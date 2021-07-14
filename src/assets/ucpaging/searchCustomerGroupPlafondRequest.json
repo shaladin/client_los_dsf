@@ -36,7 +36,7 @@
         }
     ],
   "querystring": {
-    "name": "searchCessie"
+    "name": "searchCustomerGroupPlafond"
   },
     "headerList": [
         {
@@ -144,8 +144,8 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "ResultInvoice",
-                                    "value": "0",
+                                    "property": "Status",
+                                    "value": "EXCEED",
                                     "restriction": "EQ"
                                 }
                             ],
@@ -155,12 +155,12 @@
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
-                                        "type": "CessieID",
-                                        "property": "CessieID"
+                                        "type": "CustGrpPlafondId",
+                                        "property": "CustGrpPlafondId"
                                     },
                                     {
-                                        "type": "CessieNo",
-                                        "property": "CessieNo"
+                                        "type": "CustGrpNo",
+                                        "property": "CustGrpNo"
                                     },
                                     {
                                         "type": "mode",
@@ -173,8 +173,8 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "ResultInvoice",
-                                    "value": "1",
+                                    "property": "Status",
+                                    "value": "NEAR EXCEED",
                                     "restriction": "EQ"
                                 }
                             ],
@@ -184,16 +184,16 @@
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
-                                        "type": "CessieID",
-                                        "property": "CessieID"
+                                        "type": "CustGrpPlafondId",
+                                        "property": "CustGrpPlafondId"
                                     },
                                     {
-                                        "type": "CessieNo",
-                                        "property": "CessieNo"
+                                        "type": "CustGrpNo",
+                                        "property": "CustGrpNo"
                                     },
                                     {
                                         "type": "mode",
-                                        "property": "edit"
+                                        "property": "add"
                                     }
                                 ]
                             },

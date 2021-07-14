@@ -17,6 +17,10 @@ import { FormsModule } from '@angular/forms';
 import { CollateraldataComponent } from './report/factoring/collateraldata/collateraldata.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
+import { UcapprovalcreateModule } from '@adins/Ucapprovalcreate';
+import { UcapprovalR3Module } from '@adins/ucapproval-r3';
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 
 @NgModule({
   declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent, CustomerGroupPlafondPagingComponent, CustomerGroupPlafondDetailComponent],
@@ -26,7 +30,11 @@ import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-p
     DsfRoutingModule,
     AdInsModule,
     UcreportModule,
-    UcpagingModule
+    UcpagingModule,
+    UcapprovalcreateModule,
+    UcapprovalR3Module,
+    UcapprovalHistoryModule,
+    UcapprovalgeneralinfoModule 
   ]
 })
 export class DsfModule { }

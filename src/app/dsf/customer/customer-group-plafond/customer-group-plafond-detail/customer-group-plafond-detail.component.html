@@ -5,7 +5,7 @@
               <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Customer Group Plafond Request</h4>
               <div class="col-md-12">
                 <div class="px-3">
-                  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+                  <lib-ucviewgeneric [viewGenericObj]="viewCustomerGroupPlafondDetailObj"></lib-ucviewgeneric>
                 <br />
                 <lib-ucSubsection [id]="'existingAgreementId'" [title]="'EXISTING AGREEMENT'" [panel]="'existingAgreement'">
                 </lib-ucSubsection>
@@ -21,20 +21,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- <tr *ngFor="let item of AgrmntDocObj">
-                        <td>{{item.SeqNo}}</td>
-                        <td class="text-left">{{item.DocName}}</td>
-                        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
-                        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
-                        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
-                        <td class="text-left">{{item.EmpName}}</td>
-                        <td>{{item.NumOfDocPrinted}}</td>
-                        <td>
-                          <a class="primary p-0" (click)="Print(item)">
-                            <i class="font-medium-3 fa fa-print"></i>
-                          </a>
-                        </td>
-                      </tr> -->
+                      <tr *ngFor="let item of CustGrpPlfndObj">
+                          <td *ngIf="item.Category == 'AGR'">{{item.SeqNo}}</td>
+                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrNo}}</td>
+                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.CustomerName}}</td>
+                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.OSARAmt}}</td>
+                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -52,20 +45,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- <tr *ngFor="let item of AgrmntDocObj">
-                        <td>{{item.SeqNo}}</td>
-                        <td class="text-left">{{item.DocName}}</td>
-                        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
-                        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
-                        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
-                        <td class="text-left">{{item.EmpName}}</td>
-                        <td>{{item.NumOfDocPrinted}}</td>
-                        <td>
-                          <a class="primary p-0" (click)="Print(item)">
-                            <i class="font-medium-3 fa fa-print"></i>
-                          </a>
-                        </td>
-                      </tr> -->
+                      <tr *ngFor="let item of CustGrpPlfndObj">
+                        <td *ngIf="item.Category == 'APP'">{{item.SeqNo}}</td>
+                        <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrNo}}</td>
+                        <td *ngIf="item.Category == 'APP'" class="text-center">{{item.CustomerName}}</td>
+                        <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSARAmt}}</td>
+                        <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                    </tr>
                     </tbody>
                   </table>
                 </div>
@@ -83,25 +69,18 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- <tr *ngFor="let item of AgrmntDocObj">
-                        <td>{{item.SeqNo}}</td>
-                        <td class="text-left">{{item.DocName}}</td>
-                        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
-                        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
-                        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
-                        <td class="text-left">{{item.EmpName}}</td>
-                        <td>{{item.NumOfDocPrinted}}</td>
-                        <td>
-                          <a class="primary p-0" (click)="Print(item)">
-                            <i class="font-medium-3 fa fa-print"></i>
-                          </a>
-                        </td>
-                      </tr> -->
+                      <tr *ngFor="let item of CustGrpPlfndObj">
+                        <td *ngIf="item.Category == 'OPL'">{{item.SeqNo}}</td>
+                        <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrNo}}</td>
+                        <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.CustomerName}}</td>
+                        <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.OSARAmt}}</td>
+                        <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                    </tr>
                     </tbody>
                   </table>
                 </div>
                 <br />
-                  <div class="cessieData">
+                  <div class="CustGrpPlfnd">
                      <form class="form form-horizontal" [formGroup]="plafondProposalForm" (ngSubmit)="plafondProposalForm.valid && SaveForm()"
                      #enjiForm="ngForm">
                      <div class="form-body">
@@ -131,7 +110,13 @@
                                   [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.EndPlafondDate.invalid }" >
                                <lib-uc-show-errors  [control]="plafondProposalForm.controls.EndPlafondDate" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                             </div>
-                         </div>                          
+                         </div>
+                         <lib-ucSubsection [id]="'ApprovalComponentId'" [title]="'Approval'" [panel]="'ApprovalComponent'">
+                        </lib-ucSubsection>
+                        <div id="ApprovalComponent">
+                          <lib-ucapprovalcreate [parentForm]="plafondProposalForm" [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+                        </div>
+                        <!-- <lib-ucapprovalcreate [parentForm]="plafondProposalForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent></lib-ucapprovalcreate> -->
                            <div class="form-actions right" style="text-align: right;">
                               <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
                                  translate>

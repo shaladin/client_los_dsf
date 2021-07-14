@@ -5,4 +5,5 @@ export class URLConstantDsf {
     public static GenerateReceiptFormCode = environment.losUrl + "/ReceiptFormDsfX/GenerateReceiptFormCode";
     public static AddReceiptForm = environment.losUrl + "/ReceiptFormDsfX/AddReceiptFormDsfX";
     public static EditReceiptForm = environment.losUrl + "/ReceiptFormDsfX/EditReceiptFormDsfX";
+    public static GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId = environment.losUrl + "/CustomerGroupPlafondDsfX/GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId";
 }
