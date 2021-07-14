@@ -14,7 +14,6 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqAddProductObj, ReqEditProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 import { ResAddEditProductObj } from 'app/shared/model/Response/Product/ResAddEditProdObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-prod-ho-add',
@@ -82,23 +81,6 @@ export class ProdHoAddComponent implements OnInit {
         }
       );
     }
-    else
-    {
-      this.getDefaultProdNameForTesting();
-    }
-  }
-
-  getDefaultProdNameForTesting()
-  {
-    this.http.post(environment.losUrl + "/ProductImpl/GetProdNameDefaultForTesting", {}).subscribe(
-      (response) => {
-        var a = response["ReturnObject"];
-
-        this.RefProductHOForm.patchValue({
-            ProdName: a[0].Key
-          });
-      }
-    );
   }
 
   updateMinDtForEndDt() {
@@ -127,16 +109,7 @@ export class ProdHoAddComponent implements OnInit {
     }
     return true;
   }
-
-  CopyNameFromCode()
-  {
-    this.RefProductHOForm.patchValue({
-      ProdName: this.RefProductHOForm.controls["ProdCode"].value,
-    });
-  }
-
-
-
+  
   SaveForm() {
     if (!this.ValidateDate()) {
       return false;
