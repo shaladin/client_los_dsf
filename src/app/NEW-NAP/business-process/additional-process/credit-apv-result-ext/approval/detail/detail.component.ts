@@ -96,7 +96,8 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   onApprovalSubmited(event)
   {
     let ReqCrApvResExpCustomObj = {
-      Tasks: event.Tasks
+      Tasks: event.Tasks,
+      ExtendedCrdApvResultExpDt: this.CrdApvMainDataObj.ExtendedCrdApvResultExpDt
     };
 
     this.http.post(URLConstant.ResultExpiredDaysApproval, ReqCrApvResExpCustomObj).subscribe(

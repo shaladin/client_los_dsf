@@ -290,6 +290,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       (response) => {
         this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
         this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
+        this.DownPaymentChange();
       }
     );
 

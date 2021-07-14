@@ -132,35 +132,44 @@ export class PoEntryComponent implements OnInit {
       );
 
     }
-    this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response1: NapAppModel) => {
-        let GetProduct = new GenericObj();
-        GetProduct.Code = response1["ProdOfferingCode"]
-        this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
-          (response2) => {
-            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
-              (response) => {
-                var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
-                this.Date = new Date(a);
-                this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
+    this.httpClient.post(URLConstant.GetPurchaseOrderExpDt, { Id: this.AppId }).subscribe(
+      (response1) => {
+        this.ExpirationDate = formatDate(response1["PurchaseOrderExpDt"], 'yyyy-MM-dd', 'en-US');
+        this.PODetailForm.patchValue({
+          PurchaseOrderExpiredDt: datePipe.transform(response1["PurchaseOrderExpDt"], "yyyy-MM-dd")
+        });
 
-                this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
-                this.PODetailForm.patchValue({
-                  PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
-                });
-              },
-              (error) => {
-                console.log(error);
-              }
-            );
-          }
-        ).catch(
-        );
-      },
-      (error) => {
-        console.log(error);
       }
-    );
+    )
+    // this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+    //   (response1: NapAppModel) => {
+    //     let GetProduct = new GenericObj();
+    //     GetProduct.Code = response1["ProdOfferingCode"]
+    //     this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
+    //       (response2) => {
+    //         this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
+    //           (response) => {
+    //             var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
+    //             this.Date = new Date(a);
+    //             this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
+
+    //             this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
+    //             this.PODetailForm.patchValue({
+    //               PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
+    //             });
+    //           },
+    //           (error) => {
+    //             console.log(error);
+    //           }
+    //         );
+    //       }
+    //     ).catch(
+    //     );
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
   BankAccHandler() {
@@ -221,7 +230,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.PurchaseOrderHId = 0;
       requestPurchaseOrderH.PurchaseOrderNo = "";
       requestPurchaseOrderH.PurchaseOrderDt = new Date();
-      requestPurchaseOrderH.PurchaseOrderExpiredDt = formValue["PurchaseOrderExpiredDt"];
+      requestPurchaseOrderH.PurchaseOrderExpiredDt = new Date(this.ExpirationDate);
       requestPurchaseOrderH.TotalPurchaseOrderAmt = formValue["TotalDisburse"];
       requestPurchaseOrderH.AgrmntId = this.AgrmntId;
       requestPurchaseOrderH.SupplCode = this.AppLoanPurposeList[0].SupplCode;
@@ -244,7 +253,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.PurchaseOrderHId = this.PurchaseOrderH.PurchaseOrderHId;
       requestPurchaseOrderH.PurchaseOrderNo = this.PurchaseOrderH.PurchaseOrderNo;
       requestPurchaseOrderH.PurchaseOrderDt = this.PurchaseOrderH.PurchaseOrderDt;
-      requestPurchaseOrderH.PurchaseOrderExpiredDt = formValue["PurchaseOrderExpiredDt"];
+      requestPurchaseOrderH.PurchaseOrderExpiredDt = new Date(this.ExpirationDate);
       requestPurchaseOrderH.TotalPurchaseOrderAmt = this.PurchaseOrderH.TotalPurchaseOrderAmt;
       requestPurchaseOrderH.AgrmntId = this.PurchaseOrderH.AgrmntId;
       requestPurchaseOrderH.SupplCode = this.PurchaseOrderH.SupplCode;

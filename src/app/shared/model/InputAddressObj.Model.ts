@@ -21,6 +21,7 @@ export class InputAddressObj {
     requiredPhnExt3: boolean;
     showFax: boolean;
     showOwnership: boolean;
+    requiredOwnership: boolean;
     showSubsection: boolean;
     showStayLength: boolean;
     isRequired: boolean;
@@ -42,6 +43,7 @@ export class InputAddressObj {
         this.requiredPhnExt3 = false;
         this.showFax = true;
         this.showOwnership = false;
+        this.requiredOwnership = false;
         this.showSubsection = true;
         this.showStayLength = false;
         this.isRequired = true;

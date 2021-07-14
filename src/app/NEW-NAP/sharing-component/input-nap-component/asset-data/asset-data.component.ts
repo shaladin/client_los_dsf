@@ -81,6 +81,7 @@ export class AssetDataComponent implements OnInit {
   appCollateralRegistObj: AppCollateralRegistrationObj;
   isAddressObjDelvReady: boolean = false;
   isAddressObjLocReady: boolean = false;
+  IsReady: boolean = false;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -132,7 +133,7 @@ export class AssetDataComponent implements OnInit {
     /*App Collateral Regist*/
     UserName: ['', Validators.maxLength(50)],
     MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-    OwnerName: ['', Validators.maxLength(50)],
+    OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     OwnerIdNo: ['', Validators.maxLength(50)],
     MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -246,7 +247,7 @@ export class AssetDataComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj>;
   AssetUsageObj: Array<KeyValueObj>;
   AssetConditionObj: Array<KeyValueObj>;
-  DpObj: Array<KeyValueObj>;
+  DpObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   AppObj: AppObj;
   VendorObj: VendorObj;
   AssetMasterObj: any;
@@ -368,6 +369,7 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls.MrOwnerRelationshipCode.clearValidators();
       this.AssetDataForm.controls.selectedDpType.clearValidators();
       this.AssetDataForm.controls.MrIdTypeCode.clearValidators();
+      this.AssetDataForm.controls.OwnerName.clearValidators();
       await this.getListAllAssetData();
     }
     else {
@@ -781,7 +783,7 @@ export class AssetDataComponent implements OnInit {
                   this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                   break;
                 }
-                if (newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
+                if (newAcc.DownPaymentPrcnt != oriAcc.DownPaymentPrcnt || newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
                   this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                   break;
                 }
@@ -893,7 +895,6 @@ export class AssetDataComponent implements OnInit {
         }
       );
     }
-    // }
   }
 
   Cancel() {
@@ -1168,7 +1169,8 @@ export class AssetDataComponent implements OnInit {
       appAssetAccObj.SupplCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplCodeAccessory;
       appAssetAccObj.SupplName = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplNameAccessory;
       appAssetAccObj.AccessoryPriceAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryPriceAmt;
-      appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryDownPaymentAmt;
+      appAssetAccObj.DownPaymentPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value;
+      appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value;
       appAssetAccObj.AccessoryNotes = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryNotes;
 
       appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
@@ -1693,6 +1695,7 @@ export class AssetDataComponent implements OnInit {
                 appAssetAccObj.SupplCode = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].SupplCode;
                 appAssetAccObj.SupplName = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].SupplName;
                 appAssetAccObj.AccessoryPriceAmt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryPriceAmt;
+                appAssetAccObj.DownPaymentPrcnt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryDownPaymentPrcnt;
                 appAssetAccObj.DownPaymentAmt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].DownPaymentAmt;
                 appAssetAccObj.AccessoryNotes = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryNotes;
 
@@ -1912,6 +1915,7 @@ export class AssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.DpObj = response[CommonConstant.ReturnObj];
+        this.IsReady = true;
       }
     );
   }
@@ -1936,6 +1940,7 @@ export class AssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response: any) => {
         this.AppObj = response;
+        this.BizTemplateCode = this.AppObj.BizTemplateCode;
         this.OfficeCode = this.AppObj.OriOfficeCode;
         if (this.BizTemplateCode != CommonConstant.OPL) {
           this.GetProdOfferingAssetCond();
@@ -2221,6 +2226,7 @@ export class AssetDataComponent implements OnInit {
 
         this.setAppAccessorySupplier(i, this.appAssetAccessoriesObjs[i].SupplCode);
         this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
+        this.ChangeAccessoryDPType(i, 'AMT');
       }
     }
   }
@@ -2255,7 +2261,9 @@ export class AssetDataComponent implements OnInit {
         AssetAccessoryName: ['', [Validators.maxLength(100)]],
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: ['', Validators.required],
+        AccessoryPriceAmt: [0, Validators.required],
+        AccessoryDownPaymentType: [''],
+        AccessoryDownPaymentPrcnt: [0, Validators.required],
         AccessoryDownPaymentAmt: [0, Validators.required],
         AccessoryNotes: ['']
       })
@@ -2268,6 +2276,8 @@ export class AssetDataComponent implements OnInit {
         SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
         AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, Validators.required],
+        AccessoryDownPaymentType: [this.DpObj[0].Key],
+        AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, Validators.required],
         AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, Validators.required],
         AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]
       })
@@ -2626,5 +2636,53 @@ export class AssetDataComponent implements OnInit {
     let ListValidator: Array<ValidatorFn> = this.setValidators(appAssetAttrObj);
 
     return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
+  }
+
+  ChangeAccessoryDPType(i: number, ev){
+    if(ev == CommonConstant.DownPaymentTypeAmt){
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.disable();
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.enable();
+    }else{
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.disable();
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.enable();
+    }
+  }
+
+  CheckAccessoryDPValue(i: number, from: string){
+    var InputAccessoryPrice = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryPriceAmt.value
+
+    if(InputAccessoryPrice == 0){
+      this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i+1));
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
+      return;
+    }
+
+    var InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value
+
+    if(InputDPAmt > InputAccessoryPrice){
+      this.toastr.warningMessage("Down Payment Amount " + (i+1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i+1));
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
+      return;
+    }
+
+    var InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
+    
+    if(from == CommonConstant.DownPaymentTypeAmt){
+      var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
+    }else if(from == CommonConstant.DownPaymentTypePrcnt){
+      var DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+    }else{
+      if(this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt){
+        var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
+      }else{
+        var DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+      }
+    }
   }
 }

@@ -172,6 +172,8 @@ export class ExceptionConstant {
 
     public static PLEASE_COMPLETE_RESIDENCE_ADDRESS = "Please complete Residence Address First";
     public static PLEASE_COMPLETE_BIZ_ADDRESS = "Please Complete Business Address First";
+    public static CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE = " can't be higher than Accessory Price"
+    public static ACCESSORY_PRICE_NOT_SET = "Please Input Accessory Price"
     
 }
 
