@@ -936,6 +936,7 @@ export class URLConstant {
   public static DeleteAppAsset = environment.losUrl + "/AppAsset/DeleteAppAsset";
   public static GenerateAppAssetAttr = environment.losUrl + "/AppAsset/GenerateAppAssetAttr";
   public static GenerateAppAssetAttrForEditAppAftApv = environment.losUrl + "/AppAsset/GenerateAppAssetAttrForEditAppAftApv";
+  public static GetListAppAssetAccessoryByAppId = environment.losUrl + "/AppAsset/GetListAppAssetAccessoryByAppId";
 
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";

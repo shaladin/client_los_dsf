@@ -82,7 +82,6 @@ export class CommissionCfnaComponent implements OnInit {
       this.FormInputObjSupplier["isCalculated"] = false;
       this.FormInputObjSupplier["isDataInputed"] = false;
       this.OnForm1 = true;
-      // console.log(this.FormInputObjSupplier);
     } else if (content == CommonConstant.ContentSupplierEmp) {
       this.FormInputObjSupplierEmp["title"] = CommonConstant.TitleSupplierEmp;
       this.FormInputObjSupplierEmp["content"] = CommonConstant.ContentSupplierEmp;
@@ -95,7 +94,6 @@ export class CommissionCfnaComponent implements OnInit {
       this.FormInputObjSupplierEmp["isDataInputed"] = false;
       this.FormInputObjSupplierEmp["dictSuppl"] = this.DictSupplierCode;
       this.OnForm2 = true;
-      // console.log(this.FormInputObjSupplierEmp);
     } else if (content == CommonConstant.ContentReferantor) {
       this.FormInputObjReferantor["title"] = CommonConstant.TitleReferantor;
       this.FormInputObjReferantor["content"] = CommonConstant.ContentReferantor;
@@ -107,7 +105,6 @@ export class CommissionCfnaComponent implements OnInit {
       this.FormInputObjReferantor["isCalculated"] = false;
       this.FormInputObjReferantor["isDataInputed"] = false;
       this.OnForm3 = true;
-      // console.log(this.FormInputObjReferantor);
     }
   }
 
@@ -116,22 +113,11 @@ export class CommissionCfnaComponent implements OnInit {
     await this.GetListAppReservedFundByAppId();
     await this.GetContentData();
     await this.GetRuleDataForForm();
-    // console.log(this.CommissionForm);
-    // console.log(this.DictMaxIncomeForm);
     await this.GetExistingAppCommData();
-    // console.log(this.CommissionForm.value.SupplierReferantor.length);
-
-    // if(Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object){
-    //   if(this.BizTemplateCode == CommonConstant.CFNA){
-    //     this.IsCalculated = true;
-    //   }
-    // }
-    console.log("DictMaxIncomeForm: " + JSON.stringify(this.DictMaxIncomeForm));
-    console.log("FormInputObjSupplier: " + JSON.stringify(this.FormInputObjSupplier));
   }
 
   DictRemainingIncomeForm: object = {};
-  async GetListAppReservedFundByAppId(){
+  async GetListAppReservedFundByAppId() {
     for (let index = 0; index < this.ListResultRefundIncomeInfo.length; index++) {
       const element = this.ListResultRefundIncomeInfo[index];
       let TempObj = new ResultRefundObj();
@@ -140,19 +126,15 @@ export class CommissionCfnaComponent implements OnInit {
       TempObj.RefundAmount = element.RefundAmount;
       this.DictRemainingIncomeForm[element.RefundAllocationFrom] = TempObj;
     }
-    await this.http.post(URLConstant.GetListAppReservedFundByAppId, {Id: this.AppId}).toPromise().then(
-      (response)=>{
-        // console.log(response);
+    await this.http.post(URLConstant.GetListAppReservedFundByAppId, { Id: this.AppId }).toPromise().then(
+      (response) => {
         let tempObj: Array<AppReservedFundObj> = response[CommonConstant.ReturnObj];
-        // console.log(tempObj);
         for (let index = 0; index < tempObj.length; index++) {
           const element = tempObj[index];
-          // console.log(element);
-          if(this.DictRemainingIncomeForm[element.MrReservedFundSourceCode]){
-            this.DictRemainingIncomeForm[element.MrReservedFundSourceCode].RefundAmount-=element.ReservedFundAmt;
-          }          
+          if (this.DictRemainingIncomeForm[element.MrReservedFundSourceCode]) {
+            this.DictRemainingIncomeForm[element.MrReservedFundSourceCode].RefundAmount -= element.ReservedFundAmt;
+          }
         }
-        // console.log(this.DictRemainingIncomeForm);
         this.outputDictRemaining.emit(this.DictRemainingIncomeForm);
       }
     )
@@ -160,22 +142,6 @@ export class CommissionCfnaComponent implements OnInit {
 
   async GetContentData() {
     var obj;
-    //obj = {
-    //  AppId: this.AppId,
-    //  RowVersion: ""
-    //};
-    // await this.http.post(URLConstant.GetAppLoanPurposeVendorAndVendorEmpByAppId, obj).toPromise().then(
-    //   (response) => {
-    //     console.log("GetContentData: " + JSON.stringify(response));
-    //     if (response["AppLoanPurposeVendorObjs"].length != 0) {
-    //       this.GetDDLContent(response["AppLoanPurposeVendorObjs"], CommonConstant.ContentSupplier);
-    //       // this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstant.ContentSupplierEmp);
-    //     }
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
 
     obj = {
       Id: this.AppId,
@@ -183,7 +149,6 @@ export class CommissionCfnaComponent implements OnInit {
     };
     await this.http.post<NapAppReferantorModel>(URLConstant.GetAppReferantorByAppId, obj).toPromise().then(
       (response) => {
-        // console.log(response);
         this.GetDDLContent(response, CommonConstant.ContentReferantor);
       },
       (error) => {
@@ -197,7 +162,6 @@ export class CommissionCfnaComponent implements OnInit {
   ContentObjReferantor = new Array();
   DictSupplierCode: object = {};
   GetDDLContent(ReturnObject, content: string) {
-    // console.log(ReturnObject);
     if (content == CommonConstant.ContentReferantor) {
       if (ReturnObject.AppId == null) return;
       var KVPObj;
@@ -221,12 +185,9 @@ export class CommissionCfnaComponent implements OnInit {
             Key: ReturnObject[i].SupplCode,
             Value: ReturnObject[i].SupplName
           };
-          // console.log(this.DictSupplierCode);
-          // console.log(this.DictSupplierCode[ReturnObject[i].SupplCode]);
           this.DictSupplierCode[ReturnObject[i].SupplCode] = ReturnObject[i].SupplName;
           this.ContentObjSupplier.push(KVPObj);
         } else if (content == CommonConstant.ContentSupplierEmp) {
-          // console.log(ReturnObject[i]);
           KVPObj = {
             Key: ReturnObject[i].SupplEmpNo,
             Value: ReturnObject[i].SupplEmpName,
@@ -248,14 +209,6 @@ export class CommissionCfnaComponent implements OnInit {
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
         var ResponseObj = response[CommonConstant.ReturnObj];
-        // if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp){ // For CFNA
-        //   for (var i = 0; i < response["length"]; i++) {
-        //     var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
-        //     // console.log(temp);
-        //     this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
-        //     this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
-        //   }
-        // }
         if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
           this.BindRuleData(ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
       },
@@ -266,10 +219,6 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   BindRuleData(tempObj: any, contentType: string, supplCode: string) {
-    console.log("Bind Rule Data");
-    console.log(tempObj);
-    // console.log(contentType);
-    // console.log(supplCode);
     var listTempObj = new Array();
     if (contentType == CommonConstant.ContentSupplier) {
       for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
@@ -282,9 +231,7 @@ export class CommissionCfnaComponent implements OnInit {
           MaxAllocationAmount: tempObj.MaxAllocationAmount[i]
         };
         listTempObj.push(temp);
-        console.log("listTempObj: " + JSON.stringify(listTempObj));
       };
-      // sort
       listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
       this.RuleSupplierData[supplCode] = listTempObj;
     }
@@ -310,10 +257,8 @@ export class CommissionCfnaComponent implements OnInit {
         DictJobPosition[tempObj.JobPositionCode[i]] = listTempObj;
       }
 
-      // sort 
       for (var i = 0; i < listJobPosition.length; i++) {
         listTempObj = DictJobPosition[listJobPosition[i]];
-        // console.log(listTempObj);
         listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
       }
       this.RuleSupplierEmpData[supplCode] = DictJobPosition;
@@ -330,7 +275,6 @@ export class CommissionCfnaComponent implements OnInit {
         };
         listTempObj.push(temp);
       };
-      // sort
       listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
       this.RuleReferantorData[supplCode] = listTempObj;
     }
@@ -341,11 +285,8 @@ export class CommissionCfnaComponent implements OnInit {
     var objApi = { Id: this.AppId };
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
-        console.log("response edit comm");
-        console.log(response);
         var tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
         if (tempObj.length > 0) {
-          // console.log("edit data");
           this.isAutoGenerate = false;
           this.GetFormAddDynamicObj(CommonConstant.ContentSupplier);
           this.GetFormAddDynamicObj(CommonConstant.ContentSupplierEmp);
@@ -353,7 +294,6 @@ export class CommissionCfnaComponent implements OnInit {
           setTimeout(() => {
             for (let index = 0; index < tempObj.length; index++) {
               let tempObjAt = tempObj[index];
-              // console.log(tempObjAt);
               if (tempObjAt.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplier) {
                 this.FormAdd1.PatchDataExisting(tempObjAt);
               }
@@ -364,12 +304,10 @@ export class CommissionCfnaComponent implements OnInit {
                 this.FormAdd3.PatchDataExisting(tempObjAt);
               }
             }
-            // console.log(this.CommissionForm);            
           }, 1000);
 
 
         } else {
-          // console.log("new data");
           this.GetFormAddDynamicObj(CommonConstant.ContentSupplier);
           this.GetFormAddDynamicObj(CommonConstant.ContentSupplierEmp);
           this.GetFormAddDynamicObj(CommonConstant.ContentReferantor);
@@ -382,14 +320,12 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   GetData() {
-    console.log("change data");
     this.IsCalculated = false;
   }
 
   DictTotalIncomeForm: object = {};
   ListAllocFromForDict: Array<string> = new Array();
   CalculateTotal() {
-    console.log("Calc");
     this.Summary.TotalCommisionAmount = 0;
     this.Summary.TotalTaxAmmount = 0;
     this.Summary.TotalVATAmount = 0;
@@ -397,19 +333,13 @@ export class CommissionCfnaComponent implements OnInit {
     this.totalExpenseAmt = 0;
 
     for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
-      // console.log("test nol semua");
       this.DictTotalIncomeForm[this.ListAllocFromForDict[i]] = 0;
     }
 
     var listVendorCode: Array<string> = new Array<string>();
     var listVendorEmpNo: Array<string> = new Array<string>();
     var listTrxAmt: Array<Array<number>> = new Array<Array<number>>();
-    // if(this.GetCalcTaxData(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-    // if(this.GetCalcTaxData(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
     if (this.GetCalcTaxData(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-    // console.log(listVendorCode);
-    // console.log(listVendorEmpNo);
-    // console.log(listTrxAmt);
 
     if (listVendorCode.length > 0) {
       let obj: ReqTaxObj = {
@@ -423,25 +353,15 @@ export class CommissionCfnaComponent implements OnInit {
       };
       if (this.CekMaxValueIncomeInfo()) return;
 
-      // console.log(obj);
-      // console.log(JSON.stringify(obj));
 
       this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYield, obj).subscribe(
         (response) => {
-          // console.log(response);
           let idxStart = 0;
-          // let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
-          // let totalSupplEmpData = this.CommissionForm.value[this.identifierSupplierEmp].length;
           let totalReferantorData = this.CommissionForm.value[this.identifierReferantor].length;
-          // idxStart = this.BindTaxData(this.identifierSupplier, response, idxStart, totalSupplData);
-          // idxStart = this.BindTaxData(this.identifierSupplierEmp, response, idxStart, totalSupplEmpData);
           idxStart = this.BindTaxData(this.identifierReferantor, response, idxStart, totalReferantorData);
-          // console.log(this.CommissionForm);
-          // console.log(this.DictTotalIncomeForm);
           this.Summary.GrossYield = response.GrossYield;
           this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
           if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
-          // console.log(this.RemainingAllocAmt);
           this.IsCalculated = true;
           this.outputUpdateRemainingAlloc.emit(this.totalExpenseAmt);
         },
@@ -505,7 +425,6 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   BindTaxData(identifier: string, TaxDetailData: ResponseTaxDetailObj, idxStart: number, idxEnd: number) {
-    // let totalBindData=this.CommissionForm.value[identifier].length;
     for (var i = 0; i < idxEnd; i++) {
       let totalTaxAmount = 0;
       let totalVATAmount = 0;
@@ -558,12 +477,9 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   SaveForm() {
-    console.log("save");
-    // console.log(Object.keys(this.CommissionForm.value).length);
-    // console.log(Object.keys(this.CommissionForm.value)[0]);
     for (var i = 0; i < Object.keys(this.CommissionForm.value).length; i++) {
       if (this.CommissionForm.value[Object.keys(this.CommissionForm.value)[i]].length === 0) {
-          this.IsCalculated = true;
+        this.IsCalculated = true;
       }
     }
     if (!this.IsCalculated) return this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
@@ -573,8 +489,6 @@ export class CommissionCfnaComponent implements OnInit {
 
     let listAppCommissionHAddObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
     let listAppCommissionHEditObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
-    // this.GetListAppCommObj(this.identifierSupplier, listAppCommissionHObj);
-    // this.GetListAppCommObj(this.identifierSupplierEmp, listAppCommissionHObj);
     this.GetListAppCommObj(this.identifierReferantor, listAppCommissionHAddObj, listAppCommissionHEditObj);
     var obj = {
       AppId: this.AppId,
@@ -582,8 +496,6 @@ export class CommissionCfnaComponent implements OnInit {
       ListAppCommissionHAddObj: listAppCommissionHAddObj,
       ListAppCommissionHEditObj: listAppCommissionHEditObj
     };
-    // console.log(obj);
-    // console.log(JSON.stringify(obj));
     this.http.post(URLConstant.AddOrEditAppCommissionData, obj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -596,8 +508,6 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   CekMaxValueIncomeInfo() {
-    console.log("this.DictMaxIncomeForm: " + JSON.stringify(this.DictMaxIncomeForm));
-    console.log("this.ListAllocFromForDict: " + JSON.stringify(this.ListAllocFromForDict));
     var flag = false;
     for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
       if (this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAmount < this.DictTotalIncomeForm[this.ListAllocFromForDict[i]]) {
@@ -626,7 +536,6 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   PatchAppCommHData(AppCommH: FormGroup, CommReceipientTypeCode: string) {
-    console.log(AppCommH);
     var temp = new AppCommissionHObj();
     if (AppCommH.get("AppCommissionHId").value != 0) temp.AppCommissionHId = AppCommH.get("AppCommissionHId").value;
     temp.AppId = this.AppId;

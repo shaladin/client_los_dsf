@@ -1,6 +1,7 @@
 export class AppAssetAccessoryObj {
   AppAssetAccessoryId: number;
   AppAssetId: number;
+  AssetSeqNo: number;
   AssetAccessoryCode: string;
   AssetAccessoryName: string;
   SupplCode: string;
@@ -14,6 +15,7 @@ export class AppAssetAccessoryObj {
   constructor() {
     this.AppAssetAccessoryId = 0;
     this.AppAssetId = 0;
+    this.AssetSeqNo = 0;
     this.AssetAccessoryCode = "";
     this.AssetAccessoryName = "";
     this.SupplCode = "";
