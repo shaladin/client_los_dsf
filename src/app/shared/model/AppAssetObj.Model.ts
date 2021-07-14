@@ -18,6 +18,8 @@ export class AppAssetObj {
   SerialNo5: string;
   AssetPriceAmt: number;
   DownPaymentAmt: number;
+  TotalAccessoryPriceAmt: number;
+  TotalAccessoryDownPaymentAmt: number;
   DownPaymentPrcnt: number;
   MinDownPaymentPrcnt: number;
   MaxDownPaymentPrcnt: number;
@@ -74,6 +76,8 @@ export class AppAssetObj {
     this.SerialNo5 = "";
     this.AssetPriceAmt = 0;
     this.DownPaymentAmt = 0;
+    this.TotalAccessoryPriceAmt = 0;
+    this.TotalAccessoryDownPaymentAmt = 0;
     this.AssetTypeCode = "";
     this.AssetCategoryCode = "";
     this.SupplCode = "";
