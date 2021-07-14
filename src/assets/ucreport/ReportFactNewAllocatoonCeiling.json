@@ -1,7 +1,7 @@
 { 
-    "title" : "REPORT FACT COLLATERAL",
-    "reportName": "Report of Collateral",
-    "reportTemplateCode": "FACT_COLLATERAL",
+    "title" : "REPORT FACT NEW ALLOCATION CEILING ",
+    "reportName": "Report of New Allocation Ceiling",
+    "reportTemplateCode": "FACT_NEWALLOCATIONCEILING",
     "component": [ 
         {
             "type" : "dropdown",
@@ -11,36 +11,12 @@
             "isSelectOne" : true,
             "items" : [
                 {
-                "key": "PT KRAMA YUDHA TIGA BERLIAN",
+                "key": "KTB",
                 "value": "PT KRAMA YUDHA TIGA BERLIAN"
             },
             {
-                "key": "PT MITSUBISHI MOTOR",
+                "key": "MMKSI",
                 "value": "PT MITSUBISHI MOTOR"
-            }
-            ],
-            "isFromURL" : false,
-            "url" : "", 
-            "path": "", 
-            "criteriaPropName": "", 
-            "criteriaPropValue": "", 
-            "itemsUrl" : [],
-            "paramAssignment": 1 
-        },
-        {
-            "type" : "dropdown",
-            "label" : "Product Type",
-            "name" : "CrtProductType",
-            "datatype" : "text",
-            "isSelectOne" : true,
-            "items" : [
-                {
-                "key": "MMC",
-                "value": "Unit"
-            },
-            {
-                "key": "MFTBC",
-                "value": "Sparepart"
             }
             ],
             "isFromURL" : false,
@@ -59,7 +35,7 @@
             "restriction" : "gte",
             "datatype" : "date",
             "paramAssignment": 1 
-        }    
+        }  
     ],
     "exportTypeList": [
         {
