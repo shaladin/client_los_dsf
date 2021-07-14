@@ -64,7 +64,6 @@ export class PreGoLiveOplDetailComponent implements OnInit {
     }
 
   async ngOnInit() {
-    console.log('test')
     this.claimTask();
     await this.SetMainInfo();
     await this.SetListItem();
