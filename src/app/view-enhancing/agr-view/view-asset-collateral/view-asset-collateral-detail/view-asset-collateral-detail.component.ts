@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 
 @Component({
   selector: 'view-asset-collateral-detail',
@@ -20,11 +21,14 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
   salesName: string;
   branchManagerName: string;
   adminHeadName: string;
+  inputGridObj: InputGridObj = new InputGridObj();
 
   constructor(private httpClient: HttpClient,
     public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+    this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryFL4W.json";
+
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { Id: this.AppAssetId });
     let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { Id: this.AppAssetId });
     let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppId, { Id: this.AppId });
@@ -33,6 +37,12 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
         this.appAsset = response[0];
         this.appAssetSupplEmp = response[1];
         this.appCollateralRegistration = response[2];
+        
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = this.appAsset.ResponseAppAssetAccessoryObjs;
 
         this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
           (responseAsset: any) => {

@@ -164,8 +164,16 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
 
         this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).toPromise().then(
           (responseAppDlfn) => {
+            let TotalTopAmount = responseAppDlfn["TopInterestRatePrcnt"] / 100 * (responseAppDlfn["TopDays"] / DaysInYear) * NtfAmount;
+            let TotalDisbAmount = this.ParentForm.controls.TotalDisbAmt.value;
+            if (TotalTopAmount) {
+              TotalDisbAmount = TotalDisbAmount - TotalTopAmount; 
+              this.ParentForm.patchValue({
+                TotalDisbAmt: TotalDisbAmount
+              });
+            }
             this.ParentForm.patchValue({
-              TotalTopAmount: responseAppDlfn["TopInterestRatePrcnt"] / 100 * (responseAppDlfn["TopDays"] / DaysInYear) * NtfAmount,
+              TotalTopAmount: TotalTopAmount
             });
           });
       });

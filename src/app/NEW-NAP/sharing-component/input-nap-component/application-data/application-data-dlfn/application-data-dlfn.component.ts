@@ -446,8 +446,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
   async CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.isSingle = false;
-      this.SalesAppInfoForm.controls.TopDays.disable();
-      this.SalesAppInfoForm.controls.TopBased.disable();
+      // this.SalesAppInfoForm.controls.TopDays.disable();
+      // this.SalesAppInfoForm.controls.TopBased.disable();
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
       this.SalesAppInfoForm.controls.MrWopCode.disable();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();
@@ -599,12 +599,13 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.salesAppInfoObj.listAppCrossObj = tempListAppCrossObj;
 
     if (this.salesAppInfoObj.MrInstTypeCode == CommonConstant.InstTypeSingle) {
-      this.salesAppInfoObj.MrInstSchemeCode = "EP";
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       //this.salesAppInfoObj.Tenor = 1;
-      this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
+      // this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
+      this.salesAppInfoObj.NumOfInst = 1;
       this.isSingle = true;
     } else {
-      this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
       this.isSingle = false;
     }

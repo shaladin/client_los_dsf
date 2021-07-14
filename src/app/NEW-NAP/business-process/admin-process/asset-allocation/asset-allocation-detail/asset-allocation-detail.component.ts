@@ -34,6 +34,7 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
   requisitionList: any;
   dictAssetNumber: { [key: string]: InputLookupObj; } = {};
   agrmntNo: string;
+
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
@@ -172,8 +173,8 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     assetCrit.push(critAssetObj);
 
     this.InputLookupAssetNumberObj.addCritInput = assetCrit;
-    this.InputLookupAssetNumberObj.jsonSelect = x ? x : "";
-    this.InputLookupAssetNumberObj.nameSelect = x ? x.FullAssetName : "";
+    this.InputLookupAssetNumberObj.jsonSelect = x.AssetNo != null ? x : "";
+    this.InputLookupAssetNumberObj.nameSelect = x.AssetNo != null ? x.AssetNo : "";
     this.InputLookupAssetNumberObj.isRequired = false;
     this.InputLookupAssetNumberObj.isReady = true;
     return this.InputLookupAssetNumberObj;
@@ -252,6 +253,8 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
       ManuYearAssetNumber: event.ManufacturingYear,
       AssetNo: event.AssetNo
     });
+    this.InputLookupAssetNumberObj.jsonSelect = event;
+    this.InputLookupAssetNumberObj.nameSelect = event.AssetNo;
   }
 
   ChangeAllChecked() {

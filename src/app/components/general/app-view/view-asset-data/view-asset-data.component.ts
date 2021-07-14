@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 
 @Component({
   selector: "view-asset-data",
@@ -24,6 +25,7 @@ export class ViewAssetDataComponent implements OnInit {
   AppAssetObj: any;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
+  inputGridObj: InputGridObj = new InputGridObj();
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -47,6 +49,8 @@ export class ViewAssetDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryCF4W.json";
+
     if (this.appAssetId != 0) {
       this.initSingleAssetUrl();
       this.appAssetObj.Id = this.appAssetId;
@@ -66,6 +70,12 @@ export class ViewAssetDataComponent implements OnInit {
         if(this.AppAssetObj.ResponseAppAssetAttrObjs != null) {
           this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.ResponseAppAssetAttrObjs.length/2);
         }
+
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = this.AppAssetObj.ResponseAppAssetAccessoryObjs;
       }
     );
   }
