@@ -43,6 +43,7 @@ import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/le
 import { UcaddtotempModule } from "@adins/ucaddtotemp";
 import { SharedModule } from "app/shared/shared.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { LeadToBeFollowUpDsfComponent } from "./DSF/lead-to-be-follow-up-dsf/lead-to-be-follow-up-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -100,7 +101,8 @@ export const customCurrencyMaskConfig = {
     FraudVerifPagingComponent,
     FraudVerifPageComponent,
     LeadInquiryComponent,
-    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent
+    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent,
+    LeadToBeFollowUpDsfComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

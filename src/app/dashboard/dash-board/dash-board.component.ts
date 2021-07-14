@@ -40,9 +40,9 @@ export class DashBoardComponent implements OnInit {
     this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
 
     let integrationObj = new ThingsToDoIntegrationObj();
-    integrationObj.RequestObj.Office = this.officeCode;
+    // integrationObj.RequestObj.Office = this.officeCode;
     integrationObj.RequestObj.Role = this.roleCode;
-    integrationObj.RequestObj.UserName = this.username;
+    // integrationObj.RequestObj.UserName = this.username;
     this.Item.RequestObj.IntegrationObj.push(integrationObj);
   }
 }
