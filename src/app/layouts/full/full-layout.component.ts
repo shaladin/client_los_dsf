@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 
 var fireRefreshEventOnWindow = function () {
     var evt = document.createEvent("HTMLEvents");
