@@ -1446,14 +1446,16 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         this.appAssetObj = response;
 
-        this.appCollateralRegistObj = new AppCollateralRegistrationObj();
-        this.appCollateralRegistObj.AppCollateralId = this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId'];
-        this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
-          (response: any) => {
-            this.returnAppCollateralRegistObj = response;
-          });
 
         if (this.appAssetObj.ResponseAppAssetObj != null) {
+          this.appCollateralRegistObj = new AppCollateralRegistrationObj();
+          this.appCollateralRegistObj.AppCollateralId = this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId'];
+          this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
+            (response: any) => {
+              this.returnAppCollateralRegistObj = response;
+            });
+
+
           let mode = this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0 ? "edit" : "add";
           this.AssetDataForm.patchValue({
             FullAssetCode: this.appAssetObj.ResponseAppAssetObj.FullAssetCode,
