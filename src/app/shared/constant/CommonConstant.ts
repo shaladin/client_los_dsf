@@ -549,6 +549,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeInterestInputType = "INTEREST_INPUT_TYPE";
   public static RefMasterTypeCodeAppPaidBy = "APP_PAID_BY";
   public static RefMasterTypeCodeInterestTypeGeneral = "INTRSTTYPE";
+  public static APP_APV = "APP_APV";
   public static RefMasterTypeCodeInterestTypeFactoring = "INTEREST_TYPE";
   public static RefMasterTypeCodeTopCalcBased = "TOP_CALC_BASED";
   public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE";
