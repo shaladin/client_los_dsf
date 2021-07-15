@@ -150,7 +150,9 @@ export class ApplicationDataComponent implements OnInit {
     EconomicSector: [''],
     ApplicationNotes: [''],
     CopyFromMailing: [''],
-    CustBankAcc: ['']
+    CustBankAcc: [''],
+    DpSrcPaymentCode: [''],
+    InstSrcPaymentCode: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -193,6 +195,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCspUslAml);
     this.getAppSrcData();
     setTimeout(() => { this.getAppModelInfo() }, 2000);
 
@@ -393,7 +396,9 @@ export class ApplicationDataComponent implements OnInit {
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
-          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode
+          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode,
+          DpSrcPaymentCode: this.resultResponse.MrDpSrcPaymentCode,
+          InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
 
         if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit) {
@@ -686,6 +691,8 @@ export class ApplicationDataComponent implements OnInit {
     temp.BizTemplateCode = this.BizTemplateCode;
     temp.MrSlikSecEcoCode = this.NapAppModelForm.getRawValue().MrSlikSecEcoCode;
     temp.RowVersion = this.resultResponse.RowVersion;
+    temp.MrDpSrcPaymentCode = this.NapAppModelForm.controls.DpSrcPaymentCode.value;
+    temp.MrInstSrcPaymentCode = this.NapAppModelForm.controls.InstSrcPaymentCode.value;
     if (this.NapAppModelForm.controls.MouCustId.value == "null") {
       temp.MouCustId = "";
     }
