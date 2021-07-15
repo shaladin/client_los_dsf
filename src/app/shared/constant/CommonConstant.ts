@@ -1,4 +1,8 @@
 export class CommonConstant {
+  
+  // REGEX API
+  public static regexAPI = "\\/[v,V][1-9]\\d*(\\.[1-9]\\d*)*";
+
   //FORM
   public static INVALID_FORM = "INVALID";
 
@@ -549,6 +553,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeInterestInputType = "INTEREST_INPUT_TYPE";
   public static RefMasterTypeCodeAppPaidBy = "APP_PAID_BY";
   public static RefMasterTypeCodeInterestTypeGeneral = "INTRSTTYPE";
+  public static APP_APV = "APP_APV";
   public static RefMasterTypeCodeInterestTypeFactoring = "INTEREST_TYPE";
   public static RefMasterTypeCodeTopCalcBased = "TOP_CALC_BASED";
   public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE";
