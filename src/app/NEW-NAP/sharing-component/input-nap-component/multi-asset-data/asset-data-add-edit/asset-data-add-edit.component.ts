@@ -1364,6 +1364,11 @@ export class AssetDataAddEditComponent implements OnInit {
 
 
     if (this.AssetValidationResult) {
+      let sumAssetAccessories: number = 0;
+      if(assetForm.AssetAccessoriesObjs.length > 0){
+        sumAssetAccessories = assetForm.AssetAccessoriesObjs.map(x => x.AccessoryPriceAmt).reduce((acc, curr) => acc + curr);
+      }
+
       if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCNT') {
         if (assetForm.DownPaymentPrctg < this.AssetValidationResult.DPMin) {
           isValidOk = false;
@@ -1375,7 +1380,7 @@ export class AssetDataAddEditComponent implements OnInit {
         }
       }
       else {
-        var assetDPMin = this.AssetValidationResult.DPMin * assetForm.AssetPrice / 100;
+        var assetDPMin = this.AssetValidationResult.DPMin * (assetForm.AssetPrice + sumAssetAccessories) / 100;
         var assetDPMax = this.AssetValidationResult.DPMax * assetForm.AssetPrice / 100;
         if (assetForm.DownPayment < assetDPMin) {
           isValidOk = false;
