@@ -54,6 +54,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
   selectedPurchaseOrderHObj;
   isDetail: boolean = true;
   isEditAssetData:boolean = false;
+  tempAssetDataIdx:number=0;
   isEditPoData: Boolean = false;
   listEditedPoData = new Array();
   listEditedAssetData = new Array();
@@ -278,10 +279,11 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
     }
   }
 
-  editAssetData(e: AppAssetObj)
+  editAssetData(e: AppAssetObj, idx)
   {
     this.isEditAssetData = true;
     this.isDetail = false;
+    this.tempAssetDataIdx = idx;
 
     this.selectedAppAssetObj = e;
 
@@ -327,6 +329,14 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         this.listEditedAssetData.splice(index, 1);
       
       this.listEditedAssetData.push(e.AppAssetRelatedOutput);
+
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo1 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo1;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo2 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo2;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo3 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo3;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo4 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo4;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo5 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo5;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].Color =  e.AppAssetRelatedOutput.AppAssetObj.Color;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].ManufacturingYear =  e.AppAssetRelatedOutput.AppAssetObj.ManufacturingYear;
 
       this.toastr.successMessage("Success");
     }
