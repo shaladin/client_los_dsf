@@ -6,6 +6,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-do-asset-detail',
@@ -16,7 +18,7 @@ export class DoAssetDetailComponent implements OnInit {
   @Input() AppAssetId: number;
   @Input() AppId: number;
   listItem: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
 
   DOAssetDetail = this.fb.group({
     AppAssetId: [0, [Validators.required]],
@@ -76,12 +78,12 @@ export class DoAssetDetailComponent implements OnInit {
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           Code: appAsset.AssetTypeCode
         }).subscribe(
-          (response: any) => {
+          (response: GenericListObj) => {
             while (this.listItem.length) {
               this.listItem.removeAt(0);
             }
 
-            this.SerialNoList = response[CommonConstant.ReturnObj];
+            this.SerialNoList = response.ReturnObject;
             for (let i = 0; i < this.SerialNoList.length; i++) {
               let eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -152,7 +154,7 @@ export class DoAssetDetailComponent implements OnInit {
     return assetDocs;
   }
 
-  GenerateAppCollateralDocs(appCollateralDocs: any)
+  GenerateAppCollateralDocs(appCollateralDocs)
   {
     var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
     for (const item of appCollateralDocs) {

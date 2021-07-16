@@ -1,13 +1,13 @@
 export class AppInfoObj{
-    MRInstTypeCode: any;
-    MRSingleInstCalcMthdCode: any;
-    TOPDays: any;
-    Tenor: any;
-    NumOfInst: any;
-    MRInstSchemeCode: any;
-    IsDisclosed: any;
-    PaidBy: any;
-    RecourseType: any;
-    MRAppSourceCode: any;
-    MRWOPCode:any;
+    MRInstTypeCode: string;
+    MRSingleInstCalcMthdCode: string;
+    TOPDays: number;
+    Tenor: number;
+    NumOfInst: number;
+    MRInstSchemeCode: string;
+    IsDisclosed: boolean;
+    PaidBy: string;
+    RecourseType: string;
+    MRAppSourceCode: string;
+    MRWOPCode:string;
 }

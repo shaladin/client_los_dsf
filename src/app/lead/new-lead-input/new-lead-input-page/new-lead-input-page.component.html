@@ -1,0 +1,73 @@
+<section id="horizontal-form-layouts">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>SIMPLE LEAD {{this.titlePageType}}</h4>
+            </div>
+            <div class="col-md-4" style="text-align-last: right">
+              <button  type="button" class="btn btn-raised btn-success mr-1" (click)="editMainInfoHandler()" translate>
+                Edit Main Info
+              </button>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()" translate>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="card">
+  <div class="card-body">
+    <ng-template #LeadMainInfo></ng-template>
+    <!-- <lib-ucviewgeneric [viewInput]="viewLeadHeaderMainInfo"></lib-ucviewgeneric> -->
+    <div id="stepper1" class="bs-stepper">
+      <div class="bs-stepper-header margin-stepper" role="tablist" style="overflow-x: auto;">
+        <div class="step" data-target="#customer-data-tab">
+          <button type="button" class="step-trigger" role="tab" aria-controls="customer-data-tab"
+            id="customer-data-tab-trigger" (click)="EnterTab('custData')">
+            <span class="bs-stepper-circle">1</span>
+            <span class="bs-stepper-label">CUSTOMER DATA</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#lead-data-tab">
+          <button type="button" class="step-trigger" role="tab" aria-controls="lead-data-tab" id="lead-data-tab-trigger"
+          [disabled]="!(AppStepIndex >= 2)" (click)="EnterTab('leadData')">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label">LEAD DATA</span>
+          </button>
+        </div>
+        <div  class="line" [hidden]="SysConfigResultObj?.ConfigValue == 0"></div>
+        <!-- --- -->
+        <div class="step" data-target="#upload-data-tab" [hidden]="SysConfigResultObj?.ConfigValue == 0">
+          <button type="button" class="step-trigger" role="tab" aria-controls="upload-data-tab" id="upload-data-tab-trigger"
+          [disabled]="!(AppStepIndex >= 3)"
+          (click)="EnterTab('uploadDocument')">
+            <span class="bs-stepper-circle">3</span>
+            <span class="bs-stepper-label">UPLOAD DOCUMENT</span>
+          </button>
+        </div>
+        <!-- --- -->
+      </div>
+      <br><br>
+      <!-- <div class="bs-stepper-content"> -->
+      <div id="customer-data-tab" class="content" role="tabpanel" aria-labelledby="customer-data-tab-trigger">
+        <app-new-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
+        </app-new-lead-input-cust-data>
+      </div>
+      <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
+        <app-new-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue">
+        </app-new-lead-input-lead-data>
+      </div>
+      <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
+        <app-dms-iframe *ngIf="isDmsData && AppStepIndex == 3 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</div>

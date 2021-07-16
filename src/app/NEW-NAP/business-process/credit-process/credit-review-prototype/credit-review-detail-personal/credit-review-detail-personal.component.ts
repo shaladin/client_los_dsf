@@ -15,12 +15,12 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class CreditReviewDetailPersonalComponent implements OnInit {
 
-  listDeviation : any = new Array();
-  listAppAgr : any = new Array();
-  listObligor : any = new Array();
+  listDeviation : Array<object> = new Array<object>();
+  listAppAgr : Array<object> = new Array<object>();
+  listObligor : Array<object> = new Array<object>();
   closeResultAppl: string;
-  custType: any = "C";
-  return : any = "Yes";
+  custType: string = "C";
+  return : string = "Yes";
 
   readonly ViewSrvyLink: string = NavigationConstant.VIEW_SRVY;
   readonly CancelLink: string = NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PROTOTYPE_PAGING;

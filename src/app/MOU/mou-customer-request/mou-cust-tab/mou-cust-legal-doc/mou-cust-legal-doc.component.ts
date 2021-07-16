@@ -11,6 +11,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-cust-legal-doc',
@@ -22,19 +24,19 @@ export class MouCustLegalDocComponent implements OnInit {
 
   @Input() listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
 
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<AppCustCompanyLegalDocObj>> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
+  mode: string;
+  currentEditedIndex: number;
   closeResult: any;
   appCustCompanyLegalDocObj: AppCustCompanyLegalDocObj;
   refMasterObj = {
     RefMasterTypeCode: ""
   };
-  LegalDocTypeObj: any;
-  defaultLegalDocType: any;
-  selectedLegalDocName: any;
-  defaultLegalDocName: any;
+  LegalDocTypeObj: Array<KeyValueObj>;
+  defaultLegalDocType: string;
+  selectedLegalDocName: string;
+  defaultLegalDocName: string;
   isExpDt: boolean = false;
 
   LegalDocForm = this.fb.group({
@@ -57,7 +59,7 @@ export class MouCustLegalDocComponent implements OnInit {
 
   }
 
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   ngOnInit() {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -115,7 +117,7 @@ export class MouCustLegalDocComponent implements OnInit {
     this.open(content);
   }
 
-  edit(i, content) {
+  edit(i: number, content) {
     this.clearForm();
     this.mode = "Edit";
     this.currentEditedIndex = i;
@@ -243,7 +245,7 @@ export class MouCustLegalDocComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {

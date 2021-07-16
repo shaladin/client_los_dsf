@@ -1,0 +1,197 @@
+<div formGroupName="{{identifier}}">
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="px-3">
+    
+            <div *ngIf="!isLockMode" class="pull-right">
+              <button type="button" class="addButton" translate (click)="GetFinData(ListLtkmCustPersonalFinData.length)"><i
+                  class="ft-plus-circle"></i> Add</button>
+            </div>
+            <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Data'" [panel]="'Financial'">
+            </lib-ucSubsection>
+            <div id="Financial">
+    
+              <div id="ListCustFinData" class="mb-3">
+                <table class="table table-stripped table-bordered">
+                  <thead>
+                    <tr class="table-header">
+                      <th class="text-center" translate>Date</th>
+                      <th class="text-center" translate>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of ListLtkmCustPersonalFinData; let i = index">
+                      <td class="text-center">{{item.DateAsOf | date: 'dd-MMM-yyyy'}}</td>
+                      <td class="text-center"><a href="javascript:;" (click)="GetFinData(i)"><i
+                            class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+                    </tr>
+                    <tr *ngIf="ListLtkmCustPersonalFinData.length <= 0">
+                      <td class="text-center" colspan="2" translate>No Data Available</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+    
+            <ng-template #ModalPersonalFinData let-modal>
+              <!-- <form class="form form-horizontal" [formGroup]="parentForm" #enjiForm="ngForm"
+                (ngSubmit)="enjiForm.form.valid && SaveAppCustPersonalFinData()"> -->
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title">
+                    {{IsAddFinData ? 'Add Financial Data' : 'Financial Data Date as of '}}
+                    {{parentForm['controls'][identifier]['controls'].DateAsOf.value | date: 'dd-MMM-yyyy'}}
+                  </h4>
+                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()"><span
+                      aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-4 adins-required-label" translate>Monthly Income</label>
+                        <div class="col-md-8">
+                          <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask class="form-control" formControlName="MonthlyIncomeAmt"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['MonthlyIncomeAmt'].invalid}"
+                            (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                          <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['MonthlyIncomeAmt']"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4" translate>Source Income</label>
+                        <div class="col-md-6">
+                          <select [attr.disabled]="isLockMode == true ? true : null" class="form-control" formControlName="MrSourceOfIncomeTypeCode" style="width:100%;"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['MrSourceOfIncomeTypeCode'].invalid }">
+                            <option *ngFor="let item of MrSourceOfIncomeTypeObj" [value]="item.Key">
+                              {{item.Value}}
+                            </option>
+                          </select>
+                          <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['MrSourceOfIncomeTypeCode']"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4" translate>Other Income</label>
+                        <div class="col-md-8">
+                          <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask class="form-control" formControlName="OtherIncomeAmt"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['OtherIncomeAmt'].invalid}"
+                            (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                          <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['OtherIncomeAmt']"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row" *ngIf="IsMarried">
+                        <label class="col-md-4" translate>Is Join Income</label>
+                        <div class="col-md-8">
+                          <input [attr.disabled]="isLockMode == true ? true : null" type="checkbox" formControlName="IsJoinIncome" (change)="CalculateFinData()" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4" translate>Total Monthly Income</label>
+                        <div class="col-md-8" style="text-align: right;">
+                          <label>{{parentForm['controls'][identifier]['controls'].TotalIncomeAmt.value | number:'.2':'en-US' }}</label>
+                        </div>
+                      </div>
+                      <!-- <div class="form-group row adins-required" *ngIf="IsAddFinData"> -->
+                      <div class="form-group row adins-required">
+                        <label class="col-md-4 adInsLabel" for="DateAsOf" translate>Date As Of</label>
+                        <div class="col-md-8">
+                          <input [attr.disabled]="isLockMode == true ? true : null" type="date" class="form-control adInsInput" formControlName="DateAsOf"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['DateAsOf'].invalid }" />
+                          <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['DateAsOf']" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-4" translate>Monthly Expense</label>
+                        <div class="col-md-8">
+                          <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask class="form-control" formControlName="MonthlyExpenseAmt"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['MonthlyExpenseAmt'].invalid}"
+                            (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                          <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['MonthlyExpenseAmt']"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4" translate>Monthly Installment</label>
+                        <div class="col-md-8">
+                          <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask class="form-control" formControlName="MonthlyInstallmentAmt"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['MonthlyInstallmentAmt'].invalid}"
+                            (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                          <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['MonthlyInstallmentAmt']"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4" translate>Other Monthly Installment</label>
+                        <div class="col-md-8">
+                          <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask class="form-control" formControlName="OtherMonthlyInstAmt"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['OtherMonthlyInstAmt'].invalid}"
+                            (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                          <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['OtherMonthlyInstAmt']"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row" *ngIf="IsMarried">
+                        <label class="col-md-4" translate>Spouse Monthly Income</label>
+                        <div class="col-md-8">
+                          <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask class="form-control" formControlName="SpouseMonthlyIncomeAmt"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['SpouseMonthlyIncomeAmt'].invalid}"
+                            (focusout)="CalculateFinData()" [options]="{allowNegative: false}">
+                          <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['SpouseMonthlyIncomeAmt']"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4" translate>Nett Monthly Income</label>
+                        <div class="col-md-8" style="text-align: right;">
+                          <label>{{parentForm['controls'][identifier]['controls'].NettIncomeAmt.value | number:'.2':'en-US' }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="closemodalid" class="btn btn-warning btn-raised" (click)="CloseModal()" translate><i
+                      class="far fa-window-close"></i> Cancel</button>
+                  <button *ngIf="!isLockMode" #btnclosemodal (click)="SaveModal()"  data-dismiss="modal" type="button" class="btn btn-raised btn-primary" translate><i class="far fa-check-square"></i>
+                    Save</button>
+                </div>
+              <!-- </form> -->
+            </ng-template>
+    
+    
+            <!-- <form class="form form-horizontal" [formGroup]="AppCustAttrListForm"
+              (ngSubmit)="AppCustAttrListForm.valid && SaveForm()" #enjiForm="ngForm"> -->
+    
+              <!-- <app-attr-content-component [title]="'Financial Attribute'" [LtkmCustId]="LtkmCustId" [enjiForm]="enjiForm"
+                [parentForm]="parentForm" [source]="'ltkmcust'" [identifier]="'AttrListFinancialForm'" [AttrGroup]="AttrGroup">
+              </app-attr-content-component>
+    
+              <app-bank-section [source]="'ltkmcust'" [LtkmCustId]="LtkmCustId" [LtkmCustBankAccList]="LtkmCustBankAccList"
+                (OutputObj)="GetEvent($event)"></app-bank-section> -->
+    
+              <!-- <div class="form-actions right" *ngIf="!IsDetail">
+                <button type="submit" (click)="formValidate.scrollIfFormHasErrors(FinancialForm)"
+                  class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square"></i> Save & Continue
+                </button>
+              </div>
+            </form> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-nap-view',
@@ -15,7 +16,7 @@ export class NapViewComponent implements OnInit {
   BizTemplateCode: string;
   arrValue = [];
   CustType: string = "";
-  AppCustObj: any;
+  AppCustObj: AppCustObj;
 
   IsGuarantor: boolean = true;
   IsCustomer: boolean = true;
@@ -50,7 +51,7 @@ export class NapViewComponent implements OnInit {
       Id: this.AppId,
     };
     this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
-      (response) => {
+      (response: AppCustObj) => {
         this.AppCustObj = response;
         this.CustType = this.AppCustObj.MrCustTypeCode;
       }

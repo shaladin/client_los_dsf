@@ -1,12 +1,12 @@
 export class MouCustObj {
     MouCustId: number;
     MouCustNo: string;
-    MouCustDt: any;
+    MouCustDt: Date;
     TopupMouCustId: number;
     CustNo: string;
     CustName: string;
-    StartDt: any;
-    EndDt: any;
+    StartDt: Date;
+    EndDt: Date;
     RefNo: string;
     IsRevolving: boolean;
     CurrCode: string;
@@ -17,8 +17,8 @@ export class MouCustObj {
     Notes: string;
     SrvyOrderNo: string;
     MrCustTypeCode: string;
-    MouCustStatView: any;
-    IdExpiredDt: any;
+    MouCustStatView: string;
+    IdExpiredDt: Date;
     IdNo: string;
     IsVip: boolean;
     MrIdTypeCode: string;
@@ -26,6 +26,9 @@ export class MouCustObj {
     IsExistingCust: boolean;
     CustModelCode: string;
     ApplicantNo: string;
-    RowVersion: any;
-    constructor(){ this.MouCustId = 0; this.RowVersion = ''}
+    RowVersion: string;
+    IsFreeze: boolean;
+    PlafondType: string;
+    PlafondCollateralAmt: number;
+    constructor() { this.MouCustId = 0; this.RowVersion = '' }
 }

@@ -1,0 +1,216 @@
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
+<lib-ucSubsection [id]="'LeadDuplicateCheckingId'" [title]="'Lead Duplicate Checking'"
+    [panel]="'LeadDuplicateCheckingSection'">
+</lib-ucSubsection>
+<div class="form-body" id="LeadDuplicateCheckingSection">
+  <div class="px-3">
+      <form class="form form-horizontal">
+          <div class="form-body">
+              <h4 class="form-section card-title" translate>
+                  Match / Similar Data
+              </h4>
+          </div>
+      </form>
+  </div>
+  <div class="px-3 table-responsive">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+          <tr class="table-header">
+            <th><span class="thead-header" translate>LEAD NO</span>
+            </th>
+            <th><span class="thead-header" translate>OFFICE NAME</span>
+            </th>
+            <th><span class="thead-header" translate>ORDER NO</span>
+            </th>
+            <th><span class="thead-header" translate>CUSTOMER NAME</span>
+            </th>
+            <th><span class="thead-header" translate>LEAD SOURCE</span>
+            </th>
+            <th><span class="thead-header" translate>DUPLICATE LEAD NO</span>
+            </th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of DuplicateLeadList">
+          <td>
+            <a (click)="openViewHandler(item.LeadId)">{{item.LeadNo}}</a>
+          </td>
+          <td>
+            {{item.OfficeName}}
+          </td>
+          <td>
+            {{item.OrderNo}}
+          </td>
+          <td>
+            {{item.CustName}}
+          </td>
+          <td>
+            {{item.MrLeadSourceCode}}
+          </td>
+          <td>
+            {{item.DuplicateLeadNo}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<lib-ucSubsection [id]="'InternalFraudCheckingId'" [title]="'Internal Fraud Checking'"
+    [panel]="'InternalFraudChecking'">
+</lib-ucSubsection>
+<div class="form-body" id="InternalFraudChecking">
+    <div class="px-3">
+        <form class="form form-horizontal">
+            <div class="form-body">
+                <h4 class="form-section card-title" translate>
+                    Match / Similar Data
+                </h4>
+            </div>
+        </form>
+    </div>
+    <div class="px-3 table-responsive">
+        <table class="table table-responsive-md text-center table-hover">
+            <thead>
+                <tr class="table-header">
+                    <th><span class="thead-header" name='UseCustomer' translate>USE THIS CUSTOMER</span>
+                    </th>
+                    <th><span class="thead-header" name='No' translate>NO.</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='CustNo' translate>CUSTOMER NO.</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='CustName' translate>CUSTOMER NAME</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='MrIdType' translate>ID TYPE</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='IdNo' translate>ID NO.</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='TaxIdNo' translate>NPWP</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='BirthDt' translate>BIRTH DATE</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='MotherMaidenName' translate>MOTHER MAIDEN NAME</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='MobilePhnNo1' translate>MOBILE PHONE</span>
+                    </th>
+                    <th><span class="thead-header" name='Status' translate>STATUS</span>
+                    </th>
+                    <th><span style="float: left;" class="thead-header" name='DuplicateItem' translate>DUPLICATE ITEM</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let item of ResultDuplicate; let i = index">
+                    <tr>
+                        <td>
+                          <input type="radio" name="DupCust" [value]="i" [(ngModel)]="ChoosenCustIdx" (ngModelChange)="custHandler()" />
+                        </td>
+                        <td>{{i+1}}</td>
+                        <td>{{item.CustNo}}</td>
+                        <td align="left">{{item.CustName}}</td>
+                        <td align="left">{{item.MrIdType}}</td>
+                        <td align="left">{{item.IdNo}}</td>
+                        <td align="left">{{item.TaxIdNo}}</td>
+                        <td align="left">{{item.BirthDt | date}}</td>
+                        <td align="left">{{item.MotherMaidenName}}</td>
+                        <td align="left">{{item.MobilePhnNo1}}</td>
+                        <td>{{DuplicateStatus}}</td>
+                        <td align="left">{{item.DuplicateItem}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-body">
+        <div class="px-3">
+            <form class="form form-horizontal">
+                <div class="form-body">
+                    <h4 class="form-section card-title" translate>
+                        Negative Customer
+                    </h4>
+                </div>
+            </form>
+        </div>
+        <div class="px-3 table-responsive">
+            <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                    <tr class="table-header">
+                        <th><span class="thead-header" name='No' translate>NO.</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='CustNo' translate>CUSTOMER NO.</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='CustName' translate>CUSTOMER NAME</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='MrIdType' translate>ID TYPE</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='IdNo' translate>ID NO</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='TaxIdNo' translate>NPWP</span>
+                        </th>
+                        <th><span class="thead-header" name='TaxIdNo' translate>BIRTH DATE</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='TaxIdNo' translate>MOTHER MAIDEN NAME</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='MobilePhnNo1' translate>MOBILE PHONE</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='MrNegCustSource' translate>NEGATIVE SOURCE</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='MrNegCustType' translate>NEGATIVE TYPE</span>
+                        </th>
+                        <th><span class="thead-header" name='Status' translate>STATUS</span>
+                        </th>
+                        <th><span style="float: left;" class="thead-header" name='DuplicateItem' translate>DUPLICATE ITEM</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ResultDuplicateNegative; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.CustNo}}</td>
+                        <td class="text-left">{{item.CustName}}</td>
+                        <td align="left">{{item.MrIdType}}</td>
+                        <td class="text-left">{{item.IdNo}}</td>
+                        <td class="text-left">{{item.TaxIdNo}}</td>
+                        <td>{{item.BirthDt | date}}</td>
+                        <td align="left">{{item.MotherMaidenName}}</td>
+                        <td align="left">{{item.MobilePhnNo1}}</td>
+                        <td align="left">{{item.MrNegCustSource}}</td>
+                        <td align="left">{{item.MrNegCustType}}</td>
+                        <td>{{DuplicateStatus}}</td>
+                        <td align="text-left">{{item.DuplicateItem}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<lib-ucSubsection [id]="'OtherId'" [title]="'Other'" [panel]="'Other'">
+</lib-ucSubsection>
+
+<div class="form-body" id="Other">
+    <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="FraudVerfForm"
+        (ngSubmit)="FraudVerfForm.valid" #enjiForm="ngForm">
+          <div class="form-group row">
+            <label class="col-md-2  adInsLabel" translate>Notes</label>
+            <div class="col-md-4">
+                <textarea class="form-control adInsInput" formControlName="Notes"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && FraudVerfForm.controls.Notes.invalid }"></textarea>
+            </div> 
+          </div> 
+          </form>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()"
+    translate>
+    <i class="ft-x"></i> Cancel
+  </button>
+    <button type="submit" class="btn btn-raised btn-primary" (click)="reject()">
+        Reject
+    </button>
+    <button type="button" class="btn btn-raised btn-primary" (click)="verify()">Verify</button>
+</div>

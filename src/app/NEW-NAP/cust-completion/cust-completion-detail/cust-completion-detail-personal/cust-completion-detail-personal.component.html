@@ -61,10 +61,18 @@
               </button>
             </div>
             <div class="line"></div>
+            <div class="step" data-target="#cust-asset-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="cust-asset-tab"
+                id="cust-asset-tab-trigger" (click)="EnterTab('CustAsset')">
+                <span class="bs-stepper-circle">7</span>
+                <span class="bs-stepper-label">Customer Asset</span>
+              </button>
+            </div>
+            <div class="line"></div>
             <div class="step" data-target="#cust-attr-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="cust-attr-tab"
                 id="cust-attr-tab-trigger" (click)="EnterTab('Other')">
-                <span class="bs-stepper-circle">7</span>
+                <span class="bs-stepper-circle">8</span>
                 <span class="bs-stepper-label">Other Attribute</span>
               </button>
             </div>
@@ -94,11 +102,16 @@
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <app-financial-personal *ngIf="stepIndex == 6" [AppCustId]="AppCustId" [IsMarried]="IsMarried"
-                [AppCustPersonalId]="AppCustPersonalId" (OutputTab)="GetEvent($event, 'Other')">
+                [AppCustPersonalId]="AppCustPersonalId" (OutputTab)="GetEvent($event, 'CustAsset')">
               </app-financial-personal>
             </div>
+            <div id="cust-asset-tab" class="content" role="tabpanel" aria-labelledby="cust-asset-tab-trigger">
+              <app-app-cust-asset *ngIf="stepIndex == 7" [AppCustId]="AppCustId"
+                (ResponseAppCustAsset)="GetEvent($event, 'Other')">
+              </app-app-cust-asset>
+            </div>
             <div id="cust-attr-tab" class="content" role="tabpanel" aria-labelledby="cust-attr-tab-trigger">
-              <app-other-info-tab [CustTypeCode]="'PERSONAL'" *ngIf="stepIndex == 7"
+              <app-other-info-tab [CustTypeCode]="'PERSONAL'" *ngIf="stepIndex == 8"
                 (OutputTab)="GetEvent($event, 'Save')"> </app-other-info-tab>
             </div>
           </div>

@@ -9,5 +9,5 @@ export class AppCustOtherInfoObj {
     LbppmsDebtGrpLbppDescr: string;
     LbppmsBizSustainLbppDescr: string;
     LbppmsBizSclLbppDescr: string; 
-    RowVersion : string[];
+    RowVersion : string;
 } 

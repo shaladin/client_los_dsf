@@ -18,7 +18,8 @@
             <div id="custMain">
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel" translate>Customer No</label>
-                <a href="javascript:void(0);" (click)="OpenView('cust', AppCustObj.CustNo)" class="label-control col-md-3" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj.CustNo}}</a>
+                <a href="javascript:void(0);" (click)="OpenView('cust', AppCustObj.CustNo)"
+                  class="label-control col-md-3" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj.CustNo}}</a>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo == ''">- </label>
                 <label class="col-md-3 adInsLabel" translate>NPWP</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo != ''">{{AppCustObj?.TaxIdNo}} </label>
@@ -34,89 +35,13 @@
               </div>
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel" translate>Gender</label>
-                <label class="col-md-3 adInsLabel" *ngIf="AppCustPersonalObj?.MrGenderCode != ''">{{AppCustPersonalObj?.MrGenderCode}} </label>
+                <label class="col-md-3 adInsLabel"
+                  *ngIf="AppCustPersonalObj?.MrGenderCode != ''">{{AppCustPersonalObj?.MrGenderCode}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustPersonalObj?.MrGenderCode == ''">- </label>
                 <label class="col-md-3 adInsLabel" translate>Birth Place / Date</label>
-                <label class="col-md-3 adInsLabel">{{AppCustPersonalObj?.BirthPlace}} / {{AppCustPersonalObj?.BirthDt | date: 'dd-MM-yyyy'}} </label>
+                <label class="col-md-3 adInsLabel">{{AppCustPersonalObj?.BirthPlace}} / {{AppCustPersonalObj?.BirthDt |
+                  date: 'dd-MM-yyyy'}} </label>
               </div>
-            </div>
-          </div>
-
-          <div class="form-body">
-            <lib-ucSubsection [id]="'appGuaId'" [title]="'Applicant As Guarantor'" [panel]="'appGua'">
-            </lib-ucSubsection>
-            <div id="appGua">
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th>
-                      <input type="checkbox" [checked]="checkboxAllGuarantor" (change)="SelectAllGuarantor($event.target.checked)" id="checkAll"
-                             name="CheckAll">
-                    </th>
-                    <th>
-                      <span class="thead-header" name='appNo' translate>Application No</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" name='custNo' translate>Customer No</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" name='custName' translate>
-                        Customer
-                        Name
-                      </span>
-                    </th>
-                    <th>
-                      <span class="thead-header" name='idType' translate>ID Type</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" name='idNo' translate>ID Number</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" name='birthDt' translate>Birth Date</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" name='mobilePhoneNo' translate>
-                        Mobile
-                        Phone
-                        Number
-                      </span>
-                    </th>
-                    <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
-                    <th>
-                      <span class="thead-header" name='duplicateItem' translate>
-                        Duplicate
-                        Item
-                      </span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngIf="ListAppGuarantorDuplicate?.length == 0">
-                    <td align="center" colspan="9">No data found</td>
-                  </tr>
-                  <tr *ngFor="let item of ListAppGuarantorDuplicate; let i = index">
-                    <td>
-                      <div *ngIf="listSelectedIdGuarantor?.indexOf(item.AppGuarantorId) >- 1">
-                        <input type="checkbox" id="checkSameGuarantor" name="itemSameGuarantor"
-                               (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]="true">
-                      </div>
-                      <div *ngIf="listSelectedIdGuarantor?.indexOf(item.AppGuarantorId) < 0">
-                        <input type="checkbox" id="checkDiffGuarantor" name="itemDiffGuarantor"
-                               (change)="CheckedGuarantor(item.AppGuarantorId,  $event.target.checked)" [checked]=false>
-                      </div>
-                    </td>
-                    <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
-                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
-                    <td>{{item.CustName}}</td>
-                    <td>{{item.MrIdTypeCodeDesc}}</td>
-                    <td>{{item.IdNo}}</td>
-                    <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
-                    <td>{{item.MobilePhnNo1}}</td>
-                    <td>{{item.TaxIdNo}}</td>
-                    <td>{{item.DuplicateItem}}</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
 
@@ -128,8 +53,8 @@
                 <thead>
                   <tr class="table-header">
                     <th>
-                      <input type="checkbox" [checked]="checkboxAllSpouse" (change)="SelectAllSpouse($event.target.checked)" id="checkAll"
-                             name="CheckAll">
+                      <input type="checkbox" [checked]="checkboxAllSpouse"
+                        (change)="SelectAllSpouse($event.target.checked)" id="checkAll" name="CheckAll">
                     </th>
                     <th>
                       <span class="thead-header" name='appNo' translate>Application No</span>
@@ -175,11 +100,13 @@
                     <td>
                       <div *ngIf="listSelectedIdSpouse?.indexOf(item.AppCustPersonalConstactPersonId) >- 1">
                         <input type="checkbox" id="checkSameSpouse" name="itemSameSpouse"
-                               (change)="CheckedSpouse(item.AppCustPersonalConstactPersonId,  $event.target.checked)" [checked]="true">
+                          (change)="CheckedSpouse(item.AppCustPersonalConstactPersonId,  $event.target.checked)"
+                          [checked]="true">
                       </div>
                       <div *ngIf="listSelectedIdSpouse?.indexOf(item.AppCustPersonalConstactPersonId) < 0">
                         <input type="checkbox" id="checkDiffSpouse" name="itemDiffSpouse"
-                               (change)="CheckedSpouse(item.AppCustPersonalConstactPersonId,  $event.target.checked)" [checked]=false>
+                          (change)="CheckedSpouse(item.AppCustPersonalConstactPersonId,  $event.target.checked)"
+                          [checked]=false>
                       </div>
                     </td>
                     <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
@@ -197,15 +124,16 @@
           </div>
 
           <div class="form-body">
-            <lib-ucSubsection [id]="'appShareId'" [title]="'Applicant As Management / Shareholder'" [panel]="'appShare'">
+            <lib-ucSubsection [id]="'appShareId'" [title]="'Applicant As Management / Shareholder'"
+              [panel]="'appShare'">
             </lib-ucSubsection>
             <div id="appShare">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
                     <th>
-                      <input type="checkbox" [checked]="checkboxAllShareholder" (change)="SelectAllShareholder($event.target.checked)" id="checkAll"
-                             name="CheckAll">
+                      <input type="checkbox" [checked]="checkboxAllShareholder"
+                        (change)="SelectAllShareholder($event.target.checked)" id="checkAll" name="CheckAll">
                     </th>
                     <th>
                       <span class="thead-header" name='appNo' translate>Application No</span>
@@ -252,11 +180,13 @@
                     <td>
                       <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) >- 1">
                         <input type="checkbox" id="checkSameShareholder" name="itemSameShareholder"
-                               (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]="true">
+                          (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)"
+                          [checked]="true">
                       </div>
                       <div *ngIf="listSelectedIdShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) < 0">
                         <input type="checkbox" id="checkDiffSpouse" name="itemDiffSpouse"
-                               (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
+                          (change)="CheckedShareholder(item.AppCustCompanyMgmntShrholderId,  $event.target.checked)"
+                          [checked]=false>
                       </div>
                     </td>
                     <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>

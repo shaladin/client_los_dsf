@@ -14,12 +14,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-application-data-refinancing',
@@ -33,6 +35,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   ListCrossAppObj: any = {};
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
+  listCustBankAcc: Array<AppCustBankAccObj>;
+  selectedBankAcc: any;
+  GetBankInfo: any;
+  responseBankAccCust: any;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -104,6 +110,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     MrSlikSecEcoCode: [''],
+    CustBankAcc: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -148,10 +155,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
-            // if(this.resMouCustObj.length > 0)
-            // {
-            //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
-            // }
           }
         );
       });
@@ -222,15 +225,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   applicationDDLitems;
-  resultResponse;
+  resultResponse: AppObj; 
   getAppModelInfo() {
-    var obj = {
-      Id: this.AppId,
-      RowVersion: ""
-    };
-
-    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
-      (response) => {
+    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).subscribe(
+      (response: AppObj) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -290,6 +288,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
           MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode
         });
+        if (this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+          this.GetBankAccCust();
+          this.setBankAcc(this.NapAppModelForm.controls.MrWopCode.value)
+        }
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
@@ -364,7 +366,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultResponse;
-    //this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
@@ -415,8 +416,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     addCrit4.restriction = AdInsConstant.RestrictionIn;
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
-
-    // this.inputLookupObj.addCritInput = this.arrAddCrit;
     await this.GetGSValueSalesOfficer();
     this.makeLookUpObj();
   }
@@ -447,10 +446,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
       var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }
-    // if(!isNaN(temp)){
-    //   var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
-    //   this.PatchNumOfInstallment(total);      
-    // }
   }
 
   ChangeNumOfInstallmentPayFreq(ev) {
@@ -645,4 +640,116 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     }
   }
 
+  setBankAcc(event) {
+    if (event == 'AUTOCOLLECTION') {
+      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    else {
+      this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
+  }
+
+  GetBankAccCust() {
+    var obj = {
+      AppId: this.AppId
+    };
+    this.http.post<any>(URLConstant.GetBankAccCustByAppId, obj).subscribe( 
+      (response) => {
+        this.responseBankAccCust = response
+        this.NapAppModelForm.patchValue({
+          CustBankAcc: this.responseBankAccCust[0].AppCustBankAccId
+        });
+        this.GetBankInfo = {
+          "BankCode": this.responseBankAccCust[0].BankCode,
+          "BankBranch": this.responseBankAccCust[0].BankBranch,
+          "AppId": this.AppId,
+          "BankAccNo": this.responseBankAccCust[0].BankAccNo,
+          "BankAccName": this.responseBankAccCust[0].BankAccName,
+        };
+
+        this.http.post<any>(URLConstant.GetAppOtherInfoByAppId, obj).subscribe(
+          (response) => {
+            this.GetBankInfo = response
+            if (this.GetBankInfo.AppId !== 0) {
+              this.selectedBankAcc = this.listCustBankAcc.find(x => x.BankAccNo === this.GetBankInfo.BankAccNo);
+              this.NapAppModelForm.patchValue({
+                CustBankAcc: this.selectedBankAcc.AppCustBankAccId
+              });
+    
+              this.GetBankInfo = {
+                "BankCode": this.selectedBankAcc.BankCode,
+                "BankBranch": this.selectedBankAcc.BankBranch,
+                "AppId": this.AppId,
+                "BankAccNo": this.selectedBankAcc.BankAccNo,
+                "BankAccName": this.selectedBankAcc.BankAccName,
+              };
+            }
+          })
+      });
+   
+  }
+
+  GetListAppCustBankAcc(appCustId: number) {
+    var obj = {
+      AppCustId: appCustId
+    };
+    this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
+      (response) => {
+        this.listCustBankAcc = response.AppCustBankAccObjs;
+      });
+  }
+
+  selectedBank(event) {
+    if (this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+    }
+    else {
+      this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+    }
+    var appOtherInfo = new AppOtherInfoObj();
+    appOtherInfo.AppId = event;
+    this.selectedBankAcc = this.listCustBankAcc.find(x => x.AppCustBankAccId == event);
+    this.GetBankInfo = {
+      "BankCode": this.selectedBankAcc.BankCode,
+      "BankBranch": this.selectedBankAcc.BankBranch,
+      "AppId": this.AppId,
+      "BankAccNo": this.selectedBankAcc.BankAccNo,
+      "BankAccName": this.selectedBankAcc.BankAccName,
+      "AdditionalInterestPaidBy": ""
+    };
+  }
+
+  SaveAppOtherInfo() {
+    if (this.GetBankInfo != undefined && this.GetBankInfo != "" && this.GetBankInfo.BankAccName != null && this.GetBankInfo.BankAccNo != null && this.GetBankInfo.BankBranch != null && this.GetBankInfo.BankCode != null && this.GetBankInfo.AppId != 0) {
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+        (response) => {
+          response;
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }else{
+      this.GetBankInfo = {
+        "BankCode": "",
+        "BankBranch": "",
+        "AppId": this.AppId,
+        "BankAccNo": "",
+        "BankAccName": "",
+      };
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+        (response) => {
+          response;
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+  }
 }

@@ -11,32 +11,36 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-legal-doc',
   templateUrl: './cust-legal-doc.component.html',
-  styleUrls: [],
+  styles:[
+    '.disabledLink { color: #ccc; pointer-events:none;}'
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
 export class CustLegalDocComponent implements OnInit {
-
+  @Input() isLockMode: boolean = false;
   @Input() listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  closeResult: any;
+  mode: string;
+  currentEditedIndex: number;
+  closeResult: string;
   appCustCompanyLegalDocObj: AppCustCompanyLegalDocObj;
   refMasterObj = {
     RefMasterTypeCode: ""
   };
-  LegalDocTypeObj: any;
-  defaultLegalDocType: any;
-  selectedLegalDocName: any;
-  defaultLegalDocName: any;
+  LegalDocTypeObj: Array<KeyValueObj>;
+  defaultLegalDocType: string;
+  selectedLegalDocName: string;
+  defaultLegalDocName: string;
   isExpDateMandatory: boolean = false;
 
 
@@ -60,7 +64,7 @@ export class CustLegalDocComponent implements OnInit {
 
   }
 
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   ngOnInit() {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

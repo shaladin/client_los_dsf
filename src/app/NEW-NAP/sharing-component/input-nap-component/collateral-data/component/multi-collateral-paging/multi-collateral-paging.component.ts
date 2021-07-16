@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -14,8 +13,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class MultiCollateralPagingComponent implements OnInit {
   @Input() AppId: number;
   @Input() BLCode: string = "";
-  @Output() select: EventEmitter<number> = new EventEmitter<any>();
-  @Output() list: EventEmitter<any> = new EventEmitter<any>();
+  @Output() select: EventEmitter<number> = new EventEmitter<number>();
+  @Output() list: EventEmitter<Array<AppCollateralObj>> = new EventEmitter<Array<AppCollateralObj>>();
   ListAppCollObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) {

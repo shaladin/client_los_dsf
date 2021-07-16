@@ -1,0 +1,50 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustMainDetailHeaderId",
+        "subSectionTitle": "Mou Detail",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Currency",
+            "property": "currency"
+          },
+          {
+            "type": "text",
+            "label": "Interest Type",
+            "property": "interestType"
+          },
+          {
+            "type": "text",
+            "label": "Payment Frequency",
+            "property": "payFreq"
+          },
+          {
+            "type": "text",
+            "label": "Down Payment(%)",
+            "property": "dpPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "tenor"
+          },
+          {
+            "type": "text",
+            "label": "Installment Scheme",
+            "property": "instScheme"
+          },
+          {
+            "type": "text",
+            "label": "First Installment Type",
+            "property": "firstInstType"
+          }
+        ],
+        "querystring": {
+          "name": "viewChangeMouDetailGeneral"
+        }
+      }
+    ]
+  }

@@ -9,7 +9,7 @@ export class MouCustCompanyLegalDocObj {
     DocNotes: string; 
     ReleaseBy: string; 
     ReleaseLocation: string; 
-    RowVersion: any;
+    RowVersion: string;
     
 constructor() { this.MouCustCompanyLegalDocId = 0; this.RowVersion="" }
 }

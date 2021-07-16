@@ -19,22 +19,24 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
+import { AgrmntMasterXObj } from 'app/shared/model/AgrmntMasterXObj.Model';
+import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
+import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { AgrmntFinDataObj } from 'app/shared/model/AgrmntFinData.Model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
   templateUrl: './pre-go-live-approval-detail.component.html'
 })
 export class PreGoLiveApprovalDetailComponent implements OnInit {
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   viewObj: string;
-  TrxNo: any;
-  AgrmntNo: any;
-  result: any;
-  result2: any;
-  result3: any;
-  result4: any;
-  result5: any;
-  result6: any;
+  TrxNo: string;
+  AgrmntNo: string;
+  result: AgrmntObj;
+  result4: NapAppModel;
   arrValue = [];
   TCList: any;
   identifier: string = "TCList";
@@ -46,12 +48,12 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   ListRfaLogObj: any;
   listPreGoLiveAppvrObj: Array<any> = new Array<any>();
 
-  AppId: any;
-  AgrmntId: any;
+  AppId: number;
+  AgrmntId: number;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-  LeadId: string;
+  LeadId: number;
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-  MouCustId: any;
+  MouCustId: number;
   ApvReqId: number;
   taskId: number;
   InputApvObj: UcInputApprovalObj;
@@ -81,7 +83,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive;
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, reqGetRfaLogByTrxNoAndApvCategoryObj).subscribe(
       (response) => {
-        this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
@@ -107,7 +108,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       () => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
@@ -117,7 +118,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.outstandingTcObj = new OutstandingTcObj(); 
+    this.outstandingTcObj = new OutstandingTcObj();
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
  
@@ -152,7 +153,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   initInputApprovalObj() {

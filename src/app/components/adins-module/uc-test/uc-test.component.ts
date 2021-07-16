@@ -71,7 +71,7 @@ export class UcTestComponent implements OnInit {
 
   ExportType: number = 0;
 
-  pageNow: any = 1;
+  pageNow: number = 1;
   configuration: any;
   exportData: any;
   ExcelData: any;

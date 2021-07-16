@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -19,6 +18,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -38,7 +38,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   appId: number;
   returnHandlingHId: number;
   wfTaskListId: number;
-  AppObj: any;
+  // AppObj: any;
   returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
@@ -54,14 +54,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     AppTcs: this.fb.array([])
   });
 
-  appObj = {
-    Id: 0,
-  };
-
-  rtnHandlingDObj = {
-    ReturnHandlingDId: 0,
-  };
-
   AddTcForm = this.fb.group({
     TcName: ['', [Validators.required, Validators.maxLength(50)]],
     Notes: ['', [Validators.maxLength(50)]]
@@ -69,7 +61,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router,
-    private modalService: NgbModal, private cookieService: CookieService) {
+    private modalService: NgbModal, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -89,12 +81,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
 
-
-    var AppObj = {
-      Id: this.appId
-    }
-
-    this.http.post(URLConstant.GetListExistingTCbyAppId, AppObj).subscribe(
+    this.http.post(URLConstant.GetListExistingTCbyAppId, { Id: this.appId }).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""
@@ -107,10 +94,9 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.ClaimTask();
-    this.appObj.Id = this.appId;
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.initExistingTc();
-    await this.GetAppData();
+    // await this.GetAppData();
     this.getCustType();
     if (this.isReturnHandling == true) {
       this.MakeViewReturnInfoObj();
@@ -302,13 +288,13 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     // }
   }
 
-  async GetAppData() {
-    await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
-      (response) => {
-        this.AppObj = response;
-      }
-    );
-  }
+  // async GetAppData() {
+  //   await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+  //     (response) => {
+  //       this.AppObj = response;
+  //     }
+  //   );
+  // }
 
   MakeViewReturnInfoObj() {
     if (this.returnHandlingHId > 0) {
@@ -323,7 +309,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   getCustType() {
-    this.http.post(URLConstant.GetAppCustByAppId, this.appObj).toPromise().then(
+    this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.CustType = response["MrCustTypeCode"];
         if (this.CustType == CommonConstant.CustTypePersonal) {
@@ -341,8 +327,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
         this.listTcCode = response["AppTcs"]
         this.http.post(this.getRefTcUrl, {}).subscribe(
           (response) => {
-            var result: any;
-            result = response[CommonConstant.ReturnObj];
+            var result = response[CommonConstant.ReturnObj];
             var listTcCodes = new Array();
             for (var i = 0; i < this.listTcCode.length; i++) {
               listTcCodes.push(this.listTcCode[i]["TcCode"]);
@@ -508,7 +493,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -599,17 +584,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
       TcName: ['', [Validators.required, Validators.maxLength(50)]],
       Notes: ['', [Validators.maxLength(50)]],
     });
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
   }
 
   cancel() {

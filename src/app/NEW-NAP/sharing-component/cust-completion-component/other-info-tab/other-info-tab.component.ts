@@ -48,7 +48,8 @@ export class OtherInfoTabComponent implements OnInit {
   IsLookupReady: boolean;
   AppCustId: number;
   AttrGroup: string;
-  ResponseCustOtherInfo: any;
+  AttrGroups: Array<string> = [];
+  ResponseCustOtherInfo: AppCustOtherInfoObj;
   appCustOtherInfo: AppCustOtherInfoObj;
   custAttrRequest = new Array<Object>();
 
@@ -60,7 +61,7 @@ export class OtherInfoTabComponent implements OnInit {
       Id: this.AppCustId
     }
     await this.httpClient.post(URLConstant.GetAppCustOtherInfoByAppCustId, AppcustOtherInfo).toPromise().then(
-      (response: any) => {
+      (response: AppCustOtherInfoObj) => {
         console.log(response);
         this.ResponseCustOtherInfo = response;
       });

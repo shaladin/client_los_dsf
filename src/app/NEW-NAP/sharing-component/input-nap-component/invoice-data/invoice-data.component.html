@@ -11,7 +11,7 @@
         </div>
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="InvoiceForm"
-            (ngSubmit)="InvoiceForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
+                (ngSubmit)="InvoiceForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
             <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Invoice Data'" [panel]="'InvoiceData'">
             </lib-ucSubsection>
 
@@ -20,24 +20,19 @@
                 <label class="col-md-3 adins-required-label" translate>Invoice No</label>
                 <div class="col-md-9">
                   <input type="text" class="form-control" formControlName="InvoiceNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceNo.invalid }">
-                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceNo" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceNo.invalid }">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Customer Factoring </label>
                 <div class="col-md-9">
-                  <lib-uclookupgeneric *ngIf="!IsDisableCustFctr"
-                    [lookupInput]="MouCustLookupObj" [parentForm]="InvoiceForm" [enjiForm]="enjiForm"
-                    [identifier]="'LookupCustomerFactoringName'" (lookup)=GetLookupMouCust($event)>
+                  <lib-uclookupgeneric *ngIf="!IsDisableCustFctr" [lookupInput]="MouCustLookupObj"
+                                       [parentForm]="InvoiceForm" [enjiForm]="enjiForm" [identifier]="'LookupCustomerFactoringName'"
+                                       (lookup)=GetLookupMouCust($event)>
                   </lib-uclookupgeneric>
                   <span *ngIf="IsDisableCustFctr">
                     <input type="text" class="form-control" formControlName="CustomerFactoringName"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.CustomerFactoringName.invalid }">
-                    <lib-uc-show-errors [control]="InvoiceForm.controls.CustomerFactoringName"
-                      [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                           [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.CustomerFactoringName.invalid }">
                   </span>
                 </div>
               </div>
@@ -45,27 +40,19 @@
                 <label class="col-md-3 adins-required-label" translate>Invoice Amount</label>
                 <div class="col-md-9">
                   <input type="text" currencyMask class="form-control" formControlName="InvoiceAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceAmt.invalid }">
-                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceAmt" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceAmt.invalid }">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>Due Date</label>
                 <div class="col-md-9">
                   <input type="date" class="form-control" formControlName="InvoiceDueDt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceDueDt.invalid }">
-                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceDueDt" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceDueDt.invalid }">
                 </div>
               </div>
             </div>
             <div class="form-actions right">
-              <!-- <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Office/OfficeArea']"
-                translate>
-                <i class="fa fa-arrow-circle-left"></i> Cancel
-              </button> -->
-              <button type="submit" class="btn btn-raised btn-primary" translate>
+              <button type="button" (click)="SaveDetail()" class="btn btn-raised btn-primary" translate>
                 <i class="fa fa-check-square-o"></i> Add
               </button>
             </div>
@@ -76,19 +63,19 @@
                   <tr class="table-header">
                     <th><span translate class="thead-header" name='SeqNo'>No</span></th>
                     <th class="text-left"><span translate class="thead-header" name='InvoiceNo'>Invoice No</span></th>
-                    <th class="text-left"><span translate class="thead-header" name='CustomerFactoringName'>Customer
-                        Factoring</span></th>
-                    <th class="text-left"><span translate class="thead-header" name='InvoiceAmt'>Invoice Amount</span>
+                    <th class="text-left">
+                      <span translate class="thead-header" name='CustomerFactoringName'>
+                        Customer
+                        Factoring
+                      </span>
+                    </th>
+                    <th class="text-left">
+                      <span translate class="thead-header" name='InvoiceAmt'>Invoice Amount</span>
                     </th>
                     <th class="text-left"><span translate class="thead-header" name='InvoiceDueDt'>Due Date</span></th>
-                    <th class="text-center"><span translate class="thead-header" name='Print'>Action</span></th>
+                    <th class="text-left"><span translate class="thead-header" name='Print'>Action</span></th>
                   </tr>
                 </thead>
-                <tbody *ngIf="dataobj?.AppInvoiceFctrList == null || dataobj?.AppInvoiceFctrList?.length == 0">
-                  <tr>
-                    <td colspan="100%">No Data Available</td>
-                  </tr>
-                </tbody>
                 <tbody>
                   <tr *ngFor="let item of dataobj?.AppInvoiceFctrList; let i = index;">
                     <td>{{i+1}}</td>
@@ -105,17 +92,99 @@
                 </tbody>
               </table>
             </div>
+
+            <div class="form-group row">
+              <label class="col-md-3" translate>Total Amount</label>
+              <label class="col-md-3" translate>{{dataobj?.TotalInvoiceAmt | number:'':'en-US'}}</label>
+            </div>
+
+            <lib-ucSubsection [id]="'DisburseDataId'" [title]="'Disburse'" [panel]="'DisburseData'">
+            </lib-ucSubsection>
+            <div class="form-body" id="DisburseData">
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Disburse To</label>
+                <div class="col-md-9">
+                  <select class="form-control full-width adInsInput" formControlName="DisburseTo"
+                          (change)="ChangeDisburseTo($event)">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of disburseTos" value="{{item.MasterCode}}">
+                      {{item.Descr}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.DisburseTo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="isDdlCustNameVisible">
+                <label class="col-md-3 adins-required-label">Customer Name</label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric [lookupInput]="MouCustLookupObject"
+                                       [parentForm]="InvoiceForm" [enjiForm]="enjiForm" [identifier]="'LookupCustomerFactoringNameDisbTo'"
+                                       (lookup)=GetLookupMouCustListed($event)>
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="isDdlBankAccountVisible">
+                <label class="col-md-3 adins-required-label">Bank Account</label>
+                <div class="col-md-9">
+                  <select class="form-control full-width adInsInput" formControlName="BankAccountNo"
+                          (change)="ChangeBankAcc($event)">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of BankAccs" value="{{item.BankAccNo}}">
+                      {{item.BankAccName}} - {{item.BankAccNo}} ({{item.BankName}})
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.BankAccountNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Bank Name</label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupBankObj"
+                                       [parentForm]="InvoiceForm" [identifier]="'lookupBank'" (lookup)="GetBank($event)">
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Bank Branch</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="BankBranch" required
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.BankBranch.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.BankBranch" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Account No</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="AccNo" required
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.AccNo.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.AccNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Account Name</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="AccName" required
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.AccName.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.AccName" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="button" (click)="SaveContinue()" class="btn btn-raised btn-primary" translate>
-                <i class="far"></i> Save
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Save
               </button>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3" translate>Total Amount</label>
-              <label class="col-md-3" translate>{{dataobj?.TotalInvoiceAmt | number:'':'en-US'}}</label>
             </div>
           </form>
         </div>

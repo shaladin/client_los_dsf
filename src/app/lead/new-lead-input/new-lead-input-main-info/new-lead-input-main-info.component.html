@@ -1,0 +1,150 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="px-3">
+                <div class="customerData">
+                    <form class="form form-horizontal" [formGroup]="MainInfoForm" (ngSubmit)="MainInfoForm.valid"
+                        #enjiForm="ngForm">
+                        <div class="form-body">
+                            <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Information'" [panel]="'mainInfo'">
+                            </lib-ucSubsection>
+                            <div id="mainInfo">
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel" translate>Lead No. </label>
+                                    <div class="col-md-3">
+                                        <a (click)="AddView()"><label class="adInsLabel"
+                                                style="color: blue; cursor: pointer; font-size: 12px;"
+                                                translate>{{this.returnLead?.LeadNo}}</label></a>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel adins-required" translate>Copy From </label>
+                                    <div class="col-md-4" *ngIf="this.pageType == 'add'">
+                                        <lib-uclookupgeneric [lookupInput]="leadPersonalLookUpObj"
+                                            [parentForm]="MainInfoForm" [enjiForm]="enjiForm"
+                                            [identifier]="'CustomerName'" (lookup)=getLookUpLead($event)>
+                                        </lib-uclookupgeneric>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="this.pageType == 'edit'">
+                                        <label class="adInsLabel" style="font-size: 12px;"
+                                            translate>{{this.returnLeadExistObj?.CustName == null ? '-' :
+                                            this.returnLeadExistObj?.CustName}}</label>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="this.pageType == 'add'">
+                                        <button type="button" class="btn btn-raised btn-primary" (click)="copyLead()"
+                                            [disabled]="isCopyButtonDisabled">
+                                            <i class="fa fa-check-square-o"></i> Copy
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group row adins-required">
+                                    <label class="col-md-3 adInsLabel adins-required" translate>Office Name </label>
+                                    <div class="col-md-4">
+                                        <select class="form-control adInsInput" formControlName="OfficeCode"
+                                            (change)="OfficeChanged($event)">
+                                            <!-- <option value="">-Select One-</option> -->
+                                            <option *ngFor="let ram of listRefOffice" [value]="ram.Key">
+                                                {{ram.Value}}
+                                            </option>
+                                        </select>
+                                        <lib-uc-show-errors [control]="MainInfoForm.controls.OfficeCode"
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel" translate>Order No </label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control adInsInput" formControlName="OrderNo"
+                                            [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.OrderNo.invalid }">
+                                        <lib-uc-show-errors [control]="MainInfoForm.controls.OrderNo"
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel" translate>Line Of Business </label>
+                                    <div class="col-md-4">
+                                        <select class="form-control adInsInput" formControlName="LobCode"
+                                            (change)="LobChanged($event)"
+                                            [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.LobCode.invalid }">
+                                            <option [value]="''">
+                                                -Select One-
+                                            </option>
+                                            <option *ngFor="let ram of listRefLob" [value]="ram.Key">
+                                                {{ram.Value}}
+                                            </option>
+                                        </select>
+                                        <lib-uc-show-errors [control]="MainInfoForm.controls.LobCode"
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel adins-required-label" translate>Lead Source
+                                    </label>
+                                    <div class="col-md-4">
+                                        <select class="form-control adInsInput" formControlName="LeadSource"
+                                            [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.LeadSource.invalid }">
+                                            <option *ngFor="let ram of listLeadSource" [value]="ram.Key">
+                                                {{ram.Value}}
+                                            </option>
+                                        </select>
+                                        <lib-uc-show-errors [control]="MainInfoForm.controls.LeadSource"
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel adins-required-label" translate>Agency </label>
+                                    <div class="col-md-4">
+                                        <lib-uclookupgeneric [lookupInput]="agencyLookUpObj" [parentForm]="MainInfoForm"
+                                            [enjiForm]="enjiForm" [identifier]="'Agency'"
+                                            (lookup)=getLookUpAgency($event)>
+                                        </lib-uclookupgeneric>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel" translate>CMO Username </label>
+                                    <div class="col-md-4">
+                                        <lib-uclookupgeneric [lookupInput]="cmoNameLookUpObj"
+                                            [parentForm]="MainInfoForm" [enjiForm]="enjiForm" [identifier]="'CmoName'"
+                                            (lookup)=getLookUpCmoName($event)>
+                                        </lib-uclookupgeneric>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel" translate>Surveyor Username </label>
+                                    <div class="col-md-4">
+                                        <lib-uclookupgeneric [lookupInput]="surveyorNameLookUpObj"
+                                            [parentForm]="MainInfoForm" [enjiForm]="enjiForm"
+                                            [identifier]="'SurveyorName'" (lookup)=getLookUpSurveyorName($event)>
+                                        </lib-uclookupgeneric>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 adInsLabel adins-required-label" translate>Tele Sales
+                                        Username </label>
+                                    <div class="col-md-4">
+                                        <lib-uclookupgeneric [lookupInput]="salesNameLookUpObj"
+                                            [parentForm]="MainInfoForm" [enjiForm]="enjiForm" [identifier]="'SalesName'"
+                                            (lookup)=getLookUpSalesName($event)>
+                                        </lib-uclookupgeneric>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions right" style="text-align: right;">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()"
+                                translate>
+                                <i class="ft-x"></i> Cancel
+                            </button>
+                            <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
+                                <i class="fa fa-check-square-o"></i> Save
+                            </button>
+                            <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
+                                <i class="fa fa-check-square-o"></i> Next
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

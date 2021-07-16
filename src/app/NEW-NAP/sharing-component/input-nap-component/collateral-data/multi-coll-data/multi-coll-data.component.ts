@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 @Component({
   selector: 'app-multi-coll-data',
@@ -11,11 +12,11 @@ export class MultiCollDataComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() BLCode: string = "";
-  @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   AppCollateralId: number = 0;
   mode: string = "add";
   IsDetail: boolean = false;
-  AppCollateral: any;
+  AppCollateral: Array<AppCollateralObj> = new Array<AppCollateralObj>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(private toastr : NGXToastrService) { }
@@ -25,7 +26,7 @@ export class MultiCollDataComponent implements OnInit {
     console.log(this.BLCode);
     this.isMultiCollPaging = true;
   }
-  GetList(ev) {
+  GetList(ev: Array<AppCollateralObj>) {
     this.AppCollateral = ev;
     console.log(this.AppCollateral);
   }

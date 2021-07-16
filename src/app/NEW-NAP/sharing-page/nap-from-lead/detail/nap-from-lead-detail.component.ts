@@ -15,6 +15,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-from-lead-detail',
@@ -25,7 +26,7 @@ export class NapFromLeadDetailComponent implements OnInit {
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
-  leadId: string;
+  leadId: number;
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private fb: FormBuilder,
@@ -89,10 +90,8 @@ export class NapFromLeadDetailComponent implements OnInit {
     RsvField5: ['']
   });
 
-  inputLookupObjCopyProduct;
-  inputLookupObjName;
-  officeItems;
-  user;
+  inputLookupObjName : InputLookupObj;
+  user : CurrentUserContext;
 
   leadObj: LeadObj;
   bizTemplateCode: string;

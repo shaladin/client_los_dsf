@@ -92,9 +92,17 @@
     ],
     "bodyList": [
         {
-            "type": "text",
+            "type": "link",
             "position": "center",
-            "property": "AppNo"
+            "property": "AppNo",
+            "target" : "_blank", 
+            "path" : "VIEW_APP", 
+            "param" : [ 
+                {
+                    "type" : "AppId", 
+                    "property" : "AppId" 
+                }
+            ]
         },
         {
             "type": "text",
@@ -102,10 +110,11 @@
             "property": "CustName"
         }, 
         {
-            "type": "text",
+            "type": "callback",
+            "key": "ViewProdOffering",
             "position": "center",
             "property": "ProdOfferingName"
-        }, 
+        },
         {
             "type": "text",
             "position": "center",

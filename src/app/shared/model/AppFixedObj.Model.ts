@@ -1,23 +1,23 @@
 export class AppFixedObj {
-    AppFixedId: any;
-    AppId: any;
-    MrFirstInstTypeCode: any;
-    Tenor: any;
-    SupplEffectiveRate: any;
-    EffectiveRate: any;
-    DownPaymentAmt: any;
-    InstAmt: any;
-    IsEditableDp: any;
-    AssetPriceAmt: any;
-    GracePeriod: any;
-    MrGracePeriodTypeCode: any;
-    InscoBranchCode: any;
-    InsPackageCode: any;
-    InsAdminFee: any;
-    IsCoverLifeIns: any;
-    LifeInsCoverSubject: any;
-    LifeInscoBranchCode: any;
-    LifeInsPaymentMethod: any;
-    RowVersion: any;
+    AppFixedId: number;
+    AppId: number;
+    MrFirstInstTypeCode: string;
+    Tenor: number;
+    SupplEffectiveRate: number;
+    EffectiveRate: number;
+    DownPaymentAmt: number;
+    InstAmt: number;
+    IsEditableDp: boolean;
+    AssetPriceAmt: number;
+    GracePeriod: number;
+    MrGracePeriodTypeCode: string;
+    InscoBranchCode: string;
+    InsPackageCode: string;
+    InsAdminFee: number;
+    IsCoverLifeIns: boolean;
+    LifeInsCoverSubject: string;
+    LifeInscoBranchCode: string;
+    LifeInsPaymentMethod: string;
+    RowVersion: string;
   constructor() { this.AppFixedId = 0; this.RowVersion = "" }
 }

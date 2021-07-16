@@ -14,7 +14,6 @@ import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -22,8 +21,10 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-application-review-detail',
@@ -41,7 +42,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   appId: number = 0;
   wfTaskListId: number = 0;
   isReturnOn: boolean = false;
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   Arr: FormArray;
   BizTemplateCode: string = "";
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -60,7 +61,13 @@ export class ApplicationReviewDetailComponent implements OnInit {
     arr: this.fb.array([]),
     Reason: [''],
     ReasonDesc: [''],
-    Notes: [''],
+    Notes: ['']
+  });
+
+  FormReturnObj = this.fb.group({
+    Reason: [''],
+    ReasonDesc: [''],
+    Notes: ['']
   });
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
@@ -71,7 +78,9 @@ export class ApplicationReviewDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: NGXToastrService, private cookieService: CookieService) {
+    public toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -92,7 +101,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
     this.initData();
     this.BindDDLReasonReturn();
-    await this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     await this.GetAppNo();
     await this.BindDDLRecommendation();
     await this.BindCreditAnalysisItemFormObj();
@@ -100,6 +109,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
+    this.IsReady = true;
   }
 
   //#region Get Local Data
@@ -118,6 +128,9 @@ export class ApplicationReviewDetailComponent implements OnInit {
     this.FormObj.patchValue({
       ReasonDesc: ev.selectedObj.Value
     });
+    this.FormReturnObj.patchValue({
+      ReasonDesc: ev.selectedObj.Value
+    });
   }
   //#endregion
 
@@ -133,15 +146,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
         }
       }
     );
-  }
-
-  async ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then((response) => {});
   }
 
   async GetCreditScoring(appNo: string) {
@@ -259,6 +263,11 @@ export class ApplicationReviewDetailComponent implements OnInit {
       ReasonDesc: "",
       Notes: ""
     });
+    this.FormReturnObj.patchValue({
+      Reason: "",
+      ReasonDesc: "",
+      Notes: ""
+    });
 
     if (!this.isReturnOn) {
       this.isReturnOn = true;
@@ -268,6 +277,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
         this.FormObj.get("arr").get(i.toString()).get("Answer").clearValidators();
         this.FormObj.get("arr").get(i.toString()).get("Answer").updateValueAndValidity();
       }
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
     }
     else {
       this.isReturnOn = false;
@@ -277,9 +288,13 @@ export class ApplicationReviewDetailComponent implements OnInit {
         this.FormObj.get("arr").get(i.toString()).get("Answer").setValidators([Validators.required]);
         this.FormObj.get("arr").get(i.toString()).get("Answer").updateValueAndValidity();
       }
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
     }
     this.FormObj.controls.Reason.updateValueAndValidity();
     this.FormObj.controls.Notes.updateValueAndValidity();
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
   }
 
   TotalCostAmt: number = 0;
@@ -303,13 +318,17 @@ export class ApplicationReviewDetailComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_RENT_APP;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
-    this.IsReady = true;
   }
 
   //#region Submit
-  SaveForm() {  
-    
-    let temp = this.FormObj.value;
+  temp: any;
+  SaveForm() {
+    if(this.isReturnOn) {
+      this.temp = this.FormReturnObj.value;
+    }
+    else {
+      this.temp = this.FormObj.value;
+    }
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
     tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
@@ -318,8 +337,9 @@ export class ApplicationReviewDetailComponent implements OnInit {
     if (this.ResponseExistCreditReview != null) {
       tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
     }
-    tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
+    tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(this.FormObj.value.arr);
     var flagId = 0;
+    var rfaInfo = null;
     if (!this.isReturnOn) {
       this.ApprovalCreateOutput = this.createComponent.output();
       if (this.ApprovalCreateOutput == undefined) {
@@ -327,22 +347,20 @@ export class ApplicationReviewDetailComponent implements OnInit {
       }
       else {
         flagId = 1;
+        rfaInfo = this.ApprovalCreateOutput['RFAInfo'];
       }
     }
-
-    this.ApprovalCreateOutput = this.createComponent.output();
-    if (this.ApprovalCreateOutput == undefined) return;
 
     let apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
       ApprovedById: flagId,
-      Reason: temp.ReasonDesc,
-      Notes: temp.Notes,
+      Reason: this.temp.ReasonDesc,
+      Notes: this.temp.Notes,
       WfTaskListId: this.wfTaskListId,
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: this.ApprovalCreateOutput['RFAInfo'],
+      RequestRFAObj: rfaInfo,
       TrxNo: this.appNo
     };
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
@@ -372,7 +390,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     );
   }
 
-  BindAppCrdRvwDObj(objArr: any) {
+  BindAppCrdRvwDObj(objArr) {
     let AppCrdRvwDObjs = new Array();
     for (let i = 0; i < objArr.length; i++) {
       let temp = new AppCrdRvwDObj();
@@ -395,7 +413,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
 
   OpenPefindoView(){
-    window.open(NavigationConstant.PEFINDO_VIEW + "?AppId=" + this.appId, "_blank");
+    window.open(environment.losR3Web + NavigationConstant.PEFINDO_VIEW + "?AppId=" + this.appId, "_blank");
   }
   //#endregion
 }

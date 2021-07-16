@@ -4,6 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 
 @Component({
   selector: 'app-app-asset-data-detail-fl4w',
@@ -12,10 +16,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class AppAssetDataDetailFl4wComponent implements OnInit {
   @Input() AppAssetId: number;
   @Input() AgrmntId: number;
-  appAsset: any;
-  appAssetSupplEmp: any;
-  appCollateralRegistration: any;
-  AssetTypeObj: any;
+  appAsset: AppAssetObj;
+  appAssetSupplEmp: Array<AppAssetSupplEmpObj>;
+  appCollateralRegistration: AppCollateralRegistrationObj;
+  AssetTypeObj: AssetTypeObj;
   salesName: string;
   branchManagerName: string;
   adminHeadName: string;
@@ -29,10 +33,10 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
     forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
       (response: any) => {
         this.appAsset = response[0];
-        this.appAssetSupplEmp = response[1];
+        this.appAssetSupplEmp = response[1].ReturnObject;
         this.appCollateralRegistration = response[2];
 
-        for (const item of this.appAssetSupplEmp.ReturnObject) {
+        for (const item of this.appAssetSupplEmp) {
           if(item.MrSupplEmpPositionCode == CommonConstant.SALES_JOB_CODE){
             this.salesName = item.SupplEmpName;
           }
@@ -47,7 +51,7 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
     );
 
     this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
-      (response: any) => {
+      (response: AssetTypeObj) => {
         this.AssetTypeObj = response;
       }
     );

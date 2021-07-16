@@ -10,7 +10,7 @@ export class ResLeadCustObj{
     IdExpiredDt : Date;
     TaxIdNo : string;
     IsVip : boolean;
-    RowVersion : any;
+    RowVersion : string;
     
     constructor() {
         this.RowVersion = ""; 

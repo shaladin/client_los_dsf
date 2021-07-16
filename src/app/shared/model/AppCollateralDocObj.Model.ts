@@ -1,12 +1,12 @@
 export class AppCollateralDocObj{
-    AppCollateralDocId: any;
-    AppCollareralId: any;
-    DocCode: any;
-    IsReceived: any;
-    ExpiredDt: any;
-    DocNotes: any;
-    RowVersion: any;
-    DocName: any;
-    DocNo: any;
+    AppCollateralDocId: number;
+    AppCollareralId: number;
+    DocCode: string;
+    IsReceived: boolean;
+    ExpiredDt: Date;
+    DocNotes: string;
+    RowVersion: string;
+    DocName: string;
+    DocNo: string;
     constructor() { }
 }

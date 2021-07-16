@@ -1,7 +1,7 @@
 export class LifeInsDObj {
     AppLifeInsDId: number;
     AppLifeInsHId: number;
-    RowVersion: any;
+    RowVersion: string;
     InsuredName : string;
     Age : number;
     MrCustTypeCode : string;

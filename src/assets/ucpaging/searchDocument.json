@@ -35,30 +35,30 @@
             "placeholder": "Placeholder"
         },
         {
-          "type": "dropdown",
-          "name": "(CASE WHEN NEED_TO_PRINT_DOC <> DOC.PRINTED_DOC THEN 'Incomplete' ELSE 'Complete' END)",
-          "id": "StatusOfNeedPrinted",
-          "label": "Status Of Need Doc Printing",
-          "value": "",
-          "placeholder": "Placeholder",
-          "isFromURL": false,
-          "ddlType": "all",
-          "items": [
-            {
-              "key": "Incomplete",
-              "value": "Incomplete"
-            },
-            {
-              "key": "Complete",
-              "value": "Complete"
-            }
-          ],
-          "itemsUrl": []
+            "type": "dropdown",
+            "name": "(CASE WHEN NEED_TO_PRINT_DOC <> DOC.PRINTED_DOC THEN 'Incomplete' ELSE 'Complete' END)",
+            "id": "StatusOfNeedPrinted",
+            "label": "Status Of Need Doc Printing",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": "Incomplete",
+                    "value": "Incomplete"
+                },
+                {
+                    "key": "Complete",
+                    "value": "Complete"
+                }
+            ],
+            "itemsUrl": []
         }
     ],
-  "querystring": {
-    "name": "searchDocument"
-  },
+    "querystring": {
+        "name": "searchDocument"
+    },
     "headerList": [
         {
             "type": "sort",
@@ -214,6 +214,29 @@
                                 {
                                     "property": "BizTemplateCode",
                                     "value": "CFNA",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "VIEW_AGRMNT",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "DLFN",
                                     "restriction": "EQ"
                                 }
                             ],

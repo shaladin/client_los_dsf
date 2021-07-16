@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ResMouCollForMouViewObj } from 'app/shared/model/Response/MOU/ResMouCollForMouViewObj.model';
 
 @Component({
   selector: 'app-mou-view-addcoll',
@@ -9,7 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class MouViewAddcollComponent implements OnInit {
   @Input() MouCustId: number;
 
-  listCollateralData: any;
+  listCollateralData: ResMouCollForMouViewObj;
 
   constructor(private http: HttpClient) { }
 

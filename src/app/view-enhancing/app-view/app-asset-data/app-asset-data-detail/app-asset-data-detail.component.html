@@ -116,7 +116,7 @@
       </div>
     </div>
   </div>
-  <lib-ucSubsection *ngIf="appAsset?.ResponseAppAssetAttrObjs?.length > 0" [id]="'assetAttrId'"
+  <lib-ucSubsection [id]="'assetAttrId'"
     [title]="'Asset Attribute'" [panel]="'assetAttr'">
   </lib-ucSubsection>
   <div class="col-md-12" id="assetAttr">
@@ -132,10 +132,10 @@
     </div>
   </div>
   
-  <lib-ucSubsection *ngIf="appAsset?.ResponseAppAssetAccessoryObjs?.length > 0" [id]="'assetAccId'"
+  <lib-ucSubsection [id]="'assetAccId'"
     [title]="'Asset Accessory'" [panel]="'assetAcc'">
   </lib-ucSubsection>
-  <div id="assetAcc" *ngIf="appAsset?.ResponseAppAssetAccessoryObjs?.length > 0">
+  <div id="assetAcc">
     <table class="table table-responsive-md table-hover" matSort>
       <thead>
         <tr class="table-header">

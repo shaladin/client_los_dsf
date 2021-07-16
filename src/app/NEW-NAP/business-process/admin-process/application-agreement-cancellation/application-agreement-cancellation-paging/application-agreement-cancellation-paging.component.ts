@@ -12,7 +12,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class ApplicationAgreementCancellationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  arrCrit: Array<any> = new Array();
+  arrCrit: Array<CriteriaObj> = new Array();
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -37,7 +37,7 @@ export class ApplicationAgreementCancellationPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = this.arrCrit;
 
   }
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }

@@ -92,32 +92,32 @@ const routes: Routes = [
         }
       },
       {
-          path: PathConstant.CRD_REVIEW_CR_PAGING,
-          component: CreditReviewCrPagingComponent,
-          data: {
-              title: 'Credit Review Paging'
-          }
+        path: PathConstant.CRD_REVIEW_CR_PAGING,
+        component: CreditReviewCrPagingComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
       },
       {
-          path: PathConstant.CRD_REVIEW_CR_DETAIL,
-          component: CreditReviewCrDetailComponent,
-          data: {
-              title: 'Credit Review Detail'
-          }
+        path: PathConstant.CRD_REVIEW_CR_DETAIL,
+        component: CreditReviewCrDetailComponent,
+        data: {
+          title: 'Credit Review Detail'
+        }
       },
       {
-          path: PathConstant.CRD_APPRV_CR_PAGING,
-          component: CreditApprovalCrPagingComponent,
-          data: {
-              title: 'Credit Approval Paging'
-          }
+        path: PathConstant.CRD_APPRV_CR_PAGING,
+        component: CreditApprovalCrPagingComponent,
+        data: {
+          title: 'Credit Approval Paging'
+        }
       },
       {
-          path: PathConstant.CRD_APPRV_CR_DETAIL,
-          component: CreditApprovalCrDetailComponent,
-          data: {
-              title: 'Credit Approval Detail'
-          }
+        path: PathConstant.CRD_APPRV_CR_DETAIL,
+        component: CreditApprovalCrDetailComponent,
+        data: {
+          title: 'Credit Approval Detail'
+        }
       },
       {
         path: PathConstant.CRD_REVIEW_PAGING,

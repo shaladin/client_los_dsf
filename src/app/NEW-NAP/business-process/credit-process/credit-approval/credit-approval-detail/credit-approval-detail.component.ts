@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
@@ -15,9 +15,12 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { CustHighlightCommentObj } from 'app/shared/model/CustHighlightCommentObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ViewHighlightCommentComponent } from 'app/NEW-NAP/sharing-component/view-app-component/view-highlight-comment/view-highlight-comment.component';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
@@ -29,7 +32,6 @@ export class CreditApprovalDetailComponent implements OnInit {
   mrCustTypeCode: string;
   viewObj: string;
   type: string;
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   ManualDeviationData;
   isExistedManualDeviationData;
   BizTemplateCode: string;
@@ -45,11 +47,21 @@ export class CreditApprovalDetailComponent implements OnInit {
   appNo: string;
   rootServer: string;
   isDmsReady: boolean = false;
+  custHighlightCommentObj: CustHighlightCommentObj = null;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-  getEvent: Array<any> = new Array<any>();
+  getEvent: Array<any> = new Array();
 
+  private viewHighlightCommentComponent: ViewHighlightCommentComponent;
+  @ViewChild(ViewHighlightCommentComponent) set content(
+    content: ViewHighlightCommentComponent
+  ) {
+    if (content) {
+      // initially setter gets called with undefined
+      this.viewHighlightCommentComponent = content;
+    }
+  } ;
 
   constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -65,15 +77,9 @@ export class CreditApprovalDetailComponent implements OnInit {
       if (params["TaskId"] != null) {
         this.taskId = params["TaskId"];
       }
-      var obj = {
-        taskId: params["TaskId"],
-        instanceId: params["InstanceId"],
-        approvalBaseUrl: environment.ApprovalR3Url
-      }
-      this.inputObj = obj;
 
       var ApvHoldObj = new ApprovalObj()
-      ApvHoldObj.TaskId = obj.taskId
+      ApvHoldObj.TaskId = params["TaskId"];
 
       this.HoldTask(ApvHoldObj);
     });
@@ -118,10 +124,9 @@ export class CreditApprovalDetailComponent implements OnInit {
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
           let mouCustId = response[0]['MouCustId'];
           if (mouCustId != null && mouCustId != '') {
-            var mouObj = { Id: mouCustId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              (response) => {
-                let mouCustNo = response['MouCustNo'];
+            this.http.post(URLConstant.GetMouCustById, { Id: mouCustId }).subscribe(
+              (response: MouCustObj) => {
+                let mouCustNo = response.MouCustNo;
                 this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
                 this.isDmsReady = true;
               });
@@ -201,6 +206,10 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
+  }
+
+  GetCommnet(event){
+    this.custHighlightCommentObj = event;
   }
 
   async GetIsUseDigitalization() {

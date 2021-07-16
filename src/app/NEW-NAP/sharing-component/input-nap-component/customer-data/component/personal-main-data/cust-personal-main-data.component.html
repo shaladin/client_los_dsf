@@ -14,7 +14,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
           <div class="col-md-4">
-            <select class="form-control" id="idType" formControlName="MrIdTypeCode" (change) = "clearExpDt()"
+            <select [attr.disabled]="isLockMode" class="form-control" id="idType" formControlName="MrIdTypeCode" (change) = "clearExpDt()"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrIdTypeCode.invalid }">      
               <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
                 {{item.Descr}}
@@ -26,24 +26,24 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="idNo" translate>Id No</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" formControlName="IdNo" id="idNo"
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" formControlName="IdNo" id="idNo"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].IdNo.invalid}">
-            <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].IdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            <lib-uc-show-errors [customPattern]="customPattern" [control]="parentForm.controls[identifier]['controls'].IdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="idExpDt" *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'KITAS' && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'SIM'" translate>Id Expired Date</label>
           <label class="col-md-4 adins-required-label" for="idExpDt" *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'KITAS' || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'SIM'" translate>Id Expired Date</label>
           <div class="col-md-8">
-            <input *ngIf="['NPWP','AKTA','EKTP'].includes(parentForm.controls[identifier]['controls'].MrIdTypeCode.value)" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
-            <input *ngIf="!['NPWP','AKTA','EKTP'].includes(parentForm.controls[identifier]['controls'].MrIdTypeCode.value)" min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
+            <input [attr.disabled]="isLockMode" *ngIf="['NPWP','AKTA','EKTP'].includes(parentForm.controls[identifier]['controls'].MrIdTypeCode.value)" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
+            <input [attr.disabled]="isLockMode" *ngIf="!['NPWP','AKTA','EKTP'].includes(parentForm.controls[identifier]['controls'].MrIdTypeCode.value)" min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].IdExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" translate>Birth Place</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" formControlName="BirthPlace" id="birthPlace"
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" formControlName="BirthPlace" id="birthPlace"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].BirthPlace.invalid}">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].BirthPlace" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
@@ -51,7 +51,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" translate>Birth Date</label>
           <div class="col-md-8">
-            <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control" formControlName="BirthDt" id="birthDt"
+            <input [attr.disabled]="isLockMode" type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control" formControlName="BirthDt" id="birthDt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].BirthDt.invalid}">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].BirthDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>          
@@ -60,14 +60,14 @@
           <label class="col-md-4" for="npwp" translate *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'NPWP'">NPWP</label>
           <label class="col-md-4 adins-required-label" for="npwp" translate *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'NPWP'">NPWP</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="npwp" formControlName="TaxIdNo">
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" id="npwp" formControlName="TaxIdNo">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].TaxIdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="mobilePhone1" translate>Mobile Phone 1</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="mobilePhone1" formControlName="MobilePhnNo1"
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" id="mobilePhone1" formControlName="MobilePhnNo1"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MobilePhnNo1.invalid}">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MobilePhnNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
@@ -75,35 +75,35 @@
         <div class="form-group row">
           <label class="col-md-4" for="mobilePhone2" translate>Mobile Phone 2</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2">
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" id="mobilePhone2" formControlName="MobilePhnNo2">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MobilePhnNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="mobilePhone2" translate>Mobile Phone 3</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="mobilePhone3" formControlName="MobilePhnNo3">
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" id="mobilePhone3" formControlName="MobilePhnNo3">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MobilePhnNo3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="email1" translate>Email 1</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="email1" formControlName="Email1">
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" id="email1" formControlName="Email1">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="email2" translate>Email 2</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" formControlName="Email2" id="email2">
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" formControlName="Email2" id="email2">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="email3" translate>Email 3</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" formControlName="Email3" id="email3">
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" formControlName="Email3" id="email3">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
         </div>
@@ -113,7 +113,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="custFullName" translate>{{bizTemplateCode == 'FL4W' ? 'Lessee' : 'Customer' }} Full Name</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" formControlName="CustFullName" id="custFullName"
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" formControlName="CustFullName" id="custFullName"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CustFullName.invalid }">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CustFullName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
@@ -121,7 +121,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="gender" translate>Gender</label>
           <div class="col-md-4">
-            <select class="form-control adInsInput" id="gender" formControlName="MrGenderCode" (change)="ChangeGender()">
+            <select [attr.disabled]="isLockMode" class="form-control adInsInput" id="gender" formControlName="MrGenderCode" (change)="ChangeGender()">
               <option *ngFor="let item of GenderObj" [value]="item.Key">
                 {{item.Value}}
               </option>
@@ -131,7 +131,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="motherMaidenName" translate>Mother Maiden Name</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" formControlName="MotherMaidenName" id="motherMaidenName"
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" formControlName="MotherMaidenName" id="motherMaidenName"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MotherMaidenName.invalid}">
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MotherMaidenName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
@@ -139,7 +139,7 @@
         <div class="form-group row">
           <label class="col-md-4 adins-required-label" for="maritalStatus" translate>Marital Status</label>
           <div class="col-md-4">
-            <select class="form-control adInsInput" id="maritalStatus" formControlName="MrMaritalStatCode" (change)="ChangeMaritalStats()"> 
+            <select [attr.disabled]="isLockMode" class="form-control adInsInput" id="maritalStatus" formControlName="MrMaritalStatCode" (change)="ChangeMaritalStats()"> 
               <option value="">-Select One-</option>
               <option *ngFor="let item of MaritalStatObj" [value]="item.Key">
                 {{item.Value}}
@@ -151,7 +151,7 @@
         <div class="form-group row">
           <label class="col-md-4" for="nationality" translate>Nationality</label>
           <div class="col-md-4">
-            <select class="form-control adInsInput" id="nationality" formControlName="MrNationalityCode" (change)="NationalityChanged($event)" >
+            <select [attr.disabled]="isLockMode" class="form-control adInsInput" id="nationality" formControlName="MrNationalityCode" (change)="NationalityChanged($event)" >
               <option value="">-Select One-</option>
               <option *ngFor="let item of NationalityObj" [value]="item.MasterCode">
                 {{item.Descr}}
@@ -169,7 +169,7 @@
         <div class="form-group row">          
           <label class="col-md-4" for="education" translate>Education</label>
           <div class="col-md-4">
-            <select class="form-control" id="education" formControlName="MrEducationCode">
+            <select [attr.disabled]="isLockMode" class="form-control" id="education" formControlName="MrEducationCode">
               <option value="">-Select One-</option>
               <option *ngFor="let item of EducationObj" [value]="item.Key">
                 {{item.Value}}
@@ -180,7 +180,7 @@
         <div class="form-group row">
           <label class="col-md-4" for="education" translate>Religion</label>
           <div class="col-md-4">
-            <select class="form-control" id="religion" formControlName="MrReligionCode">
+            <select [attr.disabled]="isLockMode" class="form-control" id="religion" formControlName="MrReligionCode">
               <option value="">-Select One-</option>
               <option *ngFor="let item of ReligionObj" [value]="item.Key">
                 {{item.Value}}
@@ -191,30 +191,27 @@
         <div class="form-group row">
           <label class="col-md-4" for="vip" translate>VIP</label>
           <div class="col-md-8">
-            <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsVip" />
+            <input [attr.disabled]="isLockMode" class="border-primary" type="checkbox" data-md-icheck formControlName="IsVip" />
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="familyCardNo" translate>Family Card No</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="familyCardNo" formControlName="FamilyCardNo">
+            <input [attr.disabled]="isLockMode" type="text" class="form-control" id="familyCardNo" formControlName="FamilyCardNo">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="noOfResidence" translate>Number of Residence</label>
           <div class="col-md-4">
-            <input type="number" class="form-control" formControlName="NoOfResidence" id="noOfResidence">
+            <input [attr.disabled]="isLockMode" type="number" class="form-control" formControlName="NoOfResidence" id="noOfResidence">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-4" for="noOfDependents" translate>Number of Dependents</label>
           <div class="col-md-4">
-            <input type="number" class="form-control" formControlName="NoOfDependents" id="noOfDependents">
+            <input [attr.disabled]="isLockMode" type="number" class="form-control" formControlName="NoOfDependents" id="noOfDependents">
           </div>
         </div>
-
-        
-
       </div>
     </div>
   </div>
