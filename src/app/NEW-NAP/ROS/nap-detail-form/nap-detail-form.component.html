@@ -31,7 +31,7 @@
                   <div class="col-md-4">
                     <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
-                    <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
+                    <lib-uc-show-errors [control]="FormReturnObj.controls['ReturnExecNotes']" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
