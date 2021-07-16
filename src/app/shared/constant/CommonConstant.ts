@@ -579,6 +579,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeLob = "LOB";
   public static RefMasterTypeCodeAppSrcType = "APP_SRC_TYPE";
   public static RefMasterTypeCodeMouType = "MOU_TYPE";
+  public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
