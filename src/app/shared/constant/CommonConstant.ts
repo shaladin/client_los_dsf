@@ -816,9 +816,9 @@ export class CommonConstant {
   public static CashFlowItemMasterCodeOdb = "CASHFLOW_ODB";
 
   //oth expense opl
-  public static OtherExpenseMasterCodeExpStn = "EXP_STN";
+  public static OtherExpenseMasterCodeExpStn = "STNKEXP";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
-  public static OtherExpenseMasterCodeExpRc = "RC";
+  public static OtherExpenseMasterCodeExpRc = "RCEXP";
 
   //SYS CONFIG
   public static ConfigCodeIsUseDms = "IS_USE_DMS";
