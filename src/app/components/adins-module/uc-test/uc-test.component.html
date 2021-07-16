@@ -37,47 +37,52 @@
                             translate>{{question.label}}</label>
                           <div class="col-md-7 no-padding">
                             <div *ngIf="question.type=='textbox'">
-                              <input type="text" id="{{question.id}}" class="form-control search-form-control" [ngModel]="question.value"
-                                [required]="question.isRequired" name="{{question.name}}"
+                              <input type="text" id="{{question.id}}" class="form-control search-form-control"
+                                [ngModel]="question.value" [required]="question.isRequired" name="{{question.name}}"
                                 attr.data-required="{{question.isRequired}}" value="{{question.value}}"
                                 (keyup.enter)="searchClick()" attr.data-type="{{question.datatype}}"
-                                attr.data-name="{{question.name}}" attr.data-restriction="{{question.restriction}}" attr.label="{{question.label}}"
+                                attr.data-name="{{question.name}}" attr.data-restriction="{{question.restriction}}"
+                                attr.label="{{question.label}}"
                                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
                             </div>
                             <div *ngIf="question.type=='textarea'">
-                              <textarea type="text" id="{{question.id}}" class="form-control search-form-control" [ngModel]="question.value"
-                                [required]="question.isRequired" name="{{question.name}}" attr.data-required="{{question.isRequired}}"
-                                attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}"
-                                value="{{question.value}}" attr.label="{{question.label}}"
+                              <textarea type="text" id="{{question.id}}" class="form-control search-form-control"
+                                [ngModel]="question.value" [required]="question.isRequired" name="{{question.name}}"
+                                attr.data-required="{{question.isRequired}}" attr.data-type="{{question.datatype}}"
+                                attr.data-name="{{question.name}}" value="{{question.value}}"
+                                attr.label="{{question.label}}"
                                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }"></textarea>
                             </div>
                             <div *ngIf="question.type=='numeric'">
                               <input type="number" id="{{question.id}}" (focus)="transformToDecimal($event)"
-                                (blur)="transformAmount($event)" class="form-control search-form-control" [ngModel]="question.value"
-                                [required]="question.isRequired" name="{{question.name+[i]}}" attr.data-required="{{question.isRequired}}"
-                                value="{{question.value}}" (keyup.enter)="searchClick()"
-                                attr.data-restriction="{{question.restriction}}" attr.data-type="{{question.datatype}}"
-                                attr.data-name="{{question.name}}" attr.label="{{question.label}}"
+                                (blur)="transformAmount($event)" class="form-control search-form-control"
+                                [ngModel]="question.value" [required]="question.isRequired" name="{{question.name+[i]}}"
+                                attr.data-required="{{question.isRequired}}" value="{{question.value}}"
+                                (keyup.enter)="searchClick()" attr.data-restriction="{{question.restriction}}"
+                                attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}"
+                                attr.label="{{question.label}}"
                                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name+[i]]?.touched || enjiForm.form.controls[question.name+[i]]?.dirty) && enjiForm.form.controls[question.name+[i]]?.invalid }">
                             </div>
                             <div *ngIf="question.type=='currency'">
                               <div *ngIf="question?.isCustom != undefined && question?.isCustom">
                                 <input type="" id="{{question.id}}" class="form-control search-form-control"
-                                  [required]="question.isRequired" name="{{question.name}}" (keyup.enter)="searchClick()"
-                                  attr.data-restriction="{{question.restriction}}"
+                                  [required]="question.isRequired" name="{{question.name}}"
+                                  (keyup.enter)="searchClick()" attr.data-restriction="{{question.restriction}}"
                                   attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}"
                                   attr.data-required="{{question.isRequired}}" currencyMask [ngModel]="question.value"
-                                  [(ngModel)]="question.value" [ngModelOptions]="{standalone: true}" attr.label="{{question.label}}"
+                                  [(ngModel)]="question.value" [ngModelOptions]="{standalone: true}"
+                                  attr.label="{{question.label}}"
                                   [options]="{ thousands: question.thousands, decimal: question.decimal, align: question.align, allowNegative: question.allowNegative, allowZero: question.allowZero, precision: question.precision, nullable: question.nullable }"
                                   [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
                               </div>
                               <div *ngIf="question?.isCustom == undefined || !question?.isCustom">
                                 <input type="text" id="{{question.id}}" class="form-control search-form-control"
-                                  [required]="question.isRequired" name="{{question.name}}" (keyup.enter)="searchClick()"
-                                  attr.data-restriction="{{question.restriction}}"
+                                  [required]="question.isRequired" name="{{question.name}}"
+                                  (keyup.enter)="searchClick()" attr.data-restriction="{{question.restriction}}"
                                   attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}"
                                   attr.data-required="{{question.isRequired}}" currencyMask [ngModel]="question.value"
-                                  [(ngModel)]="question.value" [ngModelOptions]="{standalone: true}" attr.label="{{question.label}}"
+                                  [(ngModel)]="question.value" [ngModelOptions]="{standalone: true}"
+                                  attr.label="{{question.label}}"
                                   [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 2, nullable: false }"
                                   [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
                               </div>
@@ -86,19 +91,25 @@
                             <!-- End Hardcode Lookup didalem-->
                             <div *ngIf="question.type=='datepicker'">
                               <input type="date" id="{{question.id}}"
-                                class="form-control search-form-control btn-lookup" name="{{question.name+[i]}}" [ngModel]="question.value"
-                                [required]="question.isRequired" attr.data-required="{{question.isRequired}}" value="{{question.value}}"
+                                class="form-control search-form-control btn-lookup" name="{{question.name+[i]}}"
+                                [ngModel]="question.value" [required]="question.isRequired"
+                                attr.data-required="{{question.isRequired}}" value="{{question.value}}"
                                 attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}"
-                                (keyup.enter)="searchClick()" attr.data-restriction="{{question.restriction}}" attr.label="{{question.label}}"
-                                min="{{question.minDate | date:'yyyy-MM-dd'}}" max="{{question.maxDate | date:'yyyy-MM-dd'}}" (focusout)="checkInputDate(question)"
+                                (keyup.enter)="searchClick()" attr.data-restriction="{{question.restriction}}"
+                                attr.label="{{question.label}}" min="{{question.minDate | date:'yyyy-MM-dd'}}"
+                                max="{{question.maxDate | date:'yyyy-MM-dd'}}" (focusout)="checkInputDate(question)"
                                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name+[i]]?.touched || enjiForm.form.controls[question.name+[i]]?.dirty) && enjiForm.form.controls[question.name+[i]]?.invalid }">
+                            </div>
+
+                            <div *ngIf="question.type=='datepicker'">
                             </div>
                             <div *ngIf="question.type=='dropdown'">
                               <!-- Ini kalau datanya tidak di load dari URL -->
                               <div *ngIf="!question.isFromURL">
                                 <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
-                                [required]="question.isRequired" class="form-control search-form-control" attr.query-in="{{question.isQueryIn}}"
-                                  attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}" attr.label="{{question.label}}"
+                                  [required]="question.isRequired" class="form-control search-form-control"
+                                  attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
+                                  attr.data-name="{{question.name}}" attr.label="{{question.label}}"
                                   [hidden]="question?.items.length == 1"
                                   [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
                                   <option *ngIf="question.ddlType == 'one' && question?.items.length != 1" value="one">
@@ -116,8 +127,9 @@
                               <div *ngIf="question.isFromURL">
                                 <div *ngIf="question.isEvent">
                                   <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
-                                    [required]="question.isRequired" class="form-control search-form-control" attr.query-in="{{question.isQueryIn}}"
-                                    attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}" attr.label="{{question.label}}"
+                                    [required]="question.isRequired" class="form-control search-form-control"
+                                    attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
+                                    attr.data-name="{{question.name}}" attr.label="{{question.label}}"
                                     (change)="onChangeEvent($event.target.value, question)"
                                     [hidden]="question?.itemsUrl.length == 1"
                                     [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
@@ -134,9 +146,9 @@
                                 </div>
                                 <div *ngIf="!question.isEvent">
                                   <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
-                                    [required]="question.isRequired" class="form-control search-form-control" attr.query-in="{{question.isQueryIn}}"
-                                    attr.data-type="{{question.datatype}}" attr.label="{{question.label}}"
-                                    [hidden]="question?.itemsUrl.length == 1"
+                                    [required]="question.isRequired" class="form-control search-form-control"
+                                    attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
+                                    attr.label="{{question.label}}" [hidden]="question?.itemsUrl.length == 1"
                                     [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
                                     <option *ngIf="question.ddlType == 'one' && question?.itemsUrl.length != 1"
                                       value="one">Select One</option>
@@ -151,11 +163,11 @@
                                 </div>
                               </div>
                             </div>
-                            <lib-uc-show-errors *ngIf="question.type!='datepicker'" [control]="enjiForm.form.controls[question.name]"
-                              [submit]="enjiForm.submitted">
+                            <lib-uc-show-errors *ngIf="question.type!='datepicker'"
+                              [control]="enjiForm.form.controls[question.name]" [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
-                            <lib-uc-show-errors *ngIf="question.type=='datepicker'"  [control]="enjiForm.form.controls[question.name+[i]]"
-                              [submit]="enjiForm.submitted">
+                            <lib-uc-show-errors *ngIf="question.type=='datepicker'"
+                              [control]="enjiForm.form.controls[question.name+[i]]" [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
                           </div>
                         </div>
