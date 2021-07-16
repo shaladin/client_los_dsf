@@ -880,6 +880,10 @@ export class ApplicationDataComponent implements OnInit {
     else {
       this.isFixedRate = false;
       this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
+      if(this.BizTemplateCode == CommonConstant.OPL)
+      {
+        this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
+      }
     }
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
