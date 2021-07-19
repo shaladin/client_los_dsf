@@ -417,7 +417,8 @@ export class AssetDataOplComponent implements OnInit {
       BranchManagerId: this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId,
       BranchManagerName: this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName,
       BranchManagerNo: this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo,
-      BranchManagerPositionCode: this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode
+      BranchManagerPositionCode: this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode,
+      TaxCityIssuer: this.allAssetDataObj.AppAssetObj.TaxCityIssuer
     });
 
     this.priceAfterDiscount = this.allAssetDataObj.AppAssetObj.AssetPriceAmt - this.allAssetDataObj.AppAssetObj.Discount;

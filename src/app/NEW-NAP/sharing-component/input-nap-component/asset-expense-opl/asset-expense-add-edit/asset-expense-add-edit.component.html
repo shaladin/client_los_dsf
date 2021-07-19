@@ -173,7 +173,7 @@
                           <td [formGroupName]="i">
                             <input type="" currencyMask id="serviceAmt{{i}}" class="form-control"
                               (ngModelChange)="calculateService()" formControlName="ServiceAmt"
-                              [options]="{ nullable: true }"
+                              [options]="{ nullable: true, allowNegative: false }"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].ServiceAmt.invalid }">
                             <lib-uc-show-errors
                               [control]="InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].ServiceAmt"
@@ -226,7 +226,7 @@
                           <td [formGroupName]="i">
                             <input type="" currencyMask id="sparePartAmt{{i}}" class="form-control"
                               (ngModelChange)="calculateSparepart()" formControlName="SparePartAmt"
-                              [options]="{ nullable: true }"
+                              [options]="{ nullable: true, allowNegative: false }"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].SparePartAmt.invalid }">
                             <lib-uc-show-errors
                               [control]="InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].SparePartAmt"
@@ -288,7 +288,7 @@
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="othExpenseAmt{{i}}" class="form-control"
                             (ngModelChange)="calculateExpense()" formControlName="OthExpenseAmt"
-                            [options]="{ nullable: true }"
+                            [options]="{ nullable: true, allowNegative: false }"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['OtherExpenseObjs']['controls'][i]['controls'].OthExpenseAmt.invalid }">
                           <lib-uc-show-errors
                             [control]="InsuranceDataForm.controls['OtherExpenseObjs']['controls'][i]['controls'].OthExpenseAmt"
@@ -345,15 +345,15 @@
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="feeTypeAmt{{i}}" class="form-control"
                             (ngModelChange)="calculateChangeVAT(i)" formControlName="FeeTypeAmt"
-                            [options]="{ nullable: true }"
+                            [options]="{ nullable: true, allowNegative: false }"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].FeeTypeAmt.invalid }">
                           <lib-uc-show-errors
                             [control]="InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].FeeTypeAmt"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </td>
                         <td [formGroupName]="i">
-                          <input type="" currencyMask id="VATAmt{{i}}" class="form-control"
-                            (ngModelChange)="calculateVAT()" formControlName="VATAmt" [options]="{ nullable: true }"
+                          <input type="" currencyMask id="vATAmt{{i}}" class="form-control"
+                            (ngModelChange)="calculateVAT()" formControlName="VATAmt" [options]="{ nullable: true, allowNegative: false }"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].VATAmt.invalid }">
                           <lib-uc-show-errors
                             [control]="InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].VATAmt"
@@ -361,7 +361,7 @@
                         </td>
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="cptlzAmt{{i}}" class="form-control"
-                            (ngModelChange)="calculateCptlz()" formControlName="CptlzAmt" [options]="{ nullable: true }"
+                            (ngModelChange)="calculateCptlz()" formControlName="CptlzAmt" [options]="{ nullable: true, allowNegative: false }"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].CptlzAmt.invalid }">
                           <lib-uc-show-errors
                             [control]="InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].CptlzAmt"
