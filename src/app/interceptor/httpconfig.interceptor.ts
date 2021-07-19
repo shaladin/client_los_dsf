@@ -103,7 +103,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             //temporary logic if BE no versioning & camunda
             if (environment["isCore"] == undefined || !environment["isCore"]) {
                 newUrl = request.url;
-                newUrl = newUrl.replace(apiVers[0], "");
+                newUrl = newUrl.replace(apiVers[0], "/v1");
                 request = request.clone({ url: newUrl});
             }
             vers = apiVers[0].substring(2);
