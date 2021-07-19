@@ -18,7 +18,7 @@ export const environment = {
   FoundationR3Web: 'http://r3impl-websvr.ad-ins.com/FOU_DSF_IMPL',
   losR3Web: 'http://r3impl-websvr.ad-ins.com/LOS_DSF_IMPL',
   WorkflowR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_DSF_IMPL',
-  WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
+  WebSocketURL: 'http://r3impl-appsvr.ad-ins.com/FOU_DSF_IMPL',
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
   dmsURL: 'http://kfx-svr/LITEDMS_OPL/LiteDMS/pageconfins.aspx',
   WfR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL/',
