@@ -37,10 +37,10 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
 
 @Component({
-  selector: 'app-application-data',
-  templateUrl: './application-data.component.html'
+  selector: 'app-application-data-opl',
+  templateUrl: './application-data-opl.component.html',
 })
-export class ApplicationDataComponent implements OnInit {
+export class ApplicationDataOplComponent implements OnInit {
   @Input() isCollateral: boolean;
   @Input() appId: number;
   @Input() showCancel: boolean = true;
@@ -177,7 +177,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.spinner.show();
+    // this.spinner.show();
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.NapAppModelForm.controls.InterestType.clearValidators();
       this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
@@ -206,6 +206,7 @@ export class ApplicationDataComponent implements OnInit {
 
         this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: this.user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
+            console.log(response);
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
         );
@@ -428,7 +429,7 @@ export class ApplicationDataComponent implements OnInit {
         this.initDdlMrFirstInstType();
         this.initDdlPayFreq();
         this.getPayFregData();
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     );
   }
@@ -1027,6 +1028,7 @@ export class ApplicationDataComponent implements OnInit {
 
   setTenorOnChange(event) {
     if (event != 'null') {
+      console.log(event);
       this.isFromMouCust = true;
       let mouCustObj = { Id: event }
       this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
