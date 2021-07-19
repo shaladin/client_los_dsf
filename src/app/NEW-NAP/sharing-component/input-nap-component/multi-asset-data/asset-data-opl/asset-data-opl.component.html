@@ -165,7 +165,9 @@
                       <label class="col-md-4  adins-required-label" translate>Asset Price</label>
                       <div class="col-md-8">
                         <input currencyMask id="assetPriceAmt" class="form-control"
-                          formControlName="AssetPriceAmt" (focusout)="updateValueAssetPrice($event)"
+                          formControlName="AssetPriceAmt" 
+                          [options]="{ allowNegative: false}"
+                          (focusout)="updateValueAssetPrice($event)"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetPriceAmt.invalid}">
                         <lib-uc-show-errors [control]="AssetDataForm.controls.AssetPriceAmt"
                           [submit]="enjiForm.submitted">
@@ -189,7 +191,12 @@
                       <label class="col-md-4  adins-label" translate>Discount</label>
                       <div class="col-md-8">
                         <input currencyMask id="discount" class="form-control"
-                          formControlName="Discount" (focusout)="updateValueAssetPrice($event)">
+                          formControlName="Discount" 
+                          [options]="{ allowNegative: false}"
+                          (focusout)="updateValueAssetPrice($event)">
+                          <lib-uc-show-errors [control]="AssetDataForm.controls.Discount"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
                       </div>
                     </div>
                   </div>
@@ -359,7 +366,7 @@
                           </td>
                           <td [formGroupName]="i">
                             <input type="" currencyMask id="accessoryPriceAmt{{i}}" class="form-control"
-                              formControlName="AccessoryPriceAmt" [options]="{ nullable: true }"
+                              formControlName="AccessoryPriceAmt" [options]="{ allowNegative: false, nullable: true }"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
                             <lib-uc-show-errors
                               [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt"

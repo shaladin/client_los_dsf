@@ -94,10 +94,10 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && isReady"
+              <app-application-data-opl *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && isReady"
                 [BizTemplateCode]="bizTemplateCode" [appId]="appId" [showCancel]="showCancel"
                 (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-              </app-application-data>
+              </app-application-data-opl>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
                 <app-multi-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && isReady"[AppId]=appId
@@ -178,10 +178,10 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && isReady" [appId]="appId"
+              <app-application-data-opl *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && isReady" [appId]="appId"
                 [BizTemplateCode]="bizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')"
                 (outputCancel)="Cancel()">
-              </app-application-data>
+              </app-application-data-opl>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <!-- <app-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && isReady" [AppId]=appId
