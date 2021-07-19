@@ -177,6 +177,7 @@ export class ApplicationDataOplComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log('TEST')
     // this.spinner.show();
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.NapAppModelForm.controls.InterestType.clearValidators();
@@ -400,6 +401,12 @@ export class ApplicationDataOplComponent implements OnInit {
           DpSrcPaymentCode: this.resultResponse.MrDpSrcPaymentCode,
           InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
+
+        if (this.BizTemplateCode === CommonConstant.OPL) {
+          this.NapAppModelForm.patchValue({
+            CharaCredit : CommonConstant.CharacteristicOfCreditTypeOther
+          });
+        }
 
         if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit) {
           this.GetBankAccCust();
