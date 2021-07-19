@@ -188,8 +188,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   CopyInsuranceHandler() {
-    console.log("_-==COPY39==-_");
-    console.log(this.selectedInsuranceForCopy);
     if(this.selectedCollateral == ""){
       this.toastr.warningMessage("Please Choose Collateral First");
       return;
@@ -199,7 +197,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.toastr.warningMessage("Please Choose Insurance Data to Copy");
       return;
     }
-    console.log("asodifjs");
 
     let reqObj: ReqCopyInsuranceCustomObj = new ReqCopyInsuranceCustomObj();
     let splittedCollateral: Array<any> = this.selectedCollateral.split(";");
@@ -208,7 +205,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
     this.http.post(URLConstant.CopyInsuranceData, reqObj).subscribe(
       (response) => {
-        console.log(response);
+        this.selectedInsuranceForCopy = "";
+        this.selectedCollateral = "";
+        this.BindMultiInsGridData();
+        this.toastr.successMessage(response["message"]);
       }
     )
   }
@@ -319,7 +319,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetListExistingAppCollateralWithInsurance, { Id: this.appId }).subscribe(
       (response) => {
         this.existingListAppColl = response["AppCollateralObjs"];
-        console.log(response);
       });
   }
 
@@ -361,15 +360,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetListAppCollateralForCopyInsuranceByAppId, appAssetObj).subscribe(
       (response) => {
         this.listDataCollateral = response[CommonConstant.ReturnObj];
-        console.log(this.listDataCollateral);
-        // if (this.listDataCollateral.length > 0) this.selectedCollateral = this.listDataCollateral[0].Code;
       }
     );
-  }
-
-  async GetInsuranceForCopy(event){
-    console.log(event.target.value);
-    await this.GetInsuranceDDLForCopy();
   }
 
   async GetInsuranceDDLForCopy() {
@@ -398,7 +390,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetListInsuranceDataForCopyInsuranceByAppId, reqObj).toPromise().then(
       (response) => {
         this.listDataInsuranceForCopy = response[CommonConstant.ReturnObj];
-        console.log(this.listDataInsuranceForCopy);
         if (this.listDataInsuranceForCopy.length > 0) this.selectedInsuranceForCopy = this.listDataInsuranceForCopy[0].Code;
       }
     );
@@ -418,7 +409,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   event(ev) {
-    console.log(ev);
     this.AppCollateralId = ev.RowObj.AppCollateralId;
     this.AppAssetId = ev.RowObj.AppAssetId;
     if (this.AppAssetId == null || this.AppAssetId == undefined) { }
@@ -514,12 +504,16 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           this.falseValue();
         });
     }
+    this.selectedInsuranceForCopy = "";
+    this.selectedCollateral = "";
   }
 
   Cancel() {
     this.BindMultiInsGridData();
     this.PageState = 'Paging';
     this.falseValue();
+    this.selectedInsuranceForCopy = "";
+    this.selectedCollateral = "";
   }
 
   falseValue(){
