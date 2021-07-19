@@ -109,7 +109,7 @@ export class URLConstant {
   public static GetListKvpRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/GetListKvpRefAppSrc";
 
   public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-  public static Login = "/Authenticate/Login";
+  public static Login = "/v1" + "/Authenticate/Login";
   public static LoginWithToken = environment.FoundationR3Url + "/v1" + "/Authenticate/LoginWithToken";
   public static LoginToken = "/UserManagement/HTML6Login";
   public static Logout = "/UserManagement/LogOut"
@@ -120,7 +120,7 @@ export class URLConstant {
   public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
   public static addCustPersonal = "";
   public static FormDefault = "dashboard/dash-board";
-  public static LoginByRole = "/Authenticate/LoginByRole";
+  public static LoginByRole = "/v1"+ "/Authenticate/LoginByRole";
   public static LoginByToken = "/Authenticate/LoginByToken";
   public static UpdateToken = "/Authenticate/UpdateRole";
   public static LoginURLFrontEnd = "Pages/Login";
