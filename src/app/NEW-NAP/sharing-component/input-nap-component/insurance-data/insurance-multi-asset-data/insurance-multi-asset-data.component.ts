@@ -34,6 +34,8 @@ import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Req
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/AppAssetCollateralForInsurance.Model';
 import { InsuranceLenObj, ResInsuranceLenObj } from 'app/shared/model/InsuranceLenObj.Model';
+import { ReqAppCollateralForCopyInsuranceCustomObj } from 'app/shared/model/Request/AppCollateral/ReqCollateralForCopyInsuranceObj.model';
+import { ReqCopyInsuranceCustomObj } from 'app/shared/model/Request/AppIns/ReqCopyInsuranceCustomObj.model';
 
 @Component({
   selector: 'app-insurance-multi-asset-data',
@@ -90,6 +92,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   insAssetRegionObj: Array<KeyValueObj>;
   payPeriodToInscoObj: Array<KeyValueObj>;
   defaultInsMainCvgType: string;
+  listDataCollateral: Array<any> = new Array();
+  listDataInsuranceForCopy: Array<any> = new Array();
+  selectedCollateral: any = "";
+  selectedInsuranceForCopy: any = "";
 
   existingListAppColl: Array<AppCollateralObj> = new Array<AppCollateralObj>();
 
@@ -174,10 +180,55 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.GetExistingAppCollateralWithInsurance();
       this.textTitle = "Collateral";
     }
+    this.GetCollateralDDLForCopy();
   }
 
   CancelHandler() {
     this.outputCancel.emit();
+  }
+
+  CopyInsuranceHandler() {
+    console.log("_-==COPY39==-_");
+    console.log(this.selectedInsuranceForCopy);
+    if(this.selectedCollateral == ""){
+      this.toastr.warningMessage("Please Choose Collateral First");
+      return;
+    }
+
+    if(this.selectedInsuranceForCopy == ""){
+      this.toastr.warningMessage("Please Choose Insurance Data to Copy");
+      return;
+    }
+    console.log("asodifjs");
+
+    let reqObj: ReqCopyInsuranceCustomObj = new ReqCopyInsuranceCustomObj();
+    let splittedCollateral: Array<any> = this.selectedCollateral.split(";");
+    let splittedInsurance: Array<any>  = this.selectedInsuranceForCopy.split(";");
+    reqObj = this.setCopyInsuranceData(reqObj, splittedCollateral, splittedInsurance);
+
+    this.http.post(URLConstant.CopyInsuranceData, reqObj).subscribe(
+      (response) => {
+        console.log(response);
+      }
+    )
+  }
+
+  setCopyInsuranceData(reqObj: ReqCopyInsuranceCustomObj, splittedCollateral: Array<any>, splittedInsurance: Array<any>) {
+    reqObj.ReqAppCollateralForCopyInsuranceCustomObj.AppId = this.appId;
+    reqObj.ReqAppCollateralForCopyInsuranceCustomObj.FullAssetCode = splittedCollateral[0];
+    reqObj.ReqAppCollateralForCopyInsuranceCustomObj.ManufacturingYear = splittedCollateral[1];
+    reqObj.ReqAppCollateralForCopyInsuranceCustomObj.MrCollateralConditionCode = splittedCollateral[2];
+    reqObj.ReqAppCollateralForCopyInsuranceCustomObj.MrCollateralUsageCode = splittedCollateral[3];
+    reqObj.ReqAppCollateralForCopyInsuranceCustomObj.CollateralValueAmt = +splittedCollateral[4];
+    reqObj.ReqAppCollateralForCopyInsuranceCustomObj.TotalAccessoryPriceAmt = +splittedCollateral[5];
+
+    reqObj.ReqInsuranceForCopyInsuranceCustomObj.InscoBranchCode = splittedInsurance[0];
+    reqObj.ReqInsuranceForCopyInsuranceCustomObj.InsLength = +splittedInsurance[1];
+    reqObj.ReqInsuranceForCopyInsuranceCustomObj.InsAssetPaidBy = splittedInsurance[2];
+    reqObj.ReqInsuranceForCopyInsuranceCustomObj.InsAssetCoveredBy = splittedInsurance[3];
+    reqObj.ReqInsuranceForCopyInsuranceCustomObj.TotalInsCustAmt = +splittedInsurance[4];
+
+    return reqObj;
   }
 
   BindMultiInsGridData() {
@@ -303,6 +354,54 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
       }
     }
+  }
+
+  GetCollateralDDLForCopy() {
+    let appAssetObj = { Id: this.appId };
+    this.http.post(URLConstant.GetListAppCollateralForCopyInsuranceByAppId, appAssetObj).subscribe(
+      (response) => {
+        this.listDataCollateral = response[CommonConstant.ReturnObj];
+        console.log(this.listDataCollateral);
+        // if (this.listDataCollateral.length > 0) this.selectedCollateral = this.listDataCollateral[0].Code;
+      }
+    );
+  }
+
+  async GetInsuranceForCopy(event){
+    console.log(event.target.value);
+    await this.GetInsuranceDDLForCopy();
+  }
+
+  async GetInsuranceDDLForCopy() {
+    this.selectedInsuranceForCopy = "";
+    if(this.selectedCollateral == ""){
+      this.listDataInsuranceForCopy = null;
+      return;
+    }
+
+    let splitted = this.selectedCollateral.split(";");
+
+    if(splitted.length == 1){
+      this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
+      return;
+    }
+
+    let reqObj: ReqAppCollateralForCopyInsuranceCustomObj = new ReqAppCollateralForCopyInsuranceCustomObj();
+    reqObj.AppId = this.appId;
+    reqObj.FullAssetCode = splitted[0];
+    reqObj.ManufacturingYear = splitted[1];
+    reqObj.MrCollateralConditionCode = splitted[2];
+    reqObj.MrCollateralUsageCode = splitted[3];
+    reqObj.CollateralValueAmt = +splitted[4];
+    reqObj.TotalAccessoryPriceAmt = +splitted[5];
+
+    await this.http.post(URLConstant.GetListInsuranceDataForCopyInsuranceByAppId, reqObj).toPromise().then(
+      (response) => {
+        this.listDataInsuranceForCopy = response[CommonConstant.ReturnObj];
+        console.log(this.listDataInsuranceForCopy);
+        if (this.listDataInsuranceForCopy.length > 0) this.selectedInsuranceForCopy = this.listDataInsuranceForCopy[0].Code;
+      }
+    );
   }
 
   // PaidAmtChanged(ev) {
