@@ -22,6 +22,15 @@ export class CommonConstant {
   public static MOU_FRZ_REQ = 'REQ';
   public static MOU_FRZ_APV = 'APV';
 
+  // REF CHANGE ITEM STAT
+  public static ChangeItemCodeAssetDataSerialNo1 = 'ASSET_DATA_SERIAL_NO_1';
+  public static ChangeItemCodeAssetDataSerialNo2 = 'ASSET_DATA_SERIAL_NO_2';
+  public static ChangeItemCodeAssetDataSerialNo3 = 'ASSET_DATA_SERIAL_NO_3';
+  public static ChangeItemCodeAssetDataSerialNo4 = 'ASSET_DATA_SERIAL_NO_4';
+  public static ChangeItemCodeAssetDataSerialNo5 = 'ASSET_DATA_SERIAL_NO_5';
+  public static ChangeItemCodeAssetDataManufacturYear = 'ASSET_DATA_MANUFACTURE_YEAR';
+  public static ChangeItemCodeAssetDataColor = 'ASSET_DATA_COLOR';
+
   //PHN VERF SUBJECT DATA
   public static PHN_VERF_RES_SCS = "SCS";
   public static PHN_VERF_RES_FAIL = "FAIL";
@@ -816,9 +825,9 @@ export class CommonConstant {
   public static CashFlowItemMasterCodeOdb = "CASHFLOW_ODB";
 
   //oth expense opl
-  public static OtherExpenseMasterCodeExpStn = "EXP_STN";
+  public static OtherExpenseMasterCodeExpStn = "STNKEXP";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
-  public static OtherExpenseMasterCodeExpRc = "RC";
+  public static OtherExpenseMasterCodeExpRc = "RCEXP";
 
   //SYS CONFIG
   public static ConfigCodeIsUseDms = "IS_USE_DMS";

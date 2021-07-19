@@ -1427,6 +1427,7 @@ export class URLConstant {
   public static ReSendLosR3DataToR2 = environment.losUrl + "/Integration/ReSendLosR3DataToR2";
 
   //EDIT APP AFTER APPROVAL
+  public static GetListRefChangeItem = environment.FoundationR3Url + "/RefChangeItem/GetListRefChangeItem";
   public static GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId = environment.losUrl + "/EditAppAftApv/GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId";
   public static GetAgrmntDataForEditAppAfterApprovalByAgrmntId = environment.losUrl + "/EditAppAftApv/GetAgrmntDataForEditAppAfterApprovalByAgrmntId";
   public static SubmitEditAppAftApvReq = environment.losUrl + "/EditAppAftApv/SubmitEditAppAftApvReq";

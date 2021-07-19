@@ -32,6 +32,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   IsReady: boolean = false;
   IsReadySummary: boolean = false;
   arrValue = [];
+  isViewReady: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
   constructor(private router: Router, 
@@ -67,7 +68,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
         this.ChangeSummaryObj = response["ReturnObject"];
         
         this.arrValue.push(this.ChangeSummaryObj.EditAppAftApvTrxHObj.AgrmntId);
-
+        this.isViewReady = true;
         this.initInputApprovalObj();
       });
   }

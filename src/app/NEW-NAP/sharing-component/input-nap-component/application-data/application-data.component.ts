@@ -206,7 +206,6 @@ export class ApplicationDataComponent implements OnInit {
 
         this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: this.user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
-            console.log(response);
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
         );
@@ -887,6 +886,10 @@ export class ApplicationDataComponent implements OnInit {
     else {
       this.isFixedRate = false;
       this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
+      if(this.BizTemplateCode == CommonConstant.OPL)
+      {
+        this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
+      }
     }
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
@@ -1024,7 +1027,6 @@ export class ApplicationDataComponent implements OnInit {
 
   setTenorOnChange(event) {
     if (event != 'null') {
-      console.log(event);
       this.isFromMouCust = true;
       let mouCustObj = { Id: event }
       this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
