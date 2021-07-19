@@ -336,12 +336,12 @@ export class FinancialDataOplEditComponent implements OnInit {
             });
             if (this.FinancialDataForm.controls.RentalPeriodCode.value == CommonConstant.FirstInstTypeAdvance) {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
+                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value - this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
             else {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
+                CustomerPaidAtCostAmt: this.FinancialDataForm.controls.TotalFeeAmt.value - this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value  + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
           }
@@ -386,12 +386,12 @@ export class FinancialDataOplEditComponent implements OnInit {
             });
             if (this.FinancialDataForm.controls.RentalPeriodCode.value == CommonConstant.FirstInstTypeAdvance) {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
+                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value - this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
             else {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt
+                CustomerPaidAtCostAmt: this.FinancialDataForm.controls.TotalFeeAmt.value - this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
           }

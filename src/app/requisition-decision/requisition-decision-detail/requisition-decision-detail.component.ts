@@ -194,7 +194,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     if(decisionCode === "EXISTING") {
       this.ReqDecForm.controls.AssetNo.setValidators(Validators.required);
 
-      console.log("Isi AssetNo: ", this.AssetInfoObj.AssetNo);
       if(this.AssetInfoObj.AssetNo !== "" && this.AssetInfoObj.AssetNo !== null) {
         this.InputLookupAssetObj.jsonSelect = { AssetNo: this.AssetInfoObj.AssetNo };
         this.InputLookupAssetObj.idSelect = this.AssetInfoObj.AssetNo;
@@ -288,16 +287,5 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     else if (event.Key === "ProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
     }
-  }
-
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.ReqDecForm.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-    console.log(invalid);
   }
 }
