@@ -101,8 +101,6 @@
                                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name+[i]]?.touched || enjiForm.form.controls[question.name+[i]]?.dirty) && enjiForm.form.controls[question.name+[i]]?.invalid }">
                             </div>
 
-                            <div *ngIf="question.type=='datepicker'">
-                            </div>
                             <div *ngIf="question.type=='dropdown'">
                               <!-- Ini kalau datanya tidak di load dari URL -->
                               <div *ngIf="!question.isFromURL">
@@ -110,11 +108,11 @@
                                   [required]="question.isRequired" class="form-control search-form-control"
                                   attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
                                   attr.data-name="{{question.name}}" attr.label="{{question.label}}"
-                                  [hidden]="question?.items.length == 1"
+                                  [hidden]="question?.items.length == 1" [(ngModel)]="question.value"
                                   [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
                                   <option *ngIf="question.ddlType == 'one' && question?.items.length != 1" value="one">
                                     Select One</option>
-                                  <option
+                                  <option selected
                                     *ngIf="(question?.ddlType == undefined || question.ddlType == 'all') && question?.items.length != 1"
                                     value="all">All</option>
                                   <option *ngFor="let item of question?.items" value="{{item.key}}">
@@ -131,7 +129,7 @@
                                     attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
                                     attr.data-name="{{question.name}}" attr.label="{{question.label}}"
                                     (change)="onChangeEvent($event.target.value, question)"
-                                    [hidden]="question?.itemsUrl.length == 1"
+                                    [hidden]="question?.itemsUrl.length == 1" [(ngModel)]="question.value"
                                     [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
                                     <option *ngIf="question.ddlType == 'one' && question?.itemsUrl.length != 1"
                                       value="one">Select One</option>
@@ -148,7 +146,7 @@
                                   <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
                                     [required]="question.isRequired" class="form-control search-form-control"
                                     attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
-                                    attr.label="{{question.label}}" [hidden]="question?.itemsUrl.length == 1"
+                                    attr.label="{{question.label}}" [hidden]="question?.itemsUrl.length == 1" [(ngModel)]="question.value"
                                     [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
                                     <option *ngIf="question.ddlType == 'one' && question?.itemsUrl.length != 1"
                                       value="one">Select One</option>
