@@ -119,7 +119,7 @@
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "Edit Customer"
         }
     ],
     "bodyList": [
@@ -144,7 +144,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "OrderNo"
+            "property": "CustType"
         },
         {
             "type": "text",
