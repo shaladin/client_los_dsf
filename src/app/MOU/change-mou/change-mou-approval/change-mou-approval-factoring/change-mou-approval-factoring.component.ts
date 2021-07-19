@@ -41,6 +41,11 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
   IsReady: boolean = false;
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
 
+  pageTitle: string;
+  ChangeMouCustId: number;
+  TrxType: string;
+  TrxTypeReqExp:string = CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -58,13 +63,16 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
         this.MouCustId = params["MouCustId"];
+        this.pageTitle = params["PageTitle"];
+        this.ChangeMouCustId = params["ChangeMouCustId"];
+        this.TrxType = params["TrxType"];
       }
     });
   }
 
   ngOnInit() {
 
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -72,6 +80,7 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
     var obj = {
       taskId: this.taskId,

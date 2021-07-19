@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import * as XLSX from 'xlsx';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -45,13 +46,18 @@ export class RoPotentialExecutionComponent implements OnInit {
 
   }
 
-  CallbackCust(ev) {
+  getSelectedCallback(ev) {
     if (ev.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.RowObj.CustNo }).subscribe(
-        (response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.RowObj.CustNo}).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
-      )
+      );
     }
   }
 

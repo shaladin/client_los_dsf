@@ -239,6 +239,22 @@
                                     {
                                         "type": "ApvReqId",
                                         "property": "ApvReqId"
+                                    },
+                                    {
+                                        "type": "PageTitle",
+                                        "property": "MouTypeDescr"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    },
+                                    {
+                                        "type": "MouType",
+                                        "property": "MouType"
+                                    },
+                                    {
+                                        "type": "TrxType",
+                                        "property": "TrxType"
                                     }
                                 ]
                             },
@@ -280,6 +296,22 @@
                                     {
                                         "type": "ApvReqId",
                                         "property": "ApvReqId"
+                                    },
+                                    {
+                                        "type": "PageTitle",
+                                        "property": "MouTypeDescr"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    },
+                                    {
+                                        "type": "MouType",
+                                        "property": "MouType"
+                                    },
+                                    {
+                                        "type": "TrxType",
+                                        "property": "TrxType"
                                     }
                                 ]
                             },
@@ -321,6 +353,22 @@
                                     {
                                         "type": "ApvReqId",
                                         "property": "ApvReqId"
+                                    },
+                                    {
+                                        "type": "PageTitle",
+                                        "property": "MouTypeDescr"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    },
+                                    {
+                                        "type": "MouType",
+                                        "property": "MouType"
+                                    },
+                                    {
+                                        "type": "TrxType",
+                                        "property": "TrxType"
                                     }
                                 ]
                             },

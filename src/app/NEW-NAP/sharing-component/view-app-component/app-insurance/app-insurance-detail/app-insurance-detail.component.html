@@ -178,11 +178,11 @@
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Total Premi to Customer</label>
-          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalCustMainPremiAmt + appInsObj.TotalCustAddPremiAmt + appInsObj.CustAdminFeeAmt | number:'.2':'en-US'}}</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInsCustAmt | number:'.2':'en-US'}}</label>
         </div>
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Total Premi from Insco</label>
-          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInscoMainPremiAmt + appInsObj.TotalInscoAddPremiAmt + appInsObj.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.TotalInsInscoAmt + appInsObj.TotalInscoAddPremiAmt + appInsObj.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
         </div>
       </div>
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">

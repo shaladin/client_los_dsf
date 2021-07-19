@@ -10,7 +10,6 @@ import {
 
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, finalize } from 'rxjs/operators';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { formatDate } from '@angular/common';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ErrorDialogService } from 'app/error-dialog/error-dialog.service';
@@ -19,6 +18,8 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { environment } from 'environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
@@ -93,6 +94,22 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         request = request.clone({ headers: request.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0') });
         request = request.clone({ headers: request.headers.set('Pragma', 'no-cache') });
         request = request.clone({ headers: request.headers.set('Expires', '0') });
+        
+        let newUrl: string;
+        let vers: string;
+        let apiVers = request.url.match(CommonConstant.regexAPI);
+
+        if (apiVers != undefined) {
+            //temporary logic if BE no versioning & camunda
+            if (environment["isCore"] == undefined || !environment["isCore"]) {
+                newUrl = request.url;
+                newUrl = newUrl.replace(apiVers[0], "");
+                request = request.clone({ url: newUrl});
+            }
+            vers = apiVers[0].substring(2);
+            request = request.clone({ headers: request.headers.set('X-Version', vers) });
+        }
+
         request = request.clone({ body: myObj });
         AdInsHelper.InsertLog(this.cookieService, request.url, "API", request.body);
         console.log(JSON.stringify(request.body));

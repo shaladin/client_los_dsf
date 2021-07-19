@@ -110,7 +110,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
-    this.IsReady = true;
   }
 
   responseListTypeCodes: Array<TypeResultObj> = new Array();
@@ -123,7 +122,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   BindManualDeviationData(ev) {
-    // this.IsReady = false;
+    this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
     let manualDevList = []
@@ -326,6 +325,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
+    this.IsReady = true;
   }
 
   //#region Submit

@@ -16,6 +16,8 @@
           </div>
         </div>
 
+        <br>
+
         <div class="card-body">
   
           <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
@@ -189,7 +191,7 @@
 
                 <div *ngIf="IsExisting">
                   <div class="form-group row">
-                    <label class="col-md-3 adins-label" translate>Asset Number</label>
+                    <label class="col-md-3 adins-required-label" translate>Asset Number</label>
                     <div class="col-md-3">
                       <lib-uclookupgeneric [lookupInput]="InputLookupAssetObj"
                         [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='ReqDecForm'

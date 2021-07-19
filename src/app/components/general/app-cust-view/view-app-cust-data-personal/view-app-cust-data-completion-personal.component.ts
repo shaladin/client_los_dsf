@@ -49,6 +49,7 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   ListCustPersonalFinData : Array<object> = new Array<object>();
   CustPersonalFinData : object;
   currentCustFinDataIndex: number;
+  responseCustAttr: Array<object> = new Array<object>();
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
@@ -104,6 +105,7 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
         this.appCustGrpObjs = response.ListAppCustGrpObj;
         this.appCustFamilyObjs = response.ListAppCustFamilyObj;
         this.ListCustPersonalFinData = response["ListAppCustPersonalFinDataObjs"];
+        this.responseCustAttr = response.ListCustFinDataAttrContent;
 
         // filter family yg punya relationship
         if(this.appCustFamilyObjs && this.appCustFamilyObjs.length > 0) {

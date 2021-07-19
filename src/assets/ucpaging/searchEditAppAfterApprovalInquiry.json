@@ -1,5 +1,5 @@
 {
-  "title": "Edit App After Approval Inquiry",
+  "title": "Edit Agreement After Credit Approval Inquiry",
   "exportExcel": false,
   "component": [
     {
@@ -48,7 +48,7 @@
       "label": "Status",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "EDIT_APP_AFT_APV_TRX_STAT"
     }
   ],

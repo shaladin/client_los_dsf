@@ -23,6 +23,7 @@ import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 export class ChangeMouDetailFactoringComponent implements OnInit {
   @Input() MouCustId: number;
+  @Input() ChangeMouTrxId: number = 0;
   @Output() ResponseMouCustFactoring: EventEmitter<MouCustFctrObj> = new EventEmitter();
   @ViewChild(MouCustListedCustFctrComponent)
   MouListedFctrComp: MouCustListedCustFctrComponent;
@@ -146,23 +147,19 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
       refMasterCurrency
     );
 
-    var mouCustFctr = new MouCustFctrObj();
-    mouCustFctr.MouCustId = this.MouCustId;
     let getMouFctr = this.httpClient.post(
       URLConstant.GetMouCustFctrByMouCustId,
-      mouCustFctr
+      {Id: this.MouCustId}
     );
 
     let getChangeMouFctr = this.httpClient.post(
-      URLConstant.GetChangeMouCustFctrByMouCustId,
-      { Id: this.MouCustId }
+      URLConstant.GetChangeMouCustFctrDetailByChangeMouTrxId,
+      { Id: this.ChangeMouTrxId }
     );
 
-    var mouListedFctr = new MouCustListedCustFctrObj();
-    mouListedFctr.MouCustId = this.MouCustId;
     let getListedCustFctr = this.httpClient.post(
       URLConstant.GetListMouCustListedCustFctrByMouCustId,
-      mouListedFctr
+      { Id: this.MouCustId }
     );
 
     this.bindUcLookup();
@@ -202,7 +199,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
         CurrCode: this.currencyList[0].Key,
       });
 
-      if (this.tempChangeMouCustFctr["Status"] == "Failed") {
+      if (this.tempChangeMouCustFctr["ChangeMouCustFctrId"] == 0) {
         this.isListedFctr = mouFctrData["IsListedCust"];
 
         if (mouFctrData["MouCustFctrId"] != 0) {
@@ -232,10 +229,20 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
         }
       }
 
-      this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
+      //this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
+     
+
+      this.MouDetailFactoringForm.controls["MrRecourseTypeCode"].disable();
+      this.MouDetailFactoringForm.controls["IsDisclosed"].disable();
+
+      if(this.MouDetailFactoringForm.controls.MrRecourseTypeCode.value == CommonConstant.WITHOUT_RECOURSE_TYPE)
+      {
+        this.MouDetailFactoringForm.controls["MrInstTypeCode"].disable();
+      }
+      this.MouDetailFactoringForm.updateValueAndValidity();
+
       this.instTypeHandler();
       this.shouldComponentLoad = true;
-
       if (this.paidByList != null) {
         if (this.paidByList != null) {
           let paidBy = this.paidByList.find(x => x.Key == this.MouDetailFactoringForm.controls.MrPaidByCode.value)
@@ -244,7 +251,6 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
           }
         }
       }
-
     });
 
   }
@@ -310,7 +316,6 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
 
   Save(enjiForm) {
     var formData = this.MouDetailFactoringForm.getRawValue();
-    console.log(formData);
     formData.IsListedCust = false;
 
     if (this.IsSingleIns) {
@@ -340,14 +345,14 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
 
   }
 
-  CheckPaidBy(value: string) {
-    if (value == CommonConstant.PAID_BY_CUST_FCTR) {
-      this.MouDetailFactoringForm.controls.IsDisclosed.disable();
-      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(true);
-    } else if (value == CommonConstant.PAID_BY_CUST) {
-      this.MouDetailFactoringForm.controls.IsDisclosed.enable();
-      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
-    }
-    this.MouDetailFactoringForm.updateValueAndValidity();
-  }
+  // CheckPaidBy(value: string) {
+  //   if (value == CommonConstant.PAID_BY_CUST_FCTR) {
+  //     this.MouDetailFactoringForm.controls.IsDisclosed.disable();
+  //     this.MouDetailFactoringForm.controls.IsDisclosed.setValue(true);
+  //   } else if (value == CommonConstant.PAID_BY_CUST) {
+  //     this.MouDetailFactoringForm.controls.IsDisclosed.enable();
+  //     this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
+  //   }
+  //   this.MouDetailFactoringForm.updateValueAndValidity();
+  // }
 }

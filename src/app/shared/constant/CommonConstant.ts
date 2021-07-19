@@ -1,4 +1,8 @@
 export class CommonConstant {
+  
+  // REGEX API
+  public static regexAPI = "\\/[v,V][1-9]\\d*(\\.[1-9]\\d*)*";
+
   //FORM
   public static INVALID_FORM = "INVALID";
 
@@ -17,6 +21,15 @@ export class CommonConstant {
   // MOU
   public static MOU_FRZ_REQ = 'REQ';
   public static MOU_FRZ_APV = 'APV';
+
+  // REF CHANGE ITEM STAT
+  public static ChangeItemCodeAssetDataSerialNo1 = 'ASSET_DATA_SERIAL_NO_1';
+  public static ChangeItemCodeAssetDataSerialNo2 = 'ASSET_DATA_SERIAL_NO_2';
+  public static ChangeItemCodeAssetDataSerialNo3 = 'ASSET_DATA_SERIAL_NO_3';
+  public static ChangeItemCodeAssetDataSerialNo4 = 'ASSET_DATA_SERIAL_NO_4';
+  public static ChangeItemCodeAssetDataSerialNo5 = 'ASSET_DATA_SERIAL_NO_5';
+  public static ChangeItemCodeAssetDataManufacturYear = 'ASSET_DATA_MANUFACTURE_YEAR';
+  public static ChangeItemCodeAssetDataColor = 'ASSET_DATA_COLOR';
 
   //PHN VERF SUBJECT DATA
   public static PHN_VERF_RES_SCS = "SCS";
@@ -329,6 +342,7 @@ export class CommonConstant {
   public static AddrTypeCompany = "COMPANY";
   public static AddrTypeEmergency = "EMERGENCY";
   public static AddrTypeContactInfo = "CONTACT";
+  public static AddrTypeBiz = "BIZ";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";
@@ -548,6 +562,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeInterestInputType = "INTEREST_INPUT_TYPE";
   public static RefMasterTypeCodeAppPaidBy = "APP_PAID_BY";
   public static RefMasterTypeCodeInterestTypeGeneral = "INTRSTTYPE";
+  public static APP_APV = "APP_APV";
   public static RefMasterTypeCodeInterestTypeFactoring = "INTEREST_TYPE";
   public static RefMasterTypeCodeTopCalcBased = "TOP_CALC_BASED";
   public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE";
@@ -573,6 +588,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeLob = "LOB";
   public static RefMasterTypeCodeAppSrcType = "APP_SRC_TYPE";
   public static RefMasterTypeCodeMouType = "MOU_TYPE";
+  public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
@@ -809,9 +825,9 @@ export class CommonConstant {
   public static CashFlowItemMasterCodeOdb = "CASHFLOW_ODB";
 
   //oth expense opl
-  public static OtherExpenseMasterCodeExpStn = "EXP_STN";
+  public static OtherExpenseMasterCodeExpStn = "STNKEXP";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
-  public static OtherExpenseMasterCodeExpRc = "RC";
+  public static OtherExpenseMasterCodeExpRc = "RCEXP";
 
   //SYS CONFIG
   public static ConfigCodeIsUseDms = "IS_USE_DMS";

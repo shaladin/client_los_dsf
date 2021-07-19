@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-976",
+  "version": "1.0.0-1010",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@adins/uc-show-errors": "^1.0.6",
     "@adins/uc-subsection": "^1.0.5",
-    "@adins/ucaddress": "^1.0.58",
+    "@adins/ucaddress": "^1.0.59",
     "@adins/ucaddtotemp": "^1.0.20",
     "@adins/ucapproval": "^1.0.9",
     "@adins/ucapproval-history": "^1.0.9",
@@ -57,7 +57,7 @@
     "@angular/platform-server": "7.0.0",
     "@angular/router": "7.0.0",
     "@aspnet/signalr": "1.1.0",
-    "@microsoft/signalr": "^3.1.16",
+    "@microsoft/signalr": "^3.1.17",
     "@ng-bootstrap/ng-bootstrap": "4.0.0",
     "@ng-select/ng-select": "2.11.2",
     "@ngrx/store": "6.1.0",
@@ -70,10 +70,10 @@
     "@swimlane/ngx-charts": "9.0.0",
     "@swimlane/ngx-datatable": "13.1.0",
     "@types/chartist": "0.9.43",
-    "@types/crypto-js": "^4.0.1",
+    "@types/crypto-js": "^4.0.2",
     "@types/d3-shape": "1.2.4",
     "@types/dragula": "2.1.33",
-    "@types/jquery": "^3.5.5",
+    "@types/jquery": "^3.5.6",
     "angular-archwizard": "^5.0.1",
     "angular-calendar": "0.26.3",
     "angular-file-uploader": "^5.0.2",

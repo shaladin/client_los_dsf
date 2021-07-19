@@ -75,6 +75,14 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
+            <div class="line" [hidden]="SysConfigResultObj?.ConfigValue == 0"></div>
+            <div class="step" data-target="#upload-tab" [hidden]="SysConfigResultObj?.ConfigValue == 0">
+              <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('UPL_DOC')">
+                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-label">Upload Document</span>
+              </button>
+            </div>
           </div>
           <br><br>
           <div class="bs-stepper-content">
@@ -92,7 +100,12 @@
               </app-financial-data-dlfn>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+            </div>
+            <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
+              <app-dms-iframe *ngIf="AppStepIndex == 5 && isDmsReady && SysConfigResultObj?.ConfigValue == 1"
+                              (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="true"
+                              [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

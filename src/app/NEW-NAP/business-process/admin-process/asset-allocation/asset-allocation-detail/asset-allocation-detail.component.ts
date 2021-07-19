@@ -21,7 +21,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 })
 
 export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
-  
+
   @ViewChildren('dyna') UclookupgenericComponents: QueryList<UclookupgenericComponent>;
   // appAssetObj: Array<any>;
   TaskListId: number;
@@ -34,12 +34,13 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
   requisitionList: any;
   dictAssetNumber: { [key: string]: InputLookupObj; } = {};
   agrmntNo: string;
+
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private http: HttpClient,
-    private route: ActivatedRoute, 
-    private router: Router, 
-    private toastr: NGXToastrService, 
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: NGXToastrService,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
@@ -95,13 +96,14 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     }
 
     var reqObj = {
-      AppAssetObjs : listAsset
+      AppAssetObjs: listAsset,
+      WfTaskListId: this.TaskListId
     }
     this.http.post(URLConstant.SubmitAssetAllocation, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.backToPaging();
-        
+
       }
     );
   }
@@ -162,7 +164,7 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     this.InputLookupAssetNumberObj.urlQryPaging = URLConstant.GetAssetStockPagingFromAms;
     this.InputLookupAssetNumberObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetNumberObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
-    
+
     var assetCrit = new Array();
     var critAssetObj = new CriteriaObj();
     critAssetObj.DataType = 'text';
@@ -172,8 +174,8 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     assetCrit.push(critAssetObj);
 
     this.InputLookupAssetNumberObj.addCritInput = assetCrit;
-    this.InputLookupAssetNumberObj.jsonSelect = x ? x : "";
-    this.InputLookupAssetNumberObj.nameSelect = x ? x.FullAssetName : "";
+    this.InputLookupAssetNumberObj.jsonSelect = x.AssetNo != null ? x : "";
+    this.InputLookupAssetNumberObj.nameSelect = x.AssetNo != null ? x.AssetNo : "";
     this.InputLookupAssetNumberObj.isRequired = false;
     this.InputLookupAssetNumberObj.isReady = true;
     return this.InputLookupAssetNumberObj;
@@ -215,7 +217,7 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
         ColorAssetNumber: [appAssetObj.ColorAssetNumber],
         ManuYearAssetNumber: [appAssetObj.ManuYearAssetNumber],
         AssetNo: [appAssetObj.AssetNo],
-        IsChecked:[false]
+        IsChecked: [false]
       })
     }
     else {
@@ -270,6 +272,10 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     if (x.length == this.AssetAllocationForm.controls["ListAsset"]["controls"].length) {
       this.AssetAllocationForm.patchValue({
         IsCheckedAll: this.AssetAllocationForm["controls"]["ListAsset"]["controls"][i]["controls"]["IsChecked"].value
+      });
+    } else {
+      this.AssetAllocationForm.patchValue({
+        IsCheckedAll: false
       });
     }
     var temp = this.UclookupgenericComponents.toArray();

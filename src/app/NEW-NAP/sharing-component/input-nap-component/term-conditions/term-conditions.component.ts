@@ -190,7 +190,7 @@ export class TermConditionsComponent implements OnInit {
             item.get("ExpiredDt").updateValueAndValidity();
           }
           else{
-            item.get("ExpiredDt").disable();
+            item.get("ExpiredDt").enable();
             item.get("ExpiredDt").clearValidators();
             item.get("ExpiredDt").updateValueAndValidity();
           }

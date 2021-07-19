@@ -156,5 +156,5 @@
     }
   ],
   "propertyId": "AssetNo",
-  "propertyName": "FullAssetName"
+  "propertyName": "AssetNo"
 }

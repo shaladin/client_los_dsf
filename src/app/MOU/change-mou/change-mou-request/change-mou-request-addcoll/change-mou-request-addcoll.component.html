@@ -196,6 +196,13 @@
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
     <div id="AddCollOwner">
+        <div class="form-group row">
+          <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
+          <div class="col-md-8">
+            <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()">
+            </mat-checkbox>
+          </div>
+        </div>
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Name</label>
         <div class="col-md-3">
@@ -207,7 +214,7 @@
         <label class="col-md-1"></label>
         <label class="col-md-2 adins-required-label" translate>ID Type</label>
         <div class="col-md-2">
-          <select class="form-control" formControlName="MrIdType"
+          <select class="form-control" formControlName="MrIdType" (change)="ChangeIdType($event.target.value)"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdType.invalid }">
             <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -230,8 +237,27 @@
         <div class="col-md-2">
           <input type="text" class="form-control" formControlName="OwnerIdNo"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
-          <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
-          </lib-uc-show-errors>
+            <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern"[submit]="enjiForm.submitted">
+            </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="!isSelfCust">
+        <label class="col-md-2" translate>Copy Address From</label>
+        <div class="col-md-4">
+          <div class="input-group">
+            <select class="form-control" formControlName="CopyToOwnerLocation">
+              <option *ngFor="let item of copyToLocationObj" [value]="item.Key">
+                {{item.Value}}
+              </option>
+            </select>
+            <div class="input-group-append">
+              <span class="input-group-btn">
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationOwner()" translate>
+                  <i class="fa fa-check-square-o"></i>Copy
+                </button>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm"
@@ -409,6 +435,13 @@
     </lib-ucSubsection>
     <div id="AddCollOwner">
       <div class="form-group row">
+        <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
+        <div class="col-md-8">
+          <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()">
+          </mat-checkbox>
+        </div>
+      </div>
+      <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Name</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerName"
@@ -419,7 +452,7 @@
         <label class="col-md-1"></label>
         <label class="col-md-2 adins-required-label" translate>ID Type</label>
         <div class="col-md-2">
-          <select class="form-control" formControlName="MrIdType"
+          <select class="form-control" formControlName="MrIdType" (change)="ChangeIdType($event.target.value)"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdType.invalid }">
             <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -442,8 +475,27 @@
         <div class="col-md-2">
           <input type="text" class="form-control" formControlName="OwnerIdNo"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
-          <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
-          </lib-uc-show-errors>
+            <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern"[submit]="enjiForm.submitted">
+            </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="!isSelfCust">
+        <label class="col-md-2" translate>Copy Address From</label>
+        <div class="col-md-4">
+          <div class="input-group">
+            <select class="form-control" formControlName="CopyToOwnerLocation">
+              <option *ngFor="let item of copyToLocationObj" [value]="item.Key">
+                {{item.Value}}
+              </option>
+            </select>
+            <div class="input-group-append">
+              <span class="input-group-btn">
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationOwner()" translate>
+                  <i class="fa fa-check-square-o"></i>Copy
+                </button>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm"

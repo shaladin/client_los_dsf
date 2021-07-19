@@ -152,7 +152,7 @@ export class LegalDocDetailComponent implements OnInit {
       flag = true;
     }
 
-    if (issueDt.getDate() > expDt.getDate()) {
+    if (issueDt.getTime() > expDt.getTime()) {
       this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN_EXP_DT);
       flag = true;
     }

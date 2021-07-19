@@ -50,6 +50,11 @@
             "type": "currency",
             "label": "Plafond Amount",
             "property": "PlafondAmt"
+          },
+          {
+            "type": "text",
+            "label": "MOU Type",
+            "property": "MouType"
           }
         ],
         "querystring": {

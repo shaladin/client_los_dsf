@@ -11,6 +11,7 @@ import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import {UcviewgenericComponent} from '@adins/ucviewgeneric';
 
 @Component({
   selector: "app-change-mou-request-detail-customer",
@@ -34,6 +35,12 @@ export class ChangeMouRequestDetailCustomerComponent
   pageType: string;
   pageTitle: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  private viewGeneric: UcviewgenericComponent;
+  @ViewChild('viewGeneric') set content(content: UcviewgenericComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.viewGeneric = content;
+    }
+  }
   resultData: MouCustObj;
   ChangeMouTrxId: number;
   WfTaskListId: number;
@@ -50,24 +57,18 @@ export class ChangeMouRequestDetailCustomerComponent
       }
     });
     this.route.queryParams.subscribe((params) => {
-      console.log("56");
-      console.log(params);
       if (params["mouCustId"] != null) {
         this.mouCustId = params["mouCustId"];
       }
-      console.log("61");
       if (params["mode"] != null) {
         this.pageType = params["mode"];
       }
-      console.log("65");
       if (params["changeMouTrxNo"] != null) {
         this.changeMouTrxNo = params["changeMouTrxNo"];
       }
-      console.log("ChangeMouStatus");
       if (params["ChangeMouStatus"] != null) {
         this.ChangeMouStatus = params["ChangeMouStatus"];
       }
-      console.log("69");
       if (params["ChangeMouCustId"] != null) {
         this.ChangeMouCustId = params["ChangeMouCustId"];
       }
@@ -82,8 +83,7 @@ export class ChangeMouRequestDetailCustomerComponent
   }
 
   ngOnInit() {
-    console.log("SELAW");
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -91,6 +91,8 @@ export class ChangeMouRequestDetailCustomerComponent
         environment: environment.losR3Web,
       },
     ];
+
+    this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
     this.httpClient
       .post(URLConstant.GetMouCustById, { Id: this.mouCustId })
@@ -174,22 +176,25 @@ export class ChangeMouRequestDetailCustomerComponent
 
   editMainInfoHandler() {
     if (this.pageType == "return") {
+
       this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL], {
-        queryParams: {
-          MouCustId: this.mouCustId,
-          mode: "return",
-          MrMouTypeCode: this.mouType,
-          ChangeMouTrxId: this.ChangeMouTrxId
-        },
+        // queryParams: {
+        //   MouCustId: this.mouCustId,
+        //   mode: "return",
+        //   MrMouTypeCode: this.mouType,
+        //   ChangeMouTrxId: this.ChangeMouTrxId
+        // },
+        queryParams: { MouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: "return", MrMouTypeCode: this.mouType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId},
       });
     } else {
       this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL], {
-        queryParams: {
-          MouCustId: this.mouCustId,
-          mode: "edit",
-          MrMouTypeCode: this.mouType,
-          ChangeMouTrxId: this.ChangeMouTrxId
-        },
+        // queryParams: {
+        //   MouCustId: this.mouCustId,
+        //   mode: "edit",
+        //   MrMouTypeCode: this.mouType,
+        //   ChangeMouTrxId: this.ChangeMouTrxId
+        // },
+        queryParams: { MouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: "edit", MrMouTypeCode: this.mouType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId},
       });
     }
   }
@@ -295,8 +300,11 @@ export class ChangeMouRequestDetailCustomerComponent
       }
     }
   }
+  refreshMainInfo(response) {
+    this.viewGeneric.initiateForm();
+  }
 
-  stepHandlerDealerfinancing(response) {
+    stepHandlerDealerfinancing(response) {
     switch (response["StatusCode"].toString()) {
       case "200":
         this.stepperDealerfinancing.next();

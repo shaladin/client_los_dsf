@@ -134,7 +134,9 @@ export class ApplicationDataFL4WComponent implements OnInit {
     WayRestructure: [''],
     MrSlikSecEcoCode: [''],
     CopyFromMailing: [''],
-    CustBankAcc: ['']
+    CustBankAcc: [''],
+    DpSrcPaymentCode: [''],
+    InstSrcPaymentCode: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -167,6 +169,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCspUslAml);
     this.initDdlMrWop();
     this.getPayFregData();
     this.getAppSrcData();
@@ -336,7 +339,9 @@ export class ApplicationDataFL4WComponent implements OnInit {
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
-          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode
+          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode,
+          DpSrcPaymentCode: this.resultResponse.MrDpSrcPaymentCode,
+          InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
 
         if (this.resultResponse.LeadId != null) {
@@ -584,6 +589,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
     temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
     temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
     temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
+    temp.MrDpSrcPaymentCode = this.NapAppModelForm.controls.DpSrcPaymentCode.value;
+    temp.MrInstSrcPaymentCode = this.NapAppModelForm.controls.InstSrcPaymentCode.value;
     return temp;
   }
 

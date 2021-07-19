@@ -176,7 +176,7 @@ export class NapCustMainDataComponent implements OnInit {
         break;
     }
     this.ucViewMainProd.initiateForm();
-    this.NextStep(AppStep, true);
+    //this.NextStep(AppStep, true);
   }
 
   getEvent(event) {

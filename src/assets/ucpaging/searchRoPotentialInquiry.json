@@ -48,7 +48,7 @@
             "label": "Ro Potential Last Step",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "RO_POTENTIAL_LAST_STEP"
         },
         {
@@ -65,7 +65,7 @@
             "label": "Ro Potential Stat",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "RO_POTENTIAL_STAT"
         }
     ],

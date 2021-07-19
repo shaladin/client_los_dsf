@@ -18,6 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import {ResSysConfigResultObj} from '../../../shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -54,7 +55,8 @@ export class NapDetailFormComponent implements OnInit {
     "APP": 1,
     "INVOICE": 2,
     "FIN": 3,
-    "TC": 4
+    "TC": 4,
+    "UPL_DOC": 5
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -63,6 +65,7 @@ export class NapDetailFormComponent implements OnInit {
   });
   OnFormReturnInfo = false;
   dmsObj: DMSObj;
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   appNo: string;
   isDmsReady: boolean = false;
 
@@ -89,6 +92,32 @@ export class NapDetailFormComponent implements OnInit {
   }
   //---
   ngOnInit() {
+    this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response;
+      });
+
+    let appObj = { Id: this.appId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          if (this.ReturnHandlingHId > 0) {
+            this.stepper.to(this.AppStepIndex);
+          }else{
+            this.AppStepIndex = this.AppStep[response.AppCurrStep];
+            this.stepper.to(this.AppStepIndex);
+            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
+              this.initDms();
+            }
+          }
+        } else {
+          this.AppStepIndex = 0;
+          this.stepper.to(this.AppStepIndex);
+        }
+      }
+    );
+
     this.ClaimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
@@ -130,6 +159,82 @@ export class NapDetailFormComponent implements OnInit {
       animation: true,
     });
     this.MakeViewReturnInfoObj();
+  }
+
+  async initDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+      let appObj = { Id: this.appId };
+
+      this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
+        response => {
+          this.appNo = this.NapObj.AppNo;
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          let isExisting = response['IsExistingCust'];
+          if (isExisting) {
+            let custNo = response['CustNo'];
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+
+          let mouId = this.NapObj.MouCustId;
+          console.log(this.NapObj.MouCustId);
+          if (mouId != null && mouId != 0) {
+            let mouObj = { Id: mouId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              result => {
+                let mouCustNo = result['MouCustNo'];
+                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                this.isDmsReady = true;
+              }
+            )
+          }
+          else {
+            this.isDmsReady = true;
+          }
+        }
+      );
+
+      this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
+        response => {
+          this.appNo = this.NapObj.AppNo;
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          let isExisting = response['IsExistingCust'];
+          if (isExisting) {
+            let custNo = response['CustNo'];
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+
+          let mouId = this.NapObj.MouCustId;
+          console.log(this.NapObj.MouCustId);
+          if (mouId != null && mouId != 0) {
+            let mouObj = { Id: mouId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              result => {
+                let mouCustNo = result['MouCustNo'];
+                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                this.isDmsReady = true;
+              }
+            )
+          }
+          else {
+            this.isDmsReady = true;
+          }
+        }
+      );
+    }
   }
 
   ChooseStep(idxStep: number) { // gaad
@@ -184,15 +289,25 @@ export class NapDetailFormComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
+    if (AppStep == CommonConstant.AppStepUplDoc)
+      this.IsLastStep = true;
+    else
+      this.IsLastStep = false;
+
     this.viewMainProd.initiateForm();
     //  this.ucViewMainProd.initiateForm();
   }
 
   NextStep(Step) {
+    if (Step == CommonConstant.AppStepUplDoc) {
+      this.initDms();
+    }
     if (this.ReturnHandlingHId > 0) {
 
     } else {

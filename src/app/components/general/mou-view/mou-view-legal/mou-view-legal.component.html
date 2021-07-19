@@ -1,10 +1,14 @@
 <form class="form form-horizontal">
   <lib-ucSubsection [id]="'LegalReviewId'" [title]="'Legal review'" [panel]="'LegalReview'">
   </lib-ucSubsection>
-  <div *ngFor="let item of listLglReviewData; let i = index" class="form-body" id="LegalReview">
-    <div class="form-group">
-      <label class="col-md-2 adInsLabel" translate>{{item.MrLglReviewDescr}}: </label>
-      <label class="col-md-2 adInsLabel" translate>{{item.LglReviewResult}} </label>
+  <div class="form-body" id="LegalReview">
+    <div class="form-group row">
+      <div class="col-md-6" *ngFor="let item of listLglReviewData; let i = index">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>{{item.MrLglReviewDescr}}: </label>
+          <label class="col-md-6 adInsLabel" translate>{{item.LglReviewResult}} </label>
+        </div>
+      </div>
     </div>
   </div>
 </form>

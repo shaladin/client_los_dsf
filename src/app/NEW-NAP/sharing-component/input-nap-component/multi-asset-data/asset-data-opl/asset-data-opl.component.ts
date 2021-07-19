@@ -145,14 +145,14 @@ export class AssetDataOplComponent implements OnInit {
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
-    FullAssetName: ['', [Validators.required, Validators.maxLength(1000)]],
+    FullAssetName: ['', [Validators.required, Validators.maxLength(1000)]], 
     MrAssetConditionCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
     SupplName: ['', Validators.maxLength(500)],
     AssetPriceAmt: ['', Validators.required],
     AssetNotes: ['', [Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
-    TaxCityIssuer: [''],
+    TaxCityIssuer: ['', Validators.required],
     TaxIssueDt: [''],
     Discount: [0],
     ExpectedDelivDt: [''],
@@ -930,7 +930,7 @@ export class AssetDataOplComponent implements OnInit {
     this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
-    this.InputLookupCityIssuerObj.isRequired = false;
+    this.InputLookupCityIssuerObj.isRequired = true;
     var disCrit = new Array();
     var critDisObj = new CriteriaObj();
     critDisObj.DataType = 'text';

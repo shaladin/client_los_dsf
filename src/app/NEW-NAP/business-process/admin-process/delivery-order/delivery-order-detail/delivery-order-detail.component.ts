@@ -343,6 +343,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.appTC.IsMandatory = tempAppTc.IsMandatory;
       this.appTC.PromisedDt = tempAppTc.PromisedDt;
       this.appTC.CheckedDt = tempAppTc.CheckedDt;
+      this.appTC.IsWaived = tempAppTc.IsWaived;
       this.appTC.Notes = tempAppTc.Notes;
       this.appTC.IsAdditional = tempAppTc.IsAdditional;
       this.appTC.RowVersion = tempAppTc.RowVersion;

@@ -211,7 +211,8 @@ export class NewLeadInputPageComponent implements OnInit {
                 }
               }
             }
-
+            if (!this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetCode) this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetCode = "";
+            if (!this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetName) this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetName = "";
             this.http.post(urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
               () => {
                 this.cancelHandler();

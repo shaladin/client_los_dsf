@@ -9,6 +9,7 @@ export class AppFinDataObj {
     RateType: string;
     TotalAR: number;
     TotalAssetPriceAmt: number;
+    TotalAccessoryPriceAmt: number;
     TotalInterestAmt: number;
     GrossYieldPrcnt: number;
     TdpPaidCoyAmt: number;
@@ -88,7 +89,7 @@ export class AppFinDataObj {
     MinDownPaymentNettPrcnt: number;
     MaxDownPaymentNettPrcnt: number;
     AppSupplEffectiveRatePrcnt: number;
-
+    TotalTopAmount: number
     constructor() {
     }
 }

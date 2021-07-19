@@ -35,7 +35,7 @@ export class ChangeMouInquiryComponent implements OnInit {
           environment: environment.FoundationR3Url
         },
         {
-          name: "MOU_STAT",
+          name: "STATUS",
           environment: environment.FoundationR3Url
         }
       ];

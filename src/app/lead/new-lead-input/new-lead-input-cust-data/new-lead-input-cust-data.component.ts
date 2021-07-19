@@ -97,7 +97,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     MotherName: [''],
     IdNo: [''],
     MrMaritalStatCode: [''],
-    Npwp: [''],
+    Npwp: ['',[Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     Email: ['', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$"), Validators.required]],
     MobilePhone2: ['', Validators.pattern("^[0-9]+$")],
@@ -732,12 +732,10 @@ export class NewLeadInputCustDataComponent implements OnInit {
     let pattern: string = "";
     if (idTypeValue != undefined) {
       if (this.resultPattern != undefined) {
-        if (idTypeValue == 'EKTP') {
           let result = this.resultPattern.find(x => x.Key == idTypeValue)
           if (result != undefined) {
             pattern = result.Value;
           }
-        }
       }
     }
     this.setValidator(pattern);
@@ -760,9 +758,9 @@ export class NewLeadInputCustDataComponent implements OnInit {
         }
       }
       else {
-        this.CustomerDataForm.controls.IdNo.clearValidators();
+        this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
         if(this.typePage == "update"){
-          this.CustomerDataForm.controls.IdNo.setValidators([Validators.required]);
+          this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
         }
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();

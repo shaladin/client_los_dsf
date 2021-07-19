@@ -578,7 +578,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.isExisting = true;
       this.isCopy=false;   
       this.AddCollForm.controls.AssetTypeCode.disable();
-      this.AddCollForm.controls.ManufacturingYear.disable();
+      if (response["ManufacturingYear"]) this.AddCollForm.controls.ManufacturingYear.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
       this.AddCollForm.controls.MrCollateralUsageCode.disable();
       this.AddCollForm.controls.AssetTaxDt.disable();

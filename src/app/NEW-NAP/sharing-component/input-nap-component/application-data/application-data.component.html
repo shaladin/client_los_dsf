@@ -5,12 +5,12 @@
         <form class="form form-horizontal" [formGroup]="NapAppModelForm"
           (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
 
-          <!-- Sales Info -->
-          <lib-ucSubsection [id]="'salesInfomationId'" [title]="'MO Information'" [panel]="'salesInfomation'">
+          <!-- MO Info -->
+          <lib-ucSubsection [id]="'moInfomationId'" [title]="'MO Information'" [panel]="'moInfomation'">
           </lib-ucSubsection>
-          <div class="form-body" id="salesInfomation">
+          <div class="form-body" id="moInfomation">
             <div class="form-group row">
-              <!-- Sales Officer -->
+              <!-- MO Officer -->
               <div class="form-group col-md-2 adins-required">
                 <label class="adInsLabel" translate>MO's Officer </label>
               </div>
@@ -112,6 +112,22 @@
                     </select>
                   </div>
                 </div>
+
+                <div class="form-group row">
+                  <!-- DP Source Payment -->
+                  <label class="col-md-4 adInsLabel" translate>DP Source Payment
+                    Type</label>
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="DpSrcPaymentCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.DpSrcPaymentCode.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of applicationDDLitems['CSP_USL_AML']" value="{{it.Key}}">
+                        {{it.Value}} </option>
+                    </select>
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.DpSrcPaymentCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
               </div>
 
               <div class="col-md-6">
@@ -210,6 +226,21 @@
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
                       (change)="ChangeNumOfInstallmentTenor()">
                     <lib-uc-show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <!-- Installment Source Payment -->
+                  <label class="col-md-4 adInsLabel" translate>Installment Source Payment
+                    Type</label>
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="InstSrcPaymentCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of applicationDDLitems['CSP_USL_AML']" value="{{it.Key}}">
+                        {{it.Value}} </option>
+                    </select>
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.InstSrcPaymentCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -316,7 +347,6 @@
               [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
           </div>
 
-          <div *ngIf="BizTemplateCode != 'OPL'">
             <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
             </lib-ucSubsection>
             <div class="form-body" id="restData">
@@ -382,7 +412,7 @@
                 </div>
               </div>
             </div>
-          </div>
+
 
           <div class="form-actions right">
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
