@@ -1511,6 +1511,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
             if (response["AppAssetFeeOplObjs"][i].FeeCapBehaviourCode == "LOCK") {
               this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["CptlzAmt"].disable();
             }
+            this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["VATAmt"].disable();
             this.calculateFee();
             this.calculateVAT();
             this.calculateCptlz();
@@ -2020,9 +2021,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
       otherExpenseObj.push(this.addGroupOtherExpense(undefined, max + 1));
     }
 
-
     var otherExpObj = this.otherExpenseObj;
-
     this.dictOtherExpense[max + 1] = otherExpObj;
   }
 
@@ -2036,7 +2035,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
         IsLock: [false],
         BehaviourCode: ['DEFAULT']
       })
-    } else {
+    }
+    else {
       return this.fb.group({
         No: [i],
         OthExpenseCode: [appAssetOtherExpenseObj.OthExpenseCode, [Validators.required, Validators.maxLength(50)]],
@@ -2055,7 +2055,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
       this.calculateExpense();
     }
   }
-
 
   async getFeeExpense() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFeeTypeOpl };
@@ -2090,6 +2089,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
         this.GetGSValueInputFeeTypeBehaviour();
       });
   }
+
   isInputTypeLock: boolean = false;
   async GetGSValueInputFeeTypeBehaviour() {
     await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeInputOPLFeeBehaviour }).toPromise().then(
@@ -2100,8 +2100,10 @@ export class AssetExpenseAddEditComponent implements OnInit {
         else {
           this.isInputTypeLock = false;;
         }
-      });
+      }
+    );
   }
+
   isIncludeVAT: boolean = false;  
   changeInputFee() {
     if (this.InsuranceDataForm.controls.FeeInputType.value == "VAT") {
@@ -2112,7 +2114,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
     }
     for (let i = 0; i < this.InsuranceDataForm.controls["FeeObjs"]["controls"].length; i++) {
       this.calculateChangeVAT(i)
-
     }
   }
 
@@ -2187,11 +2188,13 @@ export class AssetExpenseAddEditComponent implements OnInit {
       })
     }
   }
+
   calculateAssetExpense() {
     this.InsuranceDataForm.patchValue({
       TotalAssetExpense: this.InsuranceDataForm["controls"]["TotalInsInscoAmt"].value + this.InsuranceDataForm["controls"]["TotalServiceAmt"].value + this.InsuranceDataForm["controls"]["TotalSparepartAmt"].value + this.InsuranceDataForm["controls"]["TotalOthExpenseAmt"].value + this.InsuranceDataForm["controls"]["TotalFeeCptlzAmt"].value
     });
   }
+
   calculateService() {
     this.InsuranceDataForm.patchValue({
       TotalServiceAmt: 0
@@ -2286,16 +2289,5 @@ export class AssetExpenseAddEditComponent implements OnInit {
       });
     }
     this.calculateAssetExpense();
-  }
-
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.InsuranceDataForm.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-    console.log(invalid);
   }
 }
