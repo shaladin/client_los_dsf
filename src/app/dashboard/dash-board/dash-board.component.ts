@@ -7,7 +7,6 @@ import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThingsToDoIntegrationObj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;
