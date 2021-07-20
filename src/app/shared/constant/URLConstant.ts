@@ -112,20 +112,20 @@ export class URLConstant {
   public static GetListKvpRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/GetListKvpRefAppSrc";
 
   public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-  public static Login = "/Authenticate/Login";
+  public static Login = "/v1/Authenticate/Login";
   public static LoginWithToken = environment.FoundationR3Url + "/v1" + "/Authenticate/LoginWithToken";
-  public static LoginToken = "/UserManagement/HTML6Login";
-  public static Logout = "/UserManagement/LogOut"
-  public static GetListOffice = "/RefOffice/GetRefOfficePaging";
+  public static LoginToken = "/v1/UserManagement/HTML6Login";
+  public static Logout = "/v1/UserManagement/LogOut"
+  public static GetListOffice = "/v1/RefOffice/GetRefOfficePaging";
   public static GetProvince = "/los/v1/get_provinsi";
   public static GetCityByProvince = "/los/v1/get_kota";
   public static getProspectByProspectNo = "/api/MobileProspectTask/GetProspectByProspectNo";
   public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
   public static addCustPersonal = "";
   public static FormDefault = "dashboard/dash-board";
-  public static LoginByRole = "/Authenticate/LoginByRole";
-  public static LoginByToken = "/Authenticate/LoginByToken";
-  public static UpdateToken = "/Authenticate/UpdateRole";
+  public static LoginByRole = "/v1/Authenticate/LoginByRole";
+  public static LoginByToken = "/v1/Authenticate/LoginByToken";
+  public static UpdateToken = "/v1/Authenticate/UpdateRole";
   public static LoginURLFrontEnd = "Pages/Login";
 
   //Asset Master
@@ -163,12 +163,12 @@ export class URLConstant {
   public static GetAssetMasterForLookup = environment.FoundationR3Url + "/v1" + "/AssetMaster/GetAssetMasterForLookup";
 
   //GENERAL SETTING
-  public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
-  public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
-  public static EditGeneralSetting = "/GeneralSetting/EditGeneralSetting";
-  public static GetGeneralSettingPaging = "/GeneralSetting/GetGeneralSettingPaging";
-  public static GetGeneralSettingById = "/GeneralSetting/GetGeneralSettingById";
-  public static GetGeneralSettingValue = "/GeneralSetting/GetGeneralSettingValue";
+  public static GetBusinessDt = "/v1/GeneralSetting/GetBusinessDate";
+  public static AddGeneralSetting = "/v1/GeneralSetting/AddGeneralSetting";
+  public static EditGeneralSetting = "/v1/GeneralSetting/EditGeneralSetting";
+  public static GetGeneralSettingPaging = "/v1/GeneralSetting/GetGeneralSettingPaging";
+  public static GetGeneralSettingById = "/v1/GeneralSetting/GetGeneralSettingById";
+  public static GetGeneralSettingValue = "/v1/GeneralSetting/GetGeneralSettingValue";
   public static GetGeneralSettingByCode = environment.FoundationR3Url + "/v1" + "/GeneralSetting/GetGeneralSettingByCode";
   public static GetGeneralSettingValueByCode = environment.FoundationR3Url + "/v1" + "/GeneralSetting/GetGeneralSettingValueByCode";
   public static GetListGeneralSettingByListGsCode = environment.FoundationR3Url + "/v1" + "/GeneralSetting/GetListGeneralSettingByListGsCode";
