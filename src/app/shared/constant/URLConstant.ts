@@ -1,5 +1,8 @@
 import { environment } from "environments/environment";
 
+// URL" API di concat dengan environment url + version + api path
+// kecuali: API" yang di pakai di UC". contoh: GetPagingObjectBySQL, DeleteFromPaging, Approval CreateNewRFA
+
 export class URLConstant {
   // NOTIFICATION HUB
   public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
