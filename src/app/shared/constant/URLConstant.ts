@@ -21,6 +21,7 @@ export class URLConstant {
 
   // THINGS TO DO
   public static GetListWfTaskListByUsernameAndRoleCodeAndOfficeCodeForThingsToDo = "ServiceTask/GetListWfTaskListByUsernameAndRoleCodeAndOfficeCodeForThingsToDo";
+  public static GetThingsToDoByRole = environment.FoundationR3Url + "/v1" + "/ThingsToDo/GetThingsToDoByRole";
 
   // New Application
   public static AddNewApplication = environment.losUrl + "/v1" + "/Application/AddNewApplication";
