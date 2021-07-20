@@ -118,12 +118,10 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   initInputApprovalObj() {
 
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.inputObj.taskId;
 
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 

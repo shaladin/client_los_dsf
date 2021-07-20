@@ -1786,8 +1786,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
     this.InputLookupServiceObj = new InputLookupObj();
     this.InputLookupServiceObj.urlJson = "./assets/uclookup/NAP/lookupServiceExpense.json";
-    this.InputLookupServiceObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupServiceObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupServiceObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupServiceObj.pagingJson = "./assets/uclookup/NAP/lookupServiceExpense.json";
     this.InputLookupServiceObj.genericJson = "./assets/uclookup/NAP/lookupServiceExpense.json";
     this.InputLookupServiceObj.addCritInput = arrAddCrit;
@@ -1876,8 +1875,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
     this.InputLookupSparePartObj = new InputLookupObj();
     this.InputLookupSparePartObj.urlJson = "./assets/uclookup/NAP/lookupSparePartExpense.json";
-    this.InputLookupSparePartObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupSparePartObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupSparePartObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupSparePartObj.pagingJson = "./assets/uclookup/NAP/lookupSparePartExpense.json";
     this.InputLookupSparePartObj.genericJson = "./assets/uclookup/NAP/lookupSparePartExpense.json";
     this.InputLookupSparePartObj.addCritInput = arrAddCrit;

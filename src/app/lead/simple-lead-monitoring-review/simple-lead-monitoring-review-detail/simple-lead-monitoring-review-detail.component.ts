@@ -52,25 +52,22 @@ export class SimpleLeadMonitoringReviewDetailComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewReviewMonitoringLead.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "UL.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
       {
         name: "UL.MR_CUST_MODEL_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
       {
         name: "UL.LOB_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
 

@@ -5,9 +5,9 @@ import { environment } from "environments/environment";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
-import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-change-mou-request-paging",
@@ -20,21 +20,18 @@ export class ChangeMouRequestPagingComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.inputPagingObj._url =
       "./assets/ucpaging/mou/searchChangeMouRequest.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson =
       "./assets/ucpaging/mou/searchChangeMouRequest.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "MOU.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url,
+        environment: environment.FoundationR3Url + "/v1",
       },
     ];
   }

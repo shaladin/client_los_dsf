@@ -55,8 +55,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
 
   async ngOnInit() {
     this.lookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.lookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.lookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.isRequired = false;
@@ -88,8 +87,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
       (response) => {
         this.Country = response;
         this.lookupCountryObj.urlJson = "./assets/uclookup/lookupCustomerCountry.json";
-        this.lookupCountryObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-        this.lookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
+        this.lookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
         this.lookupCountryObj.pagingJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookupCountryObj.genericJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookupCountryObj.addCritInput = new Array();

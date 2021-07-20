@@ -147,7 +147,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.inputLookupBranchEmpObj.urlJson = "./assets/uclookup/lookupBranchEmp.json";
-        this.inputLookupBranchEmpObj.urlEnviPaging = environment.FoundationR3Url;
+        this.inputLookupBranchEmpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
         this.inputLookupBranchEmpObj.pagingJson = "./assets/uclookup/lookupBranchEmp.json";
         this.inputLookupBranchEmpObj.genericJson = "./assets/uclookup/lookupBranchEmp.json";
         this.inputLookupBranchEmpObj.addCritInput = new Array();
@@ -178,13 +178,13 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.inputLookupBranchEmpObj.addCritInput.push(crit2Obj);
     
         this.inputLookupOfficeEmp1Obj.urlJson = "./assets/uclookup/lookupOfficeEmp.json";
-        this.inputLookupOfficeEmp1Obj.urlEnviPaging = environment.FoundationR3Url;
+        this.inputLookupOfficeEmp1Obj.urlEnviPaging = environment.FoundationR3Url + "/v1";
         this.inputLookupOfficeEmp1Obj.pagingJson = "./assets/uclookup/lookupOfficeEmp.json";
         this.inputLookupOfficeEmp1Obj.genericJson = "./assets/uclookup/lookupOfficeEmp.json";
         this.inputLookupOfficeEmp1Obj.addCritInput = new Array();
     
         this.inputLookupOfficeEmp2Obj.urlJson = "./assets/uclookup/lookupOfficeEmp.json";
-        this.inputLookupOfficeEmp2Obj.urlEnviPaging = environment.FoundationR3Url;
+        this.inputLookupOfficeEmp2Obj.urlEnviPaging = environment.FoundationR3Url + "/v1";
         this.inputLookupOfficeEmp2Obj.pagingJson = "./assets/uclookup/lookupOfficeEmp.json";
         this.inputLookupOfficeEmp2Obj.genericJson = "./assets/uclookup/lookupOfficeEmp.json";
         this.inputLookupOfficeEmp2Obj.isRequired = false;
@@ -199,20 +199,20 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
     
         this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-        this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl;
+        this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl + "/v1";
         this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
     
         this.inputLookupAppCustCompanyShareHolder2Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-        this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
+        this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl + "/v1";
         this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder2Obj.title = "Approver Signer";
         this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
     
         this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-        this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
+        this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl + "/v1";
         this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder3Obj.title = "Approver Signer";

@@ -41,7 +41,6 @@ export class ProdHoViewComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     //** Main Information **//
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
-    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     //** Product Version **//
     this.GenericByIdObj.Id = this.ProdHId;

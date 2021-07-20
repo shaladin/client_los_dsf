@@ -17,7 +17,7 @@ export class LookupCollateralComponent implements OnInit {
 
   ngOnInit() {
     this.inputObj._url = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputObj.enviromentUrl = environment.FoundationR3Url;
+    this.inputObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.inputObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     var criteriaList = new Array<CriteriaObj>();
     var criteriaObj = new CriteriaObj();

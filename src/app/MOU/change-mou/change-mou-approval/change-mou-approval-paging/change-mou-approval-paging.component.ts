@@ -26,8 +26,6 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouApv.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouApv.json";
   }
 

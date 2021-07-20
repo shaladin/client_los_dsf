@@ -64,11 +64,9 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
     else {
       this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
     }
-    this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
 
     this.viewAppCustCompanyContactPersonObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyContactPerson.json";
-    this.viewAppCustCompanyContactPersonObj.viewEnvironment = environment.losUrl;
     this.viewAppCustCompanyContactPersonObj.whereValue = this.arrValue;
 
     this.isDataAlreadyLoaded = true;

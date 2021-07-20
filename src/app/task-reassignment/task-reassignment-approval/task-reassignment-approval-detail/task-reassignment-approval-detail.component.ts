@@ -103,26 +103,16 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
   }
 
   initInputApprovalObj(){
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = URLConstant.GetSingleTaskInfo;
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
     
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = URLConstant.GetTaskHistory;
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
-    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
-    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
-    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
-    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
-    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
-    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
     this.InputApvObj.TrxNo =  this.TaskReassignmentObj.TaskReassignmentTrxNo;
-    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }

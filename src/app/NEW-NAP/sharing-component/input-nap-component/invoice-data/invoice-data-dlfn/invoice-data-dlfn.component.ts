@@ -97,7 +97,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
     this.CollateralNameLookupObj.ddlEnvironments = [
       {
         name: "ASSET_TYPE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
     ];
     this.InputLookupBankObj = new InputLookupObj();

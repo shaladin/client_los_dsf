@@ -291,15 +291,14 @@ export class CustMainDataComponent implements OnInit {
       this.InputLookupCustCoyObj.isDisable = false;
     }
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
-    this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustObj.isRequired = true;
 
     this.InputLookupCustCoyObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
-    this.InputLookupCustCoyObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustCoyObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustCoyObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustCoyObj.isReadonly = false;

@@ -1,6 +1,5 @@
-import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -15,7 +14,6 @@ import { environment } from 'environments/environment';
   styles: []
 })
 export class NewLeadUpdateComponent implements OnInit {
-  @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj = new UcPagingObj();
 
   constructor(
@@ -25,20 +23,16 @@ export class NewLeadUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchSimpleLeadUpdate.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchSimpleLeadUpdate.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "L.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
       {
         name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
   }

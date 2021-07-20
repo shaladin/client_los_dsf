@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-report',
@@ -51,7 +52,7 @@ export class ReportComponent implements OnInit {
     // this.inputObj = new InputSearchObj();
     // this.inputObj._url = "./assets/ucpaging/searchAppInquiry.json";
 
-    this.ddlOfficeObj.apiUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlOfficeObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.ddlOfficeObj.requestObj = {
       RefMasterTypeCode: "BUILDING_OWNERSHIP"
     };

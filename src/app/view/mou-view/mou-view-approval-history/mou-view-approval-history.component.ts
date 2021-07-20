@@ -32,7 +32,6 @@ export class MouViewApprovalHistoryComponent implements OnInit {
     this.http.post(URLConstant.GetRfaLogByTrxNo, {TrxNo:this.MouCustNo}).subscribe(
       (response) => {
         this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-        this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
         this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
         if(response['ListRfaLogObj'].length > 0){
           this.InputApprovalHistoryObj.RequestId = response['ListRfaLogObj'][0]['RfaNo'];  
