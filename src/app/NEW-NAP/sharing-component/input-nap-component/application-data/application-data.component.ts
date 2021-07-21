@@ -288,7 +288,7 @@ export class ApplicationDataComponent implements OnInit {
   getInterestTypeCode() {
     let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
-    obj.RefProdCompntCode = CommonConstant.APP_APV;
+    obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
     obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
