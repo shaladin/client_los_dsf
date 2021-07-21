@@ -1026,6 +1026,9 @@ export class URLConstant {
   public static GetListAppInsObjByAgrmntIdForView = environment.losUrl + "/v1" + "/AppIns/GetListAppInsObjByAgrmntIdForView";
   public static GetAppInsObjViewDetail = environment.losUrl + "/v1" + "/AppIns/GetAppInsObjViewDetail";
   public static GetListCollateralAppInsObjForViewByAppId = environment.losUrl + "/v1" + "/AppIns/GetListCollateralAppInsObjForViewByAppId";
+  public static GetListAppCollateralForCopyInsuranceByAppId = environment.losUrl + "/v1" + "/AppIns/GetListAppCollateralForCopyInsuranceByAppId";
+  public static GetListInsuranceDataForCopyInsuranceByAppId = environment.losUrl + "/v1" + "/AppIns/GetListInsuranceDataForCopyInsuranceByAppId";
+  public static CopyInsuranceData = environment.losUrl + "/v1" + "/AppIns/CopyInsuranceData";
 
   //APP INSURANCE
   public static ExecuteInsRateRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateRule";
