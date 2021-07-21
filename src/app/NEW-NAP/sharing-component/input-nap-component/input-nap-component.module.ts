@@ -110,6 +110,7 @@ import { SchmStepUpStepDownLeasingFL4WComponent } from "app/NEW-NAP/FL4W/input-n
 import { SchmStepUpStepDownCummulativeFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-FL4W.component";
 import { SchmEvenPrincipalFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
 import { SchmBalloonFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
+import { ApplicationDataOplComponent } from "./application-data/application-data-opl/application-data-opl.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -146,6 +147,7 @@ export const customCurrencyMaskConfig = {
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
+    ApplicationDataOplComponent,
     ApplicationDataRefinancingComponent,
     LoanObjectComponent,
     SearchCrossAppComponent,
@@ -257,6 +259,7 @@ export const customCurrencyMaskConfig = {
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
+    ApplicationDataOplComponent,
     ApplicationDataRefinancingComponent,
     LoanObjectComponent,
     SearchCrossAppComponent,

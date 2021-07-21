@@ -19,15 +19,16 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { environment } from 'environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
     count = 0;
-    constructor(public errorDialogService: ErrorDialogService, private router: Router, public toastr: ToastrService, private cookieService: CookieService) { }
+    constructor(public errorDialogService: ErrorDialogService, private spinner: NgxSpinnerService, private router: Router, public toastr: ToastrService, private cookieService: CookieService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log(request);
         if (request.method == "POST" && (request.body == null || request.body.isLoading == undefined || request.body.isLoading == true)) {
-            // this.spinner.show();
+            this.spinner.show();
         }
         if (request.url != "./assets/i18n/en.json") {
             this.count++;
@@ -42,7 +43,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         var checkSession = AdInsHelper.CheckSessionTimeout(this.cookieService);
         if (checkSession == "1") {
             // this.errorDialogService.openDialog(AdInsErrorMessage.SessionTimeout);
-            // this.spinner.hide();
+            this.spinner.hide();
             this.router.navigate([NavigationConstant.PAGES_LOGIN]);
         }
 
@@ -102,7 +103,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             //temporary logic if BE no versioning & camunda
             if (environment["isCore"] == undefined || !environment["isCore"]) {
                 newUrl = request.url;
-                newUrl = newUrl.replace(apiVers[0], "");
+                newUrl = newUrl.replace(apiVers[0], "/v1");
                 request = request.clone({ url: newUrl});
             }
             vers = apiVers[0].substring(2);
@@ -156,10 +157,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (error.error != null) {
                     if (error.error.ErrorMessages != null) {
                         for (var i = 0; i < error.error.ErrorMessages.length; i++) {
-                            this.toastr.error(error.error.ErrorMessages[i].Message, 'Status: ' + error.status, { "tapToDismiss": true });
+                            this.toastr.error(error.error.ErrorMessages[i].Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
                         }
                     } else {
-                        this.toastr.error(error.error.Message, 'Status: ' + error.status, { "tapToDismiss": true });
+                        this.toastr.error(error.error.Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
                     }
                 }
                 else {
@@ -177,7 +178,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     AdInsHelper.ClearPageAccessLog(this.cookieService);
                 }
                 if (this.count == 0) {
-                    // this.spinner.hide();
+                    this.spinner.hide();
                 }
             })
         );

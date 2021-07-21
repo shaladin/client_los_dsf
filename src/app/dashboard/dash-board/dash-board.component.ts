@@ -6,7 +6,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThingsToDoIntegrationObj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
-
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;
@@ -36,7 +36,7 @@ export class DashBoardComponent implements OnInit {
     this.url = environment.DashboardURL;
     this.officeCode = context[CommonConstant.OFFICE_CODE];
     this.roleCode = context[CommonConstant.ROLE_CODE];
-    this.Item.Url = environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole";
+    this.Item.Url = AdInsConstant.GetThingsToDoByRole;
     this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
 
     let integrationObj = new ThingsToDoIntegrationObj();

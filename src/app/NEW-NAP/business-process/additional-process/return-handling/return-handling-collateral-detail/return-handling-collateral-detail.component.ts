@@ -425,8 +425,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   initLookup() {
 
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetCollateral.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetCollateral.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetCollateral.json";
   }

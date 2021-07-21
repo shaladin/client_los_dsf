@@ -78,7 +78,6 @@ export class CustCompletionOplDetailCompanyComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,

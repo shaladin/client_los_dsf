@@ -241,8 +241,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
 
 
     this.InputLookupLinkSupplGradingObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
-    this.InputLookupLinkSupplGradingObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.InputLookupLinkSupplGradingObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupLinkSupplGradingObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupLinkSupplGradingObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.isReadonly = false;
@@ -250,8 +249,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
     this.InputLookupLinkSupplGradingObj.addCritInput = suppCrit;
 
     this.InputLookupLinkManufacturerObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
-    this.InputLookupLinkManufacturerObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.InputLookupLinkManufacturerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupLinkManufacturerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupLinkManufacturerObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkManufacturerObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkManufacturerObj.isReadonly = false;

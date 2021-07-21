@@ -30,14 +30,6 @@ export class FraudDetectionResultComponent implements OnInit {
   @Input() isView: boolean = false;
 
   viewDukcapilMainDataObj: string;
-  losUrl = environment.losUrl;
-  foundationUrl = environment.FoundationR3Url;
-  getAppById = URLConstant.GetAppById;
-  getCustDataByAppId = URLConstant.GetCustDataByAppId;
-  getAppDupCheckCustByAppId = URLConstant.GetCustomerDuplicateCheck;
-  getFraudDukcapilByIdNo = URLConstant.GetFraudDukcapilByIdNo;
-  getAppAssetByAppId = URLConstant.GetAppAssetByAppId;
-  getAssetNegativeDuplicateCheck = URLConstant.GetAssetNegativeDuplicateCheck;
   viewFraudVerifResultObj: UcViewGenericObj = new UcViewGenericObj();
 
   arrValue = [];
@@ -75,11 +67,9 @@ export class FraudDetectionResultComponent implements OnInit {
     await this.getAppCust();
     this.arrValue.push(this.appId);
     this.viewDukcapilObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
-    this.viewDukcapilObj.viewEnvironment = environment.losUrl;
     this.viewDukcapilObj.whereValue = this.arrValue;
     
     this.viewFraudVerifResultObj.viewInput = "./assets/ucviewgeneric/viewFraudVerifResult.json";
-    this.viewFraudVerifResultObj.viewEnvironment = environment.losUrl;
     this.viewFraudVerifResultObj.whereValue = this.arrValue;
   }
 
@@ -100,7 +90,7 @@ export class FraudDetectionResultComponent implements OnInit {
     this.appCustCompanyObj = new AppCustCompanyObj();
     this.dukcapilObj = new FraudDukcapilObj();
     var appReqObj = { "AppId": this.appId }
-    this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, appReqObj).subscribe(
       response => {
         this.appCustObj = response["AppCustObj"];
         this.appCustCompanyObj = response["AppCustCompanyObj"];
@@ -148,7 +138,7 @@ export class FraudDetectionResultComponent implements OnInit {
 
   getApp(appId : number){
     var appReqObj = { "AppId": appId };
-    this.http.post<AppObj>(this.getAppById, appReqObj).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, appReqObj).subscribe(
       response => {
         this.appObj = response;
         this.trxRefNo = this.appObj.AppNo;
@@ -172,7 +162,7 @@ export class FraudDetectionResultComponent implements OnInit {
   }
 
   getFraudDukcapil(reqObj) {
-    this.http.post(this.getFraudDukcapilByIdNo, reqObj).subscribe(
+    this.http.post(URLConstant.GetFraudDukcapilByIdNo, reqObj).subscribe(
       (response) => {
         if(response["StatusCode"]==200)
           this.dukcapilObj = response[CommonConstant.ReturnObj];
@@ -181,7 +171,7 @@ export class FraudDetectionResultComponent implements OnInit {
   }
 
   getAppDupCheckCust(appId) {
-    this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
+    this.http.post(URLConstant.GetCustomerDuplicateCheck, appId).subscribe(
       (response) => {
         this.listCustDuplicate = response[CommonConstant.ReturnObj]["CustDuplicate"];
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);
@@ -197,7 +187,7 @@ export class FraudDetectionResultComponent implements OnInit {
   }
 
   async getAssetNegative(reqObj) {
-    await this.http.post<AppAssetObj>(this.getAppAssetByAppId, reqObj).toPromise().then(
+    await this.http.post<AppAssetObj>(URLConstant.GetAppAssetByAppId, reqObj).toPromise().then(
       response => {
         this.appAssetObj = response;
 
@@ -253,7 +243,7 @@ export class FraudDetectionResultComponent implements OnInit {
       SerialNo4: this.appAssetObj.SerialNo4,
       SerialNo5: this.appAssetObj.SerialNo5,
     }
-    await this.http.post(this.getAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
+    await this.http.post(URLConstant.GetAssetNegativeDuplicateCheck, negativeAssetObj).toPromise().then(
       response => {
         this.listNegativeAppAsset = response[CommonConstant.ReturnObj];
       });;

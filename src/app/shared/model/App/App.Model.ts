@@ -63,6 +63,8 @@ export class AppObj {
     MrCustTypeCode: string;
     RowVersion: string;
     CrdApvResultExpDt: Date;
+    MrDpSrcPaymentCode: string;
+    MrInstSrcPaymentCode: string;
 
     constructor() {
         this.AppId = 0;
@@ -118,5 +120,7 @@ export class AppObj {
         this.MrCustTypeCode = "";
         this.RowVersion = "";
         this.CrdApvResultExpDt = new Date();
+        this.MrDpSrcPaymentCode = "";
+        this.MrInstSrcPaymentCode = "";
     }
 }

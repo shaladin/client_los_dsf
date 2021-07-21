@@ -66,14 +66,14 @@ export class CcAddressDetailComponent implements OnInit {
     let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany };
     this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
       async (response) => {
-        let  tempAddressType = response[CommonConstant.ReturnObj];
+        let tempAddressType = response[CommonConstant.ReturnObj];
         let filterTempAddr = tempAddressType.filter(x => x.Key != CommonConstant.AddrTypeCompany && x.Key != CommonConstant.AddrTypeEmergency);
         this.AddressTypeObj = filterTempAddr;
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key
         })
         this.LoadAddrForCopy();
-        this.ResetForm();
+        // this.ResetForm();
         this.isDllAddressTypeReady = true;
       }
     );

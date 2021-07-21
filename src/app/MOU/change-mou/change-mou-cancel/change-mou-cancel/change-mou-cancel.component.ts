@@ -18,7 +18,7 @@ import { CookieService } from "ngx-cookie";
   styleUrls: [],
 })
 export class ChangeMouCancelComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   user: CurrentUserContext;
 
   constructor(
@@ -27,46 +27,39 @@ export class ChangeMouCancelComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cookieService: CookieService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
-      this.inputPagingObj = new UcPagingObj();
-      this.inputPagingObj._url =
-        "./assets/ucpaging/mou/searchChangeMouCancel.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-      this.inputPagingObj.deleteUrl = "";
-      this.inputPagingObj.pagingJson =
-        "./assets/ucpaging/mou/searchChangeMouCancel.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MC.MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url,
-        },
-        {
-          name: "CMT.STATUS",
-          environment: environment.FoundationR3Url,
-        },
-      ];
+    this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouCancel.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouCancel.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MC.MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url + "/v1",
+      },
+      {
+        name: "CMT.STATUS",
+        environment: environment.FoundationR3Url + "/v1",
+      },
+    ];
   }
 
   getEvent(event) {
     let custId: number;
     let mrCustTypeCode: string;
     if (event.Key == "customer") {
-     let CustNoObj = { CustNo : event.RowObj.CustNo };
+      let CustNoObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
         (response) => {
           custId = response['CustId'];
           mrCustTypeCode = response['MrCustTypeCode'];
 
-          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
+          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
             AdInsHelper.OpenCustomerCoyViewByCustId(custId);
           }
-          
-          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
+
+          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
             AdInsHelper.OpenCustomerViewByCustId(custId);
           }
         });
@@ -76,7 +69,7 @@ export class ChangeMouCancelComponent implements OnInit {
         var mouCancel = new ChangeMouCustConfirmCancelObj();
         mouCancel.Status = CommonConstant.MouStatCancel;
         mouCancel.ChangeMouTrxId = event.RowObj.ChangeMouTrxId;
-        mouCancel.TrxNo =  event.RowObj.TrxNo;
+        mouCancel.TrxNo = event.RowObj.TrxNo;
         mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
         mouCancel.RowVersion = event.RowObj.RowVersions;
         this.http

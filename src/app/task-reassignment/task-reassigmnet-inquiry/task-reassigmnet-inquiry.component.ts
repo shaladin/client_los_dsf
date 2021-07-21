@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 
@@ -10,26 +7,19 @@ import { environment } from 'environments/environment';
   templateUrl: './task-reassigmnet-inquiry.component.html'
 })
 export class TaskReassigmnetInquiryComponent implements OnInit {
-  InputPagingObj: UcPagingObj;
+  InputPagingObj: UcPagingObj = new UcPagingObj();
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { 
-    this.InputPagingObj = new UcPagingObj();
-    this.InputPagingObj._url="./assets/ucpaging/searchTaskReassignmentInquiry.json";
-    this.InputPagingObj.enviromentUrl = environment.losUrl;
-    this.InputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
+  constructor() {
+    this.InputPagingObj._url = "./assets/ucpaging/searchTaskReassignmentInquiry.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/searchTaskReassignmentInquiry.json";
     this.InputPagingObj.ddlEnvironments = [
       {
         name: "T.ACT_CODE",
-        environment: environment.losUrl
+        environment: environment.losUrl + "/v1"
       },
       {
         name: "T.OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
   }

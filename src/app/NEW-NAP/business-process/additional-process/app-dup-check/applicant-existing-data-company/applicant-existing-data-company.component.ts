@@ -25,7 +25,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
   AppId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
   AppCustObj: AppCustObj;
   AppCustCompanyObj: AppCustCompanyObj;
   ListAppShareholderDuplicate: any;

@@ -60,7 +60,6 @@ export class RoTelemkOfferDetailComponent implements OnInit {
     let whereForView = [];
     whereForView.push(this.roPotentialNo);
     this.ViewMainDataObj.viewInput = "./assets/ucviewgeneric/viewTelemkOfferDetailMainInfo.json";
-    this.ViewMainDataObj.viewEnvironment = environment.losUrl;
     this.ViewMainDataObj.whereValue = whereForView;
 
     await this.getVerfResultData();

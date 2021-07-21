@@ -11,7 +11,7 @@ export class UcViewGenericObj {
 
     constructor() {
         this.viewInput = "";
-        this.viewEnvironment = environment.losUrl;
+        this.viewEnvironment = environment.losUrl + "/v1";
         this.ddlEnvironments = new Array<EnviObj>();
         this.listEnvironments = new Array<EnvisObj>();
         this.listEnvironments.push({ environment: "FOUR3WEB", url: environment.FoundationR3Web });

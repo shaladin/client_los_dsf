@@ -101,11 +101,11 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP, Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
 
           {//ini belom jalan kenapa ya
-            Path: '', Title: 'Edit App After Approval', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+            Path: '', Title: 'Edit Agreement After Credit Approval', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
             Submenu: [
-              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING, Title: 'Edit App After Approval Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },//ini buat testing aja
-              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING, Title: 'Edit App After Approval - Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },//ini buat testing aja
-              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY, Title: 'Edit App After Approval Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING, Title: 'Edit Agreement After Credit Approval Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },//ini buat testing aja
+              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING, Title: 'Edit Agreement After Credit Approval - Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },//ini buat testing aja
+              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY, Title: 'Edit Agreement After Credit Approval Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
             ], Params: []
 
           }

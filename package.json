@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-999",
+  "version": "1.0.0-1022",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@adins/uc-show-errors": "^1.0.6",
     "@adins/uc-subsection": "^1.0.5",
-    "@adins/ucaddress": "^1.0.58",
+    "@adins/ucaddress": "^1.0.59",
     "@adins/ucaddtotemp": "^1.0.20",
     "@adins/ucapproval": "^1.0.9",
     "@adins/ucapproval-history": "^1.0.9",
@@ -39,7 +39,7 @@
     "@adins/uclookupgeneric": "^2.0.30",
     "@adins/ucpaging": "^2.0.39",
     "@adins/ucreport": "^2.0.5",
-    "@adins/ucsearch": "^2.2.25",
+    "@adins/ucsearch": "^2.2.30",
     "@adins/ucthingstodo": "^1.0.5",
     "@adins/ucupload": "^1.7.7",
     "@adins/ucviewgeneric": "^2.0.75",
@@ -57,7 +57,7 @@
     "@angular/platform-server": "7.0.0",
     "@angular/router": "7.0.0",
     "@aspnet/signalr": "1.1.0",
-    "@microsoft/signalr": "^3.1.16",
+    "@microsoft/signalr": "^3.1.17",
     "@ng-bootstrap/ng-bootstrap": "4.0.0",
     "@ng-select/ng-select": "2.11.2",
     "@ngrx/store": "6.1.0",
