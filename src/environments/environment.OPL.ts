@@ -9,7 +9,7 @@ export const environment = {
   // losUrl: 'http://localhost:5001',
   // FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3impl-appsvr.ad-ins.com/ROS_BE',
-  FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_OPL',
+  FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_OPL/v1',
   DMSUrl : "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
   AMSUrl : "http://r3impl-appsvr.ad-ins.com/AMS",
   LMSUrl : "http://r3impl-appsvr.ad-ins.com/LMS",
