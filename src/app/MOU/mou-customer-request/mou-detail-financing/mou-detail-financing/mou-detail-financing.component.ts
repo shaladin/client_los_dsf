@@ -20,6 +20,7 @@ import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-mou-detail-financing',
@@ -31,6 +32,17 @@ export class MouDetailFinancingComponent implements OnInit {
   @Output() ResponseMouCustFactoring: EventEmitter<any> = new EventEmitter();
   @ViewChild('LookUpManufacturer') ucInputLookupLinkManufacturerObj: UclookupgenericComponent;
   @ViewChild('LookUpSupplGrading') ucInputLookupLinkSupplGradingObj: UclookupgenericComponent;
+
+  dropdownSettings: IDropdownSettings = {
+    singleSelection: false,
+    idField: 'PayFreqCode',
+    textField: 'Descr',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 5,
+    allowSearchFilter: true
+  };
+  listSelectedItem:Array<any>;
 
   wopList: Array<KeyValueObj>;
   instTypeList: Array<KeyValueObj>;
@@ -67,7 +79,6 @@ export class MouDetailFinancingComponent implements OnInit {
     WopCode: ['', [Validators.required]],
     MrInstTypeCode: ['', [Validators.required]],
     TopDays: [0, [Validators.min(0)]],
-    PayFreqCode: ['', [Validators.required]],
     InterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
     Notes: [''],
     CurrCode: ['', [Validators.required]],
@@ -93,6 +104,7 @@ export class MouDetailFinancingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.listSelectedItem= new Array<any>();
     this.initLookup();
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
@@ -142,7 +154,7 @@ export class MouDetailFinancingComponent implements OnInit {
     var rmSingleInstCalcMethod = new RefMasterObj();
     rmSingleInstCalcMethod.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSingleInstCalcMethod;
     let getSingleInstCalcMethod = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmSingleInstCalcMethod);
-    let getPayFreq = this.httpClient.post(URLConstant.GetListActiveRefPayFreq, null);
+    let getPayFreq = this.httpClient.post(URLConstant.GetListRefPayFreqForMou, null);
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
     let getInstSchm = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
@@ -161,7 +173,7 @@ export class MouDetailFinancingComponent implements OnInit {
         this.wopList = response[1].ReturnObject;
         this.instTypeList = response[3].ReturnObject;
         this.singleInstCalcMthdList = response[4];
-        this.payFreqList = response[5];
+        this.payFreqList = response[5].ReturnObject;
         this.instSchmList = response[6];
         this.currencyList = response[7].ReturnObject;
         this.MouDlrFinData = response[8];
@@ -169,7 +181,6 @@ export class MouDetailFinancingComponent implements OnInit {
 
         this.MouDetailFinancingForm.patchValue({
           WopCode: this.wopList[0].Key,
-          PayFreqCode: this.payFreqList["ReturnObject"][0]["PayFreqCode"],
           CurrCode: this.currencyList[0].Key,
           AssetCondition: this.AsseConditionLis[0],
           MrInstTypeCode: this.instTypeList[0].Key,
@@ -187,7 +198,6 @@ export class MouDetailFinancingComponent implements OnInit {
           this.MouDetailFinancingForm.patchValue({
             WopCode: this.MouDlrFinData["WopCode"],
             TopDays: this.MouDlrFinData["TopDays"],
-            PayFreqCode: this.MouDlrFinData["PayFreqCode"],
             InterestRatePrcnt: this.MouDlrFinData["InterestRatePrcnt"],
             Notes: this.MouDlrFinData["Notes"],
             TopInterestRatePrcnt: this.MouDlrFinData["TopInterestRatePrcnt"],
@@ -201,6 +211,11 @@ export class MouDetailFinancingComponent implements OnInit {
             MrInstTypeCode: this.MouDlrFinData["MrInstTypeCode"],
             VirtualAccNo: this.MouDlrFinData["VirtualAccNo"]
           });
+
+          if(this.MouDlrFinData['MrInstTypeCode'] == CommonConstant.InstTypeMultiple){
+            const listPayFreqCode = this.MouDlrFinData["PayFreqCode"].split(';');
+            this.listSelectedItem = this.payFreqList.filter(x=> listPayFreqCode.includes(x.PayFreqCode));
+          }
 
           this.instTypeHandler(this.MouDlrFinData["MrInstTypeCode"]);
         }
@@ -226,6 +241,12 @@ export class MouDetailFinancingComponent implements OnInit {
     if (this.MouCustDlrFindData.MaximumMonthsForExtend < this.MouCustDlrFindData.MaximumTimesForExtends) {
       this.toastr.warningMessage(ExceptionConstant.EXTENDS_TIME_INVLID);
       return;
+    }
+    if(! this.IsSingleIns){
+      if(this.listSelectedItem.length == 0){
+        this.toastr.warningMessage("Please Select Payment Frequency");
+        return;
+      }
     }
     console.log(this.MouCustDlrFindData);
     this.httpClient.post(URLConstant.AddEditMouCustDlrFin, this.MouCustDlrFindData).subscribe(
@@ -347,7 +368,6 @@ export class MouDetailFinancingComponent implements OnInit {
     this.MouCustDlrFindData.WopCode = this.MouDetailFinancingForm.controls.WopCode.value;
     this.MouCustDlrFindData.TopDays = this.MouDetailFinancingForm.controls.TopDays.value;
     this.MouCustDlrFindData.TopInterestRatePrcnt = this.MouDetailFinancingForm.controls.TopInterestRatePrcnt.value;
-    this.MouCustDlrFindData.PayFreqCode = this.MouDetailFinancingForm.controls.PayFreqCode.value;
     this.MouCustDlrFindData.InterestRatePrcnt = this.MouDetailFinancingForm.controls.InterestRatePrcnt.value;
     this.MouCustDlrFindData.MaximumMonthsForExtend = this.MouDetailFinancingForm.controls.MmForExtend.value;
     this.MouCustDlrFindData.MaximumTimesForExtends = this.MouDetailFinancingForm.controls.MaximumExtendTimes.value;
@@ -375,21 +395,23 @@ export class MouDetailFinancingComponent implements OnInit {
       this.MouCustDlrFindData.ManufacturerCode = "-";
       this.MouCustDlrFindData.ManufacturerCustNo = "-";
     }
+
+    if(this.IsSingleIns){
+      this.MouCustDlrFindData.PayFreqCode = CommonConstant.PAY_FREQ_MONTHLY;
+    }else{
+      this.MouCustDlrFindData.PayFreqCode = this.listSelectedItem.map(x=>x.PayFreqCode).join(';');
+    }
   }
 
 
   instTypeHandler(insType) {
     if (insType == CommonConstant.SINGLE_INST_TYPE) {
       this.IsSingleIns = true;
-      this.MouDetailFinancingForm.patchValue({
-        PayFreqCode: CommonConstant.PAY_FREQ_MONTHLY,
-      });
-      this.MouDetailFinancingForm.controls["PayFreqCode"].disable();
+      this.listSelectedItem = new Array<any>();
       // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].enable();
     }
     else if (insType == CommonConstant.MULTIPLE_INST_TYPE) {
       this.IsSingleIns = false;
-      this.MouDetailFinancingForm.controls["PayFreqCode"].enable();
       // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].disable();
     }
   }

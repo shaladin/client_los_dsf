@@ -70,10 +70,12 @@
       <div *ngIf="!IsSingleIns" class="form-group row">
         <label class="col-md-3 adInsLabel adins-required-label" for="PayFreqCode" translate>Payment Frequency</label>
         <div class="col-md-4">
-          <select class="form-control adInsInput" formControlName="PayFreqCode"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.PayFreqCode.invalid }">
-            <option *ngFor="let item of payFreqList?.ReturnObject" [value]="item.PayFreqCode">{{item.Descr}}</option>
-          </select>
+          <ng-multiselect-dropdown
+            [settings]="dropdownSettings"
+            [data]="payFreqList"
+            [(ngModel)]="listSelectedItem"
+            [ngModelOptions]="{standalone: true}"
+          ></ng-multiselect-dropdown>
         </div>
       </div>
       <div class="form-group row">

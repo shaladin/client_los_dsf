@@ -319,6 +319,7 @@ export class URLConstant {
   //REF-PAY
   public static GetListLKvpActiveRefPayFreq = "/RefPayFreq/GetListLKvpActiveRefPayFreq";
   public static GetListActiveRefPayFreq = environment.FoundationR3Url + "/RefPayFreq/GetListActiveRefPayFreq";
+  public static GetListRefPayFreqForMou = environment.FoundationR3Url + "/RefPayFreq/GetListRefPayFreqForMou";
 
   //ZIPCODE
   public static GetRefZipcodePaging = "/RefZipcode/GetRefZipcodePaging";
@@ -504,7 +505,7 @@ export class URLConstant {
   public static GetLeadForUpdateByLeadId = environment.losUrl + "/Lead/GetLeadForUpdateByLeadId";
   public static GetLeadForUpdateByLeadNo = environment.losUrl + "/Lead/GetLeadForUpdateByLeadNo";
   public static UpdateLeadStatAndStepByHuman = environment.losUrl + "/Lead/UpdateLeadStatAndStepByHuman";
-  public static UpdateLeadStepByHuman = environment.losUrl + "/Lead/UpdateLeadStepByHuman";;
+  public static UpdateLeadStepByHuman = environment.losUrl + "/Lead/UpdateLeadStepByHuman";
   public static SubmitWorkflowLeadInput = environment.losUrl + "/Lead/SubmitWorkflowLeadInput";
   public static SubmitWorkflowSimpleLeadInput = environment.losUrl + "/Lead/SubmitWorkflowSimpleLeadInput";
   public static GetLeadPersonalForLookupCopy = environment.losUrl + "/Lead/GetLeadPersonalForLookupCopy";
@@ -894,7 +895,7 @@ export class URLConstant {
   public static GetAppCustBankAccByBankAccNoAndAppCustId = environment.losUrl + "/AppCustBankAcc/GetAppCustBankAccByBankAccNoAndAppCustId";
   public static GetCustBankAccByCustIdAndBankAccNo = environment.FoundationR3Url + "/CustBankAcc/GetCustBankAccByCustIdAndBankAccNo";
 
-  // APP CUST ATTR CONTENT 
+  // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
 
@@ -1126,7 +1127,7 @@ export class URLConstant {
   public static CekDifInvoiceAmountByAppId = environment.losUrl + "/AppInvoice/CekDifInvoiceAmountByAppId";
   public static GetAllNtfAppAmtByMouCustId = environment.losUrl + "/AppInvoice/GetAllNtfAppAmtByMouCustId";
 
-  //app invoice x 
+  //app invoice x
   public static GetListAppInvoiceXAppInvoiceDlrFncngHByAppId = environment.losUrl + "/AppInvoiceX/GetListAppInvoiceAppInvoiceDlrFncngHByAppId";
 
   //App Cust Addr
