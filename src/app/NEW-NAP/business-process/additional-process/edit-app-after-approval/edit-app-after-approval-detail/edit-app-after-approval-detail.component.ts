@@ -54,6 +54,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
   selectedPurchaseOrderHObj;
   isDetail: boolean = true;
   isEditAssetData:boolean = false;
+  tempAssetDataIdx:number=0;
   isEditPoData: Boolean = false;
   listEditedPoData = new Array();
   listEditedAssetData = new Array();
@@ -65,7 +66,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
   arrAddCrit = new Array();;
   IsPOEdited: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-
+  DDLReason;
   EditAppForm = this.fb.group({
     // AppAssetList: this.fb.array([]),
     // PurchaseOrderHList: this.fb.array([]),
@@ -90,11 +91,20 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
 
     async ngOnInit(): Promise<void>  {
     this.arrValue.push(this.agrmntId);
-
+    this.DDLReason = new Array();
+    await this.BindDDLReason();
     await this.initInputApprovalObj();
     await this.getData();
     await this.setdata();
   }
+
+  async BindDDLReason() {
+    var Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeEditAppAfterApproval };
+    await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
+        (response) => {
+            this.DDLReason = response[CommonConstant.ReturnObj];
+        });
+}
 
   async initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
@@ -103,21 +113,12 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
       "TypeCode": CommonConstant.EDIT_APP_AFT_APV_APV_TYPE,
       "Attributes": Attributes,
     }
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_EDIT_APP_AFT_APV_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL;
+    this.InputObj.Reason = this.DDLReason;
     this.InputObj.TrxNo = "-";
+    this.IsReady = true;
   }
 
   async getData()
@@ -187,8 +188,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId] = new InputLookupObj();
 
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
-        this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlQryPaging = "/Generic/GetPagingObjectBySQL";
-        this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlEnviPaging = environment.losUrl;
+        this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlEnviPaging = environment.losUrl + "/v1";
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].pagingJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].genericJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].isReady = true;
@@ -278,10 +278,11 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
     }
   }
 
-  editAssetData(e: AppAssetObj)
+  editAssetData(e: AppAssetObj, idx)
   {
     this.isEditAssetData = true;
     this.isDetail = false;
+    this.tempAssetDataIdx = idx;
 
     this.selectedAppAssetObj = e;
 
@@ -327,6 +328,14 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         this.listEditedAssetData.splice(index, 1);
       
       this.listEditedAssetData.push(e.AppAssetRelatedOutput);
+
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo1 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo1;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo2 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo2;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo3 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo3;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo4 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo4;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].SerialNo5 =  e.AppAssetRelatedOutput.AppAssetObj.SerialNo5;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].Color =  e.AppAssetRelatedOutput.AppAssetObj.Color;
+      this.agrmntDataForEditAppAftApv.AppAssetObjs[this.tempAssetDataIdx].ManufacturingYear =  e.AppAssetRelatedOutput.AppAssetObj.ManufacturingYear;
 
       this.toastr.successMessage("Success");
     }
@@ -501,8 +510,10 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING], {BizTemplateCode : this.BizTemplateCode});
   }
 
+  RFAInfo: Object = new Object();
   SaveForm()
   {
+    this.RFAInfo = {RFAInfo: this.EditAppForm.controls.RFAInfo.value};
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if(this.listEditedAssetData.length <= 0 && this.listEditedPoData.length <= 0)
@@ -521,7 +532,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         EditedPoDataObjs: this.listEditedPoData,
         EditedCommissionDataObjs: this.listEditedCommissionData,
         Notes: this.EditAppForm.controls.Notes.value,
-        RequestRFAObj: this.ApprovalCreateOutput
+        RequestRFAObj: this.RFAInfo
       };
 
       this.http.post(URLConstant.SubmitEditAppAftApvReq, EditAppAftApvObj).subscribe(

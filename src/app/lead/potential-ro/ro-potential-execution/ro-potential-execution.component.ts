@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { environment } from 'environments/environment';
+import { Component, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -7,8 +6,7 @@ import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.mod
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import * as XLSX from 'xlsx';
-import { ActivatedRoute, Router } from '@angular/router';
-
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-ro-potential-execution',
@@ -18,11 +16,9 @@ export class RoPotentialExecutionComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private toastr: NGXToastrService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+    private toastr: NGXToastrService) { }
 
-  TempPagingObj: UcTempPagingObj;
+  TempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   ListSelectedRo: Array<any>;
   ListResultToExcelHeader: Array<Array<string>> = [];
   ListResultToExcelData: Array<Array<string>> = [];
@@ -34,8 +30,6 @@ export class RoPotentialExecutionComponent implements OnInit {
   initAddToTempPaging() {
     this.TempPagingObj = new UcTempPagingObj();
     this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/RoPotentialExecutionTempPaging.json";
-    this.TempPagingObj.enviromentUrl = environment.losUrl;
-    this.TempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/RoPotentialExecutionTempPaging.json";
     this.TempPagingObj.isReady = true;
   }
@@ -45,13 +39,18 @@ export class RoPotentialExecutionComponent implements OnInit {
 
   }
 
-  CallbackCust(ev) {
+  getSelectedCallback(ev) {
     if (ev.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.RowObj.CustNo }).subscribe(
-        (response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.RowObj.CustNo}).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
-      )
+      );
     }
   }
 

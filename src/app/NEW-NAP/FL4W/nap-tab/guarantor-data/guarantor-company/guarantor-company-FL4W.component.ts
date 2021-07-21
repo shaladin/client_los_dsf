@@ -230,16 +230,14 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   initLookup() {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/lookupGuarantorCompany.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/lookupGuarantorCompany.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/lookupGuarantorCompany.json";
     this.inputLookupObj.isReadonly = false;
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.inputLookupObj1.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupObj1.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj1.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.inputLookupObj1.isRequired = false;

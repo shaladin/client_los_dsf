@@ -72,6 +72,7 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
             this.appTC.TcCode = this.InvoiceForm.value.TCList[i].TcCode;
             this.appTC.PriorTo = this.InvoiceForm.value.TCList[i].PriorTo;
             this.appTC.IsChecked = this.InvoiceForm.getRawValue().TCList[i].IsChecked;
+            this.appTC.IsWaived = this.InvoiceForm.getRawValue().TCList[i].IsWaived;
             this.appTC.ExpiredDt = this.InvoiceForm.getRawValue().TCList[i].ExpiredDt;
             this.appTC.IsMandatory = this.InvoiceForm.value.TCList[i].IsMandatory;
             this.appTC.PromisedDt = this.InvoiceForm.getRawValue().TCList[i].PromisedDt;
@@ -130,7 +131,6 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
 
         if (this.LobCode == "DLRFNCNG") {
             this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerifDlrFinancing.json";
-            this.viewGenericObj.viewEnvironment = environment.losUrl;
             this.viewGenericObj.ddlEnvironments = [
                 {
                     name: "ApplicationNo",
@@ -144,7 +144,6 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
             this.IsReady = true;
         } else {
             this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
-            this.viewGenericObj.viewEnvironment = environment.losUrl;
             this.viewGenericObj.ddlEnvironments = [
                 {
                     name: "ApplicationNo",

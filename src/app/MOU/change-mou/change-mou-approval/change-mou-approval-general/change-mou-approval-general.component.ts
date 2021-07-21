@@ -38,6 +38,10 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
   IsReady: boolean = false;
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
 
+  pageTitle: string;
+  ChangeMouCustId: number;
+  TrxType: string;
+  TrxTypeReqExp:string = CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -52,19 +56,24 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
         this.TrxNo = params["TrxNo"];
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
+        this.pageTitle = params["PageTitle"];
+        this.ChangeMouCustId = params["ChangeMouCustId"];
+        this.MouCustId = params["MouCustId"];
+        this.MouType = params["MouType"];
+        this.TrxType = params["TrxType"];
       }
     });
   }
 
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
         environment: environment.losR3Web
       },
     ];
+    this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.taskId
@@ -77,26 +86,16 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
   initInputApprovalObj() {
 
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
 
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
-    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
-    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
-    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
-    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
-    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
-    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
     this.InputApvObj.RequestId = this.ApvReqId;
-    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.TrxNo = this.TrxNo.toString();
     this.IsReady = true;
   }
@@ -126,15 +125,18 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
   }
 
   GetCallBack(event) {
-    console.log(event); // cek dapat apa
-    // if (event.Key == "customer") {
-    //   var custObj = { CustNo: this.custno }; // nanti cek CustNo ada /gak
-    //   this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-    //     response => {
-    //       AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-    //     });
-    // }
-
+    if (event.Key == "customer") {
+      var custObj = { CustNo: event.ViewObj["CustNo"] };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        });
+    }
   }
 
 }

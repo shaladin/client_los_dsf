@@ -183,15 +183,13 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   initUcLookup() {
     this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
-    this.inputLookupExistColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.isRequired = false;
 
     this.inputLookupColl.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupColl.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupColl.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
 
@@ -578,7 +576,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.isExisting = true;
       this.isCopy=false;   
       this.AddCollForm.controls.AssetTypeCode.disable();
-      this.AddCollForm.controls.ManufacturingYear.disable();
+      if (response["ManufacturingYear"]) this.AddCollForm.controls.ManufacturingYear.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
       this.AddCollForm.controls.MrCollateralUsageCode.disable();
       this.AddCollForm.controls.AssetTaxDt.disable();

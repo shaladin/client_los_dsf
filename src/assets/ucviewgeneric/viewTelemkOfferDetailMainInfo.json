@@ -7,9 +7,10 @@
         "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
-            "type": "text",
+            "type": "callback",
             "label": "Customer No",
-            "property": "CustNo"
+            "property": "CustNo",
+            "key": "customer"
           },
           {
             "type": "text",
@@ -17,9 +18,18 @@
             "property": "CustName"
           },
           {
-            "type": "text",
+            "type": "link",
             "label": "Agreement No",
-            "property": "AgrmntNo"
+            "property": "AgrmntNo",
+            "name": "AgrmntNo",
+            "path": "/View/AgrmntView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
           },
           {
             "type": "date",

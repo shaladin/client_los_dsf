@@ -96,7 +96,8 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   onApprovalSubmited(event)
   {
     let ReqCrApvResExpCustomObj = {
-      Tasks: event.Tasks
+      Tasks: event.Tasks,
+      ExtendedCrdApvResultExpDt: this.CrdApvMainDataObj.ExtendedCrdApvResultExpDt
     };
 
     this.http.post(URLConstant.ResultExpiredDaysApproval, ReqCrApvResExpCustomObj).subscribe(
@@ -127,7 +128,6 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
 
   initInputApprovalObj(){
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
     

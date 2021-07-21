@@ -62,6 +62,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_ADD_TC_DETAIL; //'/Nap/AddProcess/ReturnHandlingAddTc/Detail'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_PAGING; //'/Nap/AddProcess/ReturnHandlingCollateral/Paging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_EDIT; //'/Nap/AddProcess/ReturnHandlingCollateral/Edit'
+  public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_DETAIL; //'/Nap/AddProcess/ReturnHandlingCollateral/Detail'
   public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_PAGING; //'/Nap/AddProcess/ReturnHandling/Paging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_APP_PAGING; //'Nap/AddProcess/ReturnHandling/EditAppPaging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_CUST_PAGING; //'Nap/AddProcess/ReturnHandling/editcustpaging'

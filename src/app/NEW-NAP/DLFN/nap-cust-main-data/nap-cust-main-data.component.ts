@@ -82,7 +82,6 @@ export class NapCustMainDataComponent implements OnInit {
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationDF.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",
@@ -176,7 +175,7 @@ export class NapCustMainDataComponent implements OnInit {
         break;
     }
     this.ucViewMainProd.initiateForm();
-    this.NextStep(AppStep, true);
+    //this.NextStep(AppStep, true);
   }
 
   getEvent(event) {

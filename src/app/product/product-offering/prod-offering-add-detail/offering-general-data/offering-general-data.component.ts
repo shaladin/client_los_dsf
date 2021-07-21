@@ -57,10 +57,14 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   initLookup() {
+    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdOfferingHId, { Id: this.ProdOfferingHId }).subscribe(
+      (response) => {
+        let listOffice = response[CommonConstant.ReturnObj];
+
     let user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.InputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
-    this.InputLookUpObj.urlEnviPaging = environment.losUrl;
+    this.InputLookUpObj.urlEnviPaging = environment.losUrl + "/v1";
     this.InputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.InputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.InputLookUpObj.isRequired = false;
@@ -76,8 +80,22 @@ export class OfferingGeneralDataComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = user.OfficeCode;
     this.ArrCrit.push(critObj);
+    
+    let listValueOffice = new Array();
+    for (let i = 0; i < listOffice.length; i++) {
+      listValueOffice.push(listOffice[i].OfficeCode);
+    }
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "POBM.OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = listValueOffice;
+    this.ArrCrit.push(addCrit);
 
     this.InputLookUpObj.addCritInput = this.ArrCrit;
+        this.InputLookUpObj.isReady = true;
+      }
+    );
   }
 
   SaveForm(event) {

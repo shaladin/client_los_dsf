@@ -27,7 +27,7 @@ export class RoPotentialViewComponent implements OnInit {
   ListVerifResultDObj: Array<any>;
   IsViewSubDetail: boolean = false;
   IsFromTelemkOffer: boolean = false;
-
+  IsFromTelemkOfferString: string = "true";
   roPotentialNo: string;
   reqVerfResObj = {
     TrxRefNo: "",
@@ -50,19 +50,22 @@ export class RoPotentialViewComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe(params => {
       this.roPotentialNo = params['RoPotentialNo'];
-      this.IsFromTelemkOffer = params['IsFromTelemkOffer'];
+      this.IsFromTelemkOfferString = params['IsFromTelemkOffer'];
       this.reqVerfResObj.TrxRefNo = this.roPotentialNo;
     });
   }
 
   async ngOnInit() {
+    if(this.IsFromTelemkOfferString == "true"){
+      this.IsFromTelemkOffer = true;
+    }
     let whereForView = [];
     whereForView.push(this.roPotentialNo);
+    console.log(this.IsFromTelemkOffer);
     if (this.IsFromTelemkOffer)
-      this.ViewMainDataObj.viewInput = "./assets/ucviewgeneric/viewRoTelemkOfferCall.json";
+      this.ViewMainDataObj.viewInput = "./assets/ucviewgeneric/viewTelemkOfferDetailMainInfo.json";
     else
       this.ViewMainDataObj.viewInput = "./assets/ucviewgeneric/viewRoPotentialMainInfo.json";
-    this.ViewMainDataObj.viewEnvironment = environment.losUrl;
     this.ViewMainDataObj.whereValue = whereForView;
 
     await this.getVerfResultData();
@@ -122,5 +125,18 @@ export class RoPotentialViewComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_POTENTIAL_RO_TEL_OFFER_DETAIL], { "RoPotentialNo": this.roPotentialNo });
   }
 
-
+  getEvent(event) {
+    if(event.Key == "customer"){
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: event.ViewObj.CustNo}).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        }
+      );
+    }
+  }
 }

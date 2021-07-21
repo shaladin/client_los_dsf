@@ -21,6 +21,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 })
 export class ChangeMouDetailGeneralComponent implements OnInit {
   @Input() MouCustId: number;
+  @Input() ChangeMouTrxId: number = 0;
   @Input() Mode: string;
   @Output() ResponseMouDetailGeneral: EventEmitter<any> = new EventEmitter();
   @ViewChild(ChangeMouCustAssetComponent) mouCustAssetComp: ChangeMouCustAssetComponent;
@@ -97,7 +98,7 @@ export class ChangeMouDetailGeneralComponent implements OnInit {
     mouCustClause.Id = this.MouCustId;
     let getMouCustClause = this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, mouCustClause);
 
-    let getChangeMouCustClause = this.httpClient.post(URLConstant.GetChangeMouCustClauseByMouCustId, mouCustClause);
+    let getChangeMouCustClause = this.httpClient.post(URLConstant.GetChangeMouCustClauseDetailByChangeMouTrxId, {Id: this.ChangeMouTrxId});
 
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause, getChangeMouCustClause]).subscribe(
       (response: any) => {
@@ -147,7 +148,7 @@ export class ChangeMouDetailGeneralComponent implements OnInit {
       this.saveMouCustAssetDetail();
       this.mouCustClause = new MouCustClauseObj();
       this.mouCustClause.MouCustId = this.MouCustId;
-      this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, this.mouCustClause).subscribe(
+      this.httpClient.post(URLConstant.GetChangeMouCustClauseDetailByChangeMouTrxId, {Id: this.ChangeMouTrxId}).subscribe(
         (response: MouCustClauseObj) => {
           this.tempMouCustClause = response;
           this.saveMouDetail();

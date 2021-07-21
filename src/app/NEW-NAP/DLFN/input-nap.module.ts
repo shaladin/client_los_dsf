@@ -12,22 +12,24 @@ import { AdInsModule } from 'app/components/adins-module/adins.module';
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
 import { ArchwizardModule } from 'angular-archwizard';
 import { MainDataComponentModule } from '../sharing-component/main-data-component/main-data-component.module';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
     NapPagingComponent,
-    NapAddComponent, 
+    NapAddComponent,
     NapAddDetailComponent,
-    NapCustMainDataComponent, 
+    NapCustMainDataComponent,
     NapDetailFormComponent],
-  imports: [
-    CommonModule,
-    InputNapDLFNRoutingModule,
-    AdInsModule,
-    InputNapComponentModule,
-    ArchwizardModule,
-    MainDataComponentModule
-  ],
+    imports: [
+        CommonModule,
+        InputNapDLFNRoutingModule,
+        AdInsModule,
+        InputNapComponentModule,
+        ArchwizardModule,
+        MainDataComponentModule,
+        SharedModule
+    ],
   providers: [
     NGXToastrService
   ]

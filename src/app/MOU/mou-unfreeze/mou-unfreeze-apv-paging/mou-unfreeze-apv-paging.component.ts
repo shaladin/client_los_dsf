@@ -35,8 +35,6 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchMouFeezeUnfreezeApvPaging.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouFeezeUnfreezeApvPaging.json";
 
     this.arrCrit = new Array();

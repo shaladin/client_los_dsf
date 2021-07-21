@@ -190,8 +190,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/Lead/lookupAsset.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
 
@@ -290,6 +289,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       (response) => {
         this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
         this.LeadDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
+        this.DownPaymentChange();
       }
     );
 

@@ -101,11 +101,11 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP, Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
 
           {//ini belom jalan kenapa ya
-            Path: '', Title: 'Edit App After Approval', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+            Path: '', Title: 'Edit Agreement After Credit Approval', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
             Submenu: [
-              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING, Title: 'Edit App After Approval Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },//ini buat testing aja
-              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING, Title: 'Edit App After Approval - Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },//ini buat testing aja
-              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY, Title: 'Edit App After Approval Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING, Title: 'Edit Agreement After Credit Approval Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },//ini buat testing aja
+              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING, Title: 'Edit Agreement After Credit Approval - Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },//ini buat testing aja
+              { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY, Title: 'Edit Agreement After Credit Approval Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
             ], Params: []
 
           }
@@ -324,7 +324,7 @@ export const ROUTES: RouteInfo[] = [
       // { Path: NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING, Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_PAGING, Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING, Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
-      { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING, Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
+      // { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING, Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
       { Path: NavigationConstant.NAP_SHARING_FROM_MOU_PAGING, Title: 'New Application From Mou', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING, Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
       {
@@ -360,7 +360,7 @@ export const ROUTES: RouteInfo[] = [
       // { Path: '/Nap/CreditProcess/CreditApproval/Paging', Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_PAGING, Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
       // { Path: '/Nap/AdminProcess/PreGoLive/Approval/Paging', Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }]},
-      { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING, Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
+      // { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING, Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
       { Path: NavigationConstant.NAP_SHARING_FROM_MOU_PAGING, Title: 'New Application From Mou', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
     ], Params: []
   },

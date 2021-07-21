@@ -75,7 +75,6 @@ export class TabApplicationComponent implements OnInit {
     }
 
     await this.GetCrossAppData();
-    await this.GetLoanObjData();
 
     if (this.BizTemplateCode == CommonConstant.DF)
       await this.GetRestObjData();

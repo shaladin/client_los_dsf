@@ -68,7 +68,9 @@ export class ApplicationDataDlfnComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     // MrSlikSecEcoCode: [''],
-    CustBankAcc: ['']
+    CustBankAcc: [''],
+    IntrstRatePrcnt: [0],
+    TopIntrstRatePrcnt: [0]
   })
 
   refMasterInterestType: RefMasterObj = new RefMasterObj();
@@ -108,8 +110,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
   selectedBankAcc: any;
   GetBankInfo: any; 
   appCustId: number;
-  TopIntrstRatePrcnt: number;
-  IntrstRatePrcnt: number;
   IsMouSelect: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
@@ -345,8 +345,10 @@ export class ApplicationDataDlfnComponent implements OnInit {
           });
         }
         this.IsMouSelect = true;
-        this.TopIntrstRatePrcnt = this.mouCustDlrFinObj.TopInterestRatePrcnt;
-        this.IntrstRatePrcnt = this.mouCustDlrFinObj.InterestRatePrcnt;
+        this.SalesAppInfoForm.patchValue({
+          IntrstRatePrcnt: this.mouCustDlrFinObj.InterestRatePrcnt,
+          TopIntrstRatePrcnt: this.mouCustDlrFinObj.TopInterestRatePrcnt
+        });
 
         this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, { Code : this.mouCustDlrFinObj.PayFreqCode }).subscribe(
           (response: any) => {
@@ -382,6 +384,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
                 CharaCredit: this.resultData.CharaCredit,
                 PrevAgrNo: this.resultData.PrevAgrNo,
                 WayRestructure: this.resultData.WayRestructure,
+                IntrstRatePrcnt: this.resultData.InterestRatePrcnt,
+                TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt
                 // MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode
               });
               this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
@@ -442,12 +446,15 @@ export class ApplicationDataDlfnComponent implements OnInit {
   async CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.isSingle = false;
-      this.SalesAppInfoForm.controls.TopDays.disable();
-      this.SalesAppInfoForm.controls.TopBased.disable();
+      // this.SalesAppInfoForm.controls.TopDays.disable();
+      // this.SalesAppInfoForm.controls.TopBased.disable();
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
       this.SalesAppInfoForm.controls.MrWopCode.disable();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();
       this.SalesAppInfoForm.controls.Tenor.enable();
+      this.SalesAppInfoForm.controls.TopDays.setValue(0);
+      this.SalesAppInfoForm.controls["TopDays"].clearValidators();
+      this.SalesAppInfoForm.controls["TopDays"].updateValueAndValidity();
       if (this.mode != "edit") {
         this.SalesAppInfoForm.controls.Tenor.setValue("");
       }
@@ -456,9 +463,10 @@ export class ApplicationDataDlfnComponent implements OnInit {
       this.SalesAppInfoForm.controls.TopBased.enable();
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
       this.SalesAppInfoForm.controls.MrWopCode.disable();
-      this.SalesAppInfoForm.controls.TopDays.disable();
+      this.SalesAppInfoForm.controls.TopDays.enable();
+      this.SalesAppInfoForm.controls["TopDays"].setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      this.SalesAppInfoForm.controls["TopDays"].updateValueAndValidity();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();
-      this.SalesAppInfoForm.controls.Tenor.disable();
       if (this.mode != "edit") {
         this.SalesAppInfoForm.controls.Tenor.setValue(1);
       }
@@ -475,30 +483,18 @@ export class ApplicationDataDlfnComponent implements OnInit {
 
     });
   }
-  // getLookupEconomicSector(ev) {
-  //   this.SalesAppInfoForm.patchValue({
-  //     MrSlikSecEcoCode: ev.MasterCode
-  //   });
-  // }
+  
   makeLookUpObj() {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = { SalesOfficerName: this.resultData.SalesOfficerName };
     this.inputLookupObj.nameSelect = this.resultData.SalesOfficerName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
 
-    // this.inputLookupEconomicSectorObj = new InputLookupObj();
-    // this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    // this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    // this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
-    // this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    // this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    // this.inputLookupEconomicSectorObj.nameSelect = this.resultData["MrSlikSecEcoDescr"];
-    // this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultData["MrSlikSecEcoDescr"] };
     this.isInputLookupObj = true;
   }
 
@@ -591,18 +587,21 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.salesAppInfoObj.listAppCrossObj = tempListAppCrossObj;
 
     if (this.salesAppInfoObj.MrInstTypeCode == CommonConstant.InstTypeSingle) {
-      this.salesAppInfoObj.MrInstSchemeCode = "EP";
-      this.salesAppInfoObj.Tenor = 1;
-      this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
+      //this.salesAppInfoObj.Tenor = 1;
+      // this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
+      this.salesAppInfoObj.NumOfInst = 1;
       this.isSingle = true;
     } else {
-      this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
       this.isSingle = false;
     }
     this.salesAppInfoObj.AppDlrFncngObj = new AppDlrFncng();
     this.salesAppInfoObj.AppDlrFncngObj.TopBased = this.SalesAppInfoForm.controls.TopBased.value;
-
+    this.salesAppInfoObj.AppDlrFncngObj.TopDays = this.SalesAppInfoForm.controls.TopDays.value;
+    this.salesAppInfoObj.AppDlrFncngObj.TopInterestRatePrcnt = this.SalesAppInfoForm.controls.TopIntrstRatePrcnt.value;
+    this.salesAppInfoObj.AppDlrFncngObj.InterestRatePrcnt = this.SalesAppInfoForm.controls.IntrstRatePrcnt.value;
     this.http.post(URLConstant.GetMouCustDlrFindById, { Id: this.salesAppInfoObj.MouCustId }).subscribe(
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng["MouCustDlrFncngId"];

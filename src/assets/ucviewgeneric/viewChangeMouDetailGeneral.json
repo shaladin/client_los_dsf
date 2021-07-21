@@ -18,6 +18,21 @@
           },
           {
             "type": "text",
+            "label": "Payment Frequency",
+            "property": "payFreq"
+          },
+          {
+            "type": "text",
+            "label": "Down Payment(%)",
+            "property": "dpPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "tenor"
+          },
+          {
+            "type": "text",
             "label": "Installment Scheme",
             "property": "instScheme"
           },
@@ -25,31 +40,6 @@
             "type": "text",
             "label": "First Installment Type",
             "property": "firstInstType"
-          },
-          {
-            "type": "text",
-            "label": "Payment Frequency",
-            "property": "payFreq"
-          },
-          {
-            "type": "text",
-            "label": "Down Payment From (%)",
-            "property": "dpFromPrcnt"
-          },
-          {
-            "type": "text",
-            "label": "Down Payment To (%)",
-            "property": "dpToPrcnt"
-          },
-          {
-            "type": "text",
-            "label": "Tenor From",
-            "property": "tenorFrom"
-          },
-          {
-            "type": "text",
-            "label": "Tenor To",
-            "property": "tenorTo"
           }
         ],
         "querystring": {

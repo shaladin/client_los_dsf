@@ -150,7 +150,9 @@ export class ApplicationDataComponent implements OnInit {
     EconomicSector: [''],
     ApplicationNotes: [''],
     CopyFromMailing: [''],
-    CustBankAcc: ['']
+    CustBankAcc: [''],
+    DpSrcPaymentCode: [''],
+    InstSrcPaymentCode: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -193,6 +195,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCspUslAml);
     this.getAppSrcData();
     setTimeout(() => { this.getAppModelInfo() }, 2000);
 
@@ -203,7 +206,6 @@ export class ApplicationDataComponent implements OnInit {
 
         this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: this.user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
-            console.log(response);
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
         );
@@ -259,7 +261,7 @@ export class ApplicationDataComponent implements OnInit {
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
     this.ddlPayFreqObj.customObjName = "DDLRefProdComptCode";
-    this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_ONE;
     this.ddlPayFreqObj.isSelectOutput = true;
     this.isDdlPayFreqReady = true;
   }
@@ -286,7 +288,7 @@ export class ApplicationDataComponent implements OnInit {
   getInterestTypeCode() {
     let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
-    obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    obj.RefProdCompntCode = CommonConstant.APP_APV;
     obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
@@ -393,7 +395,9 @@ export class ApplicationDataComponent implements OnInit {
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
-          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode
+          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode,
+          DpSrcPaymentCode: this.resultResponse.MrDpSrcPaymentCode,
+          InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
 
         if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit) {
@@ -523,7 +527,7 @@ export class ApplicationDataComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultResponse;
@@ -532,7 +536,7 @@ export class ApplicationDataComponent implements OnInit {
 
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
 
@@ -686,6 +690,8 @@ export class ApplicationDataComponent implements OnInit {
     temp.BizTemplateCode = this.BizTemplateCode;
     temp.MrSlikSecEcoCode = this.NapAppModelForm.getRawValue().MrSlikSecEcoCode;
     temp.RowVersion = this.resultResponse.RowVersion;
+    temp.MrDpSrcPaymentCode = this.NapAppModelForm.controls.DpSrcPaymentCode.value;
+    temp.MrInstSrcPaymentCode = this.NapAppModelForm.controls.InstSrcPaymentCode.value;
     if (this.NapAppModelForm.controls.MouCustId.value == "null") {
       temp.MouCustId = "";
     }
@@ -798,9 +804,7 @@ export class ApplicationDataComponent implements OnInit {
         else { this.isTenorValid = true; }
       }
       if (this.isTenorValid == true) {
-        if (this.BizTemplateCode != CommonConstant.OPL) {
-          obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
-        }
+        obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
         this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
           (response) => {
             this.toastr.successMessage('Save Application Data Success!');
@@ -882,6 +886,10 @@ export class ApplicationDataComponent implements OnInit {
     else {
       this.isFixedRate = false;
       this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
+      if(this.BizTemplateCode == CommonConstant.OPL)
+      {
+        this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
+      }
     }
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
@@ -1019,7 +1027,6 @@ export class ApplicationDataComponent implements OnInit {
 
   setTenorOnChange(event) {
     if (event != 'null') {
-      console.log(event);
       this.isFromMouCust = true;
       let mouCustObj = { Id: event }
       this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(

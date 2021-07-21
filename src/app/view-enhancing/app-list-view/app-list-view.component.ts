@@ -43,7 +43,6 @@ export class AppListViewComponent implements OnInit {
 
   async SetMainInfo() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/view/app-list-view/view-application-list-customer-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
   }
 
   async SetAppAndAppOplList() {

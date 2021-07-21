@@ -21,6 +21,7 @@ export class InputAddressObj {
     requiredPhnExt3: boolean;
     showFax: boolean;
     showOwnership: boolean;
+    requiredOwnership: boolean;
     showSubsection: boolean;
     showStayLength: boolean;
     isRequired: boolean;
@@ -42,10 +43,11 @@ export class InputAddressObj {
         this.requiredPhnExt3 = false;
         this.showFax = true;
         this.showOwnership = false;
+        this.requiredOwnership = false;
         this.showSubsection = true;
         this.showStayLength = false;
         this.isRequired = true;
-        this.environmentUrl = environment.FoundationR3Url;
+        this.environmentUrl = environment.FoundationR3Url + "/v1";
         this.isReadonly = false;
     }
 }

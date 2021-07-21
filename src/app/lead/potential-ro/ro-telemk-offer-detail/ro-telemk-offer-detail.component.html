@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<lib-ucviewgeneric [viewGenericObj]="ViewMainDataObj"></lib-ucviewgeneric>
+<lib-ucviewgeneric [viewGenericObj]="ViewMainDataObj" (callback)="getEvent($event)"></lib-ucviewgeneric>
 
 <div class="card">
   <div class="card-body">
@@ -32,7 +32,7 @@
               <tbody *ngIf="TelemkOfferSubj">
                 <tr>
                   <td class="text-left">1</td>
-                  <td class="text-left">{{TelemkOfferSubj.CustNo}}</td>
+                  <td class="text-left"><a href="javascript:void(0);" (click)="viewCust(TelemkOfferSubj.CustNo)">{{TelemkOfferSubj.CustNo}}</a></td>
                   <td class="text-left">{{TelemkOfferSubj.CustName}}</td>
                   <td class="text-left">{{TelemkOfferSubj.PhoneNumber}}</td>
                   <td class="text-center">{{TelemkOfferSubj.DatetimeVerif | date: 'dd-MMMM-yyyy'}}</td>

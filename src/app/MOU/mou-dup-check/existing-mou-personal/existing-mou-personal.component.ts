@@ -23,7 +23,6 @@ export class ExistingMouPersonalComponent implements OnInit {
 
   MouCustId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
   MouCustObj: MouCustObj;
   MouCustPersonalObj: MouCustPersonalObj;
   ListDuplicateMouGuarantor: any;

@@ -12,6 +12,7 @@ import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
 import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { AdInsConstant } from '../AdInstConstant';
 
 @Component({
     selector: 'app-navbar',
@@ -133,8 +134,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
 
     logout() {
-        var url = environment.FoundationR3Url + URLConstant.Logout;
-        this.http.post(url, "");
+        this.http.post(AdInsConstant.Logout, "");
         AdInsHelper.ClearAllLog(this.cookieService);
         this.cookieService.removeAll();
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PAGES_LOGIN], {});
@@ -154,7 +154,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     
     changeModul() {
         var token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-        var url = environment.FoundationR3Web + URLConstant.LoginURLFrontEnd + "?token=" + token;
+        var url = environment.FoundationR3Web + NavigationConstant.PAGES_LOGIN + "?token=" + token;
         window.open(url, "_blank");
     }
 

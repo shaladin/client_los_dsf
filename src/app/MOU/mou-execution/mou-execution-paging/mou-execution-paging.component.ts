@@ -4,6 +4,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-execution-paging',
@@ -32,13 +33,22 @@ export class MouExecutionPagingComponent implements OnInit {
         }
       );
     } else if (event.Key == "customer") {
-      var custNo = event.RowObj.CustNo;
-      var custObj = { CustNo: custNo };
-      var custId: number
+      let custNo = event.RowObj.CustNo;
+      let custObj = { CustNo: custNo };
+      let custId: number;
+      let mrCustTypeCode: string;
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         (response) => {
           custId = response['CustId'];
-          AdInsHelper.OpenCustomerViewByCustId(custId);
+          mrCustTypeCode = response['MrCustTypeCode'];
+
+          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          }
+          
+          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(custId);
+          }
         });
     }
   }

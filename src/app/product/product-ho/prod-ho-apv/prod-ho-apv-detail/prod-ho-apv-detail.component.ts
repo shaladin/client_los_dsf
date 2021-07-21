@@ -48,7 +48,6 @@ export class ProdHoApvDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.TaskId;
 

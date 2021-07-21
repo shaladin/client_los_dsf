@@ -31,11 +31,22 @@ export class MouReviewPagingComponent implements OnInit {
   }
 
   GetCallBack(event) {
+    let custId: number;
+    let mrCustTypeCode: string;
     if (event.Key == "customer") {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        (response) => {
+          custId = response['CustId'];
+          mrCustTypeCode = response['MrCustTypeCode'];
+
+          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          }
+          
+          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(custId);
+          }
         });
     }
   }

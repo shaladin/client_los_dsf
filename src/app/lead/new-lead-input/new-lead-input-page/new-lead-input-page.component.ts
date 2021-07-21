@@ -85,7 +85,6 @@ export class NewLeadInputPageComponent implements OnInit {
       this.claimTask();
     }
     this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewLeadHeaderMainInfo.viewEnvironment = environment.losUrl;
     this.viewLeadHeaderMainInfo.ddlEnvironments = [
       {
         name: "LeadNo",
@@ -211,7 +210,8 @@ export class NewLeadInputPageComponent implements OnInit {
                 }
               }
             }
-
+            if (!this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetCode) this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetCode = "";
+            if (!this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetName) this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetName = "";
             this.http.post(urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
               () => {
                 this.cancelHandler();

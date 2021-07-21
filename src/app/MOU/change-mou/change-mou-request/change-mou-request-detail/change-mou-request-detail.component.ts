@@ -34,17 +34,20 @@ export class ChangeMouRequestDetailComponent implements OnInit {
   IsRevolving: string;
   ChangeMouTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
   noChangeMouData: string = "false";
-  changeMouTrxNo : string;
+  changeMouTrxNo: string;
   ChangeMouCustId: number;
-  ChangeMouStatus : string;
+  ChangeMouStatus: string;
   responseChangeMouObj: any;
   datePipe = new DatePipe("en-US");
-  ChangeMouTrxId:number;
+  ChangeMouTrxId: number;
   ChnMouVersion: number = 1;
   tempNewTrx: boolean = true;
   tempChangeMouTrxId: number = 0;
   tempChangeMouCustId: number = 0;
 
+  revolvingName = "";
+  plafondName = "";
+  mouTypeName = "";
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
     MouCustNo: [""],
@@ -62,7 +65,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     MrChangeMouTypeCode: [""],
     MrRevolvingTypeCode: [""],
     ChangeMouTrxNo: [""],
-    ChangeMouStatus : [""],
+    ChangeMouStatus: [""],
     PlafondType: [""]
   });
 
@@ -97,7 +100,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null)
         this.WfTaskListId = params["WfTaskListId"];
-        
+
       if (params["ChangeMouTrxId"] != null) {
         this.ChangeMouTrxId = params["ChangeMouTrxId"];
       }
@@ -111,15 +114,15 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     this.refOfficeId = userContext.OfficeId;
     this.businessDt = userContext.BusinessDt;
     if (this.pageType == "return") {
-       this.ClaimTask();
+      this.ClaimTask();
     }
 
     //bind data dropdown
-    this.http
+    await this.http
       .post(URLConstant.GetRefMasterListKeyValueActiveByCode, {
         RefMasterTypeCode: CommonConstant.CHANGE_MOU_TYPE,
       })
-      .subscribe((response) => {
+      .toPromise().then((response) => {
         this.ChangeMouTypeList = response[CommonConstant.ReturnObj];
         if (this.pageType != "edit") {
           this.MOUMainInfoForm.patchValue({
@@ -131,9 +134,60 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     if (this.pageType == "edit" || this.pageType == "return") {
       var mouCust = new GenericObj();
       mouCust.Id = this.mouCustId;
-      this.http
+
+      var obj = { Id: this.mouCustId }
+      await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
+        (response) => {
+          console.log(response)
+          //Jika ada data dengan status NEW
+          if (response["ChangeMouTrxId"] != 0) {
+            this.tempChangeMouCustId = response["ChangeMouCustId"];
+            this.tempChangeMouTrxId = response["ChangeMouTrxId"];
+
+            response["EndDt"] = datePipe.transform(
+              response["EndDt"],
+              "yyyy-MM-dd"
+            );
+            if (response["IsRevolving"] == true) {
+              response["IsRevolving"] = "Yes";
+            } else {
+              response["IsRevolving"] = "No";
+            }
+
+            if (
+              response["MrRevolvingTypeCode"] == null ||
+              response["MrRevolvingTypeCode"] == ""
+            ) {
+              response["MrRevolvingTypeCode"] = "-";
+            }
+
+            if (
+              response["PlafondType"] == null ||
+              response["PlafondType"] == ""
+            ) {
+              response["PlafondType"] = "-";
+            }
+
+            this.MOUMainInfoForm.patchValue({
+              ...response,
+            });
+            this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
+
+            this.tempNewTrx = false;
+
+            this.responseChangeMouObj = response;
+            this.CheckMouChangeType(this.responseChangeMouObj.TrxType);
+            this.GetRefmasterData();
+          }
+        }
+      );
+
+      if(this.tempNewTrx == true)
+      {
+        this.http
         .post(URLConstant.GetLatestChangeMouCustVersionById, mouCust)
         .subscribe((response) => {
+          console.log(response);
           if (response["Status"] == "Failed") {
             this.httpClient
               .post(URLConstant.GetMouCustById, mouCust)
@@ -159,10 +213,17 @@ export class ChangeMouRequestDetailComponent implements OnInit {
                   response["MrRevolvingTypeCode"] = "-";
                 }
 
+                if (
+                  response["PlafondType"] == null ||
+                  response["PlafondType"] == ""
+                ) {
+                  response["PlafondType"] = "-";
+                }
+
                 this.MOUMainInfoForm.patchValue({
                   ...response,
                 });
-
+                this.GetRefmasterData();
                 var custObj = { CustNo: response["CustNo"] };
 
                 this.httpClient
@@ -176,6 +237,8 @@ export class ChangeMouRequestDetailComponent implements OnInit {
                     this.ChangeMouTypeList[0].Key
                   );
                 }
+
+                this.GetRefmasterData();
               });
           } else {
             response["StartDt"] = datePipe.transform(
@@ -200,30 +263,46 @@ export class ChangeMouRequestDetailComponent implements OnInit {
               response["MrRevolvingTypeCode"] = "-";
             }
 
+            if (
+              response["PlafondType"] == null ||
+              response["PlafondType"] == ""
+            ) {
+              response["PlafondType"] = "-";
+            }
+
             this.MOUMainInfoForm.patchValue({
               ...response,
             });
             this.ChnMouVersion = response["Version"] + 1;
-            console.log(response);
 
-            if(response["ChangeMouStat"] == CommonConstant.ChangeMouNew || response["ChangeMouStat"] == CommonConstant.ChangeMouReturn)
-            {
+            if (response["ChangeMouStat"] == CommonConstant.ChangeMouNew || response["ChangeMouStat"] == CommonConstant.ChangeMouReturn) {
               this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
-            }
+            }    
           }
+
           this.responseChangeMouObj = response;
           this.CheckMouChangeType(this.responseChangeMouObj.MrChangeMouTypeCode);
-        });     
-    } else {
+          this.GetRefmasterData();
+        });
+      }
+    } 
+    else 
+    {
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: this.mouType,
       });
       this.CheckMouChangeType(this.mouType);
     }
+
+    if(this.MOUMainInfoForm.controls.PlafondType.value == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR)
+    {
+      this.MOUMainInfoForm.controls.PlafondAmt.clearValidators();
+      this.MOUMainInfoForm.controls.PlafondAmt.updateValueAndValidity();
+    }
   }
 
-  
-   ClaimTask() {
+
+  ClaimTask() {
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
@@ -231,16 +310,53 @@ export class ChangeMouRequestDetailComponent implements OnInit {
      this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe();
   }
   
-  MouChangeTypeEvent(event){
+  GetRefmasterData(){
+    if(this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value === "-"){
+      this.revolvingName = "-";
+    }
+    else{
+      this.http
+      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+        RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE, MasterCode: this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value
+      })
+      .subscribe((response) => {
+          this.revolvingName = response["Descr"];
+      });
+    }
+
+    if(this.MOUMainInfoForm.controls.PlafondType.value === "-"){
+      this.plafondName = "-";
+    }
+    else{
+      this.http
+      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+        RefMasterTypeCode: CommonConstant.RefMasterTypeCodePlafonType, MasterCode: this.MOUMainInfoForm.controls.PlafondType.value
+      })
+      .subscribe((response) => {
+        this.plafondName = response["Descr"];
+      });
+    }
+    
+
+    this.http
+    .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMouType, MasterCode: this.MOUMainInfoForm.controls.MrMouTypeCode.value
+    })
+    .subscribe((response) => {
+      this.mouTypeName = response["Descr"];
+    });
+  }
+
+  MouChangeTypeEvent(event) {
     this.CheckMouChangeType(event.target.value);
   }
 
-  CheckMouChangeType(trxType){
-    if(trxType == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP){
+  CheckMouChangeType(trxType) {
+    if (trxType == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP) {
       this.MOUMainInfoForm.patchValue({
         ...this.responseChangeMouObj
       });
-
+      this.GetRefmasterData();
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: trxType,
         EndDt: formatDate(this.businessDt, 'yyyy-MM-dd', 'en-US')
@@ -250,7 +366,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       this.MOUMainInfoForm.controls.PlafondAmt.disable();
       this.MOUMainInfoForm.controls.Notes.disable();
     }
-    if(trxType == CommonConstant.CHANGE_MOU_TRX_TYPE_CHANGE_MOU){
+    if (trxType == CommonConstant.CHANGE_MOU_TRX_TYPE_CHANGE_MOU) {
       this.MOUMainInfoForm.controls.EndDt.enable();
       this.MOUMainInfoForm.controls.RefNo.enable();
       this.MOUMainInfoForm.controls.PlafondAmt.enable();
@@ -269,13 +385,12 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     this.refOfficeId = userContext.OfficeId;
     this.businessDt = userContext.BusinessDt;
 
-    if(this.MOUMainInfoForm.controls.EndDt.value<= this.datePipe.transform(this.businessDt, "yyyy-MM-dd")  && this.MOUMainInfoForm.controls.MrChangeMouTypeCode.value == CommonConstant.CHANGE_MOU_TRX_TYPE_CHANGE_MOU ){
-      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y')  );
-     return;
+    if (this.MOUMainInfoForm.controls.EndDt.value <= this.datePipe.transform(this.businessDt, "yyyy-MM-dd") && this.MOUMainInfoForm.controls.MrChangeMouTypeCode.value == CommonConstant.CHANGE_MOU_TRX_TYPE_CHANGE_MOU) {
+      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+      return;
     }
 
-    if (this.pageType == "edit") 
-    {
+    if (this.pageType == "edit") {
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
       mouCustFormData["Status"] = "NEW";
       mouCustFormData[
@@ -284,72 +399,60 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       mouCustFormData["Version"] = this.ChnMouVersion;
       mouCustFormData["RequestDate"] = this.businessDt;
 
-      var obj = {Id: this.mouCustId}
-      await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
-        (response) => {
-          console.log(response)
-          //Jika ada data dengan status NEW
-          if(response["ChangeMouTrxId"] != 0)
-          {
-            this.tempChangeMouCustId = response["ChangeMouCustId"];
-            this.tempChangeMouTrxId = response["ChangeMouTrxId"];
-            this.tempNewTrx = false;
-          }   
-        }
-      );
-
-      if(this.tempNewTrx == true)
-      {
+      if (this.tempNewTrx == true) {
         this.httpClient
-        .post(URLConstant.AddChangeMou, mouCustFormData)
-        .subscribe((response) => {
-          this.toastr.successMessage(response["Message"]);
-          this.changeMouTrxNo = response["ChangeMouTrxNo"];
-          this.ChangeMouCustId = response["ChangeMouCustId"];
-          this.ChangeMouStatus = response["Status"];
-          this.ChangeMouTrxId = response["ChangeMouTrxId"];
-          if(mouCustFormData["TrxType"] == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP){
-            this.location.back();
-          }else{
-            this.router.navigate(
-              [
-                NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
-                this.MOUMainInfoForm.controls.MrMouTypeCode.value,
-              ],
-              { queryParams: { mouCustId: this.mouCustId , mode: this.pageType , ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo : this.changeMouTrxNo , ChangeMouCustId : this.ChangeMouCustId, ChangeMouStatus : this.ChangeMouStatus , WfTaskListId: this.WfTaskListId} }
-            );
-          }       
-        });
+          .post(URLConstant.AddChangeMou, mouCustFormData)
+          .subscribe((response) => {
+            this.toastr.successMessage(response["Message"]);
+            this.changeMouTrxNo = response["ChangeMouTrxNo"];
+            this.ChangeMouCustId = response["ChangeMouCustId"];
+            this.ChangeMouStatus = response["Status"];
+            this.ChangeMouTrxId = response["ChangeMouTrxId"];
+            if (mouCustFormData["TrxType"] == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP) {
+              this.location.back();
+            } else {
+              this.router.navigate(
+                [
+                  NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
+                  this.MOUMainInfoForm.controls.MrMouTypeCode.value,
+                ],
+                { queryParams: { mouCustId: this.mouCustId, mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, ChangeMouCustId: this.ChangeMouCustId, ChangeMouStatus: this.ChangeMouStatus, WfTaskListId: this.WfTaskListId } }
+              );
+            }
+          });
       }
-      else
-      {
+      else {
         mouCustFormData["ChangeMouCustId"] = this.tempChangeMouCustId;
         mouCustFormData["ChangeMouTrxId"] = this.tempChangeMouTrxId;
         this.httpClient
-        .post(URLConstant.EditChangeMou, mouCustFormData)
-        .subscribe((response) => {
-          this.toastr.successMessage(response["Message"]);
-          this.changeMouTrxNo = response["ChangeMouTrxNo"];
-          this.ChangeMouCustId = response["ChangeMouCustId"];
-          this.ChangeMouStatus = response["Status"];
-          this.ChangeMouTrxId = response["ChangeMouTrxId"];
-          
+          .post(URLConstant.EditChangeMou, mouCustFormData)
+          .subscribe((response) => {
+            this.toastr.successMessage(response["Message"]);
+            this.changeMouTrxNo = response["ChangeMouTrxNo"];
+            this.ChangeMouCustId = response["ChangeMouCustId"];
+            this.ChangeMouStatus = response["Status"];
+            this.ChangeMouTrxId = response["ChangeMouTrxId"];
+
             this.router.navigate(
               [
                 NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
                 this.MOUMainInfoForm.controls.MrMouTypeCode.value,
               ],
-              { queryParams: { mouCustId: this.mouCustId , mode: this.pageType , ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo : this.changeMouTrxNo , ChangeMouCustId : this.ChangeMouCustId, ChangeMouStatus : this.ChangeMouStatus , WfTaskListId: this.WfTaskListId} }
-            );      
-        });
+              { queryParams: { mouCustId: this.mouCustId, mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, ChangeMouCustId: this.ChangeMouCustId, ChangeMouStatus: this.ChangeMouStatus, WfTaskListId: this.WfTaskListId } }
+            );
+          });
       }
-  
-    }else{
-      this.toastr.successMessage("Success");
-      this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],
-        { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: this.pageType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId} }
-      );
-     }
-    
+
+    } else {
+      mouCustFormData["ChangeMouTrxId"] = this.ChangeMouTrxId;
+      this.httpClient
+        .post(URLConstant.EditChangeMou, mouCustFormData)
+        .subscribe((response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],
+            { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: this.pageType, WfTaskListId: this.WfTaskListId, ChangeMouCustId: this.ChangeMouCustId } }
+          );
+        });
+    }
   }
 }

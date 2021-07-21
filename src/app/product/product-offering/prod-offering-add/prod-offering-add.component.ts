@@ -64,8 +64,7 @@ export class ProdOfferingAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.InputLookupObj.urlEnviPaging = environment.losUrl;
-    this.InputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
 
     this.BusinessDt = new Date(this.UserContext[CommonConstant.BUSINESS_DT]);
     this.StartActiveDt = new Date(this.UserContext[CommonConstant.BUSINESS_DT]);

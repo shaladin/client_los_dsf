@@ -15,6 +15,7 @@ export const environment = {
     WebSocketURL: 'https://R3STWEBBE.ad-ins.com/FOUNDATION_BE',    
     FoundationR3Web: 'https://R3STWEBFE.ad-ins.com/FOUNDATION_FE',
     losR3Web: 'https://R3STWEBFE.ad-ins.com/LOS_FE',
+    lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
     WorkflowR3Url: 'http://r3stengine.ad-ins.com/WORKFLOW',
     ApprovalR3Url: 'http://r3stengine.ad-ins.com/approval',
     ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',

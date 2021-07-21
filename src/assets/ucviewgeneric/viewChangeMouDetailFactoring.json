@@ -8,17 +8,27 @@
         "mainInfo": [
           {
             "type": "text",
-            "label": "Virtual Account",
-            "property": "virtualAccNo"
-          },
-          {
-            "type": "text",
             "label": "Currency",
             "property": "currency"
           },
           {
+            "type": "currency",
+            "label": "Plafond Amount",
+            "property": "PlafondAmt"
+          },
+          {
             "type": "text",
-            "label": "Way Of Payment",
+            "label": "Revolving",
+            "property": "IsRevolving"
+          },
+          {
+            "type": "text",
+            "label": "Revolving Type",
+            "property": "RevolvingType"
+          },
+          {
+            "type": "text",
+            "label": "WoP",
             "property": "wop"
           },
           {
@@ -27,19 +37,14 @@
             "property": "resourceType"
           },
           {
-            "type": "text",
-            "label": "Padi By",
-            "property": "paidBy"
-          },
-          {
             "type": "boolean",
-            "label": "Disclosed",
+            "label": "Is Disclosed",
             "property": "isDisclosed"
           },
           {
             "type": "text",
-            "label": "Calculation Method",
-            "property": "calcMethod"
+            "label": "Paid By",
+            "property": "paidBy"
           },
           {
             "type": "text",
@@ -48,7 +53,7 @@
           },
           {
             "type": "text",
-            "label": "TOP Days",
+            "label": "TOP",
             "property": "topDays"
           },
           {
@@ -68,14 +73,14 @@
           },
           {
             "type": "text",
-            "label": "Vendor Name",
-            "property": "vendorName"
-          },
-          {
-            "type": "text",
             "label": "Notes",
             "property": "notes"
-          }
+          },     
+          {
+            "type": "text",
+            "label": "Calculate Method",
+            "property": "calcMethod"
+          }    
         ],
         "querystring": {
           "name": "viewChangeMouDetailFactoring"

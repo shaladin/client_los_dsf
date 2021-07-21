@@ -146,20 +146,20 @@ export class AppAddFixedComponent implements OnInit {
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.isRequired = false;
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -175,8 +175,7 @@ export class AppAddFixedComponent implements OnInit {
 
     this.inputLookupSupplierObj = new InputLookupObj();
     this.inputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplierBranch.json";
-    this.inputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierBranch.json";
     this.inputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplierBranch.json";
   }
@@ -436,13 +435,12 @@ export class AppAddFixedComponent implements OnInit {
 
   productOffering;
   getLookupProductOfferingName(ev: any) {
-    var url = environment.FoundationR3Url + URLConstant.GetListProdOfferingDByProdOfferingCode;
-
+    
     var tempLobCode;
     var tempCurrCode;
     var tempPayFreqCode;
     var tempRefProdTypeCode;
-    this.http.post(url, { Code: ev.ProdOfferingCode }).subscribe(
+    this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCode, { Code: ev.ProdOfferingCode }).subscribe(
       (response) => {
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {

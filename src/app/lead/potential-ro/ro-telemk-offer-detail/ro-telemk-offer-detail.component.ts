@@ -60,7 +60,6 @@ export class RoTelemkOfferDetailComponent implements OnInit {
     let whereForView = [];
     whereForView.push(this.roPotentialNo);
     this.ViewMainDataObj.viewInput = "./assets/ucviewgeneric/viewTelemkOfferDetailMainInfo.json";
-    this.ViewMainDataObj.viewEnvironment = environment.losUrl;
     this.ViewMainDataObj.whereValue = whereForView;
 
     await this.getVerfResultData();
@@ -156,5 +155,33 @@ export class RoTelemkOfferDetailComponent implements OnInit {
 
   onClickBack() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_POTENTIAL_RO_TEL_OFFER_PAGING], {});
+  }
+
+  getEvent(event) {
+    if(event.Key == "customer"){
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: event.ViewObj.CustNo}).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        }
+      );
+    }
+  }
+
+  viewCust(custNo){
+    this.http.post(URLConstant.GetCustByCustNo, { CustNo: custNo}).subscribe(
+      response => {
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+        }
+      }
+    );
   }
 }

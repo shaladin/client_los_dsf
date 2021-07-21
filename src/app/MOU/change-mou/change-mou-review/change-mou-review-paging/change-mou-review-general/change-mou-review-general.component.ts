@@ -37,6 +37,8 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
   ScoreResult: number;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
+  ChangeMouCustId: number;
+  TrxType: string;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild("ApprovalComponent") set content(
     content: UcapprovalcreateComponent
@@ -60,6 +62,9 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
       this.MouCustId = params["MouCustId"];
       this.WfTaskListId = params["WfTaskListId"];
       this.TrxNo = params["TrxNo"];
+      this.ChangeMouCustId = params["ChangeMouCustId"];
+      
+      this.TrxType = params["TrxType"];
     });
   }
 
@@ -68,14 +73,14 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput =
-      "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+      "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
         environment: environment.losR3Web,
       },
     ];
+    this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
     await this.http
       .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
@@ -173,7 +178,12 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
       this.http
         .post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         });
     }
   }
@@ -210,18 +220,6 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode =
-      URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode =
-      URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType =
-      URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory =
-      URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_APV;
     this.InputObj.Reason = this.listReason;

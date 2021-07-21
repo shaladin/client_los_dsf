@@ -1,8 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { environment } from "environments/environment";
-import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 
 @Component({
@@ -13,19 +10,17 @@ import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 export class ChangeMouExecutionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
 
-  constructor(private http: HttpClient, private toastr: NGXToastrService) {}
+  constructor() {}
 
   ngOnInit() {
     this.inputPagingObj._url =
       "./assets/ucpaging/mou/searchChangeMouExec.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson =
       "./assets/ucpaging/mou/searchChangeMouExec.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "MOU.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url,
+        environment: environment.FoundationR3Url + "/v1",
       },
     ];
   }

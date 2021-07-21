@@ -34,14 +34,11 @@ export class ChangeMouReturnPagingComponent implements OnInit {
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouReturn.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouReturn.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "MOU.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
     this.arrCrit = new Array<CriteriaObj>();
@@ -58,7 +55,12 @@ export class ChangeMouReturnPagingComponent implements OnInit {
       var custObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
     }

@@ -57,8 +57,6 @@ export class CopyCanAppMultiBlComponent implements OnInit {
     critObj.value = this.BizTemplateCode;
     
     this.inputPagingObj._url = "./assets/ucpaging/searchCancelledAppCrossBl.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCancelledAppCrossBl.json";
 
   }

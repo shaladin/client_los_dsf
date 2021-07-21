@@ -1,4 +1,4 @@
-<lib-ucaddtotemp *ngIf="TempPagingObj.isReady" [tempPagingObj]="TempPagingObj" (callback)="CallbackTempPaging($event)">
+<lib-ucaddtotemp *ngIf="TempPagingObj.isReady" [tempPagingObj]="TempPagingObj" (callback)="CallbackTempPaging($event)" (getSelected)="getSelectedCallback($event)">
 </lib-ucaddtotemp>
 
 <div class="card-header" *ngIf="ListSelectedRo && ListSelectedRo.length > 0">

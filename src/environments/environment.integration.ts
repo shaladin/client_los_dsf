@@ -15,6 +15,7 @@ export const environment = {
     ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
     FoundationR3Web: 'http://r3web-server.ad-ins.com/Foundation_Integration',
     losR3Web: 'http://r3web-server/LOS_INTEGRATION',
+    lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
     WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_INTEGRATION',
     WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_INTEGRATION',
     DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
