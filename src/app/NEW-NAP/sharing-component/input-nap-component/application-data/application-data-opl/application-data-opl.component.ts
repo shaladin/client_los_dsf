@@ -287,32 +287,32 @@ export class ApplicationDataOplComponent implements OnInit {
     );
   }
 
-  getInterestTypeCode() {
-    let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
-    obj.RefProdCompntCode = CommonConstant.APP_APV;
-    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+  // getInterestTypeCode() {
+  //   let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+  //   obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+  //   obj.RefProdCompntCode = CommonConstant.APP_APV;
+  //   obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
-      (response) => {
-        if (response && response["StatusCode"] == "200") {
-          this.NapAppModelForm.patchValue({
-            InterestType: response["CompntValue"],
-            InterestTypeDesc: response["CompntValueDesc"],
-          });
-          this.ChangeInterestType();
-        }
-        else {
-          // throw new Error("Interest Type component not found, please use the latest product offering");
-          this.isProdOfrUpToDate = false;
-          this.missingProdOfrComp += CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  //   this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+  //     (response) => {
+  //       if (response && response["StatusCode"] == "200") {
+  //         this.NapAppModelForm.patchValue({
+  //           InterestType: response["CompntValue"],
+  //           InterestTypeDesc: response["CompntValueDesc"],
+  //         });
+  //         this.ChangeInterestType();
+  //       }
+  //       else {
+  //         // throw new Error("Interest Type component not found, please use the latest product offering");
+  //         this.isProdOfrUpToDate = false;
+  //         this.missingProdOfrComp += CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   GetCrossInfoData() {
     let obj = {
@@ -417,11 +417,11 @@ export class ApplicationDataOplComponent implements OnInit {
           this.setTenor(this.resultResponse.MouCustId);
         }
         this.makeNewLookupCriteria();
-        this.getInterestTypeCode();
+        //this.getInterestTypeCode();
         this.initMailingAddress();
 
         if (this.BizTemplateCode != CommonConstant.OPL) {
-          this.getInterestTypeCode();
+          //this.getInterestTypeCode();
           this.GetCrossInfoData();
         }
         else {
