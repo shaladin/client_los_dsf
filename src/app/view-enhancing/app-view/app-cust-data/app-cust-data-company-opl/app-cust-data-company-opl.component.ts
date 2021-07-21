@@ -27,7 +27,6 @@ export class AppCustDataCompanyOplComponent implements OnInit {
     this.arrValue.push(this.appCustObj.AppCustId);
 
     this.viewCustDataObj.viewInput = "./assets/ucviewgeneric/view/app-view/app-cust-data/company/view-app-cust-data-company-opl-cust-data.json";
-    this.viewCustDataObj.viewEnvironment = environment.losUrl;
     this.viewCustDataObj.whereValue = this.arrValue;
 
     this.isDataAlreadyLoaded = true;

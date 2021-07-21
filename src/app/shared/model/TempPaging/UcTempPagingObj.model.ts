@@ -20,7 +20,7 @@ export class UcTempPagingObj {
 
     constructor() {
         this.urlJson = "";
-        this.enviromentUrl = environment.losUrl;
+        this.enviromentUrl = environment.losUrl + "/v1";
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.pagingJson = "";
         this.isReady = false;
@@ -28,8 +28,8 @@ export class UcTempPagingObj {
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
         this.listEnvironments = new Array<EnvisObj>();
-        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
-        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url + "/v1" });
+        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl + "/v1" });
         this.whereValue = new Array<WhereValueObj>();
         this.delay = 0;
         this.isHideSearch = false;

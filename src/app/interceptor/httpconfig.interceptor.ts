@@ -157,10 +157,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (error.error != null) {
                     if (error.error.ErrorMessages != null) {
                         for (var i = 0; i < error.error.ErrorMessages.length; i++) {
-                            this.toastr.error(error.error.ErrorMessages[i].Message, 'Status: ' + error.status, { "tapToDismiss": true });
+                            this.toastr.error(error.error.ErrorMessages[i].Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
                         }
                     } else {
-                        this.toastr.error(error.error.Message, 'Status: ' + error.status, { "tapToDismiss": true });
+                        this.toastr.error(error.error.Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
                     }
                 }
                 else {

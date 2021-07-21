@@ -35,17 +35,15 @@ export class TaskReassignmentApprovalComponent implements OnInit {
   ) { 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchTaskReassignmentApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchTaskReassignmentApproval.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "T.WF_ACTIVITY_CODE",
-        environment: environment.losUrl
+        environment: environment.losUrl + "/v1"
       },
       {
         name: "WF.OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
     ];
   }

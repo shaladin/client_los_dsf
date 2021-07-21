@@ -64,11 +64,9 @@ export class ViewLtkmCustDataCompletionCompanyComponent implements OnInit {
 
         this.arrValue.push(this.ltkmCustObj.LtkmCustId);
         this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustCompanyMainData.json";
-        this.viewMainDataObj.viewEnvironment = environment.losUrl;
         this.viewMainDataObj.whereValue = this.arrValue;
 
         this.viewAppCustCompanyContactPersonObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustCompanyContactPerson.json";
-        this.viewAppCustCompanyContactPersonObj.viewEnvironment = environment.losUrl;
         this.viewAppCustCompanyContactPersonObj.whereValue = this.arrValue;
 
         this.isDataAlreadyLoaded = true;

@@ -22,13 +22,12 @@ export class SimpleLeadMonitoringReviewComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewUploadSimpleLead.json";
-    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
+    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewUploadSimpleLead.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "UMH.OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
   }

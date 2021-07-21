@@ -24,7 +24,7 @@ export class LeadMonitoringComponent implements OnInit {
       TemplateName: 'Upload_Lead_Template', // Nama Excel Template File
       FileErrorName: "Upload_Lead_ErrorDownload", // Nama Excel Download Error File
       // SheetName: 'TemplateGan',
-      environmentUrl: environment.losUrl,
+      environmentUrl: environment.losUrl + "/v1",
       apiQryPaging: URLConstant.GetPagingObjectBySQL,
       pagingJson: "./assets/ucpaging/searchLeadMonitoring.json",
       url: URLConstant.UploadFile

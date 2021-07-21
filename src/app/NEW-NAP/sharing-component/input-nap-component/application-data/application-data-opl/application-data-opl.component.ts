@@ -177,6 +177,7 @@ export class ApplicationDataOplComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log('TEST')
     // this.spinner.show();
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.NapAppModelForm.controls.InterestType.clearValidators();
@@ -401,6 +402,12 @@ export class ApplicationDataOplComponent implements OnInit {
           InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
 
+        if (this.BizTemplateCode === CommonConstant.OPL) {
+          this.NapAppModelForm.patchValue({
+            CharaCredit : CommonConstant.CharacteristicOfCreditTypeOther
+          });
+        }
+
         if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit) {
           this.GetBankAccCust();
           this.setBankAcc(this.NapAppModelForm.controls.MrWopCode.value)
@@ -528,16 +535,15 @@ export class ApplicationDataOplComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultResponse;
-    // this.inputLookupObj.nameSelect = this.resultResponse.SalesName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
 
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
 

@@ -417,15 +417,13 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.inputLookupObjCollateral = new InputLookupObj();
     this.inputLookupObjCollateral.isRequired = false;
     this.inputLookupObjCollateral.urlJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
-    this.inputLookupObjCollateral.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObjCollateral.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjCollateral.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjCollateral.pagingJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
     this.inputLookupObjCollateral.genericJson = "./assets/uclookup/NAP/lookupAppCollateral.json";
 
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
 

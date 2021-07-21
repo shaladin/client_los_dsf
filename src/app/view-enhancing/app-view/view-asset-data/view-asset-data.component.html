@@ -27,9 +27,9 @@
             <label class="col-md-2  adInsLabel" translate>Asset Name</label>
             <label class="col-md-4  adinslabel" translate
               *ngIf="AppAssetObj?.ResponseAppAssetObj?.FullAssetName">{{AppAssetObj.ResponseAppAssetObj.FullAssetName}}</label>
-            <label class="col-md-2  adInsLabel" translate>Down Payment</label>
+            <label class="col-md-2  adInsLabel" translate>Down Payment (% / Amount)</label>
             <label class="col-md-4  adinslabel" translate
-              *ngIf="AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt">{{AppAssetObj.ResponseAppAssetObj.DownPaymentAmt | number:'.2':'en-US'}}</label>
+              *ngIf="AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt">{{AppAssetObj.ResponseAppAssetObj.DownPaymentPrcnt | number:'.2':'en-US'}} | {{AppAssetObj.ResponseAppAssetObj.DownPaymentAmt | number:'.2':'en-US'}}</label>
           </div>
           <div>
             <label class="col-md-2  adInsLabel" translate>Asset Price</label>
