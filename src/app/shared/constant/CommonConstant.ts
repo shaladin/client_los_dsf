@@ -892,4 +892,15 @@ export class CommonConstant {
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
+
+  // CUST ADDR TYPE
+  public static CustAddrTypeLegal = "LEGAL";
+  public static CustAddrTypeContact = "CONTACT";
+  public static CustAddrTypeCompany = "COMPANY";
+  public static CustAddrTypeResidence = "RESIDENCE";
+  public static CustAddrTypeEmergency = "EMERGENCY";
+  public static CustAddrTypeJob = "JOB";
+  public static CustAddrTypeOthBiz = "OTHERBIZ";
+  public static CustAddrTypePreJob = "PREV_JOB";
+  public static CustAddrTypeBiz = "BIZ";
 }
