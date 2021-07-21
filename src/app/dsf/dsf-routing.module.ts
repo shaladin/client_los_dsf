@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { CustomerGroupPlafondApvDetailDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-detail-dsf/customer-group-plafond-apv-detail-dsf.component';
+import { CustomerGroupPlafondApvInquiryDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-inquiry-dsf/customer-group-plafond-apv-inquiry-dsf.component';
+import { CustomerGroupPlafondApvPagingDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-paging-dsf/customer-group-plafond-apv-paging-dsf.component';
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
@@ -129,6 +132,42 @@ const routes: Routes = [
         component:  CustomerGroupPlafondDetailComponent,
         data: {
           title: "Customer Group Plafond Detail"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_PAGING,
+        component:  CustomerGroupPlafondApvPagingDsfComponent,
+        data: {
+          title: "Customer Group Plafond Approval Paging"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL,
+        component:  CustomerGroupPlafondApvDetailDsfComponent,
+        data: {
+          title: "Customer Group Plafond Approval Detail"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY,
+        component:  CustomerGroupPlafondApvInquiryDsfComponent,
+        data: {
+          title: "Customer Group Plafond Approval Inquiry"
         }
       }
     ]

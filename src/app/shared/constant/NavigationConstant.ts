@@ -342,5 +342,6 @@ export class NavigationConstant {
 
   //#region 
   public static CUSTOMER_GROUP_PLAFOND_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_DETAIL;
+  public static CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL;
   //#endregion
 }

@@ -3,6 +3,8 @@ export class PathConstantDsf {
     public static LR_DSF = "Dsf";
     public static PAGING = "Paging";
     public static DETAIL = "Detail";
+    public static APPROVAL = "Approval";
+    public static INQUIRY = "Inquiry";
     //#endregion layout routes
 
     //#region 
@@ -31,6 +33,9 @@ export class PathConstantDsf {
     public static CUSTOMER_GROUP_PLAFOND = "CustomerGroupPlafondDsf";
     public static CUSTOMER_GROUP_PLAFOND_PAGING = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.PAGING;
     public static CUSTOMER_GROUP_PLAFOND_DETAIL = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.DETAIL;
+    public static CUSTOMER_GROUP_PLAFOND_APPROVAL_PAGING = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.PAGING;
+    public static CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.DETAIL;
+    public static CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.INQUIRY;
     //#endregion
 
     

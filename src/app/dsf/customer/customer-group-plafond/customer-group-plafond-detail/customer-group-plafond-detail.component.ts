@@ -16,6 +16,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
+import { CustGrpPlfndReqDsfObj } from 'app/dsf/model/CustGrpPlfndReqDsfObj.Model';
 
 @Component({
   selector: 'app-customer-group-plafond-detail',
@@ -28,14 +31,15 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
   viewCustomerGroupPlafondDetailObj: UcViewGenericObj = new UcViewGenericObj();
   pageType: string = "add";
   CustGrpPlafondId: any;
+  CustGrpNo: any;
   CustGrpPlfndObj: any;
-  CustGrpPlfndObjAPL: Object;
-  CustGrpPlfndObjOPL: Object;
-  CustGrpPlfndObjLMS: Object;
   resultData: any;
   InputObj: UcInputRFAObj;
   IsReady: Boolean = false;
   ApprovalCreateOutput: any;
+  listReason: any;
+  CustGrpPlfnReqDsfObj: any;
+  
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -48,11 +52,7 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
   plafondProposalForm = this.fb.group({
     PlafondMax: ['',Validators.required],
     StartPlafondDate: ['',Validators.required],
-    EndPlafondDate: ['',Validators.required],
-    ListApprover: [''],
-    Reason: [''],
-    Notes: [''],
-    ApvRecommendation: this.fb.array([])
+    EndPlafondDate: ['',Validators.required]
   });
   readonly CancelLink: string = NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING;
 
@@ -64,14 +64,27 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
       if (params['CustGrpPlafondId'] != null) {
         this.CustGrpPlafondId = params['CustGrpPlafondId'];
       }
+      if (params['CustGrpNo'] != null) {
+        this.CustGrpNo = params['CustGrpNo'];
+      }
     });
   }
 
 
  
-  ngOnInit() {
+  async ngOnInit() {
     this.viewCustomerGroupPlafondDetailObj.viewInput = "./assets/ucviewgeneric/viewCustomerGroupPlafondDetail.json";
-    var datePipe = new DatePipe("en-US");
+    //var datePipe = new DatePipe("en-US");
+
+    let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstantDsf.REF_REASON_CUST_GRP_PLAFOND_APV };
+    await this.http.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
+      (response) => {
+        this.listReason = response[CommonConstant.ReturnObj];
+        this.plafondProposalForm.patchValue({
+          Reason: this.listReason[0].Key
+        });
+      }
+    );
     if (this.pageType == "add") {
       this.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId();
       this.initInputApprovalObj();
@@ -94,23 +107,24 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     this.InputObj = new UcInputRFAObj(this.cookieService);
     let Attributes = [{}]
     let TypeCode = {
-      "TypeCode": "MOUC_GEN_APV_TYPE",
+      "TypeCode": "CUST_GRP_PLAFOND_APV_TYPE",
       "Attributes": Attributes,
     }
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
-    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_APV_GENERAL;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_APV_GENERAL;
+    // this.InputObj.EnvUrl = environment.FoundationR3Url;
+    // this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
+    // this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
+    // this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
+    // this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+    // this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
+    // this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
+    // this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
+    this.InputObj.CategoryCode = "CUST_GRP_PLAFOND_APV";
+    this.InputObj.SchemeCode = "CUST_GRP_PLAFOND_SCHM";
+    this.InputObj.Reason = this.listReason;
 
     // this.http.post(URLConstant.GetProductById, {Id : this.ProdId}).subscribe(
     //   (response) => {
@@ -118,19 +132,26 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     //     this.IsReady = true;
     //   });
 
-    this.InputObj.TrxNo = "-";
+    this.InputObj.TrxNo = this.CustGrpNo;
     this.IsReady = true;
   }
 
   SaveForm():void {
-    
-
-    if (this.pageType == "add") {
-      
-  }
-  else {
-
-  }
+    this.CustGrpPlfnReqDsfObj = new CustGrpPlfndReqDsfObj()
+    //this.ApprovalCreateOutput = this.createComponent.output();
+    this.CustGrpPlfnReqDsfObj.CustGrpPlfndDsfId = this.CustGrpPlafondId;
+    this.CustGrpPlfnReqDsfObj.CustGrpNo = this.CustGrpNo;
+    this.CustGrpPlfnReqDsfObj.PropPlafondMax = this.plafondProposalForm.controls["PlafondMax"].value;
+    this.CustGrpPlfnReqDsfObj.PropDtmStart = this.plafondProposalForm.controls["StartPlafondDate"].value;
+    this.CustGrpPlfnReqDsfObj.PropDtmEnd = this.plafondProposalForm.controls["EndPlafondDate"].value;
+    //this.CustGrpPlfnReqDsfObj.RequestRFAObj = this.ApprovalCreateOutput;
+    this.CustGrpPlfnReqDsfObj.RequestRFAObj = {RFAInfo: this.plafondProposalForm.controls.RFAInfo.value}
+    this.http.post(URLConstantDsf.AddCustomerGroupPlafondRequestDsf, this.CustGrpPlfnReqDsfObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response['message']);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING],{});
+      }
+    );
   }
 
 }
