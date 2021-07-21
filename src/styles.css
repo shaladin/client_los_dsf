@@ -151,10 +151,6 @@ thead tr th {
     font-size: 12px;
 }
 
-tbody tr td {
-    text-transform: uppercase;
-}
-
 .form-section {
     text-transform: uppercase;
 }
@@ -171,11 +167,27 @@ tbody tr td {
     text-align: right;
 }
 
-.span {
+tbody tr td {
     text-transform: uppercase !important;
 }
 
-.button {
+select {
+    text-transform: uppercase !important;
+}
+
+div {
+    text-transform: uppercase !important;    
+}
+
+a {
+    text-transform: uppercase !important;
+}
+
+span {
+    text-transform: uppercase !important;
+}
+
+button {
     text-transform: uppercase !important;
 }
 
