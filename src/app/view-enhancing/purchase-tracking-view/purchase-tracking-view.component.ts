@@ -37,7 +37,6 @@ export class PurchaseTrackingViewComponent implements OnInit {
 
   ngOnInit() {
     this.viewPurchaseTrackingMainInfoObj.viewInput = "./assets/ucviewgeneric/viewPurchaseTrackingMainInfo.json";
-    this.viewPurchaseTrackingMainInfoObj.viewEnvironment = environment.losUrl;
 
     if(this.AppAssetId !== "null") {
       var requestAppAssetId = { Id: this.AppAssetId };

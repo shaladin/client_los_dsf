@@ -184,7 +184,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
   bindUcAddToTempData() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
 
     const addCritCustNo = new CriteriaObj();
@@ -369,8 +369,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.isReady = true;
@@ -380,8 +379,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.losUrl;
+    this.inputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
     this.inputLookupObj.isReady = true;

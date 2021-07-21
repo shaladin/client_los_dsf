@@ -703,6 +703,8 @@ export class CommonConstant {
 
   //Serial Item
   public static Chassis_No = "Chassis No";
+  public static License_Plate_No = "License Plate No";
+  public static Engine_No = "Engine No";
 
   // Cust Type  
   public static WhiteIndicator = "WHITE";

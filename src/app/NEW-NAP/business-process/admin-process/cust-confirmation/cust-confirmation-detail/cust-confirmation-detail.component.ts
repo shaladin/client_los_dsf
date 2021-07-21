@@ -67,7 +67,6 @@ export class CustConfirmationDetailComponent implements OnInit {
     this.arrValue.push(this.AgrmntId);
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfoCFNA.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
       this.viewGenericObj.whereValue = this.arrValue;
     } else {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";

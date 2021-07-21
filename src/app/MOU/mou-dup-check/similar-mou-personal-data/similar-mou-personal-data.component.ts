@@ -20,9 +20,6 @@ export class SimilarMouPersonalDataComponent implements OnInit {
 
   MouCustId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
   MouCustObj: MouCustObj;
   MouCustPersonalObj: MouCustPersonalObj;
   MouCustAddrObj: MouCustAddrObj;

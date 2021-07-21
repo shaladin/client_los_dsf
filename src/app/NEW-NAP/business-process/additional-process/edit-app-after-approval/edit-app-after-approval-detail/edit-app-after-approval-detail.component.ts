@@ -188,8 +188,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId] = new InputLookupObj();
 
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
-        this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlQryPaging = "/Generic/GetPagingObjectBySQL";
-        this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlEnviPaging = environment.losUrl;
+        this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlEnviPaging = environment.losUrl + "/v1";
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].pagingJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].genericJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
         this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].isReady = true;

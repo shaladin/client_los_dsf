@@ -1,5 +1,8 @@
 import { environment } from "environments/environment";
 
+// URL" API di concat dengan environment url + version + api path
+// kecuali: API" yang di pakai di UC". contoh: GetPagingObjectBySQL, DeleteFromPaging, Approval CreateNewRFA
+
 export class URLConstant {
   // NOTIFICATION HUB
   public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
@@ -18,6 +21,7 @@ export class URLConstant {
 
   // THINGS TO DO
   public static GetListWfTaskListByUsernameAndRoleCodeAndOfficeCodeForThingsToDo = "ServiceTask/GetListWfTaskListByUsernameAndRoleCodeAndOfficeCodeForThingsToDo";
+  public static GetThingsToDoByRole = environment.FoundationR3Url + "/v1" + "/ThingsToDo/GetThingsToDoByRole";
 
   // New Application
   public static AddNewApplication = environment.losUrl + "/v1" + "/Application/AddNewApplication";
@@ -108,23 +112,6 @@ export class URLConstant {
   public static GetListKvpRefAppSrcForAppOrLead = environment.losUrl + "/v1" + "/RefAppSrc/GetListKvpRefAppSrcForAppOrLead";
   public static GetListKvpRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/GetListKvpRefAppSrc";
 
-  public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
-  public static Login = "/v1" + "/Authenticate/Login";
-  public static LoginWithToken = environment.FoundationR3Url + "/v1" + "/Authenticate/LoginWithToken";
-  public static LoginToken = "/UserManagement/HTML6Login";
-  public static Logout = "/UserManagement/LogOut"
-  public static GetListOffice = "/RefOffice/GetRefOfficePaging";
-  public static GetProvince = "/los/v1/get_provinsi";
-  public static GetCityByProvince = "/los/v1/get_kota";
-  public static getProspectByProspectNo = "/api/MobileProspectTask/GetProspectByProspectNo";
-  public static submitNCProspect = "/api/MobileProspectTask/submitNCProspect";
-  public static addCustPersonal = "";
-  public static FormDefault = "dashboard/dash-board";
-  public static LoginByRole = "/v1"+ "/Authenticate/LoginByRole";
-  public static LoginByToken = "/Authenticate/LoginByToken";
-  public static UpdateToken = "/Authenticate/UpdateRole";
-  public static LoginURLFrontEnd = "Pages/Login";
-
   //Asset Master
   public static GetAssetMasterTypeByFullAssetCode = environment.FoundationR3Url + "/v1" + "/AssetMaster/GetAssetMasterTypeByFullAssetCode";
 
@@ -160,12 +147,12 @@ export class URLConstant {
   public static GetAssetMasterForLookup = environment.FoundationR3Url + "/v1" + "/AssetMaster/GetAssetMasterForLookup";
 
   //GENERAL SETTING
-  public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
-  public static AddGeneralSetting = "/GeneralSetting/AddGeneralSetting";
-  public static EditGeneralSetting = "/GeneralSetting/EditGeneralSetting";
-  public static GetGeneralSettingPaging = "/GeneralSetting/GetGeneralSettingPaging";
-  public static GetGeneralSettingById = "/GeneralSetting/GetGeneralSettingById";
-  public static GetGeneralSettingValue = "/GeneralSetting/GetGeneralSettingValue";
+  public static GetBusinessDt = "/v1/GeneralSetting/GetBusinessDate";
+  public static AddGeneralSetting = "/v1/GeneralSetting/AddGeneralSetting";
+  public static EditGeneralSetting = "/v1/GeneralSetting/EditGeneralSetting";
+  public static GetGeneralSettingPaging = "/v1/GeneralSetting/GetGeneralSettingPaging";
+  public static GetGeneralSettingById = "/v1/GeneralSetting/GetGeneralSettingById";
+  public static GetGeneralSettingValue = "/v1/GeneralSetting/GetGeneralSettingValue";
   public static GetGeneralSettingByCode = environment.FoundationR3Url + "/v1" + "/GeneralSetting/GetGeneralSettingByCode";
   public static GetGeneralSettingValueByCode = environment.FoundationR3Url + "/v1" + "/GeneralSetting/GetGeneralSettingValueByCode";
   public static GetListGeneralSettingByListGsCode = environment.FoundationR3Url + "/v1" + "/GeneralSetting/GetListGeneralSettingByListGsCode";
@@ -429,7 +416,7 @@ export class URLConstant {
   public static SelectRole = "/UserSessionLog/SelectRole";
 
   //NOTIFICATION
-  public static NotificationPost = "/Message/Post";
+  public static NotificationPost = environment.FoundationR3Url + "/v1" + "/Message/Post";
   public static UpdateReadNotification = environment.FoundationR3Url + "/v1" + "/NotificationD/UpdateReadNotificationD";
 
   //REF CURR
@@ -478,12 +465,12 @@ export class URLConstant {
   public static GetUploadTypePaging = "/UploadType/GetUploadTypePaging"
 
   //UPLOAD SETTING
-  public static GetUploadSettingHIdByUploadTypeId = "/UploadSetting/GetUploadSettingHIdByUploadTypeId"
-  public static GetListUploadSettingDIdByUploadSettingHId = "/UploadSetting/GetListUploadSettingDIdByUploadSettingHId"
-  public static GetListUploadSettingDIdByUploadTypeId = "/UploadSetting/GetListUploadSettingDIdByUploadTypeId"
-  public static AssignRoleToUploadSetting = "/UploadSetting/AssignRoleToUploadSetting"
-  public static GetListRefRoleByUploadTypeId = "/UploadSetting/GetListRefRoleByUploadTypeId"
-  public static GetListUploadSettingDByUploadSettingHId = '/UploadSetting/GetListUploadSettingDByUploadSettingHId'
+  public static GetUploadSettingHIdByUploadTypeId = environment.FoundationR3Url + "/v1" + "/UploadSetting/GetUploadSettingHIdByUploadTypeId"
+  public static GetListUploadSettingDIdByUploadSettingHId = environment.FoundationR3Url + "/v1" + "/UploadSetting/GetListUploadSettingDIdByUploadSettingHId"
+  public static GetListUploadSettingDIdByUploadTypeId = environment.FoundationR3Url + "/v1" + "/UploadSetting/GetListUploadSettingDIdByUploadTypeId"
+  public static AssignRoleToUploadSetting = environment.FoundationR3Url + "/v1" + "/UploadSetting/AssignRoleToUploadSetting"
+  public static GetListRefRoleByUploadTypeId = environment.FoundationR3Url + "/v1" + "/UploadSetting/GetListRefRoleByUploadTypeId"
+  public static GetListUploadSettingDByUploadSettingHId = environment.FoundationR3Url + "/v1" + '/UploadSetting/GetListUploadSettingDByUploadSettingHId'
   public static CancelUpload = environment.FoundationR3Url + "/v1" + "/Upload/CancelUpload";
   public static UploadReview = environment.FoundationR3Url + "/v1" + "/Upload/UploadReview";
 
@@ -1223,7 +1210,7 @@ export class URLConstant {
   public static MD_SubmitAppDupCheck = environment.losUrl + "/v1" + "/AppDupCheckMainData/SubmitAppDupCheck";
 
   // Product Offering
-  public static GetListProdOfferingDByProdOfferingCode = environment.losUrl + "/v1" + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
+  public static GetListProdOfferingDByProdOfferingCode = environment.FoundationR3Url + "/v1" + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";
   public static GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.losUrl + "/v1" + "/ProductOffering/GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";

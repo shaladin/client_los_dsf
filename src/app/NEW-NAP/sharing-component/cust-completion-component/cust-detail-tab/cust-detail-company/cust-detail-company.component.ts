@@ -71,8 +71,7 @@ export class CustDetailCompanyComponent implements OnInit {
     this.businessDt.setDate(this.businessDt.getDate() - 1);
 
     this.lookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.lookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.lookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.isRequired = false;
@@ -80,8 +79,7 @@ export class CustDetailCompanyComponent implements OnInit {
 
     this.lookupIndustryTypeObj = new InputLookupObj();
     this.lookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.lookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.lookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
+    this.lookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.lookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.isReady = true;

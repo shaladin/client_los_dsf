@@ -64,7 +64,7 @@ export class OfferingGeneralDataComponent implements OnInit {
     let user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.InputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
-    this.InputLookUpObj.urlEnviPaging = environment.losUrl;
+    this.InputLookUpObj.urlEnviPaging = environment.losUrl + "/v1";
     this.InputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.InputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.InputLookUpObj.isRequired = false;

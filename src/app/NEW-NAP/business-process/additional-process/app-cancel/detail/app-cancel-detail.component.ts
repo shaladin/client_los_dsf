@@ -50,7 +50,7 @@ export class AppCancelDetailComponent implements OnInit {
     }
 
     this.ddlReason = new UcDropdownListObj;
-    this.ddlReason.enviromentUrl = environment.FoundationR3Url;
+    this.ddlReason.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.ddlReason.apiPath = "/RefReason/GetListActiveRefReason";
     this.ddlReason.ddlType = "one";
     this.ddlReason.requestObj = refReasonObj;

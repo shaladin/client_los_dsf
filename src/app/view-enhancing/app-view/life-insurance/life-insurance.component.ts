@@ -23,7 +23,6 @@ export class LifeInsuranceComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppLifeInsurance.json";
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppLifeInsData.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.whereValue = this.arrValue;
 
     var AppObj = {
