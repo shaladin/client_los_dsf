@@ -58,6 +58,9 @@ import { CookieService } from 'ngx-cookie';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CustPersonalFamilyLtkmObj } from 'app/shared/model/LTKM/CustPersonalFamilyLtkmObj.Model';
+import { environment } from 'environments/environment';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 @Component({
     selector: 'app-ltkm-request',
     templateUrl: './ltkm-request.component.html',
@@ -128,6 +131,9 @@ export class LtkmRequestComponent implements OnInit {
     listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
     isBindDataDone: boolean = false;
     isExisting: boolean = false;
+    inputLookupApplicationObj: InputLookupObj = new InputLookupObj();
+    appNo: string;
+    selectedCustNo: any;
 
     CustTypeObj: Array<KeyValueObj>;
     copyToResidenceTypeObj: Array<KeyValueObj> = [
@@ -194,7 +200,7 @@ export class LtkmRequestComponent implements OnInit {
     BankFormIsDetail: boolean = false;
     LtkmCustId: number;
     isLockLookupCust: boolean = false;
-    listFamily: Array<CustPersonalFamilyLtkmObj> = new Array();
+    listFamily: Array<CustPersonalFamilyLtkmObj> = new Array();    
 
     readonly modeReqConst: string = CommonConstant.REQ;
     readonly modeRtnConst: string = CommonConstant.RTN;
@@ -255,6 +261,14 @@ export class LtkmRequestComponent implements OnInit {
         this.inputAddressObjForMailingCoy.showSubsection = false;
         this.inputAddressObjForMailingCoy.showPhn3 = false;
         this.inputAddressObjForMailingCoy.showOwnership = true;
+        
+        this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl;
+        this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        // this.inputLookupApplication.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
+        this.inputLookupApplicationObj.isRequired = true;
+    
 
         await this.bindCustTypeObj();
         this.initAddrObj();
@@ -1788,7 +1802,8 @@ export class LtkmRequestComponent implements OnInit {
     CopyCustomer(event) {
         console.log("copy customer");
         console.log(this.CustDataForm);
-        this.copyAddrFromLookup(event);
+        this.copyAddrFromLookup(event);   
+        // this.selectCustNo = event.             
 
         //perlu diganti cara bacanya (gak perlu), liat dri SELECT * FROM FOUNDATION_DSF.dbo.CUST_PERSONAL_FAMILY
         // if (event["CustPersonalContactPersonObjs"] != undefined) {
@@ -1868,6 +1883,18 @@ export class LtkmRequestComponent implements OnInit {
             this.LtkmFamilyMainDataPagingComponent.listFamily = event["custPersonalFamilyForLtkmObjs"];
             this.LtkmFamilyMainDataPagingComponent.loadFamilyListData();
         }
+        if (event["CustObj"] != undefined) {
+            console.log("ce", event["custObjs"].CustNo);
+            this.selectedCustNo = event["custObjs"].CustNo; 
+            
+            this.inputLookupApplicationObj.addCritInput = new Array();
+
+            var critLobObj = new CriteriaObj();
+            critLobObj.restriction = AdInsConstant.RestrictionEq;
+            critLobObj.propName = 'AC.CUST_NO';
+            critLobObj.value = this.selectedCustNo;
+            this.inputLookupApplicationObj.addCritInput.push(critLobObj);
+        }        
     }
 
     CopyCustomerCompany(event) {
@@ -2280,6 +2307,11 @@ export class LtkmRequestComponent implements OnInit {
             }
         }
         return temp;
+    }
+
+    getLookupAppNo(event){
+        console.log(event);
+        // this.appNo = event.appNovalue;
     }
 }
 

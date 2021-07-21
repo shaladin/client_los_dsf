@@ -26,7 +26,7 @@
                       </mat-radio-group>
                     </div>
                   </div>
-                </div>
+                </div>                
               </form>
               <div id="CustMainDataPersonal" *ngIf="MrCustTypeCode == 'PERSONAL'">
                 <form class="form form-horizontal" [formGroup]="CustDataForm"
@@ -41,7 +41,7 @@
                       </app-ltkm-cust-personal-main-data>
                       <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegal" [enjiForm]="enjiForm"
                         [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm">
-                      </lib-ucaddress>
+                      </lib-ucaddress>                  
                       <!-- <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
               [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showAllPhn]="false">
             </lib-ucaddress> -->
@@ -85,7 +85,7 @@
                                 [(ngModel)]="copyFromMailing">
                                 <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">
                                   {{item.Value}}
-                                </option>
+                                </option>                               
                               </select>
                               <div class="input-group-append">
                                 <span class="input-group-btn">
@@ -155,7 +155,18 @@
                       <ltkm-family-main-data-paging [listFamily]="listFamily"></ltkm-family-main-data-paging>
                       <br />
                       <br />
-                      <!-- Ltkm Analysis -->
+                      <!-- Ltkm Analysis -->                                            
+                      <lib-ucSubsection [id]="'applicationDataId'" [title]="'APPLICATION DATA'" [panel]="'ApplicationData'">
+                      </lib-ucSubsection>
+                        <div id="ApplicationData">
+                          <label class="col-md-4 adins-required-label" translate>Application No </label>
+                          <div class="col-md-4">
+                            <lib-uclookupgeneric [lookupInput]="inputLookupApplication" [parentForm]='CustDataForm'
+                              [enjiForm]='enjiForm' [identifier]="'AppNo'" 
+                              >
+                            </lib-uclookupgeneric>
+                          </div>                                            
+                        </div>
                       <app-ltkm-request-analysis *ngIf="mode != 'return'" [enjiForm]="enjiForm"
                         [parentForm]="CustDataForm" [identifier]="'ltkmAnalysis'"></app-ltkm-request-analysis>
                     </div>
@@ -188,8 +199,8 @@
                       <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy" [enjiForm]="enjiFormCompany"
                         [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
                       <!-- <lib-ucaddress [title]="'Company Legal Address'" [UCAddrForm]="CustDataCompanyForm"
-              [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'" [default]="legalAddrCompanyObj"
-              [inputField]="inputFieldLegalCompanyObj" [showPhn3]="false"></lib-ucaddress> -->
+                      [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'" [default]="legalAddrCompanyObj"
+                      [inputField]="inputFieldLegalCompanyObj" [showPhn3]="false"></lib-ucaddress> -->
                       <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'"
                         [panel]="'mailingAddrCompany'">
                       </lib-ucSubsection>
