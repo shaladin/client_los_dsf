@@ -894,4 +894,15 @@ export class CommonConstant {
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WorkflowUploadLead = "WF_UPL_LEAD";
   public static WfUploadLeadReview = "UPLOAD_LEAD_REVIEW"
+
+  // CUST ADDR TYPE
+  public static CustAddrTypeLegal = "LEGAL";
+  public static CustAddrTypeContact = "CONTACT";
+  public static CustAddrTypeCompany = "COMPANY";
+  public static CustAddrTypeResidence = "RESIDENCE";
+  public static CustAddrTypeEmergency = "EMERGENCY";
+  public static CustAddrTypeJob = "JOB";
+  public static CustAddrTypeOthBiz = "OTHERBIZ";
+  public static CustAddrTypePreJob = "PREV_JOB";
+  public static CustAddrTypeBiz = "BIZ";
 }
