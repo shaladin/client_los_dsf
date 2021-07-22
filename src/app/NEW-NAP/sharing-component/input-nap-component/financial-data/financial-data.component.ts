@@ -262,6 +262,7 @@ export class FinancialDataComponent implements OnInit {
         this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
     }
+    this.LoadAppFinData();
   }
 
   SetInputByCalcBase(calcBase) {
