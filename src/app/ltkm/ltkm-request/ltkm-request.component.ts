@@ -263,7 +263,7 @@ export class LtkmRequestComponent implements OnInit {
         this.inputAddressObjForMailingCoy.showOwnership = true;
         
         this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
-        this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl;
+        this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
         this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         // this.inputLookupApplication.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
