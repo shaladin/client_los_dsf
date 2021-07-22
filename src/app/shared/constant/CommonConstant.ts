@@ -904,4 +904,15 @@ export class CommonConstant {
   public static CustAddrTypeOthBiz = "OTHERBIZ";
   public static CustAddrTypePreJob = "PREV_JOB";
   public static CustAddrTypeBiz = "BIZ";
+
+  //WORFKLOW LEAD
+  public static WF_CODE_LEAD = "WF_LEAD";
+  public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
+  public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
+  public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
+
+  //Lead Step
+  public static LeadStepLeadVerf = "LVR"
+  public static LeadStepTeleVerf = "TVR"
+  public static LeadStepLeadUpd = "LUP"
 }
