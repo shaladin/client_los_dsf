@@ -75,7 +75,7 @@ export class LeadUpdateComponent implements OnInit {
       let RejectLeadUrl;
       if(environment.isCore){
         RejectLeadUrl = URLConstant.RejectLeadV2;
-        leadReject.WfTaskListId = event.RowObj.ExecutionId; //Untuk Terminate Pakainya ExecutionId
+        leadReject.WfTaskListId = event.RowObj.ExecutionId; //Ini WF Instance GUID Versi Camunda
       }else{
         RejectLeadUrl = URLConstant.RejectLead;
       }
