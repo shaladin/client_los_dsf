@@ -9,9 +9,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
-import { RequestTaskModelObj } from 'app/shared/model/V2/RequestTaskModelObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 
 @Component({
   selector: 'app-lead-monitoring-review',
@@ -57,7 +57,7 @@ export class LeadMonitoringReviewComponent implements OnInit {
   cancel(ev) {
     if(environment.isCore){
       let newWfObj = new WorkflowApiV2Obj();
-      newWfObj.TaskListId = ev.RowObj.TaskListId;
+      newWfObj.TaskListId = ev.RowObj.ExecutionId;
       newWfObj.TransactionNo = ev.RowObj.UploadNo;
       newWfObj.ListValue = { "Status": "RJC" };
       this.httpClient.post(URLConstant.CancelUploadV2, newWfObj).subscribe(

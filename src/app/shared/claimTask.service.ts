@@ -7,6 +7,7 @@ import { CommonConstant } from "./constant/CommonConstant";
 import { URLConstant } from "./constant/URLConstant";
 import { AppObj } from "./model/App/App.Model";
 import { ClaimWorkflowObj } from "./model/Workflow/ClaimWorkflowObj.Model";
+import { ClaimTaskModel } from "./model/Workflow/V2/ClaimTaskModelObj.model";
 
 @Injectable()
 export class ClaimTaskService{
@@ -34,6 +35,16 @@ export class ClaimTaskService{
     wfClaimObj.WfTaskListId = WfTaskListId;
 
     this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
+      () => {
+      });
+  }
+  
+  ClaimTaskV2(WfTaskListId: string){
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let ClaimTaskObj: ClaimTaskModel = new ClaimTaskModel();
+    ClaimTaskObj.TaskId = WfTaskListId;
+    ClaimTaskObj.UserId = currentUserContext[CommonConstant.USER_NAME];
+    this.http.post(URLConstant.ClaimTaskV2, ClaimTaskObj).subscribe(
       () => {
       });
   }
