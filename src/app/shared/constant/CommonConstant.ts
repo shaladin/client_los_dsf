@@ -1,7 +1,8 @@
 export class CommonConstant {
   
-  // REGEX API
+  // REGEX
   public static regexAPI = "\\/[v,V][1-9]\\d*(\\.[1-9]\\d*)*";
+  public static regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
 
   //FORM
   public static INVALID_FORM = "INVALID";
