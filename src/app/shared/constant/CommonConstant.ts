@@ -892,4 +892,15 @@ export class CommonConstant {
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
+
+  //WORFKLOW LEAD
+  public static WF_CODE_LEAD = "WF_LEAD";
+  public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
+  public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
+  public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
+
+  //Lead Step
+  public static LeadStepLeadVerf = "LVR"
+  public static LeadStepTeleVerf = "TVR"
+  public static LeadStepLeadUpd = "LUP"
 }
