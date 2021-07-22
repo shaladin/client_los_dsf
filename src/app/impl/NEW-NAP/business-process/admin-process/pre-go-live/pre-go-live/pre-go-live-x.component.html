@@ -1,0 +1,126 @@
+<h4 class="form-section card-title" translate><i class="ft-file-text"></i> Pre Go Live</h4>
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm" #enjiForm="ngForm"
+            (ngSubmit)="MainInfoForm.valid && SaveForm()">
+            <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Pre Go Live Information'" [panel]="'MainInfoForm'">
+            </lib-ucSubsection>
+            <div class="form-body" id="MainInfoForm">
+              <div class="form-group row">
+                <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
+                <div *ngIf = "checkPOReady" class="col-md-4">
+                  <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                  <input *ngIf = "isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
+                <label class="col-md-4 adinsLabel" translate>{{MainInfoForm.controls.EffectiveDt.value | date:
+                  'dd-MMMM-yyyy'}}</label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-2 adins-required-label" *ngIf="IsCheckedAll && BizTemplateCode != 'DLFN'" for="Note" translate>Notes</label>
+                <label class="col-md-2 adinsLabel" *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" for="Note" translate>Notes</label>
+                <label class="col-md-2 adins-required-label" *ngIf="BizTemplateCode == 'DLFN'" for="Note" translate>Notes</label>
+                <div class="col-md-4">
+                  <input type="text" id="Note" class="form-control adInsInput name" formControlName="Notes">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.Notes" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+
+                <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
+                <div class="col-md-3">
+                  <input type="date" id="GoLiveEstimated" class="form-control adInsInput name" 
+                    formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.GoLiveEstimated"
+                    [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                  <button type="button" class="btn btn-raised btn-primary mr-1"
+                  (click)="calculateAddInterest()" translate>
+                  Calculate
+                </button>
+              </div>
+
+              <div class="form-group row">
+              <label *ngIf="IsGSAddInerestExists && (BizTemplateCode == 'DLFN')"
+                class="col-md-2 adins-required-label" translate>Additional Interest
+                Paid By</label>
+              <label *ngIf="IsGSAddInerestExists && IsCheckedAll && BizTemplateCode != 'DLFN'"
+                class="col-md-2 adins-required-label" translate>Additional Interest
+                Paid By</label>
+              <label *ngIf="IsGSAddInerestExists && !IsCheckedAll && BizTemplateCode != 'DLFN'"
+                class="col-md-2 adinsLabel" translate>Additional Interest
+                Paid By</label>
+              <div *ngIf="IsGSAddInerestExists" class="col-md-4">
+                <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.AdditionalInterestPaidBy.invalid }">
+                  <option value="">--Select One--</option>
+                  <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
+                </select>
+                <lib-uc-show-errors [control]="MainInfoForm.controls.AdditionalInterestPaidBy"
+                  [submit]="MainInfoReqForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+              <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
+              <label class="col-md-4 adinsLabel" translate>{{MainInfoForm.controls.AddIntrstAmt.value | number:'.2':'en-US'}}</label>
+              </div>
+            </div>
+
+            <div *ngIf="BizTemplateCode != 'DLFN'">
+              <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
+              [panel]="'PreGoLiveApprovalHistory'">
+              </lib-ucSubsection>
+              <div id="PreGoLiveApprovalHistory">
+                <lib-ucapprovalHistory *ngIf="IsApvReady" [InputObj]="InputApprovalHistoryObj">
+                </lib-ucapprovalHistory>
+              </div>
+              <mat-tab-group>
+                <mat-tab label="Term & Conditions">
+                  <ng-template matTabContent>
+                    <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                    (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+                  </app-term-conditions>
+                  </ng-template>
+                </mat-tab>
+                <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="App Document">
+                  <ng-template matTabContent>
+                    <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                  </ng-template>
+                </mat-tab>
+                <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">
+                  <ng-template matTabContent>
+                    <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"></app-dms-iframe>
+                  </ng-template>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+            
+            <div class="form-actions right">
+              <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
+                translate>
+                <i class="fa fa-check-square-o"></i> Request For Approval
+              </button>
+              <button type="button" class="btn btn-raised btn-warning mr-1"
+                [routerLink]="[CancelLink]" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button *ngIf="IsCheckedAll && BizTemplateCode != 'DLFN'" type="submit"
+                class="btn btn-raised btn-primary mr-1" translate>
+                <i class="far fa-check-square"></i> Submit
+              </button>
+              <button *ngIf="BizTemplateCode == 'DLFN'" type="submit" class="btn btn-raised btn-primary mr-1" translate>
+                <i class="far fa-check-square"></i> Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

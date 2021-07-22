@@ -66,6 +66,7 @@ import { AssetAllocationPagingComponent } from "./asset-allocation/asset-allocat
 import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocation-detail/asset-allocation-detail.component";
 import { InvoiceVerifDetailListOfInvoiceComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component";
 import { InvoiceVerifDetailDFComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component";
+import { PreGoLiveXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live/pre-go-live-x.component";
 
 export const customCurrencyMaskConfig = {     
   align: "left",
@@ -143,7 +144,8 @@ export const customCurrencyMaskConfig = {
     AssetAllocationPagingComponent,
     AssetAllocationDetailComponent,
     InvoiceVerifDetailListOfInvoiceComponent,
-    InvoiceVerifDetailDFComponent
+    InvoiceVerifDetailDFComponent,
+    PreGoLiveXComponent
   ],
   providers: [
     NGXToastrService,
