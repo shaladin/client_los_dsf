@@ -892,4 +892,6 @@ export class CommonConstant {
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
+  public static WorkflowUploadLead = "WF_UPL_LEAD";
+  public static WfUploadLeadReview = "UPLOAD_LEAD_REVIEW"
 }

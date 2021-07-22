@@ -473,6 +473,8 @@ export class URLConstant {
   public static GetListUploadSettingDByUploadSettingHId = environment.FoundationR3Url + "/v1" + '/UploadSetting/GetListUploadSettingDByUploadSettingHId'
   public static CancelUpload = environment.FoundationR3Url + "/v1" + "/Upload/CancelUpload";
   public static UploadReview = environment.FoundationR3Url + "/v1" + "/Upload/UploadReview";
+  public static CancelUploadV2 = environment.FoundationR3Url + "/v2" + "/Upload/CancelUpload";
+  public static UploadReviewV2 = environment.FoundationR3Url + "/v2" + "/Upload/UploadReview";
 
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
@@ -1275,6 +1277,8 @@ export class URLConstant {
   public static ClaimTask = environment.FoundationR3Url + "/v1" + "/Workflow/ClaimTask";
   public static ClaimTaskNap = environment.losUrl + "/v1" + "/Application/ClaimTaskNap";
   public static ClaimTaskNapCustmainData = environment.losUrl + "/v1" + "/Application/ClaimTaskNapCustmainData";
+  public static ClaimTaskV2 = environment.FoundationR3Url + "/v2" + "/Workflow/ClaimTask";
+  public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
 
   //Application Data
   public static SaveApplicationDataFctr = environment.losUrl + "/v1" + "/ApplicationData/SaveApplicationDataFctr"
@@ -1360,6 +1364,7 @@ export class URLConstant {
 
   // Upload
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/Upload/UploadFile";
+  public static UploadFileV2 = environment.FoundationR3Url + "/v2" + "/Upload/UploadFile";
 
   // Download
   public static DownloadTemplate = environment.FoundationR3Url + "/v1" + '/Download/DownloadTemplate';

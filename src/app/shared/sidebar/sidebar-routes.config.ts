@@ -485,6 +485,8 @@ export const ROUTES: RouteInfo[] = [
       //{ Path: NavigationConstant.LEAD_FRAUD_VERIF_PAGING, Title: 'Fraud Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LEAD_INQUIRY, Title: 'Lead Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LEAD_VERIF, Title: 'Lead Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.LEAD_UPLOAD, Title: 'Lead Upload', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.LEAD_REVIEW_MONITORING, Title: 'Lead Upload Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       {
         Path: '', Title: 'RO Potential', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [

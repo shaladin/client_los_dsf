@@ -344,6 +344,8 @@ export class NavigationConstant {
   public static LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_PAGING; //"/Lead/Lead/Paging"
   public static LEAD_INPUT_PAGE = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_INPUT_PAGE; //"/Lead/LeadInput/Page"
   public static LEAD_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.VERIF; //'/Lead/Verif'
+  public static LEAD_UPLOAD = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_MONITORING; //'/Lead/Monitoring'
+  public static LEAD_REVIEW_MONITORING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_RVW_MONITORING_PAGING; //'/Lead/ReviewMonitoring/Paging'
   public static SIMPLE_LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLead/Paging'
   public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLead/Detail'
   public static SIMPLE_LEAD_MAIN_INFO = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLead/MainInfo'
