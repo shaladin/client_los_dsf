@@ -129,7 +129,7 @@
     <div>
       <label class="col-md-2  adInsLabel" translate>Installment Scheme</label>
       <label class="col-md-4  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.MrInstSchemeCode}}</label>
+      *ngIf="SummaryObj?.AgrmntFinData">{{installmentScheme}}</label>
       <label class="col-md-2  adInsLabel" translate>Pre Go Live Date</label>
       <label class="col-md-4  adinslabel" translate
         *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PreGoLiveDt  | date: 'dd-MMMM-yyyy'}}</label>
@@ -428,23 +428,23 @@
         *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.NtfAmt | number:'.2':'en-US'}}</label>
       <label class="col-md-4  adInsLabel" translate>First Installment Type</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrFirstInstTypeCode}}</label>
+        *ngIf="SummaryObj?.Agrmnt">{{firstInstType}}</label>
     </div>
     <div>
       <label class="col-md-4  adInsLabel" translate>Effective Rate to Customer</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.EffectiveRatePrcnt}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.EffectiveRatePrcnt}} %</label>
       <label class="col-md-4  adInsLabel" translate>Effective Rate to Supplier</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplEffectiveRatePrcnt}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplEffectiveRatePrcnt}} %</label>
     </div>
     <div>
       <label class="col-md-4  adInsLabel" translate>Flat Rate to Customer</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.FlatRatePrcnt}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.FlatRatePrcnt}} %</label>
       <label class="col-md-4  adInsLabel" translate>Flat Rate to Supplier</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplFlatRatePrcnt}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplFlatRatePrcnt}} %</label>
     </div>
     <div>
       <label class="col-md-4  adInsLabel" translate>Grace Period</label>

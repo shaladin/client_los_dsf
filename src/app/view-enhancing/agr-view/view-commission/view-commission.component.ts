@@ -22,9 +22,9 @@ export class ViewCommissionComponent implements OnInit {
   ListSupplData;
   ListSupplEmpData;
   ListReferantorData;
-  SupplData: any = {};
-  SupplEmpData: any = {};
-  ReferantorData: any = {};
+  SupplData: object = {};
+  SupplEmpData: object = {};
+  ReferantorData: object = {};
   SummaryData;
   initData() {
     this.ListSupplData = new Array();

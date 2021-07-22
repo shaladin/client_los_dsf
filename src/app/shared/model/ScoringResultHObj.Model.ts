@@ -1,4 +1,5 @@
 export class ScoringResultHObj{
+    VerfResultId: number;
     MrScoringMethodCode: string;
     OfficeCode: string;
     ReqBy: string;

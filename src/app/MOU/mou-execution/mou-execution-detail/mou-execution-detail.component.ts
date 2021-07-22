@@ -11,6 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-mou-execution-detail',
@@ -34,6 +35,8 @@ export class MouExecutionDetailComponent implements OnInit {
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]]
   });
+  datePipe = new DatePipe("en-US");
+  resultData: MouCustObj;
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -68,6 +71,7 @@ export class MouExecutionDetailComponent implements OnInit {
 
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: any) => {
+        this.resultData = response; 
         if (response["MouCustDt"] != null) {
           response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
         }
@@ -80,7 +84,7 @@ export class MouExecutionDetailComponent implements OnInit {
         });
       });
 
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouRequest.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
   }
 
   Back() {
@@ -88,6 +92,18 @@ export class MouExecutionDetailComponent implements OnInit {
   }
 
   SaveForm() {
+    if((this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, "yyyy-MM-dd") < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") )){
+      this.toastr.warningMessage(ExceptionConstant.MOU_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+      return
+   } 
+    if (this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, "yyyy-MM-dd") < this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, "yyyy-MM-dd")) {
+      this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, 'MMMM d, y'));
+      return;
+    }
+    if (this.datePipe.transform(this.MouExecutionForm.controls.EndDt.value, "yyyy-MM-dd") < this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, "yyyy-MM-dd")) {
+      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, 'MMMM d, y'));
+      return;
+    }
     var request = this.MouExecutionForm.value;
 
     if (this.ValidateDate()) {
@@ -119,5 +135,33 @@ export class MouExecutionDetailComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  checkStartDate(ev) {
+    if (this.datePipe.transform(ev.target.value, "yyyy-MM-dd") < this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, "yyyy-MM-dd")) {
+      this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, 'MMMM d, y'));
+    }
+  }
+
+  checkEndDate(ev) {
+    if (ev.target.value < this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, "yyyy-MM-dd")) {
+      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, 'MMMM d, y'));
+    }
+  }
+
+  checkMouDate(ev) {
+    if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+      this.toastr.warningMessage(ExceptionConstant.MOU_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+   } 
+  }
+
+  GetCallBack(event) {
+    if (event.Key == "customer") {
+      var custObj = { CustNo: this.resultData["CustNo"] };
+      this.httpClient.post(URLConstant.GetCustByCustNo, custObj)
+        .subscribe((response) => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        });
+    }
   }
 }

@@ -54,10 +54,10 @@
           <div class="col-md-3">
             <label class="adInsLabel"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" *ngIf="BizTemplateCode != 'DLFN'">
             <label class="adInsLabel"> {{item.FeeTypeName + ' Capitalized Amount'}} </label>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" *ngIf="BizTemplateCode != 'DLFN'">
             <label class="adInsLabel"> {{item.FeeCapitalizeAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -71,7 +71,7 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel" translate> Total Asset Price </label>
+            <label class="adInsLabel" translate> Total Invoice Amount </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Fee Capitalized </label>
@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Insurance Premi </label>
@@ -116,7 +116,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Insurance Premi Capitalized </label>
@@ -126,7 +126,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Life Insurance Premi </label>
@@ -136,7 +136,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Life Insurance Premi Capitalized </label>
@@ -148,7 +148,7 @@
       </div>
     </div>
     <br>
-    <div class="form-group row">
+    <div class="form-group row" *ngIf="BizTemplateCode != 'DLFN'">
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
@@ -160,7 +160,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> TDP </label>
@@ -170,7 +170,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'" translate> DP Asset - Subsidy DP </label>
@@ -181,7 +181,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> TDP Paid at MF </label>
@@ -204,7 +204,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> First Installment Type </label>
@@ -224,7 +224,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Effective Rate to Supplier </label>
@@ -244,7 +244,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Flat Rate to Supplier </label>
@@ -264,7 +264,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Num of Inst </label>
@@ -286,7 +286,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Rounding </label>
@@ -330,7 +330,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Diff Rate Amount</label>

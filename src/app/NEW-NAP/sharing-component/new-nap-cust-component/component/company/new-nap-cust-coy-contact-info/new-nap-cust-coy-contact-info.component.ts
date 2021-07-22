@@ -25,7 +25,7 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
   CcAddrObj: AddrObj = new AddrObj();
   IsUcAddrReady: boolean = false;
   TempAppCustCompanyContactPersonObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
-  DictRefMaster: any = {};
+  DictRefMaster: object = {};
   BusinessDate: Date;
   readonly MasterIdTypeCode: string = CommonConstant.RefMasterTypeCodeIdType;
   readonly MasterGenderCode: string = CommonConstant.RefMasterTypeCodeGender;

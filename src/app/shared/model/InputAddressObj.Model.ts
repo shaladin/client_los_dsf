@@ -1,6 +1,7 @@
 import { InputFieldObj } from './InputFieldObj.Model';
 import {NgForm, FormGroup} from '@angular/forms';
 import { environment } from 'environments/environment';
+import { AddrObj } from './AddrObj.Model';
 
 export class InputAddressObj {
     enjiForm: NgForm;
@@ -20,6 +21,7 @@ export class InputAddressObj {
     requiredPhnExt3: boolean;
     showFax: boolean;
     showOwnership: boolean;
+    requiredOwnership: boolean;
     showSubsection: boolean;
     showStayLength: boolean;
     isRequired: boolean;
@@ -41,6 +43,7 @@ export class InputAddressObj {
         this.requiredPhnExt3 = false;
         this.showFax = true;
         this.showOwnership = false;
+        this.requiredOwnership = false;
         this.showSubsection = true;
         this.showStayLength = false;
         this.isRequired = true;

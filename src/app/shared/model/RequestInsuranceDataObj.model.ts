@@ -1,10 +1,11 @@
+import { AppInsMainCvgObj } from "./AppInsMainCvgObj.Model";
 import { AppInsObjObj } from "./AppInsObjObj.Model";
 import { AppInsuranceObj } from "./AppInsuranceObj.Model";
 
 export class RequestInsuranceDataObj {
     AppInsuranceObj: AppInsuranceObj;
     AppInsObjObj: AppInsObjObj;
-    AppInsMainCvgObjs: any;
+    AppInsMainCvgObjs: Array<AppInsMainCvgObj>;
     AppId: number;
     AppAssetId : number;
 

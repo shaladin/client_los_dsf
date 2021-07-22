@@ -33,8 +33,6 @@ export class FinancialDataFL4WComponent implements OnInit {
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
-  listInstallment: any;
-  responseCalc: any;
   NumOfInst: number;
   IsParentLoaded: boolean = false;
 

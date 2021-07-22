@@ -1,0 +1,232 @@
+<form class="form form-horizontal" [formGroup]="EditAppAssetForm" #formDirective="ngForm" (ngSubmit)="EditAppAssetForm.valid  && SaveData()"
+            #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'AssetInfo'" [title]="'Asset Information'" [panel]="'AssetInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="AssetInfo">
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel"> Asset Name</label>
+          <label class="col-md-6 adInsLabel"> {{AppAssetObj.FullAssetName}} </label>
+        </div>
+        <div class="row">
+          <label class="col-md-6 adInsLabel"> Supplier Branch Name</label>
+          <label class="col-md-6 adInsLabel"> {{AppAssetObj.SupplName}} </label>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel"> Serial No 1</label>
+          <label class="col-md-6 adInsLabel"> {{AppAssetObj.SerialNo1}} </label>
+        </div>
+        <div class="row">
+          <label class="col-md-6 adInsLabel"> Serial No 2</label>
+          <label class="col-md-6 adInsLabel"> {{AppAssetObj.SerialNo2}} </label>
+        </div>
+        <div class="row">
+          <label class="col-md-6 adInsLabel"> Serial No 3</label>
+          <label class="col-md-6 adInsLabel"> {{AppAssetObj.SerialNo3}} </label>
+        </div>
+        <div class="row">
+          <label class="col-md-6 adInsLabel"> Serial No 4</label>
+          <label class="col-md-6 adInsLabel"> {{AppAssetObj.SerialNo4}} </label>
+        </div>
+        <div class="row">
+          <label class="col-md-6 adInsLabel"> Serial No 5</label>
+          <label class="col-md-6 adInsLabel"> {{AppAssetObj.SerialNo5}} </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <lib-ucSubsection [id]="'ownerDataId'" [title]="'Asset Owner'" [panel]="'ownerData'">
+  </lib-ucSubsection>
+  <div id="ownerData">
+    <div class="form-group row">
+      <label class="col-md-2" for="selfOwner" translate>Self Owner</label>
+      <div class="col-md-4">
+        <mat-checkbox formControlName="SelfOwner" (change)="SelfOwnerChange($event)"></mat-checkbox>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2  adInsLabel" translate>Owner Name </label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="OwnerName">
+      </div>
+      <label class="col-md-2  adins-required-label" translate>Id Type </label>
+      <div class="col-md-4">
+        <select class="form-control" id="idType" formControlName="MrIdTypeCode"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls.MrIdTypeCode.invalid }"
+          style="width:50%">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of IdTypeObj" [value]="item.Key">
+            {{item.Value}}
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2  adins-required-label" translate>Owner Relationship </label>
+      <div class="col-md-4">
+        <select class="form-control" id="userRelationship" formControlName="MrOwnerRelationshipCode"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls.MrOwnerRelationshipCode.invalid }"
+          style="width:50%">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of OwnerRelationObj" [value]="item.Key">
+            {{item.Value}}
+          </option>
+        </select>
+        <lib-uc-show-errors [control]= "EditAppAssetForm.controls.MrOwnerRelationshipCode"
+          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+      </div>
+      <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="OwnerIdNo">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" translate >Copy Address</label>
+      <div class="col-md-4">
+        <div class="input-group">
+          <select class="form-control" formControlName="OwnerAddrType"
+            [(ngModel)] = "copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
+            <option value="">-Select One-</option>
+            <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
+              {{item.MrCustAddrTypeCode}}
+            </option>
+          </select>
+          <div class="input-group-append">
+            <span class="input-group-btn" *ngIf="!EditAppAssetForm.controls.SelfOwner.value">
+              <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()">
+                <i class="fa fa-check-square-o"></i>Copy
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.OwnerMobilePhnNo"
+          [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-12">
+      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm"
+        [identifier]="'ownerData'" [UCAddrForm]="EditAppAssetForm"></lib-ucaddress>
+      <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
+                   [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj"
+                   [showAllPhn]="false"></lib-ucaddress> -->
+    </div>
+  </div>
+
+  <div *ngIf="AppAssetAttrObj != null">
+    <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
+    </lib-ucSubsection>
+    <div id= "assetAttr">
+      <!-- <div class="form-actions right">
+        <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
+          class="btn btn-raised btn-primary">
+          Refresh Attribute
+        </button>
+      </div> -->
+      <div formArrayName="AppAssetAttrObjs">
+        <div *ngFor="let item of EditAppAssetForm.controls['AppAssetAttrObjs'].controls;let i = index">
+          <div [formGroupName]="i" class="form-group row">
+            <label class="col-md-3  adInsLabel" translate>{{item.controls.AssetAttrName.value}}</label>
+            <div class="col-md-3">
+              <div *ngIf="item.controls.AttrInputType.value == 'T'">
+                <input type="text" class="form-control" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                <lib-uc-show-errors
+                  [control]="EditAppAssetForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+              <div *ngIf="item.controls.AttrInputType.value == 'N'">
+                <input type="" currencyMask class="form-control" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                <lib-uc-show-errors
+                  [control]="EditAppAssetForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+              <div *ngIf="item.controls.AttrInputType.value == 'D'">
+                <input type="date" class="form-control" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                <lib-uc-show-errors
+                  [control]="EditAppAssetForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+              <div *ngIf="item.controls.AttrInputType.value == 'L'">
+                <select class="form-control" formControlName="AttrValue" style="width:50%"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
+                    {{x}}
+                  </option>
+                </select>
+                <lib-uc-show-errors
+                  [control]="EditAppAssetForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
+                  [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <lib-ucSubsection [id]="'insuranceInfoId'" [title]="'Insurance Company Data'" [panel]="'insuranceCompanyData'">
+  </lib-ucSubsection>
+  <div *ngIf="appInsObjObj && appInsObjObj.InsAssetCoveredBy != 'OFF'" id="insuranceCompanyData">
+    <div class="form-group row">
+      <label class="col-md-3 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
+      <div class="col-md-3">
+        <select class="form-control full-width" id="insuredBy" formControlName="InscoBranchCode"
+          (change)="InscoBranchCodeChanged($event)"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls.InscoBranchCode.invalid }">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of inscoBranchObj" [value]="item.Key">
+            {{item.Value}}
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.InscoBranchCode"
+          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 adInsLabel" translate>Total Main Premi from Insco</label>
+      <label class="col-md-3 text-right"> {{appInsObjObj.TotalInscoMainPremiAmt | number:'.2':'en-US'}} </label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 adInsLabel" translate>Total Additional Premi from Insco</label>
+      <label class="col-md-3 text-right"> {{appInsObjObj.TotalInscoAddPremiAmt | number:'.2':'en-US'}} </label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 adInsLabel" translate>Total Fee from Insco</label>
+      <label class="col-md-3 text-right"> {{appInsObjObj.InscoAdminFeeAmt + appInsObjObj.InscoStampDutyFee | number:'.2':'en-US'}} </label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 adInsLabel" translate>Total Premi from Insco</label>
+      <label class="col-md-3 text-right"> {{appInsObjObj.TotalInsInscoAmt | number:'.2':'en-US'}} </label>
+    </div>
+  </div>
+  <br>
+  <div class="form-actions right">
+    <button type="button"  class="btn btn-raised btn-warning mr-1" (click)="CancelClick()" translate>
+        <i class="ft-x"></i> Cancel
+    </button>
+    <button type="submit"
+        class="btn btn-raised btn-primary" translate>
+        <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
+</form>

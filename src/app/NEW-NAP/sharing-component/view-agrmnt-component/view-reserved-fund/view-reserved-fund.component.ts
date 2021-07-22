@@ -10,11 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   providers: [NGXToastrService]
 })
 export class ViewAgrmntReservedFundComponent implements OnInit {
-  @Input() agrmntId: any;
-  agrmntObj = {
-    Id: 0,
-  };
-  AppObj: any;
+  @Input() agrmntId: number;
   RsvFundObj: any;
   totalRsvFund: number = 0;
 
@@ -27,12 +23,11 @@ export class ViewAgrmntReservedFundComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.agrmntObj.Id = this.agrmntId;
     this.GetRsvFundData();
   }
 
   GetRsvFundData() {
-    this.http.post(URLConstant.GetListAgrmntReservedFundByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(URLConstant.GetListAgrmntReservedFundByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response) => {
         this.RsvFundObj = response[CommonConstant.ReturnObj];
         if (this.RsvFundObj != null) {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { RequestSubmitMouCustDupCheckObj } from 'app/shared/model/MouCustDupCheck/RequestSubmitMouCustDupCheckObj.Model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
@@ -12,6 +11,7 @@ import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-existing-mou-company',
@@ -24,18 +24,16 @@ export class ExistingMouCompanyComponent implements OnInit {
   FondationUrl = environment.FoundationR3Url;
   MouCustObj: MouCustObj;
   MouCustCompanyObj: MouCustCompanyObj;
-  ListDuplicateAppGuarantor: any;
   ListDuplicateMouGuarantor: any;
   ListDuplicateAppShareholder: any;
   ListDuplicateMouShareholder: any;
-  ListSelectedIdAppGuarantor: any;
-  ListSelectedIdAppShareholder: any;
-  ListSelectedIdMouGuarantor: any;
-  ListSelectedIdMouShareholder: any;
+  ListSelectedIdAppShareholder: Array<number>;
+  ListSelectedIdMouGuarantor: Array<number>;
+  ListSelectedIdMouShareholder: Array<number>;
   checkboxAllGuarantor = false;
   checkboxAllShareholder = false;
-  RowVersion: any;
-  cust: any;
+  RowVersion: string;
+  cust: CustObj;
   custUrl: string;
   CustNoObj: GenericObj = new GenericObj();
   constructor(
@@ -57,7 +55,6 @@ export class ExistingMouCompanyComponent implements OnInit {
   async ngOnInit() {
     this.MouCustObj = new MouCustObj();
     this.MouCustCompanyObj = new MouCustCompanyObj();
-    this.ListSelectedIdAppGuarantor = new Array();
     this.ListSelectedIdAppShareholder = new Array();
     this.ListSelectedIdMouGuarantor = new Array();
     this.ListSelectedIdMouShareholder = new Array();
@@ -69,7 +66,7 @@ export class ExistingMouCompanyComponent implements OnInit {
 
         this.CustNoObj.CustNo = this.MouCustObj['CustNo'];
         this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-          response => {
+          (response: CustObj) => {
             this.cust = response;
           }
         );
@@ -78,22 +75,15 @@ export class ExistingMouCompanyComponent implements OnInit {
         this.MouCustCompanyObj = response['MouCustCompanyObj'];
 
         var ReqDupCheckObj = new ReqGetMouCustDuplicateObj();
-        ReqDupCheckObj.CustName =  this.MouCustObj.CustName;
+        ReqDupCheckObj.CustName = this.MouCustObj.CustName;
         ReqDupCheckObj.MrCustTypeCode = this.MouCustObj.MrCustTypeCode;
         ReqDupCheckObj.MrCustModelCode = this.MouCustObj.CustModelCode;
         ReqDupCheckObj.MrIdTypeCode = this.MouCustObj.MrIdTypeCode;
         ReqDupCheckObj.IdNo = this.MouCustObj.IdNo;
-        ReqDupCheckObj.TaxIdNo =  this.MouCustObj.TaxIdNo;
-        ReqDupCheckObj.BirthDt =  this.MouCustCompanyObj.EstablishmentDt;
+        ReqDupCheckObj.TaxIdNo = this.MouCustObj.TaxIdNo;
+        ReqDupCheckObj.BirthDt = this.MouCustCompanyObj.EstablishmentDt;
         ReqDupCheckObj.MobilePhnNo1 = "-";
         ReqDupCheckObj.RowVersion = this.RowVersion;
-        
-        //List App guarantor Checking
-        this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, ReqDupCheckObj).subscribe(
-          response => {
-            this.ListDuplicateAppGuarantor = response['ReturnObject'];
-          }
-        );
 
         //List App Shareholder Duplicate Checking
         this.http.post(URLConstant.GetAppShareholderDuplicateCheck, ReqDupCheckObj).subscribe(
@@ -113,25 +103,6 @@ export class ExistingMouCompanyComponent implements OnInit {
             this.ListDuplicateMouShareholder = response['ReturnObject'];
           });
       });
-  }
-
-  SelectAllGuarantor(condition) {
-    this.checkboxAllGuarantor = condition;
-    if (condition) {
-      for (let i = 0; i < this.ListDuplicateAppGuarantor.length; i++) {
-        if (this.ListSelectedIdAppGuarantor.indexOf(this.ListDuplicateAppGuarantor[i].AppGuarantorId) < 0) {
-          this.ListSelectedIdAppGuarantor.push(this.ListDuplicateAppGuarantor[i].AppGuarantorId);
-        }
-      }
-
-    } else {
-      for (let i = 0; i < this.ListDuplicateAppGuarantor.length; i++) {
-        let index = this.ListSelectedIdAppGuarantor.indexOf(this.ListDuplicateAppGuarantor[i].AppGuarantorId);
-        if (index > -1) {
-          this.ListSelectedIdAppGuarantor.splice(index, 1);
-        }
-      }
-    }
   }
 
   SelectAllMouGuarantor(condition) {
@@ -190,7 +161,7 @@ export class ExistingMouCompanyComponent implements OnInit {
     }
   }
 
-  Checked(type: string, Id: any, isChecked: any): void {
+  Checked(type: string, Id: number, isChecked: boolean): void {
     if (isChecked) {
       this["ListSelectedId" + type].push(Id);
     } else {
@@ -201,7 +172,6 @@ export class ExistingMouCompanyComponent implements OnInit {
 
   Submit() {
     var appDupCheckObj = new RequestSubmitMouCustDupCheckObj();
-    appDupCheckObj.AppGuarantorIds = this.ListSelectedIdAppGuarantor;
     appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.ListSelectedIdAppShareholder;
     appDupCheckObj.MouGuarantorIds = this.ListSelectedIdMouGuarantor;
     appDupCheckObj.MouCustCompanyMgmntShrholderIds = this.ListSelectedIdMouShareholder;
@@ -212,12 +182,12 @@ export class ExistingMouCompanyComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DUP_CHECK_PAGING], {});
       });
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DUP_CHECK_PAGING], {});
   }
 
   OpenView(key: string, value: number) {

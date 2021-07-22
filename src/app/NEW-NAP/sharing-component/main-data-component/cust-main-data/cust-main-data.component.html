@@ -35,6 +35,10 @@
                     *ngIf="this.InputLookupCustObj.isReady" [parentForm]="CustMainDataForm"
                     [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
                   </lib-uclookupgeneric>
+                  <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustCoyObj"
+                    *ngIf="this.InputLookupCustCoyObj.isReady" [parentForm]="CustMainDataForm"
+                    [identifier]="'lookupCustomerCoy'" (lookup)="copyCustomerEvent($event)" #LookupExistingCustCoy>
+                  </lib-uclookupgeneric>
                 </div>
               </div>
             </div>
@@ -43,7 +47,7 @@
                 <label class="col-md-4 adins-required-label" translate>Gender</label>
                 <div class="col-md-6">
                   <lib-ucdropdownlist *ngIf="isDdlMrGenderReady" [dropdownListObj]="ddlGenderObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
-                    [identifier]="'MrGenderCode'" [genericList]="DictRefMaster[MasterGender]"></lib-ucdropdownlist>
+                    [identifier]="'MrGenderCode'" [genericList]="DictRefMaster[MasterGender]" [isDisabled]="isExisting"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
@@ -78,7 +82,7 @@
                 <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
                 <div class="col-md-6">
                   <lib-ucdropdownlist *ngIf="isDdlIdTypeReady" [dropdownListObj]="ddlIdTypeObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
-                    [identifier]="'MrIdTypeCode'" [genericList]="IdTypeObj" (callback)="ChangeIdType($event.selectedValue)"></lib-ucdropdownlist>
+                    [identifier]="'MrIdTypeCode'" [genericList]="IdTypeObj" (callback)="ChangeIdType($event.selectedValue)" [isDisabled]="isExisting"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
@@ -101,7 +105,7 @@
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                     formControlName="IdNo"
                     [ngClass]="{'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [customPattern]="customPattern" [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -154,7 +158,7 @@
                 <label class="col-md-4 adins-required-label" translate>Marital Status</label>
                 <div class="col-md-6">
                   <lib-ucdropdownlist *ngIf="isDdlMaritalStatReady" [dropdownListObj]="ddlMaritalStatObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
-                    [identifier]="'MrMaritalStatCode'" [genericList]="DictRefMaster[MasterMaritalStat]"></lib-ucdropdownlist>
+                    [identifier]="'MrMaritalStatCode'" [genericList]="DictRefMaster[MasterMaritalStat]" [isDisabled]="isExisting"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
@@ -215,7 +219,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="MrCustTypeCode == 'COMPANY'">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Establishment Date</label>
                 <div class="col-md-8">

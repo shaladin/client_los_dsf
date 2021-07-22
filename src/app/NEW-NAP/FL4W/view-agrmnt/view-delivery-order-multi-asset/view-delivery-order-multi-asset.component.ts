@@ -12,7 +12,7 @@ import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/Deliv
 })
 export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
   @Input() AgrmntId: number;
-  doList: Array<any>;
+  doList: Array<DeliveryOrderHObj>;
   AppId: number;
 
   readonly CancelLink: string = NavigationConstant.NAP_FL4W_VIEW_DO_DETAIL;

@@ -48,12 +48,12 @@ import { CreditApprovalDetailComponent } from './credit-approval/credit-approval
 import { CreditApprovalPagingComponent } from './credit-approval/credit-approval-paging/credit-approval-paging.component';
 import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
 import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
-import { CustHistoryComponent } from './credit-investigation/component/cust-history/cust-history.component';
-import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
-import { ViewApplicationDataMultiComponent } from './credit-investigation/component/view-application-data-multi/view-application-data-multi.component';
 import { CreditReviewPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-paging-dsf/credit-review-paging-dsf.component";
 import { CreditReviewCfnaPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-paging-dsf/credit-review-cfna-paging-dsf.component";
 import { CreditReviewDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-detail-dsf/credit-review-detail-dsf.component";
+import { TabApplicationDataComponent } from "./shared-component/tab-application-data/tab-application-data.component";
+import { CustHistoryComponent } from "./shared-component/cust-history/cust-history.component";
+import { ViewApplicationDataMultiComponent } from "./shared-component/view-application-data-multi/view-application-data-multi.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -127,12 +127,12 @@ export const customCurrencyMaskConfig = {
     CreditApprovalPagingComponent,
     CreditApprovalCfnaPagingComponent,
     CreditApprovalCfnaDetailComponent,
-    CustHistoryComponent,
     TabApplicationDataComponent,
     ViewApplicationDataMultiComponent,
     CreditReviewPagingDsfComponent,
     CreditReviewCfnaPagingDsfComponent,
-    CreditReviewDetailDsfComponent
+    CreditReviewDetailDsfComponent,
+    CustHistoryComponent
   ],
   providers: [
     NGXToastrService

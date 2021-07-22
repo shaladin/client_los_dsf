@@ -17,7 +17,7 @@ export class ReturnHandlingSurveyComponent implements OnInit {
   BizTemplateCode: string;
   TrxType: string = "APP";
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
   constructor(private route: ActivatedRoute,
     private cookieService: CookieService) {

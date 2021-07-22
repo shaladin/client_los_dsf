@@ -1,9 +1,9 @@
 export class HolidayDObj {
-    holidaySchmDId: any;
-    holidaySchmHId: any;
-    holidayDt: any;
-    descr: any;
-    isPublicHoliday: any;
+    holidaySchmDId: number;
+    holidaySchmHId: number;
+    holidayDt: Date;
+    descr: string;
+    isPublicHoliday: boolean;
 
     constructor() { this.holidaySchmDId = 0; }
 }

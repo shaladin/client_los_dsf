@@ -1,0 +1,61 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustPersonalFinDataId",
+        "subSectionTitle": "Financial",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "currency",
+            "label": "Monthly Income",
+            "property": "MonthlyIncomeAmt"
+          },
+          {
+            "type": "currency",
+            "label": "Monthly Expense",
+            "property": "MonthlyExpenseAmt"
+          },
+          {
+            "type": "text",
+            "label": "Source of Income",
+            "property": "SourceOfIncomeName"
+          },
+          {
+            "type": "currency",
+            "label": "Monthly Installment",
+            "property": "MonthlyInstallmentAmt"
+          },
+          {
+            "type": "currency",
+            "label": "Spouse Monthly Income",
+            "property": "SpouseMonthlyIncomeAmt"
+          },
+          {
+            "type": "boolean",
+            "label": "Join Income",
+            "property": "IsJoinIncome"
+          },
+          {
+            "type": "currency",
+            "label": "Total Monthly Income",
+            "property": "TotalMonthlyIncomeAmt"
+          },
+          {
+            "type": "currency",
+            "label": "Total Monthly Expense",
+            "property": "TotalMonthlyExpenseAmt"
+          },
+          {
+            "type": "currency",
+            "label": "Nett Monthly Income",
+            "property": "NettMonthlyIncomeAmt"
+          }
+        ],
+        "querystring": {
+          "name": "viewLtkmCustPersonalFinData"
+        }
+      }
+    ]
+  }
+  

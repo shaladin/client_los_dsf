@@ -1,0 +1,115 @@
+<form class="form form-horizontal" [formGroup]="MouDetailGeneralForm" #enjiForm="ngForm" novalidate
+    (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+    <lib-ucSubsection [id]="'MouDetailGeneralId'" [title]="'MOU Detail'" [panel]="'MouDetailGeneralSection'">
+    </lib-ucSubsection>
+    <div id="MouDetailGeneralSection">
+        <div class="form-body">
+            <div class="form-group row">
+                <label class="col-md-2 adInsLabel adins-required-label" for="MrInterestTypeCode" translate>Interest
+                    Type</label>
+                <div class="col-md-10">
+                    <select class="form-control adInsInput" formControlName="MrInterestTypeCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInterestTypeCode.invalid }">
+                        <option *ngFor="let item of intrstTypeList" [value]="item.Key">{{item.Value}}
+                        </option>
+                    </select>
+                    <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrInterestTypeCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 adInsLabel adins-required-label" for="MrInstSchmCode" translate>Installment
+                    Scheme</label>
+                <div class="col-md-10">
+                    <select class="form-control adInsInput" formControlName="MrInstSchmCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInstSchmCode.invalid }">
+                        <option *ngFor="let item of instSchmList" [value]="item.Key">{{item.Value}}
+                        </option>
+                    </select>
+                    <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrInstSchmCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 adInsLabel adins-required-label" for="PayFreqCode" translate>Payment
+                    Frequency</label>
+                <div class="col-md-10">
+                    <select class="form-control adInsInput" formControlName="PayFreqCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.PayFreqCode.invalid }">
+                        <option *ngFor="let item of payFreqList" [value]="item.PayFreqCode">{{item.Descr}}
+                        </option>
+                    </select>
+                    <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.PayFreqCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 adInsLabel" for="MrFirstInstTypeCode" translate>First Installment Type</label>
+                <div class="col-md-10">
+                    <select type="text" class="form-control adInsInput" formControlName="MrFirstInstTypeCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrFirstInstTypeCode.invalid }">
+                        <option *ngFor="let item of firstInstList" [value]="item.Key">{{item.Value}}
+                        </option>
+                    </select>
+                    <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrFirstInstTypeCode"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 adInsLabel adins-required-label" for="DownPaymentFromToPrcnt" translate>Down
+                    Payment (%)</label>
+                <div class="col-md-2">
+                    <input type="" currencyMask class="form-control adInsInput" formControlName="DownPaymentFromPrcnt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.DownPaymentFromPrcnt.invalid }"
+                        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }" />
+                    <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.DownPaymentFromPrcnt"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+                <div class="col-md-1" style="padding: 0; text-align: center;">
+                    To
+                </div>
+                <div class="col-md-2">
+                    <input type="" currencyMask class="form-control adInsInput" formControlName="DownPaymentToPrcnt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.DownPaymentToPrcnt.invalid }"
+                        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }" />
+                    <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.DownPaymentToPrcnt"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+                <div *ngIf="isDPInvalid" class="invalid-feedback d-block col-md-12 offset-md-3">
+                    <div translate>{{dpInvalidMsg}}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 adInsLabel adins-required-label" for="TenorFromTo" translate>Tenor</label>
+                <div class="col-md-2">
+                    <input type="number" class="form-control adInsInput" formControlName="TenorFrom"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.TenorFrom.invalid }" />
+                    <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.TenorFrom"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+                <div class="col-md-1" style="padding: 0; text-align: center;">
+                    To
+                </div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control adInsInput" formControlName="TenorTo"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.TenorTo.invalid }" />
+                    <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.TenorTo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                </div>
+                <div *ngIf="isTenorInvalid" class="invalid-feedback d-block col-md-12 offset-md-3">
+                    <div translate>{{tenorInvalidMsg}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-change-mou-cust-asset *ngIf="isReady" [parentForm]="AssetForm" [identifier]="'Asset'" [MouCustId]="MouCustId"
+        [IsAssetSelected]="MouDetailGeneralForm.controls.AssetTypeCode.value != ''"
+        [AssetTypeCode]="MouDetailGeneralForm.controls.AssetTypeCode.value"></app-change-mou-cust-asset>
+    <div class="col-md-12" style="padding: 0; text-align: right;">
+        <div class="form-actions right">
+            <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square "></i> Save
+            </button>
+        </div>
+    </div>
+</form>

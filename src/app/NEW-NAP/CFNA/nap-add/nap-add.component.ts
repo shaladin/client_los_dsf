@@ -17,6 +17,7 @@ import { CookieService } from 'ngx-cookie';
 import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-add',
@@ -28,7 +29,7 @@ export class NapAddComponent implements OnInit {
   inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
   inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
-  user: any;
+  user: CurrentUserContext;
 
   NapAppForm = this.fb.group({
     MouCustId: [''],

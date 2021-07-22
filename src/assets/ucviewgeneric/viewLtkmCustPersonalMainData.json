@@ -1,0 +1,96 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustPersonalMainDataId",
+        "subSectionTitle": "Customer Main Data",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Gender",
+            "property": "GenderName"
+          },
+          {
+            "type": "text",
+            "label": "ID Type / ID No",
+            "property": "IdTypeAndIdNo"
+          },
+          {
+            "type": "text",
+            "label": "Mother Maiden Name",
+            "property": "MotherMaidenName"
+          },
+          {
+            "type": "date",
+            "label": "ID Expired Date",
+            "property": "IdExpiredDt"
+          },
+          {
+            "type": "text",
+            "label": "Marital Status",
+            "property": "MaritalStatusName"
+          },
+          {
+            "type": "text",
+            "label": "Birth Place / Date",
+            "property": "BirthPlaceAndDate"
+          },
+          {
+            "type": "text",
+            "label": "Nationality",
+            "property": "NationalityName"
+          },
+          {
+            "type": "text",
+            "label": "NPWP",
+            "property": "TaxIdNo"
+          },
+          {
+            "type": "text",
+            "label": "Country",
+            "property": "CountryName"
+          },
+          {
+            "type": "text",
+            "label": "Mobile Phone No",
+            "property": "MobilePhnNo1"
+          },
+          {
+            "type": "text",
+            "label": "Education",
+            "property": "EducationName"
+          },
+          {
+            "type": "text",
+            "label": "Email",
+            "property": "Email1"
+          },
+          {
+            "type": "text",
+            "label": "Religion",
+            "property": "ReligionName"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "boolean",
+            "label": "VIP",
+            "property": "IsVip"
+          }
+        ],
+        "querystring": {
+          "name": "viewLtkmCustPersonalMainData"
+        }
+      }
+    ]
+  }
+  

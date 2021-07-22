@@ -5,10 +5,11 @@ import { AppCollateralRegistrationObj } from "./AppCollateralRegistrationObj.Mod
 import { AppCollateralAccessoryObj } from "./AppCollateralAccessoryObj.Model";
 import { AppCollateralAttrObj } from "./AppCollateralAttrObj.Model";
 import { AppAssetAttrObj } from "./AppAssetAttrObj.Model";
+import { AppAssetAccessoryObj } from "./AppAssetAccessoryObj.model";
 
 export class AllAssetDataObj {
   AppAssetObj: AppAssetObj;
-  AppAssetAccessoryObjs: any;
+  AppAssetAccessoryObjs: Array<AppAssetAccessoryObj>;
   AppAssetSupplEmpAdminObj: AppAssetSupplEmpObj;
   AppAssetSupplEmpSalesObj: AppAssetSupplEmpObj;
   AppAssetSupplEmpManagerObj: AppAssetSupplEmpObj;
@@ -23,7 +24,7 @@ export class AllAssetDataObj {
   BizTemplateCode: string;
   Copy: string;
   CopyNumber: number;
-  RowVersion: any;
+  RowVersion: string;
 
   constructor() {
     this.AppAssetObj = new AppAssetObj();

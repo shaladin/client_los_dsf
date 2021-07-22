@@ -19,3 +19,14 @@ export class ReqGetListBankByVendorEmpNoAndCodeObj{
         this.RowVersion = "";     
     }
 }
+
+export class ReqGetVendorEmpByVendorEmpNoAndVendorCodeObj{
+    VendorCode: string;
+    VendorEmpNo: string;
+    RowVersion: string;
+    constructor(){   
+        this.VendorCode = "";
+        this.VendorEmpNo = "";
+        this.RowVersion = "";     
+    }
+}

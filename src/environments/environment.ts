@@ -2,7 +2,6 @@
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
-
 export const environment = {
   production: false,
   navbarColor: 'transparent',
@@ -16,7 +15,7 @@ export const environment = {
   ApprovalR3Url: 'http://foundation-be.confins.one:8888/Approval',
   ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
   FoundationR3Web:'http://foundation-be.confins.one:8888',
-  losR3Web: 'http://los-be.confins.one:8888',
+  losR3Web: 'http://los.confins.one',
   WorkflowR3Url: 'http://engine.confins.one/Workflow_Dev_R3/',
   WebSocketURL: 'http://foundation-be.confins.one:8888',
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',

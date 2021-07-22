@@ -186,10 +186,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3 form-inline">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
               <label translate>Supplier Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
@@ -219,10 +219,10 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <div class="col-md-3 form-inline">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
               <label translate>Residual Value Amount</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}"
                 (keyup)="SetNeedReCalculate(true)" currencyMask>
@@ -309,10 +309,10 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
               <label translate>Gross Yield</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
             </div>
           </div>

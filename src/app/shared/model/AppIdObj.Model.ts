@@ -1,5 +1,5 @@
 export class AppIdObj {
-    AppId: any;
-    RowVersion:any;
+    AppId: number;
+    RowVersion:string;
   constructor() { this.RowVersion="" }
 }

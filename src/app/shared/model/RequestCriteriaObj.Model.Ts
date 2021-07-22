@@ -10,7 +10,7 @@ export class RequestCriteriaObj{
     orderBy:any;
     criteria:CriteriaObj[];
     isLoading : boolean;
-    queryString: any;
+    queryString: string;
     integrationObj: IntegrationObj;
     joinType: string;
     

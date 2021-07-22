@@ -4,7 +4,7 @@
     "component": [
       {
         "type": "textbox",
-        "name": "MASTER_CODE",
+        "name": "MasterCode",
         "id": "masterCodeId",
         "value": "",
         "label": "Economic Sector Code",

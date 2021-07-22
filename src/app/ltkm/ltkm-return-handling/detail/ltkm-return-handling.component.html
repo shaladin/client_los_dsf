@@ -1,0 +1,302 @@
+<div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="px-3">
+            <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
+              <div class="col-md-8" style="padding-left: 0px;">
+                <h4 class="form-section card-title" translate><i class="ft-file-text"></i>{{this.pageTitle}}
+                </h4>
+              </div>
+            </div>
+            <lib-ucSubsection [id]="'lktmReqDetailId'" [title]="'CUSTOMER DATA'" [panel]="'lktmReqDetail'">
+            </lib-ucSubsection>
+            <!-- start customer data -->
+            <div class="form-body customerData" id="lktmReqDetail">
+              <form class="form form-horizontal" #enjiForm="ngForm">
+                <div class="form-body">
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Customer Type</label>
+                    <div class="col-md-10">
+                      <mat-radio-group [(ngModel)]="MrCustTypeCode" name="MrCustTypeCode" (change)="CheckBox($event)">
+                        <mat-radio-button [disabled]="isExisting" class="custom-control custom-radio display-inline-block"
+                          *ngFor="let item of CustTypeObj" [value]="item.Key">
+                          {{item.Value}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div id="CustMainDataPersonal" *ngIf="MrCustTypeCode == 'PERSONAL'">
+                <form class="form form-horizontal" [formGroup]="CustDataForm"
+                  (ngSubmit)="CustDataForm.valid && SaveForm()" #enjiForm="ngForm">
+                  <div class="form-body">
+                    <div *ngIf="isBindDataDone == true">
+                      <app-ltkm-cust-personal-main-data [isLockLookupCust]="isLockLookupCust" [isLockMode]="isLockMode"
+                        (callbackCopyCust)="CopyCustomer($event)" (spouseObj)="GenderChanged($event)"
+                        (isMarried)="MaritalChanged($event)" [appId]="appId" [IsSpouseExist]="IsSpouseExist"
+                        [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
+                        [bizTemplateCode]="bizTemplateCode" [identifier]="'personalMainData'">
+                      </app-ltkm-cust-personal-main-data>
+                      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegal" [enjiForm]="enjiForm"
+                        [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm">
+                      </lib-ucaddress>
+                      <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
+                      </lib-ucSubsection>
+                      <div id="residenceAddr">
+                        <div *ngIf="!isLockMode" class="form-group row">
+                          <label class="col-md-2" translate>Copy Address From</label>
+                          <div class="col-md-4">
+                            <div class="input-group">
+                              <select class="form-control" formControlName="CopyFromResidence"
+                                [(ngModel)]="copyFromResidence">
+                                <option *ngFor="let item of copyToResidenceTypeObj" [value]="item.Key">
+                                  {{item.Value}}
+                                </option>
+                              </select>
+                              <div class="input-group-append">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()">
+                                    <i class="fa fa-check-square-o"></i>Copy
+                                  </button>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForResidence" [enjiForm]="enjiForm"
+                          [identifier]="'residenceAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+                      </div>
+                      <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
+                      </lib-ucSubsection>
+                      <div id="mailingAddr">
+                        <div *ngIf="!isLockMode" class="form-group row">
+                          <label class="col-md-2" translate>Copy Address From</label>
+                          <div class="col-md-4">
+                            <div class="input-group">
+                              <select class="form-control" formControlName="CopyFromMailing"
+                                [(ngModel)]="copyFromMailing">
+                                <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">
+                                  {{item.Value}}
+                                </option>
+                              </select>
+                              <div class="input-group-append">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()">
+                                    <i class="fa fa-check-square-o"></i>Copy
+                                  </button>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForMailing" [enjiForm]="enjiForm"
+                          [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+                      </div>
+                      <app-ltkm-cust-job-data [isLockMode]="isLockMode" [custModelCode]="defCustModelCode"
+                      [ltkmCustPersonalJobDataObj]="ltkmCustPersonalJobDataObj" [enjiForm]="enjiForm"
+                        [parentForm]="CustDataForm" [identifier]="'jobData'"></app-ltkm-cust-job-data>
+                      <app-ltkm-cust-grp-member [isLockMode]="isLockMode"
+                        [ltkmCustGrpObjs]="listLtkmCustGrpObj" [enjiForm]="enjiForm"
+                        [parentForm]="CustDataForm" [identifier]="'custGrpMember'"></app-ltkm-cust-grp-member>
+  
+                      <app-ltkm-other-info [isLockMode]="isLockMode" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
+                        [identifier]="'OtherInfoList'" [CustOtherInfo]="ltkmCustOtherInfo" [CustTypeCode]="MrCustTypeCode"></app-ltkm-other-info>
+  
+                      <app-ltkm-attr-content-component #attrlistcustcomponent [ListAttrContent]="listAttrContentCustData"
+                        [isLockMode]="isLockMode" [title]="'Customer Attribute'" [enjiForm]="enjiForm"
+                        [parentForm]="CustDataForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup">
+                      </app-ltkm-attr-content-component>
+  
+                      <app-ltkm-emergency-contact [LtkmCustEmergencyContact]="LtkmCustEmergencyContactObj"
+                        [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
+                        [parentForm]="CustDataForm" [identifier]="'EmergencyContact'"></app-ltkm-emergency-contact>
+  
+                      <app-ltkm-financial-personal (UpdateSource)="updateListLtkmCustPersonalFinData($event)"
+                        [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
+                        [parentForm]="CustDataForm" [ListLtkmCustPersonalFinData]="listLtkmCustPersonalFinDataObjs"
+                        [identifier]="'FinData'"></app-ltkm-financial-personal>
+  
+  
+                      <app-ltkm-attr-content-component [isLockMode]="isLockMode" #attrlistfindatacomponent
+                        [ListAttrContent]="listAttrContentFinData" [title]="'Financial Attribute'" [enjiForm]="enjiForm"
+                        [parentForm]="CustDataForm" [identifier]="'AttrListFinancialForm'" [AttrGroup]="AttrGroupFinData">
+                      </app-ltkm-attr-content-component>
+  
+                      <app-ltkm-bank-section [isLockMode]="isLockMode" (UpdateBankSection)="updateListLtkmCustBankAccObjs($event)"
+                        [parentForm]="CustDataForm" [identifier]="'BankSection'" [enjiForm]="enjiForm"
+                        [LtkmCustBankAccList]="listLtkmCustBankAccObjs" (OutputObj)="GetEvent($event)">
+                      </app-ltkm-bank-section>
+  
+                      <ltkm-family-main-data-paging [listFamily]="listFamily"></ltkm-family-main-data-paging>
+                      <br />
+                      <br />
+                      <!-- Ltkm Analysis -->
+                      <app-ltkm-request-analysis *ngIf="mode != 'return'" [enjiForm]="enjiForm"
+                        [parentForm]="CustDataForm" [identifier]="'ltkmAnalysis'"></app-ltkm-request-analysis>
+                    </div>
+                  </div>
+  
+                  <div *ngIf="!FinFormIsDetail" class="form-actions right">
+                    <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                      translate>
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary">
+                      <i class="fa fa-check-square"></i> Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div id="CustMainDataCompany" *ngIf="MrCustTypeCode == 'COMPANY'">
+                <form class="form form-horizontal" [formGroup]="CustDataCompanyForm"
+                  (ngSubmit)="CustDataCompanyForm.valid && SaveForm()" #enjiFormCompany="ngForm">
+                  <div class="form-body">
+                    <div *ngIf="isBindDataDone == true">
+                      <app-ltkm-cust-company-main-data [isLockMode]="isLockMode"
+                      [isLockLookupCust]="isLockLookupCust"
+                        (callbackCopyCust)="CopyCustomerCompany($event)" [custDataCompanyObj]="custDataCompanyObj"
+                        [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
+                        [bizTemplateCode]="bizTemplateCode" [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data>
+                      <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy" [enjiForm]="enjiFormCompany"
+                        [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
+                      <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'"
+                        [panel]="'mailingAddrCompany'">
+                      </lib-ucSubsection>
+                      <div id="mailingAddrCompany">
+                        <div *ngIf="!isLockMode" class="form-group row">
+                          <label class="col-md-2" translate>Copy Address From</label>
+                          <div class="col-md-4">
+                            <div class="input-group">
+                              <select class="form-control" formControlName="CopyFromMailing"
+                                [(ngModel)]="copyFromMailingCompany">
+                                <option *ngFor="let item of copyToMailingCompanyTypeObj" [value]="item.Key">
+                                  {{item.Value}}
+                                </option>
+                              </select>
+                              <div class="input-group-append">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-raised btn-primary" type="button"
+                                    (click)="copyToMailingCompany()">
+                                    <i class="fa fa-check-square-o"></i>Copy
+                                  </button>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <lib-ucaddress 
+                        [addressObj]="inputAddressObjForMailingCoy" 
+                        [enjiForm]="enjiFormCompany"
+                          [identifier]="'mailingAddrCompany'" 
+                          [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
+                      </div>
+                      <app-ltkm-mgmnt-shrholder 
+                      [isLockMode]="isLockMode"
+                        [listLtkmCustCompanyManagementShareholderObj]="listLtkmCustCompanyManagementShareholderObj">
+                      </app-ltkm-mgmnt-shrholder>
+                      
+                      <app-ltkm-cc-contact-information
+                          [enjiForm]="enjiFormCompany"
+                          [identifier]="'contactPersonCompany'" 
+                          [parentForm]="CustDataCompanyForm"
+                          [LtkmCustCompanyContactPersonObj]= "ContactPersonCompany"
+                          [isLockMode]="isLockMode"
+                      >  
+                      </app-ltkm-cc-contact-information>
+  
+                      <app-ltkm-financial-company 
+                      [isLockMode]="isLockMode"
+                        [ListLtkmCustCoyFinData]="listLtkmCustCoyFinData"
+                        [enjiForm]="enjiFormCompany" 
+                        [parentForm]="CustDataCompanyForm"
+                        [identifier]="'financialDataCompany'"
+                        (UpdateSource)="updateListLtkmCustCoyFinDatas($event)"
+                        >
+                      </app-ltkm-financial-company>
+  
+                      <app-ltkm-attr-content-component 
+                      [isLockMode]="isLockMode" #attrlistfindatacomponentcoy
+                        [ListAttrContent]="listAttrContentFinDataCoy" 
+                        [title]="'Financial Attribute'" 
+                        [enjiForm]="enjiFormCompany"
+                        [parentForm]="CustDataCompanyForm" 
+                        [identifier]="'AttrListFinancialForm'" 
+                        [AttrGroup]="AttrGroupFinData">
+                      </app-ltkm-attr-content-component>
+  
+                      <app-ltkm-bank-section 
+                      [isLockMode]="isLockMode" 
+                      (UpdateBankSection)="updateListLtkmCustBankAccObjsCoy($event)"
+                        [parentForm]="CustDataCompanyForm" 
+                        [identifier]="'BankSection'" 
+                        [enjiForm]="enjiFormCompany"
+                        [LtkmCustBankAccList]="listLtkmCustBankAccCompany">
+                      </app-ltkm-bank-section>
+  
+                      <app-ltkm-legal-doc-tab 
+                      [parentForm]="CustDataCompanyForm" 
+                      [identifier]="'ListCompanyLegalDoc'"
+                      [enjiForm]="enjiFormCompany"
+                      [listLtkmCustCompanyLegalDoc]="listLtkmCustCompanyLegalDoc" 
+                      [isLockMode]="isLockMode" 
+                      (UpdateSource)="updateListLtkmCustCoyLegalDocs($event)">
+                      </app-ltkm-legal-doc-tab>
+  
+                        <app-ltkm-cust-grp-member 
+                        [isLockMode]="isLockMode"
+                        [ltkmCustGrpObjs]="listLtkmCustGrpsCompany" 
+                        [enjiForm]="enjiFormCompany"
+                        [parentForm]="CustDataCompanyForm" 
+                        [identifier]="'custGrpMemberCompany'"
+                        ></app-ltkm-cust-grp-member>
+  
+                        <app-ltkm-other-info 
+                        [isLockMode]="isLockMode" 
+                        [enjiForm]="enjiFormCompany"
+                        [parentForm]="CustDataCompanyForm" 
+                        [identifier]="'OtherInfoList'" 
+                        [CustOtherInfo]="ltkmCustOtherInfo" 
+                        [CustTypeCode]="MrCustTypeCode"></app-ltkm-other-info>
+  
+                      <app-ltkm-attr-content-component #attrlistcustcomponentcoy 
+                      [ListAttrContent]="listAttrContentCustDataCoy"
+                        [isLockMode]="isLockMode" 
+                        [title]="'Customer Attribute'" 
+                        [enjiForm]="enjiFormCompany"
+                        [parentForm]="CustDataCompanyForm" 
+                        [identifier]="'AttrList'" 
+                        [AttrGroup]="AttrGroup">
+                      </app-ltkm-attr-content-component>
+  
+                      <br />
+                      <br />
+                      <!-- Ltkm Analysis -->
+                      <app-ltkm-request-analysis 
+                      *ngIf="mode != 'return'"
+                      [enjiForm]="enjiFormCompany" 
+                      [parentForm]="CustDataCompanyForm"
+                        [identifier]="'ltkmAnalysis'">
+                        </app-ltkm-request-analysis>
+                    </div>
+                  </div>
+                  <div class="form-actions right">
+                    <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                      translate>
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary">
+                      <i class="fa fa-check-square"></i> Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- end customer data -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AgrmntLifeInsObj } from 'app/shared/model/Agrmnt/AgrmntLifeIns.Model';
 
 @Component({
   selector: 'agrmnt-life-insurance',
@@ -8,22 +9,18 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   styleUrls: []
 })
 export class AgrmntLifeInsuranceComponent implements OnInit {
-  @Input() agrmntId: any;
-  agrmntObj = {
-    Id: 0,
-  };
+  @Input() agrmntId: number;
   AgrmntLifeInsObj: any;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.agrmntObj.Id = this.agrmntId;
     this.GetAgrmntLifeInsData();
   }
 
   GetAgrmntLifeInsData() {
-    this.http.post(URLConstant.GetAgrmntLifeInsDataByAgrmntId, this.agrmntObj).subscribe(
-      (response) => {
+    this.http.post(URLConstant.GetAgrmntLifeInsDataByAgrmntId, { Id: this.agrmntId }).subscribe(
+      (response: AgrmntLifeInsObj) => {
         this.AgrmntLifeInsObj = response;
       }
     );

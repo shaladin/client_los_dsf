@@ -41,10 +41,43 @@
           "label": "Installment Type",
           "property": "InstallmentType"
         },
-        {
-          "type": "text",
-          "label": "Installment Scheme",
-          "property": "InstScheme"
+		    {            
+          "type" : "switch", 
+          "case" : [ 
+            {
+              "conditions": [                  
+                {
+                  "property" : "BizTemplateCode",
+                  "value" : "FCTR",
+                  "restriction" : "NEQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Installment Scheme",
+                "property" : "InstScheme"
+              }
+            },
+            {
+              "conditions": [                  
+                {
+                  "property" : "BizTemplateCode",
+                  "value" : "FCTR",
+                  "restriction" : "EQ"
+                },
+                {
+                  "property" : "InstallmentTypeCode",
+                  "value" : "SINGLE",
+                  "restriction" : "NEQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Installment Scheme",
+                "property" : "InstScheme"
+              }
+            }
+          ]
         },
         {
           "type": "text",

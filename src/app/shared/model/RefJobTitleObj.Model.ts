@@ -1,11 +1,11 @@
 export class RefJobTitleObj {
-    RefJobTitleId: any;
-    JobTitleCode: any;
-    JobTitleName: any;
-    Descr: any;
-    IsInternal: any;
-    MrJobPositionLvl: any;
-    RefOrgId: any;
-    OrgName : any;
+    RefJobTitleId: number;
+    JobTitleCode: string;
+    JobTitleName: string;
+    Descr: string;
+    IsInternal: boolean;
+    MrJobPositionLvl: string;
+    RefOrgId: number;
+    OrgName : string;
     constructor() { this.RefJobTitleId = 0 }
 }

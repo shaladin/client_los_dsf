@@ -34,6 +34,7 @@ export class AppObj {
     SalesOfficerName: string;
     SalesNotes: string;
     SalesHeadNo: string;
+    SalesHeadName: string; 
     CreditAdminNo: string;
     CreditAnalystNo: string;
     CreditRiskNo: string;
@@ -49,11 +50,19 @@ export class AppObj {
     RsvField3: string;
     RsvField4: string;
     RsvField5: string;
+    MrInstSchemeCode: string; 
+    InterestType: string; 
+    MrCharacteristicOfCreditCode: string; 
+    PrevAgrmntNo: string; 
+    MrWayOfRestructureCode: string; 
+    MrSlikSecEcoCode: string; 
+    FloatingPeriodCode: string;
     WfTaskListId: number;
     Username: string;
     BizTemplateCode: string;
     MrCustTypeCode: string;
     RowVersion: string;
+    CrdApvResultExpDt: Date;
 
     constructor() {
         this.AppId = 0;
@@ -108,5 +117,6 @@ export class AppObj {
         this.BizTemplateCode = "";
         this.MrCustTypeCode = "";
         this.RowVersion = "";
+        this.CrdApvResultExpDt = new Date();
     }
 }

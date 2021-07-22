@@ -7,6 +7,7 @@ import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-socmed-FL4W',
@@ -20,7 +21,7 @@ export class CustSocmedFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustSocmedObjs: Array<AppCustSocmedObj>;
 
   refMasterObj = {
@@ -28,11 +29,9 @@ export class CustSocmedFL4WComponent implements OnInit {
   };
   custDataObj: CustDataObj;
 
-  SocmedObj: any;
-  defaultSocmedCode: any;
-  defaultSocmedName: any;
-
-
+  SocmedObj: Array<KeyValueObj>;
+  defaultSocmedCode: string;
+  defaultSocmedName: string;
 
   constructor(
     private fb: FormBuilder, 

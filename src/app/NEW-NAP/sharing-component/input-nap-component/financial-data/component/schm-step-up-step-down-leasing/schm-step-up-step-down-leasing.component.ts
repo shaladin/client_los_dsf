@@ -9,6 +9,8 @@ import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStep
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/AppFinData/CalcStepUpStepDownObjForTrialCalc.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-leasing',
@@ -19,15 +21,18 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Input() BizTemplateCode: string;
+  @Input() TrialCalc: boolean;
+  @Input() InstAmt: number;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   StepUpStepDownInputOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
-  listInstallment: any;
+  calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
+  listInstallment: Array<InstallmentObj>;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  responseCalc: any;
   PriceLabel: string = "Asset Price";
+  IsTrialCalc: boolean = false;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -37,9 +42,24 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
-    
-    if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
-      this.PriceLabel = "Financing Amount";
+
+    if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
+      this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.listInstallment = response['InstallmentTable'];
+        });
+      this.IsTrialCalc = false;
+    }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
+    if (this.InstAmt != 0) {
+      this.ParentForm.patchValue({
+        InstAmt: this.InstAmt
+      });
     }
   }
 
@@ -60,7 +80,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   }
 
   LoadDDLStepUpStepDownInputType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeStepUpStepDownInputType  }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeStepUpStepDownInputType }).subscribe(
       (response) => {
         this.StepUpStepDownInputOptions = response[CommonConstant.ReturnObj];
       }
@@ -120,12 +140,12 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     });
   }
 
-  InputTypeChanged(){
-    for(let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++){
+  InputTypeChanged() {
+    for (let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++) {
       this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
         InstAmt: 0
       });
-      if(this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt)
+      if (this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt)
         this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].setValidators([Validators.max(100)]);
       else
         this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].clearValidators();
@@ -136,20 +156,20 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  SetEntryInstallment(){
-    if(this.ParentForm.get("NumOfStep").value < 1){
+  SetEntryInstallment() {
+    if (this.ParentForm.get("NumOfStep").value < 1) {
       this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
-    if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
+    if (this.ParentForm.controls.StepUpStepDownInputType.value == "") {
       this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
-    
+
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    for(let i = 0 ; i < this.ParentForm.controls.NumOfStep.value-1 ; i++){
+    for (let i = 0; i < this.ParentForm.controls.NumOfStep.value - 1; i++) {
       const group = this.fb.group({
         InstSeqNo: i + 1,
         NumOfInst: [0],
@@ -163,50 +183,93 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
 
 
   CalculateAmortization() {
-    if(this.ValidateFee() == false){
+    if (this.ValidateFee() == false) {
       return;
-    }    
-    if(this.ParentForm.controls.StepUpStepDownInputType.value == ""){
+    }
+    if (this.ParentForm.controls.StepUpStepDownInputType.value == "") {
       this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
+    if (this.ParentForm.controls.DownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
+      return;
+    }
+    if (!this.IsTrialCalc) {
+      this.calcStepUpStepDownObj = this.ParentForm.value;
+      this.calcStepUpStepDownObj["IsRecalculate"] = false;
+      this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+      this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
+      this.calcStepUpStepDownObj["InstAmt"] = 0;
 
-    this.calcStepUpStepDownObj = this.ParentForm.value;
-    this.calcStepUpStepDownObj["IsRecalculate"] = false;
-    this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
-    this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
-    this.calcStepUpStepDownObj["InstAmt"] = 0;
+
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.listAppInstStepSchm = response.AppInstStepSchmObjs;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt
+
+          })
+          this.SetInstallmentTable();
+          this.SetInstStepSchm();
+          this.SetNeedReCalculate(false);
+        }
+      );
+    } else {
+      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.value;
+      this.calcStepUpStepDownObjForTrialCalc["IsRecalculate"] = false;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
+      this.calcStepUpStepDownObjForTrialCalc["InstAmt"] = 0;
 
 
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.listAppInstStepSchm = response.AppInstStepSchmObjs;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.listAppInstStepSchm = response.AppInstStepSchmObjs;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
 
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
 
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
 
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
 
-          NtfAmt: response.NtfAmt,
-          ApvAmt: response.ApvAmt,
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
 
-          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-          LifeInsCptlzAmt: response.LifeInsCptlzAmt
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt
 
-        })
-        this.SetInstallmentTable();
-        this.SetInstStepSchm();
-        this.SetNeedReCalculate(false);
-      }
-    );
+          })
+          this.SetInstallmentTable();
+          this.SetInstStepSchm();
+          this.SetNeedReCalculate(false);
+        }
+      );
+
+    }
   }
 
   SaveAndContinue() {
@@ -277,12 +340,12 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  
-  ValidateFee(){
-    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
-      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
-          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+
+  ValidateFee() {
+    for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
+      if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+        && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt) {
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " + this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }
@@ -290,6 +353,7 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   }
 
   test() {
-    
   }
+
+
 }

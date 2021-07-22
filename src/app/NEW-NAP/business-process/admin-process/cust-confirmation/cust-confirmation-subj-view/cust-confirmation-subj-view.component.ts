@@ -5,7 +5,7 @@ import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
+import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultD.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -13,6 +13,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -35,10 +37,13 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultHObjDetail: VerfResultHObj = new VerfResultHObj();
   CustNoObj: GenericObj = new GenericObj();
   VerfResultDListObj = new Array<VerfResultDObj>();
+  appObj: AppObj = new AppObj();
   IsVerfDetail: boolean = false;
-  cust: any;
+  BusinessDt: Date;
+  VerificationDt: Date;
+
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
         this.VerfResultHId = params["VerfResultHId"];
@@ -62,7 +67,19 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.GetVerifDate();
     this.GetData();
+  }
+
+  GetVerifDate(){
+    let UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.BusinessDt = new Date(UserAccess.BusinessDt);
+    var todaydate = new Date();
+    this.VerificationDt = new Date();
+    this.VerificationDt.setDate(this.BusinessDt.getDate());
+    this.VerificationDt.setHours(todaydate.getHours());
+    this.VerificationDt.setMinutes(todaydate.getMinutes());
+    this.VerificationDt.setSeconds(todaydate.getSeconds());
   }
 
   GetData() {
@@ -71,6 +88,11 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     };
     this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
+        this.http.post<AppObj>(URLConstant.GetAppById, { Id: response["AppId"] }).subscribe(
+          (response) => {
+            this.appObj = response;
+          });
+
         this.AgrmntObj = response;
 
         var appObj = {
@@ -88,14 +110,11 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         }
       });
 
-    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, {Id : this.VerfResultHId}).subscribe(
+    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { Id: this.VerfResultHId }).subscribe(
       (response) => {
         this.VerfResultHObj = response;
 
-        var verfResultObj = {
-          VerfResultId: this.VerfResultHObj.VerfResultId
-        };
-        this.http.post<VerfResultObj>(URLConstant.GetVerfResultById, {Id : this.VerfResultHObj.VerfResultId}).subscribe(
+        this.http.post<VerfResultObj>(URLConstant.GetVerfResultById, { Id: this.VerfResultHObj.VerfResultId }).subscribe(
           (response) => {
             this.VerfResultObj = response;
           }
@@ -114,14 +133,14 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   }
 
   GetDetailVerf(TempVerfResultHId) {
-    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, {Id : TempVerfResultHId}).subscribe(
+    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { Id: TempVerfResultHId }).subscribe(
       (response) => {
         this.VerfResultHObjDetail = response;
       });
 
     let verfResultDObj: GenericObj = new GenericObj();
     verfResultDObj.Id = TempVerfResultHId;
-    
+
     this.http.post(URLConstant.GetListVerfResultDInQuestionGrp, verfResultDObj).subscribe(
       (response) => {
         this.VerfResultDListObj = response[CommonConstant.ReturnObj];
@@ -133,7 +152,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     this.IsVerfDetail = false;
   }
 
-  openUrl(key:string) {
+  openUrl(key: string) {
     if (key == "application") {
       AdInsHelper.OpenAppViewByAppId(this.AppObj.AppId);
     } else if (key == "lead") {
@@ -141,7 +160,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     }
     else if (key == "agreement") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntObj.AgrmntId);
-    }else if( key == "customer"){
+    } else if (key == "customer") {
       this.CustNoObj.CustNo = this.AgrmntObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {

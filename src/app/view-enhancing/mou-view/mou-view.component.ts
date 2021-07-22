@@ -19,7 +19,6 @@ import { CookieService } from 'ngx-cookie';
 export class MouViewComponent implements OnInit {
   @Input() inputMouCustId: number;
 
-  getMouCustByIdUrl: string;
   MouCustId: number;
   mouCustObj: MouCustObj;
   resultData: MouCustObj;
@@ -36,7 +35,6 @@ export class MouViewComponent implements OnInit {
   MouCustNo: string;
   
   constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
-    this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null)
         this.MouCustId = params["MouCustId"];
@@ -49,7 +47,7 @@ export class MouViewComponent implements OnInit {
   ngOnInit() {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(this.getMouCustByIdUrl, { Id: this.MouCustId }).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];

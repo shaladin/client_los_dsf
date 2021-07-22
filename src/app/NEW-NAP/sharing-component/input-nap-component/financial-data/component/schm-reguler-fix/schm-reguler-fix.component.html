@@ -101,17 +101,16 @@
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
               </div>
-              <!-- <div class="col-md-3 form-inline">
+              <div class="col-md-3 form-inline">
                 <label translate>TDP Paid at MF</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <input type="" class="form-control full-width" formControlName="TdpPaidCoyAmt"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TdpPaidCoyAmt.invalid}"
-                  (keyup)="SetNeedReCalculate(true)"
-                  currencyMask>
+                  (keyup)="SetNeedReCalculate(true)" currencyMask>
                 <lib-uc-show-errors [control]="ParentForm.controls.TdpPaidCoyAmt" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -193,17 +192,20 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline"
+              *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc">
               <label translate>Supplier Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline form-inline-right"
+              *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc">
               <input type="" class="form-control full-width" formControlName="AppSupplEffectiveRatePrcnt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.AppSupplEffectiveRatePrcnt.invalid}"
                 (focusout)="SupplEffectiveRatePrcnt_FocusOut()" (keyup)="SupplRate_Keyup($event)"
                 (paste)="SupplRate_Paste($event)"
                 [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
                 currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.AppSupplEffectiveRatePrcnt" [submit]="enjiForm.submitted">
+              <lib-uc-show-errors [control]="ParentForm.controls.AppSupplEffectiveRatePrcnt"
+                [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
             <!-- <div class="col-md-3 form-inline">
@@ -234,10 +236,12 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'" class="col-md-3 form-inline">
+            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc"
+              class="col-md-3 form-inline">
               <label translate>Subsidy Amount from Diff Rate</label>
             </div>
-            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'" class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc"
+              class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="SubsidyAmtFromDiffRate"
                 [options]="{ allowNegative: false }"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.SubsidyAmtFromDiffRate.invalid}"
@@ -281,15 +285,18 @@
                     <option value="">--Select--</option>
                     <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
                   </select>
-                  <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-              </div>            
+              </div>
             </div>
-            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'" class="col-md-3 form-inline">
+            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc"
+              class="col-md-3 form-inline">
               <label translate>Commission Amount from Diff Rate</label>
             </div>
-            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'" class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc"
+              class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="CommissionAmtFromDiffRate"
                 [options]="{ allowNegative: false }"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CommissionAmtFromDiffRate.invalid}"
@@ -305,10 +312,10 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode == 'FL4W'">
+            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode == 'FL4W' && !IsTrialCalc">
               <label translate>Residual Value Amount</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode == 'FL4W'">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode == 'FL4W' && !IsTrialCalc">
               <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}"
                 (keyup)="SetNeedReCalculate(true)" currencyMask>
@@ -343,11 +350,11 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
               <label translate>Gross Yield</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
             </div>
           </div>
         </div>
@@ -368,7 +375,8 @@
     </div>
 
     <div class="form-inline-right">
-      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0" (click)="Calculate()" translate>
+      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0" (click)="Calculate()"
+        translate>
         Calculate
       </button>
     </div>

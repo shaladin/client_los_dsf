@@ -82,7 +82,7 @@
           <label translate>Total Past Due Sum Amount</label>
         </div>
         <div class="col-md-6">
-          
+          {{PefindoData?.Contracts?.TotalPastDueAmount | number:'.2':'en-US'}}
         </div>
       </div>
     </div>
@@ -104,7 +104,7 @@
           <label translate>Max No. of Due Days (Current)</label>
         </div>
         <div class="col-md-6">
-          
+          {{PefindoData?.Contracts?.MaxNoOfDueDays}}
         </div>
       </div>
     </div>
@@ -126,7 +126,7 @@
           <label translate>Worst Past Due Amount</label>
         </div>
         <div class="col-md-6">
-          
+          {{PefindoData?.Contracts?.WorstPastDueDays | number:'.2':'en-US'}}
         </div>
       </div>
     </div>
@@ -148,7 +148,7 @@
           <label translate>Worst No. of Due Days</label>
         </div>
         <div class="col-md-6">
-          
+          {{PefindoData?.Contracts?.WorstNoOfDueDays}}
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ export class MouCustPersonalDataObj {
     MouCustPersonalJobDataObj: MouCustPersonalJobDataObj;
     MouCustSocmedObjs: any;
     MouCustGrpObjs: any;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() { 
         this.MouCustObj = new MouCustObj(); 

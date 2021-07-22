@@ -1,0 +1,165 @@
+{
+    "title": "Task Reassignment Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "T.ACT_CODE",
+            "id": "WfCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
+            "label": "Activity Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "T.USERNAME",
+            "id": "UsernameId",
+            "value": "",
+            "label": "Username",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "T.OFFICE_CODE",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "M.WF_NAME",
+            "id": "WfNameid",
+            "value": "",
+            "label": "Workflow Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "T.TRANSACTION_CODE",
+            "id": "TrxCode",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchTaskReassignmentInquiry"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Task ReAssignment Transaction No",
+            "name": "TRT.TASK_REASSIGNMENT_TRX_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Workflow Name",
+            "name": "M.WF_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Transaction No",
+            "name": "T.TRANSACTION_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Start Executing Date",
+            "name": "T.START_EXECUTING_DATE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Working Date",
+            "name": "T.WORKING_DATE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Username",
+            "name": "T.USERNAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "User Role",
+            "name": "T.ROLE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Status",
+            "name": "TRT.TASK_REASSIGNMENT_STAT"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "TaskReAssginmentTrxNo",
+            "path": "/TaskReassignment/View",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "TaskReassignmentTrxId",
+                    "property": "TaskReassignmentTrxId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "WfName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TransactionCode"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "StartExecutingDate"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "WorkingDate"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Username"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "RoleName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Status"
+        }
+    ]
+}

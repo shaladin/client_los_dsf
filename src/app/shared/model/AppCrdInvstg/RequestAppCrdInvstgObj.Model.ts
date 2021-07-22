@@ -4,7 +4,7 @@ export class RequestAppCrdInvstgObj {
     AppCrdInvstgHObj: AppCrdInvstgHObj;
     AppId: number;
     WfTaskListId: number;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() {
         this.AppCrdInvstgHObj = new AppCrdInvstgHObj();
