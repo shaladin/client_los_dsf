@@ -4,19 +4,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
-import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap-cust-main-data-dsf',
@@ -25,12 +23,19 @@ import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf
 })
 export class NapCustMainDataDsfComponent implements OnInit {
 
-  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
+  private ucViewMainProd: UcviewgenericComponent;
+
+  @ViewChild('viewMainProd') set content(content: UcviewgenericComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.ucViewMainProd = content;
+    }
+  }
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
   mode: string;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
@@ -38,7 +43,6 @@ export class NapCustMainDataDsfComponent implements OnInit {
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
-  IsViewReady: boolean = false;
   from: string;
 
   AppStep = {
@@ -49,14 +53,19 @@ export class NapCustMainDataDsfComponent implements OnInit {
     "GUAR": 4,
   };
 
+  ResponseReturnInfoObj;
+  FormReturnObj = this.fb.group({
+    ReturnExecNotes: ['']
+  });
+  OnFormReturnInfo = false;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
     private toastr: NGXToastrService,
-    private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService) {
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -71,40 +80,49 @@ export class NapCustMainDataDsfComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
-    this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
+  ngOnInit() {
+    this.ClaimTask();
     this.AppStepIndex = 0;
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationDF.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
+
     this.NapObj.AppId = this.appId;
-    let appObj = { Id: this.appId };
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    let obj = {
+      Id: this.appId
+    }
+    this.http.post(URLConstant.GetAppById, obj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
           this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
-          this.IsViewReady = true;
         }
         else {
           this.AppStepIndex = 0;
-          this.IsViewReady = true;
         }
       }
     );
 
-    await this.GetCustMainData();
+    obj = {
+      Id: this.NapObj.AppId
+    }
 
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
-    // this.MakeViewReturnInfoObj();
-  }
-
-  async GetCustMainData() {
-    let reqObj: GenericObj = new GenericObj();
-    reqObj.Id = this.appId;
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, obj).subscribe(
       (response) => {
         if (response.AppCustObj) {
           this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
@@ -113,12 +131,34 @@ export class NapCustMainDataDsfComponent implements OnInit {
         }
       }
     );
+
+    this.stepper = new Stepper(document.querySelector('#stepper1'), {
+      linear: false,
+      animation: true
+    })
+    this.MakeViewReturnInfoObj();
   }
 
   Back() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
 
+  MakeViewReturnInfoObj() {
+    if (this.mode == CommonConstant.ModeResultHandling) {
+      let obj = {
+        Id: this.appId,
+        Code: CommonConstant.ReturnHandlingEditApp
+      }
+      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
+        (response) => {
+          this.ResponseReturnInfoObj = response;
+          this.FormReturnObj.patchValue({
+            ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
+          });
+          this.OnFormReturnInfo = true;
+        });
+    }
+  }
 
   ChangeTab(AppStep) {
     switch (AppStep) {
@@ -137,41 +177,78 @@ export class NapCustMainDataDsfComponent implements OnInit {
       default:
         break;
     }
-    this.viewAppMainInfo.ReloadUcViewGeneric();
+    this.ucViewMainProd.initiateForm();
+    //this.NextStep(AppStep, true);
   }
 
-  async getEvent(event) {
+  getEvent(event) {
     this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED' ? true : false;
     this.MrCustTypeCode = event.MrCustTypeCode != undefined ? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepShr);
 
-    //Fix untuk data kosong saat kembai ke step cust jika save new cust
+    let obj = {
+      Id: this.NapObj.AppId
+    }
     if (!this.appCustId) {
-      await this.GetCustMainData();
+      this.http.post(URLConstant.GetAppCustMainDataByAppId, obj).subscribe(
+        (response) => {
+          if (response['AppCustObj']) {
+            this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
+            this.appCustId = response['AppCustObj'].AppCustId;
+            this.isMarried = response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'].MrMaritalStatCode == 'MARRIED' ? true : false;
+          }
+        }
+      );
     }
   }
 
-  async NextStep(Step) {
+  async NextStep(Step, IsChangeByUser: boolean = false) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
       async (response) => {
-        await this.ChangeTab(Step);
+        if (!IsChangeByUser) await this.ChangeTab(Step);
         this.stepper.to(this.AppStepIndex);
       }
     )
-    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   LastStep() {
-    let reqObj: SubmitNapObj = new SubmitNapObj();
-    reqObj.AppId = this.NapObj.AppId;
-    reqObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNapCustMainData, reqObj).subscribe(
+    this.NapObj.WfTaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
+  }
+
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let wfClaimObj = new AppObj();
+    wfClaimObj.AppId = this.appId;
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
+    wfClaimObj.WfTaskListId = this.wfTaskListId;
+
+    this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
+      () => {
+      });
+  }
+
+  // GetCallback(ev) {
+  //   AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  // }
+
+  GetCallback(ev) {
+    if (ev.Key == "HighlightComment") {
+      let custObj = { CustNo: ev.ViewObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+      );
+    } else {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
   }
 
 }

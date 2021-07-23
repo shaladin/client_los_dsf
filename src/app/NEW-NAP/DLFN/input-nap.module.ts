@@ -13,6 +13,8 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { ArchwizardModule } from 'angular-archwizard';
 import { MainDataComponentModule } from '../sharing-component/main-data-component/main-data-component.module';
 import {SharedModule} from '../../shared/shared.module';
+import { NapDetailFormDsfComponent } from '../DSF/DLFN-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component';
+import { NapCustMainDataDsfComponent } from '../DSF/DLFN-dsf/nap-cust-main-data-dsf/nap-cust-main-data-dsf.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import {SharedModule} from '../../shared/shared.module';
     NapAddComponent,
     NapAddDetailComponent,
     NapCustMainDataComponent,
-    NapDetailFormComponent],
+    NapDetailFormComponent,
+    NapCustMainDataDsfComponent,
+    NapDetailFormDsfComponent],
     imports: [
         CommonModule,
         InputNapDLFNRoutingModule,

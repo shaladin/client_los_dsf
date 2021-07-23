@@ -102,7 +102,6 @@ import { SchmStepUpStepDownLeasingCFNAComponent } from "app/NEW-NAP/CFNA/nap-com
 import { SchmStepUpStepDownCummulativeCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-cfna.component";
 import { SchmBalloonCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-baloon/schm-balloon-cfna.component";
 import { SchmEvenPrincipalCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-even-principal/schm-even-principal-cfna.component";
-
 import { FeeFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/fee/fee-FL4W.component";
 import { SchmRegulerFixFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-reguler-fix/schm-reguler-fix-FL4W.component";
 import { SchmIrregularFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-irregular/schm-irregular-FL4W.component";

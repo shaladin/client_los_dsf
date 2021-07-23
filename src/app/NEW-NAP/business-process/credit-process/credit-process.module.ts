@@ -54,6 +54,7 @@ import { CreditReviewDetailDsfComponent } from "app/NEW-NAP/DSF/business-process
 import { TabApplicationDataComponent } from "./shared-component/tab-application-data/tab-application-data.component";
 import { CustHistoryComponent } from "./shared-component/cust-history/cust-history.component";
 import { ViewApplicationDataMultiComponent } from "./shared-component/view-application-data-multi/view-application-data-multi.component";
+import { CreditReviewCfnaDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-detail-dsf/credit-review-cfna-detail-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -129,10 +130,11 @@ export const customCurrencyMaskConfig = {
     CreditApprovalCfnaDetailComponent,
     TabApplicationDataComponent,
     ViewApplicationDataMultiComponent,
+    CustHistoryComponent,
     CreditReviewPagingDsfComponent,
     CreditReviewCfnaPagingDsfComponent,
     CreditReviewDetailDsfComponent,
-    CustHistoryComponent
+    CreditReviewCfnaDetailDsfComponent
   ],
   providers: [
     NGXToastrService
