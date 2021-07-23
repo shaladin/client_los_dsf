@@ -1,4 +1,5 @@
 import { PathConstant } from "./PathConstant";
+import { PathConstantX } from "app/impl/shared/constant/PathConstantX";
 
 export class NavigationConstant {
 
@@ -100,11 +101,11 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.CUST_CONFIRM_SUBJ_VIEW; //'/Nap/AdminProcess/CustConfirmation/Subj/View'
   public static NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.CUST_CONFIRM_SUBJ_DETAIL; //'/Nap/AdminProcess/CustConfirmation/Subj/Detail'
   public static NAP_ADM_PRCS_CUST_CONFIRM_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.CUST_CONFIRM_PAGING; //'/Nap/AdminProcess/CustConfirmation/Paging'
-  public static NAP_ADM_PRCS_CUST_CONFIRM_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.CUST_CONFIRM_DETAIL; //'/Nap/AdminProcess/CustConfirmation/Detail'
+  public static NAP_ADM_PRCS_CUST_CONFIRM_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.CUST_CONFIRM_DETAIL_X; //'/Nap/AdminProcess/CustConfirmation/Detail'
   public static NAP_ADM_PRCS_DO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DO_PAGING; //'/Nap/AdminProcess/DeliveryOrder/Paging'
   public static NAP_ADM_PRCS_DO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DO_DETAIL; //'/Nap/AdminProcess/DeliveryOrder/Detail'
   public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DO_MULTI_ASSET_PAGING; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
-  public static NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DO_MULTI_ASSET_DETAIL; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Detail"
+  public static NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.DO_MULTI_ASSET_DETAIL_X; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Detail"
   public static NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/DocumentSigner/Paging'
   public static NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/DocumentSigner/Detail'
   public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_CFNA_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/NewDocumentSigner/Paging'  => '/Nap/AdminProcess/CfnaDocumentSigner/Paging'
@@ -117,7 +118,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_APPRV_PAGING; //"/Nap/AdminProcess/OfferingValidityApproval/Paging"
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_APPRV_DETAIL; //"/Nap/AdminProcess/OfferingValidityApproval/Detail"
   public static NAP_ADM_PRCS_PGL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_PAGING; //'/Nap/AdminProcess/PreGoLive/Paging'
-  public static NAP_ADM_PRCS_PGL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_DETAIL; //'/Nap/AdminProcess/PreGoLive/Detail'
+  public static NAP_ADM_PRCS_PGL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PGL_DETAIL_X; //'/Nap/AdminProcess/PreGoLive/Detail'
   public static NAP_ADM_PRCS_PGL_OPL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_OPL_PAGING; //'/Nap/AdminProcess/pregoliveopl/paging'
   public static NAP_ADM_PRCS_PGL_OPL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_OPL_DETAIL; //'/Nap/AdminProcess/pregoliveopl/detail'
   public static NAP_ADM_PRCS_PGL_REQ_APPRVL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_REQ_APPRVL; //"/Nap/AdminProcess/PreGoLive/RequestApproval"

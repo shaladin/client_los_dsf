@@ -379,16 +379,20 @@ export class PreGoLiveXComponent implements OnInit {
     var diffTimes = new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime()- new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime();
     if(diffTimes>0){
       diffDays = diffTimes / (1000*3600*24)
+      console.log(diffDays);
+
+      this.http.post(URLConstantX.CalculateAdditionalInterestX, { AgrmntId: this.AgrmntId, DiffDays: diffDays }).subscribe(
+        (response) => {
+          this.MainInfoForm.patchValue({
+            AddIntrstAmt: response["Result"]
+          });
+        }
+      );
     }
-
-    console.log(diffDays);
-
-    this.http.post(URLConstantX.CalculateAdditionalInterest, { AgrmntId: this.AgrmntId, DiffDays: diffDays }).subscribe(
-      (response) => {
-        this.MainInfoForm.patchValue({
-          AddIntrstAmt: response["Result"]
-        });
-      }
-    );
+    else{
+      this.MainInfoForm.patchValue({
+        AddIntrstAmt: 0
+      });
+    }
   }
 }
