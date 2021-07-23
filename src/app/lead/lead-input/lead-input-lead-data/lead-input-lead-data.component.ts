@@ -127,8 +127,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.typePage = params["mode"];
       }
       if (params["WfTaskListId"] == null) {
-        this.WfTaskListId = 0;
-        if(environment.isCore) this.WfTaskListId = ""; 
+        this.WfTaskListId = environment.isCore ? "" : 0;
       }
       else {
         this.WfTaskListId = params["WfTaskListId"];
@@ -864,15 +863,12 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
-    let SubmitWorkflowLeadInputUrl;
-    let SubmitWorkflowLeadInputKtaUrl;
+    let SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInput; 
+    let SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKta;
 
     if(environment.isCore){
-      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInputV2;
+      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInputV2; 
       SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKtaV2;
-    }else{
-      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInput;
-      SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKta;
     }
 
     if (this.resLeadAppObj.LeadAppId != 0 && this.resLeadAssetObj.LeadAssetId != 0) {

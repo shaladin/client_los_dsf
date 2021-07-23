@@ -34,8 +34,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
       if (this.LeadId == null || this.LeadId == undefined) this.LeadId = 1;
       this.WfTaskListId = params["WfTaskListId"];
       if (this.WfTaskListId == undefined && this.WfTaskListId == null){
-        this.WfTaskListId = 0;
-        if(environment.isCore) this.WfTaskListId = "";
+        this.WfTaskListId = environment.isCore ? "" : 0;
       }
       this.LobCode = params["LobCode"];
       if (this.LobCode == null || this.LobCode == undefined) this.LobCode = "KTA";

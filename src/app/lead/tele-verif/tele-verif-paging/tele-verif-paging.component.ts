@@ -25,6 +25,9 @@ export class TeleVerifPagingComponent implements OnInit {
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
+    this.inputPagingObj._url = "./assets/ucpaging/searchTeleVerif.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchTeleVerif.json";
+    
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchTeleVerifV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchTeleVerifV2.json";
@@ -47,9 +50,6 @@ export class TeleVerifPagingComponent implements OnInit {
       AddCrit.restriction = AdInsConstant.RestrictionEq;
       AddCrit.value = CommonConstant.LeadStepTeleVerf;
       this.inputPagingObj.addCritInput.push(AddCrit);
-    }else{
-      this.inputPagingObj._url = "./assets/ucpaging/searchTeleVerif.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchTeleVerif.json";
     }
   }
 
