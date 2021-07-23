@@ -83,11 +83,6 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       uploadV2Obj.TaskListId = this.taskListId;
       uploadV2Obj.MrUploadStatusCode = status;
       uploadV2Obj.UploadMonitoringNo = this.UploadNo;
-      uploadV2Obj.ListValue = { "Status": status };
-      uploadV2Obj.ProcessKey = CommonConstant.WorkflowUploadLead;
-      uploadV2Obj.OfficeCode = this.currentUserContext[CommonConstant.OFFICE_CODE],
-      uploadV2Obj.TaskDefinitionKey = CommonConstant.WfUploadLeadReview,
-      uploadV2Obj.RoleCode = this.currentUserContext[CommonConstant.ROLE_CODE]
 
       this.http.post(URLConstant.UploadReviewV2, uploadV2Obj).subscribe(
         response => {
