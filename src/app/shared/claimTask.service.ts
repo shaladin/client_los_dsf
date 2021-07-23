@@ -8,6 +8,7 @@ import { URLConstant } from "./constant/URLConstant";
 import { AppObj } from "./model/App/App.Model";
 import { ClaimWorkflowObj } from "./model/Workflow/ClaimWorkflowObj.Model";
 import { ClaimTaskModel } from "./model/Workflow/V2/ClaimTaskModelObj.model";
+import { AdInsConstant } from "./AdInstConstant";
 
 @Injectable()
 export class ClaimTaskService{
@@ -39,11 +40,21 @@ export class ClaimTaskService{
       });
   }
   
+
   ClaimTaskV2(WfTaskListId: string){
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let ClaimTaskObj: ClaimTaskModel = new ClaimTaskModel();
     ClaimTaskObj.TaskId = WfTaskListId;
     ClaimTaskObj.UserId = currentUserContext[CommonConstant.USER_NAME];
+    this.http.post(URLConstant.ClaimTaskV2, ClaimTaskObj).subscribe(
+      () => {
+      });
+  }
+
+  ClaimTaskSelfVerifV2(WfTaskListId: string){
+    let ClaimTaskObj: ClaimTaskModel = new ClaimTaskModel();
+    ClaimTaskObj.TaskId = WfTaskListId;
+    ClaimTaskObj.UserId = AdInsConstant.UserCustomer;
     this.http.post(URLConstant.ClaimTaskV2, ClaimTaskObj).subscribe(
       () => {
       });

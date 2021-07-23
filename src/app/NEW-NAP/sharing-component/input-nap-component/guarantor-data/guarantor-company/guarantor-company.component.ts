@@ -66,7 +66,7 @@ export class GuarantorCompanyComponent implements OnInit {
     ContactName: ['', [Validators.maxLength(500)]],
     MrJobPositionCode: ['', [Validators.maxLength(50)]],
     MobilePhnNo1: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-    ContactEmail: ['', [Validators.maxLength(50), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+    ContactEmail: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
     MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     FaxArea: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
     Fax: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -456,7 +456,7 @@ export class GuarantorCompanyComponent implements OnInit {
       ContactName: ['', [Validators.maxLength(500)]],
       MrJobPositionCode: ['', [Validators.maxLength(50)]],
       MobilePhnNo1: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-      ContactEmail: ['', [Validators.maxLength(50), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+      ContactEmail: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
       MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       FaxArea: ['', [Validators.maxLength(20), Validators.pattern("^[0-9]+$")]],
       Fax: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -561,7 +561,7 @@ export class GuarantorCompanyComponent implements OnInit {
     this.CompanyForm.controls.MrJobPositionCode.updateValueAndValidity();
     this.CompanyForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]);
     this.CompanyForm.controls.MobilePhnNo1.updateValueAndValidity();
-    this.CompanyForm.controls.ContactEmail.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
+    this.CompanyForm.controls.ContactEmail.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]);
     this.CompanyForm.controls.ContactEmail.updateValueAndValidity();
     this.CompanyForm.controls.PhnArea1.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]);
     this.CompanyForm.controls.PhnArea1.updateValueAndValidity();

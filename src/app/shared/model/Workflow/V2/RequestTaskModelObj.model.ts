@@ -18,4 +18,5 @@ export class RequestTaskModelObj {
         this.OfficeCode = "";
         this.IncludeAssignedTasks= true;
     }
+
 }

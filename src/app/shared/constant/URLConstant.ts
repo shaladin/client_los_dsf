@@ -497,10 +497,13 @@ export class URLConstant {
   public static UpdateLeadStatAndStepByHuman = environment.losUrl + "/v1" + "/Lead/UpdateLeadStatAndStepByHuman";
   public static UpdateLeadStepByHuman = environment.losUrl + "/v1" + "/Lead/UpdateLeadStepByHuman";;
   public static SubmitWorkflowLeadInput = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowLeadInput";
+  public static SubmitWorkflowLeadInputV2 = environment.losUrl + "/v2" + "/Lead/SubmitWorkflowLeadInput";
   public static SubmitWorkflowSimpleLeadInput = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowSimpleLeadInput";
   public static GetLeadPersonalForLookupCopy = environment.losUrl + "/v1" + "/Lead/GetLeadPersonalForLookupCopy";
   public static SubmitWorkflowLeadInputKta = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowLeadInputKta";
+  public static SubmitWorkflowLeadInputKtaV2 = environment.losUrl + "/v2" + "/Lead/SubmitWorkflowLeadInputKta";
   public static RejectLead = environment.losUrl + "/v1" + "/Lead/RejectLead";
+  public static RejectLeadV2 = environment.losUrl + "/v2" + "/Lead/RejectLead";
   public static CheckRapindo = environment.losUrl + "/v1" + "/Lead/CheckRapindo";
   public static CheckIntegrator = environment.losUrl + "/v1" + "/Lead/CheckIntegrator";
 
@@ -989,6 +992,7 @@ export class URLConstant {
 
   //LEAD VERF
   public static AddRangeLeadVerf = environment.losUrl + "/v1" + "/LeadVerf/AddRangeLeadVerf";
+  public static AddRangeLeadVerfV2 = environment.losUrl + "/v2" + "/LeadVerf/AddRangeLeadVerf";
   public static GetListLeadVerf = environment.losUrl + "/v1" + "/LeadVerf/GetListLeadVerf";
 
   //APP TC
@@ -1280,9 +1284,9 @@ export class URLConstant {
 
   // Workflow Engine
   public static ClaimTask = environment.FoundationR3Url + "/v1" + "/Workflow/ClaimTask";
+  public static ClaimTaskV2 = environment.FoundationR3Url + "/v2" + "/Workflow/ClaimTask";
   public static ClaimTaskNap = environment.losUrl + "/v1" + "/Application/ClaimTaskNap";
   public static ClaimTaskNapCustmainData = environment.losUrl + "/v1" + "/Application/ClaimTaskNapCustmainData";
-  public static ClaimTaskV2 = environment.FoundationR3Url + "/v2" + "/Workflow/ClaimTask";
   public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
 
   //Application Data

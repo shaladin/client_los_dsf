@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-1023",
+  "version": "1.0.0-1027",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -20,7 +20,7 @@
   },
   "private": true,
   "dependencies": {
-    "@adins/uc-show-errors": "^1.0.6",
+    "@adins/uc-show-errors": "^1.0.7",
     "@adins/uc-subsection": "^1.0.5",
     "@adins/ucaddress": "^1.0.59",
     "@adins/ucaddtotemp": "^1.0.20",

@@ -512,7 +512,18 @@ export class LeadDataComponent implements OnInit {
     }
   }
 
-  SaveForm() {
+  SaveForm() {    
+    let SubmitWorkflowLeadInputUrl;
+    let SubmitWorkflowLeadInputKtaUrl;
+
+    if(environment.isCore){
+      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInputV2;
+      SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKtaV2;
+    }else{
+      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInput;
+      SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKta;
+    }
+
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
@@ -522,7 +533,7 @@ export class LeadDataComponent implements OnInit {
         this.setLeadApp();
         this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         // this.leadInputLeadDataObj.IsEdit = true;
-        this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+        this.http.post(SubmitWorkflowLeadInputUrl, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
@@ -544,7 +555,7 @@ export class LeadDataComponent implements OnInit {
         this.setLeadApp();
         this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
         // this.leadInputLeadDataObj.IsEdit = true;
-        this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+        this.http.post(SubmitWorkflowLeadInputKtaUrl, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
@@ -568,7 +579,7 @@ export class LeadDataComponent implements OnInit {
       this.setLeadAsset();
       this.setLeadApp();
       this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-      this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+      this.http.post(SubmitWorkflowLeadInputUrl, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
