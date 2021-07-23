@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div *ngIf="isReady">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th>
+                <span class="thead-header" translate>Application No</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Currency</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Installment Amount</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Asset Price</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Total Down Payment</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Application Step</span>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="AppList.length === 0">
+              <td colspan="100%">No Data Available</td>
+            </tr>
+            <tr *ngFor="let item of AppList; let i = index">
+              <td >{{item.AppNo}}</td>
+              <td>{{item.CurrCode}}</td>
+              <td class="text-right">{{item.InstAmt == null ? '-' : item.InstAmt | number:'1.2-2':'en-US'}}</td>
+              <td class="text-right">{{item.AssetPriceAmt == null ? '-' : item.AssetPriceAmt | number:'1.2-2':'en-US'}}</td>
+              <td class="text-right">{{item.TotalDownPaymentAmt == null ? '-' : item.TotalDownPaymentAmt | number:'1.2-2':'en-US'}}</td>
+              <td>{{item.AppCurrStep}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div *ngIf="isReady">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th>
+                <span class="thead-header" translate>Application No</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Agreement No</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Agreement Date</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Currency</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Installment Amount</span>
+              </th>
+              <th>
+                <span class="thead-header" translate>Agreement Step</span>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="AgrmntList.length === 0">
+              <td colspan="100%">No Data Available</td>
+            </tr>
+            <tr *ngFor="let item of AgrmntList; let i = index">
+              <!-- <td>{{i+1}}</td> -->
+              <td>{{item.AppNo}}</td>
+              <td >{{item.AgrmntNo}}</td>
+              <td >{{item.AgrmntDate}}</td>
+              <td>{{item.CurrCode}}</td>
+              <td [ngClass]="{'text-right': item.InstAmt != null}">{{item.InstAmt == null ? '-' : item.InstAmt | number:'1.2-2':'en-US'}}</td>
+              <td>{{item.AgrmntCurrStep}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
