@@ -205,6 +205,15 @@ export class LtkmRequestComponent implements OnInit {
     readonly modeReqConst: string = CommonConstant.REQ;
     readonly modeRtnConst: string = CommonConstant.RTN;
 
+    AppNo: string = "";
+    AssetPriceAmt: number = 0;
+    DownPaymentAmt: number = 0;
+    DownPaymentPrctg: number = 0;
+    InstAmt: number= 0;
+    BpkbProfessionCode: number = 0;
+    MrInstSrcPayment: number = 0;
+    MrDpSrcPayment: number = 0;
+
     UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     constructor(
         private router: Router,
@@ -228,6 +237,17 @@ export class LtkmRequestComponent implements OnInit {
             }
         })
     }
+
+    LtkmForm = this.fb.group({
+        AppNo: [''],
+        AssetPriceAmt: [0],
+        DownPaymentAmt: [0],
+        DownPaymentPrctg: [0],
+        InstAmt: [0],
+        BpkbProfessionCode: [0],
+        MrInstSrcPayment: [0],
+        MrDpSrcPayment: [0],
+      });
 
     async ngOnInit(): Promise<void> {
         this.listAttrContentFinData = new Array<LtkmAttrContent>();
@@ -294,6 +314,7 @@ export class LtkmRequestComponent implements OnInit {
                 console.log(error);
             }
         );
+        console.log("andri")
     }
 
     async claimTask() {
@@ -713,6 +734,7 @@ export class LtkmRequestComponent implements OnInit {
         // if(this.isExisting){
         //   appCustPersonalObj.RowVersion = this.custDataPersonalObj.LtkmCustPersonalObj.RowVersion;
         // }
+
         return appCustPersonalObj;
     }
 
@@ -1886,14 +1908,15 @@ export class LtkmRequestComponent implements OnInit {
         if (event["CustObj"] != undefined) {
             console.log("ce", event["custObjs"].CustNo);
             this.selectedCustNo = event["custObjs"].CustNo; 
-            
-            this.inputLookupApplicationObj.addCritInput = new Array();
+                        
+            var arrApplicationCrit = new Array();
+            var critLookupApplicationObj = new CriteriaObj();
+            critLookupApplicationObj.restriction = AdInsConstant.RestrictionEq;
+            critLookupApplicationObj.propName = 'AC.CUST_NO';
+            critLookupApplicationObj.value = this.selectedCustNo;
+            arrApplicationCrit.push(critLookupApplicationObj)
 
-            var critLobObj = new CriteriaObj();
-            critLobObj.restriction = AdInsConstant.RestrictionEq;
-            critLobObj.propName = 'AC.CUST_NO';
-            critLobObj.value = this.selectedCustNo;
-            this.inputLookupApplicationObj.addCritInput.push(critLobObj);
+            this.inputLookupApplicationObj.addCritInput = arrApplicationCrit;
         }        
     }
 
@@ -1956,6 +1979,19 @@ export class LtkmRequestComponent implements OnInit {
             this.custOtherInfoComponent.copyOtherInfo();
         }
         //end tambahan
+        if (event["CustObj"] != undefined) {
+            console.log("ce", event["custObjs"].CustNo);
+            this.selectedCustNo = event["custObjs"].CustNo; 
+                        
+            var arrApplicationCrit = new Array();
+            var critLookupApplicationObj = new CriteriaObj();
+            critLookupApplicationObj.restriction = AdInsConstant.RestrictionEq;
+            critLookupApplicationObj.propName = 'AC.CUST_NO';
+            critLookupApplicationObj.value = this.selectedCustNo;
+            arrApplicationCrit.push(critLookupApplicationObj)
+            
+            this.inputLookupApplicationObj.addCritInput = arrApplicationCrit;
+        }    
     }
 
     copyAddrFromLookup(event) {
@@ -2309,9 +2345,11 @@ export class LtkmRequestComponent implements OnInit {
         return temp;
     }
 
-    getLookupAppNo(event){
-        console.log(event);
-        // this.appNo = event.appNovalue;
+    getLookupAppNo(event){        
+        console.log("getlookup")
+        // this.appNo = event.appNovalue; add commit
+        console.log("eventandri",event)
+        console.log(event.jsonSelect.AppNo)
     }
 }
 
