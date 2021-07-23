@@ -497,6 +497,7 @@ export class URLConstant {
   public static SubmitWorkflowLeadInput = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowLeadInput";
   public static SubmitWorkflowLeadInputV2 = environment.losUrl + "/v2" + "/Lead/SubmitWorkflowLeadInput";
   public static SubmitWorkflowSimpleLeadInput = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowSimpleLeadInput";
+  public static SubmitWorkflowSimpleLeadInputV2 = environment.losUrl + "/v2" + "/Lead/SubmitWorkflowSimpleLeadInput";
   public static GetLeadPersonalForLookupCopy = environment.losUrl + "/v1" + "/Lead/GetLeadPersonalForLookupCopy";
   public static SubmitWorkflowLeadInputKta = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowLeadInputKta";
   public static SubmitWorkflowLeadInputKtaV2 = environment.losUrl + "/v2" + "/Lead/SubmitWorkflowLeadInputKta";
@@ -985,6 +986,7 @@ export class URLConstant {
   // LEAD FRAUD VERF
   public static AddLeadFraudVerf = environment.losUrl + "/v1" + "/LeadFraudVerf/AddLeadFraudVerf";
   public static AddNewLeadFraudVerf = environment.losUrl + "/v1" + "/LeadFraudVerf/AddNewLeadFraudVerf";
+  public static AddNewLeadFraudVerfV2 = environment.losUrl + "/v2" + "/LeadFraudVerf/AddNewLeadFraudVerf";
   public static GetListLeadForLeadVerfObj = environment.losUrl + "/v1" + "/LeadVerf/GetListLeadForLeadVerfObj";
   public static GetDoubleFinancingCheckAppAsset = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
 
