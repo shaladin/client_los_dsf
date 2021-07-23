@@ -513,15 +513,12 @@ export class LeadDataComponent implements OnInit {
   }
 
   SaveForm() {    
-    let SubmitWorkflowLeadInputUrl;
-    let SubmitWorkflowLeadInputKtaUrl;
+    let SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInput; 
+    let SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKta;
 
     if(environment.isCore){
-      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInputV2;
+      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInputV2; 
       SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKtaV2;
-    }else{
-      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInput;
-      SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKta;
     }
 
     if (this.typePage == "edit" || this.typePage == "update") {

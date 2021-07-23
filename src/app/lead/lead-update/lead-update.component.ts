@@ -36,6 +36,9 @@ export class LeadUpdateComponent implements OnInit {
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
+    this.inputPagingObj._url = "./assets/ucpaging/searchLeadUpdate.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLeadUpdate.json";
+    
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchLeadUpdateV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLeadUpdateV2.json";
@@ -58,9 +61,6 @@ export class LeadUpdateComponent implements OnInit {
       AddCrit.restriction = AdInsConstant.RestrictionEq;
       AddCrit.value = CommonConstant.LeadStepLeadUpd;
       this.inputPagingObj.addCritInput.push(AddCrit);
-    }else{
-      this.inputPagingObj._url = "./assets/ucpaging/searchLeadUpdate.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLeadUpdate.json";
     }
   }
 
@@ -70,16 +70,10 @@ export class LeadUpdateComponent implements OnInit {
       leadReject.LeadStat = CommonConstant.LeadStatReject;
       leadReject.LeadStep = CommonConstant.LeadStatReject;
       leadReject.LeadId = event.RowObj.LeadId;
-      leadReject.WfTaskListId = event.RowObj.WfTaskListId;
+      leadReject.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId;  //ExecutionId = WF Instance GUID Versi Camunda
 
-      let RejectLeadUrl;
-      if(environment.isCore){
-        RejectLeadUrl = URLConstant.RejectLeadV2;
-        leadReject.WfTaskListId = event.RowObj.ExecutionId; //Ini WF Instance GUID Versi Camunda
-      }else{
-        RejectLeadUrl = URLConstant.RejectLead;
-      }
-
+      let RejectLeadUrl = environment.isCore ? URLConstant.RejectLeadV2 : URLConstant.RejectLead;
+      
       this.http.post(RejectLeadUrl, leadReject).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);
