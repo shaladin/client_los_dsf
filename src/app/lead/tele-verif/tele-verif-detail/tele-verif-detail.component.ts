@@ -28,7 +28,7 @@ export class TeleVerifDetailComponent implements OnInit {
 
   ngOnInit() {
     if(environment.isCore){
-      if (this.WfTaskListId != undefined || this.WfTaskListId != "") {
+      if (this.WfTaskListId != undefined && this.WfTaskListId != "") {
         this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
       }
     }else{

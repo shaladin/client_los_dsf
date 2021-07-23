@@ -32,10 +32,11 @@ export class CustomerSelfVerificationComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params["LeadId"];
       if (this.LeadId == null || this.LeadId == undefined) this.LeadId = 1;
-
       this.WfTaskListId = params["WfTaskListId"];
-      if (this.WfTaskListId == null || this.WfTaskListId == undefined) this.WfTaskListId = 0;
-
+      if (this.WfTaskListId == undefined && this.WfTaskListId == null){
+        this.WfTaskListId = 0;
+        if(environment.isCore) this.WfTaskListId = "";
+      }
       this.LobCode = params["LobCode"];
       if (this.LobCode == null || this.LobCode == undefined) this.LobCode = "KTA";
     })
@@ -54,7 +55,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
           this.reason = "resubmit"; 
          }else{ 
           if(environment.isCore){
-            if (this.WfTaskListId != undefined || this.WfTaskListId != "") {
+            if (this.WfTaskListId != "") {
               this.claimTaskService.ClaimTaskSelfVerifV2(this.WfTaskListId);
             }
           }else{
