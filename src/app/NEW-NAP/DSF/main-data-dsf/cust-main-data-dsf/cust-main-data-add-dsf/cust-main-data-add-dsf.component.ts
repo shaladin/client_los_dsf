@@ -21,6 +21,8 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddAppRoleObj.Model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-cust-main-data-add-dsf',
@@ -299,29 +301,39 @@ export class CustMainDataAddDsfComponent implements OnInit {
       (response) => {
         setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
-        switch (this.bizTemplateCode) {
-          case CommonConstant.CF4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response.Id });
+        let requestAddAppRoleObj: ReqAddAppRoleObj = new ReqAddAppRoleObj();
+
+        requestAddAppRoleObj.AppId = response.Id;
+        requestAddAppRoleObj.AppRoleCode = this.user.RoleCode;
+        
+        this.http.post<ReqAddAppRoleObj>(URLConstantDsf.AddNapRole, requestAddAppRoleObj).subscribe(
+          (response) => {
+            
+          }
+        )
+          switch (this.bizTemplateCode) {
+            case CommonConstant.CF4W:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.CFRFN4W:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.FCTR:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.FL4W:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.CFNA:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.OPL:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.DF :
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": response.Id});
             break;
-          case CommonConstant.CFRFN4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id });
-            break;
-          case CommonConstant.FCTR:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response.Id });
-            break;
-          case CommonConstant.FL4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response.Id });
-            break;
-          case CommonConstant.CFNA:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id });
-            break;
-          case CommonConstant.OPL:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": response.Id });
-            break;
-          case CommonConstant.DF :
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": response.Id});
-          break;
-        }
+          }
       }
     );
   }
