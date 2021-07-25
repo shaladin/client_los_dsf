@@ -1,0 +1,14 @@
+{ 
+    "title" : "REPORT FACT REMINDER OUTSTANDING 1 DAY LATER",
+    "reportName": "Report of Reminder Outstanding 1 Day Later",
+    "reportTemplateCode": "FACT_REMINDER1",
+    "component": [   
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+

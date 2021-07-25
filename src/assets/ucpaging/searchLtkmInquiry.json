@@ -1,0 +1,139 @@
+{
+    "title": "LTKM Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "LR.LTKM_NO",
+            "id": "LtkmNoId",
+            "value": "",
+            "label": "Ltkm No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ISNULL(APP_NO,'-')",
+            "id": "AppNoId",
+            "value": "",
+            "label": "App No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "LC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "LC.MR_CUST_TYPE_CODE",
+            "id": "CustTypeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Type",
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "CUST_TYPE",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "LR.LTKM_STEP",
+            "id": "StatusCode",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "LTKM Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropValue": "LTKM"
+        }
+    ],
+    "querystring": {
+        "name": "searchLtkmInquiry"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "LTKM NO",
+            "name": "LtkmNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APP NO",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TYPE",
+            "name": "MrCustTypeCode"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "LAST APPROVED BY",
+            "name": "LastApprovedBy"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "LTKM STAT",
+            "name": "LtkmStep"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "callback",
+            "key": "ltkmno",
+            "position": "center",
+            "property": "LtkmNo"
+        },
+        {
+            "type": "callback",
+            "key": "appno",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrCustTypeCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "LastApprovedBy"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "LtkmStep"
+        }
+    ]
+}

@@ -15,6 +15,7 @@ import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProd
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
 import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 @Component({
   selector: 'app-ho-prod-compnt',
   templateUrl: './ho-prod-compnt.component.html'
@@ -25,8 +26,8 @@ export class HoProdCompntComponent implements OnInit {
   source: string = "";
   FormProdComp: any;
   StateSave: string;
-  dictOptions: { [key: string]: any; } = {};
-  dictBehaviour: { [key: string]: any; } = {};
+  dictOptions: { [key: string]: Array<KeyValueObj>; } = {};
+  dictBehaviour: { [key: string]: Array<KeyValueObj>; } = {};
   GenericByCodeObj : GenericObj = new GenericObj();
   DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
   ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
@@ -229,9 +230,24 @@ export class HoProdCompntComponent implements OnInit {
 
   DownloadRule(CompntValue, CompntValueDesc) {
     this.DlRuleObj.RuleSetName = CompntValue;
-    this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(
+    this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj).subscribe(
       response => {
-        saveAs(response, CompntValueDesc + '.xlsx');
+        // saveAs(response, CompntValueDesc + '.xls');
+        let linkSource: string = "";
+        let fileName: string = "";
+
+        let type = response["ReturnObject"][0].Key.substring(response["ReturnObject"][0].Key.length - 4);
+        if(type == ".xls"){
+          linkSource = 'data:application/xls;base64,' + response["ReturnObject"][0].Value;
+        }else {
+          linkSource = 'data:application/xlsx;base64,' + response["ReturnObject"][0].Value;
+        }
+        fileName = response["ReturnObject"][0].Key;
+        
+        const downloadLink = document.createElement("a");
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
       }
     );
   }

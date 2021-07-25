@@ -1,0 +1,156 @@
+{
+    "title": "Task Reassignment",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "T.ACT_CODE",
+            "id": "WfCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
+            "label": "Activity Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "T.USERNAME",
+            "id": "UsernameId",
+            "value": "",
+            "label": "Username",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "T.OFFICE_CODE",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "M.WF_NAME",
+            "id": "WfNameid",
+            "value": "",
+            "label": "Workflow Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "T.TRANSACTION_CODE",
+            "id": "TrxCode",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchTaskReassignmentPaging"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Workflow Name",
+            "name": "M.WF_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Transaction No",
+            "name": "T.TRANSACTION_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Start Executing Date",
+            "name": "T.START_EXECUTING_DATE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Working Date",
+            "name": "T.WORKING_DATE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Username",
+            "name": "T.USERNAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "User Role",
+            "name": "T.ROLE_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Re-Assign"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "WfName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TransactionCode"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "StartExecutingDate"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "WorkingDate"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Username"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "RoleName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/TaskReassignment/Detail",
+                    "param": [
+                        {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

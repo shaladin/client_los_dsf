@@ -7,6 +7,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/AppAssetCollateralForInsurance.Model';
 
 @Component({
   selector: 'agrmnt-view-insurance',
@@ -29,7 +30,7 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
   link: string = 'false';
 
   inputGridObj: any;
-  result : any = new Array();
+  result : Array<AppAssetCollateralForInsuranceObj> = new Array<AppAssetCollateralForInsuranceObj>();
   resultData : any;
   closeResult: any; 
   appAssetObj: AppAssetObj = new AppAssetObj();
@@ -43,7 +44,6 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
-    this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
     
     this.http.post(URLConstant.GetAppAssetListForInsuranceByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response) => {

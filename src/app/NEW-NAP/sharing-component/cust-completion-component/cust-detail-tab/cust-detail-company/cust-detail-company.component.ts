@@ -151,7 +151,6 @@ export class CustDetailCompanyComponent implements OnInit {
             }
           );
         }
-
         this.CustDetailForm.patchValue({
           IsAffiliateWithMF : response.AppCustObj.IsAffiliateWithMf,
           NoOfEmployee : response.AppCustCompanyObj.NumOfEmp,

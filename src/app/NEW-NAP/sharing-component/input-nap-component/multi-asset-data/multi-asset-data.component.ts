@@ -7,16 +7,16 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   providers: [NGXToastrService]
 })
 export class MultiAssetDataComponent implements OnInit {
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Input() showCancel: boolean = true;
   @Input() BizTemplateCode: string = "";
   @Output() OutputMultiAsset: EventEmitter<any> = new EventEmitter<any>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  mode: any = "paging";
-  AppAssetId: any;
-  AppCollateralId: any;
-  type: any;
+  mode: string = "paging";
+  AppAssetId: number;
+  AppCollateralId: number;
+  // type: any;
 
   constructor() {}
 

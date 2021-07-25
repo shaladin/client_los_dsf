@@ -99,7 +99,7 @@
               </div>
             </div>
             <br>
-            <lib-ucapprovalcreate [parentForm]="FormObj" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>  
+            <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>  
           </div>
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>

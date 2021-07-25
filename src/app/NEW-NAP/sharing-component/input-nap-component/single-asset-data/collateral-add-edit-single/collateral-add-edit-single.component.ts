@@ -22,6 +22,8 @@ import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-collateral-add-edit-single',
@@ -35,7 +37,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
 
   IsOpenExisting: boolean = false;
-  AppCollateralDocs: any = [];
+  AppCollateralDocs: Array<AppCollateralDocObj> = Array<AppCollateralDocObj>();
   inputObj: any;
   arrCrit: any[];
   checkboxAll = false;
@@ -77,7 +79,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
   collateralRegistrationObj: any;
   listCollExisting: any;
 
-  copyToLocationObj: any = [
+  copyToLocationObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -139,7 +141,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
   listRefAppAttr: any;
   ListAttr: any;
   AddrObj: AddrObj;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
 
   AppCollateralId: any;
   inputAddressObjForOwner: InputAddressObj;
@@ -458,8 +460,8 @@ export class CollateralAddEditSingleComponent implements OnInit {
     var obj = {
       Id: this.AppId,
     }
-    var getListUrl = URLConstant.GetListAppCollateralByAppId;
-    this.http.post(getListUrl, obj).subscribe(
+    
+    this.http.post(URLConstant.GetListAppCollateralByAppId, obj).subscribe(
       (response) => {
         this.listCollExisting = response[CommonConstant.ReturnObj];
       });

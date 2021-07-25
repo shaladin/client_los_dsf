@@ -8,6 +8,7 @@ import { MouCustCompanyContactPersonObj } from 'app/shared/model/MouCustCompanyC
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-company-contact-info',
@@ -17,19 +18,19 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class MouCustCompanyContactInfoComponent implements OnInit {
   @Input() listContactPersonCompany: Array<MouCustCompanyContactPersonObj> = new Array<MouCustCompanyContactPersonObj>();
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<MouCustCompanyContactPersonObj>> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  closeResult: any;
+  mode: string;
+  currentEditedIndex: number;
+  closeResult: string;
   MouCustCompanyContactPersonObj: MouCustCompanyContactPersonObj;
   refMasterObj = {
     RefMasterTypeCode: ""
   };
-  JobPositionObj: any;
-  defaultJobPosition: any;
-  selectedJobPositionName: any;
-  defaultJobPositionName: any;
+  JobPositionObj: Array<KeyValueObj>;
+  defaultJobPosition: string;
+  selectedJobPositionName: string;
+  defaultJobPositionName: string;
 
 
   ContactInfoCompanyForm = this.fb.group({
@@ -146,7 +147,7 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {

@@ -58,7 +58,6 @@
       </button>
     </div>
     <div class="modal-body">
-      <!-- <div class="px-3"> -->
         <form class="form form-horizontal" [formGroup]="LegalDocForm" #enjiForm="ngForm" 
           (ngSubmit)="LegalDocForm.valid && SaveForm()">
           <div class="form-body">
@@ -66,7 +65,6 @@
               [panel]="'addLegalDoc'">
             </lib-ucSubsection>
             <div id="addLegalDoc">
-              <!-- <div class="px-3"> -->
                 <div class="form-group row">
                   <label class="col-md-2 adins-required-label" for="legalDocType" translate>Legal Doc Type</label>
                   <div class="col-md-4">
@@ -121,13 +119,6 @@
                     <lib-uc-show-errors [control]="LegalDocForm.controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
-                <!-- <div class="form-group row">
-                  <label class="col-md-2" for="ExpDtMandatory" translate>Expired Date Mandatory</label>
-                  <div class="col-md-4">
-                    <input type="checkbox" id="ExpDtMandatory" formControlName="IsExpDtMandatory" (change)="ExpDtHandler($event)" />
-                  </div>
-                </div> -->
-              <!-- </div> -->
             </div>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
@@ -139,7 +130,6 @@
             </div>
           </div>
         </form>
-      <!-- </div> -->
     </div>
   </ng-template>
 </div>

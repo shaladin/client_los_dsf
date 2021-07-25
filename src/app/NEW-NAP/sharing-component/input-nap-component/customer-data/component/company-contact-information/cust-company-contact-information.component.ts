@@ -8,32 +8,35 @@ import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyC
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-company-contact-information',
   templateUrl: './cust-company-contact-information.component.html',
-  styleUrls: [],
+  styles:[
+    '.disabledLink { color: #ccc; pointer-events:none;}'
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
 export class CustCompanyContactInformationComponent implements OnInit {
-
+  
+  @Input() isLockMode: boolean = false;
   @Input() listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
-
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  closeResult: any;
+  mode: string;
+  currentEditedIndex: number;
+  closeResult: string;
   appCustCompanyContactPersonObj: AppCustCompanyContactPersonObj;
   refMasterObj = {
     RefMasterTypeCode: ""
   };
-  JobPositionObj: any;
-  defaultJobPosition: any;
-  selectedJobPositionName: any;
-  defaultJobPositionName: any;
+  JobPositionObj: Array<KeyValueObj>;
+  defaultJobPosition: string;
+  selectedJobPositionName: string;
+  defaultJobPositionName: string;
 
 
   ContactInfoCompanyForm = this.fb.group({

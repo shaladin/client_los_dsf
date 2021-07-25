@@ -8,7 +8,7 @@
       <label class="col-md-3 adInsLabel adins-required-label" for="IsListedCust" translate>Listed Customer
         Factoring</label>
       <div class="col-md-9" style="display: inline-block;">
-        <input type="checkbox" formControlName="IsListedCust" />
+        <input type="checkbox" formControlName="IsListedCust" (change)="changeIsListedCust()" />
       </div>
     </div>
     <div class="col-md-12" style="padding: 0; text-align: right;">

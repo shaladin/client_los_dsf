@@ -4,7 +4,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PoEntryComponent } from './po-entry/po-entry.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,11 +15,13 @@ import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -56,7 +57,10 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder, private cookieService: CookieService
+    private fb: FormBuilder, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService,
+    private toastrSvc: ToastrService
   ) {
     this.POList = new Array<Object>();
     this.arrValue = new Array<number>();
@@ -80,7 +84,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     // let appAssetObj : GenericObj = new GenericObj();
     // appAssetObj.Id = this.AgrmntId;
     // this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
@@ -104,16 +108,6 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         this.SysConfigResultObj = response
     });
     await this.InitDms();
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
   }
 
   POEntryHandler(idx) {
@@ -147,11 +141,26 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_NEW_PO_PAGING], { "BizTemplateCode": CommonConstant.CFNA });
   }
 
+  checkValidExpDt(ExpirationDate: Date, PoNo: string, flag: boolean): boolean {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let bzDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    let tempExpDt = new Date(ExpirationDate);
+    if (bzDt.getTime() > tempExpDt.getTime()) {
+      flag = false;
+      throw this.toastr.typeErrorCustom(PoNo + " Need Extension.");
+    }
+    return flag;
+  }
+
   async Save() {
-    var isPOResolved = true;
+    let isPOResolved: boolean = true;
     for (const item of this.POList) {
       if (!item["PurchaseOrderNo"] || item["PurchaseOrderNo"] === "") {
         isPOResolved = false;
+        break;
+      }
+      if (item["PurchaseOrderExpiredDt"]) {
+        isPOResolved = this.checkValidExpDt(item["PurchaseOrderExpiredDt"], item["PurchaseOrderNo"], isPOResolved);
       }
     }
     if (!isPOResolved) {
@@ -174,6 +183,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         this.appTC.TcName = this.TcForm.value.TCList[i].TcName;
         this.appTC.PriorTo = this.TcForm.value.TCList[i].PriorTo;
         this.appTC.IsChecked = this.TcForm.getRawValue().TCList[i].IsChecked;
+        this.appTC.IsWaived = this.TcForm.getRawValue().TCList[i].IsWaived;
         this.appTC.ExpiredDt = this.TcForm.getRawValue().TCList[i].ExpiredDt;
         this.appTC.IsMandatory = this.TcForm.value.TCList[i].IsMandatory;
         this.appTC.PromisedDt = this.TcForm.getRawValue().TCList[i].PromisedDt;

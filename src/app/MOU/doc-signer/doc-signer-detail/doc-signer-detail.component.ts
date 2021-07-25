@@ -14,21 +14,22 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-doc-signer-detail',
   templateUrl: './doc-signer-detail.component.html',
   providers: [DecimalPipe]
 })
+
 export class DocSignerDetailComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  WfTaskListId: any;
+  WfTaskListId: number;
   MouCustId: number;
   MouType: string;
-  mouCustObj: MouCustObj;
   mouCustSignerObj: ReqMouCustSignerObj;
   returnMouCust: MouCustObj;
   @ViewChild('LookupEmp1') ucLookupEmp1: UclookupgenericComponent;
@@ -36,11 +37,6 @@ export class DocSignerDetailComponent implements OnInit {
   @ViewChild('LookupShareHolder1') ucLookupShareHolder1: UclookupgenericComponent;
   @ViewChild('LookupShareHolder2') ucLookupShareHolder2: UclookupgenericComponent;
 
-  returnMouCustSigner: any;
-  getMouCustById: string;
-  addMouCustSigner: string;
-  getMouCustSignerByMouCustId: string;
-  getCustSignerObj: any;
   tempShareholder1: string;
   tempShareholderPosition1: string;
   tempShareholder2: string;
@@ -61,16 +57,12 @@ export class DocSignerDetailComponent implements OnInit {
   MrCustTypeCode: string;
   customerLookUpObj2: InputLookupObj;
   customerLookUpObj1: InputLookupObj;
-  tempCustomer1: any;
+  tempCustomer1: string;
   tempCustomerPosition1: string;
-  getCustByCustNo: string;
-  getCustCompanyByCustId: string;
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
-  custNo: any;
-  link: any;
-  resultData: any;
-
+  custNo: string;
+  
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
     MfSignerPosition1: [''],
@@ -83,12 +75,7 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   readonly CancelLink: string = NavigationConstant.MOU_DOC_SIGNER_PAGING;
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
-    this.getMouCustById = URLConstant.GetMouCustById;
-    this.addMouCustSigner = URLConstant.AddMouCustSigner;
-    this.getMouCustSignerByMouCustId = URLConstant.GetMouCustSignerByMouCustId;
-    this.getCustByCustNo = URLConstant.GetCustByCustNo;
-    this.getCustCompanyByCustId = URLConstant.GetCustCompanyByCustId;
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null) this.MouCustId = params["MouCustId"];
       if (params["WfTaskListId"] != null) this.WfTaskListId = params["WfTaskListId"];
@@ -151,16 +138,9 @@ export class DocSignerDetailComponent implements OnInit {
     });
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   ngOnInit() {
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
@@ -204,9 +184,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.customerLookUpObj1.pagingJson = "./assets/uclookup/lookupCustPersonal.json";
     this.customerLookUpObj1.genericJson = "./assets/uclookup/lookupCustPersonal.json";
 
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(this.getMouCustById, { Id: this.MouCustId }).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;
         this.MrCustTypeCode = this.returnMouCust["MrCustTypeCode"];
@@ -217,8 +195,15 @@ export class DocSignerDetailComponent implements OnInit {
           this.custCompanyCrit.propName = "MC.MOU_CUST_ID";
           this.custCompanyCrit.restriction = AdInsConstant.RestrictionEq;
           this.custCompanyCrit.value = this.MouCustId.toString();
+          var custCompanyCrit2: CriteriaObj = new CriteriaObj();
+          custCompanyCrit2.DataType = "text";
+          custCompanyCrit2.propName = "CC.MR_CUST_TYPE_CODE";
+          custCompanyCrit2.restriction = AdInsConstant.RestrictionEq;
+          custCompanyCrit2.value = CommonConstant.CustTypePersonal;
           this.custShareholderLookUpObj1.addCritInput.push(this.custCompanyCrit);
+          this.custShareholderLookUpObj1.addCritInput.push(custCompanyCrit2);
           this.custShareholderLookUpObj2.addCritInput.push(this.custCompanyCrit);
+          this.custShareholderLookUpObj2.addCritInput.push(custCompanyCrit2);
           this.ucLookupShareHolder1.setAddCritInput();
           this.ucLookupShareHolder2.setAddCritInput();
         }
@@ -256,7 +241,7 @@ export class DocSignerDetailComponent implements OnInit {
   SaveForm() {
     this.mouCustSignerObj = new ReqMouCustSignerObj();
     this.setMouCustSigner();
-    this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
+    this.http.post(URLConstant.AddMouCustSigner, this.mouCustSignerObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DOC_SIGNER_PAGING], {});

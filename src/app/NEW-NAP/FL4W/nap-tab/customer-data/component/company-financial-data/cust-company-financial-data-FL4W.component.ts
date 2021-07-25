@@ -15,7 +15,7 @@ export class CustCompanyFinancialDataFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustCompanyFinDataObj: AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
   constructor(
     private fb: FormBuilder) {

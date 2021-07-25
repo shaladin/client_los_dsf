@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ResGetRefFeeListObj } from 'app/shared/model/Response/RefFee/ResGetRefFeeListObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-fee-detail',
@@ -16,8 +17,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class MouCustFeeDetailComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() UsedRefFeeIdList : Array<number>;
-  refFeeList: any;
-  feeTypeList: any;
+  refFeeList: Array<ResGetRefFeeListObj>;
+  feeTypeList: Array<KeyValueObj>;
+  mouCustFeePaymentTypeList: Array<KeyValueObj>;
+  mrAgreementAffectedList: Array<KeyValueObj>;
 
   MouCustFeeForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -25,6 +28,8 @@ export class MouCustFeeDetailComponent implements OnInit {
     FeePrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
     FeeAmt: [0, [Validators.required, Validators.min(1)]],
     MrFeeTypeCode: ['', [Validators.required]],
+    MouCustFeePaymentType: ['', [Validators.required]],
+    MrAgreementAffected: ['', [Validators.required]],
     RowVersion: ['']
   });
 
@@ -54,6 +59,22 @@ export class MouCustFeeDetailComponent implements OnInit {
           this.MouCustFeeForm.controls['FeeAmt'].updateValueAndValidity();
         }
       });
+
+      var rmPaymentType = new RefMasterObj();
+      rmPaymentType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMouCustFeePaymentType;
+      this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmPaymentType).subscribe(
+        (response) => {
+        this.mouCustFeePaymentTypeList = response[CommonConstant.ReturnObj];
+        }
+      ); 
+
+      var rmAgreementAffected = new RefMasterObj();
+      rmAgreementAffected.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAgreementAffected;
+      this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmAgreementAffected).subscribe(
+        (response) => {
+          this.mrAgreementAffectedList = response[CommonConstant.ReturnObj];
+        }
+      );
    }
 
   ngOnInit() {
@@ -84,6 +105,18 @@ export class MouCustFeeDetailComponent implements OnInit {
     }
   }
 
+  feePaymentTypeHandler(e){
+    if(e.target.value == CommonConstant.PaymentTypeApDeduction){
+      this.MouCustFeeForm.controls['MrAgreementAffected'].clearValidators();
+      this.MouCustFeeForm.controls['MrAgreementAffected'].setValidators([Validators.required]);
+      this.MouCustFeeForm.controls['MrAgreementAffected'].updateValueAndValidity();
+    }
+    else if(e.target.value ==  CommonConstant.PaymentTypeDirectPayment){
+      this.MouCustFeeForm.controls['MrAgreementAffected'].clearValidators();
+      this.MouCustFeeForm.controls['MrAgreementAffected'].updateValueAndValidity();
+    }
+  }
+
   getDdlName(key){
     for(var i=0;i< this.refFeeList.length ;i++){
       if(this.refFeeList[i]['RefFeeId'] == key){
@@ -93,6 +126,13 @@ export class MouCustFeeDetailComponent implements OnInit {
   }
 
   Save(enjiForm){
+    if(this.MouCustFeeForm.controls["MouCustFeePaymentType"].value == CommonConstant.PaymentTypeDirectPayment)
+    {
+      this.MouCustFeeForm.patchValue({
+        MrAgreementAffected: null
+      });
+    }
+    
     var formData = this.MouCustFeeForm.value;
     if(formData.FeeAmt > 0){
       formData.FeeAmt = this.currencyToNumber(formData.FeeAmt.toString());

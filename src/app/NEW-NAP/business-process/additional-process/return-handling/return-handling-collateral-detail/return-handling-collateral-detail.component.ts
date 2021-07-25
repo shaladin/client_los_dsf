@@ -18,6 +18,13 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AssetMasterObj } from 'app/shared/model/Response/AssetMaster/AssetMasterObj.model';
+import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 
 @Component({
@@ -101,13 +108,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   });
 
 
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-  appObj = {
-    Id: 0,
-  };
-
   assetMasterObj = {
     FullAssetCode: "",
   };
@@ -116,34 +116,28 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
   InputLookupAssetObj: InputLookupObj;
 
-  UserRelationObj: any;
-  OwnerRelationObj: any;
-  IdTypeObj: any;
-  AssetUsageObj: any;
-  AssetConditionObj: any;
-  DpObj: any;
-  AppObj: any;
-  AssetMasterObj: any;
-  AppCustAddrObj: any;
-  AddrLegalObj: any;
-  AddrObj: any;
-  AssetTypeObj: any;
-  AssetTypeDllObj: any;
-  appCollateral: any;
-  appCollateralRegist: any;
+  UserRelationObj: Array<KeyValueObj>;
+  OwnerRelationObj: Array<KeyValueObj>;
+  IdTypeObj: Array<KeyValueObj>;
+  AssetUsageObj: Array<KeyValueObj>;
+  AssetConditionObj: Array<KeyValueObj>;
+  // AppObj: any;
+  AssetMasterObj: AssetMasterObj;
+  AppCustAddrObj: Array<AppCustAddrObj>;
+  AddrLegalObj: Array<AppCustAddrObj>;
+  AddrObj: Array<AppCustAddrObj>;
+  AssetTypeObj: AssetTypeObj;
+  AssetTypeDllObj: Array<KeyValueObj>;
+  appCollateral: AppCollateralObj;
+  appCollateralRegist: AppCollateralRegistrationObj;
 
 
-  AppCustObj: any;
+  AppCustObj: AppCustObj;
 
-  copyFromAppCustAddrForOwner: any;
-  copyFromAppCustAddrForLocation: any;
-  typeCrit: any;
+  copyFromAppCustAddrForOwner: string;
+  copyFromAppCustAddrForLocation: string;
+  typeCrit: Array<CriteriaObj>;
 
-
-
-  appCollateralObj = {
-    Id: 0,
-  };
   inputAddressObjForOwner: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
 
@@ -184,7 +178,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
 
-    this.appCollateralObj.Id = this.AppCollateralId;
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj = new InputFieldObj();
@@ -192,7 +185,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.InputLookupAssetObj = new InputLookupObj();
     this.initLookup();
     this.bindAllRefMasterObj();
-    this.GetAppData();
+    // this.GetAppData();
     await this.GetListAddr();
     //this.GetAssetMaster(this.assetMasterObj);
 
@@ -348,10 +341,10 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
   async getAllCollateralData() {
     if (this.AppCollateralId != 0) {
-      await this.http.post(URLConstant.GetAppCollateralByAppCollateralId, this.appCollateralObj).toPromise().then(
-        (response) => {
+      await this.http.post(URLConstant.GetAppCollateralByAppCollateralId, { Id: this.AppCollateralId }).toPromise().then(
+        (response: AppCollateralObj) => {
           this.appCollateral = response;
-          if (this.appCollateral != "" && this.appCollateral != null) {
+          if (this.appCollateral != undefined && this.appCollateral != null) {
             this.CollateralDataForm.patchValue({
 
               FullAssetCode: this.appCollateral.FullAssetCode,
@@ -387,10 +380,10 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
         });
 
-      this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralObj).subscribe(
-        (response) => {
+      this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, { Id: this.AppCollateralId }).subscribe(
+        (response: AppCollateralRegistrationObj) => {
           this.appCollateralRegist = response;
-          if (this.appCollateralRegist != "" && this.appCollateralRegist != null) {
+          if (this.appCollateralRegist != undefined && this.appCollateralRegist != null) {
             this.CollateralDataForm.patchValue({
 
               UserName: this.appCollateralRegist.UserName,
@@ -447,8 +440,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   bindAssetUsageObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetUsage }).subscribe(
       (response) => {
         this.AssetUsageObj = response[CommonConstant.ReturnObj];
         if (this.AssetUsageObj.length > 0) {
@@ -462,10 +454,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   bindAssetTypeObj() {
-    var obj = {
-
-    };
-    this.http.post(URLConstant.GetAssetTypeKeyValueCode, obj).subscribe(
+    this.http.post(URLConstant.GetAssetTypeKeyValueCode, {}).subscribe(
       (response) => {
         this.AssetTypeDllObj = response[CommonConstant.ReturnObj];
         if (this.AssetTypeDllObj.length > 0) {
@@ -480,8 +469,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   bindAsseConditionObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition }).subscribe(
       (response) => {
         this.AssetConditionObj = response[CommonConstant.ReturnObj];
         //if (this.AssetConditionObj.length > 0) {
@@ -495,8 +483,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   bindIdTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
@@ -509,9 +496,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   bindUserOwnerRelationshipObj() {
-
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
       (response) => {
         this.UserRelationObj = response[CommonConstant.ReturnObj];
         this.OwnerRelationObj = response[CommonConstant.ReturnObj];
@@ -525,19 +510,18 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     );
   }
 
-  GetAppData() {
-    this.appObj.Id = this.AppId;
-    this.http.post(URLConstant.GetAppById, this.appObj).subscribe(
-      (response) => {
-        this.AppObj = response;
-      }
-    );
-  }
+  // GetAppData() {
+  //   this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+  //     (response) => {
+  //       this.AppObj = response;
+  //     }
+  //   );
+  // }
 
 
   GetAssetMaster(assetMasterObj) {
     this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, {Code: assetMasterObj.FullAssetCode}).subscribe(
-      (response) => {
+      (response: AssetMasterObj) => {
         this.AssetMasterObj = response;
         this.CollateralDataForm.patchValue({
           FullAssetCode: this.AssetMasterObj.FullAssetCode,
@@ -551,11 +535,8 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   async AssetTypeChanged(Code) {
-    var assetTypeObj = {
-      AssetTypeCode: Code
-    };
     await this.http.post(URLConstant.GetAssetTypeByCode, {Code: Code}).toPromise().then(
-      (response) => {
+      (response: AssetTypeObj) => {
         this.AssetTypeObj = response;
       }
     );
@@ -690,8 +671,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   async GetListAddr() {
-    this.appObj.Id = this.AppId;
-    this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
+    this.http.post(URLConstant.GetListAppCustAddrByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddrLegalObj = this.AppCustAddrObj.filter(
@@ -758,11 +738,11 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.allCollateralDataObj = new AllCollateralDataObj();
     this.setAllCollateralObj();
   }
-  SetLocationAddrType(event) {
+  SetLocationAddrType(event: string) {
     this.copyFromAppCustAddrForLocation = event;
   }
 
-  SetOwnerAddrType(event) {
+  SetOwnerAddrType(event: string) {
     this.copyFromAppCustAddrForOwner = event;
   }
 
@@ -771,7 +751,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       Id: this.AppId,
     };
     this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
-      (response) => {
+      (response: AppCustObj) => {
         this.AppCustObj = response;
         this.CollateralDataForm.patchValue({
           UserName: this.AppCustObj.CustName,

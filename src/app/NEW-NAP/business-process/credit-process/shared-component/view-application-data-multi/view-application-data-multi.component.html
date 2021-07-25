@@ -1,0 +1,485 @@
+<div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="px-3">
+  
+            <lib-ucSubsection [id]="'viewReferantorInfoId'" [title]="'Referantor'" [panel]="'viewReferantorInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewReferantorInfo">
+              <div class="row">
+                <div class="col-md-6 ">
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Referantor Name </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.ReferantorName!=null">
+                      {{ReferantorData.ReferantorName}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.ReferantorName==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Num Of Sales </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfSales!=null">
+                      {{ReferantorData.NumOfSales}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfSales==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Total Sales Amount </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalSalesAmount!=null">
+                      {{ReferantorData.TotalSalesAmount | number:'.2':'en-US'}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalSalesAmount==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Total Profit </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalProfit!=null">
+                      {{ReferantorData.TotalProfit}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalProfit==null"> - </label>
+                  </div>
+                </div>
+                <div class="col-md-6 ">
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Cooperation Date </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.CooperationDate!=null">
+                      {{ReferantorData.CooperationDate | date: 'dd-MMMM-yyyy'}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.CooperationDate==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> F12PD (Num Of Application) </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfApplication!=null">
+                      {{ReferantorData.NumOfApplication}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.NumOfApplication==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.InAmount!=null">
+                      {{ReferantorData.InAmount | number:'.2':'en-US'}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.InAmount==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Total Loss </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalLoss!=null">
+                      {{ReferantorData.TotalLoss}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="ReferantorData.TotalLoss==null"> - </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <lib-ucSubsection [id]="'viewSalesInfoId'" [title]="'Sales'" [panel]="'viewSalesInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewSalesInfo">
+              <div class="row">
+                <div class="col-md-6 ">
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Sales Name </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SalesName!=null">
+                      {{AppDetailAssetData.SalesName}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SalesName==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Join Date </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.AppDetailAssetData!=null">
+                      {{AppDetailAssetData.JoinDt | date: 'dd-MMMM-yyyy'}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.AppDetailAssetData==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> F12PD (Num of Application) </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.NumOfApplication!=null">
+                      {{AppDetailAssetData.NumOfApplication}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.NumOfApplication==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.InAmount!=null">
+                      {{AppDetailAssetData.InAmount | number:'.2':'en-US'}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.InAmount==null"> - </label>
+                  </div>
+                </div>
+                <div class="col-md-6 ">
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Supervisor Name </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SpvName!=null">
+                      {{AppDetailAssetData.SpvName}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.SpvName==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Total Profit </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalProfit!=null">
+                      {{AppDetailAssetData.TotalProfit}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalProfit==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Total Loss </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalLoss!=null">
+                      {{AppDetailAssetData.TotalLoss}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailAssetData.TotalLoss==null"> - </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <lib-ucSubsection [id]="'viewDealerInfoId'" [title]="'List Asset'" [panel]="'viewDealerInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewDealerInfo">
+              <table class="table table-responsive-md text-center table-hover" matSort>
+                <thead>
+                  <tr class="table-header">
+                    <th><span translate class="thead-header" mat-sort-header="AssetSeqNo">Asset Seq No</span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="FullAssetName">Full Asset Name</span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="DealerName">Dealer Name</span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="AssetPrice">Asset Price</span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="SecurityDeposit">Security Deposit</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="ListAssetData?.length == 0">
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr *ngFor="let item of ListAssetData">
+                    <td *ngIf="item.AssetSeqNo!=null">{{item.AssetSeqNo}}</td>
+                    <td *ngIf="item.AssetSeqNo==null"> - </td>
+                    <td *ngIf="item.FullAssetName!=null">{{item.FullAssetName}}</td>
+                    <td *ngIf="item.FullAssetName==null"> - </td>
+                    <td *ngIf="item.SupplName!=null"><a (click)="getDealer(item.AppAssetId, content)"
+                        style="color:#009DA0;">{{item.SupplName}}</a></td>
+                    <td *ngIf="item.SupplName==null"> - </td>
+                    <td *ngIf="item.AssetPriceAmt!=null" style="text-align: right;">
+                      {{item.AssetPriceAmt | number:'.2':'en-US'}}</td>
+                    <td *ngIf="item.AssetPriceAmt==null"> - </td>
+                    <td *ngIf="item.DownPaymentAmt!=null" style="text-align: right;">
+                      {{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
+                    <td *ngIf="item.DownPaymentAmt==null"> - </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+  
+            <ng-template #content let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">Dealer Info</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="px-3">
+                  <div class="form-body" id="viewDealerInfo">
+                    <div class="row">
+                      <div class="col-md-6 ">
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> Dealer Name </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.DealerName!=null">
+                            {{AssetDealerData.DealerName}} </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.DealerName==null"> - </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.SalesDealerPositionCode}} </label>
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.SalesDealerName}} </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.AdmDealerPositionCode}} </label>
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.AdmDealerName}} </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> F12PD (Num of Application) </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.NumOfApplication!=null">
+                            {{AssetDealerData.NumOfApplication}} </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.NumOfApplication==null"> - </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> F12PD (In Amount) </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.InAmount!=null">
+                            {{AssetDealerData.InAmount | number:'.2':'en-US'}} </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.InAmount==null"> - </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 ">
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> Address </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.Addr!=null"> {{AssetDealerData.Addr}}
+                          </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.Addr==null"> - </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.SpvDealerPositionCode}} </label>
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.SpvDealerName}} </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.BMDealerPositionCode}} </label>
+                          <label class="col-md-6 adInsLabel"> {{AssetDealerData.BMDealerName}} </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> Cooperation Date </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.CooperationDt!=null">
+                            {{AssetDealerData.CooperationDt | date: 'dd-MMMM-yyyy'}} </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.CooperationDt==null"> - </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> Total Profit </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.TotalProfit!=null">
+                            {{AssetDealerData.TotalProfit}} </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.TotalProfit==null"> - </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> Total Loss </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.TotalLoss!=null">
+                            {{AssetDealerData.TotalLoss}} </label>
+                          <label class="col-md-6 adInsLabel" *ngIf="AssetDealerData.TotalLoss==null"> - </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+  
+  
+            <lib-ucSubsection [id]="'viewAppsFinInfoId'" [title]="'Application'" [panel]="'viewAppsFinInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewAppsFinInfo">
+              <div class="row">
+                <div class="col-md-6 ">
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Installment Scheme </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme!=null">
+                      {{AppDetailFinData.InstScheme}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstScheme==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Num Of Installment </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst!=null">
+                      {{AppDetailFinData.NumOfInst}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.NumOfInst==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Installment Amount </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstAmt!=null">
+                      {{AppDetailFinData.InstAmt | number:'.2':'en-US'}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InstAmt==null"> - </label>
+                  </div>
+                </div>
+                <div class="col-md-6 ">
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Payment Frequency </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.PayFreqDesc!=null">
+                      {{AppDetailFinData.PayFreqDesc}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.PayFreqDesc==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Interest Type </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InterestTypeDesc!=null">
+                      {{AppDetailFinData.InterestTypeDesc}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.InterestTypeDesc==null"> - </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6 adInsLabel"> Asset Name </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.AssetName!=null">
+                      {{AppDetailFinData.AssetName}} </label>
+                    <label class="col-md-6 adInsLabel" *ngIf="AppDetailFinData.AssetName==null"> - </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <lib-ucSubsection [id]="'viewInsuranceInfoId'" [title]="InsuranceTitle" [panel]="'viewInsuranceInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewInsuranceInfo">
+              <div class="px-3">
+                <lib-ucSubsection [id]="'viewCollateralInfoId'" [title]="'Collateral'" [panel]="'viewCollateralInfo'">
+                </lib-ucSubsection>
+                <div class="form-body" id="viewCollateralInfo">
+                  <table class="table table-responsive-md text-center table-hover" matSort>
+                    <thead>
+                      <tr class="table-header">
+                        <th><span translate class="thead-header" mat-sort-header="AssetName">Asset Name</span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="InsuredBy">Insured By</span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="PaidBy">Paid By</span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="InsuranceCompany">Insurance
+                            Company</span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="CoverPeriod">Cover Period</span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="InsuranceLength">Insurance Length</span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="MainPremi">Main Premi</span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="AdditionalPremi">Additional Premi</span>
+                        </th>
+                        <th><span translate class="thead-header" mat-sort-header="Fee">Fee</span>
+                        </th>
+                        <!-- <th><span translate class="thead-header">View</span>
+                          </th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="ListCollateralData?.length == 0">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr *ngFor="let item of ListCollateralData">
+                        <td *ngIf="item.FullAssetName!=null" style="text-align: left;">{{item.FullAssetName}}</td>
+                        <td *ngIf="item.FullAssetName==null"> - </td>
+                        <td *ngIf="item.InsuredBy!=null">{{item.InsuredBy}}</td>
+                        <td *ngIf="item.InsuredBy==null"> - </td>
+                        <td *ngIf="item.PaidBy!=null">{{item.PaidBy}}</td>
+                        <td *ngIf="item.PaidBy==null"> - </td>
+                        <td *ngIf="item.InscoName!=null">{{item.InscoName}}</td>
+                        <td *ngIf="item.InscoName==null"> - </td>
+                        <td *ngIf="item.CoverPeriod!=null">{{item.CoverPeriod}}</td>
+                        <td *ngIf="item.CoverPeriod==null"> - </td>
+                        <td *ngIf="item.InsLength!=null">{{item.InsLength}}</td>
+                        <td *ngIf="item.InsLength==null"> - </td>
+                        <td *ngIf="item.MainPremi!=null" style="text-align: right;">
+                          {{item.MainPremi | number:'.2':'en-US'}}</td>
+                        <td *ngIf="item.MainPremi==null"> - </td>
+                        <td *ngIf="item.AddPremi!=null" style="text-align: right;">{{item.AddPremi | number:'.2':'en-US'}}
+                        </td>
+                        <td *ngIf="item.AddPremi==null"> - </td>
+                        <td *ngIf="item.Fee!=null" style="text-align: right;">{{item.Fee | number:'.2':'en-US'}}</td>
+                        <td *ngIf="item.Fee==null"> - </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <lib-ucSubsection [id]="'viewLifeInsInfoId'" [title]="'Life Insurance'" [panel]="'viewLifeInsInfo'">
+                </lib-ucSubsection>
+                <div class="form-body" id="viewLifeInsInfo">
+                  <div class="row">
+                    <div class="col-md-6 ">
+                      <div class="row">
+                        <label class="col-md-6 adInsLabel"> Life Insco Branch Code </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="LifeInsuranceData?.LifeInscoBranchCode!=null">
+                          {{LifeInsuranceData?.LifeInscoBranchCode}} </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="LifeInsuranceData?.LifeInscoBranchCode==null"> -
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 ">
+                      <div class="row">
+                        <label class="col-md-6 adInsLabel"> Life Insco Branch Name </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="LifeInsuranceData?.LifeInscoBranchName!=null">
+                          {{LifeInsuranceData?.LifeInscoBranchName}} </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="LifeInsuranceData?.LifeInscoBranchName==null"> -
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <br>
+                  <br>
+  
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th style="text-align: left;"><span translate class="thead-header"
+                            mat-sort-header="InsuredName">Insured Name</span>
+                        </th>
+                        <th style="text-align: left;"><span translate class="thead-header"
+                            mat-sort-header="MrCustTypeCode">Relationship</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="LifeInsuranceData?.ListAppLifeInsD == null">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr *ngFor="let item of LifeInsuranceData?.ListAppLifeInsD">
+                        <td *ngIf="item.InsuredName!=null" style="text-align: left;">{{item.InsuredName}}</td>
+                        <td *ngIf="item.InsuredName==null" style="text-align: left;"> - </td>
+                        <td *ngIf="item.MrCustTypeCode!=null" style="text-align: left;">{{item.MrCustTypeCode}}</td>
+                        <td *ngIf="item.MrCustTypeCode==null" style="text-align: left;"> - </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-6 ">
+                      <div class="row">
+                        <label class="col-md-6 adInsLabel"> Cover By </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CU'"> Customer </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CO'"> Company </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CUCO' "> Customer/Company </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == null "> - </label>
+                      </div>
+                      <div class="row" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CU' || AssetInsuranceAndLifeInsuranceData.CoverBy == 'CUCO'">
+                        <label class="col-md-6 adInsLabel"> Asset Insurance Company (Customer) </label>
+                        <label class="col-md-6 adInsLabel"> {{AssetInsuranceAndLifeInsuranceData.AssetInsuranceCustomer}} </label>
+                      </div>
+                      <div class="row" *ngIf="AssetInsuranceAndLifeInsuranceData.CoverBy == 'CO' || AssetInsuranceAndLifeInsuranceData.CoverBy == 'CUCO'">
+                        <label class="col-md-6 adInsLabel"> Asset Insurance Company </label>
+                        <label class="col-md-6 adInsLabel"> {{AssetInsuranceAndLifeInsuranceData.AssetInsuranceCompany}} </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6" *ngIf= "AssetInsuranceAndLifeInsuranceData.CoverBy == 'CU'">
+                      <div class="row">
+                        <label class="col-md-6 adInsLabel"> Cover Life Insurance </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="AssetInsuranceAndLifeInsuranceData.IsLifeInsurance"> Yes </label>
+                        <label class="col-md-6 adInsLabel" *ngIf="!AssetInsuranceAndLifeInsuranceData.IsLifeInsurance"> No </label>
+                      </div>
+                      <div class="row" *ngIf="AssetInsuranceAndLifeInsuranceData.IsLifeInsurance">
+                        <label class="col-md-6 adInsLabel"> Life Insurance Company </label>
+                        <label class="col-md-6 adInsLabel"> {{AssetInsuranceAndLifeInsuranceData.InterestTypeDesc}} </label>
+                      </div>
+                    </div> 
+                  </div>-->
+              </div>
+            </div>
+  
+            <lib-ucSubsection [id]="'viewCommissionInfoId'" [title]="'Commission'" [panel]="'viewCommissionInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewCommissionInfo">
+              <table class="table table-responsive-md text-center table-hover" matSort
+                (matSortChange)="sortCommData($event)">
+                <thead>
+                  <tr class="table-header">
+                    <th><span translate class="thead-header"> No </span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="Subject">Subject</span>
+                    </th>
+                    <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="Name">Name</span>
+                    </th>
+                    <th style="text-align: right;"><span translate class="thead-header"
+                        mat-sort-header="TotalCommAmt">Total Commission</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="CommData?.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr *ngFor="let item of CommData; let idx = index">
+                    <td>{{idx + 1}}</td>
+                    <td *ngIf="item.Subject!=null">{{item.Subject}}</td>
+                    <td *ngIf="item.Subject==null"> - </td>
+                    <td style="text-align: left;" *ngIf="item.Name!=null">{{item.Name}}</td>
+                    <td style="text-align: left;" *ngIf="item.Name==null"> - </td>
+                    <td style="text-align: right;" *ngIf="item.TotalCommAmt!=null">
+                      {{item.TotalCommAmt | number:'.2':'en-US'}}</td>
+                    <td style="text-align: right;" *ngIf="item.TotalCommAmt==null"> - </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <lib-ucSubsection [id]="'viewAppTcId'" [title]="'Term & Condition'" [panel]="'viewAppTcInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewAppTcInfo">
+              <lib-ucgridview *ngIf="IsGridTcReady" [gridInput]="inputGridObj"></lib-ucgridview>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

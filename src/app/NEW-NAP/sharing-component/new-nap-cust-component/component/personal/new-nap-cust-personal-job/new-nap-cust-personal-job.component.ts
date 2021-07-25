@@ -9,6 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
@@ -47,7 +48,7 @@ export class NewNapCustPersonalJobComponent implements OnInit {
   isUcAddrReady: boolean = false
   MrCustModelDescr: string = "Employee";
   BusinessDt: Date;
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
 
   constructor(
     private http: HttpClient,

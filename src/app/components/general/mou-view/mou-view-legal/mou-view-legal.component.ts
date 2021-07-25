@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ResMouCustLglReviewObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustLglReviewObj.model';
 
 @Component({
   selector: 'app-mou-view-legal',
@@ -11,7 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class MouViewLegalComponent implements OnInit {
   @Input() MouCustId: number;
 
-  listLglReviewData: any;
+  listLglReviewData: Array<ResMouCustLglReviewObj> = new Array<ResMouCustLglReviewObj>();
 
   constructor(private http: HttpClient) { }
 

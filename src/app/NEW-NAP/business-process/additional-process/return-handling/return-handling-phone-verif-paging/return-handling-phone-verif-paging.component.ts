@@ -39,7 +39,7 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
     return critObjs;
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }

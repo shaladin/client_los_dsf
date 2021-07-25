@@ -1,0 +1,298 @@
+{
+    "title": "Change MOU Approval",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "TL.TRX_NO",
+            "id": "TrxNoId",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.MOU_CUST_NO",
+            "id": "TrxNoId",
+            "value": "",
+            "label": "MoU No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "TL.APV_NO",
+            "id": "ApvNoId",
+            "value": "",
+            "label": "Approval No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "TL.REQUEST_BY",
+            "id": "ReqById",
+            "value": "",
+            "label": "Request By",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "TL.CURRENT_USER_ID",
+            "id": "TaskOwnerId",
+            "value": "",
+            "label": "Task Owner",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "TL.CURRENT_USER_ID",
+            "id": "CurrentUserId",
+            "value": "",
+            "label": "Current User",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "TL.REQUEST_DATE",
+            "id": "ReqDtFromId",
+            "value": "",
+            "label": "Request Date From",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "TL.REQUEST_DATE",
+            "id": "ReqDtFromId",
+            "value": "",
+            "label": "Request Date To",
+            "restriction": "lte",
+            "datatype": "date"
+        }
+    ],
+    "querystring": {
+        "name": "searchChangeMouCustApproval"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "SLA",
+            "name": "SlaColor"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TRANSACTION NO",
+            "name": "TL.TRX_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPROVAL NO",
+            "name": "TL.APV_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "A.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "A.MOU_CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "REQUEST BY",
+            "name": "RequestBy"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "TASK OWNER",
+            "name": "MainUserId"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CURRENT USER",
+            "name": "CurrentUserId"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REQUEST DATE",
+            "name": "RequestDate"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "ACTION"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "sla",
+            "position": "center",
+            "property": "SlaColor"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TrxNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ApvNo"
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "RequestBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MainUserId"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CurrentUserId"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "RequestDate"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MouType",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_APPRV_FCTR",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "TaskId",
+                                        "property": "TaskId"
+                                    },
+                                    {
+                                        "type": "InstanceId",
+                                        "property": "InstanceId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MouType",
+                                    "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_APPRV_GENERAL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "TaskId",
+                                        "property": "TaskId"
+                                    },
+                                    {
+                                        "type": "InstanceId",
+                                        "property": "InstanceId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MouType",
+                                    "value": "FINANCING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_APPRV_GENERAL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "TaskId",
+                                        "property": "TaskId"
+                                    },
+                                    {
+                                        "type": "InstanceId",
+                                        "property": "InstanceId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

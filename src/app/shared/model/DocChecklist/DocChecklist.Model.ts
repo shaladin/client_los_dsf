@@ -3,7 +3,7 @@ import { ListAppTCObj } from "../ListAppTCObj.Model";
 
 
 export class DocChecklist {
-    TaskListId : any;
+    TaskListId : number;
     RListAppTcObj: ListAppTCObj;
 
     constructor() {

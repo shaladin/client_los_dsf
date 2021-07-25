@@ -10,6 +10,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/AppFinData/CalcStepUpStepDownObjForTrialCalc.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-cummulative',
@@ -20,15 +22,18 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Input() BizTemplateCode: string;
+  @Input() TrialCalc: boolean;
+  @Input() InstAmt: number;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
-  listInstallment: any;
+  calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
+  listInstallment: Array<InstallmentObj>;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  responseCalc: any;
   PriceLabel: string = "Asset Price";
+  IsTrialCalc: boolean = false;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -39,9 +44,26 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
 
-    if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
-      this.PriceLabel = "Financing Amount";
+    if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
+      this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.listInstallment = response['InstallmentTable'];
+        });
+      this.IsTrialCalc = false;
     }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
+    if (this.InstAmt != 0) {
+      this.ParentForm.patchValue({
+        InstAmt: this.InstAmt
+      });
+    }
+
+
   }
 
   LoadDDLRateType() {
@@ -53,7 +75,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType  }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
@@ -67,7 +89,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmStepUpStepDownCummulative) !== -1);
 
-        if(this.CalcBaseOptions.length == 1){
+        if (this.CalcBaseOptions.length == 1) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
@@ -131,57 +153,99 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   }
 
   Calculate() {
-    if(this.ParentForm.getRawValue().CalcBase == ''){
+    if (this.ParentForm.getRawValue().CalcBase == '') {
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
       return;
     }
-    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.getRawValue().InstAmt <= 0){
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.getRawValue().InstAmt <= 0) {
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
     }
-    if(this.ValidateFee() == false){
+    if (this.ValidateFee() == false) {
       return;
-    }    
-    if(this.ParentForm.controls.CummulativeTenor.value <= 0){
+    }
+    if (this.ParentForm.controls.CummulativeTenor.value <= 0) {
       this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '0.');
       return;
     }
+    if (this.ParentForm.controls.DownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
+      return;
+    }
+    if (!this.IsTrialCalc) {
+      this.calcStepUpStepDownObj = this.ParentForm.getRawValue();
+      this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
 
-    this.calcStepUpStepDownObj = this.ParentForm.getRawValue();
-    this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
+      this.http.post(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+        (response) => {
+          this.listInstallment = response["InstallmentTable"];
+          this.listAppInstStepSchm = response["AppInstStepSchmObjs"];
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response["TotalDownPaymentNettAmt"], //muncul di layar
+            TotalDownPaymentGrossAmt: response["TotalDownPaymentGrossAmt"], //inmemory
 
-    this.http.post(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
-      (response) => {
-        this.listInstallment = response["InstallmentTable"];
-        this.listAppInstStepSchm = response["AppInstStepSchmObjs"];
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response["TotalDownPaymentNettAmt"], //muncul di layar
-          TotalDownPaymentGrossAmt: response["TotalDownPaymentGrossAmt"], //inmemory
+            EffectiveRatePrcnt: response["EffectiveRatePrcnt"],
+            FlatRatePrcnt: response["FlatRatePrcnt"],
+            InstAmt: response["InstAmt"],
 
-          EffectiveRatePrcnt: response["EffectiveRatePrcnt"],
-          FlatRatePrcnt: response["FlatRatePrcnt"],
-          InstAmt: response["InstAmt"],
+            GrossYieldPrcnt: response["GrossYieldPrcnt"],
 
-          GrossYieldPrcnt: response["GrossYieldPrcnt"],
+            TotalInterestAmt: response["TotalInterestAmt"],
+            TotalAR: response["TotalARAmt"],
 
-          TotalInterestAmt: response["TotalInterestAmt"],
-          TotalAR: response["TotalARAmt"],
+            NtfAmt: response["NtfAmt"],
+            ApvAmt: response["ApvAmt"],
 
-          NtfAmt: response["NtfAmt"],
-          ApvAmt: response["ApvAmt"],
+            TotalLifeInsCustAmt: response["TotalLifeInsCustAmt"],
+            LifeInsCptlzAmt: response["LifeInsCptlzAmt"],
 
-          TotalLifeInsCustAmt: response["TotalLifeInsCustAmt"],
-          LifeInsCptlzAmt: response["LifeInsCptlzAmt"],
+            DownPaymentGrossAmt: response["DownPaymentGrossAmt"],
+            DownPaymentNettAmt: response["DownPaymentNettAmt"]
 
-          DownPaymentGrossAmt: response["DownPaymentGrossAmt"],
-          DownPaymentNettAmt: response["DownPaymentNettAmt"]
+          })
+          this.SetInstallmentTable();
+          this.SetInstStepSchm();
+          this.SetNeedReCalculate(false);
+        }
+      );
+    } else {
+      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
 
-        })
-        this.SetInstallmentTable();
-        this.SetInstStepSchm();
-        this.SetNeedReCalculate(false);
-      }
-    );
+      this.http.post(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response["InstallmentTable"];
+          this.listAppInstStepSchm = response["AppInstStepSchmObjs"];
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response["TotalDownPaymentNettAmt"], //muncul di layar
+            TotalDownPaymentGrossAmt: response["TotalDownPaymentGrossAmt"], //inmemory
+
+            EffectiveRatePrcnt: response["EffectiveRatePrcnt"],
+            FlatRatePrcnt: response["FlatRatePrcnt"],
+            InstAmt: response["InstAmt"],
+
+            GrossYieldPrcnt: response["GrossYieldPrcnt"],
+
+            TotalInterestAmt: response["TotalInterestAmt"],
+            TotalAR: response["TotalARAmt"],
+
+            NtfAmt: response["NtfAmt"],
+            ApvAmt: response["ApvAmt"],
+
+            TotalLifeInsCustAmt: response["TotalLifeInsCustAmt"],
+            LifeInsCptlzAmt: response["LifeInsCptlzAmt"],
+
+            DownPaymentGrossAmt: response["DownPaymentGrossAmt"],
+            DownPaymentNettAmt: response["DownPaymentNettAmt"]
+
+          })
+          this.SetInstallmentTable();
+          this.SetInstStepSchm();
+          this.SetNeedReCalculate(false);
+        }
+      );
+
+    }
   }
 
   SaveAndContinue() {
@@ -252,40 +316,41 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  
-  ValidateFee(){
-    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
-      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
-          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+
+  ValidateFee() {
+    for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
+      if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+        && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt) {
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " + this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }
     return true;
   }
 
-  CalcBaseChanged(event){
+  CalcBaseChanged(event) {
     this.SetEnableDisableInputByCalcBase(event.target.value);
     this.SetNeedReCalculate(true);
   }
 
-  SetEnableDisableInputByCalcBase(calcBase){
-    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
+  SetEnableDisableInputByCalcBase(calcBase) {
+    if (calcBase == CommonConstant.FinDataCalcBaseOnRate) {
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){
+    } else if (calcBase == CommonConstant.FinDataCalcBaseOnInst) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
+    } else if (calcBase == CommonConstant.FinDataCalcBaseOnCommission) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
-    }else{
+    } else {
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").enable();
     }
   }
 
   test() {
-    
   }
+
+
 }

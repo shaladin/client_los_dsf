@@ -28,8 +28,11 @@ import { MouViewListedCustFactoringComponent } from "./mou-view-listed-cust-fact
 import { MouViewSurveyComponent } from "./mou-view-survey/mou-view-survey.component";
 import { MouViewTcComponent } from "./mou-view-tc/mou-view-tc.component";
 import { SharedModule } from "app/shared/shared.module";
+import { MouViewChangeMouHistoryComponent } from "./mou-view-change-mou-history/mou-view-change-mou-history.component";
+import { MouViewFreezeUnfreezeHistoryComponent } from "./mou-view-freeze-unfreeze-history/mou-view-freeze-unfreeze-history.component";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewModule } from "../view.module";
+import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-recommendation/mou-view-approval-recommendation.component";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -65,6 +68,9 @@ import { ViewModule } from "../view.module";
         MouViewListedCustFactoringComponent,
         MouViewSurveyComponent,
         MouViewTcComponent,
+        MouViewChangeMouHistoryComponent,
+        MouViewFreezeUnfreezeHistoryComponent,
+        MouViewApprovalRecommendationComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

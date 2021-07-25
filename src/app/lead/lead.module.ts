@@ -41,11 +41,30 @@ import { UcuploadModule } from "@adins/ucupload";
 import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
 import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
 import { UcaddtotempModule } from "@adins/ucaddtotemp";
+import { GeneratePotentialRoComponent } from "./potential-ro/generate-potential-ro/generate-potential-ro.component";
+import { UcgridviewModule } from "@adins/ucgridview";
+import { RoTelemkOfferPagingComponent } from "./potential-ro/ro-telemk-offer-paging/ro-telemk-offer-paging.component";
+import { RoTelemkOfferDetailComponent } from "./potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail.component";
+import { RoTelemkOfferVerifComponent } from "./potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif.component";
+import { RoPotentialInquiryComponent } from "./potential-ro/ro-potential-inquiry/ro-potential-inquiry.component";
+import { NewLeadInputComponent } from './new-lead-input/new-lead-input.component';
+import { NewLeadInputMainInfoComponent } from './new-lead-input/new-lead-input-main-info/new-lead-input-main-info.component';
+import { NewLeadInputCustDataComponent } from './new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data.component';
+import { NewFraudVerifComponent } from './new-fraud-verif/new-fraud-verif.component';
+import { NewFraudVerifDetailComponent } from './new-fraud-verif/new-fraud-verif-detail/new-fraud-verif-detail.component';
+import { NewLeadUpdateComponent } from './new-lead-update/new-lead-update.component';
 import { SharedModule } from "app/shared/shared.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { RoPotentialViewComponent } from "./potential-ro/ro-potential-view/ro-potential-view.component";
+import { RoPotentialExecutionComponent } from "./potential-ro/ro-potential-execution/ro-potential-execution.component";
+import { NewLeadInputLeadDataComponent } from './new-lead-input/new-lead-input-lead-data/new-lead-input-lead-data.component';
+import { NewLeadInputPageComponent } from './new-lead-input/new-lead-input-page/new-lead-input-page.component';
+import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-lead-monitoring.component';
+import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
+import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
 
 export const customCurrencyMaskConfig = {
-  align: "left",
+  align: "right",
   allowNegative: true,
   allowZero: true,
   decimal: ".",
@@ -54,7 +73,7 @@ export const customCurrencyMaskConfig = {
   suffix: "",
   thousands: ",",
   nullable: false,
-  inputMode: CurrencyMaskInputMode.NATURAL
+  inputMode: CurrencyMaskInputMode.FINANCIAL
 };
 
 @NgModule({
@@ -81,6 +100,7 @@ export const customCurrencyMaskConfig = {
     CustSharingComponentModule,
     UcuploadModule,
     UcaddtotempModule,
+    UcgridviewModule,
     SharedModule
   ],
   declarations: [
@@ -88,6 +108,13 @@ export const customCurrencyMaskConfig = {
     LeadCancelComponent,
     LeadCancelConfirmComponent,
     FraudVerifPagingComponent, FraudVerifPageComponent, LeadInquiryComponent,
+    GeneratePotentialRoComponent,
+    RoTelemkOfferPagingComponent,
+    RoTelemkOfferDetailComponent,
+    RoTelemkOfferVerifComponent,
+    RoPotentialInquiryComponent,
+    RoPotentialExecutionComponent,
+    RoPotentialViewComponent,
     LeadInputComponent,
     LeadInputPageComponent,
     LeadInputMainInfoComponent,
@@ -100,7 +127,7 @@ export const customCurrencyMaskConfig = {
     FraudVerifPagingComponent,
     FraudVerifPageComponent,
     LeadInquiryComponent,
-    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent
+    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent, NewLeadInputComponent, NewLeadInputMainInfoComponent, NewLeadInputCustDataComponent, NewFraudVerifComponent, NewFraudVerifDetailComponent, NewLeadUpdateComponent, NewLeadInputLeadDataComponent, NewLeadInputPageComponent, SimpleLeadMonitoringComponent, SimpleLeadMonitoringReviewComponent, SimpleLeadMonitoringReviewDetailComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

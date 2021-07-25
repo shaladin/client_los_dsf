@@ -17,6 +17,7 @@ import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-add',
@@ -29,7 +30,7 @@ export class NapAddComponent implements OnInit {
   inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
   inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
-  user: any;
+  user: CurrentUserContext;
 
   NapAppForm = this.fb.group({
     MouCustId: [''],
@@ -124,30 +125,30 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
 
-    var arrCopyLookupCrit = new Array();
-    var addCrit = new CriteriaObj();
+    let arrCopyLookupCrit = new Array();
+    let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "a.ORI_OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     arrCopyLookupCrit.push(addCrit);
 
-    var critObj = new CriteriaObj();
+    let critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
     critObj.value = CommonConstant.FCTR;
     arrCopyLookupCrit.push(critObj);
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
 
-    var arrAddCrit = new Array();
-    var addCrit = new CriteriaObj();
+    let arrAddCrit = new Array();
+    addCrit = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     arrAddCrit.push(addCrit);
 
-    var addCritBizTempalte = new CriteriaObj();
+    let addCritBizTempalte = new CriteriaObj();
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
@@ -192,7 +193,7 @@ export class NapAddComponent implements OnInit {
     return obj;
   }
 
-  
+
   SaveForm() {
     let requestAddNapObj: Object = new Object();
     let AddNapUrl: string = "";
@@ -230,7 +231,7 @@ export class NapAddComponent implements OnInit {
       (response) => {
         setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response.Id });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response.Id });
       });
   }
 
@@ -259,22 +260,20 @@ export class NapAddComponent implements OnInit {
   }
 
   getLookupAppResponseName(ev: any) {
-    var url = URLConstant.GetListProdOfferingDByProdOfferingCode;
-
-    var tempLobCode;
-    var tempCurrCode;
-    var tempPayFreqCode;
-    var tempRefProdTypeCode;
-    this.http.post(url, {Code: ev.ProdOfferingCode}).subscribe(
+    let tempLobCode;
+    let tempCurrCode;
+    let tempPayFreqCode;
+    let tempRefProdTypeCode;
+    this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCode, { Code: ev.ProdOfferingCode }).subscribe(
       (response) => {
-        var temp = response[CommonConstant.ReturnObj];
-        for (var i = 0; i < temp.length; i++) {
+        let temp = response[CommonConstant.ReturnObj];
+        for (let i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = temp[i].CompntValue;
           } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
             tempCurrCode = temp[i].CompntValue;
           } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
-            var listPayFreqCode = temp[i].CompntValue.split(";");
+            let listPayFreqCode = temp[i].CompntValue.split(";");
             if (listPayFreqCode.length == 1) {
               tempPayFreqCode = temp[i].CompntValue;
             } else {
@@ -303,15 +302,15 @@ export class NapAddComponent implements OnInit {
       OriOfficeName: ev.target.selectedOptions[0].text
     });
 
-    var arrCopyLookupCrit = new Array();
-    var addCrit = new CriteriaObj();
+    let arrCopyLookupCrit = new Array();
+    let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "a.ORI_OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [ev.target.selectedOptions[0].value];
     arrCopyLookupCrit.push(addCrit);
 
-    var critObj = new CriteriaObj();
+    let critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
     critObj.value = CommonConstant.FCTR;
@@ -320,15 +319,15 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
     this.ucLookupCopyProduct.setAddCritInput();
 
-    var arrAddCrit = new Array();
-    var addCrit = new CriteriaObj();
+    let arrAddCrit = new Array();
+    addCrit = new CriteriaObj();
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [ev.target.selectedOptions[0].value];
     arrAddCrit.push(addCrit);
 
-    var addCritBizTempalte = new CriteriaObj();
+    let addCritBizTempalte = new CriteriaObj();
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;

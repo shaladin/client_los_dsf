@@ -1,0 +1,132 @@
+{
+    "title": "Credit Approval Result Extension Approval",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "TL.TRX_NO",
+            "id": "TrxNo",
+            "value": "",
+            "label": "Trx No",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchApprovalCreditApvExtension"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Trx No",
+            "name": "TrxNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Apv No",
+            "name": "ApvNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Request By",
+            "name": "RequestBy"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Request Date",
+            "name": "RequestDate"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Main User Id",
+            "name": "MainUserId"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Current User Id",
+            "name": "CurrentUserId"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Process"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Hold"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Take Back"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TrxNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ApvNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RequestBy"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "RequestDate"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MainUserId"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CurrentUserId"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback",
+                    "key": "Process"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback",
+                    "key": "HoldTask"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback",
+                    "key": "TakeBack"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "isSeq" : true,
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Cust No",
+            "name": "CustNo"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Cust Name",
+            "name": "CustName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Agrmnt No",
+            "name": "AgrmntNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Agrmnt Date",
+            "name": "AgrmntDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Maturity Date",
+            "name": "MaturityDt"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "AgrmntDt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "MaturityDt"
+        }
+    ]
+}

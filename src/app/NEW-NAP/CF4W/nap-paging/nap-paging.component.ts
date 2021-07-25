@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-paging',
@@ -19,9 +20,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class NapPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
-  userAccess: any;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  arrCrit: Array<CriteriaObj> = new Array();
+  userAccess: CurrentUserContext;
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -29,6 +30,7 @@ export class NapPagingComponent implements OnInit {
   }
 
   makeCriteria() {
+    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';

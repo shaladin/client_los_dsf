@@ -10,6 +10,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/AppFinData/CalcStepUpStepDownObjForTrialCalc.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-leasing-FL4W',
@@ -19,25 +20,30 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
+  @Input() TrialCalc: boolean;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   StepUpStepDownInputOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
+  calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
+  IsTrialCalc: boolean = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+  private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService) { }
+    private toastr: NGXToastrService
+    ) { }
 
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
+    if (this.AppId != null) {
     this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
@@ -45,6 +51,11 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
           this.PriceLabel = "Financing Amount";
         }
       });
+      this.IsTrialCalc = false;
+    }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
   }
 
   LoadDDLRateType() {
@@ -169,6 +180,7 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
       return;
     }
 
+    if (!this.IsTrialCalc) {
     this.calcStepUpStepDownObj = this.ParentForm.value;
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
@@ -204,6 +216,43 @@ export class SchmStepUpStepDownLeasingFL4WComponent implements OnInit {
         this.SetNeedReCalculate(false);
       }
     );
+  } else {
+      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.value;
+      this.calcStepUpStepDownObjForTrialCalc["IsRecalculate"] = false;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
+      this.calcStepUpStepDownObjForTrialCalc["InstAmt"] = 0;
+
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.listAppInstStepSchm = response.AppInstStepSchmObjs;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt
+
+          })
+          this.SetInstallmentTable();
+          this.SetInstStepSchm();
+          this.SetNeedReCalculate(false);
+        }
+      );
+    }
   }
 
   SaveAndContinue() {

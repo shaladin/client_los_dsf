@@ -1,0 +1,183 @@
+{
+    "url": "",
+    "sectionTitle":"LOOK UP - SEctor Economy SLIK",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RES.ECONOMIC_SECTOR_CODE",
+        "id": "economicSectorCodeId",
+        "value": "",
+        "label": "Economic Sector Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RES.ECONOMIC_SECTOR_NAME",
+        "id": "economicSectorNameId",
+        "value": "",
+        "label": "Economic Sector Name",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RITC.REF_INDUSTRY_TYPE_CATEGORY_CODE",
+        "id": "refIndustryTypeCategoryCodeId",
+        "value": "",
+        "label": "Industry Type Category Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RITC.REF_INDUSTRY_TYPE_CATEGORY_NAME",
+        "id": "refIndustryTypeCategoryNameId",
+        "value": "",
+        "label": "Industry Type Category Name",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RIT.INDUSTRY_TYPE_CODE",
+        "id": "industryTypeCodeId",
+        "value": "",
+        "label": "Industry Type Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RIT.INDUSTRY_TYPE_NAME",
+        "id": "industryTypeNameId",
+        "value": "",
+        "label": "Industry Type Name",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RSS.REF_SECTOR_ECONOMY_SLIK_CODE",
+        "id": "refSectorEconomySlikCodeId",
+        "value": "",
+        "label": "Economic Sector Slik Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "RSS.REF_SECTOR_ECONOMY_SLIK_NAME",
+        "id": "refSectorEconomySlikNameId",
+        "value": "",
+        "label": "Economic Sector Slik Name",
+        "placeholder": ""
+      } 
+    ],
+    "querystring": {
+        "name": "lookupRefSectorEconomySlik"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Economic Sector Code",
+        "name": "RES.ECONOMIC_SECTOR_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Economic Sector Name",
+        "name": "RES.ECONOMIC_SECTOR_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Industry Type Category Code",
+        "name": "RITC.REF_INDUSTRY_TYPE_CATEGORY_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Industry Type Category Name",
+        "name": "RITC.REF_INDUSTRY_TYPE_CATEGORY_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Industry Type Code",
+        "name": "RIT.INDUSTRY_TYPE_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Industry Type Name",
+        "name": "RIT.INDUSTRY_TYPE_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Economic Sector Slik Code",
+        "name": "RSS.REF_SECTOR_ECONOMY_SLIK_CODE"
+      },
+      
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Economic Sector Slik Name",
+        "name": "RSS.REF_SECTOR_ECONOMY_SLIK_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Select"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "EconomicSectorCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "EconomicSectorName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RefIndustryTypeCategoryCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "RefIndustryTypeCategoryName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "IndustryTypeCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "IndustryTypeName"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "RefSectorEconomySlikCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "RefSectorEconomySlikName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "RefSectorEconomySlikCode"
+          }
+        ]
+      }
+    ],
+    "propertyId": "RefSectorEconocySlikCode",
+    "propertyName": "RefSectorEconomySlikName"
+  }

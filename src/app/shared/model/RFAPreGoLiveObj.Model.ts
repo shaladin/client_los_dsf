@@ -1,14 +1,14 @@
 export class RFAPreGoLiveObj {
     TaskId: any;
-    InstanceId: any;
-    TaskListId: any;
-    TransactionNo: any;
-    Reason: any;
-    WFCode: any;
+    InstanceId: number;
+    TaskListId: number;
+    TransactionNo: string;
+    Reason: string;
+    WFCode: string;
     ListValue: any;
-    ApprovedBy: any;
-    Notes: any;
-    RowVersion: any;
+    ApprovedBy: number;
+    Notes: string;
+    RowVersion: string;
     RequestRFAObj: any;
     constructor() {
         this.TaskId = "",

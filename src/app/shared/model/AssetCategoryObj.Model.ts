@@ -1,8 +1,8 @@
 export class AssetCategoryObj {
-    AssetCategoryId: any;
-    AssetCategoryName : any;
-    AssetCategoryCode: any;
-    IsActive: any;
-    AssetTypeId: any;
-    RowVersion : any;
+    AssetCategoryId: number;
+    AssetCategoryName : string;
+    AssetCategoryCode: string;
+    IsActive: boolean;
+    AssetTypeId: number;
+    RowVersion : string;
 }

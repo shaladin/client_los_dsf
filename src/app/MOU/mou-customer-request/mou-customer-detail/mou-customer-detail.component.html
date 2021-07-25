@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="row">
-          <app-mou-main-info [MouCustId]="mouCustId"></app-mou-main-info>
+          <app-mou-main-info [MouCustId]="mouCustId" #viewMouMainInfo></app-mou-main-info>
         </div>
         <div class="row">
           <div class="col-md-12">
@@ -65,15 +65,6 @@
                     <span class="bs-stepper-label">Upload Document</span>
                   </button>
                 </div>
-                <!-- <div class="line"></div>
-                <div class="step" data-target="#document-data-tab">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="document-data-tab"
-                    id="document-data-tab-trigger" (click)="designatedStepHandler('5')"
-                    [disabled]="currentStepIndex < 5">
-                    <span class="bs-stepper-circle">5</span>
-                    <span class="bs-stepper-label">Document</span>
-                  </button>
-                </div> -->
               </div>
               <br><br>
               <div id="mou-cust-tab" class="content" role="tabpanel" aria-labelledby="mou-cust-tab-trigger">
@@ -109,18 +100,8 @@
               </div>
               <div id="upload-data-tab" class="content" role="tabpanel"
                 aria-labelledby="upload-data-tab-trigger">
-                <app-dms-iframe *ngIf="currentStepIndex == 5 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
+                <app-dms-iframe *ngIf="currentStepIndex == 5 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false" (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
               </div>
-              <!-- <div id="document-data-tab" class="content" role="tabpanel" aria-labelledby="document-data-tab-trigger">
-                <div *ngIf="currentStepIndex == 5" class="col-md-12" style="padding: 0;">
-                  <div class="col-md-12">
-                    <iframe [src]="link | safe" style="width: inherit; height: 800px;" title="DMS Lite"></iframe>
-                  </div>
-                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="mouDocumentBack()" translate>
-                    <i class="fa fa-arrow-left"></i> Back
-                  </button>
-                </div>
-              </div> -->
             </div>
 
             <div id="stepperFactoring" class="bs-stepper" *ngIf="mouType == 'FACTORING'">
@@ -173,15 +154,6 @@
                     <span class="bs-stepper-label">Upload Document</span>
                   </button>
                 </div>
-                <!-- <div class="line"></div>
-                <div class="step" data-target="#document-data-tab">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="document-data-tab"
-                    id="document-data-tab-trigger" (click)="designatedStepHandler('6')"
-                    [disabled]="currentStepIndex < 6">
-                    <span class="bs-stepper-circle">6</span>
-                    <span class="bs-stepper-label">Document</span>
-                  </button>
-                </div> -->
               </div>
               <br><br>
               <div id="mou-cust-tab" class="content" role="tabpanel" aria-labelledby="mou-cust-tab-trigger">
@@ -222,15 +194,101 @@
               
               <div id="upload-data-tab" class="content" role="tabpanel"
               aria-labelledby="upload-data-tab-trigger">
-              <app-dms-iframe *ngIf="currentStepIndex == 6 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="true"  (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
+              <app-dms-iframe *ngIf="currentStepIndex == 6 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"  (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
             </div>
-                <!-- <div id="document-data-tab" class="content" role="tabpanel" aria-labelledby="document-data-tab-trigger">
-                <div *ngIf="currentStepIndex == 6" class="col-md-12" style="padding: 0; text-align: right;">
-                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="mouDocumentBack()" translate>
-                    <i class="fa fa-arrow-left"></i> Back
+            </div>
+
+            <div id="stepperFinancing" class="bs-stepper" *ngIf="mouType == 'FINANCING'">
+              <div class="bs-stepper-header margin-stepper" role="tablist" style="overflow-x: auto;">
+                <div class="step" data-target="#mou-cust-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="mou-cust-tab"
+                    id="mou-cust-tab-trigger" (click)="designatedStepHandler('1')" [disabled]="currentStepIndex < 1">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">MoU Customer</span>
                   </button>
                 </div>
-              </div> -->
+                <div class="line"></div>
+                <div class="step" data-target="#mou-detail-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="mou-detail-tab"
+                    id="mou-detail-tab-trigger" (click)="designatedStepHandler('2')" [disabled]="currentStepIndex < 2">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">MoU Detail</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#fee-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="fee-data-tab"
+                    id="fee-data-tab-trigger" (click)="designatedStepHandler('3')" [disabled]="currentStepIndex < 3">
+                    <span class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">Fee</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#collateral-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="collateral-data-tab"
+                    id="collateral-data-tab-trigger" (click)="designatedStepHandler('4')"
+                    [disabled]="currentStepIndex < 4">
+                    <span class="bs-stepper-circle">4</span>
+                    <span class="bs-stepper-label">Collateral</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#tc-data-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="tc-data-tab"
+                    id="tc-data-tab-trigger" (click)="designatedStepHandler('5')" [disabled]="currentStepIndex < 5">
+                    <span class="bs-stepper-circle">5</span>
+                    <span class="bs-stepper-label">Term and Condition</span>
+                  </button>
+                </div>
+                <div class="line" [hidden]="SysConfigResultObj?.ConfigValue == 0"></div>
+                <div class="step" data-target="#upload-data-tab" [hidden]="SysConfigResultObj?.ConfigValue == 0">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="upload-data-tab"
+                    id="upload-data-tab-trigger" (click)="designatedStepHandler('6')" [disabled]="currentStepIndex < 6">
+                    <span class="bs-stepper-circle">6</span>
+                    <span class="bs-stepper-label">Upload Document</span>
+                  </button>
+                </div>
+              </div>
+              <br><br>
+              <div id="mou-cust-tab" class="content" role="tabpanel" aria-labelledby="mou-cust-tab-trigger">
+                <app-mou-cust-tab *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
+                  (ResponseMouCust)="stepHandlerFinancing($event)"></app-mou-cust-tab>
+              </div>
+              <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
+                <app-mou-detail-financing *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
+                  (ResponseMouCustFactoring)="stepHandlerFinancing($event)"></app-mou-detail-financing>
+              </div>
+
+              <div id="fee-data-tab" class="content" role="tabpanel" aria-labelledby="fee-data-tab-trigger">
+                <app-mou-cust-fee *ngIf="currentStepIndex == 3" [MouCustId]="mouCustId"
+                  (ResponseMouCustFee)="stepHandlerFinancing($event)"></app-mou-cust-fee>
+              </div>
+
+              <div id="collateral-data-tab" class="content" role="tabpanel"
+                aria-labelledby="collateral-data-tab-trigger">
+                <app-mou-request-addcoll *ngIf="currentStepIndex == 4" [MouCustId]="mouCustId"
+                  (ResponseMouAddColl)="stepHandlerFinancing($event)"></app-mou-request-addcoll>
+              </div>
+
+              <div id="tc-data-tab" class="content" role="tabpanel" aria-labelledby="tc-data-tab-trigger">
+                <app-mou-cust-tc #MouTcFinancing *ngIf="currentStepIndex == 5" [MouCustId]="mouCustId"
+                  (ResponseMouCustTc)="stepHandlerFinancing($event)"></app-mou-cust-tc>
+                <br><br><br>
+                <div class="col-md-12" style="padding: 0;">
+                  <div class="form-actions right" style="text-align: right;">
+                    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backFromMouTc()" translate>
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="button" class="btn btn-raised btn-primary" (click)="saveMouTc()" translate>
+                      <i class="far fa-check-square"></i> Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div id="upload-data-tab" class="content" role="tabpanel"
+              aria-labelledby="upload-data-tab-trigger">
+              <app-dms-iframe *ngIf="currentStepIndex == 6 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"  (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
+            </div>
             </div>
           </div>
         </div>

@@ -17,11 +17,12 @@ import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddAppRoleObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
-import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddAppRoleObj.model';
 
 @Component({
   selector: 'app-cust-main-data-add-dsf',
@@ -37,7 +38,9 @@ export class CustMainDataAddDsfComponent implements OnInit {
   dropdownListObj: UcDropdownListObj = new UcDropdownListObj();
   bizTemplateCode: string;
   isCopyData: boolean = false;
-  user: any;
+  user: CurrentUserContext;
+  DF: string = CommonConstant.DF;
+  FCTR: string= CommonConstant.FCTR;
 
   NapAppForm = this.fb.group({
     AppNo: [''],
@@ -298,34 +301,39 @@ export class CustMainDataAddDsfComponent implements OnInit {
       (response) => {
         setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
-        let napRole : ReqAddAppRoleObj = new ReqAddAppRoleObj();
-        let Id = response.Id;
-        napRole.AppId = response.Id;
-        napRole.AppRoleCode = this.user.RoleCode;
-        this.http.post(URLConstantDsf.AddNapRole, napRole).subscribe(
+        let requestAddAppRoleObj: ReqAddAppRoleObj = new ReqAddAppRoleObj();
+
+        requestAddAppRoleObj.AppId = response.Id;
+        requestAddAppRoleObj.AppRoleCode = this.user.RoleCode;
+        
+        this.http.post<ReqAddAppRoleObj>(URLConstantDsf.AddNapRole, requestAddAppRoleObj).subscribe(
           (response) => {
-            switch (this.bizTemplateCode) {
-              case CommonConstant.CF4W:
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": Id });
-                break;
-              case CommonConstant.CFRFN4W:
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": Id });
-                break;
-              case CommonConstant.FCTR:
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": Id });
-                break;
-              case CommonConstant.FL4W:
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": Id });
-                break;
-              case CommonConstant.CFNA:
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": Id });
-                break;
-              case CommonConstant.OPL:
-                AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": Id });
-                break;
-            }
+            
           }
-        );
+        )
+          switch (this.bizTemplateCode) {
+            case CommonConstant.CF4W:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.CFRFN4W:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.FCTR:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.FL4W:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.CFNA:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.OPL:
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": response.Id });
+              break;
+            case CommonConstant.DF :
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": response.Id});
+            break;
+          }
       }
     );
   }
@@ -333,5 +341,4 @@ export class CustMainDataAddDsfComponent implements OnInit {
   buttonCancelClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
-
 }

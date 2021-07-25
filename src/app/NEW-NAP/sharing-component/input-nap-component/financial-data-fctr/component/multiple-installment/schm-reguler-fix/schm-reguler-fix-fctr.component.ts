@@ -10,6 +10,7 @@ import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-reguler-fix-fctr',
@@ -23,8 +24,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
-  listInstallment: any;
-  responseCalc: any;
+  listInstallment: Array<InstallmentObj>;
   IsAppFeePrcntValid: boolean = true;
 
   constructor(
@@ -78,8 +78,8 @@ export class SchmRegulerFixFctrComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
-
+          DiffRateAmt: response.DiffRateAmt,
+          TotalDisbAmt: response.TotalDisbAmt,
         })
 
         this.SetInstallmentTable();
@@ -126,9 +126,8 @@ export class SchmRegulerFixFctrComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
-
-
+          DiffRateAmt: response.DiffRateAmt,
+          TotalDisbAmt: response.TotalDisbAmt,
         })
 
         this.SetInstallmentTable();

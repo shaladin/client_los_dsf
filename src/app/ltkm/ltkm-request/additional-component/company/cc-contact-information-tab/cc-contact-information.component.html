@@ -1,0 +1,172 @@
+<div formGroupName="{{identifier}}">
+
+    <!-- <form class="form form-horizontal" [formGroup]="CcForm" (ngSubmit)="CcForm.valid && SaveForm()"
+      #enjiForm="ngForm"> -->
+      <lib-ucSubsection [id]="'CcMainId'" [title]="'Contact Main Information'" [panel]="'CcMain'">
+      </lib-ucSubsection>
+      <div id="CcMain">
+        <div class="row">
+          <!-- left -->
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Name</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" formControlName="ContactPersonName"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['ContactPersonName'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['ContactPersonName']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Job Title</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" formControlName="JobTitleName"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['JobTitleName'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['JobTitleName']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Id Type</label>
+              <div class="col-md-8">
+                <select [attr.disabled]="isLockMode == true ? true : null" class="form-control adInsInput" formControlName="MrIdTypeCode" (change)="ChangeIdType()">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DictRefMaster[MasterIdTypeCode]" value="{{it.Key}}">
+                    {{it.Value}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4"
+                [ngClass]="{ 'adins-required-label': parentForm.controls[identifier]['controls']['MrIdTypeCode'].value == IdTypeNpwp, 'adInsLabel': parentForm.controls[identifier]['controls']['MrIdTypeCode'].value != IdTypeNpwp }"
+                translate>Id No</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" formControlName="IdNo"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['IdNo'].invalid }">
+                <lib-uc-show-errors [customPattern]="customPattern" [control]="parentForm.controls[identifier]['controls']['IdNo']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4"
+                [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls']['MrIdTypeCode'].value == 'KITAS' || parentForm.controls[identifier]['controls']['MrIdTypeCode'].value == 'SIM'}"
+                translate>Id Expired Date</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" *ngIf="['NPWP','AKTA','EKTP'].includes(parentForm.controls[identifier]['controls']['MrIdTypeCode'].value)" readonly
+                  type="date" class="form-control" formControlName="IdExpiredDt"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['IdExpiredDt'].invalid}">
+                <input [attr.disabled]="isLockMode == true ? true : null" [attr.readonly]="isExisting ? 'true' : null"
+                  *ngIf="!['NPWP','AKTA','EKTP'].includes(parentForm.controls[identifier]['controls']['MrIdTypeCode'].value)"
+                  min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control"
+                  formControlName="IdExpiredDt"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['IdExpiredDt'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['IdExpiredDt']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Mobile Phone 1</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" formControlName="MobilePhnNo1"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['MobilePhnNo1'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['MobilePhnNo1']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Email 1</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" formControlName="Email1"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['Email1'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['Email1']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+          <!-- Right -->
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Gender</label>
+              <div class="col-md-8">
+                <select [attr.disabled]="isLockMode == true ? true : null" class="form-control adInsInput" formControlName="MrGenderCode"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['MrGenderCode'].invalid}">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DictRefMaster[MasterGenderCode]" value="{{it.Key}}">
+                    {{it.Value}} </option>
+                </select>
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['MrGenderCode']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Job Position</label>
+              <div class="col-md-8">
+                <select [attr.disabled]="isLockMode == true ? true : null" class="form-control adInsInput" formControlName="MrJobPositionCode"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['MrJobPositionCode'].invalid}">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DictRefMaster[MasterJobPosCode]" value="{{it.Key}}">
+                    {{it.Value}} </option>
+                </select>
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['MrJobPositionCode']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Birth Place</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" formControlName="BirthPlace"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['BirthPlace'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['BirthPlace']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Birth Date</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="date" class="form-control" formControlName="BirthDt"
+                  max="{{BusinessDate | date:'yyyy-MM-dd'}}"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['BirthDt'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['BirthDt']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Contact Relationship</label>
+              <div class="col-md-8">
+                <select [attr.disabled]="isLockMode == true ? true : null" class="form-control adInsInput" formControlName="MrCustRelationshipCode">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DictRefMaster[MasterCustRelationCode]" value="{{it.Key}}">
+                    {{it.Value}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Mobile Phone 2</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" formControlName="MobilePhnNo2"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['MobilePhnNo2'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['MobilePhnNo2']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Email 2</label>
+              <div class="col-md-8">
+                <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" formControlName="Email2"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls']['Email2'].invalid}">
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls']['Email2']" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <lib-ucaddress *ngIf="IsUcAddrReady" #UcAddrCc [addressObj]="inputAddressObjForCc" [enjiForm]="enjiForm"
+        [identifier]="InputAddressObjForCc_Identifier" [UCAddrForm]="parentForm"></lib-ucaddress>
+      <!-- <div class="form-actions right">
+        <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CcForm) class="btn btn-raised btn-primary">
+          <i class="fa fa-check-square"></i> Save & Continue
+        </button>
+      </div> -->
+    <!-- </form> -->
+</div>

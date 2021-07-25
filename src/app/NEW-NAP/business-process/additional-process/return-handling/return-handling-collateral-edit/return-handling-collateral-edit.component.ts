@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -13,6 +12,10 @@ import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 
 
@@ -24,11 +27,11 @@ import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/
 export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   isReturnHandling: boolean = false;
-  appId: any;
-  returnHandlingHId: any;
-  wfTaskListId: any;
-  appCollateralObj: any;
-  AppObj: any;
+  appId: number;
+  returnHandlingHId: number;
+  wfTaskListId: number;
+  appCollateralObj: Array<AppCollateralObj>;
+  AppObj: NapAppModel;
   returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
@@ -37,11 +40,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
   });
-
-  appObj = {
-    AppId: 0,
-    Id: 0
-  };
 
   rtnHandlingDObj = {
     ReturnHandlingDId: 0,
@@ -55,7 +53,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   arrValue = [];
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -74,9 +72,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.ClaimTask();
-    this.appObj.AppId = this.appId;
-    this.appObj.Id = this.appId;
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     await this.GetAppData();
     await this.GetAppCollateralData();
     if (this.isReturnHandling == true) {
@@ -128,7 +124,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   async GetAppData() {
     var appObj1 = { Id: this.appId };
     await this.http.post(URLConstant.GetAppById, appObj1).toPromise().then(
-      (response) => {
+      (response: NapAppModel) => {
 
         this.AppObj = response;
       }
@@ -148,7 +144,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   GetAppCollateralData() {
-    this.http.post(URLConstant.GetListAppCollateralByAppId, this.appObj).subscribe(
+    var obj = {
+      Id: this.appId,
+    }
+    this.http.post(URLConstant.GetListAppCollateralByAppId, obj).subscribe(
       (response) => {
         this.appCollateralObj = response[CommonConstant.ReturnObj];
       }
@@ -176,14 +175,4 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     }
   }
 
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
 }

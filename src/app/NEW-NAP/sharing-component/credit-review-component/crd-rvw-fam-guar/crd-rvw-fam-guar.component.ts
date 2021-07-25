@@ -10,6 +10,7 @@ import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposure
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 import { CrdRvwOvdObj } from 'app/shared/model/CreditReview/CrdRvwOvdObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 
 @Component({
@@ -124,7 +125,7 @@ export class CrdRvwFamGuarComponent implements OnInit {
   async GetListRefMasterByRefMasterTypeCodes() {
     let tempReq: GenericObj = new GenericObj();
     tempReq.Codes = [this.RefMasterTypeCustPersonalRelationship, this.RefMasterTypeCustCompanyRelationship, this.RefMasterTypeCustGuarCompanyRelationship, this.RefMasterTypeCodeGuarPersonalRelationship];
-    await this.http.post<{ ReturnObject: any }>(URLConstant.GetListRefMasterByRefMasterTypeCodes, tempReq).toPromise().then(
+    await this.http.post<{ ReturnObject: Array<RefMasterObj> }>(URLConstant.GetListRefMasterByRefMasterTypeCodes, tempReq).toPromise().then(
       (response) => {
         for (let index = 0; index < response.ReturnObject.length; index++) {
           const element = response.ReturnObject[index];

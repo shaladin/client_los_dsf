@@ -12,6 +12,7 @@ import { MouViewSurveyComponent } from './mou-view-survey/mou-view-survey.compon
 import { MouViewTcComponent } from './mou-view-tc/mou-view-tc.component';
 import { MouViewThirdPartyComponent } from 'app/view/mou-view/mou-view-third-party/mou-view-third-party.component';
 import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
+import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-view-analysis-result.component';
 
 @NgModule({
     imports: [
@@ -30,6 +31,7 @@ import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
         MouViewLegalComponent,
         MouViewSurveyComponent,
         MouViewTcComponent,
+        MouViewAnalysisResultComponent
     ],
     exports: [
         MouViewAddcollComponent,
@@ -39,7 +41,8 @@ import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
         MouViewThirdPartyComponent,
         MouViewLegalComponent,
         MouViewSurveyComponent,
-        MouViewTcComponent
+        MouViewTcComponent,
+        MouViewAnalysisResultComponent
     ]
 })
 export class MouViewComponentsModule { }
