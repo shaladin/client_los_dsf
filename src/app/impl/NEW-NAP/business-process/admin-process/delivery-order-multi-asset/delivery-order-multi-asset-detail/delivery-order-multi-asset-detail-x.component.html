@@ -1,0 +1,232 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="">
+            <div class="col-md-12" style="border-bottom: 1px solid black; margin-left: -5px; padding: 0;">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> Delivery Order </h4>
+            </div>
+          </div>
+        </div>
+        <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
+        <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="DOAssetForm" (ngSubmit)="createDOHandler()">
+            <lib-ucSubsection [id]="'DoInfo'" [title]="'Delivery Order Information'" [panel]="'DoInfoForm'">
+            </lib-ucSubsection>
+            <div class="form-body" id="DoInfoForm">
+              <div class="form-group row">
+                <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
+                <div *ngIf = "checkPOReady" class="col-md-4">
+                  <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                  <input *ngIf = "isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="DOAssetForm.controls.AgrmntDt" [submit]="DOAssetForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
+                <div class="col-md-4">
+                  <input type="date" id="EffectiveDt" class="form-control adInsInput name"
+                    formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="DOAssetForm.controls.EffectiveDt"
+                    [submit]="DOAssetForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
+                <div class="col-md-4">
+                  <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
+                    formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="DOAssetForm.controls.GoLiveEstimated"
+                    [submit]="DOAssetForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
+                <label class="col-md-4 adinsLabel" translate>{{DOAssetForm.controls.AddIntrstAmt.value | number:'.2':'en-US'}}</label>
+              </div>
+                <div class="form-actions right">
+                  <button type="button" class="btn btn-raised btn-primary mr-2"
+                  (click)="calculateAddInterest()" translate>
+                  Calculate
+                </button>
+                </div>
+             
+            </div>
+            <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetListSection'">
+            </lib-ucSubsection>
+            <div class="form-body" id="AssetListSection">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='no' translate>CHECKBOX</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='seqNo' translate>SEQ NO.</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='assetName' translate>FULL ASSET NAME</span>
+                    </th>
+                    <th style="text-align: right;">
+                      <span class="thead-header" name='assetPrice' translate>ASSET PRICE</span>
+                    </th>
+                    <th style="text-align: right;" *ngIf="!isHideDP">
+                      <span class="thead-header" name='downPayment' translate>DOWN PAYMENT</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='serialNo1' translate>SERIAL NO. 1</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='serialNo2' translate>SERIAL NO. 2</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='ownerName' translate>OWNER NAME</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='deliveryNo' translate>DELIVERY NO.</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" name='deliveryDate' translate>DELIVERY DATE</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="DOAssetList">
+                  <tr *ngFor="let item of DOAssetForm.get('DOAssetList')['controls']; index as i" [formGroupName]="i">
+                    <td style="text-align: left;">
+                      <input type="checkbox" formControlName="IsSelected"
+                        *ngIf="DOAssetForm.get('DOAssetList').at(i).controls.IsAvailable.value == true" />
+                    </td>
+                    <td style="text-align: left;">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.AssetSeqNo.value}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.FullAssetName.value}}
+                    </td>
+                    <td style="text-align: right;">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.AssetPriceAmt.value | currency : "USD" : ""}}
+                    </td>
+                    <td style="text-align: right;" *ngIf="!isHideDP">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.DownPaymentAmt.value | currency : "USD" : ""}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.SerialNo1.value}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.SerialNo2.value}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.OwnerName.value}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.DeliveryNo.value}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{DOAssetForm.get('DOAssetList').at(i).controls.DeliveryDt.value | date: "dd-MMM-yyyy"}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-12" style="padding: 0; text-align: right">
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="ft-plus-circle"></i> Create DO
+              </button>
+            </div>
+            <div *ngIf="isCreateDOInvalid" class="invalid-feedback d-block col-md-12"
+              style="padding: 0; text-align: right;">
+              <div translate>{{createDOInvalidMsg}}</div>
+            </div>
+          </form>
+        </div>
+        <div class="px-3">
+          <lib-ucSubsection [id]="'DeliveryListId'" [title]="'Delivery List'" [panel]="'DeliveryListSection'">
+          </lib-ucSubsection>
+          <div class="form-body" id="DeliveryListSection">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th style="text-align: center;">
+                    <span class="thead-header" name='no' translate>DELIVERY ORDER NO.</span>
+                  </th>
+                  <th style="text-align: center;">
+                    <span class="thead-header" name='seqNo' translate>DELIVERY DATE</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='assetName' translate>CUST RELATIONSHIP</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='assetPrice' translate>RECIPIENT NAME</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='downPayment' translate>RECIPIENT ADDRESS</span>
+                  </th>
+                  <th style="text-align: center;">
+                    <span class="thead-header" name='serialNo1' translate>ACTION</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of doList">
+                  <td style="text-align: center;">
+                    {{item.DeliveryNo}}
+                  </td>
+                  <td style="text-align: center;">
+                    {{item.DeliveryDt | date: "dd-MMM-yyyy"}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{item.MrCustRelationshipCode}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{item.RecipientName}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{item.DeliveryAddr}}
+                  </td>
+                  <td style="text-align: center;">
+                    <a (click)="editDOHandler(item.DeliveryOrderHId)"><i class="fas fa-pencil-alt mr-2"></i></a>
+                    <a (click)="deleteDO(item.DeliveryOrderHId)"><i class="fas fa-trash"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="px-3" style="margin-top: 20px;">
+          <form class="form form-horizontal" [formGroup]="AppTcForm" (ngSubmit)="AppTcForm.valid && DOAssetForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>
+                  <app-term-conditions [AppId]="appId" [parentForm]="AppTcForm" [enjiForm]="enjiForm">
+                  </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="App Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+              <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+            <div class="form-actions right">
+              <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1" translate>
+                <i class="far fa-check-square"></i> Save
+              </button>
+              <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal" translate>
+                <i class="far fa-check-square"></i> Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

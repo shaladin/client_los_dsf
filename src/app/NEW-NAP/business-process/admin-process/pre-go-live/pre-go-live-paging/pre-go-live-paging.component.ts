@@ -44,7 +44,7 @@ export class PreGoLivePagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
     else if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/PreGoLive/Detail"], { "AgrmntId": ev.RowObj.AgrmntId, "AppId": ev.RowObj.AppId, "TaskListId": ev.RowObj.TaskListId, "AgrmntNo": ev.RowObj.AgrmntNo, "BizTemplateCode": this.bizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/PreGoLive/DetailX"], { "AgrmntId": ev.RowObj.AgrmntId, "AppId": ev.RowObj.AppId, "TaskListId": ev.RowObj.TaskListId, "AgrmntNo": ev.RowObj.AgrmntNo, "BizTemplateCode": this.bizTemplateCode });
     }
   }
 }

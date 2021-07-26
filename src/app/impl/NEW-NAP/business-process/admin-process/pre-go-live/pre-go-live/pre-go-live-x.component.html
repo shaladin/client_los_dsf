@@ -34,17 +34,13 @@
                 </div>
 
                 <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <input type="date" id="GoLiveEstimated" class="form-control adInsInput name" 
                     formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.GoLiveEstimated"
                     [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                  <button type="button" class="btn btn-raised btn-primary mr-1"
-                  (click)="calculateAddInterest()" translate>
-                  Calculate
-                </button>
               </div>
 
               <div class="form-group row">
@@ -69,6 +65,12 @@
               </div>
               <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
               <label class="col-md-4 adinsLabel" translate>{{MainInfoForm.controls.AddIntrstAmt.value | number:'.2':'en-US'}}</label>
+              </div>
+              <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-primary mr-2"
+                (click)="calculateAddInterest()" translate>
+                Calculate
+              </button>
               </div>
             </div>
 
