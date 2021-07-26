@@ -14,9 +14,11 @@ export class UpperCaseDirective {
   constructor(public ref: ElementRef) { }
 
   @HostListener('input', ['$event']) onInput($event) {
-    if (this.IsUpperCase) {
+    if (this.IsUpperCase || typeof this.lastValue == 'string') {
       let start = $event.target.selectionStart;
       let end = $event.target.selectionEnd;
+      let typeOf = $event.currentTarget;
+      if (typeOf.type != 'text') return;
       $event.target.value = $event.target.value.toUpperCase();
       $event.target.setSelectionRange(start, end);
       $event.preventDefault();
