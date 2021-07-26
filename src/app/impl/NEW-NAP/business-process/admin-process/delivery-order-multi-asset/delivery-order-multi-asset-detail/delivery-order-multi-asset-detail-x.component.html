@@ -21,7 +21,7 @@
                 <div *ngIf = "checkPOReady" class="col-md-4">
                   <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <input *ngIf = "isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
-                  <lib-uc-show-errors [control]="DOAssetForm.controls.AgrmntDt" [submit]="DOAssetForm.submitted">
+                  <lib-uc-show-errors [control]="DOAssetForm.controls.AgrmntDt">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
@@ -29,7 +29,7 @@
                   <input type="date" id="EffectiveDt" class="form-control adInsInput name"
                     formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.EffectiveDt"
-                    [submit]="DOAssetForm.submitted">
+                    >
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -39,7 +39,7 @@
                   <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
                     formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.GoLiveEstimated"
-                    [submit]="DOAssetForm.submitted">
+                    >
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
