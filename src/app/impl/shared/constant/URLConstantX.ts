@@ -6,4 +6,6 @@ export class URLConstantX {
   public static SubmitDeliveryOrderDataX = environment.losUrl+ "/v1" + "/DeliveryOrderX/SubmitDeliveryOrderData";
   public static UpdateEffectiveAndAgrmntCreatedDtX = environment.losUrl+ "/v1" + "/AgrmntX/UpdateEffectiveAndAgrmntCreatedDt";
   public static AddCustCnfrmX = environment.losUrl+ "/v1" + "/CustCnfrmX/AddCustCnfrm";
+  public static EditAppAddAppCrossX = environment.losUrl+ "/v1" + "/AppX/EditAppAddAppCross";
+  public static GetAppXByAppId = environment.losUrl+ "/v1" + "/AppX/GetAppXByAppId";
 }
