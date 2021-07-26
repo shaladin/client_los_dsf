@@ -470,7 +470,7 @@ export class CreditReviewCfnaDetailDsfComponent implements OnInit {
   cancel(){ 
     AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
-
+  
   async GetIsUseDigitalization() {
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response: GeneralSettingObj) => {

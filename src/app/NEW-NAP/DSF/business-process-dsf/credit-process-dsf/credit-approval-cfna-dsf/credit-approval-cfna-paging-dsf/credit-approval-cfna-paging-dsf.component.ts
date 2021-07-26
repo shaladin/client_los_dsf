@@ -26,7 +26,6 @@ export class CreditApprovalCfnaPagingDsfComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {

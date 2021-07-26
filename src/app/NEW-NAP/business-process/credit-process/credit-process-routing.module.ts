@@ -237,7 +237,7 @@ const routes: Routes = [
         path: PathConstantDsf.CRD_APPRV_CFNA_DETAIL,
         component: CreditApprovalCfnaDetailDsfComponent,
         data: {
-          title: 'Credit Approval Detail'
+          title: 'Credit Approval Detail Dsf'
         }
       }
     ]

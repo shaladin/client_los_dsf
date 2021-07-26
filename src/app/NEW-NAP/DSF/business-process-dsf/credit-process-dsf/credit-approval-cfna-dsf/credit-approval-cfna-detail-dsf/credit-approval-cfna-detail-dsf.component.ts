@@ -26,12 +26,11 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   styleUrls: ['./credit-approval-cfna-detail-dsf.component.css']
 })
 export class CreditApprovalCfnaDetailDsfComponent implements OnInit {
-
   appId: number;
   mrCustTypeCode: string;
   viewObj: string;
   type: string;
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
+  inputObj: { taskId: number; instanceId: number; approvalBaseUrl: string; };
   ManualDeviationData;
   isExistedManualDeviationData;
   BizTemplateCode: string;
@@ -44,12 +43,12 @@ export class CreditApprovalCfnaDetailDsfComponent implements OnInit {
   taskId: number;
   dmsObj: DMSObj;
   isDmsReady: boolean;
-  appNo: any;
-  custNo: any;
+  appNo: string;
+  custNo: string;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-  getEvent: Array<any> = new Array<any>();
+  getEvent: Array<any> = new Array();
 
   constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -118,8 +117,7 @@ export class CreditApprovalCfnaDetailDsfComponent implements OnInit {
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
           let mouCustId = response[0]['MouCustId'];
           if (mouCustId != null && mouCustId != '') {
-            var mouObj = { Id: mouCustId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            this.http.post(URLConstant.GetMouCustById, { Id: mouCustId }).subscribe(
               (response) => {
                 let mouCustNo = response['MouCustNo'];
                 this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
@@ -204,13 +202,10 @@ export class CreditApprovalCfnaDetailDsfComponent implements OnInit {
   }
 
   async GetIsUseDigitalization() {
-    var generalSettingObj = new GeneralSettingObj();
-    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response: GeneralSettingObj) => {
         this.IsUseDigitalization = response.GsValue;
       }
     )
   }
-
 }

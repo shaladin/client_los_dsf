@@ -93,6 +93,7 @@ import { ViewAppScoreGradeDatarobotDsfComponent } from "app/NEW-NAP/DSF/credit-r
     ViewFraudDetectionResultComponent,
     ViewSurveyVerifComponent,
     ChangeMouViewModule,
+    ViewAppScoreGradeDatarobotDsfComponent
   ],
   imports: [
     CommonModule,

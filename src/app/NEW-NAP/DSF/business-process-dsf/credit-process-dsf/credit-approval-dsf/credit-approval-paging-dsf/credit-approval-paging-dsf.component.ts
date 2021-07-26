@@ -26,7 +26,7 @@ export class CreditApprovalPagingDsfComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   arrCrit: Array<CriteriaObj>;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
@@ -93,7 +93,8 @@ export class CreditApprovalPagingDsfComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.MainUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
-        ApvReqObj.TaskId = ev.RowObj.TaskId
+        ApvReqObj.TaskId = ev.RowObj.TaskId;
+        ApvReqObj.Username = ev.RowObj.MainUser;
         this.httpClient.post(URLConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
