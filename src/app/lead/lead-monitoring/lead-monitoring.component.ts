@@ -69,5 +69,5 @@ export class LeadMonitoringComponent implements OnInit {
       }
     }
   }
-
+  
 }

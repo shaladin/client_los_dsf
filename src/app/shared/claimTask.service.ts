@@ -17,7 +17,6 @@ export class ClaimTaskService{
     private http: HttpClient,
     private cookieService: CookieService) { }
 
-
   ClaimTask(WfTaskListId: number){
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();

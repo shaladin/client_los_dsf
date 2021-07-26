@@ -478,6 +478,7 @@ export class URLConstant {
   public static CancelUploadV2 = environment.FoundationR3Url + "/v2" + "/Upload/CancelUpload";
   public static UploadReviewV2 = environment.FoundationR3Url + "/v2" + "/Upload/UploadReview";
 
+  
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
   public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";

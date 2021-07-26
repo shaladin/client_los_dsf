@@ -109,4 +109,5 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       this.claimTaskService.ClaimTask(this.taskListId);
     }
   }
+  
 }
