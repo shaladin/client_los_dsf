@@ -4,7 +4,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
@@ -77,7 +79,7 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     LobCode: [''],
     LeadSource: ['', [Validators.required]],
   });
-  WfTaskListId: number;
+  WfTaskListId: any;
   isCopyButtonDisabled: boolean = true;
 
   constructor(
@@ -86,7 +88,8 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private fb: FormBuilder,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
@@ -103,9 +106,15 @@ export class NewLeadInputMainInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
     }
+    else if (this.WfTaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
+    
     this.MakeLookUpObj();
     this.GetOfficeDDL();
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -440,10 +449,10 @@ export class NewLeadInputMainInfoComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit") {
-              this.router.navigate(["/Lead/SimpleLead/Detail"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
             }
             else {
-              this.router.navigate(["/Lead/SimpleLead/Detail"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
             }
           }
         );
@@ -454,7 +463,7 @@ export class NewLeadInputMainInfoComponent implements OnInit {
           (response) => {
             this.LeadId = response["Id"];
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/SimpleLead/Detail"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
+            this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
           }
         );
       }
@@ -493,13 +502,4 @@ export class NewLeadInputMainInfoComponent implements OnInit {
       }
     }
   }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
-
 }
