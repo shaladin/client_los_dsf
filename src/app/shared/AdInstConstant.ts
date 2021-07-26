@@ -30,4 +30,6 @@ export class AdInsConstant {
 
   public static ApvHoldTaskUrl = environment.FoundationR3Url + "/Approval/Hold";
   public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/Approval/TakeBack";
+  
+  public static UserCustomer = "Customer";
 }

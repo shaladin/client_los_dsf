@@ -98,7 +98,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
     MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100)]],
     IsFamily: [false],
-    Email: ['', [Validators.maxLength(100), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+    Email: ['', [Validators.maxLength(100), Validators.pattern(CommonConstant.regexEmail)]],
     CopyFromContactPerson: [''],
     IsGuarantor: [false]
   });
@@ -240,7 +240,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       MobilePhnNo2: ['', [Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
-      Email: ['', [Validators.maxLength(100), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+      Email: ['', [Validators.maxLength(100), Validators.pattern(CommonConstant.regexEmail)]],
       CopyFromContactPerson: [''],
       IsGuarantor: [false]
     });

@@ -6,6 +6,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-tele-verif-detail',
@@ -16,7 +17,7 @@ export class TeleVerifDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   isCustData: boolean;
   isLeadData: boolean;
-  WfTaskListId: number;
+  WfTaskListId: any;
 
   readonly CancelLink: string = NavigationConstant.LEAD_TELE_VERIF_PAGING;
   constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
@@ -26,8 +27,14 @@ export class TeleVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    if(environment.isCore){
+      if (this.WfTaskListId != undefined && this.WfTaskListId != "") {
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }else{
+      if (this.WfTaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+      }
     }
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
 

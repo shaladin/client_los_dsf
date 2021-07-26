@@ -9,6 +9,12 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { environment } from 'environments/environment';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { CookieService } from 'ngx-cookie';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-lead-update',
@@ -18,15 +24,44 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class LeadUpdateComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
 
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router) { }
+    private router: Router,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
     this.inputPagingObj._url = "./assets/ucpaging/searchLeadUpdate.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLeadUpdate.json";
+    
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchLeadUpdateV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLeadUpdateV2.json";
+      this.inputPagingObj.isJoinExAPI = true
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_LEAD,
+      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE],
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_LEAD_UPD,
+      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE]
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "LeadNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+      
+      let AddCrit = new CriteriaObj();
+      AddCrit.DataType = "text";
+      AddCrit.propName = "L.LEAD_STEP";
+      AddCrit.restriction = AdInsConstant.RestrictionEq;
+      AddCrit.value = CommonConstant.LeadStepLeadUpd;
+      this.inputPagingObj.addCritInput.push(AddCrit);
+    }
   }
 
   rejectLead(event) {
@@ -35,9 +70,11 @@ export class LeadUpdateComponent implements OnInit {
       leadReject.LeadStat = CommonConstant.LeadStatReject;
       leadReject.LeadStep = CommonConstant.LeadStatReject;
       leadReject.LeadId = event.RowObj.LeadId;
-      leadReject.WfTaskListId = event.RowObj.WfTaskListId;
+      leadReject.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId;  //ExecutionId = WF Instance GUID Versi Camunda
 
-      this.http.post(URLConstant.RejectLead, leadReject).subscribe(
+      let RejectLeadUrl = environment.isCore ? URLConstant.RejectLeadV2 : URLConstant.RejectLead;
+      
+      this.http.post(RejectLeadUrl, leadReject).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

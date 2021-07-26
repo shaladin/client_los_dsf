@@ -1,7 +1,8 @@
 export class CommonConstant {
   
-  // REGEX API
+  // REGEX
   public static regexAPI = "\\/[v,V][1-9]\\d*(\\.[1-9]\\d*)*";
+  public static regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
 
   //FORM
   public static INVALID_FORM = "INVALID";
@@ -903,4 +904,19 @@ export class CommonConstant {
   public static CustAddrTypeOthBiz = "OTHERBIZ";
   public static CustAddrTypePreJob = "PREV_JOB";
   public static CustAddrTypeBiz = "BIZ";
+
+  //WORFKLOW LEAD
+  public static WF_CODE_LEAD = "WF_LEAD";
+  public static WF_CODE_SIMPLE_LEAD = "WF_SIMPLE_LEAD";
+  public static ACT_CODE_SIMPLE_FRAUD_VERIFICATION = "SIMPLE_FRAUD_VERIFICATION";
+  public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
+  public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
+  public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
+
+  //Lead Step
+  public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL"
+  public static LeadStepLeadVerf = "LVR"
+  public static LeadStepTeleVerf = "TVR"
+  public static LeadStepLeadUpd = "LUP"
+  
 }
