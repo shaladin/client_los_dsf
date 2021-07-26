@@ -9,12 +9,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { CookieService } from 'ngx-cookie';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UploadReviewCustomV2Obj } from 'app/shared/model/V2/UploadReviewObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-lead-monitoring-review-detail',
@@ -28,7 +25,6 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   UploadMonitoringHId: number;
   UploadNo: string;
   taskListId: any;
-  currentUserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   readonly BackLink: string = NavigationConstant.LEAD_RVW_MONITORING_PAGING;
 
@@ -37,7 +33,6 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService, 
-    private cookieService: CookieService,
     private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {

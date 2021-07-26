@@ -27,7 +27,10 @@ export class LeadMonitoringReviewComponent implements OnInit {
 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    
+    this.inputPagingObj._url = "./assets/ucpaging/searchReviewUploadLead.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewUploadLead.json";
+    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
+
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchReviewUploadLeadV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchReviewUploadLeadV2.json";
@@ -35,9 +38,9 @@ export class LeadMonitoringReviewComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKey = CommonConstant.WorkflowUploadLead,
+      this.requestTaskModel.ProcessKey = CommonConstant.WF_UPL_LEAD,
       this.requestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE],
-      this.requestTaskModel.TaskDefinitionKey = CommonConstant.WfUploadLeadReview,
+      this.requestTaskModel.TaskDefinitionKey = CommonConstant.UPLOAD_LEAD_REVIEW,
       this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE],
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
@@ -46,11 +49,6 @@ export class LeadMonitoringReviewComponent implements OnInit {
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.IntegrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
       this.inputPagingObj.integrationObj = this.IntegrationObj;
-    }
-    else{
-      this.inputPagingObj._url = "./assets/ucpaging/searchReviewUploadLead.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewUploadLead.json";
-      this.inputPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     }
   }
 
