@@ -1,0 +1,5 @@
+export class CommonConstantX {
+    //Ref Master Type Code
+    public static RefMasterTypeCodeOrdStatus = "ORD_STATUS";
+    public static RefMasterTypeCodeStatusBpkb = "STATUS_BPKB";
+}
