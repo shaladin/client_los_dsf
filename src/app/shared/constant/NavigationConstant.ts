@@ -1,3 +1,4 @@
+import { PathConstantX } from "app/impl/shared/constant/PathConstantX";
 import { PathConstant } from "./PathConstant";
 
 export class NavigationConstant {
@@ -30,8 +31,8 @@ export class NavigationConstant {
   public static NAP_VIEW_ASSET = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_VIEW_ASSET; //"/Nap/ViewAsset"
 
   //#region MainData
-  public static NAP_MAIN_DATA_NAP1_PAGING = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstant.NAP1_PAGING; //"/Nap/MainData/NAP1/Paging"
-  public static NAP_MAIN_DATA_NAP1_ADD = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstant.NAP1_ADD; //"/Nap/MainData/NAP1/Add"
+  public static NAP_MAIN_DATA_NAP1_PAGING = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantX.NAP1_PAGING; //"/Nap/MainData/NAP1/PagingX"
+  public static NAP_MAIN_DATA_NAP1_ADD = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantX.NAP1_ADD; //"/Nap/MainData/NAP1/AddX"
   public static NAP_MAIN_DATA_NAP2_PAGING = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstant.NAP2_PAGING; //"/Nap/MainData/NAP2/Paging"
   //#endregion
 
