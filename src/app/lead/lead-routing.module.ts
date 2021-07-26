@@ -36,6 +36,8 @@ import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-l
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
 
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { LeadToBeFollowUpDsfComponent } from './DSF/lead-to-be-follow-up-dsf/lead-to-be-follow-up-dsf.component';
 
 const routes: Routes = [
   {
@@ -88,6 +90,13 @@ const routes: Routes = [
         component: NewLeadInputMainInfoComponent,
         data: {
           title: 'Lead Input Main Info'
+        }
+      }
+      {
+        path: PathConstantDsf.NEW_LEAD_TO_BE_FOLLOW_UP_PAGING,
+        component: LeadToBeFollowUpDsfComponent,
+        data: {
+          title: 'New Lead To Be Follow Up Paging Dsf'
         }
       },
       {

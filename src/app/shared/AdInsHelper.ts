@@ -6,6 +6,7 @@ import { CommonConstant } from "./constant/CommonConstant";
 import { NavigationConstant } from "./constant/NavigationConstant";
 import { CookieService } from "ngx-cookie";
 import * as CryptoJS from 'crypto-js';
+import { NavigationConstantDsf } from "./constant/NavigationConstantDsf";
 
 export class AdInsHelper {
   //Function
@@ -156,6 +157,16 @@ export class AdInsHelper {
   public static OpenCustExposureViewByCrdRvwExposureHId(CrdRvwExposureHId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + NavigationConstant.VIEW_CUST_EXPSR + "?CrdRvwExposureHId=" + CrdRvwExposureHId + "&Token=" + token, '_blank');
+  }
+
+  public static EditCustomerMainDataPersonalByCustId(CustId, From) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_EDIT_MAIN_DATA_PERSONAL + "?CustId=" + CustId + "&From=" + From, "_blank");
+  }
+
+  public static EditCustomerMainDataCompanyByCustId(CustId, From) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_EDIT_MAIN_DATA_COY + "?CustId=" + CustId + "&From=" + From, "_blank");
   }
 
   public static CreateUserAccess(response) {

@@ -25,6 +25,10 @@ export class NavigationConstantDsf {
     public static NAP_CRD_PRCS_CRD_APPRV_CFNA_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantDsf.CRD_APPRV_CFNA_DETAIL; //"/Nap/CreditProcess/CreditApprovalCfna/Detail"
     public static NAP_CRD_PRCS_CRD_APPRV_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantDsf.CRD_APPRV_PAGING; //"/Nap/CreditProcess/CreditApproval/Paging"
 
+    public static NEW_LEAD_TO_BE_FOLLOW_UP_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.NEW_LEAD_TO_BE_FOLLOW_UP + "/" + PathConstant.PAGING; //"Lead/LeadUpdate/Paging"
+    public static CUST_EDIT_MAIN_DATA_PERSONAL = "/" + PathConstantDsf.LR_CUST + "/" + PathConstantDsf.CUST_EDIT_MAIN_DATA_PERSONAL; //'/Customer/EditMainData/Personal'
+    public static CUST_EDIT_MAIN_DATA_COY = "/" + PathConstantDsf.LR_CUST + "/" + PathConstantDsf.CUST_EDIT_MAIN_DATA_COY; //'/Customer/EditMainData/Company'
+
     //#region REPORT FACT
     public static REPORT_FACT_MONITORING = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_MONITORING;
     public static REPORT_FACT_MORNING_MONITORING = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_MORNING_MONITORING;
