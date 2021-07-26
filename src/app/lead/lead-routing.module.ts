@@ -91,7 +91,7 @@ const routes: Routes = [
         data: {
           title: 'Lead Input Main Info'
         }
-      }
+      },
       {
         path: PathConstantDsf.NEW_LEAD_TO_BE_FOLLOW_UP_PAGING,
         component: LeadToBeFollowUpDsfComponent,
