@@ -14,31 +14,59 @@ export class SimpleLeadMonitoringComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.uploadObj = {
-      title: 'Upload Simple Lead', // Title Paging dan Upload Page
-      subsectionId: 'UcUploadFile', // Ga perlu diubah
-      formatsAllowed: '.xls, .xlsx', // File yang bisa di upload
-      UploadTypeCode: 'UPL_SMPL_LEAD', // UploadTypeCode berdasarkan keperluan
-      ErrorDownloadUrl: URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
-      TemplateUrl: URLConstant.DownloadTemplate, // URL untuk Download Template File
-      TemplateName: 'Upload_Simple_Lead_Template', // Nama Excel Template File
-      FileErrorName: "Upload_Simple_Lead_ErrorDownload", // Nama Excel Download Error File
-      // SheetName: 'TemplateGan',
-      environmentUrl: environment.losUrl + "/v1",
-      apiQryPaging: URLConstant.GetPagingObjectBySQL,
-      pagingJson: "./assets/ucpaging/searchSimpleLeadMonitoring.json",
-      ddlEnvironments: [
-        {
-          name: "UL.UPLOAD_STATUS",
-          environment: environment.FoundationR3Url + "/v1"
-        },
-        {
-          name: "UL.ORI_OFFICE_CODE",
-          environment: environment.FoundationR3Url + "/v1"
-        }
-      ],
-      url: URLConstant.UploadFile
+    if(environment.isCore){
+      this.uploadObj = {
+        title: 'Upload Simple Lead', // Title Paging dan Upload Page
+        subsectionId: 'UcUploadFile', // Ga perlu diubah
+        formatsAllowed: '.xls, .xlsx', // File yang bisa di upload
+        UploadTypeCode: 'UPL_SMPL_LEAD', // UploadTypeCode berdasarkan keperluan
+        ErrorDownloadUrl: URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
+        TemplateUrl: URLConstant.DownloadTemplate, // URL untuk Download Template File
+        TemplateName: 'Upload_Simple_Lead_Template', // Nama Excel Template File
+        FileErrorName: "Upload_Simple_Lead_ErrorDownload", // Nama Excel Download Error File
+        // SheetName: 'TemplateGan',
+        environmentUrl: environment.losUrl + "/v1",
+        apiQryPaging: URLConstant.GetPagingObjectBySQL,
+        pagingJson: "./assets/ucpaging/searchSimpleLeadMonitoring.json",
+        ddlEnvironments: [
+          {
+            name: "UL.UPLOAD_STATUS",
+            environment: environment.FoundationR3Url + "/v1"
+          },
+          {
+            name: "UL.ORI_OFFICE_CODE",
+            environment: environment.FoundationR3Url + "/v1"
+          }
+        ],
+        url: URLConstant.UploadFileV2
+      }
+    }
+    else{
+      this.uploadObj = {
+        title: 'Upload Simple Lead', // Title Paging dan Upload Page
+        subsectionId: 'UcUploadFile', // Ga perlu diubah
+        formatsAllowed: '.xls, .xlsx', // File yang bisa di upload
+        UploadTypeCode: 'UPL_SMPL_LEAD', // UploadTypeCode berdasarkan keperluan
+        ErrorDownloadUrl: URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
+        TemplateUrl: URLConstant.DownloadTemplate, // URL untuk Download Template File
+        TemplateName: 'Upload_Simple_Lead_Template', // Nama Excel Template File
+        FileErrorName: "Upload_Simple_Lead_ErrorDownload", // Nama Excel Download Error File
+        // SheetName: 'TemplateGan',
+        environmentUrl: environment.losUrl + "/v1",
+        apiQryPaging: URLConstant.GetPagingObjectBySQL,
+        pagingJson: "./assets/ucpaging/searchSimpleLeadMonitoring.json",
+        ddlEnvironments: [
+          {
+            name: "UL.UPLOAD_STATUS",
+            environment: environment.FoundationR3Url + "/v1"
+          },
+          {
+            name: "UL.ORI_OFFICE_CODE",
+            environment: environment.FoundationR3Url + "/v1"
+          }
+        ],
+        url: URLConstant.UploadFile
+      }
     }
   }
-
 }
