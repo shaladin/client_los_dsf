@@ -40,11 +40,12 @@
                   </tr>
                   <tr *ngFor="let item of AppList; let i = index">
                     <td>{{i+1}}</td>
-                    <td>
+                    <td *ngIf="item.AppId !== 0">
                       <a href="javascript:void(0);" (click)="OpenAppView(item.AppId)">
                         {{item.AppNo}}
                       </a>
                     </td>
+                    <td *ngIf="item.AppId === 0">{{item.AppNo}}</td>
                     <td>{{item.CurrCode}}</td>
                     <td class="text-right">{{item.InstAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.AssetPriceAmt | number:'1.2-2':'en-US'}}</td>

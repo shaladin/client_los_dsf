@@ -11,11 +11,11 @@
             "isSelectOne" : true,
             "items" : [
                 {
-                "key": "KTB",
+                "key": "PT KRAMA YUDHA TIGA BERLIAN",
                 "value": "PT KRAMA YUDHA TIGA BERLIAN"
             },
             {
-                "key": "MMKSI",
+                "key": "PT MITSUBISHI MOTOR",
                 "value": "PT MITSUBISHI MOTOR"
             }
             ],
@@ -35,11 +35,11 @@
             "isSelectOne" : true,
             "items" : [
                 {
-                "key": "Unit",
+                "key": "MMC",
                 "value": "Unit"
             },
             {
-                "key": "SP",
+                "key": "MFTBC",
                 "value": "Sparepart"
             }
             ],

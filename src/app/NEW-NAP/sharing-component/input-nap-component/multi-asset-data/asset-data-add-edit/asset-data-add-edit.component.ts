@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
@@ -12,12 +12,8 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
-import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
-import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
-import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
@@ -32,7 +28,6 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
@@ -40,27 +35,26 @@ import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
+import { String } from 'typescript-string-operations';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
   templateUrl: './asset-data-add-edit.component.html'
 })
 export class AssetDataAddEditComponent implements OnInit {
-  //@Input() type: string = "addAsset";
-  @Input() mode: any;
+  @Input() mode: string;
   @Input() AppAssetId: number;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() assetValue: EventEmitter<object> = new EventEmitter();
-  //AppAssetId: number = 0;
-  //type: string = "addAsset";
   currentChassisNo: string = "";
-  @Input() AppId: any;
+  @Input() AppId: number;
   LobCode: string;
   pageType: string = "add";
   custType: string;
-  branchObj: any;
   listBranchObj: any;
-  salesObj: any;
+  salesObj: VendorEmpObj;
   listSalesObj: any;
   adminHeadObj: any;
   listAdminHeadObj: any;
@@ -110,7 +104,7 @@ export class AssetDataAddEditComponent implements OnInit {
   appData: AppObj;
   grossDPPrcnt: number = 0;
   items: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
   originalAssetAccs: Array<AppAssetAccessoryObj>;
   assetTypeCompntValue: string;
   AppAssetAttrObj: any;
@@ -118,6 +112,7 @@ export class AssetDataAddEditComponent implements OnInit {
   appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
   ListAttrAnswer = [];
   isAssetAttrReady: boolean = false;
+  isUsed : boolean = false;
 
 
   InputLookupAccObj: any;
@@ -212,12 +207,14 @@ export class AssetDataAddEditComponent implements OnInit {
     VendorEmpId: 0,
     VendorEmpNo: "",
   };
-  generalSettingObj: GeneralSettingObj;
+  generalSettingObj: GenericListByCodeObj;
   IntegratorCheckBySystemGsValue: string = "1";
-  LastRequestedDate: any = "";
+  IsUseDigitalization: string;
+  LastRequestedDate: Date;
   indexChassis: number = 0;
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
+  InputLookupCityIssuerObj : any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.originalAssetAccs = new Array<AppAssetAccessoryObj>();
@@ -265,6 +262,55 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
 
+  async GetGS(){
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization); 
+
+    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
+      (response) => {
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }        
+      }
+    );
+  }
+  async GetThirdPartyResultH(){
+    var ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
+    await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, {TrxNo : this.appData.AppNo, TrxTypeCode : "APP", ChassisNo : ChassisNoValue}).toPromise().then(
+      (response) => {
+        console.log(response);
+        if(response["AppAssetObject"]["SerialNo1"] != null){
+          this.currentChassisNo = response["AppAssetObject"]["SerialNo1"];
+        }
+        if(response["ResponseThirdPartyRsltH"]["ThirdPartyRsltHId"] != null){
+        this.LastRequestedDate = response["ResponseThirdPartyRsltH"]["ReqDt"];
+        }
+      }
+    );
+  }
+  HitAPI() {
+    if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '') {
+      this.toastr.warningMessage("Please Input Chassis No !");
+    }
+    else {
+      this.toastr.successMessage("Submit with Integrator");
+      this.IsIntegrator = true;
+    }
+  }
   GetListAddr() {
     this.appObj.Id = this.AppId;
     this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
@@ -408,9 +454,6 @@ export class AssetDataAddEditComponent implements OnInit {
 
   SalesPersonChanged(event) {
     if (event.target.value != "") {
-      //this.vendorEmpObj.VendorEmpId = event.target.value;
-      //this.GetVendorEmpSupervisi();
-
       var temp: any;
       temp = this.listSalesObj.filter(
         emp => emp.VendorEmpId == event.target.value);
@@ -601,6 +644,22 @@ export class AssetDataAddEditComponent implements OnInit {
   }
   readonly AssetUsed: string = CommonConstant.AssetConditionUsed;
   async ngOnInit(): Promise<void> {
+    this.InputLookupCityIssuerObj = new InputLookupObj();
+    this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.isRequired = false;
+    var disCrit = new Array();
+    var critDisObj = new CriteriaObj();
+    critDisObj.DataType = 'text';
+    critDisObj.restriction = AdInsConstant.RestrictionEq;
+    critDisObj.propName = 'TYPE';
+    critDisObj.value = 'DIS';
+    disCrit.push(critDisObj);
+    this.InputLookupCityIssuerObj.addCritInput = disCrit;
+
     this.AssetDataForm.updateValueAndValidity();
 
     this.items = this.AssetDataForm.get('items') as FormArray;
@@ -645,6 +704,9 @@ export class AssetDataAddEditComponent implements OnInit {
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
         });
+
+        this.InputLookupCityIssuerObj.nameSelect = this.returnAppAssetObj.TaxCityIssuer;
+        this.InputLookupCityIssuerObj.jsonSelect = { provDistrictCode: this.returnAppAssetObj.TaxCityIssuer };
 
       var reqByCode = new GenericObj();
       reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
@@ -825,6 +887,12 @@ export class AssetDataAddEditComponent implements OnInit {
           });
           this.ChangeAssetCondition();
         }
+        
+        if(this.AssetDataForm.controls.MrAssetConditionCode.value == "USED") { 
+          this.isUsed = true;
+          this.InputLookupCityIssuerObj.isRequired = true;
+        }
+
         this.GenerataAppAssetAttr(false);
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
@@ -856,8 +924,12 @@ export class AssetDataAddEditComponent implements OnInit {
               for (let i = 0; i < this.items.length; i++) {
                 if (this.items.controls[i] != null) {
                   this.items.controls[i]['controls']['SerialNoValue'].value = this.returnAppAssetObj["SerialNo" + (i + 1)];
+                  if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No"){
+                    this.indexChassis = i;
+                  }
                 }
               }
+			  this.GetThirdPartyResultH();
             }
             this.UcAddressHandler();
 
@@ -965,6 +1037,7 @@ export class AssetDataAddEditComponent implements OnInit {
         });
       }
     );
+	await this.GetGS();
   }
 
   GenerataAppAssetAttr(isRefresh: boolean) {
@@ -1070,6 +1143,12 @@ export class AssetDataAddEditComponent implements OnInit {
     });
   }
 
+  SetBpkbCity(event) {
+    this.AssetDataForm.patchValue({
+      TaxCityIssuer: event.DistrictCode,
+    });
+  }
+
   setAssetAttr(){
     this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
 
@@ -1109,7 +1188,6 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
     this.allAssetDataObj["VendorEmpId"] = this.AssetDataForm.controls.SalesPersonId.value;
 
-    // if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
     if (!this.AssetDataForm.controls["BranchManagerName"].value) {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
@@ -1140,12 +1218,10 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
 
     if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
-      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
       this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["DownPayment"];
       this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm["DownPayment"] / assetForm["AssetPrice"]) * 100;
     }
     else {
-      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPaymentPrctg"].value / 100;
       this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["AssetPrice"] * (assetForm["DownPaymentPrctg"] / 100);
       this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm["DownPaymentPrctg"];
     }
@@ -1374,13 +1450,48 @@ export class AssetDataAddEditComponent implements OnInit {
           }
         }
       }
-      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.AssetDataForm.reset();
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
-          this.assetValue.emit({ mode: 'paging' });
-        });
+      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+              });
+          }
+        }
+        else if (!this.IsIntegrator) {
+            if (confirm("Submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+              });
+            }
+        }
+        else if (this.IsIntegrator) {
+          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+                (response) => {
+                });
+                this.AssetDataForm.reset();
+                this.assetValue.emit({ mode: 'paging' });
+            });
+        }
+      }else{
+        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.AssetDataForm.reset();
+            this.assetValue.emit({ mode: 'paging' });
+          });
+      }
     }
     else {
       this.allAssetDataObj = new AllAssetDataObj();
@@ -1449,26 +1560,59 @@ export class AssetDataAddEditComponent implements OnInit {
         }
       }
 
-      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.AssetDataForm.reset();
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
-          this.assetValue.emit({ mode: 'paging' });
-        });
+      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+              });
+          }
+        }
+        else if (!this.IsIntegrator) {
+          
+          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                this.assetValue.emit({ mode: 'paging' });
+              });
+          }
+          else{
+            if (confirm("Submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                this.assetValue.emit({ mode: 'paging' });
+              });
+            }
+          }
+        }
+        else if (this.IsIntegrator) {
+          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+                (response) => {
+                });
+                this.AssetDataForm.reset();
+                this.assetValue.emit({ mode: 'paging' });
+            });
+        }
+      }else{
+        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.AssetDataForm.reset();
+            this.assetValue.emit({ mode: 'paging' });
+          });
+      }
     }
-
-    // this.inputAddressObjForLoc = new InputAddressObj();
-    // this.inputAddressObjForLoc.title = "Asset Location";
-    // this.inputAddressObjForLoc.showSubsection = false; 
-    // this.inputAddressObjForLoc.showAllPhn = false;
-    // this.inputAddressObjForLoc.showOwnership = false;
-
-    // var datePipe = new DatePipe("en-US");
-    // this.inputFieldLocationAddrObj = new InputFieldObj();
-    // this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-    // this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
-
   }
   addGroup(appAssetAccessoriesObj, i) {
     if (appAssetAccessoriesObj == undefined) {

@@ -1,25 +1,25 @@
 export class AppGuarantorPersonalObj {
-    AppGuarantorPersonalId: any;
-    MrIdTypeCode: any;
-    MrGenderCode: any;
-    IdNo: any;
-    BirthPlace: any;
-    BirthDt: any;
-    RowVersion: any;
-    IdExpDt :any;
-    MrNationalityCode: any;
-    CountryCode: any;
-    MrReligionCode: any;
-    MrMaritalStatCode:any;
-    TaxIdNo: any;
-    MobilePhnNo: any;
-    Addr: any;
-    AreaCode1:any;
-    AreaCode2: any;
-    AreaCode3: any;
-    AreaCode4:any;
-    City: any;
-    Zipcode: any;
-    Subzipcode: any;
+    AppGuarantorPersonalId: number;
+    MrIdTypeCode: string;
+    MrGenderCode: string;
+    IdNo: string;
+    BirthPlace: string;
+    BirthDt: Date;
+    RowVersion: string;
+    IdExpDt :Date;
+    MrNationalityCode: string;
+    CountryCode: string;
+    MrReligionCode: string;
+    MrMaritalStatCode:string;
+    TaxIdNo: string;
+    MobilePhnNo: string;
+    Addr: string;
+    AreaCode1:string;
+    AreaCode2: string;
+    AreaCode3: string;
+    AreaCode4:string;
+    City: string;
+    Zipcode: string;
+    Subzipcode: string;
   constructor() { this.AppGuarantorPersonalId = 0; this.RowVersion = "" }
 }

@@ -29,9 +29,11 @@ export class ExceptionConstant {
     public static INSURANCE_LENGTH_MUST_LOWER_THAN = "Insurance Length must be lower than ";
     public static BIRTH_DATE_CANNOT_MORE_THAN = "Birth Date can not be more than ";
     public static EXPIRED_DATE_CANNOT_LESS_THAN = "Expired Date can not be less than ";
-    public static ISSUED_DATE_CANNOT_MORE_THAN = "Issued Date can not be more than "
+    public static ISSUED_DATE_CANNOT_MORE_THAN = "Issued Date can not be more than ";
+    public static ISSUED_DATE_CANNOT_MORE_THAN_EXP_DT = "Issued Date can not be more than Expired Date";
     public static DOWN_PAYMENT_MUST_LESS_THAN = "Down Payment Must Be Less Than ";
     public static DOWN_PAYMENT_MUST_MORE_THAN = "Down Payment Must Be More Than ";
+    public static TOTAL_PAID_AT_COY_MUST_LESS_THAN = "TDP Paid at MF Must Be Less Than ";
     public static DISCOUNT_AMOUNT_CANNOT_HIGHER_THAN = "Discount Amount can't be higher than ";
     public static CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN = "Capitalize Amount can't be higher than ";
     public static END_DATE_CANNOT_LOWER_THAN = "End Date can't be lower than ";
@@ -39,6 +41,8 @@ export class ExceptionConstant {
     public static EFF_RATE_CANNOT_LESS_THAN_STD_RATE = "Effective Rate cannot be less than Standard Rate.";
     public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate.";
     public static COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT = "Collateral Value can not be less than Plafond Amount.";
+    public static COLL_VALUE_CANNOT_LESS_THAN_EQUALS_PLAFOND_AMT = "Collateral Value can not be less than or equals Plafond Amount.";
+    public static COLL_VALUE_MUST_EQUALS_PLAFOND_AMT = "Collateral Value must equals Plafond Amount.";
     public static REF_ATTR_CHANGE = "Ref Attribute have changed, Please refresh to get latest ref attribute";
 
     public static EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be less than Sell Supplier Rate ({0}).";
@@ -50,6 +54,7 @@ export class ExceptionConstant {
     public static PLEASE_CALCULATE_FIRST = "Please Calculate First";
     public static PLEASE_CALCULATE_AGAIN = "Please Calculate Again";
     public static MUST_CALCUCATE_FIRST = "Must Calculate First";
+    public static NTF_MUST_BE_GREAD_THAN_TOTFEE = "Total Fee Amount cannot be greater than NTF Amount ";
 
 
     public static OFFICE_IS_NOT_ALLOWED_TO_CREATE_APP = "Office Is Not Allowed to Create App";
@@ -88,6 +93,8 @@ export class ExceptionConstant {
     public static MAX_DATA = "Maximum {50} Data";
     public static INPUT_SPOUSE_CONTACT_INFO = "Please Input Spouse in Contact Information";
     public static INCORRECT_PASSWORD = "Password Mismatch";
+    public static ASSET_DATA_NOT_COMPLETE = "Asset data not completed, Please complete asset data first";
+    public static UNIT_CANT_BE_ZERO = "Unit cannot be 0.";
     public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input";
     public static INPUT_MIN_1_HISTORY = "Please Input At Least 1 History"; 
 
@@ -102,9 +109,22 @@ export class ExceptionConstant {
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
     public static SUPPLIER_BANK_ACC_NOT_SET = "Please input a valid Bank Account Data for this supplier";
+    public static MUST_COMPLETE_FAMILY_DATA = "Please complete customer family data";
+    public static COMPLETE_SHAREHOLDER_COMPANY_MODEL = "Please complete all shareholder company model";
+    public static MUST_COMPLETE_SHAREHOLDER_DATA = "Please complete all shareholder data";
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
+    public static NO_EXISTING_COLL = "This MoU don't Have Existing Collateral";
+    public static MOU_FREEZE_STATE = "Cant Process this MOU, Please Unfreeze First";
+
+
+    public static EditMouFreezeNotValid = "Edit Mou Freeze Status Not Valid";
+
+    public static CALC_FIRST = "Please Click Calculate";
+
+    public static EXTENDS_TIME_INVLID = "maximum extends times, maximum extends times cant exceed extend month!";
+
     public static NO_SURVEY = "No Survey";
     public static NO_PHONE_VERF = "No Phone Verification";
     public static STATEMENT_WITH_SAME_MONTH_AND_YEAR = "Cannot Input Statement With The Same Month and Year";
@@ -118,9 +138,37 @@ export class ExceptionConstant {
     public static CONFIRM_PROD_OFF_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
     public static SELECT_PROD_TO_COPY = "Please select Product to copied";
     public static CONFIRM_PROD_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
+
+    public static PLEASE_INPUT_FIN_DATA = "Please input at least 1 Financial Data";
+    public static PLEASE_INPUT_BANK_ACCOUNT= "Please input at least 1 Bank Account";
+    public static PLEASE_INPUT_AGREEMENT_PARENT = "Please input Agreement Parent";
+    public static FINANCING_AMOUNT_EXCEEDED = "Exceeded Maximum Financing Amount.";
+    public static TENOR_EXCEEDED = "Exceeded Maximum Tenor.";
+
+    public static NO_DATA_EDITED = "Please edit at least one data!";
+    
+    public static DATA_ALREADY_EXIST = "Data Already Exist!";
+    public static INVOICE_NO_CANNOT_EMPTY = "Invoice No cannot be Empty";
+    public static INVOICE_DUE_DT_CANNOT_EMPTY = "Invoice Due Date cannot be Empty";
+    public static INVOICE_D_CORATERAL_CANNOT_EMPTY = "Corateral Name cannot be Empty";
+    public static CORATERAL_AMOUNT_CANNOT_LESS_THAN = "Corateral Amount cannot be less than ";
+    public static CUST_FCTRING_CANNOT_EMPTY = "Customer Factoring cannot be Empty";
+
+    public static NO_MOU = "There is no MOU in this customer"
+    public static INPUT_MAX_1_COMMENT = "Input Max 1 Comment";
+    public static MOU_EXP_DT_OR_MOU_STAT_CANCEL = "MOU Expired or Cancel";
+    public static THERE_IS_APP_ON_PROGRESS = "There is App on Progress";
+
+    public static COLL_VALUE_MUST_EQUALS_INVOICE_AMT = "Collateral Value must equals Invoice Amount.";
+    public static DOUBLE_FINANCING = "Double Financing";
+    public static START_DATE_CANNOT_MORE_THAN = "Start Date can not be more than ";
+    public static START_DATE_CANNOT_LESS_THAN = "Start Date can not be lses than ";
+    public static END_DATE_CANNOT_LESS_THAN = "End Date can not be less than ";
+    public static MOU_DATE_CANNOT_LESS_THAN = "MOU Date can not be less than ";
     public static PRODUCT_HAS = "This Product has ";
     public static MOU_DT_MUST_GREATER_THAN_BUSINESS_DT = "MOU Date Must be Greater than Equal D - 1 Business Date";
     public static START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT = "Start Date Must be Greater than Equal Business Date";
+    public static COVERAGE_CANT_0_LESS = "Coverage Amount Cant be 0 or less";
     
 }
 

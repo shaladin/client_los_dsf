@@ -22,7 +22,6 @@ import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-d
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 import { TestUploadComponent } from './test-upload/test-upload.component';
 import { MouCancelComponent } from './mou-cancel/mou-cancel.component';
-import { UnauthorizedPageComponent } from './unauthorized-page/unauthorized-page.component';
 import { MouExecutionPagingComponent } from './mou-execution/mou-execution-paging/mou-execution-paging.component';
 import { MouExecutionDetailComponent } from './mou-execution/mou-execution-detail/mou-execution-detail.component';
 import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
@@ -31,6 +30,36 @@ import { SimilarMouPersonalDataComponent } from './mou-dup-check/similar-mou-per
 import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
 import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-company/existing-mou-company.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { MouReviewDlfnComponent } from './mou-customer/mou-review/mou-review-dlfn/mou-review-dlfn.component';
+import { ChangeMouApprovalFactoringComponent } from './change-mou/change-mou-approval/change-mou-approval-factoring/change-mou-approval-factoring.component';
+import { ChangeMouApprovalFinancingComponent } from './change-mou/change-mou-approval/change-mou-approval-financing/change-mou-approval-financing.component';
+import { ChangeMouApprovalPagingComponent } from './change-mou/change-mou-approval/change-mou-approval-paging/change-mou-approval-paging.component';
+import { ChangeMouApprovalGeneralComponent } from './change-mou/change-mou-approval/change-mou-approval-general/change-mou-approval-general.component';
+import { ChangeMouCancelComponent } from './change-mou/change-mou-cancel/change-mou-cancel/change-mou-cancel.component';
+import { ChangeMouExecutionDetailComponent } from './change-mou/change-mou-execution/change-mou-execution-detail/change-mou-execution-detail.component';
+import { ChangeMouExecutionPagingComponent } from './change-mou/change-mou-execution/change-mou-execution-paging/change-mou-execution-paging.component';
+import { ChangeMouInquiryComponent } from './change-mou/change-mou-inquiry/change-mou-inquiry.component';
+import { ChangeMouDetailDealerFinancingComponent } from './change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing.component';
+import { ChangeMouDetailFactoringComponent } from './change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring.component';
+import { ChangeMouCustAssetDetailComponent } from './change-mou/change-mou-request/change-mou-detail-general/change-mou-cust-asset/change-mou-cust-asset-detail/change-mou-cust-asset-detail.component';
+import { ChangeMouCustAssetComponent } from './change-mou/change-mou-request/change-mou-detail-general/change-mou-cust-asset/change-mou-cust-asset.component';
+import { ChangeMouDetailGeneralComponent } from './change-mou/change-mou-request/change-mou-detail-general/change-mou-detail-general.component';
+import { ChangeMouRequestAddcollComponent } from './change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll.component';
+import { ChangeMouRequestDetailComponent } from './change-mou/change-mou-request/change-mou-request-detail/change-mou-request-detail.component';
+import { ChangeMouRequestDetailCustomerComponent } from './change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer.component';
+import { ChangeMouRequestPagingComponent } from './change-mou/change-mou-request/change-mou-request-paging/change-mou-request-paging.component';
+import { ChangeMouReturnDetailComponent } from './change-mou/change-mou-return/change-mou-return-detail/change-mou-return-detail.component';
+import { ChangeMouReturnPagingComponent } from './change-mou/change-mou-return/change-mou-return-paging/change-mou-return-paging.component';
+import { ChangeMouReviewFactoringComponent } from './change-mou/change-mou-review/change-mou-review-paging/change-mou-review-factoring/change-mou-review-factoring.component';
+import { ChangeMouReviewFinancingComponent } from './change-mou/change-mou-review/change-mou-review-paging/change-mou-review-financing/change-mou-review-financing.component';
+import { ChangeMouReviewGeneralComponent } from './change-mou/change-mou-review/change-mou-review-paging/change-mou-review-general/change-mou-review-general.component';
+import { ChangeMouReviewPagingComponent } from './change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging.component';
+import { MouUnfreezeApvDetailComponent } from './mou-unfreeze/mou-unfreeze-apv-detail/mou-unfreeze-apv-detail.component';
+import { MouUnfreezeApvPagingComponent } from './mou-unfreeze/mou-unfreeze-apv-paging/mou-unfreeze-apv-paging.component';
+import { MouUnfreezeInquiryComponent } from './mou-unfreeze/mou-unfreeze-inquiry/mou-unfreeze-inquiry.component';
+import { MouUnfreezeViewComponent } from './mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component';
+import { MouUnfreezeDetailComponent } from './mou-unfreeze/mou-unfreeze-detail/mou-unfreeze-detail.component';
+import { MouUnfreezePagingComponent } from './mou-unfreeze/mou-unfreeze-paging/mou-unfreeze-paging.component';
 
 const routes: Routes = [
   {
@@ -121,6 +150,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstant.MOU_CUST_RVW_DFLN,
+        component: MouReviewDlfnComponent,
+        data: {
+          title: 'MOU Review Dealer Financing'
+        }
+      },
+      {
         path: PathConstant.MOU_CUST_RVW_FCTR,
         component: MouReviewFactoringComponent,
         data: {
@@ -191,13 +227,6 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.MOU_UNAUTHORIZED_PAGE,
-        component: UnauthorizedPageComponent,
-        data: {
-          title: "Unauthorized Page"
-        }
-      },
-      {
         path: PathConstant.MOU_EXECUTION_PAGING,
         component: MouExecutionPagingComponent,
         data: {
@@ -245,7 +274,210 @@ const routes: Routes = [
         data: {
           title: "Mou Existing Company Data Page"
         }
-      }
+      },
+      {
+        path: PathConstant.MOU_FREEZE_PAGING,
+        component: MouUnfreezePagingComponent,
+        data: {
+          title: "Mou Freeze Unfreeze Paging"
+        }
+      },
+      {
+        path: PathConstant.MOU_FREEZE_DETAIL,
+        component: MouUnfreezeDetailComponent,
+        data: {
+          title: "Mou Freeze Unfreeze Detail"
+        }
+      },
+      {
+        path: PathConstant.MOU_FREEZE_APV_PAGING,
+        component: MouUnfreezeApvPagingComponent,
+        data: {
+          title: "Mou Freeze Unfreeze Approval Paging"
+        }
+      },
+      {
+        path: PathConstant.MOU_FREEZE_APV_DETAIL,
+        component: MouUnfreezeApvDetailComponent,
+        data: {
+          title: "Mou Freeze Unfreeze Approval Detail"
+        }
+      },
+      {
+        path: PathConstant.MOU_FREEZE_INQUIRY,
+        component: MouUnfreezeInquiryComponent,
+        data: {
+          title: "Mou Freeze Unfreeze Inquiry"
+        }
+      },
+      {
+        path: PathConstant.MOU_FREEZE_VIEW,
+        component: MouUnfreezeViewComponent,
+        data: {
+          title: "Mou Freeze Unfreeze View"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_DETAIL_GEN,
+        component: ChangeMouDetailGeneralComponent,
+        data: {
+          title: "Change MOU Detail General"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_DETAIL_FCTR,
+        component: ChangeMouDetailFactoringComponent,
+        data: {
+          title: "Change MOU Detail Factoring"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_DETAIL_DLFN,
+        component: ChangeMouDetailDealerFinancingComponent,
+        data: {
+          title: "Change MOU Detail Dealer Financing"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_REQ_PAGING,
+        component: ChangeMouRequestPagingComponent,
+        data: {
+          title: "Change MOU Request Paging"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_REQ_DETAIL,
+        component: ChangeMouRequestDetailComponent,
+        data: {
+          title: "Change MOU Request Detail"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_REQ_DETAIL_CUST_TYPE,
+        component: ChangeMouRequestDetailCustomerComponent,
+        data: {
+          title: "Change MOU Request Customer Detail"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_CUST_ASSET,
+        component: ChangeMouCustAssetComponent,
+        data: {
+          title: "Change MOU Cust Asset"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_CUST_ASSET_DETAIL,
+        component: ChangeMouCustAssetDetailComponent,
+        data: {
+          title: "Change MOU Cust Asset Detail"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_REQ_ADD_COLL,
+        component: ChangeMouRequestAddcollComponent,
+        data: {
+          title: "Change MOU Req Add Collateral"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_INQUIRY,
+        component: ChangeMouInquiryComponent,
+        data: {
+          title: "Change MOU Inquiry"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_EXEC_PAGING,
+        component: ChangeMouExecutionPagingComponent,
+        data: {
+          title: "Change MOU Execution"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_EXEC_DETAIL,
+        component: ChangeMouExecutionDetailComponent,
+        data: {
+          title: "Change MOU Execution Detail"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_RVW_PAGING,
+        component: ChangeMouReviewPagingComponent,
+        data: {
+          title: "Change MOU Review"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_RVW_DETAIL_GEN,
+        component: ChangeMouReviewGeneralComponent,
+        data: {
+          title: "Change MOU Review General"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_RVW_DETAIL_FCTR,
+        component: ChangeMouReviewFactoringComponent,
+        data: {
+          title: "Change MOU Review Factoring"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_RVW_DETAIL_FIN,
+        component: ChangeMouReviewFinancingComponent,
+        data: {
+          title: "Change MOU Review Financing"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_APV_PAGING,
+        component: ChangeMouApprovalPagingComponent,
+        data: {
+          title: "Change MOU Approval"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_APV_DETAIL_FCTR,
+        component: ChangeMouApprovalFactoringComponent,
+        data: {
+          title: "Change MOU Approval Factoring"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_APV_DETAIL_FIN,
+        component: ChangeMouApprovalFinancingComponent,
+        data: {
+          title: "Change MOU Approval Factoring"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_APV_DETAIL_GEN,
+        component: ChangeMouApprovalGeneralComponent,
+        data: {
+          title: "Change MOU Approval General"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_RTN_PAGING,
+        component: ChangeMouReturnPagingComponent,
+        data: {
+          title: "Change MOU Return"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_RTN_DETAIL,
+        component: ChangeMouReturnDetailComponent,
+        data: {
+          title: "Change MOU Return Detail"
+        }
+      },
+      {
+        path: PathConstant.CHANGE_MOU_CANCEL,
+        component: ChangeMouCancelComponent,
+        data: {
+          title: "Change MOU Canel"
+        }
+      },
     ]
   }
 ];

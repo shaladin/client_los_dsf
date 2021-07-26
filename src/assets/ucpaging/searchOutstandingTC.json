@@ -168,6 +168,10 @@
                     "path": "NAP_ADD_PRCS_OUTSTANDING_TC_DETAIL",
                     "param": [
                         {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        },
+                        {
                             "type": "AppId",
                             "property": "AppId"
                         },

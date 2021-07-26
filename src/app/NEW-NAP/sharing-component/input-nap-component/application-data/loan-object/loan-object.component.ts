@@ -14,6 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 
 @Component({
   selector: 'app-loan-object',
@@ -26,16 +27,16 @@ export class LoanObjectComponent implements OnInit {
   @Output() ResponseProdOfrUpToDate: EventEmitter<any>;
 
   modal: any;
-  loanObjectInputLookupObj: any;
+  loanObjectInputLookupObj: InputLookupObj;
   AppLoanPurposeId: number;
-  supplierInputLookupObj: any;
+  supplierInputLookupObj: InputLookupObj;
   title: string = "Add Loan Object";
-  objEdit: any;
+  objEdit: AppLoanPurposeObj;
   AppLoanPurposeObj: AppLoanPurposeObj = new AppLoanPurposeObj();
   IsDisburseToCust: boolean;
   AppObj: AppObj;
   OfficeCode: string;
-  RefProdCmptSupplSchm: any;
+  RefProdCmptSupplSchm: ProdOfferingDObj;
   isCFNA: boolean = false;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string;
@@ -46,8 +47,7 @@ export class LoanObjectComponent implements OnInit {
     SelfFinancing: ['', [Validators.required, Validators.min(-1)]],
     FinancingAmount: ['']
   })
-  resultData: any;
-  result: any;
+  resultData: Array<AppLoanPurposeObj>;
   closeResult: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private modalService: NgbModal) {
@@ -60,7 +60,7 @@ export class LoanObjectComponent implements OnInit {
         this.AppLoanPurposeId = params["AppLoanPurposeid"];
       });
     }
-    this.ResponseProdOfrUpToDate = new EventEmitter<any>();
+    this.ResponseProdOfrUpToDate = new EventEmitter();
   }
 
   private getDismissReason(reason: any): string {
@@ -74,16 +74,13 @@ export class LoanObjectComponent implements OnInit {
   }
 
   async editLoanObject(id, content) {
+
     this.mode = "edit";
     this.AppLoanPurposeId = id;
     this.title = "Edit Loan Object";
     this.MainInfoForm.controls.FinancingAmount.disable();
 
-    var obj = {
-      Id: this.AppLoanPurposeId
-    };
-
-    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then(response => {
+    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, { Id: this.AppLoanPurposeId }).toPromise().then((response: AppLoanPurposeObj) => {
       this.objEdit = response;
       this.MainInfoForm.patchValue({
         IsDisburseToCust: response["IsDisburseToCust"],
@@ -111,6 +108,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   open(content) {
+
     this.mode = "add";
     this.objEdit = undefined;
     this.GetAppData();
@@ -187,12 +185,11 @@ export class LoanObjectComponent implements OnInit {
                   appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
 
                   this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
-                    (response) => {
+                    (response: ProdOfferingDObj) => {
                       if (response && response["StatusCode"] == "200") {
                         this.RefProdCmptSupplSchm = response;
                       }
                       else {
-                        // throw new Error("Suppl Schm component not found, please use the latest product offering");
                         this.isProdOfrUpToDate = false;
                         this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
                         this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
@@ -205,7 +202,6 @@ export class LoanObjectComponent implements OnInit {
                 }
               }
               else {
-                // throw new Error("Disburse To Cust component not found, please use the latest product offering");
                 this.isProdOfrUpToDate = false;
                 this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
                 this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
@@ -365,10 +361,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   loadDataTable() {
-    var obj = {
-      Id: this.AppId
-    }
-    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.resultData = response["listResponseAppLoanPurpose"];
       });

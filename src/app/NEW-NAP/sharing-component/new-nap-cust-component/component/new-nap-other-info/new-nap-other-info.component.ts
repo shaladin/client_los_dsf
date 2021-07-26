@@ -27,7 +27,7 @@ export class NewNapOtherInfoComponent implements OnInit {
   InputSustaianableFinancialBusinessLookupObj: InputLookupObj;
   IsLookupReady: boolean;
   AttrGroup: string;
-  ResponseCustOtherInfo: any;
+  ResponseCustOtherInfo: AppCustOtherInfoObj;
   appCustOtherInfo: AppCustOtherInfoObj;
   custAttrRequest = new Array<Object>();
 
@@ -44,7 +44,7 @@ export class NewNapOtherInfoComponent implements OnInit {
       Id: this.AppCustId
     }
     await this.httpClient.post(URLConstant.GetAppCustOtherInfoByAppCustId, AppcustOtherInfo).toPromise().then(
-      (response: any) => {
+      (response: AppCustOtherInfoObj) => {
         this.ResponseCustOtherInfo = response;
         this.ResponseAppCustOtherInfo.emit(response);
       });

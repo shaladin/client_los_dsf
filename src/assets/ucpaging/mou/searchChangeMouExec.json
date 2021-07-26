@@ -1,0 +1,191 @@
+{
+    "title": "Change MOU Execution",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CMT.CHANGE_MOU_TRX_NO",
+            "id": "TrxNoId",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU.MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MOU.MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "path": "/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Mou Type",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchChangeMouExec"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "ClaimBy"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TRANSACTION NO",
+            "name": "TrxNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "MouCustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU DATE",
+            "name": "MouCustDt"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "EXPIRED DATE",
+            "name": "EndDt"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "PLAFOND AMOUNT",
+            "name": "PlafondAmt"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REVOLVING",
+            "name": "IsRevolving"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU TYPE",
+            "name": "MrMouTypeCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "ACTION"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TrxNo"
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "/Mou/Cust/View",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "MouCustDt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "EndDt"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "PlafondAmt"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsRevolving"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MouTypeName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Mou/ChangeMou/ExecDetail",
+                    "param": [
+                        {
+                            "type": "MouCustId",
+                            "property": "MouCustId"
+                        },
+                        {
+                            "type": "TrxNo",
+                            "property": "TrxNo"
+                        },
+                        {
+                            "type": "WfTaskListId",
+                            "property": "WfTaskListId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

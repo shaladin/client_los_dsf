@@ -17,6 +17,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -47,7 +48,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   });
 
   constructor(
-    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.ReturnHandlingHObj = new ReturnHandlingHObj();
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -79,7 +80,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ngOnInit() {
     this.isShow = false;
-    this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
@@ -92,7 +93,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   TotalHalfListResultRefundIncomeInfo: number = 0;
-  DictMaxIncomeForm: any = {};
+  DictMaxIncomeForm: object = {};
   isView: boolean = false;
   GetIncomeInfoObj() {
     var obj = {
@@ -215,12 +216,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     }
   }
 
-  async ClaimTask(WfTaskListId) {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
-  }
-
   SubmitReturnHandling() {
     if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
@@ -267,7 +262,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   isShow: boolean = false;
-  DictRemainingIncomeForm: any = {};
+  DictRemainingIncomeForm: object = {};
   GetDictRemaining(ev) {
     this.DictRemainingIncomeForm = ev;
     this.isShow = true;

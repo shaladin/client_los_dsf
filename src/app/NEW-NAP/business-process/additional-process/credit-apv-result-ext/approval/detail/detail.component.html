@@ -1,0 +1,59 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title" style="margin-bottom: 10px;">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> Credit Approval Result Extension
+                Approval - General
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+            <lib-ucSubsection [id]="'custInfoId'" [title]="'Main Information'" [panel]="'custInfo'">
+            </lib-ucSubsection>
+            <div id="custInfo">
+            <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Application No</label>
+                <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('app')">
+                {{this.CrdApvMainDataObj?.AppNo}}
+                </a>
+                <label class="col-md-2  adInsLabel" translate>Customer Name</label>
+                <label class="col-md-4  " translate>{{this.CrdApvMainDataObj?.CustName}}</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Agreement No</label>
+                <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('agr')">
+                {{this.CrdApvMainDataObj?.AgrmntNo}}
+                </a>
+                <label class="col-md-2  adInsLabel" translate>Credit Approval Result Expired Date</label>
+                <label class="col-md-4  "
+                translate>{{this.CrdApvMainDataObj?.CrdApvResultExpDt | date: 'dd-MM-yyyy'}}</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2  adInsLabel" translate>Remaining Days</label>
+                <label class="col-md-4" translate>
+                {{this.CrdApvMainDataObj?.RemainingDays}}
+                </label>
+                <label class="col-md-2  adInsLabel" translate>Number of Extension</label>
+                <label class="col-md-4  " translate>{{this.CrdApvMainDataObj?.NumberOfExtension}}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2  adInsLabel" translate>New Credit Approval Result Expired Date</label>
+              <label class="col-md-4" translate>
+                {{this.CrdApvMainDataObj?.ExtendedCrdApvResultExpDt | date: 'dd-MM-yyyy'}}
+              </label>
+          </div>
+            </div>
+        </div>
+        <br />
+     
+          <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj"  *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+
+          <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"  (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,11 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { PhoneVerifObj } from 'app/shared/model/PhoneVerifObj.model';
+import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 
 @Component({
   selector: "phone-verification-subject",
@@ -34,31 +39,13 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     ExecNotes: ['', Validators.maxLength(4000)],
   });;
 
-  appId: any;
-  returnHandlingHId: any;
-  wfTaskListId: any;
+  appId: number;
+  returnHandlingHId: number;
+  wfTaskListId: number;
 
-  appObj = {
-    AppId: 0,
-    Id:0
-  };
-
-  rtnHandlingDObj = {
-    ReturnHandlingDId: 0,
-    Id:0
-  };
-
-  verfResObj: ReqGetVerfResultObj =
-    {
-      TrxRefNo: "",
-      MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn,
-    };
-  phoneVerifObj: any;
-  AppObj: any;
-  verifResultObj: any;
-  tempFail: any;
-  tempScs: any;
-  tempBlank: any;
+  phoneVerifObj: Array<PhoneVerifObj>;
+  AppObj: AppObj;
+  verifResultObj: ScoringResultHObj;
   failCount: number = 0;
   scsCount: number = 0;
   blankCount: number = 0;
@@ -69,8 +56,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   BizTemplateCode: string;
   IsViewReady: boolean = false;
+  UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -89,11 +77,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
-    if (this.wfTaskListId != null || this.wfTaskListId != undefined)
-      this.claimTask();
+    if (this.wfTaskListId != null || this.wfTaskListId != undefined){
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
 
-    this.appObj.AppId = this.appId;
-    this.appObj.Id = this.appId;
     await this.GetAppData();
     await this.GetVerfResultData();
     await this.GetPhnVerfSubjData();
@@ -108,7 +95,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   async SaveForm() {
     if (this.blankCount == 0) {
-      if (this.isReturnHandling == false) {
+      if (!this.isReturnHandling) {
         this.setReturnHandlingH();
         this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
           (response) => {
@@ -117,7 +104,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });
           });
       }
-      if (this.isReturnHandling == true) {
+      if (this.isReturnHandling) {
         this.setReturnHandlingD();
         this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData).subscribe(
           (response) => {
@@ -168,13 +155,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async GetAppData() {
-    var appObj = { Id: this.appId };
-    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
-      (response) => {
-
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      (response: AppObj) => {
         this.AppObj = response;
         this.IsViewReady = true;
-        this.verfResObj.TrxRefNo = this.AppObj.AppNo;
       }
     );
   }
@@ -192,32 +176,39 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   GetPhnVerfSubjData() {
-    this.http.post(URLConstant.GetAppPhoneVerifSubjectListByAppId, this.appObj).subscribe(
+    this.http.post(URLConstant.GetAppPhoneVerifSubjectListByAppId, { Id: this.appId }).subscribe(
       (response) => {
         this.phoneVerifObj = response[CommonConstant.ReturnObj];
-        this.tempBlank = this.phoneVerifObj.filter(
-          blank => blank.Result == '');
-        this.tempScs = this.phoneVerifObj.filter(
-          scs => scs.Result == 'SCS');
-        this.tempFail = this.phoneVerifObj.filter(
-          fail => fail.Result == 'FAIL');
-        this.blankCount = this.tempBlank.length;
-        this.scsCount = this.tempScs.length;
-        this.failCount = this.tempFail.length;
-
+        for (let index = 0; index < this.phoneVerifObj.length; index++) {
+          const element = this.phoneVerifObj[index];
+          switch (element.Result) {
+            case CommonConstant.PHN_VERF_RES_SCS:
+              this.scsCount++;
+              break;
+            case CommonConstant.PHN_VERF_RES_FAIL:
+              this.failCount++;
+              break;          
+            case '':
+              this.blankCount++;
+              break;          
+            default:
+              break;
+          }
+        }
       }
     );
   }
 
   async GetVerfResultData() {
-    await this.http.post(URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode, this.verfResObj).toPromise().then(
+    let verfResObj: ReqGetVerfResultObj = { TrxRefNo: this.AppObj.AppNo, MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn, };
+    await this.http.post(URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode, verfResObj).toPromise().then(
       (response) => {
-        this.verifResultObj = response;
+        this.verifResultObj = response["ScoringResultHObj"];
 
       }
     );
-    if (this.verifResultObj.VerfResultId == 0) {
-      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DATE);
+    if (this.verifResultObj == undefined || this.verifResultObj.VerfResultId == 0) {
+      var Business_Date = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE));
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
@@ -241,10 +232,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }  
 
   View(VerifResultHid, SubjectName) {
-    var link = environment.losR3Web + "/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
-    this.router.navigate([]).then(() => { window.open(link, '_blank'); });
-
-    //window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
+    var link = environment.losR3Web + NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT_VIEW + "?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
+    window.open(link, '_blank');
   }
 
   Verif(VerifResultHid, SubjectName, SubjectType, IdSource, SubjectRelation) {
@@ -255,18 +244,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.isReturnHandling == true) {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId });
     }
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = {
-      pWFTaskListID: this.wfTaskListId,
-      pUserID: currentUserContext[CommonConstant.USER_NAME],
-      isLoading: false
-    };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   back() {

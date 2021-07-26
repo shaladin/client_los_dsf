@@ -11,6 +11,8 @@ export class AppCustPersonalFinDataObj {
     OtherMonthlyInstallmentAmt: number;
     TotalIncomeAmt: number;
     NettIncomeAmt: number;
+    NettProfitMonthlyAmt: number;
+    DateAsOf: Date;
     RowVersion: string;
 
 constructor() { 
@@ -27,5 +29,6 @@ constructor() {
         this.OtherMonthlyInstallmentAmt = 0;
         this.TotalIncomeAmt = 0;
         this.NettIncomeAmt = 0;
+        this.DateAsOf = new Date();
     }
 }

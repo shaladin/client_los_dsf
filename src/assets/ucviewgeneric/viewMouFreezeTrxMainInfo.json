@@ -1,0 +1,57 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "MouFreezeTrxInfo",
+        "subSectionTitle": "Trx Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Transaction No",
+            "property": "TrxNo"
+          },
+          {
+            "type": "text",
+            "label": "MOU No",
+            "property": "MouCustNo"
+          },
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Freeze",
+            "property": "IsFreeze"
+          },
+          {
+            "type": "text",
+            "label": "Status",
+            "property": "Status"
+          },
+          {
+            "type": "text",
+            "label": "Request By",
+            "property": "RequestBy"
+          },
+          {
+            "type": "date",
+            "label": "Request Date",
+            "property": "ReqDt"
+          },
+          {
+            "type": "date",
+            "label": "Execution Date",
+            "property": "ExeDt"
+          }
+        ],
+        "querystring": {
+          "name":"viewMouFreezeTrxMainInfo"
+      }
+
+      }
+    ]
+  }
+  

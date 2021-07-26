@@ -34,10 +34,23 @@ export class ReqAddNapFromCopyObj {
     AppNo: string;
     OriOfficeCode: string;
     RowVersion: string;
-
+    LobCode: string;
+    ProdOfferingCode: string;
+    ProdOfferingName: string;
+    ProdOfferingVersion: string;
+    CurrCode: string;
+    RefProdTypeCode: string;
+    PayFreqCode: string;
     constructor() {
         this.AppNo = "";
         this.OriOfficeCode = "";
         this.RowVersion = "";
+        this.LobCode = "";
+        this.ProdOfferingCode = "";
+        this.ProdOfferingName = "";
+        this.ProdOfferingVersion = "";
+        this.CurrCode = "";
+        this.RefProdTypeCode = "";
+        this.PayFreqCode = "";
     }
 }

@@ -13,7 +13,7 @@ export class RefMasterObj {
     DefaultValue : string;
     IsDefaultValue : boolean;
     IsDeletable: boolean;
-    isSystem: boolean;
+    IsSystem: boolean;
     IsActive: boolean;
     RowVersion: string;
     constructor() { this.RefMasterId = 0; this.RowVersion = '' }

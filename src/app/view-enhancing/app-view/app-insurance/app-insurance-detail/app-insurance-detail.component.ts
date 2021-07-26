@@ -12,7 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   templateUrl: './app-insurance-detail.component.html',
   styles: []
 })
-export class AppInsuranceDetailComponent implements OnInit {
+export class AppViewInsuranceDetailComponent implements OnInit {
   @Input() AppInsObjId: number;
   appInsObj: AppInsObjObj;
   appInsCvgs: any;

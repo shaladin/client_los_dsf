@@ -69,9 +69,9 @@
             "datatype": "date"
         }
     ],
-  "querystring": {
-    "name": "searchMouCustomerApproval"
-  },
+    "querystring": {
+        "name": "searchMouCustomerApproval"
+    },
     "headerList": [
         {
             "type": "sort",
@@ -143,7 +143,7 @@
             "key": "customer",
             "position": "left",
             "property": "CustName"
-          },
+        },
         {
             "type": "link",
             "position": "center",
@@ -196,7 +196,7 @@
                                 "type": "url",
                                 "path": "MOU_CUST_APPRV_FCTR",
                                 "icon": "ft-edit-2",
-                                "param": [                                    
+                                "param": [
                                     {
                                         "type": "MouCustId",
                                         "property": "MouCustId"
@@ -222,6 +222,39 @@
                                 {
                                     "property": "MouType",
                                     "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_APPRV_GENERAL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "TaskId",
+                                        "property": "TaskId"
+                                    },
+                                    {
+                                        "type": "InstanceId",
+                                        "property": "InstanceId"
+                                    },
+                                    {
+                                        "type": "ApvReqId",
+                                        "property": "ApvReqId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MouType",
+                                    "value": "FINANCING",
                                     "restriction": "EQ"
                                 }
                             ],

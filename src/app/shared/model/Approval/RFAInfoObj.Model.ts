@@ -1,18 +1,18 @@
 import { KeyValueObj } from "../KeyValue/KeyValueObj.model";
 
 export class RFAInfoObj {
-    ApprovedById: any;
-    OfficeCode: any;
-    Value: any;
-    Reason: any;
-    Notes: any;
-    RequestBy: any;
-    TrxNo: any;
-    RequestDate: any;
-    SchemeName: any;
-    SchemeCode: any;
-    CategoryName: any;
-    CategoryCode: any;
+    ApprovedById: number;
+    OfficeCode: string;
+    Value: string;
+    Reason: string;
+    Notes: string;
+    RequestBy: string;
+    TrxNo: string;
+    RequestDate: Date;
+    SchemeName: string;
+    SchemeCode: string;
+    CategoryName: string;
+    CategoryCode: string;
     MinimumFinalLevel: any;
     RecommendationObj: Array<KeyValueObj>
 

@@ -1,8 +1,8 @@
 export class MouCustRvwDObj{
-    MouCustRvwDId: any;
-    MouCustRvwHId: any;
-    MrAnalysisItemCode: any;
-    AnalysisResult: any; 
-    RowVersion: any;
+    MouCustRvwDId: number;
+    MouCustRvwHId: number;
+    MrAnalysisItemCode: string;
+    AnalysisResult: string; 
+    RowVersion: string;
  
 }

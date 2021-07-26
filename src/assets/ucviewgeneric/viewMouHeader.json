@@ -51,6 +51,21 @@
           "type": "currency",
           "label": "Plafond Amount",
           "property": "PlafondAmt"
+        },
+        {
+          "type": "text",
+          "label": "Mou Freeze",
+          "property": "IsFreeze"
+        },
+        {
+          "type": "text",
+          "label": "Plafond Type",
+          "property": "PlafondType"
+        },
+        {
+          "type": "text",
+          "label": "Mou Type",
+          "property": "MouType"
         }
       ],
       "querystring": {

@@ -11,7 +11,10 @@ export class ProdOfferingObj {
     OfficeName : string;
     StartDt : Date;
     EndDt : Date;
+    ProdOfferingHId: number;
+    ProdOfferingVersion: string;
     RowVersion : string;
+    
 
     constructor(){
         this.ProdOfferingId = 0;
@@ -26,6 +29,8 @@ export class ProdOfferingObj {
         this.OfficeName = "";
         this.StartDt = new Date();
         this.EndDt = new Date();
+        this.ProdOfferingHId = 0;
+        this.ProdOfferingVersion = "";
         this.RowVersion = "";
     }
 }

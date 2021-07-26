@@ -1,0 +1,74 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustConfirmMainInformationId",
+        "subSectionTitle": "Customer Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "link",
+            "label": "Application No",
+            "property": "AppNo",
+            "name": "AppNo",
+            "path": "/View/AppView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "label": "Agreement Parent",
+            "property": "AgrmntParentNo"
+          },
+          {
+            "type": "link",
+            "label": "Lead No",
+            "property": "LeadNo",
+            "name": "LeadNo",
+            "isHide": true,
+            "path": "/View/Lead",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "LeadId",
+                "property": "LeadId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "name": "AgrmntNo",
+            "path": "/View/AgrmntView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          },
+          {
+            "type": "callback",
+            "key": "customer",
+            "label": "Customer No",
+            "property": "CustNo"
+          },
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          }
+        ],
+        "querystring": {
+          "name": "viewCustConfirmInfoCFNA"
+        }
+      }
+    ]
+  }

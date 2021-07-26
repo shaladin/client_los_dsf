@@ -32,7 +32,7 @@
             <div class="col-md-8">
               <input type="text" class="form-control" formControlName="IdNo" id="idNo"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].IdNo.invalid}">
-              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].IdNo"
+                <lib-uc-show-errors [customPattern]="customPattern" [control]="parentForm.controls[identifier]['controls'].IdNo"
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
           </div>

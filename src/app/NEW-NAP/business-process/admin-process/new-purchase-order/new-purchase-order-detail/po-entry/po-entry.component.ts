@@ -13,6 +13,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-po-entry',
@@ -32,14 +34,13 @@ export class PoEntryComponent implements OnInit {
   BusinessDt: Date;
   vendorBankAccList: Array<Object>;
 
-  AppData: any;
   Date: Date;
   ExpirationDate: string;
   arrValue = [];
 
   constructor(
     private httpClient: HttpClient,
-    private fb: FormBuilder,
+    private fb: FormBuilder, private toastr: NGXToastrService,
     public activeModal: NgbActiveModal, private cookieService: CookieService
   ) {
     this.AppLoanPurposeList = new Array<AppLoanPurposeObj>();
@@ -51,8 +52,9 @@ export class PoEntryComponent implements OnInit {
       SupplName: [''],
       BankAccNo: [''],
       TotalDisburse: [0],
-      Notes: [''],
-      PurchaseOrderExpiredDt: ['', [Validators.required]]
+      Notes: ['',[Validators.required]],
+      PurchaseOrderExpiredDt: ['', [Validators.required]],
+      RowVersion: ['']
     });
   }
 
@@ -119,7 +121,8 @@ export class PoEntryComponent implements OnInit {
             BankAccNo: this.VendorBankAcc.BankAccountNo,
             TotalDisburse: this.PurchaseOrderH.TotalPurchaseOrderAmt,
             Notes: this.PurchaseOrderH.Notes,
-            PurchaseOrderExpiredDt: datePipe.transform(this.PurchaseOrderH.PurchaseOrderExpiredDt, "yyyy-MM-dd")
+            PurchaseOrderExpiredDt: datePipe.transform(this.PurchaseOrderH.PurchaseOrderExpiredDt, "yyyy-MM-dd"),
+            RowVersion: this.PurchaseOrderH.RowVersion
           });
         }
       ).catch(
@@ -129,36 +132,44 @@ export class PoEntryComponent implements OnInit {
       );
 
     }
-    this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.AppData = response;
-        let GetProduct = new GenericObj();
-        GetProduct.Code = this.AppData["ProdOfferingCode"]
-        this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
-          (response2) => {
-            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
-              (response) => {
-                var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
-                this.Date = new Date(a);
-                this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
+    this.httpClient.post(URLConstant.GetPurchaseOrderExpDt, { Id: this.AppId }).subscribe(
+      (response1) => {
+        this.ExpirationDate = formatDate(response1["PurchaseOrderExpDt"], 'yyyy-MM-dd', 'en-US');
+        this.PODetailForm.patchValue({
+          PurchaseOrderExpiredDt: datePipe.transform(response1["PurchaseOrderExpDt"], "yyyy-MM-dd")
+        });
 
-                this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
-                this.PODetailForm.patchValue({
-                  PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
-                });
-              },
-              (error) => {
-                console.log(error);
-              }
-            );
-          }
-        ).catch(
-        );
-      },
-      (error) => {
-        console.log(error);
       }
-    );
+    )
+    // this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+    //   (response1: NapAppModel) => {
+    //     let GetProduct = new GenericObj();
+    //     GetProduct.Code = response1["ProdOfferingCode"]
+    //     this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
+    //       (response2) => {
+    //         this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
+    //           (response) => {
+    //             var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
+    //             this.Date = new Date(a);
+    //             this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
+
+    //             this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
+    //             this.PODetailForm.patchValue({
+    //               PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
+    //             });
+    //           },
+    //           (error) => {
+    //             console.log(error);
+    //           }
+    //         );
+    //       }
+    //     ).catch(
+    //     );
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
   BankAccHandler() {
@@ -170,18 +181,18 @@ export class PoEntryComponent implements OnInit {
       }
     }
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.AppData = response;
+      (response1) => {
         let GetProduct = new GenericObj();
-        GetProduct.Code  = this.AppData["ProdOfferingCode"]
+        GetProduct.Code  = response1["ProdOfferingCode"]
         this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
             var datePipe = new DatePipe("locale");
-            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: response2.Id, RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: response2.Id, GroupCodes: ["OTHR"] }).subscribe(
               (response) => {
-                var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
+                var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
-                this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][1]["CompntValue"]));
+                let date = response["ReturnObject"]["ProdOffComponents"][0]["Components"].find(x => x.RefProdCompntCode == CommonConstant.RefProdCompntCodeCrApvResExpDays);
+                this.Date.setDate(this.Date.getDate() + parseInt(date.CompntValue));
                 this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
                 this.PODetailForm.patchValue({
                   PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
@@ -201,7 +212,17 @@ export class PoEntryComponent implements OnInit {
     );
   }
 
+  checkValidExpDt() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let bzDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    let tempExpDt = new Date(this.ExpirationDate);
+    if (bzDt.getTime() > tempExpDt.getTime()) {
+      throw this.toastr.typeErrorCustom("Need Extension");
+    }
+  }
+
   Save() {
+    this.checkValidExpDt();
     var formValue = this.PODetailForm.value;
     var requestPurchaseOrderH = new PurchaseOrderHObj();
     var requestListPurchaseOrderD = new Array<PurchaseOrderDObj>();
@@ -209,7 +230,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.PurchaseOrderHId = 0;
       requestPurchaseOrderH.PurchaseOrderNo = "";
       requestPurchaseOrderH.PurchaseOrderDt = new Date();
-      requestPurchaseOrderH.PurchaseOrderExpiredDt = formValue["PurchaseOrderExpiredDt"];
+      requestPurchaseOrderH.PurchaseOrderExpiredDt = new Date(this.ExpirationDate);
       requestPurchaseOrderH.TotalPurchaseOrderAmt = formValue["TotalDisburse"];
       requestPurchaseOrderH.AgrmntId = this.AgrmntId;
       requestPurchaseOrderH.SupplCode = this.AppLoanPurposeList[0].SupplCode;
@@ -232,7 +253,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.PurchaseOrderHId = this.PurchaseOrderH.PurchaseOrderHId;
       requestPurchaseOrderH.PurchaseOrderNo = this.PurchaseOrderH.PurchaseOrderNo;
       requestPurchaseOrderH.PurchaseOrderDt = this.PurchaseOrderH.PurchaseOrderDt;
-      requestPurchaseOrderH.PurchaseOrderExpiredDt = formValue["PurchaseOrderExpiredDt"];
+      requestPurchaseOrderH.PurchaseOrderExpiredDt = new Date(this.ExpirationDate);
       requestPurchaseOrderH.TotalPurchaseOrderAmt = this.PurchaseOrderH.TotalPurchaseOrderAmt;
       requestPurchaseOrderH.AgrmntId = this.PurchaseOrderH.AgrmntId;
       requestPurchaseOrderH.SupplCode = this.PurchaseOrderH.SupplCode;
@@ -247,6 +268,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.Notes = this.PODetailForm.controls.Notes.value;
       requestPurchaseOrderH.NumOfExtension = this.PurchaseOrderH.NumOfExtension;
       requestPurchaseOrderH.MouNo = this.PurchaseOrderH.MouNo;
+      requestPurchaseOrderH.RowVersion = this.PODetailForm.controls.RowVersion.value;
 
       for (const item of this.PurchaseOrderH.PurchaseOrderDList) {
         var purchaseOrderDObj = new PurchaseOrderDObj();

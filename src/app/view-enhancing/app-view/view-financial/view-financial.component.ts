@@ -8,6 +8,7 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppDlrFncng } from 'app/shared/model/AppData/AppDlrFncng.Model';
 
 @Component({
   selector: "view-financial",
@@ -25,6 +26,14 @@ export class ViewFinancialComponent implements OnInit {
   
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   appObj: NapAppModel = new NapAppModel();
+
+  //FIN DATA
+  provisionFeeType: string = "-";
+  calcBase: string = "-";
+  calcMethod: string = "-";
+  appDlrFncng: AppDlrFncng;
+  instTypeDescr: string = "-";
+  topCalcBased: string = "-";
 
   TotalAssetValue: number;
   TotalRentAmtPerPeriod: number;
@@ -54,7 +63,7 @@ export class ViewFinancialComponent implements OnInit {
       await this.GetListAllAssetFinancialData();
     }
     else {
-      this.getFinancialData();
+      await this.getFinancialData();
     }
   }
 
@@ -74,15 +83,18 @@ export class ViewFinancialComponent implements OnInit {
     this.TotalCofInterestAmt = 0;
   }
 
-  getFinancialData() {
+  async getFinancialData() {
     var reqObj = { Id: this.AppId };
-    this.http.post(URLConstant.GetFinancialDataByAppIdForView, reqObj).subscribe(
-      (response) => {
+    await this.http.post(URLConstant.GetFinancialDataByAppIdForView, reqObj).toPromise().then(
+      async (response) => {
         this.listSubsidy = response["AppSubsidyObjs"];
         this.listAppFeeObj = response["AppFeeObjs"];
         this.appFinDataObj = response["AppFinDataObj"];
         this.appObj = response["AppObj"];
         this.listInstallment = response["InstallmentObjs"];
+        if (this.appObj.BizTemplateCode == CommonConstant.DF) {
+          await this.getDataForDF(this.appFinDataObj)
+        }
       }
     );
   }
@@ -115,5 +127,51 @@ export class ViewFinancialComponent implements OnInit {
         }
       }
     );
+  }
+  
+  async getDataForDF(appFinDataObj: AppFinDataObj) {
+      await this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).toPromise().then(
+      async (response: AppDlrFncng) => {
+        this.appDlrFncng = response;
+
+        var obj = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInstType,
+          MasterCode: this.appDlrFncng.MrInstTypeCode
+        }
+        await this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).toPromise().then(
+          (response) => {
+            this.instTypeDescr = response["Descr"]
+          }
+        )
+        var object  = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeTopCalcBased,
+          MasterCode: this.appDlrFncng.TopBased
+        }
+        await this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, object).toPromise().then(
+          (response) => {
+            this.topCalcBased = response["Descr"]
+          }
+        )
+      }
+    )
+
+    var obj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeProvisionSource,
+      MasterCode: appFinDataObj.MrProvisionFeeCalcMethodCode
+    }
+    await this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).toPromise().then(
+      (response) => {
+        this.calcBase = response["Descr"]
+      }
+    )
+    obj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeProvisionType,
+      MasterCode: appFinDataObj.MrProvisionFeeTypeCode
+    }
+    await this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).toPromise().then(
+      (response) => {
+        this.provisionFeeType = response["Descr"]
+      }
+    )
   }
 }

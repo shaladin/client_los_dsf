@@ -38,11 +38,11 @@
                 <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Survey">
+            <!-- <mat-tab label="Survey">
               <ng-template matTabContent>
                 <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
               </ng-template>
-            </mat-tab>
+            </mat-tab> -->
             <mat-tab label="Third Party Checking">
               <ng-template matTabContent>
                 <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
@@ -53,11 +53,6 @@
                 <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
               </ng-template>
             </mat-tab>
-            <!-- <mat-tab label="Review">
-                        <ng-template matTabContent>
-                          
-                        </ng-template>
-                      </mat-tab> -->
           </mat-tab-group>
         </div>
         <br>

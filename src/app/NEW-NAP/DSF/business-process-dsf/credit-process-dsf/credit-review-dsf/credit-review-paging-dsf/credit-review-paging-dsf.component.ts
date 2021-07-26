@@ -29,7 +29,6 @@ export class CreditReviewPagingDsfComponent implements OnInit {
 
   ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditReviewCr.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReviewCr.json";
 
@@ -41,7 +40,7 @@ export class CreditReviewPagingDsfComponent implements OnInit {
     arrCrit.push(critObj);
 
     this.inputPagingObj.addCritInput = arrCrit;
-
+    
     var critUserObj = new CriteriaObj();
     critUserObj.restriction = AdInsConstant.RestrictionLike;
     critUserObj.propName = 'WTL.USERNAME';

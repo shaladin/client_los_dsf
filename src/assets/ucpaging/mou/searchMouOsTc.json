@@ -55,12 +55,6 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "MOU DATE",
-            "name": "MouCustDt"
-        },
-        {
-            "type": "sort",
-            "position": "center",
             "label": "EXPIRED DATE",
             "name": "EndDt"
         },
@@ -111,11 +105,6 @@
         {
             "type": "date",
             "position": "center",
-            "property": "MouCustDt"
-        },
-        {
-            "type": "date",
-            "position": "center",
             "property": "EndDt"
         },
         {
@@ -131,7 +120,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "MrMouTypeCode"
+            "property": "MouTypeName"
         },
         {
             "type": "action",

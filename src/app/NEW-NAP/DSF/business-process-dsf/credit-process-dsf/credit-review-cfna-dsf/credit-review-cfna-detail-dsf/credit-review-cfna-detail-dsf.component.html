@@ -10,7 +10,7 @@
           </view-summary-app>
         </ng-template>
       </mat-tab> -->
-
+ 
       <mat-tab label="Summary">
         <ng-template matTabContent>
           <app-view-sumamry-app-cfna-dsf [AppId] = "appId">
@@ -81,7 +81,7 @@
             </div>
 
             <br>
-            <lib-ucapprovalcreate [parentForm]="FormObj"  [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>
+            <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>
 
           </div>
 

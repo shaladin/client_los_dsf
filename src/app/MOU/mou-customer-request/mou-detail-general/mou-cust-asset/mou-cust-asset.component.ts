@@ -4,11 +4,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustAssetDetailComponent } from './mou-cust-asset-detail/mou-cust-asset-detail.component';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-mou-cust-asset',
@@ -19,11 +20,11 @@ export class MouCustAssetComponent implements OnInit {
   @Input() IsAssetSelected: boolean;
   @Input() AssetTypeCode: string;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   index: number = 0;
-  tempResponseMouCustAsset: any;
+  tempResponseMouCustAsset: Array<MouCustAssetObj>;
   mouAssetList: Array<object> = [];
-  assetTypeList: any;
+  assetTypeList: Array<KeyValueObj>;
   listExclude: Array<string>;
   MouCustClauseAssetForm = this.fb.group({
     AssetTypeCode: ['']
@@ -38,8 +39,8 @@ export class MouCustAssetComponent implements OnInit {
   ) {
     this.listExclude = new Array<string>();
     this.httpClient.post(URLConstant.GetListAssetTypeByCode, null).subscribe(
-      (response: any) => {
-        this.assetTypeList = response;
+      (response: GenericListObj) => {
+        this.assetTypeList = response.ReturnObject;
         if (this.AssetTypeCode != null) {
           this.MouCustClauseAssetForm.patchValue({
             AssetTypeCode: this.AssetTypeCode
@@ -60,7 +61,7 @@ export class MouCustAssetComponent implements OnInit {
     mouAsset.MouCustId = this.MouCustId;
 
     this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, { Id: this.MouCustId }).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
 
         this.IsAssetSelected = false;
         if (response.ReturnObject != null && response.ReturnObject.length > 0) {

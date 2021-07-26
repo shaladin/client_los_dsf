@@ -8,17 +8,17 @@
         "mainInfo": [ 
           {
             "type": "text",
-            "label": "Collection Type",
+            "label": "Collateral Type",
             "property": "CollType"
           },
           {
             "type": "text",
-            "label": "Collection Name",
+            "label": "Collateral Name",
             "property": "CollName"
           },
           {
             "type": "currency",
-            "label": "Collection Price",
+            "label": "Collateral Price",
             "property": "CollPrice"
           },
           {
@@ -28,7 +28,7 @@
           },
           {
             "type": "text",
-            "label": "Collection Condition",
+            "label": "Collateral Condition",
             "property": "CollCondition"
           },
           {
@@ -38,7 +38,7 @@
           },
           {
             "type": "text",
-            "label": "Collection Usage",
+            "label": "Collateral Usage",
             "property": "CollUsage"
           },
           {
@@ -48,7 +48,7 @@
           },
           {
             "type": "date",
-            "label": "Collection Tax Date",
+            "label": "Collateral Tax Date",
             "property": "CollTaxDt"
           },
           {

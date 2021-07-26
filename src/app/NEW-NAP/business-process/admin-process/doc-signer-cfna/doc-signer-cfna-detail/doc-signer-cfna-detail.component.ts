@@ -12,6 +12,9 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/ResAppCustPersonalAndSpouseDataObj.Model';
 
 @Component({
   selector: 'app-doc-signer-cfna-detail',
@@ -21,9 +24,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class DocSignerCfnaDetailComponent implements OnInit {
   AppId: number;
   AgrmntId: number;
-  ResponseAppAssetObj: any;
-  result2: any;
-  ResponseAgrmntSignerObj: any;
+  ResponseAgrmntSignerObj: AgrmntSignerObj;
   SupplCode: string;
   OfficeCode: string;
   CustNo: string;
@@ -35,7 +36,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   inputLookupAppCustCompanyShareHolder3Obj: InputLookupObj = new InputLookupObj();
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   mode: string;
-  ResponseAppCustDataObj: any;
+  ResponseAppCustDataObj: ResAppCustPersonalAndSpouseDataObj;
   MrCustTypeCode: string = CommonConstant.CustTypeCompany;
   CustFullName: string;
   ContactPersonName: string;
@@ -79,7 +80,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
     }
 
     await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, appObj).toPromise().then(
-      (response) => {
+      (response: ResAppCustPersonalAndSpouseDataObj) => {
         this.ResponseAppCustDataObj = response;
         this.MrCustTypeCode = this.ResponseAppCustDataObj.MrCustTypeCode;
         this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
@@ -87,20 +88,18 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       });
 
     await this.http.post(URLConstant.GetAppAssetDataByAppId, appObj).toPromise().then(
-      (response) => {
-        this.ResponseAppAssetObj = response;
-        this.SupplCode = this.ResponseAppAssetObj.SupplCode;
+      (response: AppAssetObj) => {
+        this.SupplCode = response.SupplCode;
       });
 
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).toPromise().then(
-      (response) => {
-        this.result2 = response;
-        this.OfficeCode = this.result2.OfficeCode;
-        this.CustNo = this.result2.CustNo;
+      (response: AgrmntObj) => {
+        this.OfficeCode = response.OfficeCode;
+        this.CustNo = response.CustNo;
       });
 
     await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, agrmntObj).toPromise().then(
-      (response) => {
+      (response: AgrmntSignerObj) => {
         this.ResponseAgrmntSignerObj = response;
         if (this.ResponseAgrmntSignerObj.AgrmntSignerId == 0) {
           this.mode = "add";

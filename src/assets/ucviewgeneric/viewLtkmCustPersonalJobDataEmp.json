@@ -1,0 +1,81 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustPersonalJobDataEmpId",
+        "subSectionTitle": "Job Data",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Customer Model",
+            "property": "CustModelName"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "Profession",
+            "property": "ProfessionName"
+          },
+          {
+            "type": "boolean",
+            "label": "Internal Employee",
+            "property": "IsMfEmp"
+          },
+          {
+            "type": "text",
+            "label": "Company Name",
+            "property": "CompanyName"
+          },
+          {
+            "type": "text",
+            "label": "Industry Type",
+            "property": "IndustryTypeName"
+          },
+          {
+            "type": "text",
+            "label": "Company Scale",
+            "property": "CompanyScaleName"
+          },
+          {
+            "type": "text",
+            "label": "Job Position",
+            "property": "JobPositionName"
+          },
+          {
+            "type": "text",
+            "label": "Number of Employee",
+            "property": "NumOfEmp"
+          },
+          {
+            "type": "text",
+            "label": "Job Title",
+            "property": "JobTitleName"
+          },
+          {
+            "type": "date",
+            "label": "Join Date",
+            "property": "EstablishmentDt"
+          },
+          {
+            "type": "text",
+            "label": "Job Status",
+            "property": "JobStatName"
+          },
+          {
+            "type": "text",
+            "label": "Company Address",
+            "property": "JobAddr"
+          }
+        ],
+        "querystring": {
+          "name": "viewLtkmCustPersonalJobDataEmp"
+        }
+      }
+    ]
+  }
+  

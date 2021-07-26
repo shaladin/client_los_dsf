@@ -16,9 +16,7 @@ export class CreditReviewCfnaPagingDsfComponent implements OnInit {
 
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array();
   userAccess: any;
-
   constructor(private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -30,7 +28,7 @@ export class CreditReviewCfnaPagingDsfComponent implements OnInit {
 
   ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
+    
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditReview.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReview.json";
 

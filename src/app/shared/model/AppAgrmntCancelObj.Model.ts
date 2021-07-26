@@ -1,13 +1,13 @@
 export class AppAgrmntCancelObj {
-    AppAgrmntCancelId: any;
-    AppId: any;
-    AgrmntId: any;
-    CancelByRefNo: any;
-    CancelDt: any;
-    ReasonCode: any;
-    CancelNotes: any;
-    RowVersion: any;
-    IsContractSigned: any;
+    AppAgrmntCancelId: number;
+    AppId: number;
+    AgrmntId: number;
+    CancelByRefNo: string;
+    CancelDt: Date;
+    ReasonCode: string;
+    CancelNotes: string;
+    RowVersion: string;
+    IsContractSigned: boolean;
     constructor() {
       this.AppAgrmntCancelId = 0;
       this.RowVersion = "";

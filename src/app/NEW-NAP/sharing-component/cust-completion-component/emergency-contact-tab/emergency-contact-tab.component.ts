@@ -16,6 +16,8 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { RegexService } from 'app/shared/services/regex.services';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
@@ -23,7 +25,8 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 @Component({
   selector: 'app-emergency-contact-tab',
   templateUrl: './emergency-contact-tab.component.html',
-  styleUrls: ['./emergency-contact-tab.component.scss']
+  styleUrls: ['./emergency-contact-tab.component.scss'],
+  providers: [RegexService]
 })
 export class EmergencyContactTabComponent implements OnInit {
 
@@ -60,13 +63,15 @@ export class EmergencyContactTabComponent implements OnInit {
   })
 
   constructor(
+    private regexService: RegexService,
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService, private cookieService: CookieService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.customPattern = new Array<CustomPatternObj>();
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = UserAccess.BusinessDt;
 
@@ -94,12 +99,12 @@ export class EmergencyContactTabComponent implements OnInit {
     this.InputUcAddressObj.showFax = false;
     this.isUcAddressReady = true;
 
-    this.setDropdown();
-    this.getData();
+    await this.setDropdown();
+    await this.getData();
   }
 
-  setDropdown() {
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+  async setDropdown() {
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
@@ -107,11 +112,12 @@ export class EmergencyContactTabComponent implements OnInit {
           this.EmergencyContactForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
+          this.getInitPattern();
           this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -123,19 +129,19 @@ export class EmergencyContactTabComponent implements OnInit {
 
     let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
     tempReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).toPromise().then(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
         if (!this.IsMarried) {
           await this.removeSpouse();
         }
-        await this.EmergencyContactForm.patchValue({
+        this.EmergencyContactForm.patchValue({
           MrCustRelationshipCode: this.MrCustRelationshipObj[0].Key
         });
       }
     );
 
-    this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.AppCustId }).subscribe(
+    await this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         this.copyAddressFromObj = response[CommonConstant.ReturnObj];
         this.EmergencyContactForm.patchValue({ CopyAddrFrom: this.copyAddressFromObj[0]['AppCustAddrId'] });
@@ -143,8 +149,8 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   isDataExist: boolean = false;
-  getData() {
-    this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { Id: this.AppCustId }).subscribe(
+  async getData() {
+    await this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         if (response.AppCustEmrgncCntctId != 0) {
           this.isDataExist = true;
@@ -160,6 +166,12 @@ export class EmergencyContactTabComponent implements OnInit {
             MobilePhnNo2: response.MobilePhnNo2,
             Email: response.Email
           })
+
+          if (this.GenderObj.findIndex(x => x.Key == this.EmergencyContactForm.controls.MrGenderCode.value) == -1) {
+            this.EmergencyContactForm.patchValue({
+              MrGenderCode: ''
+            })
+          }
         }
         this.appCustEmrgncCntctObj.RowVersion = response["RowVersion"];
         this.InputLookupCustObj.nameSelect = response["ContactPersonName"];
@@ -202,6 +214,7 @@ export class EmergencyContactTabComponent implements OnInit {
     }
 
     this.EmergencyContactForm.controls.IdExpiredDt.updateValueAndValidity();
+    this.setValidatorPattern();
   }
 
   removeSpouse() {
@@ -338,4 +351,51 @@ export class EmergencyContactTabComponent implements OnInit {
         });
     }
   }
+
+  //START URS-LOS-041
+  controlNameIdNo: string = 'IdNo';
+  controlNameIdType: string = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  resultPattern: Array<KeyValueObj>;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if(this.resultPattern != undefined)
+        {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+    
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern();
+        }
+      }
+    );
+  }
+  setValidatorPattern() {
+    let idTypeValue: string;
+    idTypeValue = this.EmergencyContactForm.controls[this.controlNameIdType].value;
+    var pattern: string = '';
+    if (idTypeValue != undefined) {
+      if (this.resultPattern != undefined) {
+        var result = this.resultPattern.find(x => x.Key == idTypeValue)
+        if (result != undefined) {
+          pattern = result.Value;
+        }
+      }
+    }
+    this.setValidator(pattern);
+  }
+  setValidator(pattern: string) {
+    if (pattern != undefined) {
+      this.EmergencyContactForm.controls[this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+      this.EmergencyContactForm.controls[this.controlNameIdNo].updateValueAndValidity();
+    }
+  }
+  //END OF URS-LOS-041
 }

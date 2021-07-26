@@ -14,6 +14,7 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMain
 import Stepper from 'bs-stepper';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
@@ -36,6 +37,7 @@ export class NapCustMainDataDsfComponent implements OnInit {
   bizTemplateCode: string;
   appCustId: number = 0;
   IsViewReady: boolean = false;
+  from: string;
 
   AppStep = {
     "NEW": 1,
@@ -50,7 +52,7 @@ export class NapCustMainDataDsfComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService) {
+    private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -59,11 +61,15 @@ export class NapCustMainDataDsfComponent implements OnInit {
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
+      if(params["from"]!= null)
+      {
+        this.from = params["from"];
+      }
     });
   }
 
   async ngOnInit() {
-    this.ClaimTask();
+    this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
     this.AppStepIndex = 0;
     this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
@@ -161,18 +167,6 @@ export class NapCustMainDataDsfComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
 }

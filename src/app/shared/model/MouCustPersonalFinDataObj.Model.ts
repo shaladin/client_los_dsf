@@ -7,7 +7,7 @@ export class MouCustPersonalFinDataObj {
     MrSourceOfIncomeTypeCode: string;
     SpouseMonthlyIncomeAmt: number;
     IsJoinIncome: boolean;
-    RowVersion: any;
+    RowVersion: string;
 
 constructor() { 
         this.MouCustPersonalFinDataId = 0;

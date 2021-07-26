@@ -16,8 +16,6 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHisto
 export class MouViewApprovalHistoryComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() MouCustNo: string;
-  GetMouCustRvwHByMouCustIdUrl: string;
-  GetListMouCustRvwDUrl: string;
   responseMouCustRvwH: MouCustRvwHObj;
   mouCustRvwHObj: MouCustRvwHObj;
   mouCustRvwDObj: MouCustRvwDObj;
@@ -28,8 +26,6 @@ export class MouViewApprovalHistoryComponent implements OnInit {
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
   
   constructor(private http: HttpClient, private router: Router) {
-    this.GetMouCustRvwHByMouCustIdUrl = URLConstant.GetMouCustRvwHByMouCustId;
-    this.GetListMouCustRvwDUrl = URLConstant.GetListMouCustRvwD;
   }
 
   ngOnInit() {

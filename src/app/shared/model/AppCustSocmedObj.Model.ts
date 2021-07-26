@@ -1,10 +1,10 @@
 
 export class AppCustSocmedObj {
-    AppCustSocmedId: any;
-    AppCustId: any;
-    MrSocmedCode: any;
-    MrSocmedName: any;
-    SocmedId: any;
+    AppCustSocmedId: number;
+    AppCustId: number;
+    MrSocmedCode: string;
+    MrSocmedName: string;
+    SocmedId: number;
     
 
 

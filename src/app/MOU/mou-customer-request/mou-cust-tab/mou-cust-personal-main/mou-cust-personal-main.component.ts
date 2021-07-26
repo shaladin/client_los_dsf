@@ -12,12 +12,18 @@ import { environment } from 'environments/environment';
 import { MouCustPersonalDataObj } from 'app/shared/model/MouCustPersonalDataObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { RegexService } from 'app/shared/services/regex.services';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-cust-personal-main',
   templateUrl: './mou-cust-personal-main.component.html',
   styleUrls: ['./mou-cust-personal-main.component.scss'],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  providers: [RegexService]
 })
 
 export class MouCustPersonalMainComponent implements OnInit {
@@ -26,39 +32,34 @@ export class MouCustPersonalMainComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: string;
   @Input() custDataPersonalObj: MouCustPersonalDataObj = new MouCustPersonalDataObj();
-  @Input() custType: any;
   @Input() IsSpouseExist: boolean = false;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-  @Output() isMarried: EventEmitter<any> = new EventEmitter();
+  @Output() isMarried: EventEmitter<boolean> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
-  countryObj = {
-    CountryCode: ""
-  };
   selectedCustNo: string = "";
   selectedNationalityCountryCode: string = "";
   custDataObj: CustDataObj;
 
   InputLookupCustomerObj: InputLookupObj = new InputLookupObj();
   InputLookupCountryObj: InputLookupObj = new InputLookupObj();
-  CustTypeObj: any;
-  IdTypeObj: any;
-  GenderObj: any;
-  MaritalStatObj: any;
-  NationalityObj: any;
-  EducationObj: any;
-  ReligionObj: any;
-
-  getCountryUrl: any;
-  UserAccess: any;
+  IdTypeObj: Array<RefMasterObj>;
+  GenderObj: Array<KeyValueObj>;
+  MaritalStatObj: Array<KeyValueObj>;
+  NationalityObj: Array<RefMasterObj>;
+  EducationObj: Array<KeyValueObj>;
+  ReligionObj: Array<KeyValueObj>;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   constructor(
+    private regexService: RegexService,
     private fb: FormBuilder,
     private http: HttpClient, private cookieService: CookieService) {
 
   }
 
   async ngOnInit(): Promise<void> {
+    this.customPattern = new Array<CustomPatternObj>();
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
@@ -89,7 +90,6 @@ export class MouCustPersonalMainComponent implements OnInit {
       NoOfDependents: ['', [Validators.maxLength(4)]],
     }));
 
-    this.initUrl();
     this.initLookup();
     this.bindAllRefMasterObj();
     await this.bindCustData();
@@ -177,10 +177,8 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  setCountryName(countryCode) {
-    this.countryObj.CountryCode = countryCode;
-
-    this.http.post(this.getCountryUrl, { Code: countryCode }).subscribe(
+  setCountryName(countryCode: string) {
+    this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: countryCode }).subscribe(
       (response) => {
         this.InputLookupCountryObj.jsonSelect = { CountryName: response["CountryName"] };
       },
@@ -203,6 +201,12 @@ export class MouCustPersonalMainComponent implements OnInit {
         IsVip: this.custDataPersonalObj.MouCustObj.IsVip,
       });
       this.InputLookupCustomerObj.jsonSelect = { CustName: this.custDataPersonalObj.MouCustObj.CustName };
+      if(this.custDataPersonalObj.MouCustObj.CustName != null || this.custDataPersonalObj.MouCustObj.CustName != "" || this.custDataPersonalObj.MouCustObj.CustName != undefined)
+      {
+        this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
+        this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
+        this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
+      }
       this.selectedCustNo = this.custDataPersonalObj.MouCustObj.CustNo;
       if (this.custDataPersonalObj.MouCustObj.CustNo != undefined && this.custDataPersonalObj.MouCustObj.CustNo != "") {
         this.InputLookupCustomerObj.isReadonly = true;
@@ -239,10 +243,6 @@ export class MouCustPersonalMainComponent implements OnInit {
     }
   }
 
-  initUrl() {
-    this.getCountryUrl = URLConstant.GetRefCountryByCountryCode;
-  }
-
   initLookup() {
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
@@ -270,6 +270,10 @@ export class MouCustPersonalMainComponent implements OnInit {
           });
         }
         this.clearExpDt();
+        if(this.IdTypeObj != undefined)
+        {
+          this.getInitPattern();
+        }
       }
     );
 
@@ -357,6 +361,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       idExpiredDate.clearValidators();
     }
     idExpiredDate.updateValueAndValidity();
+    this.setValidatorPattern();
   }
 
   isLocal: boolean = false;
@@ -435,6 +440,53 @@ export class MouCustPersonalMainComponent implements OnInit {
     }
     else {
       this.isMarried.emit(false);
+    }
+  }
+
+  controlNameIdNo: string = 'IdNo';
+  controlNameIdType: string = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  resultPattern: Array<KeyValueObj>;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if(this.resultPattern != undefined)
+        {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+    
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern();
+        }
+      }
+    );
+  }
+
+  setValidatorPattern() {
+    let idTypeValue: string;
+    idTypeValue = this.parentForm.controls[this.identifier]['controls'][this.controlNameIdType].value;
+    var pattern: string = '';
+    if (idTypeValue != undefined) {
+      if (this.resultPattern != undefined) {
+        var result = this.resultPattern.find(x => x.Key == idTypeValue)
+        if (result != undefined) {
+          pattern = result.Value;
+        }
+      }
+    }
+    this.setValidator(pattern);
+  }
+
+  setValidator(pattern: string) {
+    if (pattern != undefined) {
+      this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].setValidators([Validators.required, Validators.pattern(pattern)]);
+      this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].updateValueAndValidity();
     }
   }
 }

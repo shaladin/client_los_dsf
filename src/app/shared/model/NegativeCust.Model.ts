@@ -1,5 +1,5 @@
 export class NegativeCustObj{
-    BirthDt: any;
+    BirthDt: Date;
     CustName: string;
     CustNo: string;
     DuplicateItem: string;

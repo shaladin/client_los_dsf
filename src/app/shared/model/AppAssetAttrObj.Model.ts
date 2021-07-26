@@ -4,6 +4,11 @@ export class AppAssetAttrObj {
   AssetAttrCode: string;
   AssetAttrName: string;
   AttrValue: string;
+  AttrCode: string;
+  AttrName: string;
+  AttrInputType: string;
+  AttrQuestionValue: Array<string>;
+  AttrLength: number;
 
   constructor() {
     this.AssetAttrCode = "";

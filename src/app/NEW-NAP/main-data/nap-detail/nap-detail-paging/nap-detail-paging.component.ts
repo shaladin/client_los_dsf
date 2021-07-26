@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'nap-detail-paging',
@@ -17,7 +18,7 @@ export class NapDetailPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
   bizTemplateCode: string;
-  userAccess: any;
+  userAccess: CurrentUserContext;
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   constructor(
     private router: Router,
@@ -40,6 +41,11 @@ export class NapDetailPagingComponent implements OnInit {
     critObj.value = "NAPD_MD_" + this.bizTemplateCode;
     this.arrCrit.push(critObj);
 
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'a.BIZ_TEMPLATE_CODE';
+    critObj.value = this.bizTemplateCode;
+    this.arrCrit.push(critObj);
     // var critObj2 = new CriteriaObj();
     // critObj2.restriction = AdInsConstant.RestrictionNotIn;
     // critObj2.propName = 'a.APP_CURR_STEP';
@@ -83,6 +89,9 @@ export class NapDetailPagingComponent implements OnInit {
         case CommonConstant.OPL:
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
           break;
+        case CommonConstant.DF :
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_DLFN_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true});
+        break;
       }
     }
   }

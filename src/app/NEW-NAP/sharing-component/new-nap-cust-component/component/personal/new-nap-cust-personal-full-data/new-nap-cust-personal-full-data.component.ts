@@ -34,7 +34,6 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
   CustFullName: string;
   NationalityCountryCode: string;
   Country: GeneralSettingObj = new GeneralSettingObj();
-  LocalCountry: any;
   AppCustGrpObj: AppCustGrpObj = new AppCustGrpObj();
   ListAppCustGrpObj: Array<AppCustGrpObj> = new Array<AppCustGrpObj>();
   CustNoObj: GenericObj = new GenericObj();
@@ -103,10 +102,9 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
 
         this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: this.Country.GsValue }).subscribe(
           (response) => {
-            this.LocalCountry = response;
             this.ChangeNationality(this.Country.GsValue)
             this.lookupCountryObj.isReady = true;
-            this.ResponseLocalCountry.emit(this.LocalCountry.CountryCode);
+            this.ResponseLocalCountry.emit(response["CountryCode"]);
           });
       });
 

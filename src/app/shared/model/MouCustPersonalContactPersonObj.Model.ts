@@ -34,7 +34,7 @@ export class MouCustPersonalContactPersonObj {
     SubZipcode: string;
     FullAddr: string;
     IsGuarantor: boolean;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor()
     {

@@ -1,0 +1,35 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CessieId",
+        "subSectionTitle": "Main Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Cessie No",
+            "property": "CessieNo"
+          },
+          {
+            "type": "text",
+            "label": "Cessie Date",
+            "property": "CessieDate"
+          },
+          {
+            "type": "text",
+            "label": "Client",
+            "property": "ClientName"
+          },
+          {
+            "type": "text",
+            "label": "Amount",
+            "property": "PiutangAmount"
+          }
+        ],
+        "querystring": {
+          "name": "viewCessieInformation"
+        }
+      }
+    ]
+  }

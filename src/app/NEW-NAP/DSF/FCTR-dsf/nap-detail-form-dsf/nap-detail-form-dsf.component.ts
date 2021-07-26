@@ -18,8 +18,10 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
@@ -39,7 +41,6 @@ export class NapDetailFormDsfComponent implements OnInit {
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
-  ListAsset: any;
   IsDataReady: boolean = false;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
@@ -54,7 +55,7 @@ export class NapDetailFormDsfComponent implements OnInit {
     "APP": 1,
     "INVOICE": 2,
     "COLL": 3,
-    "INS": 4,
+    "INS":4,
     "FIN": 5,
     "TC": 6,
     "UPL_DOC": 7
@@ -63,10 +64,11 @@ export class NapDetailFormDsfComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: string;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  MouCustId: number;
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
-  constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private toastr: NGXToastrService) {
+  constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private toastr: NGXToastrService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -82,18 +84,18 @@ export class NapDetailFormDsfComponent implements OnInit {
     });
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     //check DMS
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
-    });
+      });
 
-    this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    var appObj = { Id: this.appId };
+    let appObj = { Id: this.appId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
@@ -102,6 +104,7 @@ export class NapDetailFormDsfComponent implements OnInit {
             this.stepper.to(this.AppStepIndex);
           }else{
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
+            this.MouCustId = response.MouCustId;
             this.stepper.to(this.AppStepIndex);
             if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
               this.initDms();
@@ -124,14 +127,14 @@ export class NapDetailFormDsfComponent implements OnInit {
   }
 
   async initDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-      var appObj = { Id: this.appId };
+      let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
           this.appNo = this.NapObj.AppNo;
@@ -145,8 +148,10 @@ export class NapDetailFormDsfComponent implements OnInit {
           else {
             this.dmsObj.MetadataParent = null;
           }
-  
+
           let mouId = this.NapObj.MouCustId;
+          this.MouCustId = this.NapObj.MouCustId;
+          console.log(this.NapObj.MouCustId);
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
             this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
@@ -162,11 +167,11 @@ export class NapDetailFormDsfComponent implements OnInit {
           }
         }
       );
-    }  
+    }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.FCTR });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.FCTR });
   }
 
   MakeViewReturnInfoObj() {
@@ -175,7 +180,7 @@ export class NapDetailFormDsfComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.appId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
       this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
@@ -186,12 +191,12 @@ export class NapDetailFormDsfComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { Id: this.appId }
+    let appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null) {
-          if (this.ListAsset.length > 1)
+        let ListAsset = response['ReturnObject'];
+        if (ListAsset != undefined && ListAsset != null) {
+          if (ListAsset.length > 1)
             this.IsMultiAsset = true;
           else
             this.IsMultiAsset = false;
@@ -250,16 +255,32 @@ export class NapDetailFormDsfComponent implements OnInit {
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
-  CheckIsUseDms(){
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+  CheckIsUseDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.NextStep(CommonConstant.AppStepUplDoc);
-    }else{
+    } else {
       this.LastStepHandler();
     }
   }
-  
-  LastStepHandler() {
+
+  async LastStepHandler() {
     let reqObj: SubmitNapObj = new SubmitNapObj();
+    if(this.MouCustId == null){
+      await this.http.post(URLConstant.GetMouCustByAppId, { Id: this.appId }).toPromise().then(
+        (response) => {
+          this.MouCustId = response["MouCustId"]
+        });
+    }
+    let IsInValid;
+    await this.http.post(URLConstant.CheckIsMouFreeze, {MouCustId : this.MouCustId}).toPromise().then(
+      (response) => {
+        IsInValid = response["IsFreeze"]
+      });
+    if (IsInValid) {
+      this.toastr.warningMessage(ExceptionConstant.MOU_FREEZE_STATE);
+      return
+    }
+
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
@@ -286,17 +307,6 @@ export class NapDetailFormDsfComponent implements OnInit {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.FCTR });
         })
     }
-  }
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      () => {
-
-      });
   }
 
 }
