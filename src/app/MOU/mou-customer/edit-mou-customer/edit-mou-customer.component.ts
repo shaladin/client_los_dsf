@@ -12,6 +12,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { environment } from 'environments/environment';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -23,12 +26,13 @@ export class EditMouCustomerComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj>;
-  user: CurrentUserContext;
+  requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
 
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/searchEditMouCustomer.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditMouCustomer.json";
@@ -38,6 +42,25 @@ export class EditMouCustomerComponent implements OnInit {
     critObj.propName = 'MOU.MOU_STAT';
     critObj.value = 'RTN';
     this.arrCrit.push(critObj);
+    
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchEditMouCustomerV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchEditMouCustomerV2.json";
+
+      this.inputPagingObj.isJoinExAPI = true;
+
+      this.requestTaskModel.ProcessKey = CommonConstant.WF_MOU_GENERAL,
+      this.requestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE],
+      this.requestTaskModel.TaskDefinitionKey = CommonConstant.MOU_RETURN,
+      this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE],
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.requestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "MouCustNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.IntegrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 

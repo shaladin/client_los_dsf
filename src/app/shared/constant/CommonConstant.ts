@@ -894,7 +894,11 @@ export class CommonConstant {
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
-  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW"
+  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
+  public static MOU_REVIEW = "MOU_REVIEW";
+  public static LEGAL_RVW = "LEGAL_RVW";
+  public static MOU_RETURN = "MOU_RETURN";
   
 
   // CUST ADDR TYPE

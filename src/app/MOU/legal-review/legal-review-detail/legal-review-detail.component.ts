@@ -13,11 +13,12 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
+import { ReqListMouCustLglReviewObj, ReqListMouCustLglReviewV2Obj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -28,7 +29,7 @@ import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model'
 export class LegalReviewDetailComponent implements OnInit {
 
   MouCustId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   responseRefMasterObj: Array<KeyValueObj>;
   items: FormArray;
   isItemsReady: boolean = false;
@@ -65,9 +66,7 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    if (this.WfTaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    this.claimTask();
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -134,25 +133,57 @@ export class LegalReviewDetailComponent implements OnInit {
 
   SaveData(formObj: FormGroup, isSubmit: boolean) {
     if (this.LegalForm.valid) {
-      var mouObj = new ReqListMouCustLglReviewObj();
-      for (let index = 0; index < this.responseRefMasterObj.length; index++) {
-        var tempMouObj = {
-          MouCustId: this.MouCustId,
-          MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
-          LglReviewResult: formObj.value.items[index].values,
-          RowVersion: formObj.value.items[index].RowVersion
+      if(environment.isCore){
+        var mouObj = new ReqListMouCustLglReviewV2Obj();
+        for (let index = 0; index < this.responseRefMasterObj.length; index++) {
+          var tempMouObj = {
+            MouCustId: this.MouCustId,
+            MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
+            LglReviewResult: formObj.value.items[index].values,
+            RowVersion: formObj.value.items[index].RowVersion
+          }
+          mouObj.MouCustLglReviewObjs.push(tempMouObj);
         }
-        mouObj.MouCustLglReviewObjs.push(tempMouObj);
+        mouObj.WfTaskListId = this.WfTaskListId;
+        mouObj.IsSubmit = isSubmit;
+        this.http.post(URLConstant.AddRangeMouCustLglReviewV2, mouObj).subscribe(
+          response => {
+            this.toastr.successMessage(response['message']);
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
+  
+          });
+        this.mouTc.Save();
       }
-      mouObj.WfTaskListId = this.WfTaskListId;
-      mouObj.IsSubmit = isSubmit;
-      this.http.post(URLConstant.AddRangeMouCustLglReview, mouObj).subscribe(
-        response => {
-          this.toastr.successMessage(response['message']);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
+      else{
+        var mouObj = new ReqListMouCustLglReviewObj();
+        for (let index = 0; index < this.responseRefMasterObj.length; index++) {
+          var tempMouObj = {
+            MouCustId: this.MouCustId,
+            MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
+            LglReviewResult: formObj.value.items[index].values,
+            RowVersion: formObj.value.items[index].RowVersion
+          }
+          mouObj.MouCustLglReviewObjs.push(tempMouObj);
+        }
+        mouObj.WfTaskListId = this.WfTaskListId;
+        mouObj.IsSubmit = isSubmit;
+        this.http.post(URLConstant.AddRangeMouCustLglReview, mouObj).subscribe(
+          response => {
+            this.toastr.successMessage(response['message']);
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
+  
+          });
+        this.mouTc.Save();
+      }
+    }
+  }
 
-        });
-      this.mouTc.Save();
+  claimTask() {
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+    }
+    else{
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }
 }

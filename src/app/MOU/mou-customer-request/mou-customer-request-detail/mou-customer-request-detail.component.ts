@@ -19,6 +19,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -27,7 +28,7 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMast
 })
 export class MouCustomerRequestDetailComponent implements OnInit {
   mouType: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLookupCust: InputLookupObj;
   pageType: string = "add";
   mouCustId: number;
@@ -93,8 +94,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         }
       });
 
-    if (this.WfTaskListId > 0){
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    if (this.WfTaskListId != null || this.WfTaskListId > 0){
+      this.claimTask();
     }
 
     this.GetMouTypeDesc();
@@ -244,6 +245,15 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   checkEndDate(ev){
     if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
        this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+    }
+  }
+
+  claimTask() {
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+    }
+    else{
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }
 }
