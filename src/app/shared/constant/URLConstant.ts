@@ -306,6 +306,8 @@ export class URLConstant {
   //REF-PAY
   public static GetListLKvpActiveRefPayFreq = "/RefPayFreq/GetListLKvpActiveRefPayFreq";
   public static GetListActiveRefPayFreq = environment.FoundationR3Url + "/v1" + "/RefPayFreq/GetListActiveRefPayFreq";
+  public static GetListRefPayFreqForMou = environment.FoundationR3Url + "/v1" + "/RefPayFreq/GetListRefPayFreqForMou";
+
 
   //ZIPCODE
   public static GetRefZipcodePaging = "/RefZipcode/GetRefZipcodePaging";
@@ -473,7 +475,10 @@ export class URLConstant {
   public static GetListUploadSettingDByUploadSettingHId = environment.FoundationR3Url + "/v1" + '/UploadSetting/GetListUploadSettingDByUploadSettingHId'
   public static CancelUpload = environment.FoundationR3Url + "/v1" + "/Upload/CancelUpload";
   public static UploadReview = environment.FoundationR3Url + "/v1" + "/Upload/UploadReview";
+  public static CancelUploadV2 = environment.FoundationR3Url + "/v2" + "/Upload/CancelUpload";
+  public static UploadReviewV2 = environment.FoundationR3Url + "/v2" + "/Upload/UploadReview";
 
+  
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
   public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
@@ -493,10 +498,14 @@ export class URLConstant {
   public static UpdateLeadStatAndStepByHuman = environment.losUrl + "/v1" + "/Lead/UpdateLeadStatAndStepByHuman";
   public static UpdateLeadStepByHuman = environment.losUrl + "/v1" + "/Lead/UpdateLeadStepByHuman";;
   public static SubmitWorkflowLeadInput = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowLeadInput";
+  public static SubmitWorkflowLeadInputV2 = environment.losUrl + "/v2" + "/Lead/SubmitWorkflowLeadInput";
   public static SubmitWorkflowSimpleLeadInput = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowSimpleLeadInput";
+  public static SubmitWorkflowSimpleLeadInputV2 = environment.losUrl + "/v2" + "/Lead/SubmitWorkflowSimpleLeadInput";
   public static GetLeadPersonalForLookupCopy = environment.losUrl + "/v1" + "/Lead/GetLeadPersonalForLookupCopy";
   public static SubmitWorkflowLeadInputKta = environment.losUrl + "/v1" + "/Lead/SubmitWorkflowLeadInputKta";
+  public static SubmitWorkflowLeadInputKtaV2 = environment.losUrl + "/v2" + "/Lead/SubmitWorkflowLeadInputKta";
   public static RejectLead = environment.losUrl + "/v1" + "/Lead/RejectLead";
+  public static RejectLeadV2 = environment.losUrl + "/v2" + "/Lead/RejectLead";
   public static CheckRapindo = environment.losUrl + "/v1" + "/Lead/CheckRapindo";
   public static CheckIntegrator = environment.losUrl + "/v1" + "/Lead/CheckIntegrator";
 
@@ -881,7 +890,7 @@ export class URLConstant {
   public static GetAppCustBankAccByBankAccNoAndAppCustId = environment.losUrl + "/v1" + "/AppCustBankAcc/GetAppCustBankAccByBankAccNoAndAppCustId";
   public static GetCustBankAccByCustIdAndBankAccNo = environment.FoundationR3Url + "/v1" + "/CustBankAcc/GetCustBankAccByCustIdAndBankAccNo";
 
-  // APP CUST ATTR CONTENT 
+  // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
 
@@ -980,11 +989,13 @@ export class URLConstant {
   // LEAD FRAUD VERF
   public static AddLeadFraudVerf = environment.losUrl + "/v1" + "/LeadFraudVerf/AddLeadFraudVerf";
   public static AddNewLeadFraudVerf = environment.losUrl + "/v1" + "/LeadFraudVerf/AddNewLeadFraudVerf";
+  public static AddNewLeadFraudVerfV2 = environment.losUrl + "/v2" + "/LeadFraudVerf/AddNewLeadFraudVerf";
   public static GetListLeadForLeadVerfObj = environment.losUrl + "/v1" + "/LeadVerf/GetListLeadForLeadVerfObj";
   public static GetDoubleFinancingCheckAppAsset = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
 
   //LEAD VERF
   public static AddRangeLeadVerf = environment.losUrl + "/v1" + "/LeadVerf/AddRangeLeadVerf";
+  public static AddRangeLeadVerfV2 = environment.losUrl + "/v2" + "/LeadVerf/AddRangeLeadVerf";
   public static GetListLeadVerf = environment.losUrl + "/v1" + "/LeadVerf/GetListLeadVerf";
 
   //APP TC
@@ -1117,7 +1128,7 @@ export class URLConstant {
   public static CekDifInvoiceAmountByAppId = environment.losUrl + "/v1" + "/AppInvoice/CekDifInvoiceAmountByAppId";
   public static GetAllNtfAppAmtByMouCustId = environment.losUrl + "/v1" + "/AppInvoice/GetAllNtfAppAmtByMouCustId";
 
-  //app invoice x 
+  //app invoice x
   public static GetListAppInvoiceXAppInvoiceDlrFncngHByAppId = environment.losUrl + "/v1" + "/AppInvoiceX/GetListAppInvoiceAppInvoiceDlrFncngHByAppId";
 
   //App Cust Addr
@@ -1276,8 +1287,10 @@ export class URLConstant {
 
   // Workflow Engine
   public static ClaimTask = environment.FoundationR3Url + "/v1" + "/Workflow/ClaimTask";
+  public static ClaimTaskV2 = environment.FoundationR3Url + "/v2" + "/Workflow/ClaimTask";
   public static ClaimTaskNap = environment.losUrl + "/v1" + "/Application/ClaimTaskNap";
   public static ClaimTaskNapCustmainData = environment.losUrl + "/v1" + "/Application/ClaimTaskNapCustmainData";
+  public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
 
   //Application Data
   public static SaveApplicationDataFctr = environment.losUrl + "/v1" + "/ApplicationData/SaveApplicationDataFctr"
@@ -1363,6 +1376,7 @@ export class URLConstant {
 
   // Upload
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/Upload/UploadFile";
+  public static UploadFileV2 = environment.FoundationR3Url + "/v2" + "/Upload/UploadFile";
 
   // Download
   public static DownloadTemplate = environment.FoundationR3Url + "/v1" + '/Download/DownloadTemplate';
@@ -1680,7 +1694,7 @@ export class URLConstant {
   public static CopyProduct = environment.losUrl + "/v1" + "/Product/CopyProduct";
   public static SubmitProduct = environment.losUrl + "/v1" + "/Product/SubmitProduct"
   public static GetListProdBranchOfficeMbrByProdOfferingHId = environment.losUrl + "/v1" + "/Product/GetListProdBranchOfficeMbrByProdOfferingHId";
-  
+
   //PRODUCT OFFERING
   public static GetProdOfferingHById = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingHById";
   public static AddProdOffering = environment.losUrl + "/v1" + "/ProductOffering/AddProdOffering";

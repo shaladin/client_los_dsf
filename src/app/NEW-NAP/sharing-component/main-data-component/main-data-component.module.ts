@@ -7,7 +7,7 @@ import { CustMainDataComponent } from "./cust-main-data/cust-main-data.component
 import { FamilyMainDataPagingComponent } from "./family-main-data/family-main-data-paging.component";
 import { GuarantorMainDataPagingComponent } from "./guarantor-main-data/guarantor-main-data-paging.component";
 import { MngmntShrhldrMainDataPagingComponent } from "./mngmnt-shrhldr-main-data/mngmnt-shrhldr-main-data-paging.component";
-import { NgxCurrencyModule } from "ngx-currency";
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -18,7 +18,8 @@ export const customCurrencyMaskConfig = {
     prefix: "",
     suffix: "",
     thousands: ",",
-    nullable: false
+    nullable: false,
+    inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({

@@ -2,6 +2,7 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { environment } from "environments/environment";
 import { CriteriaObj } from "../CriteriaObj.model";
+import { IntegrationObj } from "../library/IntegrationObj.model";
 
 export class UcTempPagingObj {
     urlJson: string;
@@ -17,6 +18,8 @@ export class UcTempPagingObj {
     isHideSearch: boolean;
     navigationConst: any;
     listEnvironments: Array<EnvisObj>;
+    isJoinExAPI: boolean;
+    integrationObj: IntegrationObj;
 
     constructor() {
         this.urlJson = "";
@@ -34,6 +37,8 @@ export class UcTempPagingObj {
         this.delay = 0;
         this.isHideSearch = false;
         this.navigationConst = NavigationConstant;
+        this.isJoinExAPI = false;
+        this.integrationObj = new IntegrationObj();
     }
 }
 

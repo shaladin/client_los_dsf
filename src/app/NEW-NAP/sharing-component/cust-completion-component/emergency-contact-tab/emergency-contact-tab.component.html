@@ -14,7 +14,7 @@
                   <div class="col-md-8">
                     <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustObj"
                       *ngIf="this.InputLookupCustObj.isReady" [parentForm]="EmergencyContactForm"
-                      [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
+                      [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" (inputtedValue)="onTypeName($event)" #LookupExistingCust>
                     </lib-uclookupgeneric>
                   </div>
                 </div>
