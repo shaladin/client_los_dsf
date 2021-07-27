@@ -6,8 +6,8 @@ import { AdInsHelper } from "./AdInsHelper";
 import { CommonConstant } from "./constant/CommonConstant";
 import { URLConstant } from "./constant/URLConstant";
 import { AppObj } from "./model/App/App.Model";
-import { ClaimTaskModel } from "./model/Workflow/V2/ClaimTaskModelObj.model";
 import { ClaimWorkflowObj } from "./model/Workflow/ClaimWorkflowObj.Model";
+import { ClaimTaskModel } from "./model/Workflow/V2/ClaimTaskModelObj.model";
 import { AdInsConstant } from "./AdInstConstant";
 
 @Injectable()
@@ -16,7 +16,6 @@ export class ClaimTaskService{
   constructor(
     private http: HttpClient,
     private cookieService: CookieService) { }
-
 
   ClaimTask(WfTaskListId: number){
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -39,6 +38,7 @@ export class ClaimTaskService{
       () => {
       });
   }
+  
 
   ClaimTaskV2(WfTaskListId: string){
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

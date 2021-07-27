@@ -84,7 +84,7 @@ export class LeadInputPageComponent implements OnInit {
       });
     
     if(environment.isCore){   
-      if (this.TaskListId != undefined && this.TaskListId == "") {
+      if (this.TaskListId != undefined && this.TaskListId != "") {
         this.claimTaskService.ClaimTaskV2(this.TaskListId);
       }
     }else{
