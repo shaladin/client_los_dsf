@@ -22,7 +22,8 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "Edit") {
-      this.http.post(URLConstantDsf.UpdateNotify, { LeadNo: ev.RowObj.LeadNo }).subscribe(
+      var reqObj = { TrxNo: ev.RowObj.LeadNo };
+      this.http.post(URLConstantDsf.UpdateNotify, reqObj).subscribe(
         (response) => {
         
         }

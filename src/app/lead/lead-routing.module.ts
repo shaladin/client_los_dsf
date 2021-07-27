@@ -18,6 +18,8 @@ import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.compo
 import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
 import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { LeadToBeFollowUpDsfComponent } from './DSF/lead-to-be-follow-up-dsf/lead-to-be-follow-up-dsf.component';
 import { GeneratePotentialRoComponent } from './potential-ro/generate-potential-ro/generate-potential-ro.component';
 import { RoTelemkOfferPagingComponent } from './potential-ro/ro-telemk-offer-paging/ro-telemk-offer-paging.component';
 import { RoTelemkOfferDetailComponent } from './potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail.component';
@@ -36,8 +38,6 @@ import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-l
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
 
-import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
-import { LeadToBeFollowUpDsfComponent } from './DSF/lead-to-be-follow-up-dsf/lead-to-be-follow-up-dsf.component';
 
 const routes: Routes = [
   {
@@ -69,6 +69,13 @@ const routes: Routes = [
         component: LeadInputComponent,
         data: {
           title: 'Lead Input Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.NEW_LEAD_TO_BE_FOLLOW_UP_PAGING,
+        component: LeadToBeFollowUpDsfComponent,
+        data: {
+          title: 'New Lead To Be Follow Up Paging Dsf'
         }
       },
       {

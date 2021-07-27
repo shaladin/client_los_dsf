@@ -55,6 +55,7 @@ import { NewFraudVerifDetailComponent } from './new-fraud-verif/new-fraud-verif-
 import { NewLeadUpdateComponent } from './new-lead-update/new-lead-update.component';
 import { SharedModule } from "app/shared/shared.module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { LeadToBeFollowUpDsfComponent } from "./DSF/lead-to-be-follow-up-dsf/lead-to-be-follow-up-dsf.component";
 import { RoPotentialViewComponent } from "./potential-ro/ro-potential-view/ro-potential-view.component";
 import { RoPotentialExecutionComponent } from "./potential-ro/ro-potential-execution/ro-potential-execution.component";
 import { NewLeadInputLeadDataComponent } from './new-lead-input/new-lead-input-lead-data/new-lead-input-lead-data.component';
@@ -62,7 +63,6 @@ import { NewLeadInputPageComponent } from './new-lead-input/new-lead-input-page/
 import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-lead-monitoring.component';
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
-import { LeadToBeFollowUpDsfComponent } from "./DSF/lead-to-be-follow-up-dsf/lead-to-be-follow-up-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
