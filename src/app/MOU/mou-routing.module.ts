@@ -60,6 +60,10 @@ import { MouUnfreezeInquiryComponent } from './mou-unfreeze/mou-unfreeze-inquiry
 import { MouUnfreezeViewComponent } from './mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component';
 import { MouUnfreezeDetailComponent } from './mou-unfreeze/mou-unfreeze-detail/mou-unfreeze-detail.component';
 import { MouUnfreezePagingComponent } from './mou-unfreeze/mou-unfreeze-paging/mou-unfreeze-paging.component';
+import {MouCustomerDetailXComponent} from '../impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component';
+import {PathConstantX} from '../impl/shared/constant/PathConstantX';
+import {ChangeMouRequestAddcollXComponent} from '../impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
+import {ChangeMouRequestDetailCustomerXComponent} from '../impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
 
 const routes: Routes = [
   {
@@ -94,10 +98,10 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.DETAIL,
-        component: MouCustomerDetailComponent,
+        path: PathConstantX.DETAIL_X,
+        component: MouCustomerDetailXComponent,
         data: {
-          title: 'MOU Customer Detail'
+          title: 'MOU Customer Detail X'
         }
       },
       {
@@ -353,8 +357,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.CHANGE_MOU_REQ_DETAIL_CUST_TYPE,
-        component: ChangeMouRequestDetailCustomerComponent,
+        path: PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X,
+        component: ChangeMouRequestDetailCustomerXComponent,
         data: {
           title: "Change MOU Request Customer Detail"
         }
@@ -374,8 +378,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.CHANGE_MOU_REQ_ADD_COLL,
-        component: ChangeMouRequestAddcollComponent,
+        path: PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X,
+        component: ChangeMouRequestAddcollXComponent,
         data: {
           title: "Change MOU Req Add Collateral"
         }
