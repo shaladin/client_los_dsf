@@ -438,4 +438,8 @@ export class NavigationConstant {
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
   //EndSettings
+
+  //Cessie
+  public static CESSIE_MONITORING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_MONITORING; //'/Impl/Cessie/Monitoring'
+  //EndCessie
 }
