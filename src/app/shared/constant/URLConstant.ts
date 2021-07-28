@@ -1750,4 +1750,7 @@ export class URLConstant {
   public static EditRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/EditRefAppSrc";
   public static GetRefAppSrcByRefAppSrcId = environment.losUrl + "/v1" + "/RefAppSrc/GetRefAppSrcByRefAppSrcId";
   public static GetListRefAppSrcOfficeMbrByRefAppSrcId = environment.losUrl + "/v1" + "/RefAppSrc/GetListRefAppSrcOfficeMbrByRefAppSrcId";
+
+  //Config Result
+  public static GetSysConfigResultByCode = environment.FoundationR3Url + "/v1" + "/SysConfigResult/GetSysConfigResultByCode";
 }

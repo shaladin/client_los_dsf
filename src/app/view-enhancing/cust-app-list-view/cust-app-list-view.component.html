@@ -4,9 +4,9 @@
       <div class="card">
         <div class="card-body" *ngIf="isReady">
           <div class="px-3">
-            <lib-ucSubsection [id]="'AppListId'" [title]="'Customer Application List'" [panel]="'AppList'">
+            <lib-ucSubsection [id]="'CustAppListId'" [title]="'Customer Application List'" [panel]="'CustAppList'">
             </lib-ucSubsection>
-            <div id="AppList">
+            <div class="form-body" id="CustAppList">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
@@ -32,10 +32,10 @@
                 </thead>
     
                 <tbody>
-                  <tr *ngIf="AppList.length === 0">
+                  <tr *ngIf="CustAppList.length === 0">
                     <td colspan="100%">No Data Available</td>
                   </tr>
-                  <tr *ngFor="let item of AppList; let i = index">
+                  <tr *ngFor="let item of CustAppList; let i = index">
                     <td >{{item.AppNo}}</td>
                     <td>{{item.CurrCode}}</td>
                     <td class="text-right">{{item.InstAmt == null ? '-' : item.InstAmt | number:'1.2-2':'en-US'}}</td>
@@ -46,6 +46,100 @@
                 </tbody>
               </table>
             </div>
+
+            <div *ngIf="isOplReady">
+              <lib-ucSubsection [id]="'AppListId'" [title]="'Application List'" [panel]="'AppList'">
+              </lib-ucSubsection>
+              <div class="form-body" id="AppList">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Application No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Currency</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Installment Amount</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Asset Price</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Total Down Payment</span>
+                      </th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngIf="AppList.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                    <tr *ngFor="let item of AppList; let i = index">
+                      <td>{{i+1}}</td>
+                      <td *ngIf="item.AppId !== 0">
+                        <a href="javascript:void(0);" (click)="OpenAppView(item.AppId)">
+                          {{item.AppNo}}
+                        </a>
+                      </td>
+                      <td *ngIf="item.AppId === 0">{{item.AppNo}}</td>
+                      <td>{{item.CurrCode}}</td>
+                      <td class="text-right">{{item.InstAmt | number:'1.2-2':'en-US'}}</td>
+                      <td class="text-right">{{item.AssetPriceAmt | number:'1.2-2':'en-US'}}</td>
+                      <td class="text-right">{{item.TotalDownPaymentAmt | number:'1.2-2':'en-US'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+    
+              <lib-ucSubsection [id]="'AppOplListId'" [title]="'Application Opl List'" [panel]="'AppOplList'">
+              </lib-ucSubsection>
+              <div class="form-body" id="AppOplList">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Application No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Currency</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Rental Amount</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Total Asset Price</span>
+                      </th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngIf="AppOplList.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                    <tr *ngFor="let item of AppOplList; let i = index">
+                      <td>{{i+1}}</td>
+                      <td>
+                        <a href="javascript:void(0);" (click)="OpenAppView(item.AppId)">
+                          {{item.AppNo}}
+                        </a>
+                      </td>
+                      <td>{{item.CurrCode}}</td>
+                      <td class="text-right">{{item.RentAmt | number:'1.2-2':'en-US'}}</td>
+                      <td class="text-right">{{item.TotalAssetPriceAmt | number:'1.2-2':'en-US'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
