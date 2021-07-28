@@ -505,6 +505,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         });
     }
     this.selectedInsuranceForCopy = "";
+    this.listDataInsuranceForCopy = null;
     this.selectedCollateral = "";
   }
 
@@ -513,6 +514,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.PageState = 'Paging';
     this.falseValue();
     this.selectedInsuranceForCopy = "";
+    this.listDataInsuranceForCopy = null;
     this.selectedCollateral = "";
   }
 
