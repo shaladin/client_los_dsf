@@ -336,7 +336,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
         this.plafondName = response["Descr"];
       });
     }
-    
+
 
     this.http
     .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
