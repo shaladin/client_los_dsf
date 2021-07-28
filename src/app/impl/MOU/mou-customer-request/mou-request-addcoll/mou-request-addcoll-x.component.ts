@@ -187,6 +187,8 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.inputAddressObjForLocAddr.showPhn2 = false;
     this.inputAddressObjForLocAddr.showPhn3 = false;
     this.inputAddressObjForLocAddr.showFax = false;
+    this.inputAddressObjForLocAddr.isRequired = false;
+    this.inputAddressObjForLocAddr.inputField.inputLookupObj.isRequired = false;
 
     this.items = this.AddCollForm.get('items') as FormArray;
     this.bindUcLookup()
@@ -469,12 +471,15 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn2 = false;
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showFax = false;
+
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
     this.inputAddressObjForLocAddr.showPhn1 = false;
     this.inputAddressObjForLocAddr.showPhn2 = false;
     this.inputAddressObjForLocAddr.showPhn3 = false;
     this.inputAddressObjForLocAddr.showFax = false;
+    this.inputAddressObjForLocAddr.isRequired = false;
+    this.inputAddressObjForLocAddr.inputField.inputLookupObj.isRequired = false;
 
     this.AddCollForm.patchValue({
       MouCustCollateralId: 0,
@@ -602,6 +607,7 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.locationAddrObj = new AddrObj();
     this.inputFieldLocationObj = new InputFieldObj();
     this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldLocationObj.inputLookupObj.isRequired = false;
   }
 
   getLookupCollateralTypeResponse(e) {
