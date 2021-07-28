@@ -16,7 +16,7 @@ export class CustAppListViewComponent implements OnInit {
   CustNo: string = '';
   CustId: number = 0;
   isReady: boolean = false;
-  isOplReady: boolean = true;
+  isOplReady: boolean = false;
   isOpl: boolean = false;
   CustAppList: Array<any> = new Array<any>();
   AppList: Array<any> = new Array<any>();
