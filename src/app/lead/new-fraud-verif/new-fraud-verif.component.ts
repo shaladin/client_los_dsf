@@ -33,10 +33,10 @@ export class NewFraudVerifComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchSimpleFraudVerifV2.json";
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_SIMPLE_LEAD,
-      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE],
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_FRAUD_VERIFICATION,
-      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE]
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_SIMPLE_LEAD;
+      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_FRAUD_VERIFICATION;
+      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;

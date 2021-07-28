@@ -918,8 +918,7 @@ export class CommonConstant {
 
   //Lead Step
   public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL"
-  public static LeadStepLeadVerf = "LVR"
-  public static LeadStepTeleVerf = "TVR"
-  public static LeadStepLeadUpd = "LUP"
-  
+  public static LeadStepLeadVerf = "LVR";
+  public static LeadStepTeleVerf = "TVR";
+  public static LeadStepLeadUpd = "LUP";
 }

@@ -130,8 +130,11 @@ export class MouUnfreezeDetailComponent implements OnInit {
         RequestRFAObj: this.RFAInfo
       };
 
+      let SubmitMouFreezeUnfreezeUrl = URLConstant.SubmitMouFreezeUnfreeze;
+      if(environment.isCore) SubmitMouFreezeUnfreezeUrl = URLConstant.SubmitMouFreezeUnfreezeV2;
+      
       this.http
-        .post(URLConstant.SubmitMouFreezeUnfreeze, sendObj)
+        .post(SubmitMouFreezeUnfreezeUrl, sendObj)
         .subscribe((response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate([NavigationConstant.MOU_FREEZE_PAGING]);
