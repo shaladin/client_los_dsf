@@ -22,7 +22,7 @@
                     <th>
                       <span class="thead-header" translate>Currency</span>
                     </th>
-                    <th>
+                    <th class="text-right">
                       <span class="thead-header" translate>Installment Amount</span>
                     </th>
                     <th>
@@ -36,12 +36,11 @@
                     <td colspan="100%">No Data Available</td>
                   </tr>
                   <tr *ngFor="let item of AgrmntList; let i = index">
-                    <!-- <td>{{i+1}}</td> -->
                     <td>{{item.AppNo}}</td>
                     <td >{{item.AgrmntNo}}</td>
                     <td >{{item.AgrmntDate}}</td>
                     <td>{{item.CurrCode}}</td>
-                    <td [ngClass]="{'text-right': item.InstAmt != null}">{{item.InstAmt == null ? '-' : item.InstAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="text-right">{{item.InstAmt == null ? '-' : item.InstAmt | number:'1.2-2':'en-US'}}</td>
                     <td>{{item.AgrmntCurrStep}}</td>
                   </tr>
                 </tbody>
