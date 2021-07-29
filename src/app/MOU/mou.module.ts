@@ -105,6 +105,8 @@ import { MouUnfreezeDetailComponent } from "./mou-unfreeze/mou-unfreeze-detail/m
 import { MouUnfreezeInquiryComponent } from "./mou-unfreeze/mou-unfreeze-inquiry/mou-unfreeze-inquiry.component";
 import { MouUnfreezeViewComponent } from "./mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component";
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { MouRequestAddcollXComponent } from "app/impl/MOU/mou-customer-request/mou-request-addcoll/mou-request-addcoll-x.component";
+import { MouCustomerDetailXComponent } from "app/impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -141,6 +143,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalgeneralinfoModule,
     SharedModule,
     NgMultiSelectDropDownModule
+
   ],
   declarations: [
     DocSignerComponent,
@@ -236,7 +239,9 @@ export const customCurrencyMaskConfig = {
     MouUnfreezePagingComponent,
     MouUnfreezeDetailComponent,
     MouUnfreezeInquiryComponent,
-    MouUnfreezeViewComponent
+    MouUnfreezeViewComponent,
+    MouRequestAddcollXComponent,
+    MouCustomerDetailXComponent
   ],
   exports: [],
   providers: [NGXToastrService],

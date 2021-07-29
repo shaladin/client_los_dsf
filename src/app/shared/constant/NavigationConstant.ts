@@ -287,7 +287,7 @@ export class NavigationConstant {
   public static MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_REQ_DETAIL; //'/Mou/Request/Detail'
   public static MOU_CUST_APPRV = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV; //"/Mou/Cust/Approval"
   public static MOU_EDIT_CUST_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_EDIT_CUST_PAGING; //"/Mou/EditMouCustomer/Paging"
-  public static MOU_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.DETAIL; //"/Mou/Detail"
+  public static MOU_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.DETAIL_X; //"/Mou/DetailX"
   public static MOU_DUP_CHECK_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_PAGING; //"/Mou/DuplicateCheck/Paging"
   public static MOU_DUP_CHECK_SIMILAR_PERSONAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_SIMILAR_PERSONAL; //"/Mou/DuplicateCheck/SimilarPersonal"
   public static MOU_DUP_CHECK_EXIST_PERSONAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_EXIST_PERSONAL; //"/Mou/DuplicateCheck/ExistingPersonal"

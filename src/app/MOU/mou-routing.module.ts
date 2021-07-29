@@ -60,6 +60,9 @@ import { MouUnfreezeInquiryComponent } from './mou-unfreeze/mou-unfreeze-inquiry
 import { MouUnfreezeViewComponent } from './mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component';
 import { MouUnfreezeDetailComponent } from './mou-unfreeze/mou-unfreeze-detail/mou-unfreeze-detail.component';
 import { MouUnfreezePagingComponent } from './mou-unfreeze/mou-unfreeze-paging/mou-unfreeze-paging.component';
+import { MouRequestAddcollXComponent } from 'app/impl/MOU/mou-customer-request/mou-request-addcoll/mou-request-addcoll-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { MouCustomerDetailXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component';
 
 const routes: Routes = [
   {
@@ -476,6 +479,20 @@ const routes: Routes = [
         component: ChangeMouCancelComponent,
         data: {
           title: "Change MOU Canel"
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_REQ_ADD_COLL_X,
+        component: MouRequestAddcollXComponent,
+        data: {
+          title: 'MOU Collateral'
+        }
+      },
+      {
+        path: PathConstantX.DETAIL_X,
+        component: MouCustomerDetailXComponent,
+        data: {
+          title: 'MOU Customer Detail'
         }
       },
     ]
