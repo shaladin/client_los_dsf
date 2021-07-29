@@ -901,6 +901,8 @@ export class CommonConstant {
   public static LEGAL_RVW = "LEGAL_RVW";
   public static MOU_RETURN = "MOU_RETURN";
   public static MOU_APV = "MOU_APV";
+  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER";
+  public static MOU_EXECUTION = "MOU_EXECUTION";
   
 
   // CUST ADDR TYPE

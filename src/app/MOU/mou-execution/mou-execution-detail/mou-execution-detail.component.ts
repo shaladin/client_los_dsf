@@ -12,6 +12,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { environment } from 'environments/environment';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-mou-execution-detail',
@@ -22,7 +24,7 @@ export class MouExecutionDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   businessDt: Date;
   MouCustId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   businessDtYesterday: Date; 
   StartDt: Date;
   EndDt: Date;
@@ -42,7 +44,8 @@ export class MouExecutionDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router, private cookieService: CookieService) {
+    private router: Router, private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
@@ -57,10 +60,7 @@ export class MouExecutionDetailComponent implements OnInit {
 
   ngOnInit() {
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
+    this.claimTask();
 
     var datePipe = new DatePipe("en-US");
     if (currentUserContext != null && currentUserContext != undefined) {
@@ -107,11 +107,22 @@ export class MouExecutionDetailComponent implements OnInit {
     var request = this.MouExecutionForm.value;
 
     if (this.ValidateDate()) {
-      this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
-        (response: any) => {
-          this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
+
+      if(environment.isCore){
+        this.httpClient.post(URLConstant.MouCustExecutionHumanActivityV2, request).subscribe(
+          (response: any) => {
+            this.toastr.successMessage(response["Message"]);
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
         });
+      }
+      else{
+        this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
+          (response: any) => {
+            this.toastr.successMessage(response["Message"]);
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
+        });
+      }
+      
     }
   }
 
@@ -162,6 +173,15 @@ export class MouExecutionDetailComponent implements OnInit {
         .subscribe((response) => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });
+    }
+  }
+
+  claimTask() {
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+    }
+    else{
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }
 }

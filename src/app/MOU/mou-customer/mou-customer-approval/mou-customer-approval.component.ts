@@ -31,18 +31,6 @@ export class MouCustomerApprovalComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
-
-    this.arrCrit = new Array<CriteriaObj>();
-    var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'A.MOU_STAT';
-    critObj.value = 'MAP';
-    this.arrCrit.push(critObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
-
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
@@ -70,6 +58,19 @@ export class MouCustomerApprovalComponent implements OnInit {
       this.arrCrit.push(critObj);
   
       this.inputPagingObj.addCritInput = this.arrCrit
+    }
+    else{
+      this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
+  
+      this.arrCrit = new Array<CriteriaObj>();
+      var critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'A.MOU_STAT';
+      critObj.value = 'MAP';
+      this.arrCrit.push(critObj);
+      this.inputPagingObj.addCritInput = this.arrCrit;
     }
     
   }
