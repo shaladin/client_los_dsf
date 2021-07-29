@@ -10,9 +10,10 @@ export class PathConstantX {
   public static CESSIE = "Cessie";
   public static PAGING = "PagingX";
   public static ADD = "AddX";
-  public static DETAIL_X = PathConstant.DETAIL + "X";
+  public static DETAIL_X = "DetailX";
   public static MONITORING = "Monitoring";
   public static MOU_CUSTOMER_X = "CustomerX";
+  public static NAP2_X = "NAP2X";
   //#endregion
 
   //#region Nap-Main-Data
