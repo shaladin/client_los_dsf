@@ -20,6 +20,7 @@
   },
   "private": true,
   "dependencies": {
+    "@adins/uc-directive-upper-case": "0.0.1",
     "@adins/uc-show-errors": "^1.0.7",
     "@adins/uc-subsection": "^1.0.5",
     "@adins/ucaddress": "^1.0.60",
