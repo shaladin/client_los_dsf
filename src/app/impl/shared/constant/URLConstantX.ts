@@ -12,6 +12,9 @@ export class URLConstantX {
   // Upload
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
 
+  //MOU CUST X
+  public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
+
   // MOU CUST COLLATERAL X
   public static GetMouCustCollateralStatXByMouCustCollateralIdX = environment.losUrl +'/v1' + "/MouCustCollateralX/GetMouCustCollateralStatXByMouCustCollateralId";
   public static AddExistingCustCollateralDataX = environment.losUrl + '/v1' + "/MouCustCollateralX/AddExistingCustCollateralData";

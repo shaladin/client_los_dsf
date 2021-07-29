@@ -34,6 +34,8 @@ export class PathConstantX {
   public static CHANGE_MOU_REQ_DETAIL_CUST_X = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/" + PathConstantX.MOU_CUSTOMER_X;
   public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/" + PathConstantX.MOU_CUSTOMER_X + "/:MOUType";
   //#endregion
+
+  public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + "/" + PathConstantX.DETAIL_X;
 }
 
 

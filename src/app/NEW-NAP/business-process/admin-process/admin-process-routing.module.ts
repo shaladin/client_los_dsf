@@ -49,6 +49,7 @@ import { PreGoLiveXComponent } from 'app/impl/NEW-NAP/business-process/admin-pro
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { DeliveryOrderMultiAssetDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail-x.component';
 import { CustConfirmationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-detail/cust-confirmation-detail-x.component';
+import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
 
 const routes: Routes = [
   {
@@ -293,8 +294,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.INVOICE_VERIF_DETAIL,
-        component: InvoiceVerifDetailComponent,
+        path: PathConstantX.INVOICE_VERIF_DETAIL_X,
+        component: InvoiceVerifDetailXComponent,
         data: {
           title: 'Delivery Order Detail'
         }
