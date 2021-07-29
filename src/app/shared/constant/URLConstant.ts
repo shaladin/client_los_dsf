@@ -640,6 +640,7 @@ export class URLConstant {
   public static GetListMouCustByCustNo = environment.losUrl + "/v1" + "/MouCust/GetListMouCustByCustNo";
   public static GetMouCustByAppId = environment.losUrl + "/v1" + "/MouCust/GetMouCustByAppId";
   public static MouCustExecutionHumanActivity = environment.losUrl + "/v1" + "/MouCust/MouCustExecutionHumanActivity";
+  public static MouCustExecutionHumanActivityV2 = environment.losUrl + "/v2" + "/MouCust/MouCustExecutionHumanActivity";
   public static CheckMouActiveR2 = environment.losUrl + "/v1" + "/MouCustX/CheckMouActiveR2";
   public static IsMouUsedByAppOnProgress = environment.losUrl + "/v1" + "/MouCust/IsMouUsedByAppOnProgress";
 
@@ -726,6 +727,7 @@ export class URLConstant {
 
   // MOU DOC SIGNER
   public static AddMouCustSigner = environment.losUrl + "/v1" + "/MouCustSigner/AddMouCustSigner";
+  public static AddMouCustSignerV2 = environment.losUrl + "/v2" + "/MouCustSigner/AddMouCustSigner";
   public static GetMouCustSignerByMouCustId = environment.losUrl + "/v1" + "/MouCustSigner/GetMouCustSignerByMouCustId";
 
   // MOU CUST DOC PRINT

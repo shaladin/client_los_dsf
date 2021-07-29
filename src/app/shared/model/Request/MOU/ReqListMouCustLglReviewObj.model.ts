@@ -6,6 +6,6 @@ export class ReqListMouCustLglReviewObj {
 
 export class ReqListMouCustLglReviewV2Obj {
     MouCustLglReviewObjs = new Array();
-    WfTaskListId : number;
+    WfTaskListId : string;
     IsSubmit : boolean;
 }

@@ -134,7 +134,7 @@ export class LegalReviewDetailComponent implements OnInit {
   SaveData(formObj: FormGroup, isSubmit: boolean) {
     if (this.LegalForm.valid) {
       if(environment.isCore){
-        var mouObj = new ReqListMouCustLglReviewV2Obj();
+        var mouV2Obj = new ReqListMouCustLglReviewV2Obj();
         for (let index = 0; index < this.responseRefMasterObj.length; index++) {
           var tempMouObj = {
             MouCustId: this.MouCustId,
@@ -142,11 +142,11 @@ export class LegalReviewDetailComponent implements OnInit {
             LglReviewResult: formObj.value.items[index].values,
             RowVersion: formObj.value.items[index].RowVersion
           }
-          mouObj.MouCustLglReviewObjs.push(tempMouObj);
+          mouV2Obj.MouCustLglReviewObjs.push(tempMouObj);
         }
-        mouObj.WfTaskListId = this.WfTaskListId;
-        mouObj.IsSubmit = isSubmit;
-        this.http.post(URLConstant.AddRangeMouCustLglReviewV2, mouObj).subscribe(
+        mouV2Obj.WfTaskListId = this.WfTaskListId;
+        mouV2Obj.IsSubmit = isSubmit;
+        this.http.post(URLConstant.AddRangeMouCustLglReviewV2, mouV2Obj).subscribe(
           response => {
             this.toastr.successMessage(response['message']);
             AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});

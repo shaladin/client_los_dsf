@@ -54,6 +54,7 @@ export class LegalReviewPagingComponent implements OnInit {
       this.requestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE],
       this.requestTaskModel.TaskDefinitionKey = CommonConstant.LEGAL_RVW,
       this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE],
+      this.requestTaskModel.OfficeRoleCodes = [CommonConstant.HeadOffice, CommonConstant.SuperUser],
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.requestTaskModel;

@@ -173,6 +173,7 @@ export class CommonConstant {
 
   //OFFICE TYPE
   public static HeadOffice = "HO";
+  public static SuperUser = "SUPUSR";
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
 
@@ -900,6 +901,9 @@ export class CommonConstant {
   public static MOU_REVIEW = "MOU_REVIEW";
   public static LEGAL_RVW = "LEGAL_RVW";
   public static MOU_RETURN = "MOU_RETURN";
+  public static MOU_APV = "MOU_APV";
+  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER";
+  public static MOU_EXECUTION = "MOU_EXECUTION";
   
 
   // CUST ADDR TYPE
