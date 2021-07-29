@@ -173,6 +173,7 @@ export class CommonConstant {
 
   //OFFICE TYPE
   public static HeadOffice = "HO";
+  public static SuperUser = "SUPUSR";
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
 
@@ -894,7 +895,9 @@ export class CommonConstant {
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
-  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW"
+  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static PROD_OFF_APV = "PROD_OFF_APV";
+  public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
   
 
   // CUST ADDR TYPE

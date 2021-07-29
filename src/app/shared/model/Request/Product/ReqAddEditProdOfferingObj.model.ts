@@ -90,3 +90,16 @@ export class ReqReviewProdOfferingObj {
     this.WfTaskListId = 0;
   }
 }
+
+export class ReqReviewProdOfferingV2Obj {
+  ProdOfferingHId: number;
+  ProdOfferingId: number;
+  WfTaskListId: string;
+  RequestRFAObj: any;
+
+  constructor() {
+    this.ProdOfferingHId = 0;
+    this.ProdOfferingId = 0;
+    this.WfTaskListId = "";
+  }
+}
