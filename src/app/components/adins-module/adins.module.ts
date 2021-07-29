@@ -26,6 +26,7 @@ import { UcreportModule } from "@adins/ucreport";
 import { UcTestingComponent } from './uc-testing/uc-testing.component';
 import { UcTestComponent } from './uc-test/uc-test.component';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
+import { UcDirectiveUpperCaseModule } from '@adins/uc-directive-upper-case';
 
 export const customCurrencyMaskConfig = {
     align: "right",
