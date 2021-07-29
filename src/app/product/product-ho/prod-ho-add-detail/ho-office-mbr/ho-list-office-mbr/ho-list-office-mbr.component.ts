@@ -9,6 +9,7 @@ import { ResGetProdBranchMbrObj, ResProdBranchMbrObj } from 'app/shared/model/Re
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-ho-list-office-mbr',
@@ -68,7 +69,10 @@ export class HoListOfficeMbrComponent implements OnInit {
 
   DoneForm() {
     this.GenericByIdObj.Id = this.ProdHId;
-    this.http.post(URLConstant.SubmitProduct, this.GenericByIdObj).subscribe(
+
+    let SubmitProductUrl = URLConstant.SubmitProduct;
+    if(environment.isCore) SubmitProductUrl = URLConstant.SubmitProductV2;
+    this.http.post(SubmitProductUrl, this.GenericByIdObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
       }

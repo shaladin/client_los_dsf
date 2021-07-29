@@ -916,10 +916,14 @@ export class CommonConstant {
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
 
+  //WORFKLOW PRODUCT
+  public static WF_CODE_PROD_HO_APV = "PROD_HO_APV";
+  public static ACT_CODE_PROD_HO_RVW = "PROD_HO_RVW";
+
   //Lead Step
-  public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL"
-  public static LeadStepLeadVerf = "LVR"
-  public static LeadStepTeleVerf = "TVR"
-  public static LeadStepLeadUpd = "LUP"
+  public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL";
+  public static LeadStepLeadVerf = "LVR";
+  public static LeadStepTeleVerf = "TVR";
+  public static LeadStepLeadUpd = "LUP";
   
 }

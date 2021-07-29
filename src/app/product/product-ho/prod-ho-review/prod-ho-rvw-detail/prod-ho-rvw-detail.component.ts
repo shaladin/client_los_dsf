@@ -14,6 +14,7 @@ import { ReqReviewProductObj } from 'app/shared/model/Request/Product/ReqAddEdit
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-prod-ho-rvw-detail',
@@ -30,7 +31,7 @@ export class ProdHoRvwDetailComponent implements OnInit {
 
   ProdId: number;
   ProdHId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   IsReady: Boolean = false;
   ApprovalCreateOutput: any;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -66,7 +67,11 @@ export class ProdHoRvwDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTaskService.ClaimTask(this.WfTaskListId);
+    if(environment.isCore){ 
+      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+    }else{
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
     await this.LoadRefReason();
     this.initInputApprovalObj();
   }
@@ -108,7 +113,9 @@ export class ProdHoRvwDetailComponent implements OnInit {
     this.ReqReviewProductObj.WfTaskListId = this.WfTaskListId;
     this.ReqReviewProductObj.RequestRFAObj = this.RFAInfo;
 
-    this.http.post(URLConstant.ReviewProduct, this.ReqReviewProductObj).subscribe(
+    let ReviewProductUrl = URLConstant.ReviewProduct;
+    if(environment.isCore) ReviewProductUrl = URLConstant.ReviewProductV2;
+    this.http.post(ReviewProductUrl, this.ReqReviewProductObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_REVIEW], {});
