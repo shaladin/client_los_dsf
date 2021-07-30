@@ -262,7 +262,7 @@ export class CommonConstant {
   public static AppCollateralAttrTaxCityIssuer = "TAX_CITY_ISSUER";
   public static AppCollateralAttrBpkbIssueDate = "BPKB_ISSUE_DATE";
 
-  //APP CUST 
+  //ATTR GROUP 
   public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
   public static AttrGroupCustPersonalOther = "CUST_PERSONAL_OTH"
   public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
@@ -273,6 +273,17 @@ export class CommonConstant {
   public static AttrGroupCustCompanyFinDataIncome = "CUST_COMPANY_FINDATA_INCOME"
   public static AttrGroupCustCompanyFinDataExpense = "CUST_COMPANY_FINDATA_EXPENSE"
   public static AttrGroupCustCompanyFinDataOther = "CUST_COMPANY_FINDATA_OTHER"
+  public static AttrGroupApplicationData = "APPLICATION_DATA";
+
+  //ATTR INTPUT TYPE
+  public static AttrInputTypeDate = "D";
+  public static AttrInputTypeNum = "N";
+  public static AttrInputTypeNumPerc = "P";
+  public static AttrInputTypeList = "L";
+  public static AttrInputTypeSearchList = "SL";
+  public static AttrInputTypeText = "T";
+  public static AttrInputTypeTextArea = "TA";
+  public static AttrInputTypeRefMaster = "RM";
 
   //Interest Type
   public static InterestTypeFixed = "FIXED";
