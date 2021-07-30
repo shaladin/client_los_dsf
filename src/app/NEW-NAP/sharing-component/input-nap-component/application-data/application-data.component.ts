@@ -37,7 +37,6 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
 import { GenerateAppAttrContentObj } from 'app/shared/model/AppAttrContent/GenerateAppAttrContentObj.Model';
 import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
-import { generate } from 'rxjs';
 
 @Component({
   selector: 'app-application-data',

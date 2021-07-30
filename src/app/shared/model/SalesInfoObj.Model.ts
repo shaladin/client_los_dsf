@@ -1,3 +1,4 @@
+import { AppAttrContentObj } from "./AppAttrContent/AppAttrContentObj.Model";
 import { AppDlrFncng } from "./AppData/AppDlrFncng.Model";
 
 export class SalesInfoObj {
@@ -26,5 +27,6 @@ export class SalesInfoObj {
     RowVersion: string;
     listAppCrossObj: Array<any>;
     AppDlrFncngObj: AppDlrFncng;
+    AppAttrContentObjs: Array<AppAttrContentObj>;
     constructor() { this.RowVersion = "" }
 }
