@@ -1712,7 +1712,8 @@ export class URLConstant {
   public static GetProdOfferingHByCodeAndVersion = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingHByCodeAndVersion";
   public static GetListProdOfferingHByProdOfferingCurrentProdHId = environment.losUrl + "/v1" + "/ProductOffering/GetListProdOfferingHByProdOfferingCurrentProdHId"
   public static GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode = environment.losUrl + "/v1" + "/ProductOffering/GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode"
-  public static RequestOfferingDeactivation = environment.losUrl + "/v1" + "/ProductOffering/RequestProdOfferingDeactivation"
+  public static RequestOfferingDeactivation = environment.losUrl + "/v1" + "/ProductOffering/RequestProdOfferingDeactivation";
+  public static RequestOfferingDeactivationV2 = environment.losUrl + "/v2" + "/ProductOffering/RequestProdOfferingDeactivation";
   public static GetListProdOfferingBranchOfficeMbrByProdHIdAndApp = environment.losUrl + "/v1" + "/ProductOffering/GetListProdOfferingBranchOfficeMbrByProdHIdAndApp"
   public static CopyProductOffering = environment.losUrl + "/v1" + "/ProductOffering/CopyProductOffering";
   public static UpdateProdOfferingPostApv = environment.losUrl + "/v1" + "/ProductOffering/UpdateProdOfferingPostApv";
