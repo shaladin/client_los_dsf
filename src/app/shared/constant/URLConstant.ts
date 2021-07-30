@@ -1754,4 +1754,8 @@ export class URLConstant {
 
   //Config Result
   public static GetSysConfigResultByCode = environment.FoundationR3Url + "/v1" + "/SysConfigResult/GetSysConfigResultByCode";
+
+  //App Attr Content
+  public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
+
 }
