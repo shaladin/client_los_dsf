@@ -105,10 +105,11 @@ import { MouUnfreezeDetailComponent } from "./mou-unfreeze/mou-unfreeze-detail/m
 import { MouUnfreezeInquiryComponent } from "./mou-unfreeze/mou-unfreeze-inquiry/mou-unfreeze-inquiry.component";
 import { MouUnfreezeViewComponent } from "./mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { MouCustomerDetailXComponent } from '../impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component';
-import { MouRequestAddcollXComponent } from '../impl/MOU/mou-customer-request/mou-request-addcoll/mou-request-addcoll-x.component';
-import { ChangeMouRequestDetailCustomerXComponent } from '../impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
-import { ChangeMouRequestAddcollXComponent } from '../impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
+import { MouCustomerDetailXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component';
+import { MouRequestAddcollXComponent } from 'app/impl/MOU/mou-customer-request/mou-request-addcoll/mou-request-addcoll-x.component';
+import { ChangeMouRequestDetailCustomerXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
+import { ChangeMouRequestAddcollXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
+import { MouCustomerRequestDetailXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-request-detail/mou-customer-request-detail-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -245,7 +246,8 @@ export const customCurrencyMaskConfig = {
     MouCustomerDetailXComponent,
     MouRequestAddcollXComponent,
     ChangeMouRequestDetailCustomerXComponent,
-    ChangeMouRequestAddcollXComponent
+    ChangeMouRequestAddcollXComponent,
+    MouCustomerRequestDetailXComponent
   ],
   exports: [],
   providers: [NGXToastrService],

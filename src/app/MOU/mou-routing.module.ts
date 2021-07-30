@@ -61,10 +61,11 @@ import { MouUnfreezeViewComponent } from './mou-unfreeze/mou-unfreeze-view/mou-u
 import { MouUnfreezeDetailComponent } from './mou-unfreeze/mou-unfreeze-detail/mou-unfreeze-detail.component';
 import { MouUnfreezePagingComponent } from './mou-unfreeze/mou-unfreeze-paging/mou-unfreeze-paging.component';
 import { MouRequestAddcollXComponent } from 'app/impl/MOU/mou-customer-request/mou-request-addcoll/mou-request-addcoll-x.component';
-import { MouCustomerDetailXComponent } from '../impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component';
-import { PathConstantX } from '../impl/shared/constant/PathConstantX';
-import { ChangeMouRequestAddcollXComponent } from '../impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
-import { ChangeMouRequestDetailCustomerXComponent } from '../impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
+import { MouCustomerDetailXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { ChangeMouRequestAddcollXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
+import { ChangeMouRequestDetailCustomerXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
+import {MouCustomerRequestDetailXComponent} from 'app/impl/MOU/mou-customer-request/mou-customer-request-detail/mou-customer-request-detail-x.component';
 
 const routes: Routes = [
   {
@@ -92,8 +93,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.MOU_REQ_DETAIL,
-        component: MouCustomerRequestDetailComponent,
+        path: PathConstantX.MOU_REQ_DETAIL_X,
+        component: MouCustomerRequestDetailXComponent,
         data: {
           title: 'MOU Customer Request Detail'
         }

@@ -30,8 +30,9 @@ export class PathConstantX {
 
     //#region MOU
     public static MOU_CUST_REQ_ADD_COLL_X = PathConstant.MOU_CUST + "/RequestAddCollX";
+    public static MOU_REQ_DETAIL_X = PathConstant.MOU_REQ + "/" + PathConstantX.DETAIL_X;
     //#endregion
-    
+
     //#region Change mou
     public static CHANGE_MOU_REQ_ADD_COLL_X = PathConstant.CHANGE_MOU + "/RequestAddCollX";
     public static CHANGE_MOU_REQ_DETAIL_CUST_X = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/" + PathConstantX.MOU_CUSTOMER_X;
