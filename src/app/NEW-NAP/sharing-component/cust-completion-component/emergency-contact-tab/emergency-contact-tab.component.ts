@@ -455,6 +455,8 @@ export class EmergencyContactTabComponent implements OnInit {
     this.EmergencyContactForm.controls.BirthPlace.disable();
     this.EmergencyContactForm.controls.BirthDt.disable();
     this.EmergencyContactForm.controls.MrGenderCode.disable();
+    this.InputUcAddressObj.isReadonly = true;
+    this.InputUcAddressObj.inputField.inputLookupObj.isReadonly = true;
   }
 
   onTypeName(ev : string){
