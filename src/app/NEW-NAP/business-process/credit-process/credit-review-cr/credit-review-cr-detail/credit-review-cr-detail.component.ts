@@ -41,7 +41,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     }
   }
   appId: number = 0;
-  wfTaskListId: number = 0;
+  wfTaskListId: any;
   isReturnOn: boolean = false;
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   Arr: FormArray;
@@ -382,14 +382,18 @@ export class CreditReviewCrDetailComponent implements OnInit {
   ReCaptureCreditReviewData() {
     let workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
+    let CrdRvwDataReCaptureUrl = URLConstant.CrdRvwDataReCapture;
+    if(environment.isCore) CrdRvwDataReCaptureUrl = URLConstant.CrdRvwDataReCaptureV2;
+    this.http.post(CrdRvwDataReCaptureUrl, workflowApiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
   ReCaptureDataR2() {
-    this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
+    let ReCaptureDataR2Url = URLConstant.ReCaptureDataR2;
+    if(environment.isCore) ReCaptureDataR2Url = URLConstant.ReCaptureDataR2V2;
+    this.http.post(ReCaptureDataR2Url, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditReviewCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
       });
