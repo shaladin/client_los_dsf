@@ -493,10 +493,9 @@ export class CommissionCfnaComponent implements OnInit {
     var obj = {
       AppId: this.AppId,
       GrossYield: this.Summary.GrossYield,
-      ListAppCommissionHAddObj: listAppCommissionHAddObj,
-      ListAppCommissionHEditObj: listAppCommissionHEditObj
+      ListAppCommissionHAddObj: listAppCommissionHAddObj
     };
-    this.http.post(URLConstant.AddOrEditAppCommissionData, obj).subscribe(
+    this.http.post(URLConstant.SubmitAppCommissionData, obj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.outputTab.emit();
@@ -527,11 +526,8 @@ export class CommissionCfnaComponent implements OnInit {
       if (identifier == this.identifierSupplier) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplier);
       if (identifier == this.identifierSupplierEmp) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplierEmp);
       if (identifier == this.identifierReferantor) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeReferantor);
-      if (tempData.AppCommissionHId == 0) {
-        listAppCommissionHAddObj.push(tempData);
-        continue;
-      }
-      listAppCommissionHEditObj.push(tempData);
+      
+      listAppCommissionHAddObj.push(tempData);
     }
   }
 
