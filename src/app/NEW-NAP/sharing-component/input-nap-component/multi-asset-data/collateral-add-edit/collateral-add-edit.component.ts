@@ -283,7 +283,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.tempPagingObj.isReady = true;
   }
 
-  collateralTypeHandler() {
+  collateralTypeHandler(isOnInit: boolean = false) {
     // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
     // this.collateralModal.clear();
     this.inputLookupObj.isReady = false;
@@ -295,12 +295,14 @@ export class CollateralAddEditComponent implements OnInit {
     criteriaList.push(criteriaObj);
     this.inputLookupObj.addCritInput = criteriaList;
     this.inputLookupObj.isReady = true;
-    this.AddCollForm.patchValue({
-      FullAssetCode: "",
-      FullAssetName: "",
-      AssetCategoryCode: "",
-      CollateralName: ""
-    });
+    if(!isOnInit){
+      this.AddCollForm.patchValue({
+        FullAssetCode: "",
+        FullAssetName: "",
+        AssetCategoryCode: "",
+        CollateralName: ""
+      });
+    }
 
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
       Code: this.AddCollForm.controls["AssetTypeCode"].value
@@ -311,7 +313,6 @@ export class CollateralAddEditComponent implements OnInit {
         }
 
         this.SerialNoList = response[CommonConstant.ReturnObj];
-        console.log(this.SerialNoList);
         for (let i = 0; i < this.SerialNoList.length; i++) {
           let eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -515,123 +516,12 @@ export class CollateralAddEditComponent implements OnInit {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
-    
-    this.GetListAddr();
-
-    this.inputFieldLocationAddrObj = new InputFieldObj();
-    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-    this.inputFieldCollOwnerObj = new InputFieldObj();
-    this.inputFieldCollOwnerObj.inputLookupObj = new InputLookupObj();
-
-    this.inputFieldLegalObj = new InputFieldObj();
-    this.inputFieldLegalObj.inputLookupObj = new InputLookupObj();
-    this.inputFieldLocationObj = new InputFieldObj();
-    this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
-
-    this.idTypeCode = new RefMasterObj();
-    this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).subscribe(
-      (response) => {
-        this.tempIdType = response[CommonConstant.ReturnObj];
-        this.AddCollForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
-      });
-
-    this.ownerRelationshipObj = new RefMasterObj();
-    this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.ownerRelationshipObj).subscribe(
-      (response) => {
-        this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
-        this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
-      }
-    );
-
-    this.assetRegionObj = new RefMasterObj();
-    this.assetRegionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetInsRegion;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetRegionObj).subscribe(
-      (response) => {
-        this.returnAssetRegionObj = response[CommonConstant.ReturnObj];
-        this.AddCollForm.patchValue({ AssetRegion: response[CommonConstant.ReturnObj][0]['Key'] });
-      }
-    );
-
-    this.collTypeObj = new AssetTypeObj();
-    this.http.post(URLConstant.GetListAssetTypeByCode, this.collTypeObj).subscribe(
-      (response) => {
-        this.returnCollTypeObj = response[CommonConstant.ReturnObj];
-        if (this.mode != 'editColl') {
-          this.AddCollForm.patchValue({ AssetTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
-        }
-        this.collateralTypeHandler();
-        this.collateralPortionHandler();
-        this.AddCollForm.removeControl("AssetAccessoriesObjs");
-        this.AddCollForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
-        if(this.returnAppCollateralObj != undefined)
-        {
-            this.AddCollForm.patchValue({
-            AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode
-          });
-        }
-        this.inputLookupObj = new InputLookupObj();
-        this.inputLookupObj.isReady = false;
-        this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-        this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-        this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-        this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-        var criteriaList = new Array<CriteriaObj>();
-        var criteriaObj = new CriteriaObj();
-        criteriaObj.restriction = AdInsConstant.RestrictionEq;
-        criteriaObj.propName = 'B.ASSET_TYPE_CODE';
-        criteriaObj.value = response[CommonConstant.ReturnObj][0]['Key'];
-        criteriaList.push(criteriaObj);
-        this.inputLookupObj.addCritInput = criteriaList;
-        this.inputLookupObj.isReady = true;
-
-        // bookmark
-        // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
-        // const component = this.collateralModal.createComponent(componentFactory);
-        // component.instance.lookupInput = this.inputLookupObj;
-        // component.instance.parentForm = this.AddCollForm;
-        // component.instance.enjiForm = this.enjiForm;
-        // component.instance.identifier = 'CollateralName';
-        // component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
-      }
-    );
-
-    this.InputLookupCityIssuerObj = new InputLookupObj();
-    this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
-    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
-    this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
-    var disCrit = new Array();
-    var critDisObj = new CriteriaObj();
-    critDisObj.DataType = 'text';
-    critDisObj.restriction = AdInsConstant.RestrictionEq;
-    critDisObj.propName = 'TYPE';
-    critDisObj.value = 'DIS';
-    disCrit.push(critDisObj);
-    this.InputLookupCityIssuerObj.addCritInput = disCrit;
-
-    this.bindUcAddToTempData();
-    this.GenerateAppCollateralAttr(false);
-
-
-    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex }).subscribe(
-      (response) => {
-        this.SerialNoRegex = response["GsValue"];
-
-        let obj: CustomPatternObj = {
-          pattern: this.SerialNoRegex,
-          invalidMsg: "Cannot input special character"
-        }
-        this.ListPattern.push(obj);
-      }
-    )
     if (this.mode == 'editColl') {
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
       this.appCollateralObj.Id = this.AppCollateralId;
       this.appAssetId = this.appCollateralObj.AppAssetId;
-      this.http.post(URLConstant.GetAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
-        (response) => {
+      await this.http.post(URLConstant.GetAppCollateralByAppCollateralId, this.appCollateralObj).toPromise().then(
+        async (response) => {
           this.returnAppCollateralObj = response;
           if (this.returnAppCollateralObj.CollateralStat == CommonConstant.AssetStatNew) {
             this.AddCollForm.patchValue({
@@ -655,7 +545,7 @@ export class CollateralAddEditComponent implements OnInit {
 
           var reqByCode = new GenericObj();
           reqByCode.Code = this.returnAppCollateralObj.FullAssetCode;
-          this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).subscribe(
+          await this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).toPromise().then(
             (response) => {
               this.resAssetMasterObj = response;
               this.inputLookupObj.nameSelect = this.resAssetMasterObj.FullAssetName;
@@ -673,7 +563,6 @@ export class CollateralAddEditComponent implements OnInit {
       this.appCollateralRegistObj.Id = this.AppCollateralId;
       this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
         (response) => {
-          console.log(response);
           this.returnAppCollateralRegistObj = response;
           this.AddCollForm.patchValue({
             OwnerRelationship: this.returnAppCollateralRegistObj.MrOwnerRelationshipCode,
@@ -812,6 +701,119 @@ export class CollateralAddEditComponent implements OnInit {
           this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer };
         });
     }
+    
+    this.GetListAddr();
+
+    this.inputFieldLocationAddrObj = new InputFieldObj();
+    this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldCollOwnerObj = new InputFieldObj();
+    this.inputFieldCollOwnerObj.inputLookupObj = new InputLookupObj();
+
+    this.inputFieldLegalObj = new InputFieldObj();
+    this.inputFieldLegalObj.inputLookupObj = new InputLookupObj();
+    this.inputFieldLocationObj = new InputFieldObj();
+    this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
+
+    this.idTypeCode = new RefMasterObj();
+    this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).subscribe(
+      (response) => {
+        this.tempIdType = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
+      });
+
+    this.ownerRelationshipObj = new RefMasterObj();
+    this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.ownerRelationshipObj).subscribe(
+      (response) => {
+        this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
+        if(this.mode != 'editColl'){
+          this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
+        }
+      }
+    );
+
+    this.assetRegionObj = new RefMasterObj();
+    this.assetRegionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetInsRegion;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetRegionObj).subscribe(
+      (response) => {
+        this.returnAssetRegionObj = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({ AssetRegion: response[CommonConstant.ReturnObj][0]['Key'] });
+      }
+    );
+
+    this.collTypeObj = new AssetTypeObj();
+    this.http.post(URLConstant.GetListAssetTypeByCode, this.collTypeObj).subscribe(
+      (response) => {
+        this.returnCollTypeObj = response[CommonConstant.ReturnObj];
+        if (this.mode != 'editColl') {
+          this.AddCollForm.patchValue({ AssetTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
+        }
+        this.collateralTypeHandler(true);
+        this.collateralPortionHandler();
+        this.AddCollForm.removeControl("AssetAccessoriesObjs");
+        this.AddCollForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
+        if(this.returnAppCollateralObj != undefined)
+        {
+            this.AddCollForm.patchValue({
+            AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode
+          });
+        }
+        this.inputLookupObj = new InputLookupObj();
+        this.inputLookupObj.isReady = false;
+        this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+        this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+        this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+        this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
+        var criteriaList = new Array<CriteriaObj>();
+        var criteriaObj = new CriteriaObj();
+        criteriaObj.restriction = AdInsConstant.RestrictionEq;
+        criteriaObj.propName = 'B.ASSET_TYPE_CODE';
+        criteriaObj.value = response[CommonConstant.ReturnObj][0]['Key'];
+        criteriaList.push(criteriaObj);
+        this.inputLookupObj.addCritInput = criteriaList;
+        this.inputLookupObj.isReady = true;
+
+        // bookmark
+        // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
+        // const component = this.collateralModal.createComponent(componentFactory);
+        // component.instance.lookupInput = this.inputLookupObj;
+        // component.instance.parentForm = this.AddCollForm;
+        // component.instance.enjiForm = this.enjiForm;
+        // component.instance.identifier = 'CollateralName';
+        // component.instance.lookup.subscribe((e) => this.getLookupCollateralName(e));
+      }
+    );
+
+    this.InputLookupCityIssuerObj = new InputLookupObj();
+    this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+    this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    var disCrit = new Array();
+    var critDisObj = new CriteriaObj();
+    critDisObj.DataType = 'text';
+    critDisObj.restriction = AdInsConstant.RestrictionEq;
+    critDisObj.propName = 'TYPE';
+    critDisObj.value = 'DIS';
+    disCrit.push(critDisObj);
+    this.InputLookupCityIssuerObj.addCritInput = disCrit;
+
+    this.bindUcAddToTempData();
+    this.GenerateAppCollateralAttr(false);
+
+
+    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex }).subscribe(
+      (response) => {
+        this.SerialNoRegex = response["GsValue"];
+
+        let obj: CustomPatternObj = {
+          pattern: this.SerialNoRegex,
+          invalidMsg: "Cannot input special character"
+        }
+        this.ListPattern.push(obj);
+      }
+    )
   }
 
   async GenerateAppCollateralAttr(isRefresh: boolean) {
@@ -1114,7 +1116,6 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   GetProfession(event) {
-    console.log(event);
     this.AddCollForm.patchValue({
       OwnerProfessionCode: event.ProfessionCode
     });
