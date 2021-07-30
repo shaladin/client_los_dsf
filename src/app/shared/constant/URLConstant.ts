@@ -1684,6 +1684,7 @@ export class URLConstant {
   public static AddProduct = environment.losUrl + "/v1" + "/Product/AddProduct"
   public static EditProduct = environment.losUrl + "/v1" + "/Product/EditProduct"
   public static RequestDeactivation = environment.losUrl + "/v1" + "/Product/RequestDeactivation"
+  public static RequestDeactivationV2 = environment.losUrl + "/v2" + "/Product/RequestDeactivation"
   public static GetListProdBranchOfficeMbrByProdHId = environment.losUrl + "/v1" + "/Product/GetListProdBranchOfficeMbrByProdHId"
   public static GetListProdHByProdCurrentProdHId = environment.losUrl + "/v1" + "/Product/GetListProdHByProdCurrentProdHId";
   public static AddProductOfficeMbrBatch = environment.losUrl + "/v1" + "/Product/AddProductOfficeMbrBatch";
