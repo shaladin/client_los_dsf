@@ -93,10 +93,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstant.MOU_REQ_DETAIL,
+        component: MouCustomerRequestDetailComponent,
+        data: {
+          title: 'MOU Customer Request Detail'
+        }
+      },
+      {
         path: PathConstantX.MOU_REQ_DETAIL_X,
         component: MouCustomerRequestDetailXComponent,
         data: {
-          title: 'MOU Customer Request Detail'
+          title: 'MOU Customer Request Detail X'
+        }
+      },
+      {
+        path: PathConstant.DETAIL,
+        component: MouCustomerDetailComponent,
+        data: {
+          title: 'MOU Customer Detail'
         }
       },
       {
@@ -359,10 +373,17 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstant.CHANGE_MOU_REQ_DETAIL_CUST_TYPE,
+        component: ChangeMouRequestDetailCustomerComponent,
+        data: {
+          title: "Change MOU Request Customer Detail"
+        }
+      },
+      {
         path: PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X,
         component: ChangeMouRequestDetailCustomerXComponent,
         data: {
-          title: "Change MOU Request Customer Detail"
+          title: "Change MOU Request Customer Detail X"
         }
       },
       {
@@ -380,10 +401,17 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstant.CHANGE_MOU_REQ_ADD_COLL,
+        component: ChangeMouRequestAddcollComponent,
+        data: {
+          title: "Change MOU Req Add Collateral"
+        }
+      },
+      {
         path: PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X,
         component: ChangeMouRequestAddcollXComponent,
         data: {
-          title: "Change MOU Req Add Collateral"
+          title: "Change MOU Req Add Collateral X"
         }
       },
       {
@@ -485,17 +513,17 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.MOU_CUST_REQ_ADD_COLL_X,
-        component: MouRequestAddcollXComponent,
+        path: PathConstant.MOU_CUST_REQ_ADD_COLL,
+        component: MouRequestAddcollComponent,
         data: {
           title: 'MOU Collateral'
         }
       },
       {
-        path: PathConstantX.DETAIL_X,
-        component: MouCustomerDetailXComponent,
+        path: PathConstantX.MOU_CUST_REQ_ADD_COLL_X,
+        component: MouRequestAddcollXComponent,
         data: {
-          title: 'MOU Customer Detail'
+          title: 'MOU Collateral X'
         }
       },
     ]
