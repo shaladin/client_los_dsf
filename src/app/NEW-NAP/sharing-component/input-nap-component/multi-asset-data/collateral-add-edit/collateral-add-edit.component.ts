@@ -172,7 +172,7 @@ export class CollateralAddEditComponent implements OnInit {
   inputAddressObjForLoc: any;
   appAssetId: number;
   AppCollateralAttrObj: any;
-  AppCustPersonalJobData: AppCustPersonalJobDataObj;
+  AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
@@ -226,9 +226,7 @@ export class CollateralAddEditComponent implements OnInit {
   async GetAppCustPersonalJobData() {
     await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
       (response) => {
-        if(response.AppCustPersonalJobDataObj != null) {
-          this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
-        }
+        this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
       }
     );
   }

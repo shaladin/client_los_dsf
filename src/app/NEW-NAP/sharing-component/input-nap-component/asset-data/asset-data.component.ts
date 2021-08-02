@@ -265,7 +265,7 @@ export class AssetDataComponent implements OnInit {
   VendorAdminHeadObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
   VendorEmpBMObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
   AppCustObj: any;
-  AppCustPersonalJobData: AppCustPersonalJobDataObj;
+  AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   RefProdCmptAssetType: ProdOfferingDObj;
   RefProdCmptAssetCond: ProdOfferingDObj;
   RefProdCmptSupplSchm: ProdOfferingDObj;
@@ -2467,9 +2467,7 @@ export class AssetDataComponent implements OnInit {
   async GetAppCustPersonalJobData() {
     await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
       (response) => {
-        if(response.AppCustPersonalJobDataObj != null) {
-          this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
-        }
+        this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
       }
     );
   }
