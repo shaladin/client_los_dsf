@@ -58,6 +58,7 @@ export class CommonConstant {
   // Module
   public static LOAN_ORIGINATION = "LOS";
   public static FOUNDATION = "FOUNDATION";
+  public static MODULE_LMS = "LMS";
 
   // COMPONENTS
   public static LINE = 'Line';
