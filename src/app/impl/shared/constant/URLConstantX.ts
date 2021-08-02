@@ -14,7 +14,6 @@ export class URLConstantX {
 
   // MOU CUST X
   public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
-  public static EditMouCustX = environment.losUrl + '/v1' +"/MouCustX/EditMouCust";
 
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";

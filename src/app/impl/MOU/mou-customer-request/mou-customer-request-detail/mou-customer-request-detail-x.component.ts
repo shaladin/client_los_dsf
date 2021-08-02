@@ -150,6 +150,7 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
                 this.MOUMainInfoForm.patchValue({
                   MrMouCustFctrType : ress['MrMouCustFctrType']
                 });
+                this.MOUMainInfoForm.controls.MrMouCustFctrType.disable();
               });
           }
 
@@ -226,7 +227,7 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DETAIL], {mouCustId: mouCustId, MOUType: this.mouType});
         });
     } else if (this.pageType == 'edit' || this.pageType == 'return') {
-      this.httpClient.post(URLConstantX.EditMouCustX, mouCustFormData).subscribe(
+      this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response['Message']);
           if (this.pageType == 'return') {
