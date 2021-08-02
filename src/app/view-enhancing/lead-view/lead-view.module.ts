@@ -44,7 +44,8 @@ import { TranslateModule } from "@ngx-translate/core";
         SharingComponentModule,
         UcapprovalhistModule,
         UcShowErrorsModule,
-        TranslateModule
+        TranslateModule,
+        SharedModule
     ],
     declarations: [
         LeadViewComponent,

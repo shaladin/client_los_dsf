@@ -253,7 +253,7 @@
               [panel]="'crossInfomation'">
             </lib-ucSubsection>
             <div class="form-body" id="crossInfomation">
-              <div class="form-actions right" *ngIf="BizTemplateCode != 'CFNA'">
+              <div class="form-actions right">
                 <button type="button" (click)="AddTemp(contentCrossApp)" class="btn btn-raised btn-primary" translate>
                   <i class="fa ft-plus"></i> Add
                 </button>
@@ -278,7 +278,7 @@
                         Customer Name
                       </span>
                     </th>
-                    <th *ngIf="BizTemplateCode != 'CFNA'"><span translate class="thead-header"
+                    <th><span translate class="thead-header"
                         name='action'>Delete</span></th>
                   </tr>
                 </thead>
@@ -293,7 +293,7 @@
                     <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
                     <td style="text-align: left;">{{item.CustName}}</td>
-                    <td *ngIf="agrmntParentNo != item.CrossAgrmntNo || BizTemplateCode != 'CFNA'">
+                    <td *ngIf="agrmntParentNo != item.CrossAgrmntNo">
                       <a class="warning p-0" (click)="DeleteCrossApp(i)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
                       </a>
@@ -407,6 +407,85 @@
                       <lib-uc-show-errors [control]="NapAppModelForm.controls.MrSlikSecEcoDescr"
                         [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="GenerateAppAttrContentObjs != null && isAppAttrContentReady">
+              <lib-ucSubsection [id]="'AppAttrContentId'" [title]="'Application Attribute'" [panel]="'appAttrContent'">
+              </lib-ucSubsection>
+              <div [id]="appAttrContent">
+                <div class="form-actions right">
+                  <button type="button" name="refreshAttr" id="add" (click)="GenerateAppAttrContent()"
+                    class="btn btn-raised btn-primary" translate>
+                    Refresh Attribute
+                  </button>
+                </div>
+                <div formArrayName="AppAttrContentObjs">
+                  <div *ngFor="let item of NapAppModelForm.controls['AppAttrContentObjs'].controls;let i = index">
+                    <div [formGroupName]="i" class="form-group row">
+                      <label class="col-md-2  adInsLabel"
+                      [ngClass]="{'adins-required-label': item.controls.IsMandatory.value}"
+                      translate>{{item.controls.RefAttrName.value}}</label>
+                      <div class="col-md-4">
+                        <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeText">
+                          <input type="text" class="form-control" formControlName="AttrValue"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                          <lib-uc-show-errors
+                            [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeTextArea">
+                          <textarea class="form-control" formControlName="AttrValue"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }"></textarea>
+                          <lib-uc-show-errors
+                            [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeNum">
+                          <input type="" currencyMask class="form-control" formControlName="AttrValue"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                          <lib-uc-show-errors
+                            [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeNumPerc">
+                          <input type="" currencyMask class="form-control" formControlName="AttrValue"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }"
+                            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }">
+                          <lib-uc-show-errors
+                            [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeDate">
+                          <input type="date" class="form-control adInsInput" formControlName="AttrValue"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                          <lib-uc-show-errors
+                            [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeList">
+                          <select class="form-control" formControlName="AttrValue" style="width:100%"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                            <option value="">-Select One-</option>
+                            <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
+                              {{x}}
+                            </option>
+                          </select>
+                          <lib-uc-show-errors
+                            [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                        <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeRefMaster">
+                          <lib-uclookupgeneric [lookupInput]="ListInputLookUpObj[0][item.controls.RefAttrCode.value]"
+                            [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'lookup'+ item.controls.RefAttrCode.value"
+                            (lookup)="SetAttrValueRm($event,i)">
+                          </lib-uclookupgeneric>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -16,6 +16,7 @@ import { UcapprovalcreateComponent } from "@adins/ucapprovalcreate";
 import { CookieService } from "ngx-cookie";
 import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { ClaimTaskService } from "app/shared/claimTask.service";
 
 @Component({
   selector: "app-change-mou-review-general",
@@ -28,7 +29,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
   ChangeMouTrxId: number;
   MouCustId: number;
   TrxNo: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   MouType: string = "GENERAL";
   PlafondAmt: number;
   MrCustTypeCode: string;
@@ -55,7 +56,8 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService : ClaimTaskService
   ) {
     this.route.queryParams.subscribe((params) => {
       this.ChangeMouTrxId = params["ChangeMouTrxId"];
@@ -69,9 +71,8 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
-    }
+    this.claimTask();
+    
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.ddlEnvironments = [
@@ -122,29 +123,29 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
   });
 
   async claimTask() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = {
-      pWFTaskListID: this.WfTaskListId,
-      pUserID: currentUserContext[CommonConstant.USER_NAME],
-    };
-    this.http
-      .post(URLConstant.ClaimTask, wfClaimObj)
-      .subscribe((response) => { });
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }
+    if (this.WfTaskListId > 0){
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 
   Submit() {
-    this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
-      this.mouCustObj.MouCustId = this.MouCustId;
-      this.PlafondAmt = this.PlafondAmt;
+      let urlPost = environment.isCore ? URLConstant.SubmitChangeMouReviewV2 : URLConstant.SubmitChangeMouReview;
 
+      this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
+      this.mouCustObj.MouCustId = this.MouCustId;
+      
       var submitMouReviewObj = {
         WfTaskListId: this.WfTaskListId,
         MouCust: this.mouCustObj,
-        PlafondAmt: this.PlafondAmt,
         RequestRFAObj: this.ApprovalCreateOutput,
       };
       this.http
-        .post(URLConstant.SubmitChangeMouReview, submitMouReviewObj)
+        .post(urlPost, submitMouReviewObj)
         .subscribe((response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(
@@ -156,12 +157,13 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
   }
 
   Return() {
+    let urlPost = environment.isCore ? URLConstant.ReturnChangeMouReviewV2 : URLConstant.ReturnChangeMouReview;
     var mouObj = { 
       WfTaskListId: this.WfTaskListId,
       ChangeMouTrxId : this.ChangeMouTrxId
     };
     this.http
-      .post(URLConstant.ReturnChangeMouReview, mouObj)
+      .post(urlPost, mouObj)
       .subscribe((response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(
@@ -199,21 +201,19 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
 
   initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
-    var Attributes = [];
-    var attribute1 = {
-      "AttributeName": "Approval Amount",
-      "AttributeValue": this.PlafondAmt
-    };
-
-    var attribute2 = {
-      "AttributeName": "Scoring",
-      "AttributeValue": this.ScoreResult
-    };
-    Attributes.push(attribute1);
-    Attributes.push(attribute2);
+    var Attributes = [
+      {
+        "AttributeName": "Plafond Amount",
+        "AttributeValue": this.PlafondAmt
+      },
+      {
+        "AttributeName": "Scoring",
+        "AttributeValue": this.ScoreResult
+      }
+    ];
 
     var TypeCode = {
-      TypeCode: "CHG_MOU_APV_TYPE",
+      TypeCode: CommonConstant.APV_TYPE_CHG_MOU_APV_TYPE,
       Attributes: Attributes,
     };
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
