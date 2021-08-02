@@ -102,6 +102,8 @@ export class URLConstant {
   public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
   public static DeleteAppCross = environment.losUrl + "/v1" + "/AppCross/DeleteAppCross";
   public static GetListAppCross = environment.losUrl + "/v1" + "/AppCross/GetListAppCross";
+  public static GetListAppCrossForView = environment.losUrl + "/v1" + "/AppCross/GetListAppCrossForView";
+
   public static AddListAppCross = "/AppCross/AddListAppCross";
 
   // App Fctr
@@ -1757,5 +1759,6 @@ export class URLConstant {
 
   //App Attr Content
   public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
+  public static GetListAppAttrContentForView = environment.losUrl + "/v1" + "/AppAttrContent/GetListAppAttrContentForView";
 
 }

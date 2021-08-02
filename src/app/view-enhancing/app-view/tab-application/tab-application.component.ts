@@ -5,6 +5,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-tab-application',
@@ -16,12 +20,14 @@ export class TabApplicationComponent implements OnInit {
   AppNo: string;
   viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   viewRestObj: UcViewGenericObj = new UcViewGenericObj();
+  viewRestructuringDataObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
   isReady: boolean = false;
   isLoanObjectNeeded: boolean = false;
   ListCrossAppData: any;
   isDF: boolean = false;
+  AppAttrContentObjs: Array<AppAttrContentObj> = new Array<AppAttrContentObj>();
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {      
@@ -78,12 +84,15 @@ export class TabApplicationComponent implements OnInit {
 
     if (this.BizTemplateCode == CommonConstant.DF)
       await this.GetRestObjData();
+
+    this.getRestructuringData();
+    await this.getAppAttrContent();
     this.isReady = true;
   }
 
   async GetCrossAppData() {
     var obj = { Id: this.appId };
-    await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCrossForView, obj).toPromise().then(
       (response) => {
         this.ListCrossAppData = response[CommonConstant.ReturnObj];
       }
@@ -109,5 +118,64 @@ export class TabApplicationComponent implements OnInit {
 
   async GetRestObjData() {
     this.viewRestObj.viewInput = "./assets/ucviewgeneric/viewRestructureObj.json";
+  
+  }
+
+  getRestructuringData(){
+    this.viewRestructuringDataObj.viewInput = "./assets/ucviewgeneric/viewRestructuringData.json";
+  }
+
+  async getAppAttrContent(){
+    var GenObj =
+    {
+      AppId: this.appId,
+      AttrGroup: CommonConstant.AttrGroupApplicationData + "_" + this.BizTemplateCode,
+    };
+    
+    await this.http.post(URLConstant.GetListAppAttrContentForView, GenObj).toPromise().then(
+      (response) => {
+        this.AppAttrContentObjs = response["ReturnObject"];
+        
+        for(let i = 0; i < this.AppAttrContentObjs.length; i++){
+          if(this.AppAttrContentObjs[i].AttrInputType == CommonConstant.AttrInputTypeRefMaster
+            && this.AppAttrContentObjs[i].RefAttrValue != null 
+            && this.AppAttrContentObjs[i].RefAttrValue != ""){
+              let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+                RefMasterTypeCode: this.AppAttrContentObjs[i].RefAttrValue,
+                MasterCode: this.AppAttrContentObjs[i].AttrValue
+              };
+              this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+                (responseRefMaster: KeyValueObj) => {
+                  this.AppAttrContentObjs[i].AttrValue = responseRefMaster.Value
+                });
+          }
+        }
+      });
+  }
+
+  OpenAppView(appNo) {
+    var appObj = { TrxNo: appNo };
+  
+    this.http.post(URLConstant.GetAppByAppNo, appObj).subscribe(
+      (response) => {
+        AdInsHelper.OpenAppViewByAppId(response["AppId"]);
+      });
+  }
+
+  OpenAgrmntView(agrmntNo) {
+    var agrObj = { TrxNo: agrmntNo };
+  
+    this.http.post(URLConstant.GetAgrmntByAgrmntNo, agrObj).subscribe(
+      (response) => {
+        AdInsHelper.OpenAgrmntViewByAgrmntId(response["AgrmntId"]);
+      });
+  }
+
+  OpenCustView(custNo) {
+    var custObj = { TrxNo: custNo };
+    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      (response) => {
+        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+      });
   }
 }
