@@ -138,6 +138,7 @@ export class CollateralAddEditComponent implements OnInit {
     AssetTypeCode: [''],
     CollateralSeqNo: [1],
     CollateralName: ['', [Validators.required]],
+    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
 
     AppCollateralAttrObjs: this.fb.array([]),
 
@@ -540,7 +541,8 @@ export class CollateralAddEditComponent implements OnInit {
             AssetTypeCode: this.returnAppCollateralObj.AssetTypeCode,
             AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode,
             CollPercentage: this.returnAppCollateralObj.CollateralPrcnt,
-            CollateralSeqNo: this.returnAppCollateralObj.CollateralSeqNo
+            CollateralSeqNo: this.returnAppCollateralObj.CollateralSeqNo,
+            ManufacturingYear: this.returnAppCollateralObj.ManufacturingYear
           });
 
           var reqByCode = new GenericObj();
@@ -996,6 +998,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralObj.MrCollateralUsageCode = CommonConstant.AssetUsageNonComm;
     this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = this.AddCollForm.controls["AssetCategoryCode"].value;
     this.appCollateralDataObj.AppCollateralObj.CollateralValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
+    this.appCollateralDataObj.AppCollateralObj.ManufacturingYear = this.AddCollForm.controls["ManufacturingYear"].value;
     // this.appCollateralDataObj.AppCollateralObj.AssetCategoryCode = "MOBIL1000";
   }
 
