@@ -129,7 +129,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
         this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
       }
     }
-    if (this.WfTaskListId > 0){
+    else if (this.WfTaskListId > 0){
         this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }
