@@ -20,6 +20,7 @@ import {RefMasterObj} from 'app/shared/model/RefMasterObj.Model';
 import {CustObj} from 'app/shared/model/CustObj.Model';
 import {ReqRefMasterByTypeCodeAndMasterCodeObj} from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
+import {URLConstantX} from '../../../shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-mou-customer-request-detail-x',
@@ -41,7 +42,7 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
   CustNoObj: GenericObj = new GenericObj();
   plafondTypeObj: Array<RefMasterObj>;
   datePipe = new DatePipe('en-US');
-  MrMouFctrTypeList: Array<KeyValueObj> = [];
+  MrMouCustFctrTypeList: Array<KeyValueObj> = [];
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -49,7 +50,7 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]],
     RefNo: [''],
-    MrMouFctrType: [''],
+    MrMouCustFctrType: [''],
     IsRevolving: [false],
     PlafondAmt: [0, [Validators.required, Validators.min(1.00)]],
     MouStat: ['NEW', [Validators.required]],
@@ -101,7 +102,7 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     if(this.mouType == CommonConstant.FACTORING){
       this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstantX.RefMasterTypeCodeMouFctrType}).subscribe(
         (response) => {
-          this.MrMouFctrTypeList = response[CommonConstant.ReturnObj];
+          this.MrMouCustFctrTypeList = response[CommonConstant.ReturnObj];
           // if (this.pageType != 'edit') {
           //   this.MOUMainInfoForm.patchValue({
           //     MrRevolvingTypeCode: this.RevolvingTypeList[0].Key
@@ -137,12 +138,21 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
 
     if (this.pageType == 'edit' || this.pageType == 'return') {
       this.httpClient.post(URLConstant.GetMouCustById, {Id: this.mouCustId}).subscribe(
-        (response) => {
+        async (response) => {
           response['StartDt'] = datePipe.transform(response['StartDt'], 'yyyy-MM-dd');
           response['EndDt'] = datePipe.transform(response['EndDt'], 'yyyy-MM-dd');
           this.MOUMainInfoForm.patchValue({
             ...response
           });
+          if (response['MrMouTypeCode'] == CommonConstant.FACTORING) {
+            await this.httpClient.post(URLConstantX.GetMouCustFctrXByMouCustNoX, {CustNo : response['MouCustNo']}).toPromise().then(
+              (ress) => {
+                this.MOUMainInfoForm.patchValue({
+                  MrMouCustFctrType : ress['MrMouCustFctrType']
+                });
+              });
+          }
+
           this.CustNoObj.CustNo = response['CustNo'];
           this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
             (response: CustObj) => {
@@ -209,14 +219,14 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     }
 
     if (this.pageType == 'add') {
-      this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
+      this.httpClient.post(URLConstantX.AddMouCustX, mouCustFormData).subscribe(
         (response: GenericObj) => {
           this.toastr.successMessage(response['Message']);
           var mouCustId = response.Id;
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DETAIL], {mouCustId: mouCustId, MOUType: this.mouType});
         });
     } else if (this.pageType == 'edit' || this.pageType == 'return') {
-      this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
+      this.httpClient.post(URLConstantX.EditMouCustX, mouCustFormData).subscribe(
         (response) => {
           this.toastr.successMessage(response['Message']);
           if (this.pageType == 'return') {

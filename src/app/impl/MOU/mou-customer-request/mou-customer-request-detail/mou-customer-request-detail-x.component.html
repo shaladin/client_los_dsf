@@ -53,11 +53,11 @@
                 </div>
               </div>
               <div class="form-group row" *ngIf="mouType == 'FACTORING'">
-                <label class="col-md-3 adInsLabel" for="FactoringType" translate>Factoring Type</label>
+                <label class="col-md-3 adInsLabel" for="MrMouCustFctrType" translate>Factoring Type</label>
                 <div class="col-md-2">
-                  <select type="text" class="form-control adInsInput" formControlName="MrMouFctrType"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.MrMouFctrType.invalid }">
-                    <option *ngFor="let item of MrMouFctrTypeList" [value]="item.Key">{{item.Value}}</option>
+                  <select type="text" class="form-control adInsInput" formControlName="MrMouCustFctrType"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.MrMouCustFctrType.invalid }">
+                    <option *ngFor="let item of MrMouCustFctrTypeList" [value]="item.Key">{{item.Value}}</option>
                   </select>
                 </div>
               </div>
