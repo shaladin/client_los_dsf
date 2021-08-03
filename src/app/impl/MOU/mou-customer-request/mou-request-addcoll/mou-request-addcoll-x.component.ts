@@ -1119,11 +1119,22 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.http.post<MouCustCollateralStatXObj>(URLConstantX.GetMouCustCollateralStatXByMouCustCollateralIdX, obj).subscribe(
       (response)=>{
         this.AddCollForm.patchValue({
-          CollateralReceivedDt : response.CollateralReceivedDt,
-          CollateralReleasedDt : response.CollateralReleasedDt
+          CollateralReceivedDt : this.formatDate(response.CollateralReceivedDt),
+          CollateralReleasedDt : this.formatDate(response.CollateralReleasedDt)
         });
+        console.log(this.AddCollForm.controls)
       }
     )
+  }
+
+  formatDate(date){
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
   }
 
   Cancel() {
@@ -1165,7 +1176,12 @@ export class MouRequestAddcollXComponent implements OnInit {
       ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
       CollateralPortionAmt: [''],
       CollateralPortionType: [''],
-      ListDoc: this.fb.array([])
+      ListDoc: this.fb.array([]),
+
+      CollateralStatus: [''],
+      IsRequiredStatus: [''],
+      CollateralReceivedDt: [''],
+      CollateralReleasedDt: ['']
     })
     this.AddCollForm.updateValueAndValidity();
 
