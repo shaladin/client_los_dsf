@@ -217,7 +217,7 @@
               <label>Grace Period</label>
             </div>
             <div class="col-md-1 form-inline form-inline-right">
-              <input type="number" class="form-control full-width" formControlName="GracePeriod" disabled
+              <input type="number" class="form-control full-width" formControlName="GracePeriod"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
                 (keyup)="SetNeedReCalculate(true)">
               <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
@@ -225,7 +225,7 @@
             </div>
             <div class="col-md-2 form-inline">
               <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
-                (change)="SetNeedReCalculate(true)" disabled>
+                (change)="SetNeedReCalculate(true)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>

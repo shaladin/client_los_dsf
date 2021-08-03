@@ -45,6 +45,11 @@ import { AssetAllocationPagingComponent } from './asset-allocation/asset-allocat
 import { AssetAllocationDetailComponent } from './asset-allocation/asset-allocation-detail/asset-allocation-detail.component';
 import { InvoiceVerifDetailListOfInvoiceComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component';
 import { InvoiceVerifDetailDFComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component';
+import { PreGoLiveXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live/pre-go-live-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { DeliveryOrderMultiAssetDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail-x.component';
+import { CustConfirmationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-detail/cust-confirmation-detail-x.component';
+import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
 
 const routes: Routes = [
   {
@@ -94,7 +99,7 @@ const routes: Routes = [
       },
       {
         path: PathConstant.DO_DETAIL,
-        component: DeliveryOrderDetailComponent,
+        component: DeliveryOrderMultiAssetDetailComponent,
         data: {
           title: 'Delivery Order'
         }
@@ -107,8 +112,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.CUST_CONFIRM_DETAIL,
-        component: CustConfirmationDetailComponent,
+        path: PathConstantX.CUST_CONFIRM_DETAIL_X,
+        component: CustConfirmationDetailXComponent,
         data: {
           title: 'Customer Confirmation Detail'
         }
@@ -135,8 +140,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.PGL_DETAIL,
-        component: PreGoLiveComponent,
+        path: PathConstantX.PGL_DETAIL_X,
+        component: PreGoLiveXComponent,
         data: {
           title: 'PreGoLive Detail'
         }
@@ -275,8 +280,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.DO_MULTI_ASSET_DETAIL,
-        component: DeliveryOrderMultiAssetDetailComponent,
+        path: PathConstantX.DO_MULTI_ASSET_DETAIL_X,
+        component: DeliveryOrderMultiAssetDetailXComponent,
         data: {
           title: 'Delivery Order Detail'
         }
@@ -293,6 +298,13 @@ const routes: Routes = [
         component: InvoiceVerifDetailComponent,
         data: {
           title: 'Delivery Order Detail'
+        }
+      },
+      {
+        path: PathConstantX.INVOICE_VERIF_DETAIL_X,
+        component: InvoiceVerifDetailXComponent,
+        data: {
+          title: 'Delivery Order Detail X'
         }
       },
       {

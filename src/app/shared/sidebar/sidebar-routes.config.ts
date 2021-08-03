@@ -538,4 +538,10 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.SETTING_APP_SOURCE_PAGING, Title: "Application Source", Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: []
   },
+  {
+    Path: '', Title: 'Cessie', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Submenu: [
+      { Path: NavigationConstant.CESSIE_MONITORING, Title: 'Cessie Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+    ], Params: []
+  },
 ];
