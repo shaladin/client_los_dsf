@@ -18,7 +18,7 @@ export class SimpleLeadMonitoringComponent implements OnInit {
       this.uploadObj = {
         title: 'Upload Simple Lead', // Title Paging dan Upload Page
         subsectionId: 'UcUploadFile', // Ga perlu diubah
-        formatsAllowed: '.xls, .xlsx', // File yang bisa di upload
+        formatsAllowed: '.xls, .xlsx, .txt, .TXT', // File yang bisa di upload
         UploadTypeCode: 'UPL_SMPL_LEAD', // UploadTypeCode berdasarkan keperluan
         ErrorDownloadUrl: URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
         TemplateUrl: URLConstant.DownloadTemplate, // URL untuk Download Template File
