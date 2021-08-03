@@ -191,7 +191,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <div id="upload-data-tab" class="content" role="tabpanel"
               aria-labelledby="upload-data-tab-trigger">
               <app-dms-iframe *ngIf="currentStepIndex == 6 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"  (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>

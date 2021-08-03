@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { MouCustTcComponent } from '../../../../MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
 import Stepper from 'bs-stepper';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -15,6 +14,7 @@ import { CustObj } from 'app/shared/model/CustObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
+import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
 
 @Component({
   selector: 'app-mou-customer-detail-x',
@@ -43,7 +43,7 @@ export class MouCustomerDetailXComponent implements OnInit, AfterViewInit {
   custObj: CustObj = new CustObj();
   isDmsReady: boolean = false;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
-
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -102,7 +102,7 @@ export class MouCustomerDetailXComponent implements OnInit, AfterViewInit {
           this.dmsObj.User = currentUserContext.UserName;
           this.dmsObj.Role = currentUserContext.RoleCode;
           this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-
+  
           if(response['CustNo'] != null && response['CustNo'] != ""){
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
           }
@@ -165,19 +165,19 @@ export class MouCustomerDetailXComponent implements OnInit, AfterViewInit {
       this.mouTcGeneral.Save();
       if(this.SysConfigResultObj.ConfigValue == '0'){
         this.endOfTab()
-      }
+      }     
     }
     else if (this.mouType == CommonConstant.FACTORING) {
       this.mouTcFactoring.Save();
       if(this.SysConfigResultObj.ConfigValue == '0'){
         this.endOfTab()
-      }
+      }  
     }
     else if (this.mouType == CommonConstant.FINANCING) {
       this.mouTcFinancing.Save();
       if(this.SysConfigResultObj.ConfigValue == '0'){
         this.endOfTab()
-      }
+      }  
     }
   }
 
@@ -228,7 +228,7 @@ export class MouCustomerDetailXComponent implements OnInit, AfterViewInit {
 
   submitHandler() {
     if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex >= 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex >= 5) || (this.mouType == CommonConstant.FINANCING && this.currentStepIndex >= 5)) {
-
+      
       var mouObj = { Id: this.mouCustId }
       this.httpClient.post(URLConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
         () => {
@@ -332,7 +332,7 @@ export class MouCustomerDetailXComponent implements OnInit, AfterViewInit {
       await this.initDms();
     }
   }
-
+  
   endOfTab() {
     this.toastr.successMessage("Success");
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});

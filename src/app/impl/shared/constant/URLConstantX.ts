@@ -10,17 +10,23 @@ export class URLConstantX {
   public static GetAppXByAppId = environment.losUrl + '/v1' + '/AppX/GetAppXByAppId';
 
   // Upload
-  public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
+  public static UploadFile = environment.FoundationR3Url + '/v1' + '/UploadX/UploadFile';
+
+  // MOU CUST X
+  public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
+
+  // MOU CUST FCTR X
+  public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";
 
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
 
   // MOU CUST COLLATERAL X
-  public static GetMouCustCollateralStatXByMouCustCollateralIdX = environment.losUrl +'/v1' + "/MouCustCollateralX/GetMouCustCollateralStatXByMouCustCollateralId";
-  public static AddExistingCustCollateralDataX = environment.losUrl + '/v1' + "/MouCustCollateralX/AddExistingCustCollateralData";
+  public static GetMouCustCollateralStatXByMouCustCollateralIdX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetMouCustCollateralStatXByMouCustCollateralId';
+  public static AddExistingCustCollateralDataX = environment.losUrl + '/v1' + '/MouCustCollateralX/AddExistingCustCollateralData';
   public static AddMouCustCollateralDataX = environment.losUrl + '/v1' + '/MouCustCollateralX/AddMouCustCollateralData';
   public static EditMouCustCollateralDataX = environment.losUrl + '/v1' + '/MouCustCollateralX/EditMouCustCollateralData';
-  public static DeleteMouCustCollateralX = environment.losUrl +  '/v1' + "/MouCustCollateralX/DeleteMouCustCollateral";
+  public static DeleteMouCustCollateralX = environment.losUrl + '/v1' + '/MouCustCollateralX/DeleteMouCustCollateral';
 
   //CHANGE MOU CUST COLLATERAL X
   public static GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralStatByChangeMouCustCollateralId";

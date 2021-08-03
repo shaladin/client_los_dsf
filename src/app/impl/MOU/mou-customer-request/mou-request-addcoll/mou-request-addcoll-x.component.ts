@@ -471,7 +471,6 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn2 = false;
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showFax = false;
-
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
     this.inputAddressObjForLocAddr.showPhn1 = false;
@@ -1255,7 +1254,8 @@ export class MouRequestAddcollXComponent implements OnInit {
       }
     }
 
-    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
+    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT
+        && this.mouCustObj.MrMouTypeCode == CommonConstant.MOU_TYPE_GENERAL) {
       if (sumCollateralValue < this.returnMouCust.PlafondAmt) {
         this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
         return;
