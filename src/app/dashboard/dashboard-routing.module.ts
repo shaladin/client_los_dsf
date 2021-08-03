@@ -5,6 +5,7 @@ import { Dashboard1Component } from "app/dashboard/dashboard1/dashboard1.compone
 import { Dashboard2Component } from "app/dashboard/dashboard2/dashboard2.component";
 import { DashBoardComponent } from 'app/dashboard/dash-board/dash-board.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { DashEmptyComponent } from './dash-empty/dash-empty.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,13 @@ const routes: Routes = [
         component: DashBoardComponent,
         data: {
           title: 'Dashboard'
+        }
+      },
+      {
+        path: PathConstant.DASHEMPTY,
+        component: DashEmptyComponent,
+        data: {
+          title: 'Dashboard Empty'
         }
       },
     ]

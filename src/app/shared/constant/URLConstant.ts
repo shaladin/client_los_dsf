@@ -1638,6 +1638,11 @@ export class URLConstant {
 
   // App List View
   public static GetAllAppAndAppOplListData = environment.losUrl + "/v1" + "/AppListView/GetAllAppAndAppOplListData";
+  
+  public static GetAppListForCustView = environment.losUrl + "/v1" + "/Application/GetAppListForCustView";
+
+  // Agreement List View
+  public static GetAgrmntListForCustView = environment.losUrl + "/v1" + "/Agrmnt/GetAgrmntListForCustView";
 
   // App Review
   public static GetAppRvwSummaryAsset = environment.losUrl + "/v1" + "/ApplicationReview/GetAppRvwSummaryAsset";
@@ -1751,4 +1756,7 @@ export class URLConstant {
   public static EditRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/EditRefAppSrc";
   public static GetRefAppSrcByRefAppSrcId = environment.losUrl + "/v1" + "/RefAppSrc/GetRefAppSrcByRefAppSrcId";
   public static GetListRefAppSrcOfficeMbrByRefAppSrcId = environment.losUrl + "/v1" + "/RefAppSrc/GetListRefAppSrcOfficeMbrByRefAppSrcId";
+
+  //Config Result
+  public static GetSysConfigResultByCode = environment.FoundationR3Url + "/v1" + "/SysConfigResult/GetSysConfigResultByCode";
 }
