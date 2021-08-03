@@ -66,6 +66,8 @@ import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { ChangeMouRequestAddcollXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
 import { ChangeMouRequestDetailCustomerXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
 import {MouCustomerRequestDetailXComponent} from 'app/impl/MOU/mou-customer-request/mou-customer-request-detail/mou-customer-request-detail-x.component';
+import {MouReviewFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-factoring/mou-review-factoring-x.component';
+import {MouApprovalFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring-x.component';
 
 const routes: Routes = [
   {
@@ -184,6 +186,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.MOU_CUST_RVW_FCTR_X,
+        component: MouReviewFactoringXComponent,
+        data: {
+          title: 'MOU Review Factoring X'
+        }
+      },
+      {
         path: PathConstant.MOU_EDIT_CUST_PAGING,
         component: EditMouCustomerComponent,
         data: {
@@ -209,6 +218,13 @@ const routes: Routes = [
         component: MouApprovalFactoringComponent,
         data: {
           title: 'MOU Approval Factoring'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_APPRV_FCTR_X,
+        component: MouApprovalFactoringXComponent,
+        data: {
+          title: 'MOU Approval Factoring X'
         }
       },
       {

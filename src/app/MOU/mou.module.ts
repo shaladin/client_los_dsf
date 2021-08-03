@@ -110,6 +110,9 @@ import { MouRequestAddcollXComponent } from 'app/impl/MOU/mou-customer-request/m
 import { ChangeMouRequestDetailCustomerXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
 import { ChangeMouRequestAddcollXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
 import { MouCustomerRequestDetailXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-request-detail/mou-customer-request-detail-x.component';
+import {MouReviewFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-factoring/mou-review-factoring-x.component';
+import {MouMainInfoXComponent} from 'app/impl/MOU/mou-main-info/mou-main-info-x.component';
+import {MouApprovalFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -247,7 +250,10 @@ export const customCurrencyMaskConfig = {
     MouRequestAddcollXComponent,
     ChangeMouRequestDetailCustomerXComponent,
     ChangeMouRequestAddcollXComponent,
-    MouCustomerRequestDetailXComponent
+    MouCustomerRequestDetailXComponent,
+    MouReviewFactoringXComponent,
+    MouMainInfoXComponent,
+    MouApprovalFactoringXComponent
   ],
   exports: [],
   providers: [NGXToastrService],
