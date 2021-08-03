@@ -13,6 +13,7 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { ArchwizardModule } from 'angular-archwizard';
 import { MainDataComponentModule } from '../sharing-component/main-data-component/main-data-component.module';
 import {SharedModule} from '../../shared/shared.module';
+import {NapDetailFormXComponent} from '../../impl/NEW-NAP/DLFN/nap-detail-form/nap-detail-form-x.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +21,18 @@ import {SharedModule} from '../../shared/shared.module';
     NapAddComponent,
     NapAddDetailComponent,
     NapCustMainDataComponent,
-    NapDetailFormComponent],
-    imports: [
-        CommonModule,
-        InputNapDLFNRoutingModule,
-        AdInsModule,
-        InputNapComponentModule,
-        ArchwizardModule,
-        MainDataComponentModule,
-        SharedModule
-    ],
+    NapDetailFormComponent,
+    NapDetailFormXComponent
+  ],
+  imports: [
+    CommonModule,
+    InputNapDLFNRoutingModule,
+    AdInsModule,
+    InputNapComponentModule,
+    ArchwizardModule,
+    MainDataComponentModule,
+    SharedModule
+  ],
   providers: [
     NGXToastrService
   ]

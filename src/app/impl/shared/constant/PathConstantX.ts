@@ -6,14 +6,15 @@ export class PathConstantX {
     public static LR_IMPL = "Impl";
     //#endregion
 
-    //#region Common-Path
-    public static CESSIE = "Cessie";
-    public static PAGING = "PagingX";
-    public static ADD = "AddX";
-    public static DETAIL_X = PathConstant.DETAIL + "X";
-    public static MONITORING = "Monitoring";
-    public static MOU_CUSTOMER_X = "CustomerX";
-    //#endregion
+  //#region Common-Path
+  public static CESSIE = "Cessie";
+  public static PAGING = "PagingX";
+  public static ADD = "AddX";
+  public static DETAIL_X = "DetailX";
+  public static MONITORING = "Monitoring";
+  public static MOU_CUSTOMER_X = "CustomerX";
+  public static NAP2_X = "NAP2X";
+  //#endregion
 
     //#region Nap-Main-Data
     public static NAP1_PAGING = PathConstant.NAP1 + "/" + PathConstantX.PAGING;
@@ -30,8 +31,9 @@ export class PathConstantX {
 
     //#region MOU
     public static MOU_CUST_REQ_ADD_COLL_X = PathConstant.MOU_CUST + "/RequestAddCollX";
+    public static MOU_REQ_DETAIL_X = PathConstant.MOU_REQ + "/" + PathConstantX.DETAIL_X;
     //#endregion
-    
+
     //#region Change mou
     public static CHANGE_MOU_REQ_ADD_COLL_X = PathConstant.CHANGE_MOU + "/RequestAddCollX";
     public static CHANGE_MOU_REQ_DETAIL_CUST_X = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/" + PathConstantX.MOU_CUSTOMER_X;
@@ -47,6 +49,7 @@ export class PathConstantX {
     public static GO_LIVE_APV_PAGING_X = PathConstantX.GO_LIVE_APV_X + "/" + PathConstantX.PAGING;
     public static GO_LIVE_APV_DETAIL_X = PathConstantX.GO_LIVE_APV_X + "/" + PathConstantX.DETAIL_X;
     //endregion
+  public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + "/" + PathConstantX.DETAIL_X;
 }
 
 

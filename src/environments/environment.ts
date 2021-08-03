@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-  //losUrl: 'http://localhost:5001',
+  // losUrl: 'https://localhost:5001',
   // FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL',
   FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_DSF_IMPL',

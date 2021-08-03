@@ -905,9 +905,17 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       });
     this.http.post<ChangeMouCustCollateralStatXObj>(URLConstantX.GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX, collObj).subscribe(
       (response)=>{
+        let collRcvDt = "";
+        let collRlsDt = "";
+        if(response.CollateralReceivedDt != null){
+          collRcvDt = formatDate(response.CollateralReceivedDt, 'yyyy-MM-dd', 'en-US')
+        }
+        if(response.CollateralReleasedDt != null){
+          collRlsDt = formatDate(response.CollateralReleasedDt, 'yyyy-MM-dd', 'en-US')
+        }
         this.AddCollForm.patchValue({
-          CollateralReceivedDt : response.CollateralReceivedDt,
-          CollateralReleasedDt : response.CollateralReleasedDt
+          CollateralReceivedDt : collRcvDt,
+          CollateralReleasedDt : collRlsDt
         });
       }
     );
@@ -946,7 +954,12 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       MrCollateralConditionCode: [""],
       ManufacturingYear: ["", [Validators.pattern("^[0-9]+$")]],
       CopyToOwnerLocation: [''],
-      SelfOwner: [false]
+      SelfOwner: [false],
+
+      CollateralStatus: [''],
+      IsRequiredStatus: [''],
+      CollateralReceivedDt: [''],
+      CollateralReleasedDt: ['']
     });
     this.AddCollForm.updateValueAndValidity();
 

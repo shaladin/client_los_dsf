@@ -73,8 +73,9 @@ import { GoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-proces
 import { GoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-detail/go-live-approval-detail-x.component";
 import { EndDateForGoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-paging/end-date-go-live-approval-paging-x.component";
 import { EndDateForGoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-detail/end-date-go-live-approval-detail-x.component";
+import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
 
-export const customCurrencyMaskConfig = {     
+export const customCurrencyMaskConfig = {
   align: "left",
   allowNegative: true,
   allowZero: true,
@@ -157,7 +158,8 @@ export const customCurrencyMaskConfig = {
     GoLiveApprovalPagingXComponent,
     GoLiveApprovalDetailXComponent,
     EndDateForGoLiveApprovalPagingXComponent,
-    EndDateForGoLiveApprovalDetailXComponent
+    EndDateForGoLiveApprovalDetailXComponent,
+    InvoiceVerifDetailXComponent
   ],
   providers: [
     NGXToastrService,
