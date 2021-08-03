@@ -8,6 +8,9 @@ import { FamilyMainDataPagingComponent } from "./family-main-data/family-main-da
 import { GuarantorMainDataPagingComponent } from "./guarantor-main-data/guarantor-main-data-paging.component";
 import { MngmntShrhldrMainDataPagingComponent } from "./mngmnt-shrhldr-main-data/mngmnt-shrhldr-main-data-paging.component";
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+import { CustPublicComponent } from "./components/cust-public/cust-public.component";
+import { CustAttrFormComponent } from "./components/cust-attr-form/cust-attr-form.component";
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -25,6 +28,8 @@ export const customCurrencyMaskConfig = {
 @NgModule({
     exports: [
         CustMainDataComponent,
+        CustPublicComponent,
+        CustAttrFormComponent,
         GuarantorMainDataPagingComponent,
         FamilyMainDataPagingComponent,
         MngmntShrhldrMainDataPagingComponent
@@ -33,10 +38,13 @@ export const customCurrencyMaskConfig = {
         CommonModule,
         AdInsModule,
         MatRadioModule,
+        NgMultiSelectDropDownModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
         CustMainDataComponent,
+        CustPublicComponent,
+        CustAttrFormComponent,
         GuarantorMainDataPagingComponent,
         FamilyMainDataPagingComponent,
         MngmntShrhldrMainDataPagingComponent
