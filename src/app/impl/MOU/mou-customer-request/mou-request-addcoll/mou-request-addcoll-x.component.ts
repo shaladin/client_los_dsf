@@ -1122,7 +1122,6 @@ export class MouRequestAddcollXComponent implements OnInit {
           CollateralReceivedDt : this.formatDate(response.CollateralReceivedDt),
           CollateralReleasedDt : this.formatDate(response.CollateralReleasedDt)
         });
-        console.log(this.AddCollForm.controls)
       }
     )
   }
