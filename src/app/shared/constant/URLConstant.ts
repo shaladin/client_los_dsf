@@ -319,7 +319,8 @@ export class URLConstant {
   //REF-PAY
   public static GetListLKvpActiveRefPayFreq = "/RefPayFreq/GetListLKvpActiveRefPayFreq";
   public static GetListActiveRefPayFreq = environment.FoundationR3Url + "/RefPayFreq/GetListActiveRefPayFreq";
-  public static GetListRefPayFreqForMou = environment.FoundationR3Url + "/RefPayFreq/GetListRefPayFreqForMou";
+  // public static GetListRefPayFreqForMou = environment.FoundationR3Url + "/RefPayFreq/GetListRefPayFreqForMou";
+  public static GetListRefPayFreqForMou = environment.FoundationR3Url + "/RefPayFreq/GetListActiveRefPayFreq";
 
   //ZIPCODE
   public static GetRefZipcodePaging = "/RefZipcode/GetRefZipcodePaging";
