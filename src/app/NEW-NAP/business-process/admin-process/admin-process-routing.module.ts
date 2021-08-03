@@ -294,10 +294,17 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstant.INVOICE_VERIF_DETAIL,
+        component: InvoiceVerifDetailComponent,
+        data: {
+          title: 'Delivery Order Detail'
+        }
+      },
+      {
         path: PathConstantX.INVOICE_VERIF_DETAIL_X,
         component: InvoiceVerifDetailXComponent,
         data: {
-          title: 'Delivery Order Detail'
+          title: 'Delivery Order Detail X'
         }
       },
       {

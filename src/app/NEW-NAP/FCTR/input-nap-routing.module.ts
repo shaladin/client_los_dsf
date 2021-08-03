@@ -50,13 +50,19 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.NAP2_X,
-        component: NapDetailFormXComponent,
+        path: PathConstant.NAP2,
+        component: NapDetailFormComponent,
         data: {
             title: 'NAP Detail'
         }
       },
-
+      {
+        path: PathConstantX.NAP2_X,
+        component: NapDetailFormXComponent,
+        data: {
+          title: 'NAP Detail X'
+        }
+      },
     ]
   }
 ];
