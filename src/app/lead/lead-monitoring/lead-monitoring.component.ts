@@ -45,7 +45,7 @@ export class LeadMonitoringComponent implements OnInit {
       this.uploadObj = {
         title: 'Upload Lead', // Title Paging dan Upload Page
         subsectionId: 'UcUploadFile', // Ga perlu diubah
-        formatsAllowed: '.xls, .xlsx', // File yang bisa di upload
+        formatsAllowed: '.xls, .xlsx, .txt, .TXT', // File yang bisa di upload
         UploadTypeCode: 'UPL_LEAD', // UploadTypeCode berdasarkan keperluan
         ErrorDownloadUrl: URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
         TemplateUrl: URLConstant.DownloadTemplate, // URL untuk Download Template File
