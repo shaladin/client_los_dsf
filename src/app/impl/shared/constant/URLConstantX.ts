@@ -8,6 +8,9 @@ export class URLConstantX {
   public static AddCustCnfrmX = environment.losUrl + '/v1' + '/CustCnfrmX/AddCustCnfrm';
   public static EditAppAddAppCrossX = environment.losUrl + '/v1' + '/AppX/EditAppAddAppCross';
   public static GetAppXByAppId = environment.losUrl + '/v1' + '/AppX/GetAppXByAppId';
+  public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
+  public static EndDateGoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/EndDateGoLiveApproval";
+  public static GoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/GoLiveApproval";
 
   // Upload
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";

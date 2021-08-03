@@ -1,0 +1,23 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="px-3">
+        <div class="col-md-8" style="padding-left: 0px;">
+          <h4 class="form-section card-title" translate>End Date For Go Live Approval</h4>
+        </div>
+      </div>
+      <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
+      <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewAgrmnt"> </lib-ucviewgeneric>
+      <div class="card-body">
+        <div class="px-3">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+
+<lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
+  (onCancel)="onCancelClick()"></lib-ucapprovalR3>
