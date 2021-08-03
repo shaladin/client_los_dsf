@@ -905,22 +905,20 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       });
     this.http.post<ChangeMouCustCollateralStatXObj>(URLConstantX.GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX, collObj).subscribe(
       (response)=>{
+        let collRcvDt = "";
+        let collRlsDt = "";
+        if(response.CollateralReceivedDt != null){
+          collRcvDt = formatDate(response.CollateralReceivedDt, 'yyyy-MM-dd', 'en-US')
+        }
+        if(response.CollateralReleasedDt != null){
+          collRlsDt = formatDate(response.CollateralReleasedDt, 'yyyy-MM-dd', 'en-US')
+        }
         this.AddCollForm.patchValue({
-          CollateralReceivedDt : this.formatDate(response.CollateralReceivedDt),
-          CollateralReleasedDt : this.formatDate(response.CollateralReleasedDt)
+          CollateralReceivedDt : collRcvDt,
+          CollateralReleasedDt : collRlsDt
         });
       }
     );
-  }
-
-  formatDate(date){
-    const d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [year, month, day].join('-');
   }
 
   Cancel() {
