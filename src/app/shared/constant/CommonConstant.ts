@@ -58,6 +58,7 @@ export class CommonConstant {
   // Module
   public static LOAN_ORIGINATION = "LOS";
   public static FOUNDATION = "FOUNDATION";
+  public static MODULE_LMS = "LMS";
 
   // COMPONENTS
   public static LINE = 'Line';
@@ -263,7 +264,7 @@ export class CommonConstant {
   public static AppCollateralAttrTaxCityIssuer = "TAX_CITY_ISSUER";
   public static AppCollateralAttrBpkbIssueDate = "BPKB_ISSUE_DATE";
 
-  //APP CUST 
+  //ATTR GROUP 
   public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
   public static AttrGroupCustPersonalOther = "CUST_PERSONAL_OTH"
   public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
@@ -274,6 +275,17 @@ export class CommonConstant {
   public static AttrGroupCustCompanyFinDataIncome = "CUST_COMPANY_FINDATA_INCOME"
   public static AttrGroupCustCompanyFinDataExpense = "CUST_COMPANY_FINDATA_EXPENSE"
   public static AttrGroupCustCompanyFinDataOther = "CUST_COMPANY_FINDATA_OTHER"
+  public static AttrGroupApplicationData = "APPLICATION_DATA";
+
+  //ATTR INTPUT TYPE
+  public static AttrInputTypeDate = "D";
+  public static AttrInputTypeNum = "N";
+  public static AttrInputTypeNumPerc = "P";
+  public static AttrInputTypeList = "L";
+  public static AttrInputTypeSearchList = "SL";
+  public static AttrInputTypeText = "T";
+  public static AttrInputTypeTextArea = "TA";
+  public static AttrInputTypeRefMaster = "RM";
 
   //Interest Type
   public static InterestTypeFixed = "FIXED";
@@ -751,6 +763,7 @@ export class CommonConstant {
   public static CAT_CODE_APV_RES_EXP_D = "CR_APV_RES_EXP_D_CAT";
   public static SCHM_CODE_CR_APV_RES_EXP_D = "CR_APV_RES_EXP_D_SCM";
   public static APV_TYPE_MOU_FRZ_UNFRZ_APV_TYPE = "MOU_FRZ_UNFRZ_APV_TYPE";
+  public static APV_TYPE_CHG_MOU_APV_TYPE = "CHG_MOU_APV_TYPE";
 
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";
@@ -904,7 +917,6 @@ export class CommonConstant {
   public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER";
   public static MOU_EXECUTION = "MOU_EXECUTION";
   
-
   // CUST ADDR TYPE
   public static CustAddrTypeLegal = "LEGAL";
   public static CustAddrTypeContact = "CONTACT";
@@ -923,6 +935,12 @@ export class CommonConstant {
   public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
+
+  //WORKFLOW MOU
+  public static WF_CHANGE_MOU = "WF_CHANGE_MOU";
+  public static ACT_CODE_CHNG_MOU_REVIEW = "CHNG_MOU_REVIEW";
+  public static ACT_CODE_CHNG_MOU_APV = "CHNG_MOU_APV";
+  public static ACT_CODE_CHG_MOU_RTRN = "CHG_MOU_RTRN";
 
   //Lead Step
   public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL"

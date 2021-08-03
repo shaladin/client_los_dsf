@@ -8,6 +8,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 
 @Component({
   selector: 'app-change-mou-review-paging',
@@ -16,14 +18,13 @@ import { CookieService } from 'ngx-cookie';
 })
 export class ChangeMouReviewPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
-  user: CurrentUserContext;
-  link: string;
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouReview.json";
@@ -34,6 +35,24 @@ export class ChangeMouReviewPagingComponent implements OnInit {
         environment: environment.FoundationR3Url + "/v1"
       }
     ];
+
+    if(environment.isCore) {
+      this.inputPagingObj._url = "./assets/ucpaging/mou/V2/searchChangeMouReviewV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchChangeMouReviewV2.json";
+      this.inputPagingObj.isJoinExAPI = true;
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CHANGE_MOU;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CHNG_MOU_REVIEW;
+      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
+      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "TrxNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
   }
 
   GetCallBack(event) {
