@@ -505,6 +505,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         });
     }
     this.selectedInsuranceForCopy = "";
+    this.listDataInsuranceForCopy = null;
     this.selectedCollateral = "";
   }
 
@@ -513,6 +514,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.PageState = 'Paging';
     this.falseValue();
     this.selectedInsuranceForCopy = "";
+    this.listDataInsuranceForCopy = null;
     this.selectedCollateral = "";
   }
 
@@ -705,6 +707,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
         insCoverage.MrInsPaidByCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrInsPaidByCode.value;
+        insCoverage.IsCapitalized = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].IsCapitalized.value;
 
         insCoverage.StartDt = startDt;
         let tenorAdded: number = 12;
