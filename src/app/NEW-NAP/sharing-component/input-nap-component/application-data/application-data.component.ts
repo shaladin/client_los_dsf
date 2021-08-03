@@ -687,6 +687,9 @@ export class ApplicationDataComponent implements OnInit {
           this.slikSecDescr = response.Value;
           this.inputLookupEconomicSectorObj.nameSelect = response.Value;
           this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
+          this.NapAppModelForm.patchValue({
+            MrSlikSecEcoCode: this.defaultSlikSecEcoCode
+          });
         });
     }
 

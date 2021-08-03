@@ -58,6 +58,7 @@ export class CommonConstant {
   // Module
   public static LOAN_ORIGINATION = "LOS";
   public static FOUNDATION = "FOUNDATION";
+  public static MODULE_LMS = "LMS";
 
   // COMPONENTS
   public static LINE = 'Line';
@@ -761,6 +762,7 @@ export class CommonConstant {
   public static CAT_CODE_APV_RES_EXP_D = "CR_APV_RES_EXP_D_CAT";
   public static SCHM_CODE_CR_APV_RES_EXP_D = "CR_APV_RES_EXP_D_SCM";
   public static APV_TYPE_MOU_FRZ_UNFRZ_APV_TYPE = "MOU_FRZ_UNFRZ_APV_TYPE";
+  public static APV_TYPE_CHG_MOU_APV_TYPE = "CHG_MOU_APV_TYPE";
 
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";
@@ -904,10 +906,9 @@ export class CommonConstant {
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
-  public static WF_UPL_LEAD = "WF_UPL_LEAD";
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW"
+  public static WF_UPL_LEAD = "WF_UPL_LEAD";
   
-
   // CUST ADDR TYPE
   public static CustAddrTypeLegal = "LEGAL";
   public static CustAddrTypeContact = "CONTACT";
@@ -931,6 +932,11 @@ export class CommonConstant {
   public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
   public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
 
+  //WORKFLOW MOU
+  public static WF_CHANGE_MOU = "WF_CHANGE_MOU";
+  public static ACT_CODE_CHNG_MOU_REVIEW = "CHNG_MOU_REVIEW";
+  public static ACT_CODE_CHNG_MOU_APV = "CHNG_MOU_APV";
+  public static ACT_CODE_CHG_MOU_RTRN = "CHG_MOU_RTRN";
 
   //Lead Step
   public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL"

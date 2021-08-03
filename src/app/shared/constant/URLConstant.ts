@@ -102,6 +102,8 @@ export class URLConstant {
   public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
   public static DeleteAppCross = environment.losUrl + "/v1" + "/AppCross/DeleteAppCross";
   public static GetListAppCross = environment.losUrl + "/v1" + "/AppCross/GetListAppCross";
+  public static GetListAppCrossForView = environment.losUrl + "/v1" + "/AppCross/GetListAppCrossForView";
+
   public static AddListAppCross = "/AppCross/AddListAppCross";
 
   // App Fctr
@@ -599,14 +601,19 @@ export class URLConstant {
   public static GetChangeMouCustDlrFncgDetailByChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustDlrFncgDetailByChangeMouTrxId";
   public static AddEditChangeMouCustDlrFin = environment.losUrl + "/v1" + "/ChangeMou/AddEditChangeMouCustDlrFin";
   public static SubmitChangeMouReview = environment.losUrl + "/v1" + "/ChangeMou/SubmitChangeMouReview";
+  public static SubmitChangeMouReviewV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitChangeMouReview";
   public static SubmitWorkflowChangeMouRequest = environment.losUrl + "/v1" + "/ChangeMou/SubmitWorkflowChangeMouRequest";
+  public static SubmitWorkflowChangeMouRequestV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitWorkflowChangeMouRequest";
   public static CheckMouCustInChangeMouProcess = environment.losUrl + "/v1" + "/ChangeMou/CheckMouCustInChangeMouProcess";
   public static GetChangeMouTrxbyTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouTrxbyTrxId";
   public static EditChangeMouForCancelByChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/EditChangeMouForCancelByChangeMouTrxId";
+  public static EditChangeMouForCancelByChangeMouTrxIdV2 = environment.losUrl + "/v2" + "/ChangeMou/EditChangeMouForCancelByChangeMouTrxId";
   public static GetListChangeMouTrxByMouCustId = environment.losUrl + "/v1" + "/ChangeMOU/GetListChangeMouTrxByMouCustId";
   public static ReturnChangeMouReview = environment.losUrl + "/v1" + "/ChangeMOU/ReturnChangeMouReview";
+  public static ReturnChangeMouReviewV2 = environment.losUrl + "/v2" + "/ChangeMOU/ReturnChangeMouReview";
   public static ChangeMouExecutionHumanActivity = environment.losUrl + "/v1" + "/ChangeMou/ChangeMouExecutionHumanActivity";
   public static SubmitChangeMouReturn = environment.losUrl + "/v1" + "/ChangeMou/SubmitChangeMouReturn";
+  public static SubmitChangeMouReturnV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitChangeMouReturn";
   public static GetChangeMouCustbyChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxId";
   //CHANGE MOU CUST COLLATERAL
   public static GetChangeMouCustCollateralDocByChangeMouCustCollateralId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDocByChangeMouCustCollateralId";
@@ -1759,5 +1766,6 @@ export class URLConstant {
 
   //App Attr Content
   public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
+  public static GetListAppAttrContentForView = environment.losUrl + "/v1" + "/AppAttrContent/GetListAppAttrContentForView";
 
 }

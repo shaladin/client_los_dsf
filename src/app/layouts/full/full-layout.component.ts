@@ -24,16 +24,16 @@ export class FullLayoutComponent implements OnInit {
     constructor(private elementRef: ElementRef, private strService: StorageService, private spinner: NgxSpinnerService) { }
 
     ngOnInit() {
-        this.subEnd = this.strService.watch("isLoading").subscribe(
-            (response) => {
-                if (response == true) {
-                    this.spinner.show();
-                } else {
-                    this.spinner.hide();
-                }
+        // this.subEnd = this.strService.watch("isLoading").subscribe(
+        //     (response) => {
+        //         if (response == true) {
+        //             this.spinner.show();
+        //         } else {
+        //             this.spinner.hide();
+        //         }
 
-            }
-        );
+        //     }
+        // );
 
         //sidebar toggle event listner
         this.elementRef.nativeElement.querySelector("#sidebarToggle")
@@ -46,7 +46,7 @@ export class FullLayoutComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.subEnd.unsubscribe();
+        // this.subEnd.unsubscribe();
         // this.unsubscribe.next();
         // this.unsubscribe.complete();
     }
