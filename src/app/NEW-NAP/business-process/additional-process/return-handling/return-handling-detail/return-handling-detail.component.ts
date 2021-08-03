@@ -15,6 +15,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -117,7 +118,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
       reqObj.AppId = this.appId;
       reqObj.RowVersion = item.RowVersion;
 
-      this.http.post(URLConstant.RequestReturnTask, reqObj).subscribe(
+      let RequestReturnTaskUrl = URLConstant.RequestReturnTask;
+      if(environment.isCore) RequestReturnTaskUrl = URLConstant.RequestReturnTaskV2;
+      this.http.post(RequestReturnTaskUrl, reqObj).subscribe(
         (response) => {
           this.GetListReturnHandlingDByReturnHandlingHId();
           this.toastr.successMessage(response["message"]);

@@ -41,7 +41,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   appId: number;
   returnHandlingHId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
 
   phoneVerifObj: Array<PhoneVerifObj>;
   AppObj: AppObj;
@@ -78,7 +78,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
     if (this.wfTaskListId != null || this.wfTaskListId != undefined){
-      this.claimTaskService.ClaimTask(this.wfTaskListId);
+      if(environment.isCore) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }else{
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+      }
+      
     }
 
     await this.GetAppData();
@@ -106,7 +111,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       }
       if (this.isReturnHandling) {
         this.setReturnHandlingD();
-        this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData).subscribe(
+        let EditReturnHandlingDUrl = URLConstant.EditReturnHandlingD;
+        if(environment.isCore) EditReturnHandlingDUrl = URLConstant.EditReturnHandlingDV2;
+        this.http.post(EditReturnHandlingDUrl, this.ReturnHandlingDData).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });

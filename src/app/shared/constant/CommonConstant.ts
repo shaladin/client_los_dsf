@@ -927,6 +927,11 @@ export class CommonConstant {
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
 
+  //WORFKLOW RETURN HANDLING
+  public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
+  public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
+
+
   //Lead Step
   public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL"
   public static LeadStepLeadVerf = "LVR"
