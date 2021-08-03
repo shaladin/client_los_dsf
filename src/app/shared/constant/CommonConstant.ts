@@ -174,6 +174,7 @@ export class CommonConstant {
 
   //OFFICE TYPE
   public static HeadOffice = "HO";
+  public static SuperUser = "SUPUSR";
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
 
