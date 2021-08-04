@@ -51,6 +51,11 @@ import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit
 import { TabApplicationDataComponent } from "./shared-component/tab-application-data/tab-application-data.component";
 import { CustHistoryComponent } from "./shared-component/cust-history/cust-history.component";
 import { ViewApplicationDataMultiComponent } from "./shared-component/view-application-data-multi/view-application-data-multi.component";
+import { ComissionReservedFundDetailXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-detail-x/comission-reserved-fund-detail-x.component";
+import { CommissionV2XComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/commission-v2-x/commission-v2-x.component";
+import { ReservedFundXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/reserved-fund-x/reserved-fund-x.component";
+import { ComissionReservedFundPagingXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-paging-x/comission-reserved-fund-paging-x.component";
+import { FormCommissionGenerateXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/commission-v2-x/form-commission-generate-x/form-commission-generate-x.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -127,6 +132,11 @@ export const customCurrencyMaskConfig = {
     TabApplicationDataComponent,
     CustHistoryComponent,
     ViewApplicationDataMultiComponent,
+    ComissionReservedFundPagingXComponent,
+    ComissionReservedFundDetailXComponent,
+    CommissionV2XComponent,
+    ReservedFundXComponent,
+    FormCommissionGenerateXComponent
   ],
   providers: [
     NGXToastrService
