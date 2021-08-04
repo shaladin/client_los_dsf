@@ -25,7 +25,7 @@ export class CustomerGroupPlafondApvInquiryDsfComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchCustomerGroupPlafondInquiry.json";
   }
 
-  GetCallback(ev: any) {
+  CallbackHandler(ev: any) {
     
   }
 
