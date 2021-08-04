@@ -8,6 +8,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { ShareholderListingObj } from 'app/shared/model/AppCust/Shareholder/ShareholderListingObj.Model';
 
 @Component({
   selector: 'app-mngmnt-shrhldr-main-data-paging',
@@ -22,7 +25,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
 
   isDetail: boolean = false;
   inputGridObj: InputGridObj;
-  listMgmntShrholder: Array<any> = new Array();
+  listMgmntShrholder: Array<ShareholderListingObj> = new Array();
   closeResult: string;
   appCustId: number;
   inputMode: string = "ADD";
@@ -32,17 +35,19 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridMgmntShrholderMainData.json";
     this.custMainDataMode = CommonConstant.CustMainDataModeMgmntShrholder;
-    this.loadMgmntShrholderListData();
+    await this.loadMgmntShrholderListData();
   }
 
   add() {
     this.inputMode = "ADD";
     this.isDetail = true;
-    this.appCustId = null;
+    this.appCustId = 0;
+    this.MrCustTypeCode = CommonConstant.CustTypePersonal;
+    this.AppCustCompanyMgmntShrholderId = 0;
   }
 
   CekRelationshipCode() {
@@ -50,9 +55,9 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
 
     for (let index = 0; index < this.listMgmntShrholder.length; index++) {
       const element = this.listMgmntShrholder[index];
-      if (element.IsExistingCust && element.MrCustRelationshipCode == "") {
+      if (element.IsExistingCust) {
         flag = true;
-        this.toastr.warningMessage("Please input Cust Relationship for " + element.CustName);
+        this.toastr.warningMessage("Please input Cust Relationship for " + element.ShareholderName);
       }
     }
     return flag;
@@ -68,13 +73,13 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       }
     );
 
-    if (this.CekRelationshipCode()) return;
+    // if (this.CekRelationshipCode()) return;
 
     if (this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x => x.IsOwner == true) == null) {
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
       return;
     }
-    if (this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x => x.IsActive == true && x.IsSigner == true && x.MrCustTypeCode == CommonConstant.CustTypePersonal) == null) {
+    if (this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x => x.IsActive == true && x.IsSigner == true && x.ShareholderType == CommonConstant.CustTypePersonal) == null) {
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_ACTIVE_SIGNER);
       return false;
     }
@@ -84,10 +89,10 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
     //   return;
     // }
 
-    if (this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x => x.MrCustRelationshipCode == null || x.MrCustRelationshipCode == "") != null) {
-      this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_SHAREHOLDER_DATA)
-      return;
-    }
+    // if (this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x => x.MrCustRelationshipCode == null || x.MrCustRelationshipCode == "") != null) {
+    //   this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_SHAREHOLDER_DATA)
+    //   return;
+    // }
 
     var totalSharePrcnt = 0;
 
@@ -107,15 +112,28 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  event(ev) {
+  AppCustCompanyMgmntShrholderId: number = 0;
+  MrCustTypeCode: string = "";
+  event(ev: { Key: string, RowObj: ShareholderListingObj }) {
     if (ev.Key == "edit") {
       this.isDetail = true;
       this.inputMode = "EDIT";
       this.appCustId = ev.RowObj.AppCustId;
+      this.MrCustTypeCode = ev.RowObj.ShareholderType;
+      this.AppCustCompanyMgmntShrholderId = ev.RowObj.AppCustCompanyMgmntShrholderId;
     }
 
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+        if (ev.RowObj.ShareholderType == CommonConstant.CustTypePublic) {
+          this.http.post(URLConstant.DeleteAppCustCompanyMgmntShrholderPublic, { Id: ev.RowObj.AppCustCompanyMgmntShrholderId }).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.loadMgmntShrholderListData();
+            }
+          );
+          return;
+        }
         this.http.post(URLConstant.DeleteAppCustMainData, { Id: ev.RowObj.AppCustId }).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -126,18 +144,21 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
     }
   }
 
-  loadMgmntShrholderListData() {
-    this.custDataObj = new CustDataObj();
-    this.custDataObj.AppId = this.appId;
-    this.custDataObj.IsShareholder = true;
-    this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
-      (response: ResListCustMainDataObj) => {
-        this.inputGridObj.resultData = {
-          Data: ""
-        }
-        this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response['ListAppCustObj'];
-        this.listMgmntShrholder = this.inputGridObj.resultData.Data;
+  ParentAppCustCompanyId: number = 0;
+  async loadMgmntShrholderListData() {
+    await this.http.post(URLConstant.GetAppCustCompanyMainDataByAppId, { Id: this.appId }).toPromise().then(
+      (response: AppCustCompanyObj) => {
+        this.ParentAppCustCompanyId = response.AppCustCompanyId;
+        this.http.post(URLConstant.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).subscribe(
+          (response2: GenericListObj) => {
+            this.inputGridObj.resultData = {
+              Data: ""
+            }
+            this.inputGridObj.resultData["Data"] = new Array();
+            this.inputGridObj.resultData.Data = response2.ReturnObject;
+            this.listMgmntShrholder = response2.ReturnObject;
+          }
+        )
       }
     );
   }

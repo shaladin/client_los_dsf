@@ -26,7 +26,7 @@ import { UcreportModule } from "@adins/ucreport";
 import { UcTestingComponent } from './uc-testing/uc-testing.component';
 import { UcTestComponent } from './uc-test/uc-test.component';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
-import { UpperCaseDirective } from './upper-case.directive';
+import { UcDirectiveUpperCaseModule } from '@adins/uc-directive-upper-case';
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -45,10 +45,9 @@ export const customCurrencyMaskConfig = {
     declarations: [
         UcTestingComponent,
         UcTestComponent,
-        UpperCaseDirective,
     ],
     exports: [
-        UpperCaseDirective,
+        UcDirectiveUpperCaseModule,
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
@@ -75,6 +74,7 @@ export const customCurrencyMaskConfig = {
         //  UcapprovalModule
     ],
     imports: [
+        UcDirectiveUpperCaseModule,
         CommonModule,
         NgbModule,
         FormsModule,
