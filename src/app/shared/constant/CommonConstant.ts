@@ -430,6 +430,7 @@ export class CommonConstant {
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
   public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
+  public static RefReasonTypeCodeReturnHandlingGeneral = "RTN_H_GEN";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";

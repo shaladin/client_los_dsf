@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
@@ -19,6 +19,8 @@ import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model'
 import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
 import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
 import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -78,6 +80,18 @@ export class CommissionV2Component implements OnInit {
   HideForm1: boolean = false;
   HideForm2: boolean = false;
   HideForm3: boolean = false;
+
+  isReturnOn: boolean = false;
+  DDLData: { [id: string]: Array<KeyValueObj> } = {};
+  readonly DDLReason: string = "REASON";
+
+
+  FormReturnObj  =this.fb.group({
+    Reason: [''],
+    Notes: ['']
+  });
+
+
   GetFormAddDynamicObj(content) {
     if (content == CommonConstant.ContentSupplier) {
       this.FormInputObjSupplier["title"] = CommonConstant.TitleSupplier;
@@ -634,5 +648,38 @@ export class CommissionV2Component implements OnInit {
     this.FormAdd1.UpdateInputType();
     this.FormAdd2.UpdateInputType();
     this.FormAdd3.UpdateInputType();
+  }
+
+  switchForm() {
+    this.FormReturnObj.patchValue({
+      Reason: "",
+      ReasonDesc: "",
+      Notes: ""
+    });
+
+    if (!this.isReturnOn) {
+      this.isReturnOn = true;
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
+    } else {
+      this.isReturnOn = false;
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
+    }
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
+
+  }
+
+  async bindDDLReasonReturn() {
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
+    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
+      });
+  }
+
+  SaveReturnForm(){
+    
   }
 }

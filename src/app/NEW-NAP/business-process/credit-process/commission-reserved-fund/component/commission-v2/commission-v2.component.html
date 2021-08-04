@@ -70,7 +70,10 @@
               </div>
             </div>
           </div>
-          <div class="form-actions right">
+          <div *ngIf="!isReturnOn" class="form-actions right">
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+              <i  class="ft-x"></i> Return 
+            </button>
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
               (click)="Cancel()" translate>
               <i class="ft-x"></i> Cancel
@@ -81,6 +84,53 @@
             <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
               <i class="far fa-check-square"></i> Save
             </button>
+          </div>
+        </form>
+        <form class="form form-horizontal" *ngIf="isReturnOn" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid && SaveReturnForm()"
+        #enjiForm="ngForm">
+          <div class="form-body">
+            <div class="px-3">
+              <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCommissionId'" [title]="'Return Commission & Reserved Fund'"
+              [panel]="'formReturnCommission'">
+              </lib-ucSubsection>
+              <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCommission'">
+                <div class="form-group row adins-required">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel" translate>Return Reason</label>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.Reason.invalid}">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of DDLData[DDLReason]" value="{{it.Key}}">
+                        {{it.Value}} </option>
+                    </select>
+                    <lib-uc-show-errors [control]="FormReturnObj.controls.Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+
+                </div>
+
+                <div class="form-group row adins-required">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel" translate>Return Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.Notes.invalid}"></textarea>
+                    <lib-uc-show-errors [control]="FormReturnObj.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div class="form-actions right">
+                  <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+                    <i  class="ft-x"></i> Cancel Return 
+                  </button>
+                  <button type="submit" class="btn btn-raised btn-primary" translate>
+                    <i class="far fa-check-square"></i> Save
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       <!-- </div> -->
