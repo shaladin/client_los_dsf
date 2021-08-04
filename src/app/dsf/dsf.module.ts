@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { DsfRoutingModule } from './dsf-routing.module';
 import { UcreportModule } from '@adins/ucreport';
 import { MorningmonitoringComponent } from './report/factoring/morningmonitoring/morningmonitoring.component';
@@ -17,7 +16,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { CollateraldataComponent } from './report/factoring/collateraldata/collateraldata.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
-import { UcapprovalcreateModule } from '@adins/Ucapprovalcreate';
+import { UcapprovalcreateModule} from '@adins/ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
