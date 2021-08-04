@@ -10,90 +10,90 @@ import { AppCollateralObj } from "app/shared/model/AppCollateralObj.Model";
 import { InputGridObj } from "app/shared/model/InputGridObj.Model";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 
-Component({
+@Component({
     selector: 'app-view-collateral-data',
     templateUrl: './view-collateral-data.component.html'
-  })
-  export class ViewCollateralDataComponent implements OnInit {
-    viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-    viewUOLObj: UcViewGenericObj = new UcViewGenericObj();
-    
-    AppId: number;  @Input() appId: number = 0;
-    @Input() AppCollateralId: number = 0;
-    AppCollateralObj: AppCollateralObj = new AppCollateralObj();
-    AppCollateralDocs: Array<AppCollateralDocObj> = new Array<AppCollateralDocObj>();
-    IsHidden: boolean = true;
-    arrValue = [];
-    @Output() outputTab: EventEmitter<boolean> = new EventEmitter();
-    @Input() isMulti: boolean = false;
-    IsReady: boolean = false;
-    AppCollateralAttrObjs : Array<AppCollateralAttrObj> = new Array<AppCollateralAttrObj>();
-    AppCollateralAccessoryObjs : Array<AppCollateralAccessoryObj> = new Array<AppCollateralAccessoryObj>();
-    inputGridObj: InputGridObj = new InputGridObj();
+})
+export class ViewCollateralDataComponent implements OnInit {
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  viewUOLObj: UcViewGenericObj = new UcViewGenericObj();
   
-    constructor(private http: HttpClient, private route: ActivatedRoute) {
-      this.route.queryParams.subscribe(params => {
-        this.AppId = params["AppId"];
-      });}
+  AppId: number;  @Input() appId: number = 0;
+  @Input() AppCollateralId: number = 0;
+  AppCollateralObj: AppCollateralObj = new AppCollateralObj();
+  AppCollateralDocs: Array<AppCollateralDocObj> = new Array<AppCollateralDocObj>();
+  IsHidden: boolean = true;
+  arrValue = [];
+  @Output() outputTab: EventEmitter<boolean> = new EventEmitter();
+  @Input() isMulti: boolean = false;
+  IsReady: boolean = false;
+  AppCollateralAttrObjs : Array<AppCollateralAttrObj> = new Array<AppCollateralAttrObj>();
+  AppCollateralAccessoryObjs : Array<AppCollateralAccessoryObj> = new Array<AppCollateralAccessoryObj>();
+  inputGridObj: InputGridObj = new InputGridObj();
+
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      this.AppId = params["AppId"];
+    });}
+
+  async ngOnInit() {
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
+    this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
+    this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppCollateralAccessory.json";
   
-    async ngOnInit() {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
-      this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
-      this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppCollateralAccessory.json";
-    
-      if(this.AppCollateralId!=0){
-        this.arrValue.push(this.AppCollateralId);
-        this.viewGenericObj.whereValue = this.arrValue;
-        this.viewUOLObj.whereValue = this.arrValue;
-        this.IsReady = true;
-        await this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, {Id: this.AppCollateralId}).toPromise().then(
-          (response) => {
-            this.AppCollateralDocs = response["AppCollateralDocs"];
-          }
-        );
-      }else{
-        await this.http.post<AppCollateralObj>(URLConstant.GetAppCollateralByAppId, {Id: this.AppId}).toPromise().then(
-          (response) => {
-            this.AppCollateralObj = response;        
-            this.arrValue.push(this.AppCollateralObj.AppCollateralId);
-            this.viewGenericObj.whereValue = this.arrValue;
-            this.viewUOLObj.whereValue = this.arrValue;
-            this.IsReady = false;
-            this.AppCollateralId = this.AppCollateralObj.AppCollateralId;
-            this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralObj.AppCollateralId }).subscribe(
-              (response) => {
-                this.AppCollateralDocs = response["AppCollateralDocs"];
-              }
-            );
-        });
-      }
-  
-      this.GetCollateralData();
-    }
-  
-    Back(){
-      this.outputTab.emit(this.IsHidden);
-    }
-  
-    GetCollateralData(){
-  
-      this.http.post<Array<AppCollateralAttrObj>>(URLConstant.GetAppCollateralAttrByAppCollateralId, {Id: this.AppCollateralId }).subscribe(
+    if(this.AppCollateralId!=0){
+      this.arrValue.push(this.AppCollateralId);
+      this.viewGenericObj.whereValue = this.arrValue;
+      this.viewUOLObj.whereValue = this.arrValue;
+      this.IsReady = true;
+      await this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, {Id: this.AppCollateralId}).toPromise().then(
         (response) => {
-          this.AppCollateralAttrObjs = response["AppCollateralAttrObjs"];
+          this.AppCollateralDocs = response["AppCollateralDocs"];
         }
       );
-  
-      this.http.post<Array<AppCollateralAccessoryObj>>(URLConstant.GetAppCollateralAccessoriesListByAppCollateralId, {Id: this.AppCollateralId }).subscribe(
+    }else{
+      await this.http.post<AppCollateralObj>(URLConstant.GetAppCollateralByAppId, {Id: this.AppId}).toPromise().then(
         (response) => {
-          this.AppCollateralAccessoryObjs = response[CommonConstant.ReturnObj];
-  
-          this.inputGridObj.resultData = {
-            Data: ""
-          }
-          this.inputGridObj.resultData["Data"] = new Array();
-          this.inputGridObj.resultData.Data = this.AppCollateralAccessoryObjs;
-        }
-      );
+          this.AppCollateralObj = response;        
+          this.arrValue.push(this.AppCollateralObj.AppCollateralId);
+          this.viewGenericObj.whereValue = this.arrValue;
+          this.viewUOLObj.whereValue = this.arrValue;
+          this.IsReady = false;
+          this.AppCollateralId = this.AppCollateralObj.AppCollateralId;
+          this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralObj.AppCollateralId }).subscribe(
+            (response) => {
+              this.AppCollateralDocs = response["AppCollateralDocs"];
+            }
+          );
+      });
     }
+
+    this.GetCollateralData();
   }
+
+  Back(){
+    this.outputTab.emit(this.IsHidden);
+  }
+
+  GetCollateralData(){
+
+    this.http.post<Array<AppCollateralAttrObj>>(URLConstant.GetAppCollateralAttrByAppCollateralId, {Id: this.AppCollateralId }).subscribe(
+      (response) => {
+        this.AppCollateralAttrObjs = response["AppCollateralAttrObjs"];
+      }
+    );
+
+    this.http.post<Array<AppCollateralAccessoryObj>>(URLConstant.GetAppCollateralAccessoriesListByAppCollateralId, {Id: this.AppCollateralId }).subscribe(
+      (response) => {
+        this.AppCollateralAccessoryObjs = response[CommonConstant.ReturnObj];
+
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = this.AppCollateralAccessoryObjs;
+      }
+    );
+  }
+}
   
