@@ -435,7 +435,7 @@
                           </lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeRefMaster">
-                          <lib-uclookupgeneric [lookupInput]="ListInputLookUpObj[0][item.controls.RefAttrCode.value]"
+                          <lib-uclookupgeneric *ngIf="ListInputLookUpObj[0][item.controls.RefAttrCode.value]?.isReady" [lookupInput]="ListInputLookUpObj[0][item.controls.RefAttrCode.value]"
                             [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'lookup'+ item.controls.RefAttrCode.value"
                             (lookup)="SetAttrValueRm($event,i)">
                           </lib-uclookupgeneric>
