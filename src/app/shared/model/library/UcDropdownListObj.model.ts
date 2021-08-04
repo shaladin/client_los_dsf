@@ -15,6 +15,7 @@ export class UcDropdownListObj {
     isSelectOutput: boolean;
     isLabel: boolean;
     isCustomList: boolean;
+    isReady: boolean;
 
     constructor() {
         this.enviromentUrl = environment.FoundationR3Url + "/v1";
@@ -29,6 +30,7 @@ export class UcDropdownListObj {
         this.isSelectOutput = false;
         this.isLabel = true;
         this.isCustomList = false;
+        this.isReady = false;
     }
 }
 
