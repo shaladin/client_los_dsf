@@ -26,7 +26,6 @@ export class CustSetData {
     inputLookupObjName.urlJson = "./assets/uclookup/customer/lookupPositionSlik.json";
     inputLookupObjName.pagingJson = "./assets/uclookup/customer/lookupPositionSlik.json";
     inputLookupObjName.genericJson = "./assets/uclookup/customer/lookupPositionSlik.json";
-    inputLookupObjName.isRequired = false;
     return inputLookupObjName;
   }
 
