@@ -13,6 +13,7 @@ export class UcDropdownListObj {
     isObject: boolean;
     customObjName: string;
     isSelectOutput: boolean;
+    isLabel: boolean;
     isCustomList: boolean;
     isReady: boolean;
 
@@ -27,6 +28,7 @@ export class UcDropdownListObj {
         this.isObject = true;
         this.customObjName = CommonConstant.ReturnObj;
         this.isSelectOutput = false;
+        this.isLabel = true;
         this.isCustomList = false;
         this.isReady = false;
     }
