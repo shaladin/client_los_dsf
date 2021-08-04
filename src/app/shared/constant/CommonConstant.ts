@@ -15,16 +15,6 @@ export class CommonConstant {
   public static CANCEL = 'Cancel';
   public static REQ = 'request';
   public static RTN = 'return';
-
-  //ATTR Input Type
-  public static AttrInputTypeDate = "D";
-  public static AttrInputTypeNum = "N";
-  public static AttrInputTypeNumPerc = "P";
-  public static AttrInputTypeList = "L";
-  public static AttrInputTypeSearchList = "SL";
-  public static AttrInputTypeText = "T";
-  public static AttrInputTypeTextArea = "TA";
-  public static AttrInputTypeRefMaster = "RM";
   
   // Behaviour
   public static DEFAULT = 'DEF';
