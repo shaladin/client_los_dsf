@@ -25,7 +25,7 @@
                           <td *ngIf="item.Category == 'AGR'">{{item.SeqNo}}</td>
                           <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrNo}}</td>
                           <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.CustomerName}}</td>
-                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.OSARAmt}}</td>
+                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.OSARAmt | number }}</td>
                           <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                       </tr>
                     </tbody>
@@ -49,7 +49,7 @@
                         <td *ngIf="item.Category == 'APP'">{{item.SeqNo}}</td>
                         <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrNo}}</td>
                         <td *ngIf="item.Category == 'APP'" class="text-center">{{item.CustomerName}}</td>
-                        <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSARAmt}}</td>
+                        <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSARAmt | number }}</td>
                         <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                     </tr>
                     </tbody>
@@ -73,7 +73,7 @@
                         <td *ngIf="item.Category == 'OPL'">{{item.SeqNo}}</td>
                         <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrNo}}</td>
                         <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.CustomerName}}</td>
-                        <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.OSARAmt}}</td>
+                        <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.OSARAmt | number }}</td>
                         <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                     </tr>
                     </tbody>
@@ -91,7 +91,8 @@
                               <label class="col-md-3 adInsLabel adins-required-label" translate>Plafond Maximum</label>
                               <div class="col-md-4">
                                  <input type="text" class="form-control adInsInput" formControlName="PlafondMax"
-                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.PlafondMax.invalid }">
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.PlafondMax.invalid }" currencyMask
+                                    [options]="{thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 2, nullable: false }">
                                  <lib-uc-show-errors  [control]="plafondProposalForm.controls.PlafondMax" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                               </div>
                            </div>                          

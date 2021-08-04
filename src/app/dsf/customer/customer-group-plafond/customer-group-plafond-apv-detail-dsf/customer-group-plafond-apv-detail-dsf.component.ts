@@ -13,6 +13,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { DatePipe } from '@angular/common';
+import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-customer-group-plafond-apv-detail-dsf',
@@ -34,6 +38,7 @@ export class CustomerGroupPlafondApvDetailDsfComponent implements OnInit {
   CustGrpPlafondId: any;
   CustGrpPlfndObj: any;
   resultData: any;
+  listReason: any;
 
   plafondProposalForm = this.fb.group({
     PlafondMax: [''],
@@ -55,12 +60,21 @@ export class CustomerGroupPlafondApvDetailDsfComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     
-    this.viewCustomerGroupPlafondDetailObj.viewInput = "./assets/ucviewgeneric/viewCustomerGroupPlafondDetail.json";
+    this.viewCustomerGroupPlafondDetailObj.viewInput = "./assets/dsf/ucviewgeneric/viewCustomerGroupPlafondDetail.json";
     this.initInputApprovalObj();
     this.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId();
     this.GetCustomerGroupPlafondDsfByCustomerGroupPlafondId();
+    let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstantDsf.REF_REASON_CUST_GRP_PLAFOND_APV };
+    await this.http.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
+      (response) => {
+        this.listReason = response[CommonConstant.ReturnObj];
+        this.plafondProposalForm.patchValue({
+          Reason: this.listReason[0].Key
+        });
+      }
+    );
     
   }
   GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId() {
@@ -116,6 +130,7 @@ export class CustomerGroupPlafondApvDetailDsfComponent implements OnInit {
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo = this.CustGrpNo;
     this.InputApvObj.RequestId = this.ApvReqId;
+    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.IsReady = true;
   }
 

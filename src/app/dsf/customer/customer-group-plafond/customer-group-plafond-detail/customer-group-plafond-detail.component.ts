@@ -73,7 +73,7 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
 
  
   async ngOnInit() {
-    this.viewCustomerGroupPlafondDetailObj.viewInput = "./assets/ucviewgeneric/viewCustomerGroupPlafondDetail.json";
+    this.viewCustomerGroupPlafondDetailObj.viewInput = "./assets/dsf/ucviewgeneric/viewCustomerGroupPlafondDetail.json";
     //var datePipe = new DatePipe("en-US");
 
     let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstantDsf.REF_REASON_CUST_GRP_PLAFOND_APV };

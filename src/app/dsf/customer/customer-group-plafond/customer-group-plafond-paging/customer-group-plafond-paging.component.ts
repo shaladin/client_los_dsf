@@ -25,8 +25,8 @@ export class CustomerGroupPlafondPagingComponent implements OnInit {
     private cookieService: CookieService) {}
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/searchCustomerGroupPlafondRequest.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustomerGroupPlafondRequest.json";
+    this.inputPagingObj._url = "./assets/dsf/ucpaging/searchCustomerGroupPlafondRequest.json";
+    this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchCustomerGroupPlafondRequest.json";
   }
 
   GetCallback(ev: any) {
