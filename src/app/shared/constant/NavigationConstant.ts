@@ -441,4 +441,9 @@ export class NavigationConstant {
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
   //EndSettings
+
+  //#region 
+  public static CUSTOMER_GROUP_PLAFOND_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_DETAIL;
+  public static CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL;
+  //#endregion
 }

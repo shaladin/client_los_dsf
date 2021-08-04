@@ -520,6 +520,14 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.LTKM_INQUIRY, Title: 'LTKM Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
     ], Params: []
   },
+  {
+    Path: '', Title: 'Customer Group Plafond', Icon: 'far fa-file-alt', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Submenu: [
+      { Path: NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING, Title: 'Plafond Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+      { Path: NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_PAGING, Title: 'Plafond Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+      { Path: NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY, Title: 'Plafond Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+    ], Params: [] 
+  },
   //{
   //  Path: '', Title: 'Inquiry', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
   //  Submenu: [

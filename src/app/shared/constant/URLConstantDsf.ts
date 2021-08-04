@@ -10,4 +10,8 @@ export class URLConstantDsf {
     public static GenerateReceiptFormCode = environment.losUrl + "/ReceiptFormDsfX/GenerateReceiptFormCode";
     public static AddReceiptForm = environment.losUrl + "/ReceiptFormDsfX/AddReceiptFormDsfX";
     public static EditReceiptForm = environment.losUrl + "/ReceiptFormDsfX/EditReceiptFormDsfX";
+    public static GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId = environment.losUrl + "/CustomerGroupPlafondDsf/GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId";
+    public static AddCustomerGroupPlafondRequestDsf = environment.losUrl + "/CustomerGroupPlafondDsf/AddCustomerGroupPlafondRequestDsf";
+    public static CustomerGroupPlafondApproval = environment.losUrl + "/ApprovalDsf/CustomerGroupPlafondApprovalDsf";
+    public static GetCustomerGroupPlafondDsfByCustomerGroupPlafondId = environment.losUrl + "/CustomerGroupPlafondDsf/GetCustomerGroupPlafondDsfByCustomerGroupPlafondId";
 }

@@ -1,0 +1,140 @@
+{
+    "title": "Upgrade Customer Group Plafond Approval",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "TL.TRX_NO",
+        "id": "CustGrpNoId",
+        "value": "",
+        "label": "Customer Parent No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "CGP.CUST_GRP_NAME",
+        "id": "CustGrpNameId",
+        "value": "",
+        "label": "Customer Parent Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "CGP.TOTAL_OS_AR",
+        "id": "TotalOSARId",
+        "value": "",
+        "label": "Outstanding AR/NI",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "querystring": {
+      "name": "searchCustomerGroupPlafondApproval"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "TRX NO",
+        "name": "TRX_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Cust Parent No",
+        "name": "CUST_GRP_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Cust Parent Name",
+        "name": "CUST_GRP_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Prop. Plafond Max",
+        "name": "PROP_PLAFOND_MAX"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Plafond Max",
+        "name": "PLAFOND_MAX"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Outstanding AR",
+        "name": "TOTAL_OS_AR"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Main User Id",
+        "name": "MAIN_USER_ID"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current User Id",
+        "name": "CURRENT_USER_ID"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Process"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "TRX_NO"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CUST_GRP_NO"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CUST_GRP_NAME"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "PROP_PLAFOND_MAX"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "PLAFOND_MAX"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "TOTAL_OS_AR"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MAIN_USER_ID"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CURRENT_USER_ID"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "Process"
+          }
+        ]
+      }
+    ]
+  }

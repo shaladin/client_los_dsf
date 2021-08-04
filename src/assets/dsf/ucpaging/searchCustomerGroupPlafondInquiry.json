@@ -1,0 +1,187 @@
+{
+    "title": "Upgrade Customer Group Plafond Inquiry",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "CGP.CUST_GRP_NO",
+        "id": "CustGrpNoId",
+        "value": "",
+        "label": "Customer Parent No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "CGP.CUST_GRP_NAME",
+        "id": "CustGrpNameId",
+        "value": "",
+        "label": "Customer Parent Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "CGP.TOTAL_OS_AR",
+        "id": "TotalOSARId",
+        "value": "",
+        "label": "Outstanding AR/NI",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "CGP.TOTAL_OS_AR",
+        "id": "TotalOSARId",
+        "value": "",
+        "label": "Outstanding AR/NI",
+        "placeholder": "Placeholder"
+      },
+    {
+      "type": "datepicker",
+      "name": "CGP.DTM_CRT",
+      "id": "requestDtgte",
+      "value": "",
+      "label": "Request Date >=",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+        "type": "datepicker",
+        "name": "CGP.DTM_CRT",
+        "id": "requestDtlte",
+        "value": "",
+        "label": "Request Date <=",
+        "restriction": "lte",
+        "datatype": "date"
+      },
+      {
+          "type": "dropdown",
+          "name": "CGP.STATUS",
+          "id": "StatusId",
+          "label": "Status",
+          "value": "",
+          "placeholder": "Placeholder",
+          "isFromURL": false,
+          "ddlType": "all",
+          "items": [
+              {
+                  "key": "REJECT",
+                  "value": "REJECT"
+              },
+              {
+                  "key": "IN PROGRESS",
+                  "value": "INPROGRESS"
+              },
+              {
+                  "key": "APPROVE",
+                  "value": "APPROVE"
+              }
+          ],
+          "itemsUrl": []
+      }
+    ],
+    "querystring": {
+      "name": "searchCustomerGroupPlafondInquiry"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "TRX NO",
+        "name": "CustGrpNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Cust Parent No",
+        "name": "CustGrpNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Cust Parent Name",
+        "name": "CustGrpName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Plafond Max",
+        "name": "PlafondMax"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Outstanding AR",
+        "name": "TotalOSAR"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Plafond Balance",
+          "name": "PlafondBalance"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Start Date",
+          "name": "DtmStart"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "End Date",
+          "name": "DtmEnd"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Status",
+          "name": "Status"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CustGrpNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CustGrpNo"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "CustGrpName"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "PlafondMax"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "TotalOSAR"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "PlafondBalance"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "DtmStart"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "DtmEnd"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "Status"
+    }
+    ]
+  }

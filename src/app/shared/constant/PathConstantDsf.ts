@@ -31,7 +31,11 @@ export class PathConstantDsf {
     public static CUST_EDIT_MAIN_DATA_COY = PathConstantDsf.CUST_EDIT_MAIN_DATA + "/" + PathConstant.COY;
 
     //#region
-    public static LR_DSF = "Dsf"; 
+    public static LR_DSF = "Dsf";
+    public static PAGING = "Paging";
+    public static DETAIL = "Detail";
+    public static APPROVAL = "Approval";
+    public static INQUIRY = "Inquiry";
     //#endregion layout routes
 
     //#region 
@@ -56,5 +60,16 @@ export class PathConstantDsf {
     public static PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING;
     public static PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
     //#endregion report factoring
+
+    //#region customer-plafond
+    public static CUSTOMER_GROUP_PLAFOND = "CustomerGroupPlafondDsf";
+    public static CUSTOMER_GROUP_PLAFOND_PAGING = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.PAGING;
+    public static CUSTOMER_GROUP_PLAFOND_DETAIL = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.DETAIL;
+    public static CUSTOMER_GROUP_PLAFOND_APPROVAL_PAGING = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.PAGING;
+    public static CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.DETAIL;
+    public static CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.INQUIRY;
+    //#endregion
+
+    
 
 }

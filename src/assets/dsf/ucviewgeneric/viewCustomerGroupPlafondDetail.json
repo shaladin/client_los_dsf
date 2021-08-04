@@ -1,0 +1,45 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustomerGroupPlafondId",
+        "subSectionTitle": "CUSTOMER GROUP INFORMATION",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Customer Parent",
+            "property": "CustGrpName"
+          },
+          {
+            "type": "text",
+            "label": "Plafond Maximum",
+            "property": "PlafondMax"
+          },
+          {
+            "type": "text",
+            "label": "Outstanding AR/NI",
+            "property": "TotalOSAR"
+          },
+          {
+            "type": "text",
+            "label": "Plafond Balance",
+            "property": "PlafondBalance"
+          },
+          {
+            "type": "text",
+            "label": "Start Plafond Date",
+            "property": "DtmStart"
+          },
+          {
+            "type": "text",
+            "label": "End Plafond Date",
+            "property": "DtmEnd"
+          }
+        ],
+        "querystring": {
+          "name": "viewCustomerGroupPlafondInformation"
+        }
+      }
+    ]
+  }
