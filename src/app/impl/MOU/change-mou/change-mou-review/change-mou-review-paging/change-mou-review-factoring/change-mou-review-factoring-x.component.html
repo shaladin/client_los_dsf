@@ -29,8 +29,7 @@
           <p>
             &nbsp; <span style="display: block"> <br /> </span> &nbsp;
           </p>
-          <form class="form form-horizontal" [formGroup]="MouReviewDataForm"
-            (ngSubmit)="Submit()" #enjiForm="ngForm">
+          <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid && Submit()" #enjiForm="ngForm">
             <lib-ucapprovalcreate [parentForm]= "MouReviewDataForm" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent>
             </lib-ucapprovalcreate>
 

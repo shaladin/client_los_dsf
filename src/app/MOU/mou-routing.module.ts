@@ -72,6 +72,7 @@ import {MouExecutionDetailXComponent} from 'app/impl/MOU/mou-execution/mou-execu
 import {ChangeMouRequestDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail/change-mou-request-detail-x.component';
 import {ChangeMouReviewFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-factoring/change-mou-review-factoring-x.component';
 import {ChangeMouApprovalFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-factoring/change-mou-approval-factoring-x.component';
+import {ChangeMouExecutionDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-execution/change-mou-execution-detail/change-mou-execution-detail-x.component';
 
 const routes: Routes = [
   {
@@ -468,6 +469,13 @@ const routes: Routes = [
         component: ChangeMouExecutionDetailComponent,
         data: {
           title: "Change MOU Execution Detail"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_EXEC_DETAIL_X,
+        component: ChangeMouExecutionDetailXComponent,
+        data: {
+          title: "Change MOU Execution Detail X"
         }
       },
       {

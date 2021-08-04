@@ -117,6 +117,7 @@ import {MouExecutionDetailXComponent} from 'app/impl/MOU/mou-execution/mou-execu
 import {ChangeMouRequestDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail/change-mou-request-detail-x.component';
 import {ChangeMouReviewFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-factoring/change-mou-review-factoring-x.component';
 import {ChangeMouApprovalFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-factoring/change-mou-approval-factoring-x.component';
+import {ChangeMouExecutionDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-execution/change-mou-execution-detail/change-mou-execution-detail-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -261,7 +262,8 @@ export const customCurrencyMaskConfig = {
     MouExecutionDetailXComponent,
     ChangeMouRequestDetailXComponent,
     ChangeMouReviewFactoringXComponent,
-    ChangeMouApprovalFactoringXComponent
+    ChangeMouApprovalFactoringXComponent,
+    ChangeMouExecutionDetailXComponent
   ],
   exports: [],
   providers: [NGXToastrService],
