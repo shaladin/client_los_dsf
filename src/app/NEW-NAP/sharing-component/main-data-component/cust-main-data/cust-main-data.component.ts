@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { formatDate, KeyValue } from '@angular/common';
+import { DatePipe, formatDate, KeyValue } from '@angular/common';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -87,6 +87,7 @@ export class CustMainDataComponent implements OnInit {
   @Output() outputAfterSave: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Input() from: string;
+  @Input() tempTotalSharePrct: number = 0;
 
   LeadId: number;
   LeadNo: string;
@@ -181,6 +182,7 @@ export class CustMainDataComponent implements OnInit {
     Email1: ['', [Validators.required, Validators.pattern(CommonConstant.regexEmail)]],
     MrJobPositionCode: [''],
     EstablishmentDt: [''],
+    EmploymentEstablishmentDt: [''],
     SharePrcnt: [0],
     IsSigner: [false],
     IsActive: [false],
@@ -414,6 +416,7 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.patchValue({
       MrProfessionCode: event.ProfessionCode,
     });
+    if (this.custMainDataMode == CommonConstant.CustMainDataModeCust) return;
     this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, event.ProfessionCode);
     this.custAttrForm.ResetValueFromAttrCode(CommonConstant.AttrCodeDeptAml);
   }
@@ -422,12 +425,13 @@ export class CustMainDataComponent implements OnInit {
     this.ResetLookupProfession();
   }
 
-  ResetLookupProfession(valueCode: string = null, valueDesc: string = ""){
+  ResetLookupProfession(valueCode: string = null, valueDesc: string = "") {
     this.CustMainDataForm.patchValue({
       MrProfessionCode: valueCode,
     });
     this.professionLookUpObj.nameSelect = valueDesc;
     this.professionLookUpObj.jsonSelect = { JobDesc: valueDesc };
+    if (this.custMainDataMode == CommonConstant.CustMainDataModeCust) return;
     this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, valueCode);
     this.custAttrForm.ResetValueFromAttrCode(CommonConstant.AttrCodeDeptAml);
     this.PatchCriteriaLookupProfession();
@@ -607,15 +611,23 @@ export class CustMainDataComponent implements OnInit {
       this.jobPositionLookupObj.nameSelect = tempDesc;
       this.jobPositionLookupObj.jsonSelect = { JobDesc: tempDesc };
     }
-    
+
     if (AppCustPersonalJobDataObj.MrProfessionCode !== "") {
       await this.http.post(URLConstant.GetRefProfessionByCode, { Code: AppCustPersonalJobDataObj.MrProfessionCode }).subscribe(
         (response: RefProfessionObj) => {
           this.professionLookUpObj.nameSelect = response.ProfessionName;
           this.professionLookUpObj.jsonSelect = response;
+          if (this.custMainDataMode == CommonConstant.CustMainDataModeCust) return;
           this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, AppCustPersonalJobDataObj.MrProfessionCode);
         }
       );
+    }
+
+    if (this.custMainDataMode == this.CustMainDataFamily) {
+      let datePipe = new DatePipe("en-US");
+      this.CustMainDataForm.patchValue({
+        EmploymentEstablishmentDt: datePipe.transform(AppCustPersonalJobDataObj.EmploymentEstablishmentDt, 'yyyy-MM-dd'),
+      });
     }
   }
 
@@ -1101,7 +1113,7 @@ export class CustMainDataComponent implements OnInit {
 
     tempReqObj.MrProfessionCode = tempForm["MrProfessionCode"];
     tempReqObj.MrJobPositionCode = tempForm["MrJobPositionCode"];
-    if(this.custMainDataMode == this.CustMainDataFamily) tempReqObj.EmploymentEstablishmentDt = tempForm["EmploymentEstablishmentDt"];
+    if (this.custMainDataMode == this.CustMainDataFamily) tempReqObj.EmploymentEstablishmentDt = tempForm["EmploymentEstablishmentDt"];
     if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode) tempReqObj = null;
     return tempReqObj
   }
@@ -1140,6 +1152,16 @@ export class CustMainDataComponent implements OnInit {
       if (TempCust1 == TempCust2) {
         this.toastr.warningMessage(ExceptionConstant.CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP);
         return true;
+      }
+    }
+    if (this.custMainDataMode == this.CustMainDataMgmntShrholder) {
+      if (this.CustMainDataForm.controls.IsActive.value) {
+        let tempTotalSharePrctTobeAdd = this.tempTotalSharePrct + this.CustMainDataForm.controls.SharePrcnt.value;
+        if (tempTotalSharePrctTobeAdd > 100) {
+          this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_CAN_NOT_100);
+          this.toastr.warningMessage("Total Share now is " + this.tempTotalSharePrct + "%");
+          return true;
+        }
       }
     }
     return false;
