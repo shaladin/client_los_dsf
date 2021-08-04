@@ -16,6 +16,16 @@ export class CommonConstant {
   public static REQ = 'request';
   public static RTN = 'return';
 
+  //ATTR Input Type
+  public static AttrInputTypeDate = "D";
+  public static AttrInputTypeNum = "N";
+  public static AttrInputTypeNumPerc = "P";
+  public static AttrInputTypeList = "L";
+  public static AttrInputTypeSearchList = "SL";
+  public static AttrInputTypeText = "T";
+  public static AttrInputTypeTextArea = "TA";
+  public static AttrInputTypeRefMaster = "RM";
+  
   // Behaviour
   public static DEFAULT = 'DEF';
 
@@ -76,6 +86,7 @@ export class CommonConstant {
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
   public static CustTypeCompany = "COMPANY";
+  public static CustTypePublic = "PUBLIC";
   public static GuarantorTypeCodePersonal = "PERSONAL";
   public static GuarantorTypeCodeCompany = "COMPANY";
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
@@ -286,6 +297,10 @@ export class CommonConstant {
   public static AttrInputTypeTextArea = "TA";
   public static AttrInputTypeRefMaster = "RM";
 
+  //ATTR CODE
+  public static AttrCodeDeptAml = "DEPT_AML";
+  public static AttrCodeAuthAml = "AUTH_AML";
+  
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 
@@ -507,6 +522,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeDisbToDlrFncng = "DISB_TO_DLR_FNCNG";
   public static RefMasterTypeCodeDisbToFctr = "DISB_TO_FCTR";
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
+  public static RefMasterTypeCodeShareholderCustType = "SHR_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
   public static RefMasterTypeCodeWOP = "WOP";
   public static RefMasterTypeCodeInstSchm = "INST_SCHM";
@@ -602,6 +618,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeAppSrcType = "APP_SRC_TYPE";
   public static RefMasterTypeCodeMouType = "MOU_TYPE";
   public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
+  public static RefMasterTypeCodePublicType = "PUBLIC_TYPE";
+  public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
