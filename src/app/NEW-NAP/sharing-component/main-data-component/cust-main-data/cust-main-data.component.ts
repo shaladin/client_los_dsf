@@ -283,6 +283,8 @@ export class CustMainDataComponent implements OnInit {
         this.isIncludeCustRelation = false;
         this.custDataObj.IsShareholder = true;
         this.subjectTitle = 'Shareholder';
+        this.CustMainDataForm.controls.MrPositionSlikCode.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.MrPositionSlikCode.updateValueAndValidity();
         if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);

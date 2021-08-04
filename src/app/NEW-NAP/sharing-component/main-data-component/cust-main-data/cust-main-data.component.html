@@ -272,7 +272,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 adInsLabel" translate> Position SLIK </label>
+                <label class="col-md-4 adins-required-label" translate> Position SLIK </label>
                 <div class="col-md-8" *ngIf="positionSlikLookUpObj.isReady">
                   <lib-uclookupgeneric [lookupInput]="positionSlikLookUpObj" [parentForm]="CustMainDataForm"
                     [enjiForm]="enjiForm" [identifier]="'PositionSlikCode'" (lookup)=getLookUpSlik($event)>

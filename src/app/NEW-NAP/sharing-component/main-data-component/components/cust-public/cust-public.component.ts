@@ -48,7 +48,7 @@ export class CustPublicComponent implements OnInit {
   positionSlikLookUpObj: InputLookupObj = new InputLookupObj();
   ClearForm(item: ShareholderPublicObj = null) {
     this.CustomerForm = this.fb.group({
-      MrPositionSlikCode: [item == null ? '' : item.MrPositionSlikCode],
+      MrPositionSlikCode: [item == null ? '' : item.MrPositionSlikCode, Validators.required],
       MrPublicTypeCode: [item == null ? '' : item.MrPublicTypeCode, Validators.required],
       PublicName: [item == null ? '' : item.PublicName, Validators.required],
       PublicIdentityNo: [item == null ? '' : item.PublicIdentityNo, Validators.required],
