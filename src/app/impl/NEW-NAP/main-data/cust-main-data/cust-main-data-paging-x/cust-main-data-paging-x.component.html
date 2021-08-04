@@ -1,0 +1,14 @@
+<div class="ucSearch-Button-Right">
+  <span class="mr-1">
+    <button type="button" class="addButton" *ngIf="bizTemplateCode != 'CFNA'" (click)="AddApp()" translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+    <button type="button" class="addButton" *ngIf="bizTemplateCode == 'CFNA'" (click)="AddApp('MPF')" translate>
+      <i class="ft-plus-circle"></i> Add MPF
+    </button>
+    <button type="button" class="addButton" *ngIf="bizTemplateCode == 'CFNA'" (click)="AddApp('FD')" translate>
+      <i class="ft-plus-circle"></i> Add FD
+    </button>
+  </span>
+</div>
+<lib-ucpaging [searchObj]="inputPagingObj" (callback)="GetCallBack($event)"></lib-ucpaging>

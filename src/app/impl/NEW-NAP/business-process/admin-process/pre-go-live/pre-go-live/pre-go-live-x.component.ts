@@ -28,6 +28,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-sharing-pre-go-live-x',
@@ -370,6 +371,12 @@ export class PreGoLiveXComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAdditionalInterestPaidBy }).toPromise().then(
       (response) => {
         this.ListRmAddInterestPaidByCode = response[CommonConstant.ReturnObj];
+        if(this.BizTemplateCode === CommonConstant.CFNA){
+          this.MainInfoForm.patchValue({
+            AdditionalInterestPaidBy: CommonConstantX.AdditionalInterestPaidByCustomer
+          });
+          this.MainInfoForm.controls['AdditionalInterestPaidBy'].disable();
+        }
       }
     );
   }
@@ -379,16 +386,20 @@ export class PreGoLiveXComponent implements OnInit {
     var diffTimes = new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime()- new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime();
     if(diffTimes>0){
       diffDays = diffTimes / (1000*3600*24)
+      console.log(diffDays);
+
+      this.http.post(URLConstantX.CalculateAdditionalInterestX, { AgrmntId: this.AgrmntId, DiffDays: diffDays }).subscribe(
+        (response) => {
+          this.MainInfoForm.patchValue({
+            AddIntrstAmt: response["Result"]
+          });
+        }
+      );
     }
-
-    console.log(diffDays);
-
-    this.http.post(URLConstantX.CalculateAdditionalInterest, { AgrmntId: this.AgrmntId, DiffDays: diffDays }).subscribe(
-      (response) => {
-        this.MainInfoForm.patchValue({
-          AddIntrstAmt: response["Result"]
-        });
-      }
-    );
+    else{
+      this.MainInfoForm.patchValue({
+        AddIntrstAmt: 0
+      });
+    }
   }
 }

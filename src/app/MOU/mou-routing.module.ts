@@ -60,6 +60,12 @@ import { MouUnfreezeInquiryComponent } from './mou-unfreeze/mou-unfreeze-inquiry
 import { MouUnfreezeViewComponent } from './mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component';
 import { MouUnfreezeDetailComponent } from './mou-unfreeze/mou-unfreeze-detail/mou-unfreeze-detail.component';
 import { MouUnfreezePagingComponent } from './mou-unfreeze/mou-unfreeze-paging/mou-unfreeze-paging.component';
+import { MouRequestAddcollXComponent } from 'app/impl/MOU/mou-customer-request/mou-request-addcoll/mou-request-addcoll-x.component';
+import { MouCustomerDetailXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { ChangeMouRequestAddcollXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
+import { ChangeMouRequestDetailCustomerXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
+import {MouCustomerRequestDetailXComponent} from 'app/impl/MOU/mou-customer-request/mou-customer-request-detail/mou-customer-request-detail-x.component';
 
 const routes: Routes = [
   {
@@ -94,10 +100,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.MOU_REQ_DETAIL_X,
+        component: MouCustomerRequestDetailXComponent,
+        data: {
+          title: 'MOU Customer Request Detail X'
+        }
+      },
+      {
         path: PathConstant.DETAIL,
         component: MouCustomerDetailComponent,
         data: {
           title: 'MOU Customer Detail'
+        }
+      },
+      {
+        path: PathConstantX.DETAIL_X,
+        component: MouCustomerDetailXComponent,
+        data: {
+          title: 'MOU Customer Detail X'
         }
       },
       {
@@ -360,6 +380,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X,
+        component: ChangeMouRequestDetailCustomerXComponent,
+        data: {
+          title: "Change MOU Request Customer Detail X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_CUST_ASSET,
         component: ChangeMouCustAssetComponent,
         data: {
@@ -378,6 +405,13 @@ const routes: Routes = [
         component: ChangeMouRequestAddcollComponent,
         data: {
           title: "Change MOU Req Add Collateral"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X,
+        component: ChangeMouRequestAddcollXComponent,
+        data: {
+          title: "Change MOU Req Add Collateral X"
         }
       },
       {
@@ -476,6 +510,20 @@ const routes: Routes = [
         component: ChangeMouCancelComponent,
         data: {
           title: "Change MOU Canel"
+        }
+      },
+      {
+        path: PathConstant.MOU_CUST_REQ_ADD_COLL,
+        component: MouRequestAddcollComponent,
+        data: {
+          title: 'MOU Collateral'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_REQ_ADD_COLL_X,
+        component: MouRequestAddcollXComponent,
+        data: {
+          title: 'MOU Collateral X'
         }
       },
     ]

@@ -68,7 +68,9 @@ export class ApplicationDataDlfnComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     // MrSlikSecEcoCode: [''],
-    CustBankAcc: ['']
+    CustBankAcc: [''],
+    TopIntrstRatePrcnt : [0],
+    IntrstRatePrcnt: [0]
   })
 
   refMasterInterestType: RefMasterObj = new RefMasterObj();
@@ -108,8 +110,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
   selectedBankAcc: any;
   GetBankInfo: any;
   appCustId: number;
-  TopIntrstRatePrcnt: number;
-  IntrstRatePrcnt: number;
   IsMouSelect: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
@@ -226,7 +226,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
         this.allInType = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
-            MrInstTypeCode: this.allInType[0].Key,
             MrInstSchemeCode: CommonConstant.InstSchmEvenPrincipal
           });
           this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;

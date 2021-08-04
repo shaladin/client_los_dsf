@@ -1,5 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { CustMainDataAddXComponent } from "app/impl/NEW-NAP/main-data/cust-main-data/cust-main-data-add-x/cust-main-data-add-x.component";
+import { CustMainDataPagingXComponent } from "app/impl/NEW-NAP/main-data/cust-main-data/cust-main-data-paging-x/cust-main-data-paging-x.component";
+import { PathConstantX } from "app/impl/shared/constant/PathConstantX";
 import { PathConstant } from "app/shared/constant/PathConstant";
 import { CustMainDataAddComponent } from "./cust-main-data/cust-main-data-add/cust-main-data-add.component";
 import { CustMainDataPagingComponent } from "./cust-main-data/cust-main-data-paging/cust-main-data-paging.component";
@@ -10,15 +13,15 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: PathConstant.NAP1_PAGING,
-        component: CustMainDataPagingComponent,
+        path: PathConstantX.NAP1_PAGING,
+        component: CustMainDataPagingXComponent,
         data: {
           title: 'Cust Main Data Paging'
         }
       },
       {
-        path: PathConstant.NAP1_ADD,
-        component: CustMainDataAddComponent,
+        path: PathConstantX.NAP1_ADD,
+        component: CustMainDataAddXComponent,
         data: {
           title: 'Add Cust Main Data'
         }

@@ -110,6 +110,8 @@ import { SchmStepUpStepDownLeasingFL4WComponent } from "app/NEW-NAP/FL4W/input-n
 import { SchmStepUpStepDownCummulativeFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-FL4W.component";
 import { SchmEvenPrincipalFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
 import { SchmBalloonFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
+import { ApplicationDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-x.component";
+import { ApplicationDataFL4WXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-FL4W/application-data-FL4W-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -225,6 +227,8 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownCummulativeFL4WComponent,
     SchmEvenPrincipalFL4WComponent,
     SchmBalloonFL4WComponent,
+    ApplicationDataXComponent,
+    ApplicationDataFL4WXComponent
   ],
   imports: [
     CommonModule,
@@ -341,6 +345,8 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownCummulativeFL4WComponent,
     SchmEvenPrincipalFL4WComponent,
     SchmBalloonFL4WComponent,
+    ApplicationDataXComponent,
+    ApplicationDataFL4WXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [
