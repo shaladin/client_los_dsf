@@ -12,6 +12,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-customer-group-plafond-apv-detail-dsf',
@@ -29,12 +30,24 @@ export class CustomerGroupPlafondApvDetailDsfComponent implements OnInit {
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
+  CustGrpPlfnReqDsfObj: any;
+  CustGrpPlafondId: any;
+  CustGrpPlfndObj: any;
+  resultData: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http: HttpClient,) { 
+  plafondProposalForm = this.fb.group({
+    PlafondMax: [''],
+    StartPlafondDate: [''],
+    EndPlafondDate: ['']
+  });
+  constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http: HttpClient,private fb: FormBuilder) { 
     this.route.queryParams.subscribe(params => {
 
       if (params["CustGrpNo"] != null) {
         this.CustGrpNo = params["CustGrpNo"];
+      }
+      if (params['CustGrpPlafondId'] != null) {
+        this.CustGrpPlafondId = params['CustGrpPlafondId'];
       }
       this.ApvReqId = params["ApvReqId"];
       this.taskId = params["TaskId"];
@@ -43,9 +56,33 @@ export class CustomerGroupPlafondApvDetailDsfComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.viewCustomerGroupPlafondDetailObj.viewInput = "./assets/ucviewgeneric/viewCustomerGroupPlafondDetail.json";
     this.initInputApprovalObj();
+    this.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId();
+    this.GetCustomerGroupPlafondDsfByCustomerGroupPlafondId();
     
+  }
+  GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId() {
+    var obj = { CustomerGroupPlafondDsfId: this.CustGrpPlafondId }
+    this.http.post(URLConstantDsf.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId, obj).subscribe(
+      (response) => {
+        this.CustGrpPlfndObj = response;
+      }
+    );
+  }
+  GetCustomerGroupPlafondDsfByCustomerGroupPlafondId() {
+    var datePipe = new DatePipe("en-US");
+    var obj = { CustGrpPlfndDsfId: this.CustGrpPlafondId }
+    this.http.post(URLConstantDsf.GetCustomerGroupPlafondDsfByCustomerGroupPlafondId, obj).subscribe(
+      (response) => {
+        this.resultData = response;
+        this.plafondProposalForm.patchValue({
+          PlafondMax: this.resultData.PropPlafondMax,
+          StartPlafondDate: datePipe.transform(this.resultData.PropDtmStart, "yyyy-MM-dd"),
+          EndPlafondDate: datePipe.transform(this.resultData.PropDtmEnd, "yyyy-MM-dd")
+        })
+      });
   }
 
   onApprovalSubmited(event) {

@@ -1,5 +1,121 @@
 <div>
   <lib-ucviewgeneric [viewGenericObj]="viewCustomerGroupPlafondDetailObj"></lib-ucviewgeneric>
+  <div class="card">
+    <div class="card-body">
+        <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Customer Group Plafond Request</h4>
+        <div class="col-md-12">
+          <div class="px-3">
+          <lib-ucSubsection [id]="'existingAgreementId'" [title]="'EXISTING AGREEMENT'" [panel]="'existingAgreement'">
+          </lib-ucSubsection>
+          <div id="existingAgreement">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Agreement No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='CsutomerName'>Customer Name</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='OutstandingAR'>Outstanding AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='Status'>Status</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of CustGrpPlfndObj">
+                    <td *ngIf="item.Category == 'AGR'">{{item.SeqNo}}</td>
+                    <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrNo}}</td>
+                    <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.CustomerName}}</td>
+                    <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.OSARAmt}}</td>
+                    <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <lib-ucSubsection [id]="'applicationinProcessId'" [title]="'APPLICATION IN PROCESS'" [panel]="'applicationinProcess'">
+          </lib-ucSubsection>
+          <div id="applicationinProcess">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Application No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='CustomerName'>Customer Name</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='TotalNIAR'>Total NI/AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='ApplicationStep'>Application Step</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of CustGrpPlfndObj">
+                  <td *ngIf="item.Category == 'APP'">{{item.SeqNo}}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrNo}}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.CustomerName}}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSARAmt}}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <lib-ucSubsection [id]="'oplAgreementId'" [title]="'OPL AGREEMENT'" [panel]="'oplAgreement'">
+          </lib-ucSubsection>
+          <div id="oplAgreement">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Agreement No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='CsutomerName'>Customer Name</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='OutstandingAR'>Outstanding AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='Status'>Status</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of CustGrpPlfndObj">
+                  <td *ngIf="item.Category == 'OPL'">{{item.SeqNo}}</td>
+                  <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrNo}}</td>
+                  <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.CustomerName}}</td>
+                  <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.OSARAmt}}</td>
+                  <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <br />
+            <div class="CustGrpPlfnd">
+               <form class="form form-horizontal" [formGroup]="plafondProposalForm" #enjiForm="ngForm">
+               <div class="form-body">
+                  <lib-ucSubsection [id]="'plafondProposalId'" [title]="'Plafond Proposal'" [panel]="'plafondProposal'">
+                  </lib-ucSubsection>
+                  <div id="plafondProposal">
+                     <div class="form-group row">
+                        <label class="col-md-3 adInsLabel adins-required-label" translate>Prop Plafond Maximum</label>
+                        <div class="col-md-4">
+                           <input type="text" class="form-control adInsInput" formControlName="PlafondMax"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.PlafondMax.invalid }" disabled>
+                           <lib-uc-show-errors  [control]="plafondProposalForm.controls.PlafondMax" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </div>
+                     </div>                          
+                     <div class="form-group row">
+                        <label class="col-md-3 adInsLabel adins-required" translate>Prop Start Plafond Date</label>
+                        <div class="col-md-4">
+                           <input type="date" class="form-control adInsInput" formControlName="StartPlafondDate"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.StartPlafondDate.invalid }" disabled >
+                           <lib-uc-show-errors  [control]="plafondProposalForm.controls.StartPlafondDate" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                      <label class="col-md-3 adInsLabel adins-required" translate>Prop End Plafond Date</label>
+                      <div class="col-md-4">
+                         <input type="date" class="form-control adInsInput" formControlName="EndPlafondDate"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.EndPlafondDate.invalid }" disabled>
+                         <lib-uc-show-errors  [control]="plafondProposalForm.controls.EndPlafondDate" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                      </div>
+                   </div>
+                  </div>
+               </div>
+              </form>
+            </div>
+         </div>
+        </div>
+    </div>
+</div>
   <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
   <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"  (onCancel)="onCancelClick()"></lib-ucapprovalR3>
 </div>

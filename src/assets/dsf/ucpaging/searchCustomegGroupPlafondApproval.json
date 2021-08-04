@@ -107,12 +107,12 @@
         "property": "PROP_PLAFOND_MAX"
       },
       {
-        "type": "date",
+        "type": "text",
         "position": "center",
         "property": "PLAFOND_MAX"
       },
       {
-        "type": "date",
+        "type": "text",
         "position": "center",
         "property": "TOTAL_OS_AR"
       },
