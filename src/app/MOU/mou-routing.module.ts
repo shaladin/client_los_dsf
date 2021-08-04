@@ -68,6 +68,10 @@ import { ChangeMouRequestDetailCustomerXComponent } from 'app/impl/MOU/change-mo
 import {MouCustomerRequestDetailXComponent} from 'app/impl/MOU/mou-customer-request/mou-customer-request-detail/mou-customer-request-detail-x.component';
 import {MouReviewFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-factoring/mou-review-factoring-x.component';
 import {MouApprovalFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring-x.component';
+import {MouExecutionDetailXComponent} from 'app/impl/MOU/mou-execution/mou-execution-detail/mou-execution-detail-x.component';
+import {ChangeMouRequestDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail/change-mou-request-detail-x.component';
+import {ChangeMouReviewFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-factoring/change-mou-review-factoring-x.component';
+import {ChangeMouApprovalFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-factoring/change-mou-approval-factoring-x.component';
 
 const routes: Routes = [
   {
@@ -276,6 +280,14 @@ const routes: Routes = [
           title: "Mou Execution Detail"
         }
       },
+
+      {
+        path: PathConstantX.MOU_EXECUTION_DETAIL_X,
+        component: MouExecutionDetailXComponent,
+        data: {
+          title: "Mou Execution Detail X"
+        }
+      },
       {
         path: PathConstant.MOU_DUP_CHECK_PAGING,
         component: MouDupCheckPagingComponent,
@@ -389,6 +401,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_REQ_DETAIL_X,
+        component: ChangeMouRequestDetailXComponent,
+        data: {
+          title: "Change MOU Request Detail X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_REQ_DETAIL_CUST_TYPE,
         component: ChangeMouRequestDetailCustomerComponent,
         data: {
@@ -473,6 +492,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_RVW_DETAIL_FCTR_X,
+        component: ChangeMouReviewFactoringXComponent,
+        data: {
+          title: "Change MOU Review Factoring X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_RVW_DETAIL_FIN,
         component: ChangeMouReviewFinancingComponent,
         data: {
@@ -491,6 +517,13 @@ const routes: Routes = [
         component: ChangeMouApprovalFactoringComponent,
         data: {
           title: "Change MOU Approval Factoring"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_APV_DETAIL_FCTR_X,
+        component: ChangeMouApprovalFactoringXComponent,
+        data: {
+          title: "Change MOU Approval Factoring X"
         }
       },
       {
