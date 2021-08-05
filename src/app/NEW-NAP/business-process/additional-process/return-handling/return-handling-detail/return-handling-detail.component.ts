@@ -118,8 +118,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
       reqObj.AppId = this.appId;
       reqObj.RowVersion = item.RowVersion;
 
-      let RequestReturnTaskUrl = URLConstant.RequestReturnTask;
-      if(environment.isCore) RequestReturnTaskUrl = URLConstant.RequestReturnTaskV2;
+      let RequestReturnTaskUrl = environment.isCore ? URLConstant.RequestReturnTaskV2 : URLConstant.RequestReturnTask;
       this.http.post(RequestReturnTaskUrl, reqObj).subscribe(
         (response) => {
           this.GetListReturnHandlingDByReturnHandlingHId();

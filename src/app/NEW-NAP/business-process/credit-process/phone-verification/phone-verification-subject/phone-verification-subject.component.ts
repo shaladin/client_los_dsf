@@ -77,7 +77,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
-    if (this.wfTaskListId != null || this.wfTaskListId != undefined){
+    if (this.wfTaskListId != undefined && this.wfTaskListId != null){
       if(environment.isCore) {
         this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
       }else{
@@ -111,8 +111,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       }
       if (this.isReturnHandling) {
         this.setReturnHandlingD();
-        let EditReturnHandlingDUrl = URLConstant.EditReturnHandlingD;
-        if(environment.isCore) EditReturnHandlingDUrl = URLConstant.EditReturnHandlingDV2;
+        let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
         this.http.post(EditReturnHandlingDUrl, this.ReturnHandlingDData).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
