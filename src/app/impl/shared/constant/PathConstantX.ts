@@ -52,6 +52,17 @@ export class PathConstantX{
     //#endregion
 
     public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + '/' + PathConstantX.DETAIL_X;
+
+
+    //region New Approval
+    public static END_DATE_GO_LIVE_APV_X = "EndDtGoLiveApvX";
+    public static END_DATE_GO_LIVE_APV_PAGING_X = PathConstantX.END_DATE_GO_LIVE_APV_X + "/" + PathConstantX.PAGING;
+    public static END_DATE_GO_LIVE_APV_DETAIL_X = PathConstantX.END_DATE_GO_LIVE_APV_X + "/" + PathConstantX.DETAIL_X;
+
+    public static GO_LIVE_APV_X = "GoLiveApvX";
+    public static GO_LIVE_APV_PAGING_X = PathConstantX.GO_LIVE_APV_X + "/" + PathConstantX.PAGING;
+    public static GO_LIVE_APV_DETAIL_X = PathConstantX.GO_LIVE_APV_X + "/" + PathConstantX.DETAIL_X;
+    //endregion
 }
 
 

@@ -103,7 +103,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_CUST_CONFIRM_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.CUST_CONFIRM_PAGING; //'/Nap/AdminProcess/CustConfirmation/Paging'
   public static NAP_ADM_PRCS_CUST_CONFIRM_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.CUST_CONFIRM_DETAIL_X; //'/Nap/AdminProcess/CustConfirmation/Detail'
   public static NAP_ADM_PRCS_DO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DO_PAGING; //'/Nap/AdminProcess/DeliveryOrder/Paging'
-  public static NAP_ADM_PRCS_DO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DO_DETAIL; //'/Nap/AdminProcess/DeliveryOrder/Detail'
+  public static NAP_ADM_PRCS_DO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.DO_MULTI_ASSET_DETAIL_X; //'/Nap/AdminProcess/DeliveryOrder/Detail'
   public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DO_MULTI_ASSET_PAGING; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
   public static NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.DO_MULTI_ASSET_DETAIL_X; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Detail"
   public static NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/DocumentSigner/Paging'
@@ -441,5 +441,12 @@ export class NavigationConstant {
 
   //Cessie
   public static CESSIE_MONITORING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_MONITORING; //'/Impl/Cessie/Monitoring'
+  //EndCessie
+
+  //Approval X
+  public static END_DT_GO_LIVE_APV_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.END_DATE_GO_LIVE_APV_PAGING_X; //'/AdminProcess/EndDtGoLiveApvX/PagingX'
+  public static END_DT_GO_LIVE_APV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.END_DATE_GO_LIVE_APV_DETAIL_X; //'/AdminProcess/EndDtGoLiveApvX/DetailX'
+  public static GO_LIVE_APV_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.GO_LIVE_APV_PAGING_X; //'/AdminProcess/GoLiveX/PagingX'
+  public static GO_LIVE_APV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.GO_LIVE_APV_DETAIL_X; //'/AdminProcess/GoLiveX/DetailX'
   //EndCessie
 }

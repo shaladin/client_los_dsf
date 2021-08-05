@@ -49,6 +49,10 @@ import { PreGoLiveXComponent } from 'app/impl/NEW-NAP/business-process/admin-pro
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { DeliveryOrderMultiAssetDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail-x.component';
 import { CustConfirmationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-detail/cust-confirmation-detail-x.component';
+import { EndDateForGoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-paging/end-date-go-live-approval-paging-x.component';
+import { EndDateForGoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-detail/end-date-go-live-approval-detail-x.component';
+import { GoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-paging/go-live-approval-paging-x.component';
+import { GoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-detail/go-live-approval-detail-x.component';
 import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
 
 const routes: Routes = [
@@ -99,7 +103,7 @@ const routes: Routes = [
       },
       {
         path: PathConstant.DO_DETAIL,
-        component: DeliveryOrderMultiAssetDetailComponent,
+        component: DeliveryOrderDetailComponent,
         data: {
           title: 'Delivery Order'
         }
@@ -140,8 +144,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.PGL_DETAIL_X,
-        component: PreGoLiveXComponent,
+        path: PathConstant.PGL_DETAIL,
+        component: PreGoLiveComponent,
         data: {
           title: 'PreGoLive Detail'
         }
@@ -280,8 +284,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.DO_MULTI_ASSET_DETAIL_X,
-        component: DeliveryOrderMultiAssetDetailXComponent,
+        path: PathConstant.DO_MULTI_ASSET_DETAIL,
+        component: DeliveryOrderMultiAssetDetailComponent,
         data: {
           title: 'Delivery Order Detail'
         }
@@ -369,7 +373,49 @@ const routes: Routes = [
         data:{
           title: 'Invoice Detail DF'
         }
-      }
+      },
+      {
+        path: PathConstantX.END_DATE_GO_LIVE_APV_PAGING_X,
+        component:EndDateForGoLiveApprovalPagingXComponent,
+        data:{
+          title: 'End Date Go Live Approval Paging'
+        }
+      },
+      {
+        path: PathConstantX.END_DATE_GO_LIVE_APV_DETAIL_X,
+        component:EndDateForGoLiveApprovalDetailXComponent,
+        data:{
+          title: 'End Date Go Live Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.GO_LIVE_APV_PAGING_X,
+        component:GoLiveApprovalPagingXComponent,
+        data:{
+          title: 'Go Live Approval Paging'
+        }
+      },
+      {
+        path: PathConstantX.GO_LIVE_APV_DETAIL_X,
+        component:GoLiveApprovalDetailXComponent,
+        data:{
+          title: 'Go Live Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.DO_MULTI_ASSET_DETAIL_X,
+        component: DeliveryOrderMultiAssetDetailXComponent,
+        data: {
+          title: 'Delivery Order'
+        }
+      },
+      {
+        path: PathConstantX.PGL_DETAIL_X,
+        component: PreGoLiveXComponent,
+        data: {
+          title: 'PreGoLive Detail'
+        }
+      },
     ]
   }
 ];
