@@ -463,6 +463,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
     if (generateAppAttrContentObj.AttrInputType == this.AttrInputTypeRefMaster) {
       this.tempLookup[generateAppAttrContentObj.RefAttrCode] = new InputLookupObj();
+      this.tempLookup[generateAppAttrContentObj.RefAttrCode].isReady = false;
       this.tempLookup[generateAppAttrContentObj.RefAttrCode].urlJson = "./assets/uclookup/lookupRefMaster.json";
       this.tempLookup[generateAppAttrContentObj.RefAttrCode].urlEnviPaging = environment.FoundationR3Url + "/v1";
       this.tempLookup[generateAppAttrContentObj.RefAttrCode].pagingJson = "./assets/uclookup/lookupRefMaster.json";
@@ -474,17 +475,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       else {
         this.tempLookup[generateAppAttrContentObj.RefAttrCode].isRequired = false;
       }
-      if (generateAppAttrContentObj.AttrValue != null && generateAppAttrContentObj.AttrValue != "") {
-        let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
-          RefMasterTypeCode: generateAppAttrContentObj.RefAttrValue,
-          MasterCode: generateAppAttrContentObj.AttrValue
-        };
-        this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
-          (response: KeyValueObj) => {
-            this.tempLookup[generateAppAttrContentObj.RefAttrCode].jsonSelect = { Descr: response.Value }
-          });
-      }
-    
+          
       var arrAddCrit = new Array();
       var critAssetObj = new CriteriaObj();
       critAssetObj.DataType = 'text';
@@ -493,6 +484,21 @@ export class ApplicationDataFL4WComponent implements OnInit {
       critAssetObj.value = generateAppAttrContentObj.RefAttrValue;
       arrAddCrit.push(critAssetObj);
       this.tempLookup[generateAppAttrContentObj.RefAttrCode].addCritInput = arrAddCrit;
+
+      if (generateAppAttrContentObj.AttrValue != null && generateAppAttrContentObj.AttrValue != "") {
+        let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+          RefMasterTypeCode: generateAppAttrContentObj.RefAttrValue,
+          MasterCode: generateAppAttrContentObj.AttrValue
+        };
+        this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+          (response: KeyValueObj) => {
+            this.tempLookup[generateAppAttrContentObj.RefAttrCode].nameSelect = response.Value;
+            this.tempLookup[generateAppAttrContentObj.RefAttrCode].jsonSelect = { Descr: response.Value }
+            this.tempLookup[generateAppAttrContentObj.RefAttrCode].isReady = true;
+          });
+      }else{
+        this.tempLookup[generateAppAttrContentObj.RefAttrCode].isReady = true;
+      }
     }
 
     return tempFB;
