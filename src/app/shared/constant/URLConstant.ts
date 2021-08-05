@@ -1522,7 +1522,9 @@ export class URLConstant {
   public static GetCrdRvwCustInfoByAppId = environment.losUrl + "/v1" + "/CrdRvwCustInfo/GetCrdRvwCustInfoByAppId";
   public static GetCrdRvwCustInfoIncomeAndExpenseDetails = environment.losUrl + "/v1" + "/CrdRvwCustInfo/GetCrdRvwCustInfoIncomeAndExpenseDetails";
   public static CrdRvwDataReCapture = environment.losUrl + "/v1" + "/CrdRvwCustInfo/CrdRvwDataReCapture";
+  public static CrdRvwDataReCaptureV2 = environment.losUrl + "/v2" + "/CrdRvwCustInfo/CrdRvwDataReCapture";
   public static ReCaptureDataR2 = environment.losUrl + "/v1" + "/CrdRvwCustInfo/ReCaptureDataR2";
+  public static ReCaptureDataR2V2 = environment.losUrl + "/v2" + "/CrdRvwCustInfo/ReCaptureDataR2";
   public static GetCrdRvwCustPersInfoByCrdRvwCustInfoId = environment.losUrl + "/v1" + "/CrdRvwCustPersInfo/GetCrdRvwCustPersInfoByCrdRvwCustInfoId";
   public static GetCrdRvwCustCoyInfoByCrdRvwCustInfoId = environment.losUrl + "/v1" + "/CrdRvwCustCoyInfo/GetCrdRvwCustCoyInfoByCrdRvwCustInfoId";
   public static GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId = environment.losUrl + "/v1" + "/CrdRvwCustPhnStatus/GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId";

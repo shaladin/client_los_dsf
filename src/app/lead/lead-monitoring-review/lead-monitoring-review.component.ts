@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { WorkflowApiObj, WorkflowApiV2Obj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskMod
 export class LeadMonitoringReviewComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
-  requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
+  requestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
 
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService) { }
 
@@ -31,7 +31,7 @@ export class LeadMonitoringReviewComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewUploadLead.json";
     this.inputPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
 
-    if(environment.isCore){
+    if (environment.isCore) {
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchReviewUploadLeadV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchReviewUploadLeadV2.json";
       this.inputPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
@@ -43,7 +43,7 @@ export class LeadMonitoringReviewComponent implements OnInit {
       this.requestTaskModel.TaskDefinitionKey = CommonConstant.UPLOAD_LEAD_REVIEW;
       this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
-      
+
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.requestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "UploadNo";
@@ -54,34 +54,19 @@ export class LeadMonitoringReviewComponent implements OnInit {
   }
 
   cancel(ev) {
-    if(environment.isCore){
-      let newWfObj = new WorkflowApiV2Obj();
-      newWfObj.TaskListId = ev.RowObj.ExecutionId;
-      newWfObj.TransactionNo = ev.RowObj.UploadNo;
-      newWfObj.ListValue = { "Status": "RJC" };
-      this.httpClient.post(URLConstant.CancelUploadV2, newWfObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["Message"]);
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_RVW_MONITORING_PAGING], {});
-          });
-        }
-      );
-    }
-    else{
-      let wfObj = new WorkflowApiObj();
-      wfObj.TaskListId = ev.RowObj.TaskListId;
-      wfObj.TransactionNo = ev.RowObj.UploadNo;
-      wfObj.ListValue = { "Status": "RJC" };
-      this.httpClient.post(URLConstant.CancelUpload, wfObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["Message"]);
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_RVW_MONITORING_PAGING], {});
-          });
-        }
-      );
-    }
+    let wfObj = new WorkflowApiObj();
+    wfObj.TaskListId = environment.isCore ? ev.RowObj.ExecutionId : ev.RowObj.TaskListId;
+    wfObj.TransactionNo = ev.RowObj.UploadNo;
+    wfObj.ListValue = { "Status": "RJC" };
+
+    let CancelUploadUrl = environment.isCore ? URLConstant.CancelUploadV2 : URLConstant.CancelUpload;
+    this.httpClient.post(CancelUploadUrl, wfObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["Message"]);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_RVW_MONITORING_PAGING], {});
+        });
+      }
+    );
   }
- 
 }
