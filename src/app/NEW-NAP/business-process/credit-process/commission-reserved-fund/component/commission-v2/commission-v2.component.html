@@ -71,7 +71,7 @@
             </div>
           </div>
           <div *ngIf="!isReturnOn" class="form-actions right">
-            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+            <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
               <i  class="ft-x"></i> Return 
             </button>
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
@@ -86,7 +86,7 @@
             </button>
           </div>
         </form>
-        <form class="form form-horizontal" *ngIf="isReturnOn" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid && SaveReturnForm()"
+        <form class="form form-horizontal" *ngIf="isReturnOn && ReturnHandlingHObj.ReturnHandlingHId == 0" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid && SaveReturnForm()"
         #enjiForm="ngForm">
           <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCommissionId'" [title]="'Return Commission & Reserved Fund'"
           [panel]="'formReturnCommission'">

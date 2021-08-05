@@ -27,6 +27,7 @@ import { String } from 'typescript-string-operations';
 import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/AppCommissionRsvFund/ReqReturnHandlingCommRsvFundObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -39,6 +40,7 @@ export class CommissionV2Component implements OnInit {
   @ViewChild('Form2') FormAdd2: FormCommissionGenerateComponent;
   @ViewChild('Form3') FormAdd3: FormCommissionGenerateComponent;
   @Input() AppId: number = 0;
+  @Input() ReturnHandlingHObj: ReturnHandlingHObj;
   @Input() showCancel: boolean = true;
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
@@ -736,6 +738,7 @@ export class CommissionV2Component implements OnInit {
   SaveReturnForm(){
     var reqReturnHandlingCommRsvFundObj = new ReqReturnHandlingCommRsvFundObj();
     reqReturnHandlingCommRsvFundObj.AppId = this.AppId;
+    reqReturnHandlingCommRsvFundObj.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
     reqReturnHandlingCommRsvFundObj.ReturnTo = this.FormReturnObj.value.ReturnTo;
     reqReturnHandlingCommRsvFundObj.Reason = this.FormReturnObj.value.Reason;
     reqReturnHandlingCommRsvFundObj.Notes = this.FormReturnObj.value.Notes;
