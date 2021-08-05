@@ -187,7 +187,7 @@ export class NavigationConstant {
   public static NAP_CF4W_ADD = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstant.ADD; //"Nap/ConsumerFinance/Add"
   public static NAP_CF4W_ADD_DETAIL = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstant.ADD_DETAIL; //"/Nap/ConsumerFinance/Add/Detail"
   public static NAP_CF4W_NAP1 = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstant.NAP1; //"Nap/ConsumerFinance/NAP1"
-  public static NAP_CF4W_NAP2 = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstant.NAP2; //"Nap/ConsumerFinance/NAP2"
+  public static NAP_CF4W_NAP2 = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstantX.NAP2_X; //"Nap/ConsumerFinance/NAP2"
   //#endregion
 
   //#region FL4W
@@ -197,7 +197,7 @@ export class NavigationConstant {
   public static NAP_FL4W_ADD = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.ADD; //"Nap/FinanceLeasing/Add"
   public static NAP_FL4W_ADD_DETAIL = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/FinanceLeasing/Add/Detail"
   public static NAP_FL4W_NAP1 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.NAP1; //"Nap/FinanceLeasing/NAP1"
-  public static NAP_FL4W_NAP2 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.NAP2; //"Nap/FinanceLeasing/NAP2"
+  public static NAP_FL4W_NAP2 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstantX.NAP2_X; //"Nap/FinanceLeasing/NAP2"
   //#endregion
 
   //#region CFRFN4W
@@ -215,7 +215,7 @@ export class NavigationConstant {
   public static NAP_CFNA_ADD = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstant.ADD; //"Nap/CFNA/Add"
   public static NAP_CFNA_ADD_DETAIL = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/CFNA/Add/Detail"
   public static NAP_CFNA_NAP1 = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstant.NAP1; //"Nap/CFNA/NAP1"
-  public static NAP_CFNA_NAP2 = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstant.NAP2; //"Nap/CFNA/NAP2"
+  public static NAP_CFNA_NAP2 = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstantX.NAP2_X; //"Nap/CFNA/NAP2"
   //#endregion
 
   //#region FCTR
