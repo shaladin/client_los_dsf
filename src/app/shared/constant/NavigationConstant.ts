@@ -256,6 +256,7 @@ export class NavigationConstant {
   public static VIEW_CUST_EXPSR = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CUST_EXPSR; //"/View/CustExposureView"
   public static VIEW_LEAD = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_LEAD; //"/View/Lead"
   public static VIEW_MOU_CUST = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_MOU_CUST_X; //"/View/Mou/CustView/X"
+  public static VIEW_CHANGE_MOU = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_CHANGE_MOU_X; //"/View/ChangeMouView/X"
   public static VIEW_PHN_VERIF = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PHN_VERIF; //"/View/PhoneVerifView"
   public static VIEW_SRVY = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_SRVY; //'/View/SurveyView'
   //#endregion
