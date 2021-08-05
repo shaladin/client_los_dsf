@@ -1738,8 +1738,10 @@ export class URLConstant {
   public static CopyProductOffering = environment.losUrl + "/v1" + "/ProductOffering/CopyProductOffering";
   public static UpdateProdOfferingPostApv = environment.losUrl + "/v1" + "/ProductOffering/UpdateProdOfferingPostApv";
   public static ReviewProdOffering = environment.losUrl + "/v1" + "/ProductOffering/ReviewProdOffering";
+  public static ReviewProdOfferingV2 = environment.losUrl + "/v2" + "/ProductOffering/ReviewProdOffering";
   public static GetProdOfferingByProdOfferingId = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingByProdOfferingId";
   public static SubmitProdOffering = environment.losUrl + "/v1" + "/ProductOffering/SubmitProdOffering";
+  public static SubmitProdOfferingV2 = environment.losUrl + "/v2" + "/ProductOffering/SubmitProdOffering";
 
   // PRODUCT COMPONENT
   public static GetProductHOComponent = environment.losUrl + "/v1" + "/ProductComponent/GetProductHOComponent";
