@@ -115,9 +115,9 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
+              <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-              </app-application-data>
+              </app-application-data-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]=appId
@@ -215,9 +215,9 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
+              <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-              </app-application-data>
+              </app-application-data-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady" [AppId]=appId
