@@ -20,7 +20,7 @@ import {RefMasterObj} from 'app/shared/model/RefMasterObj.Model';
 import {CustObj} from 'app/shared/model/CustObj.Model';
 import {ReqRefMasterByTypeCodeAndMasterCodeObj} from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
-import {URLConstantX} from '../../../shared/constant/URLConstantX';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-mou-customer-request-detail-x',
@@ -103,11 +103,6 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
       this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstantX.RefMasterTypeCodeMouFctrType}).subscribe(
         (response) => {
           this.MrMouCustFctrTypeList = response[CommonConstant.ReturnObj];
-          // if (this.pageType != 'edit') {
-          //   this.MOUMainInfoForm.patchValue({
-          //     MrRevolvingTypeCode: this.RevolvingTypeList[0].Key
-          //   });
-          // }
         });
     }
 

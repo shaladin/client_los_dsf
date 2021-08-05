@@ -14,7 +14,7 @@ import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.compon
 import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
-import {NapDetailFormXComponent} from '../../impl/NEW-NAP/FCTR/nap-detail-form/nap-detail-form-x.component';
+import {NapDetailFormXComponent} from 'app/impl/NEW-NAP/FCTR/nap-detail-form/nap-detail-form-x.component';
 
 @NgModule({
   imports: [
