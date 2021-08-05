@@ -13,6 +13,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -31,17 +32,22 @@ export class ProdOfferingDeactApvPagingComponent implements OnInit {
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOffDeactApv.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOffDeactApv.json";
 
+    if(environment.isCore){
+      this.InputPagingObj._url = "./assets/ucpaging/V2/searchProductOffDeactApv.json";
+      this.InputPagingObj.pagingJson = "./assets/ucpaging/V2/searchProductOffDeactApv.json";
+    }
+
     let critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'CATEGORY_CODE';
-    critObj.value = 'PRD_OFR_DEACT_APV';
+    critObj.value = CommonConstant.CAT_CODE_PRD_OFR_DEACT_APV;
     this.ArrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'PROD_OFFERING_STAT';
+    critObj.propName = 'P.PROD_OFFERING_STAT';
     critObj.value = CommonConstant.ProdStatReqDeact;
     this.ArrCrit.push(critObj);
 

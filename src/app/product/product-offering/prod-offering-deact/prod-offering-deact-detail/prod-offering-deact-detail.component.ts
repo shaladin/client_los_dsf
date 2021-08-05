@@ -79,7 +79,7 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
       });
 
     this.GenericByIdObj.Id = this.ProdOfferingHId;
-    this.http.post<ResGetListProdOfferingBranchMbrObj>(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHIdAndApp, this.GenericByIdObj).subscribe(
+    await this.http.post<ResGetListProdOfferingBranchMbrObj>(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHIdAndApp, this.GenericByIdObj).toPromise().then(
       response => {
         if (response.ReturnObject.length > 0) {
           this.OfficeList = response.ReturnObject;
@@ -116,12 +116,13 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
     this.ProdOfferingHDeactObj.Notes = this.RFAInfo["RFAInfo"].Notes;
     this.ProdOfferingHDeactObj.ProdOfferingHId = this.ProdOfferingHId;
     this.ProdOfferingHDeactObj.RequestRFAObj = this.RFAInfo;
-    this.http.post(URLConstant.RequestOfferingDeactivation, this.ProdOfferingHDeactObj).subscribe(
+
+    let urlPost = environment.isCore? URLConstant.RequestOfferingDeactivationV2 : URLConstant.RequestOfferingDeactivation;
+    this.http.post(urlPost, this.ProdOfferingHDeactObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE], {});
       }
     );
-
   }
 }
