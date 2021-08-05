@@ -175,6 +175,7 @@ export class CommonConstant {
 
   //OFFICE TYPE
   public static HeadOffice = "HO";
+  public static SuperUser = "SUPUSR";
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
 
@@ -915,8 +916,10 @@ export class CommonConstant {
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
-  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW"
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
+  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static PROD_OFF_APV = "PROD_OFF_APV";
+  public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
   
   // CUST ADDR TYPE
   public static CustAddrTypeLegal = "LEGAL";
@@ -937,6 +940,10 @@ export class CommonConstant {
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
 
+  //WORFKLOW PRODUCT
+  public static WF_CODE_PROD_HO_APV = "PROD_HO_APV";
+  public static ACT_CODE_PROD_HO_RVW = "PROD_HO_RVW";
+  
   //WORKFLOW MOU
   public static WF_CHANGE_MOU = "WF_CHANGE_MOU";
   public static ACT_CODE_CHNG_MOU_REVIEW = "CHNG_MOU_REVIEW";
@@ -944,9 +951,9 @@ export class CommonConstant {
   public static ACT_CODE_CHG_MOU_RTRN = "CHG_MOU_RTRN";
 
   //Lead Step
-  public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL"
-  public static LeadStepLeadVerf = "LVR"
-  public static LeadStepTeleVerf = "TVR"
-  public static LeadStepLeadUpd = "LUP"
+  public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL";
+  public static LeadStepLeadVerf = "LVR";
+  public static LeadStepTeleVerf = "TVR";
+  public static LeadStepLeadUpd = "LUP";
   
 }

@@ -1521,7 +1521,9 @@ export class URLConstant {
   public static GetCrdRvwCustInfoByAppId = environment.losUrl + "/v1" + "/CrdRvwCustInfo/GetCrdRvwCustInfoByAppId";
   public static GetCrdRvwCustInfoIncomeAndExpenseDetails = environment.losUrl + "/v1" + "/CrdRvwCustInfo/GetCrdRvwCustInfoIncomeAndExpenseDetails";
   public static CrdRvwDataReCapture = environment.losUrl + "/v1" + "/CrdRvwCustInfo/CrdRvwDataReCapture";
+  public static CrdRvwDataReCaptureV2 = environment.losUrl + "/v2" + "/CrdRvwCustInfo/CrdRvwDataReCapture";
   public static ReCaptureDataR2 = environment.losUrl + "/v1" + "/CrdRvwCustInfo/ReCaptureDataR2";
+  public static ReCaptureDataR2V2 = environment.losUrl + "/v2" + "/CrdRvwCustInfo/ReCaptureDataR2";
   public static GetCrdRvwCustPersInfoByCrdRvwCustInfoId = environment.losUrl + "/v1" + "/CrdRvwCustPersInfo/GetCrdRvwCustPersInfoByCrdRvwCustInfoId";
   public static GetCrdRvwCustCoyInfoByCrdRvwCustInfoId = environment.losUrl + "/v1" + "/CrdRvwCustCoyInfo/GetCrdRvwCustCoyInfoByCrdRvwCustInfoId";
   public static GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId = environment.losUrl + "/v1" + "/CrdRvwCustPhnStatus/GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId";
@@ -1703,6 +1705,7 @@ export class URLConstant {
   public static AddProduct = environment.losUrl + "/v1" + "/Product/AddProduct"
   public static EditProduct = environment.losUrl + "/v1" + "/Product/EditProduct"
   public static RequestDeactivation = environment.losUrl + "/v1" + "/Product/RequestDeactivation"
+  public static RequestDeactivationV2 = environment.losUrl + "/v2" + "/Product/RequestDeactivation"
   public static GetListProdBranchOfficeMbrByProdHId = environment.losUrl + "/v1" + "/Product/GetListProdBranchOfficeMbrByProdHId"
   public static GetListProdHByProdCurrentProdHId = environment.losUrl + "/v1" + "/Product/GetListProdHByProdCurrentProdHId";
   public static AddProductOfficeMbrBatch = environment.losUrl + "/v1" + "/Product/AddProductOfficeMbrBatch";
@@ -1713,10 +1716,12 @@ export class URLConstant {
   public static DownloadProductRule = environment.losUrl + "/v1" + "/Product/DownloadProductRule";
   public static UpdateProductPostApv = environment.losUrl + "/v1" + "/Product/UpdateProductPostApv";
   public static ReviewProduct = environment.losUrl + "/v1" + "/Product/ReviewProduct";
+  public static ReviewProductV2 = environment.losUrl + "/v2" + "/Product/ReviewProduct";
   public static GetProductById = environment.losUrl + "/v1" + "/Product/GetProductById";
   public static GetProductByHId = environment.losUrl + "/v1" + "/Product/GetProductByHId";
   public static CopyProduct = environment.losUrl + "/v1" + "/Product/CopyProduct";
   public static SubmitProduct = environment.losUrl + "/v1" + "/Product/SubmitProduct"
+  public static SubmitProductV2 = environment.losUrl + "/v2" + "/Product/SubmitProduct"
   public static GetListProdBranchOfficeMbrByProdOfferingHId = environment.losUrl + "/v1" + "/Product/GetListProdBranchOfficeMbrByProdOfferingHId";
 
   //PRODUCT OFFERING
@@ -1731,13 +1736,16 @@ export class URLConstant {
   public static GetProdOfferingHByCodeAndVersion = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingHByCodeAndVersion";
   public static GetListProdOfferingHByProdOfferingCurrentProdHId = environment.losUrl + "/v1" + "/ProductOffering/GetListProdOfferingHByProdOfferingCurrentProdHId"
   public static GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode = environment.losUrl + "/v1" + "/ProductOffering/GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode"
-  public static RequestOfferingDeactivation = environment.losUrl + "/v1" + "/ProductOffering/RequestProdOfferingDeactivation"
+  public static RequestOfferingDeactivation = environment.losUrl + "/v1" + "/ProductOffering/RequestProdOfferingDeactivation";
+  public static RequestOfferingDeactivationV2 = environment.losUrl + "/v2" + "/ProductOffering/RequestProdOfferingDeactivation";
   public static GetListProdOfferingBranchOfficeMbrByProdHIdAndApp = environment.losUrl + "/v1" + "/ProductOffering/GetListProdOfferingBranchOfficeMbrByProdHIdAndApp"
   public static CopyProductOffering = environment.losUrl + "/v1" + "/ProductOffering/CopyProductOffering";
   public static UpdateProdOfferingPostApv = environment.losUrl + "/v1" + "/ProductOffering/UpdateProdOfferingPostApv";
   public static ReviewProdOffering = environment.losUrl + "/v1" + "/ProductOffering/ReviewProdOffering";
+  public static ReviewProdOfferingV2 = environment.losUrl + "/v2" + "/ProductOffering/ReviewProdOffering";
   public static GetProdOfferingByProdOfferingId = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingByProdOfferingId";
   public static SubmitProdOffering = environment.losUrl + "/v1" + "/ProductOffering/SubmitProdOffering";
+  public static SubmitProdOfferingV2 = environment.losUrl + "/v2" + "/ProductOffering/SubmitProdOffering";
 
   // PRODUCT COMPONENT
   public static GetProductHOComponent = environment.losUrl + "/v1" + "/ProductComponent/GetProductHOComponent";
