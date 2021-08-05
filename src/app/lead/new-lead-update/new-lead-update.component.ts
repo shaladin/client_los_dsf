@@ -70,7 +70,7 @@ export class NewLeadUpdateComponent implements OnInit {
       leadReject.LeadId = event.RowObj.LeadId;
       leadReject.LeadStat = CommonConstant.LeadStatReject;
       leadReject.LeadStep = CommonConstant.LeadStatReject;
-      leadReject.WfTaskListId = event.RowObj.ExecutionId; //Ini WF Instance GUID Versi Camunda
+      leadReject.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId; //Ini WF Instance GUID Versi Camunda
 
       this.http.post(urlPost, leadReject).subscribe(
         response => {
