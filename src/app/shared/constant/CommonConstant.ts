@@ -15,7 +15,7 @@ export class CommonConstant {
   public static CANCEL = 'Cancel';
   public static REQ = 'request';
   public static RTN = 'return';
-
+  
   // Behaviour
   public static DEFAULT = 'DEF';
 
@@ -76,6 +76,7 @@ export class CommonConstant {
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
   public static CustTypeCompany = "COMPANY";
+  public static CustTypePublic = "PUBLIC";
   public static GuarantorTypeCodePersonal = "PERSONAL";
   public static GuarantorTypeCodeCompany = "COMPANY";
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
@@ -174,6 +175,7 @@ export class CommonConstant {
 
   //OFFICE TYPE
   public static HeadOffice = "HO";
+  public static SuperUser = "SUPUSR";
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
 
@@ -286,6 +288,10 @@ export class CommonConstant {
   public static AttrInputTypeTextArea = "TA";
   public static AttrInputTypeRefMaster = "RM";
 
+  //ATTR CODE
+  public static AttrCodeDeptAml = "DEPT_AML";
+  public static AttrCodeAuthAml = "AUTH_AML";
+  
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 
@@ -507,6 +513,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeDisbToDlrFncng = "DISB_TO_DLR_FNCNG";
   public static RefMasterTypeCodeDisbToFctr = "DISB_TO_FCTR";
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
+  public static RefMasterTypeCodeShareholderCustType = "SHR_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
   public static RefMasterTypeCodeWOP = "WOP";
   public static RefMasterTypeCodeInstSchm = "INST_SCHM";
@@ -602,6 +609,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeAppSrcType = "APP_SRC_TYPE";
   public static RefMasterTypeCodeMouType = "MOU_TYPE";
   public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
+  public static RefMasterTypeCodePublicType = "PUBLIC_TYPE";
+  public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
@@ -906,8 +915,10 @@ export class CommonConstant {
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
-  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW"
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
+  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static PROD_OFF_APV = "PROD_OFF_APV";
+  public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
   
   // CUST ADDR TYPE
   public static CustAddrTypeLegal = "LEGAL";
@@ -932,6 +943,10 @@ export class CommonConstant {
   public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
   public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
 
+  //WORFKLOW PRODUCT
+  public static WF_CODE_PROD_HO_APV = "PROD_HO_APV";
+  public static ACT_CODE_PROD_HO_RVW = "PROD_HO_RVW";
+  
   //WORKFLOW MOU
   public static WF_CHANGE_MOU = "WF_CHANGE_MOU";
   public static ACT_CODE_CHNG_MOU_REVIEW = "CHNG_MOU_REVIEW";
@@ -939,9 +954,9 @@ export class CommonConstant {
   public static ACT_CODE_CHG_MOU_RTRN = "CHG_MOU_RTRN";
 
   //Lead Step
-  public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL"
-  public static LeadStepLeadVerf = "LVR"
-  public static LeadStepTeleVerf = "TVR"
-  public static LeadStepLeadUpd = "LUP"
+  public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL";
+  public static LeadStepLeadVerf = "LVR";
+  public static LeadStepTeleVerf = "TVR";
+  public static LeadStepLeadUpd = "LUP";
   
 }
