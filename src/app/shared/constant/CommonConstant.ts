@@ -490,7 +490,7 @@ export class CommonConstant {
   public static ReturnHandlingEditCust = "RTN_EDIT_CUST";
   public static ReturnHandlingEditNAP4 = "RTN_EDIT_NAP4";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
-  public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SURVEY";
+  public static ReturnHandlingAddSurvey = "RTN_ADD_SRVY";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
