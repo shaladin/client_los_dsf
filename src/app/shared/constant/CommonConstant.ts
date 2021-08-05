@@ -919,6 +919,7 @@ export class CommonConstant {
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
   public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
   public static WF_MOU_FACTORING = "WF_MOU_FACTORING";
+  public static WF_MOU_DLFN = "WF_MOU_DLFN";
   public static MOU_REVIEW = "MOU_REVIEW";
   public static LEGAL_RVW = "LEGAL_RVW";
   public static MOU_RETURN = "MOU_RETURN";

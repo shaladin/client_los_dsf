@@ -50,10 +50,10 @@ export class LegalReviewPagingComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKey = CommonConstant.WF_MOU_GENERAL;
-      this.requestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
+      this.requestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
+      // this.requestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.requestTaskModel.TaskDefinitionKey = CommonConstant.LEGAL_RVW;
-      this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
+      // this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;

@@ -33,7 +33,7 @@ export class MouExecutionPagingComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKey = CommonConstant.WF_MOU_GENERAL;
+      this.requestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
       this.requestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.requestTaskModel.TaskDefinitionKey = CommonConstant.MOU_EXECUTION;
       this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
