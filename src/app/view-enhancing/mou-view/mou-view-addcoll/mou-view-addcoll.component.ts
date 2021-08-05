@@ -30,6 +30,7 @@ export class MouViewAddcollComponent implements OnInit {
   OwnerRelationshipObj: any;
   collateralObj: MouCustCollateralObj;
   collateralRegistrationObj: any;
+  OwnerProfessionName: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -43,7 +44,8 @@ export class MouViewAddcollComponent implements OnInit {
 
   AddCollDataForm = this.fb.group({
   })
-  ViewColl(MouCustCollateralId) {
+
+  async ViewColl(MouCustCollateralId) {
     this.listMouCustCollateralDocObj = new Array<any>();
     this.isView = true;
     var collObj = { Id: MouCustCollateralId };
@@ -72,8 +74,7 @@ export class MouViewAddcollComponent implements OnInit {
 
       });
 
-
-    this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
+    await this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).toPromise().then(
       (response) => {
 
         this.collateralObj = response['MouCustCollateral'];
@@ -82,7 +83,20 @@ export class MouViewAddcollComponent implements OnInit {
         console.log(this.collateralObj);
         console.log(this.collateralRegistrationObj);
       })
+    
+    await this.GetProfessionName(this.collateralRegistrationObj.OwnerProfessionCode);
+  }
 
+  async GetProfessionName(professionCode: string) {
+    await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
+      (response) => {
+        this.OwnerProfessionName = response["ProfessionName"]
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   Back() {
