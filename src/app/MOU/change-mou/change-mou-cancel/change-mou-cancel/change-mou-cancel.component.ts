@@ -11,6 +11,8 @@ import { ChangeMouCustConfirmCancelObj } from "app/shared/model/ChangeMouCustCon
 import { CurrentUserContext } from "app/shared/model/CurrentUserContext.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CookieService } from "ngx-cookie";
+import { RequestTaskModelObj } from "app/shared/model/Workflow/V2/RequestTaskModelObj.model";
+import { IntegrationObj } from "app/shared/model/library/IntegrationObj.model";
 
 @Component({
   selector: "app-change-mou-cancel",
@@ -19,7 +21,8 @@ import { CookieService } from "ngx-cookie";
 })
 export class ChangeMouCancelComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  user: CurrentUserContext;
+  RequestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj : IntegrationObj = new IntegrationObj();
 
   constructor(
     private http: HttpClient,
@@ -30,7 +33,7 @@ export class ChangeMouCancelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouCancel.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouCancel.json";
     this.inputPagingObj.ddlEnvironments = [
@@ -43,6 +46,23 @@ export class ChangeMouCancelComponent implements OnInit {
         environment: environment.FoundationR3Url + "/v1",
       },
     ];
+
+    if(environment.isCore) {
+      this.inputPagingObj._url = "./assets/ucpaging/mou/V2/searchChangeMouCancelV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchChangeMouCancelV2.json";
+      this.inputPagingObj.isJoinExAPI = true;
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CHANGE_MOU;
+      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
+      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "TrxNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
   }
 
   getEvent(event) {
@@ -67,13 +87,15 @@ export class ChangeMouCancelComponent implements OnInit {
       if (confirm("Are you sure to cancel this?")) {
         console.log(event)
         var mouCancel = new ChangeMouCustConfirmCancelObj();
+        let urlPost = environment.isCore ? URLConstant.EditChangeMouForCancelByChangeMouTrxIdV2 : URLConstant.EditChangeMouForCancelByChangeMouTrxId;
+
         mouCancel.Status = CommonConstant.MouStatCancel;
         mouCancel.ChangeMouTrxId = event.RowObj.ChangeMouTrxId;
         mouCancel.TrxNo = event.RowObj.TrxNo;
-        mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
+        mouCancel.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId;
         mouCancel.RowVersion = event.RowObj.RowVersions;
         this.http
-          .post(URLConstant.EditChangeMouForCancelByChangeMouTrxId, mouCancel)
+          .post(urlPost, mouCancel)
           .subscribe((response) => {
             this.toastr.successMessage(response["Message"]);
             this.router

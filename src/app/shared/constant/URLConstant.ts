@@ -102,6 +102,8 @@ export class URLConstant {
   public static GetAppCrossByCrossAgrmntNo = "/AppCross/GetAppCrossByCrossAgrmntNo";
   public static DeleteAppCross = environment.losUrl + "/v1" + "/AppCross/DeleteAppCross";
   public static GetListAppCross = environment.losUrl + "/v1" + "/AppCross/GetListAppCross";
+  public static GetListAppCrossForView = environment.losUrl + "/v1" + "/AppCross/GetListAppCrossForView";
+
   public static AddListAppCross = "/AppCross/AddListAppCross";
 
   // App Fctr
@@ -117,6 +119,7 @@ export class URLConstant {
 
   // App Commission
   public static AddOrEditAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/AddOrEditAppCommissionData";
+  public static SubmitAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/SubmitAppCommissionData";
   public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionDataForEditByAppId";
   public static DeleteAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionRule";
@@ -528,6 +531,14 @@ export class URLConstant {
   public static GetListAppGuarantorPersonalByAppId = environment.losUrl + "/v1" + "/AppGuarantor/GetListAppGuarantorPersonalByAppId"
   public static GetListAppGuarantorPersonalForView = environment.losUrl + "/v1" + "/AppCust/GetListAppGuarantorPersonalForView"
   public static GetListAppGuarantorCompanyForView = environment.losUrl + "/v1" + "/AppCust/GetListAppGuarantorCompanyForView"
+  public static GetAppCustCompanyMainDataByAppId = environment.losUrl + "/v1" + "/AppCust/GetAppCustCompanyMainDataByAppId"
+  
+  // AppCustCompanyMgmntShrholder
+  public static GetAppCustCompanyMgmntShrholdersByAppCustCompanyMgmntShrholderId = environment.losUrl + "/v1" + "/AppCustCompanyMgmntShrholder/GetAppCustCompanyMgmntShrholdersByAppCustCompanyMgmntShrholderId"
+  public static GetListManagementShareholderForListPagingByParentAppCustCompanyId = environment.losUrl + "/v1" + "/AppCustCompanyMgmntShrholder/GetListManagementShareholderForListPagingByParentAppCustCompanyId"
+  public static AddAppCustCompanyMgmntShrholderPublic = environment.losUrl + '/v1' + "/AppCustCompanyMgmntShrholder/AddAppCustCompanyMgmntShrholderPublic";
+  public static EditAppCustCompanyMgmntShrholderPublic = environment.losUrl + '/v1' + "/AppCustCompanyMgmntShrholder/EditAppCustCompanyMgmntShrholderPublic";
+  public static DeleteAppCustCompanyMgmntShrholderPublic = environment.losUrl + '/v1' + "/AppCustCompanyMgmntShrholder/DeleteAppCustCompanyMgmntShrholderPublic";
 
   // Vendor
   public static GetListVendorBankAccByVendorId = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListVendorBankAccByVendorId";
@@ -598,14 +609,19 @@ export class URLConstant {
   public static GetChangeMouCustDlrFncgDetailByChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustDlrFncgDetailByChangeMouTrxId";
   public static AddEditChangeMouCustDlrFin = environment.losUrl + "/v1" + "/ChangeMou/AddEditChangeMouCustDlrFin";
   public static SubmitChangeMouReview = environment.losUrl + "/v1" + "/ChangeMou/SubmitChangeMouReview";
+  public static SubmitChangeMouReviewV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitChangeMouReview";
   public static SubmitWorkflowChangeMouRequest = environment.losUrl + "/v1" + "/ChangeMou/SubmitWorkflowChangeMouRequest";
+  public static SubmitWorkflowChangeMouRequestV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitWorkflowChangeMouRequest";
   public static CheckMouCustInChangeMouProcess = environment.losUrl + "/v1" + "/ChangeMou/CheckMouCustInChangeMouProcess";
   public static GetChangeMouTrxbyTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouTrxbyTrxId";
   public static EditChangeMouForCancelByChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/EditChangeMouForCancelByChangeMouTrxId";
+  public static EditChangeMouForCancelByChangeMouTrxIdV2 = environment.losUrl + "/v2" + "/ChangeMou/EditChangeMouForCancelByChangeMouTrxId";
   public static GetListChangeMouTrxByMouCustId = environment.losUrl + "/v1" + "/ChangeMOU/GetListChangeMouTrxByMouCustId";
   public static ReturnChangeMouReview = environment.losUrl + "/v1" + "/ChangeMOU/ReturnChangeMouReview";
+  public static ReturnChangeMouReviewV2 = environment.losUrl + "/v2" + "/ChangeMOU/ReturnChangeMouReview";
   public static ChangeMouExecutionHumanActivity = environment.losUrl + "/v1" + "/ChangeMou/ChangeMouExecutionHumanActivity";
   public static SubmitChangeMouReturn = environment.losUrl + "/v1" + "/ChangeMou/SubmitChangeMouReturn";
+  public static SubmitChangeMouReturnV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitChangeMouReturn";
   public static GetChangeMouCustbyChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxId";
   //CHANGE MOU CUST COLLATERAL
   public static GetChangeMouCustCollateralDocByChangeMouCustCollateralId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDocByChangeMouCustCollateralId";
@@ -892,7 +908,9 @@ export class URLConstant {
 
   // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
+  public static GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes"
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
+  public static GetRuleForAttrContent = environment.FoundationR3Url + '/v1' + "/CustAttrContent/GetRuleForAttrContent";
 
   // APP CUST ATTR CONTENT
   public static GetListAppCustFinDataAttrContentByAppCustIdAndListAttrGroup = environment.losUrl + "/v1" + "/AppCustFinDataAttrContent/GetListAppCustFinDataAttrContentByAppCustIdAndListAttrGroup";
@@ -1754,4 +1772,9 @@ export class URLConstant {
 
   //Config Result
   public static GetSysConfigResultByCode = environment.FoundationR3Url + "/v1" + "/SysConfigResult/GetSysConfigResultByCode";
+
+  //App Attr Content
+  public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
+  public static GetListAppAttrContentForView = environment.losUrl + "/v1" + "/AppAttrContent/GetListAppAttrContentForView";
+
 }

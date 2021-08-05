@@ -8,16 +8,19 @@
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
-            <th class="text-left"><span translate class="thead-header" name='No'>No</span></th>
-            <th class="text-left"><span translate class="thead-header" name='AgreementNo'>Agreement No</span></th>
+            <th class="text-center"><span translate class="thead-header" name='No'>No</span></th>
+            <th class="text-center"><span translate class="thead-header" name='AppNo'>Application No</span></th>
+            <th class="text-center"><span translate class="thead-header" name='AgreementNo'>Agreement No</span></th>
             <th class="text-left"><span translate class="thead-header" name='CustomerName'>Customer Name</span></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of ListCrossAppData; let i = index">
-            <td class="text-left">{{i + 1}}</td>
-            <td class="text-left">{{item.CrossAgrmntNo}}</td>
-            <td class="text-left">{{item.CustName}}</td>
+            <td class="text-center">{{i + 1}}</td>
+            <td class="text-center"><a style="color: blue; cursor: pointer;" (click)="OpenAppView(item.CrossAppNo)">{{item.CrossAppNo}}</a></td>
+            <td class="text-center"><a style="color: blue; cursor: pointer;" (click)="OpenAgrmntView(item.CrossAgrmntNo)">{{item.CrossAgrmntNo}}</a></td>
+            <td class="text-left" *ngIf="item.CustNo != null"><a style="color: blue; cursor: pointer;" (click)="OpenCustView(item.CustNo)">{{item.CustName}}</a></td>
+            <td class="text-left" *ngIf="item.CustNo == null">{{item.CustName}}</td>
           </tr>
         </tbody>
       </table>
@@ -29,6 +32,21 @@
       </lib-ucSubsection>
       <div class="form-body" id="viewLoanObjInfo">
           <lib-ucgridview *ngIf="IsGridLoanReady" [gridInput]="inputGridObj"></lib-ucgridview>
+      </div>
+    </div>
+    <lib-ucviewgeneric *ngIf="isReady" [viewGenericObj]="viewRestructuringDataObj"> </lib-ucviewgeneric>
+    <div class="px-3">
+      <lib-ucSubsection [id]="'appAttrContentId'" [title]="'Application Attribute'" [panel]="'appAttrContent'">
+      </lib-ucSubsection>
+      <div class="form-body" id="appAttrContent">
+        <div *ngFor="let item of AppAttrContentObjs" class="form-group row">
+          <div class="form-group col-md-4">
+            <label class="adInsLabel"> {{item.RefAttrName}} </label>
+          </div>
+          <div class="col-md-8">
+            <label class="adInsLabel"> {{item.AttrValue}} </label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
