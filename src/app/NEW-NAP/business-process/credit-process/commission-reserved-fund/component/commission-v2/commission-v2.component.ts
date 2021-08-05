@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
 import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
@@ -19,6 +19,15 @@ import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model'
 import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
 import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
 import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { String } from 'typescript-string-operations';
+import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/AppCommissionRsvFund/ReqReturnHandlingCommRsvFundObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -31,6 +40,7 @@ export class CommissionV2Component implements OnInit {
   @ViewChild('Form2') FormAdd2: FormCommissionGenerateComponent;
   @ViewChild('Form3') FormAdd3: FormCommissionGenerateComponent;
   @Input() AppId: number = 0;
+  @Input() ReturnHandlingHObj: ReturnHandlingHObj;
   @Input() showCancel: boolean = true;
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
@@ -78,6 +88,20 @@ export class CommissionV2Component implements OnInit {
   HideForm1: boolean = false;
   HideForm2: boolean = false;
   HideForm3: boolean = false;
+
+  isReturnOn: boolean = false;
+  DDLData: { [id: string]: Array<KeyValueObj> } = {};
+  readonly DDLReason: string = "REASON";
+  readonly DDLTask: string = "TASK";
+
+
+  FormReturnObj  =this.fb.group({
+    ReturnTo: [''],
+    Reason: [''],
+    Notes: ['']
+  });
+
+
   GetFormAddDynamicObj(content) {
     if (content == CommonConstant.ContentSupplier) {
       this.FormInputObjSupplier["title"] = CommonConstant.TitleSupplier;
@@ -122,6 +146,8 @@ export class CommissionV2Component implements OnInit {
     await this.GetContentData();
     await this.GetRuleDataForForm();
     await this.GetExistingAppCommData();
+    await this.bindDDLReasonReturn();
+    await this.bindTaskObj();
     // if (Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object) {
     //   if (this.BizTemplateCode == CommonConstant.CFNA) {
     //     this.IsCalculated = true;
@@ -634,5 +660,93 @@ export class CommissionV2Component implements OnInit {
     this.FormAdd1.UpdateInputType();
     this.FormAdd2.UpdateInputType();
     this.FormAdd3.UpdateInputType();
+  }
+
+  switchForm() {
+    this.FormReturnObj.patchValue({
+      ReturnTo: "",
+      Reason: "",
+      Notes: ""
+    });
+
+    if (!this.isReturnOn) {
+      this.isReturnOn = true;
+      this.FormReturnObj.controls.ReturnTo.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
+    } else {
+      this.isReturnOn = false;
+      this.FormReturnObj.controls.ReturnTo.clearValidators();
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
+    }
+    this.FormReturnObj.controls.ReturnTo.updateValueAndValidity();
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
+
+  }
+
+  async bindDDLReasonReturn() {
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
+    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
+      });
+  }
+
+  async bindTaskObj() {
+    let refMasterTypeCode = '';
+    switch (this.BizTemplateCode) {
+      case CommonConstant.CF4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCF4W;
+        break;
+      case CommonConstant.CFNA:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFNA;
+        break;
+      case CommonConstant.CFRFN4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFRFN4W;
+        break;
+      case CommonConstant.FL4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFL4W;
+        break;
+      case CommonConstant.OPL:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskOPL;
+        break;
+    }
+    if (!refMasterTypeCode) return;
+    var mrCustTypeCode;
+
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
+      (response: AppCustObj) => {
+        mrCustTypeCode = response.MrCustTypeCode;
+      }
+    );
+
+    let refMasterObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: mrCustTypeCode };
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
+        if(this.BizTemplateCode == CommonConstant.CFNA){
+          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
+        }else{
+          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstant.ReturnHandlingAddSurvey);
+        }
+      }
+    );
+  }
+
+  SaveReturnForm(){
+    var reqReturnHandlingCommRsvFundObj = new ReqReturnHandlingCommRsvFundObj();
+    reqReturnHandlingCommRsvFundObj.AppId = this.AppId;
+    reqReturnHandlingCommRsvFundObj.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
+    reqReturnHandlingCommRsvFundObj.ReturnTo = this.FormReturnObj.value.ReturnTo;
+    reqReturnHandlingCommRsvFundObj.Reason = this.FormReturnObj.value.Reason;
+    reqReturnHandlingCommRsvFundObj.Notes = this.FormReturnObj.value.Notes;
+
+    this.http.post(URLConstant.SubmitReturnHandlingCommRsvFund, reqReturnHandlingCommRsvFundObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
+      });
   }
 }

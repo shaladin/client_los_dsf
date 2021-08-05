@@ -203,7 +203,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   readonly DDLReason: string = "REASON";
   async BindDDLReasonReturn() {
-    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
@@ -369,6 +369,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     let apiObj = {
       WfTaskListId: this.wfTaskListId,
       Notes: temp.Notes,
+      Reason: temp.Reason,
       RowVersion: "",
       AppId: this.appId
     }
