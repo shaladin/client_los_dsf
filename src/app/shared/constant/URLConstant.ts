@@ -1702,6 +1702,7 @@ export class URLConstant {
   public static AddProduct = environment.losUrl + "/v1" + "/Product/AddProduct"
   public static EditProduct = environment.losUrl + "/v1" + "/Product/EditProduct"
   public static RequestDeactivation = environment.losUrl + "/v1" + "/Product/RequestDeactivation"
+  public static RequestDeactivationV2 = environment.losUrl + "/v2" + "/Product/RequestDeactivation"
   public static GetListProdBranchOfficeMbrByProdHId = environment.losUrl + "/v1" + "/Product/GetListProdBranchOfficeMbrByProdHId"
   public static GetListProdHByProdCurrentProdHId = environment.losUrl + "/v1" + "/Product/GetListProdHByProdCurrentProdHId";
   public static AddProductOfficeMbrBatch = environment.losUrl + "/v1" + "/Product/AddProductOfficeMbrBatch";
@@ -1712,10 +1713,12 @@ export class URLConstant {
   public static DownloadProductRule = environment.losUrl + "/v1" + "/Product/DownloadProductRule";
   public static UpdateProductPostApv = environment.losUrl + "/v1" + "/Product/UpdateProductPostApv";
   public static ReviewProduct = environment.losUrl + "/v1" + "/Product/ReviewProduct";
+  public static ReviewProductV2 = environment.losUrl + "/v2" + "/Product/ReviewProduct";
   public static GetProductById = environment.losUrl + "/v1" + "/Product/GetProductById";
   public static GetProductByHId = environment.losUrl + "/v1" + "/Product/GetProductByHId";
   public static CopyProduct = environment.losUrl + "/v1" + "/Product/CopyProduct";
   public static SubmitProduct = environment.losUrl + "/v1" + "/Product/SubmitProduct"
+  public static SubmitProductV2 = environment.losUrl + "/v2" + "/Product/SubmitProduct"
   public static GetListProdBranchOfficeMbrByProdOfferingHId = environment.losUrl + "/v1" + "/Product/GetListProdBranchOfficeMbrByProdOfferingHId";
 
   //PRODUCT OFFERING
