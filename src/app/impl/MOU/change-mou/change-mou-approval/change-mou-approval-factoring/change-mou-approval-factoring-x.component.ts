@@ -72,7 +72,7 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
 
   ngOnInit() {
 
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
+    this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewChangeMouHeaderX.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {

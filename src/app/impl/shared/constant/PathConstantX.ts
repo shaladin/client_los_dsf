@@ -16,6 +16,10 @@ export class PathConstantX {
   public static NAP2_X = 'NAP2X';
   //#endregion
 
+  //#region View-Enhancing-Module
+  public static VIEW_MOU_CUST_X = "Mou/CustView/X";
+  //#endregion
+
   //#region Nap-Main-Data
   public static NAP1_PAGING = PathConstant.NAP1 + '/' + PathConstantX.PAGING;
   public static NAP1_ADD = PathConstant.NAP1 + '/' + PathConstantX.ADD;
