@@ -52,11 +52,9 @@ export class NapDetailFormXComponent implements OnInit {
     "NAPD": 1,
     "APP": 1,
     "INVOICE": 2,
-    "COLL": 3,
-    "INS":4,
-    "FIN": 5,
-    "TC": 6,
-    "UPL_DOC": 7
+    "FIN": 3,
+    "TC": 4,
+    "UPL_DOC": 5
   };
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
@@ -211,12 +209,6 @@ export class NapDetailFormXComponent implements OnInit {
         break;
       case CommonConstant.AppStepInvoice:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
-        break;
-      case CommonConstant.AppStepColl:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
-        break;
-      case CommonConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
         break;
       case CommonConstant.AppStepFin:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
