@@ -17,6 +17,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-mou-review-dlfn',
@@ -29,7 +30,7 @@ export class MouReviewDlfnComponent implements OnInit {
   mouCustObj: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   MouCustId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   MouType: string = CommonConstant.FINANCING;
   PlafondAmt: number;
   MrCustTypeCode: string;
@@ -57,7 +58,13 @@ export class MouReviewDlfnComponent implements OnInit {
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, 
+              private router: Router, 
+              private route: ActivatedRoute, 
+              private http: HttpClient, 
+              private toastr: NGXToastrService, 
+              private cookieService: CookieService,
+              private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
       this.WfTaskListId = params["WfTaskListId"];
@@ -65,9 +72,7 @@ export class MouReviewDlfnComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
-    }
+    this.claimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -111,11 +116,13 @@ export class MouReviewDlfnComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+    }else{
+      if (this.WfTaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+      }
+    }
   }
 
   Submit() {
@@ -129,7 +136,9 @@ export class MouReviewDlfnComponent implements OnInit {
       PlafondAmt: this.PlafondAmt,
       RequestRFAObj: this.RFAInfo
     }
-    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+
+    let SubmitMouReviewNewUrl = environment.isCore ? URLConstant.SubmitMouReviewNewV2 : URLConstant.SubmitMouReviewNew;
+    this.http.post(SubmitMouReviewNewUrl, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
@@ -138,7 +147,8 @@ export class MouReviewDlfnComponent implements OnInit {
 
   Return() {
     var mouObj = { TaskListId: this.WfTaskListId};
-    this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
+    let ReturnMouReviewUrl = environment.isCore ? URLConstant.ReturnMouReviewV2 : URLConstant.ReturnMouReview;
+    this.http.post(ReturnMouReviewUrl, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});

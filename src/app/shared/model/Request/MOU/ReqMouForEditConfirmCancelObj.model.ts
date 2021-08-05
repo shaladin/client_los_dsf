@@ -8,3 +8,14 @@ export class ReqMouForEditConfirmCancelObj {
         this.RowVersion = "";
     }
 }
+
+export class ReqMouForEditConfirmCancelV2Obj {
+    MouStat: string;
+    MouCustId: number;
+    WfTaskListId: string;
+    RowVersion: string;
+
+    MouCustConfirmCancelObj() {
+        this.RowVersion = "";
+    }
+}
