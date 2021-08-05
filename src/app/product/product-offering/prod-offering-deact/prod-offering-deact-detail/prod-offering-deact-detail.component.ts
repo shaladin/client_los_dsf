@@ -117,21 +117,12 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
     this.ProdOfferingHDeactObj.ProdOfferingHId = this.ProdOfferingHId;
     this.ProdOfferingHDeactObj.RequestRFAObj = this.RFAInfo;
 
-    if(environment.isCore){
-      this.http.post(URLConstant.RequestOfferingDeactivationV2, this.ProdOfferingHDeactObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE], {});
-        }
-      );
-    }
-    else{
-      this.http.post(URLConstant.RequestOfferingDeactivation, this.ProdOfferingHDeactObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE], {});
-        }
-      );
-    }
+    let urlPost = environment.isCore? URLConstant.RequestOfferingDeactivationV2 : URLConstant.RequestOfferingDeactivation;
+    this.http.post(urlPost, this.ProdOfferingHDeactObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE], {});
+      }
+    );
   }
 }
