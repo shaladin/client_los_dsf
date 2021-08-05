@@ -113,8 +113,7 @@ export class ProdHoRvwDetailComponent implements OnInit {
     this.ReqReviewProductObj.WfTaskListId = this.WfTaskListId;
     this.ReqReviewProductObj.RequestRFAObj = this.RFAInfo;
 
-    let ReviewProductUrl = URLConstant.ReviewProduct;
-    if(environment.isCore) ReviewProductUrl = URLConstant.ReviewProductV2;
+    let ReviewProductUrl = environment.isCore ? URLConstant.ReviewProductV2 : URLConstant.ReviewProduct;
     this.http.post(ReviewProductUrl, this.ReqReviewProductObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);

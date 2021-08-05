@@ -110,8 +110,7 @@ export class ProdHoDeactDetailComponent implements OnInit {
     this.ReqProdDeactObj.ProdHId = this.ProdHId;
     this.ReqProdDeactObj.RequestRFAObj = this.RFAInfo;
 
-    let RequestDeactivationUrl = URLConstant.RequestDeactivation;
-    if(environment.isCore) RequestDeactivationUrl = URLConstant.RequestDeactivationV2;
+    let RequestDeactivationUrl = environment.isCore ? URLConstant.RequestDeactivationV2 : URLConstant.RequestDeactivation;
     this.http.post(RequestDeactivationUrl, this.ReqProdDeactObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);

@@ -70,8 +70,7 @@ export class HoListOfficeMbrComponent implements OnInit {
   DoneForm() {
     this.GenericByIdObj.Id = this.ProdHId;
 
-    let SubmitProductUrl = URLConstant.SubmitProduct;
-    if(environment.isCore) SubmitProductUrl = URLConstant.SubmitProductV2;
+    let SubmitProductUrl = environment.isCore ? URLConstant.SubmitProductV2 : URLConstant.SubmitProduct;
     this.http.post(SubmitProductUrl, this.GenericByIdObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
