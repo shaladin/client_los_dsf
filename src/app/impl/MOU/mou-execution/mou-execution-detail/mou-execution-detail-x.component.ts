@@ -12,6 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-mou-execution-detail-x',
@@ -114,7 +115,7 @@ export class MouExecutionDetailXComponent implements OnInit {
     var request = this.MouExecutionForm.value;
 
     if (this.ValidateDate()) {
-      this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
+      this.httpClient.post(URLConstantX.MouCustExecutionHumanActivityX, request).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});

@@ -33,6 +33,7 @@ export class URLConstantX {
 
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
+  public static MouCustExecutionHumanActivityX = environment.losUrl +'/v1' + "/MouCustX/MouCustExecutionHumanActivity";
 
   // MOU CUST COLLATERAL X
   public static GetMouCustCollateralStatXByMouCustCollateralIdX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetMouCustCollateralStatXByMouCustCollateralId';
