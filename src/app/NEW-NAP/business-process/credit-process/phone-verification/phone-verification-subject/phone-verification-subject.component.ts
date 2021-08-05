@@ -80,7 +80,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.wfTaskListId != undefined && this.wfTaskListId != null){
       if(environment.isCore) {
         this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-      }else{
+      }else if(this.wfTaskListId > 0){
         this.claimTaskService.ClaimTask(this.wfTaskListId);
       }
       
