@@ -281,7 +281,7 @@ export class NavigationConstant {
   public static MOU_CUST_RVW_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_RVW_FCTR_X; //'/Mou/Cust/ReviewFactoringX'
   public static MOU_CUST_RVW_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_GENERAL; //'/Mou/Cust/ReviewGeneral'
   public static MOU_CUST_APPRV_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_APPRV_FCTR_X; //'/Mou/Cust/ApprovalFactoringX'
-  public static MOU_CUST_RVW_DFLN = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_DFLN; //'/Mou/Cust/ReviewDLFN'
+  public static MOU_CUST_RVW_DFLN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_RVW_DFLN_X; //'/Mou/Cust/ReviewDLFNX'
   public static MOU_CUST_APPRV_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV_GENERAL; //'/Mou/Cust/ApprovalGeneral'
   public static MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_REQ_PAGING; //"/Mou/Request/Paging"
   public static MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_REQ_DETAIL_X; //'/Mou/Request/DetailX'

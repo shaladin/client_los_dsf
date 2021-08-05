@@ -7,7 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ResMouCollForMouViewObj } from 'app/shared/model/Response/MOU/ResMouCollForMouViewObj.model';
 import {ResMouCollForMouViewObjX} from 'app/impl/shared/model/Response/MOU/ResMouCollForMouViewObjX.model';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {CommonConstant} from '../../../../../shared/constant/CommonConstant';
+import {CommonConstant} from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-change-mou-addcoll-x',
@@ -23,7 +23,7 @@ export class ChangeMouAddcollXComponent implements OnInit {
 
 
   ngOnInit() {
-    var mouCustObj = { Id: this.ChangeMouTrxId }
+    const mouCustObj = { Id: this.ChangeMouTrxId }
 
     this.http.post(URLConstantX.GetChangeMouCustCollateralXForChangeMouViewByMouCustId, mouCustObj).subscribe(
       (response) => {

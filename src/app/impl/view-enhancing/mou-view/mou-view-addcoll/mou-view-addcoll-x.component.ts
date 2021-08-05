@@ -12,8 +12,8 @@ import { MouCustCollateralRegistrationObj } from 'app/shared/model/MouCustCollat
 import { ListMouCustCollateralDocObj } from 'app/shared/model/ListMouCustCollateralDocObj.Model';
 import { MouCustCollateralDocObj } from 'app/shared/model/MouCustCollateralDocObj.Model';
 import { formatDate } from '@angular/common';
-import {URLConstantX} from '../../../shared/constant/URLConstantX';
-import {MouCustCollateralStatXObj} from '../../../shared/model/MouCustCollateralStatXObj.Model';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {MouCustCollateralStatXObj} from 'app/impl/shared/model/MouCustCollateralStatXObj.Model';
 
 @Component({
   selector: 'app-mou-view-addcoll-x',

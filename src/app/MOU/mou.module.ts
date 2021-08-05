@@ -118,7 +118,10 @@ import {ChangeMouRequestDetailXComponent} from 'app/impl/MOU/change-mou/change-m
 import {ChangeMouReviewFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-factoring/change-mou-review-factoring-x.component';
 import {ChangeMouApprovalFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-factoring/change-mou-approval-factoring-x.component';
 import {ChangeMouExecutionDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-execution/change-mou-execution-detail/change-mou-execution-detail-x.component';
-import {ChangeMouAddcollXComponent} from '../impl/MOU/change-mou/change-mou-view/change-mou-addcoll/change-mou-addcoll-x.component';
+import {ChangeMouAddcollXComponent} from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll/change-mou-addcoll-x.component';
+import {MouReviewDlfnXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-dlfn/mou-review-dlfn-x.component';
+import {MouViewAddcollXComponent} from 'app/impl/components/general/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
+import {MouApprovalGeneralXComponent} from '../impl/MOU/mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -257,10 +260,13 @@ export const customCurrencyMaskConfig = {
     ChangeMouRequestDetailCustomerXComponent,
     ChangeMouRequestAddcollXComponent,
     MouCustomerRequestDetailXComponent,
+    MouReviewDlfnXComponent,
     MouReviewFactoringXComponent,
-    MouMainInfoXComponent,
+    MouApprovalGeneralXComponent,
     MouApprovalFactoringXComponent,
     MouExecutionDetailXComponent,
+    MouMainInfoXComponent,
+    MouViewAddcollXComponent,
     ChangeMouRequestDetailXComponent,
     ChangeMouReviewFactoringXComponent,
     ChangeMouApprovalFactoringXComponent,

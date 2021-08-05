@@ -35,11 +35,14 @@ export class PathConstantX {
 
   //#region MOU
   public static MOU_REQ_DETAIL_X = PathConstant.MOU_REQ + '/' + PathConstantX.DETAIL_X;
+  public static MOU_CUST_RVW_DFLN_X = PathConstant.MOU_CUST + "/ReviewDLFNX";
   public static MOU_CUST_REQ_ADD_COLL_X = PathConstant.MOU_CUST + '/RequestAddCollX';
   public static MOU_CUST_RVW_FCTR_X = PathConstant.MOU_CUST + '/ReviewFactoringX';
   public static MOU_CUST_APPRV_FCTR_X = PathConstant.MOU_CUST + "/ApprovalFactoringX";
+  public static MOU_CUST_APPRV_GENERAL_X = PathConstant.MOU_CUST + "/ApprovalGeneralX";
   public static MOU_EXECUTION_DETAIL_X = PathConstant.MOU_EXECUTION + "/" + PathConstantX.DETAIL_X;
   //#endregion
+
 
 
   //#region Change mou
