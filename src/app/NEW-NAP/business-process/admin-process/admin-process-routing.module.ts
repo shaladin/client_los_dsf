@@ -102,8 +102,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.DO_MULTI_ASSET_DETAIL_X,
-        component: DeliveryOrderMultiAssetDetailXComponent,
+        path: PathConstant.DO_DETAIL,
+        component: DeliveryOrderDetailComponent,
         data: {
           title: 'Delivery Order'
         }
@@ -144,8 +144,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.PGL_DETAIL_X,
-        component: PreGoLiveXComponent,
+        path: PathConstant.PGL_DETAIL,
+        component: PreGoLiveComponent,
         data: {
           title: 'PreGoLive Detail'
         }
@@ -284,8 +284,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.DO_MULTI_ASSET_DETAIL_X,
-        component: DeliveryOrderMultiAssetDetailXComponent,
+        path: PathConstant.DO_MULTI_ASSET_DETAIL,
+        component: DeliveryOrderMultiAssetDetailComponent,
         data: {
           title: 'Delivery Order Detail'
         }
@@ -401,7 +401,21 @@ const routes: Routes = [
         data:{
           title: 'Go Live Approval Detail'
         }
-      }
+      },
+      {
+        path: PathConstantX.DO_MULTI_ASSET_DETAIL_X,
+        component: DeliveryOrderMultiAssetDetailXComponent,
+        data: {
+          title: 'Delivery Order'
+        }
+      },
+      {
+        path: PathConstantX.PGL_DETAIL_X,
+        component: PreGoLiveXComponent,
+        data: {
+          title: 'PreGoLive Detail'
+        }
+      },
     ]
   }
 ];
