@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-md-8">
               <h4 class="card-title" id="horz-layout-colored-controls" translate>
-                Change MOU Review - Factoring
+                Change MOU Review - General
               </h4>
             </div>
           </div>
@@ -29,10 +29,11 @@
           <p>
             &nbsp; <span style="display: block"> <br /> </span> &nbsp;
           </p>
-          <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid && Submit()" #enjiForm="ngForm">
+
+          <form class="form form-horizontal" [formGroup]="MouReviewDataForm"
+            (ngSubmit)="MouReviewDataForm.valid && Submit()" #enjiForm="ngForm">
             <lib-ucapprovalcreate [parentForm]= "MouReviewDataForm" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent>
             </lib-ucapprovalcreate>
-
             <div class="card">
               <div class="card-body">
                 <div class="px-3">

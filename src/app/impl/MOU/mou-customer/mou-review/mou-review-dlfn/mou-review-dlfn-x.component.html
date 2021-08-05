@@ -5,12 +5,12 @@
         <div class="card-header header-title" style="margin-bottom: 10px;">
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Review - Factoring
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Review - Dealer Financing
               </h4>
             </div>
           </div>
         </div>
-        <app-mou-main-info-x [MouCustId]="MouCustId"></app-mou-main-info-x>
+        <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
         <div class="px-3">
           <mat-tab-group>
             <mat-tab label="MOU Detail">
@@ -33,9 +33,9 @@
                 <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
               </ng-template>
             </mat-tab>
-            <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
+            <mat-tab label="Document">
               <ng-template matTabContent>
-                <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                <app-dms-iframe [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
               </ng-template>
             </mat-tab>
             <!-- <mat-tab label="Survey">
@@ -58,13 +58,13 @@
           <p> &nbsp; <span style="display: block;"> <br> </span> &nbsp; </p>
           <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid && Submit()"
             #enjiForm="ngForm">
-
             <lib-ucapprovalcreate [parentForm]= "MouReviewDataForm" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent></lib-ucapprovalcreate>
             <div class="card">
               <div class="card-body">
                 <div class="px-3">
                     <div class="form-actions right">
-                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
+
+                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/Cust/ReviewPaging']"
                       translate>
                       <i class="ft-x"></i> Cancel
                     </button>

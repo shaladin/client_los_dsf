@@ -255,7 +255,7 @@ export class NavigationConstant {
   public static VIEW_AGRMNT = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_AGRMNT; //"/View/AgrmntView"
   public static VIEW_CUST_EXPSR = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CUST_EXPSR; //"/View/CustExposureView"
   public static VIEW_LEAD = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_LEAD; //"/View/Lead"
-  public static VIEW_MOU_CUST = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_MOU_CUST; //"/View/Mou/CustView"
+  public static VIEW_MOU_CUST = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_MOU_CUST_X; //"/View/Mou/CustView/X"
   public static VIEW_PHN_VERIF = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PHN_VERIF; //"/View/PhoneVerifView"
   public static VIEW_SRVY = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_SRVY; //'/View/SurveyView'
   //#endregion
@@ -279,10 +279,10 @@ export class NavigationConstant {
   public static MOU_CUST_LEGAL_RVW_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_LEGAL_RVW_DETAIL; //'/Mou/CustomerLegalReview/Detail'
   public static MOU_CUST_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_PAGING; //'/Mou/Cust/ReviewPaging'
   public static MOU_CUST_RVW_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_RVW_FCTR_X; //'/Mou/Cust/ReviewFactoringX'
-  public static MOU_CUST_RVW_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_GENERAL; //'/Mou/Cust/ReviewGeneral'
+  public static MOU_CUST_RVW_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_RVW_GENERAL_X; //'/Mou/Cust/ReviewGeneralX'
   public static MOU_CUST_APPRV_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_APPRV_FCTR_X; //'/Mou/Cust/ApprovalFactoringX'
-  public static MOU_CUST_RVW_DFLN = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_DFLN; //'/Mou/Cust/ReviewDLFN'
-  public static MOU_CUST_APPRV_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV_GENERAL; //'/Mou/Cust/ApprovalGeneral'
+  public static MOU_CUST_RVW_DFLN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_RVW_DFLN_X; //'/Mou/Cust/ReviewDLFNX'
+  public static MOU_CUST_APPRV_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_APPRV_GENERAL_X; //'/Mou/Cust/ApprovalGeneralX'
   public static MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_REQ_PAGING; //"/Mou/Request/Paging"
   public static MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_REQ_DETAIL_X; //'/Mou/Request/DetailX'
   public static MOU_CUST_APPRV = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV; //"/Mou/Cust/Approval"
@@ -314,12 +314,12 @@ export class NavigationConstant {
   public static CHANGE_MOU_REQ_DETAIL_CUSTOMER = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_X; //"/Mou/ChangeMouRequest/Detail/CustomerX"
   public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_PAGING; //"/Mou/ChangeMou/ReviewPaging"
   public static CHANGE_MOU_RVW_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_FCTR_X; //"/Mou/ChangeMou/ReviewDetailFctrX"
-  public static CHANGE_MOU_RVW_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_FIN; //"/Mou/ChangeMou/ReviewFinancing"
-  public static CHANGE_MOU_RVW_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_GEN; //"/Mou/ChangeMou/ReviewDetailGen"
+  public static CHANGE_MOU_RVW_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_FIN_X; //"/Mou/ChangeMou/ReviewFinancingX"
+  public static CHANGE_MOU_RVW_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_GEN_X; //"/Mou/ChangeMou/ReviewDetailGen"
   public static CHANGE_MOU_APV_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_PAGING; //"/Mou/ChangeMou/ApvPaging"
   public static CHANGE_MOU_APV_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_DETAIL_GEN; //"/Mou/ChangeMou/ApvDetailGen"
   public static CHANGE_MOU_APV_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_APV_DETAIL_FCTR_X; //"/Mou/ChangeMou/ApvDetailFctrX"
-  public static CHANGE_MOU_APV_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_DETAIL_FIN; //"/Mou/ChangeMou/ApvDetailFinancing"
+  public static CHANGE_MOU_APV_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_APV_DETAIL_FIN_X; //"/Mou/ChangeMou/ApvDetailFinancingX"
   public static CHANGE_MOU_EXEC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_EXEC_PAGING; //"/Mou/ChangeMou/ExecPaging"
   public static CHANGE_MOU_EXEC_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_EXEC_DETAIL_X; //"/Mou/ChangeMou/ExecDetailX"
   public static CHANGE_MOU_CANCEL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_CANCEL; //"/Mou/ChangeMou/Cancel"

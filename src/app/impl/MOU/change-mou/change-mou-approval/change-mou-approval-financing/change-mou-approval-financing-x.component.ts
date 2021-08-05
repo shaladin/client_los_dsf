@@ -1,70 +1,60 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { MouCustObj } from "app/shared/model/MouCustObj.Model";
 import { environment } from "environments/environment";
-import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
+import { AdInsConstant } from "app/shared/AdInstConstant";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { HttpClient } from "@angular/common/http";
+import { ApprovalObj } from "app/shared/model/Approval/ApprovalObj.Model";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { AdInsHelper } from "app/shared/AdInsHelper";
-import { ApvViewInfo } from "app/shared/model/ApvViewInfo.Model";
-import { AdInsConstant } from "app/shared/AdInstConstant";
-import { ApprovalObj } from "app/shared/model/Approval/ApprovalObj.Model";
 import { UcInputApprovalObj } from "app/shared/model/UcInputApprovalObj.Model";
 import { UcInputApprovalHistoryObj } from "app/shared/model/UcInputApprovalHistoryObj.Model";
 import { UcInputApprovalGeneralInfoObj } from "app/shared/model/UcInputApprovalGeneralInfoObj.model";
-import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
+import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
-  selector: "app-change-mou-approval-factoring-x",
-  templateUrl: "./change-mou-approval-factoring-x.component.html"
+  selector: "app-change-mou-approval-financing-x",
+  templateUrl: "./change-mou-approval-financing-x.component.html"
 })
-export class ChangeMouApprovalFactoringXComponent implements OnInit {
-  mouCustObj: MouCustObj;
-  MouCustId: number;
-  taskId: number;
-  instanceId: number;
-  inputObj: ApvViewInfo;
-  MouType: string = "FACTORING";
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  TrxNo: number;
-  MrCustTypeCode: string;
+export class ChangeMouApprovalFinancingXComponent implements OnInit {
   changeMouTrxId: number;
+  resultData: any;
   changeMouCustId: number;
+  taskId: number;
+  TrxNo: string;
+  instanceId: number;
   ApvReqId: number;
   InputApvObj: UcInputApprovalObj;
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsReady: boolean = false;
-  changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
 
   pageTitle: string;
   ChangeMouCustId: number;
+  MouCustId: number;
+  MouType: string;
   TrxType: string;
   TrxTypeReqExp:string = CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP;
-
   constructor(
-    private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private http: HttpClient
   ) {
-
-    this.route.queryParams.subscribe(params => {
-
+    this.route.queryParams.subscribe((params) => {
       if (params["ChangeMouTrxId"] != null) {
         this.changeMouTrxId = params["ChangeMouTrxId"];
         this.taskId = params["TaskId"];
-        this.TrxNo = params["TrxNo"];
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
-        this.MouCustId = params["MouCustId"];
+        this.TrxNo = params["TrxNo"];
         this.pageTitle = params["PageTitle"];
         this.ChangeMouCustId = params["ChangeMouCustId"];
+        this.MouCustId = params["MouCustId"];
+        this.MouType = params["MouType"];
         this.TrxType = params["TrxType"];
       }
     });
@@ -72,7 +62,7 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
 
   ngOnInit() {
 
-    this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewChangeMouHeaderX.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -82,23 +72,14 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
     ];
     this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
-    var obj = {
-      taskId: this.taskId,
-      instanceId: this.instanceId,
-      approvalBaseUrl: environment.ApprovalR3Url
-    }
-
-    this.inputObj = obj;
-
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = obj.taskId
+    var ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.taskId;
 
     this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
   }
 
   initInputApprovalObj() {
-
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
@@ -117,18 +98,19 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
     this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
     this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.PathUrlGetChangeFinalLevel =
+      URLConstant.GetCanChangeMinFinalLevel;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.TrxNo = this.TrxNo.toString();
     this.IsReady = true;
+
   }
 
   HoldTask(obj) {
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response) => {
-      }
-    )
+    this.http
+      .post(AdInsConstant.ApvHoldTaskUrl, obj)
+      .subscribe((response) => { });
   }
 
   onApprovalSubmited(event) {
@@ -161,5 +143,4 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
         });
     }
   }
-
 }
