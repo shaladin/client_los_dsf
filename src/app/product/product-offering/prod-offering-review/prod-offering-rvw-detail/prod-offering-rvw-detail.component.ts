@@ -10,7 +10,7 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqReviewProdOfferingObj, ReqReviewProdOfferingV2Obj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
+import { ReqReviewProdOfferingObj} from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
@@ -36,7 +36,6 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   ApprovalCreateOutput: any;
   GenericByIdObj: GenericObj = new GenericObj();
   ReqReviewProdOfferingObj: ReqReviewProdOfferingObj = new ReqReviewProdOfferingObj();
-  ReqReviewProdOfferingV2Obj: ReqReviewProdOfferingV2Obj = new ReqReviewProdOfferingV2Obj();
   RFAInfo: Object = new Object();
   itemReason: any;
   readonly CancelLink: string = NavigationConstant.PRODUCT_OFFERING_REVIEW;
@@ -104,12 +103,12 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   SaveForm() {
     if(environment.isCore){
       this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
-      this.ReqReviewProdOfferingV2Obj.ProdOfferingId = this.ProdOfferingId;
-      this.ReqReviewProdOfferingV2Obj.ProdOfferingHId = this.ProdOfferingHId;
-      this.ReqReviewProdOfferingV2Obj.WfTaskListId = this.WfTaskListId;
-      this.ReqReviewProdOfferingV2Obj.RequestRFAObj = this.RFAInfo;
+      this.ReqReviewProdOfferingObj.ProdOfferingId = this.ProdOfferingId;
+      this.ReqReviewProdOfferingObj.ProdOfferingHId = this.ProdOfferingHId;
+      this.ReqReviewProdOfferingObj.WfTaskListId = this.WfTaskListId;
+      this.ReqReviewProdOfferingObj.RequestRFAObj = this.RFAInfo;
   
-      this.http.post(URLConstant.ReviewProdOfferingV2, this.ReqReviewProdOfferingV2Obj).subscribe(
+      this.http.post(URLConstant.ReviewProdOfferingV2, this.ReqReviewProdOfferingObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_REVIEW], {});

@@ -69,23 +69,15 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   DoneForm() {
+    let urlPost = environment.isCore? URLConstant.SubmitProdOfferingV2 : URLConstant.SubmitProdOffering;
     this.GenericByIdObj.Id = this.ProdOfferingHId;
-    if(environment.isCore){
-      this.http.post(URLConstant.SubmitProdOfferingV2, this.GenericByIdObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-        }
-      );
-      this.BackToPaging();
-    }
-    else{
-      this.http.post(URLConstant.SubmitProdOffering, this.GenericByIdObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-        }
-      );
-      this.BackToPaging();
-    }
+      
+    this.http.post(urlPost, this.GenericByIdObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+      }
+    );
+    this.BackToPaging();
   }
 
   Cancel() {
