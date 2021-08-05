@@ -121,7 +121,12 @@ import {ChangeMouExecutionDetailXComponent} from 'app/impl/MOU/change-mou/change
 import {ChangeMouAddcollXComponent} from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll/change-mou-addcoll-x.component';
 import {MouReviewDlfnXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-dlfn/mou-review-dlfn-x.component';
 import {MouViewAddcollXComponent} from 'app/impl/components/general/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
-import {MouApprovalGeneralXComponent} from '../impl/MOU/mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general-x.component';
+import {MouApprovalGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general-x.component';
+import {ChangeMouApprovalFinancingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-financing/change-mou-approval-financing-x.component';
+import {ChangeMouReviewFinancingXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-financing/change-mou-review-financing-x.component';
+import {ChangeMouReviewGeneralXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-general/change-mou-review-general-x.component';
+import {ChangeMouApprovalGeneralXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-general/change-mou-approval-general-x.component';
+import {MouReviewGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-general/mou-review-general-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -269,9 +274,14 @@ export const customCurrencyMaskConfig = {
     MouViewAddcollXComponent,
     ChangeMouRequestDetailXComponent,
     ChangeMouReviewFactoringXComponent,
+    ChangeMouReviewFinancingXComponent,
+    ChangeMouReviewGeneralXComponent,
     ChangeMouApprovalFactoringXComponent,
+    ChangeMouApprovalFinancingXComponent,
+    ChangeMouApprovalGeneralXComponent,
     ChangeMouExecutionDetailXComponent,
-    ChangeMouAddcollXComponent
+    ChangeMouAddcollXComponent,
+    MouReviewGeneralXComponent
   ],
   exports: [],
   providers: [NGXToastrService],
