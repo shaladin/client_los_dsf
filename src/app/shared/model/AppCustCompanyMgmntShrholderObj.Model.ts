@@ -27,6 +27,8 @@ export class AppCustCompanyMgmntShrholderObj {
   CustTypeName: string;
   CustNo: string;
   IsGuarantor: boolean;
+  MrPositionSlikCode: string;
+  MrShrholderTypeCode: string;
   RowVersion: string[];
 
   constructor() {
@@ -51,6 +53,8 @@ export class AppCustCompanyMgmntShrholderObj {
     this.MrCompanyTypeCode = "";
     this.MrCustTypeCode = "";
     this.CustNo = "";
+    this.MrPositionSlikCode = "";
+    this.MrShrholderTypeCode = "";
     this.IsGuarantor = false;
     this.RowVersion = [];
   }
