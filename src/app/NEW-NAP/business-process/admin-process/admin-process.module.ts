@@ -69,6 +69,10 @@ import { InvoiceVerifDetailDFComponent } from "./invoice-verif/invoice-verif-det
 import { PreGoLiveXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live/pre-go-live-x.component";
 import { DeliveryOrderMultiAssetDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail-x.component";
 import { CustConfirmationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-detail/cust-confirmation-detail-x.component";
+import { GoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-paging/go-live-approval-paging-x.component";
+import { GoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-detail/go-live-approval-detail-x.component";
+import { EndDateForGoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-paging/end-date-go-live-approval-paging-x.component";
+import { EndDateForGoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-detail/end-date-go-live-approval-detail-x.component";
 import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
 
 export const customCurrencyMaskConfig = {
@@ -151,6 +155,10 @@ export const customCurrencyMaskConfig = {
     PreGoLiveXComponent,
     DeliveryOrderMultiAssetDetailXComponent,
     CustConfirmationDetailXComponent,
+    GoLiveApprovalPagingXComponent,
+    GoLiveApprovalDetailXComponent,
+    EndDateForGoLiveApprovalPagingXComponent,
+    EndDateForGoLiveApprovalDetailXComponent,
     InvoiceVerifDetailXComponent
   ],
   providers: [

@@ -90,6 +90,8 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.NAP_ADM_PRCS_DO_PAGING, Title: 'Delivery Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_PAGING, Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING, Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+      { Path: NavigationConstant.END_DT_GO_LIVE_APV_PAGING, Title: 'End Date Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+      { Path: NavigationConstant.GO_LIVE_APV_PAGING, Title: 'Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       {
         Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
@@ -160,6 +162,8 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.NAP_ADM_PRCS_NEW_PO_PAGING, Title: 'Purchase Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_PAGING, Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING, Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }]},
+      { Path: NavigationConstant.END_DT_GO_LIVE_APV_PAGING, Title: 'End Date Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+      { Path: NavigationConstant.GO_LIVE_APV_PAGING, Title: 'Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       
       {Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
       Submenu: [
@@ -218,6 +222,8 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING, Title: 'Delivery Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_PAGING, Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING, Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+      { Path: NavigationConstant.END_DT_GO_LIVE_APV_PAGING, Title: 'End Date Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+      { Path: NavigationConstant.GO_LIVE_APV_PAGING, Title: 'Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
 
       {
         Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
@@ -361,6 +367,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_PAGING, Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
       // { Path: '/Nap/AdminProcess/PreGoLive/Approval/Paging', Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }]},
       // { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING, Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
+      { Path: NavigationConstant.GO_LIVE_APV_PAGING, Title: 'Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
       { Path: NavigationConstant.NAP_SHARING_FROM_MOU_PAGING, Title: 'New Application From Mou', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
     ], Params: []
   },
