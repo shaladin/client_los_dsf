@@ -101,32 +101,18 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    if(environment.isCore){
       this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
       this.ReqReviewProdOfferingObj.ProdOfferingId = this.ProdOfferingId;
       this.ReqReviewProdOfferingObj.ProdOfferingHId = this.ProdOfferingHId;
       this.ReqReviewProdOfferingObj.WfTaskListId = this.WfTaskListId;
       this.ReqReviewProdOfferingObj.RequestRFAObj = this.RFAInfo;
   
-      this.http.post(URLConstant.ReviewProdOfferingV2, this.ReqReviewProdOfferingObj).subscribe(
+      let urlPost = environment.isCore? URLConstant.ReviewProdOfferingV2 : URLConstant.ReviewProdOffering;
+      this.http.post(urlPost, this.ReqReviewProdOfferingObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_REVIEW], {});
       });
-    }
-    else{
-      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
-      this.ReqReviewProdOfferingObj.ProdOfferingId = this.ProdOfferingId;
-      this.ReqReviewProdOfferingObj.ProdOfferingHId = this.ProdOfferingHId;
-      this.ReqReviewProdOfferingObj.WfTaskListId = this.WfTaskListId;
-      this.ReqReviewProdOfferingObj.RequestRFAObj = this.RFAInfo;
-  
-      this.http.post(URLConstant.ReviewProdOffering, this.ReqReviewProdOfferingObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_REVIEW], {});
-      });
-    }
   }
 
   claimTask() {
