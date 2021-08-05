@@ -11,6 +11,9 @@
                 <thead>
                   <tr class="table-header">
                     <th>
+                      <span class="thead-header" translate>No</span>
+                    </th>
+                    <th>
                       <span class="thead-header" translate>Application No</span>
                     </th>
                     <th>
@@ -36,6 +39,7 @@
                     <td colspan="100%">No Data Available</td>
                   </tr>
                   <tr *ngFor="let item of AgrmntList; let i = index">
+                    <td>{{i+1}}</td>
                     <td><a href="javascript:void(0);" (click)="appNoHandler(item)">{{item.AppNo}}</a></td>
                     <td><a href="javascript:void(0);" (click)="agrmntNoHandler(item)">{{item.AgrmntNo}}</a></td>
                     <td >{{item.AgrmntDate | date:'dd-MM-yyyy'}}</td>
