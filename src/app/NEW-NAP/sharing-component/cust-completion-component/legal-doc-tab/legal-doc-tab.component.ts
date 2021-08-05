@@ -8,6 +8,7 @@ import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalD
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-legal-doc-tab',
@@ -71,16 +72,40 @@ export class LegalDocTabComponent implements OnInit {
   }
 
   Continue(){
-    if(this.ListLegalDoc.length > 0){
-      this.OutputTab.emit({IsComplete: true});
-    }else{
+    if(this.ListLegalDoc.length == 0){
       this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA)
       return;
     }
+
+    var groupedCustLegalDoc = this.groupBy(this.ListLegalDoc, function (item) {
+      return [item.MrLegalDocTypeCode, item.DocNo];
+    });
+
+    var duplCustLegalDoc = groupedCustLegalDoc.find(x => x.length > 1);
+
+    if(duplCustLegalDoc != undefined){
+      this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
+      return;
+    }
+
+
+    this.OutputTab.emit({IsComplete: true});
   }
 
   GetEvent(){
     this.IsDetail = false;
     this.LoadListLegalDocData();
+  }
+
+  groupBy(array, f) {
+    let groups = {};
+    array.forEach(function (o) {
+      var group = JSON.stringify(f(o));
+      groups[group] = groups[group] || [];
+      groups[group].push(o);
+    });
+    return Object.keys(groups).map(function (group) {
+      return groups[group];
+    })
   }
 }

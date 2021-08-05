@@ -4,12 +4,15 @@
       <div class="card">
         <div class="card-body" *ngIf="isReady">
           <div class="px-3">
-            <lib-ucSubsection [id]="'CustAppListId'" [title]="'Customer Application List'" [panel]="'CustAppList'">
+            <lib-ucSubsection [id]="'CustAppListId'" [title]="'Application List'" [panel]="'CustAppList'">
             </lib-ucSubsection>
             <div class="form-body" id="CustAppList">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
+                    <th>
+                      <span class="thead-header" translate>No</span>
+                    </th>
                     <th>
                       <span class="thead-header" translate>Application No</span>
                     </th>
@@ -36,8 +39,9 @@
                     <td colspan="100%">No Data Available</td>
                   </tr>
                   <tr *ngFor="let item of CustAppList; let i = index">
-                    <td >{{item.AppNo}}</td>
-                    <td>{{item.CurrCode}}</td>
+                    <td>{{i+1}}</td>
+                    <td><a href="javascript:void(0);" (click)="appNoHandler(item)">{{item.AppNo}}</a></td>
+                    <td>{{item.CurrName}}</td>
                     <td class="text-right">{{item.InstAmt == null ? '-' : item.InstAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.AssetPriceAmt == null ? '-' : item.AssetPriceAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.TotalDownPaymentAmt == null ? '-' : item.TotalDownPaymentAmt | number:'1.2-2':'en-US'}}</td>

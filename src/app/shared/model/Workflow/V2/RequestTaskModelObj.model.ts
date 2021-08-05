@@ -7,6 +7,7 @@ export class RequestTaskModelObj {
     RoleCode: string;
     OfficeCode: string;
     IncludeAssignedTasks: boolean;
+    OfficeRoleCodes: Array<string>;
  
     constructor() {
         this.ProcessKey = "";
@@ -17,6 +18,7 @@ export class RequestTaskModelObj {
         this.RoleCode = "";
         this.OfficeCode = "";
         this.IncludeAssignedTasks= true;
+        this.OfficeRoleCodes = new Array<string>();
     }
 
 }

@@ -13,6 +13,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'app-prod-ho-deact-apv-paging',
   templateUrl: './prod-ho-deact-apv-paging.component.html'
@@ -30,6 +31,11 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
   ngOnInit() {
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHODeactApv.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactApv.json";
+
+    if(environment.isCore){
+      this.InputPagingObj._url = "./assets/ucpaging/product/V2/searchProductHODeactApvV2.json";
+      this.InputPagingObj.pagingJson = "./assets/ucpaging/product/V2/searchProductHODeactApvV2.json";
+    }
 
     let critObj = new CriteriaObj();
     critObj.DataType = 'text';
