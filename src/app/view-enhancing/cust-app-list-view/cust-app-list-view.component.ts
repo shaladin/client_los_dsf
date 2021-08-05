@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
@@ -76,9 +77,13 @@ export class CustAppListViewComponent implements OnInit {
     );
   }
 
+  appNoHandler(event) {
+    AdInsHelper.OpenAppViewByAppId(event.AppId);
+  }
+
   async checkIsOpl() {
     let reqGetSysConfigResultLOSObj = new GenericObj();
-    reqGetSysConfigResultLOSObj.Code  = CommonConstant.LOAN_ORIGINATION;
+    reqGetSysConfigResultLOSObj.Code  = CommonConstant.MODULE_LMS;
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigResultByCode, {ConfigCode : reqGetSysConfigResultLOSObj.Code}).toPromise().then(
       (response) => {
         if(response.ConfigValue === "1") {

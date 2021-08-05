@@ -28,8 +28,8 @@ export class AdInsConstant {
   // List Approver
   public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
 
-  public static ApvHoldTaskUrl = environment.FoundationR3Url + "/Approval/Hold";
-  public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/Approval/TakeBack";
+  public static ApvHoldTaskUrl = environment.FoundationR3Url + "/v1" + "/Approval/Hold";
+  public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/v1" + "/Approval/TakeBack";
   
   public static UserCustomer = "Customer";
 }
