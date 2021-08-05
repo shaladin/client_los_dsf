@@ -130,9 +130,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
         RequestRFAObj: this.RFAInfo
       };
 
-      let SubmitMouFreezeUnfreezeUrl = URLConstant.SubmitMouFreezeUnfreeze;
-      if(environment.isCore) SubmitMouFreezeUnfreezeUrl = URLConstant.SubmitMouFreezeUnfreezeV2;
-      
+      let SubmitMouFreezeUnfreezeUrl = environment.isCore ? URLConstant.SubmitMouFreezeUnfreezeV2 : URLConstant.SubmitMouFreezeUnfreeze;
       this.http
         .post(SubmitMouFreezeUnfreezeUrl, sendObj)
         .subscribe((response) => {
