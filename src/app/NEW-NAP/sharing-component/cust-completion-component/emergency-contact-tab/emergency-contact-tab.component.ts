@@ -56,12 +56,12 @@ export class EmergencyContactTabComponent implements OnInit {
     ContactPersonName: [''],
     ContactPersonCustNo: [''],
     MrIdTypeCode: [''],
-    MrGenderCode: [''],
+    MrGenderCode: ['', Validators.required],
     IdNo: [''],
     BirthPlace: [''],
     IdExpiredDt: [''],
     BirthDt: [''],
-    MrCustRelationshipCode: [''],
+    MrCustRelationshipCode: ['', Validators.required],
     MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     MobilePhnNo2: ['', Validators.pattern("^[0-9]+$")],
     Email: ['', Validators.pattern(CommonConstant.regexEmail)],
@@ -455,6 +455,8 @@ export class EmergencyContactTabComponent implements OnInit {
     this.EmergencyContactForm.controls.BirthPlace.disable();
     this.EmergencyContactForm.controls.BirthDt.disable();
     this.EmergencyContactForm.controls.MrGenderCode.disable();
+    this.InputUcAddressObj.isReadonly = true;
+    this.InputUcAddressObj.inputField.inputLookupObj.isReadonly = true;
   }
 
   onTypeName(ev : string){

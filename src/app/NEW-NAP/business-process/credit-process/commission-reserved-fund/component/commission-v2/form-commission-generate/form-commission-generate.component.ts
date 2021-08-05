@@ -483,87 +483,89 @@ export class FormCommissionGenerateComponent implements OnInit {
   }
 
   PatchDataExisting(appCommObj: AppCommissionHObj) {
-    this.AddNewDataForm();
     let idxDDLContent = this.DDLContentName.findIndex(x => x.Key == appCommObj.CommissionRecipientRefNo);
-    let indexFormObj = this.parentForm.value[this.identifier].length - 1;
-    var obj;
-    var code;
-    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
-      obj = {
-        Key: this.DDLContentName[idxDDLContent].Key,
-        Value: this.DDLContentName[idxDDLContent].Value,
-        MrSupplEmpPositionCode: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode,
-        MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
-        SupplCode: this.DDLContentName[idxDDLContent].SupplCode,
-      };
-      code = this.DDLContentName[idxDDLContent].SupplCode;
-    } else {
-      obj = {
-        Key: this.DDLContentName[idxDDLContent].Key,
-        Value: this.DDLContentName[idxDDLContent].Value,
-      };
-      code = this.DDLContentName[idxDDLContent].Key;
-
-    }
-    var temp = this.GetTempRuleObj(code, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
-    if (temp == undefined || temp == null) {
-      this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
-        ContentName: "",
-        ContentNameValue: ""
-      });
-      return this.toastr.warningMessage("There no rule setting for " + code);
-    }
-    this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
-      AppCommissionHId: appCommObj.AppCommissionHId,
-      ContentName: this.DDLContentName[idxDDLContent].Key,
-      ContentNameValue: this.DDLContentName[idxDDLContent].Value,
-      BankAccountNo: appCommObj.BankAccNo,
-      BankAccountName: appCommObj.BankAccName,
-      BankBranch: appCommObj.BankBranch,
-      BankCode: appCommObj.BankCode,
-      BankName: appCommObj.BankName,
-      MrIdTypeCode: appCommObj.MrIdTypeCode,
-      MrTaxKindCode: appCommObj.MrTaxKindCode,
-      MrTaxCalcMethodCode: appCommObj.MrTaxCalcMethodCode,
-      TaxpayerNo: appCommObj.TaxpayerNo,
-      TotalCommisionAmount: appCommObj.TotalCommissionAmt,
-      TotalExpenseAmount: appCommObj.TotalExpenseAmt,
-      TotalTaxAmount: appCommObj.TaxAmt,
-      TotalVATAmount: appCommObj.VatAmt,
-      TotalPenaltyAmount: appCommObj.PenaltyAmt,
-      TotalDisburseAmount: appCommObj.TotalDisburseAmt,
-      RowVersion: appCommObj.RowVersion,
-    });
-    if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
-      this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
-        MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
-        SupplCode: this.DDLContentName[idxDDLContent].SupplCode
-      });
-    this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
-    this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
-
-    for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
-      let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionDs[i].MrCommissionSourceCode);
-      if (idxFromRuleObj >= 0) {
-        var allocAmt = 0;
-        if (this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["value"][idxFromRuleObj].AllocationBehaviour != "LOCK") {
-          allocAmt = appCommObj.AppCommissionDs[i].CommissionAmt;
-        }
-        this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][idxFromRuleObj].patchValue({
-          AppCommissionDId: appCommObj.AppCommissionDs[i].AppCommissionDId,
-          AppCommissionHId: appCommObj.AppCommissionDs[i].AppCommissionHId,
-          AllocationAmount: allocAmt,
-          TaxAmt: appCommObj.AppCommissionDs[i].TaxAmt,
-          VatAmt: appCommObj.AppCommissionDs[i].VatAmt,
-          PenaltyAmt: appCommObj.AppCommissionDs[i].PenaltyAmt,
-          RowVersion: appCommObj.AppCommissionDs[i].RowVersion,
-        })
+    if(idxDDLContent != -1){
+      this.AddNewDataForm();
+      let indexFormObj = this.parentForm.value[this.identifier].length - 1;
+      var obj;
+      var code;
+      if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
+        obj = {
+          Key: this.DDLContentName[idxDDLContent].Key,
+          Value: this.DDLContentName[idxDDLContent].Value,
+          MrSupplEmpPositionCode: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode,
+          MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
+          SupplCode: this.DDLContentName[idxDDLContent].SupplCode,
+        };
+        code = this.DDLContentName[idxDDLContent].SupplCode;
+      } else {
+        obj = {
+          Key: this.DDLContentName[idxDDLContent].Key,
+          Value: this.DDLContentName[idxDDLContent].Value,
+        };
+        code = this.DDLContentName[idxDDLContent].Key;
+  
       }
+      var temp = this.GetTempRuleObj(code, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
+      if (temp == undefined || temp == null) {
+        this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+          ContentName: "",
+          ContentNameValue: ""
+        });
+        return this.toastr.warningMessage("There no rule setting for " + code);
+      }
+      this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+        AppCommissionHId: appCommObj.AppCommissionHId,
+        ContentName: this.DDLContentName[idxDDLContent].Key,
+        ContentNameValue: this.DDLContentName[idxDDLContent].Value,
+        BankAccountNo: appCommObj.BankAccNo,
+        BankAccountName: appCommObj.BankAccName,
+        BankBranch: appCommObj.BankBranch,
+        BankCode: appCommObj.BankCode,
+        BankName: appCommObj.BankName,
+        MrIdTypeCode: appCommObj.MrIdTypeCode,
+        MrTaxKindCode: appCommObj.MrTaxKindCode,
+        MrTaxCalcMethodCode: appCommObj.MrTaxCalcMethodCode,
+        TaxpayerNo: appCommObj.TaxpayerNo,
+        TotalCommisionAmount: appCommObj.TotalCommissionAmt,
+        TotalExpenseAmount: appCommObj.TotalExpenseAmt,
+        TotalTaxAmount: appCommObj.TaxAmt,
+        TotalVATAmount: appCommObj.VatAmt,
+        TotalPenaltyAmount: appCommObj.PenaltyAmt,
+        TotalDisburseAmount: appCommObj.TotalDisburseAmt,
+        RowVersion: appCommObj.RowVersion,
+      });
+      if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
+        this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+          MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
+          SupplCode: this.DDLContentName[idxDDLContent].SupplCode
+        });
+      this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
+      this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
+  
+      for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
+        let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionDs[i].MrCommissionSourceCode);
+        if (idxFromRuleObj >= 0) {
+          var allocAmt = 0;
+          if (this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["value"][idxFromRuleObj].AllocationBehaviour != "LOCK") {
+            allocAmt = appCommObj.AppCommissionDs[i].CommissionAmt;
+          }
+          this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][idxFromRuleObj].patchValue({
+            AppCommissionDId: appCommObj.AppCommissionDs[i].AppCommissionDId,
+            AppCommissionHId: appCommObj.AppCommissionDs[i].AppCommissionHId,
+            AllocationAmount: allocAmt,
+            TaxAmt: appCommObj.AppCommissionDs[i].TaxAmt,
+            VatAmt: appCommObj.AppCommissionDs[i].VatAmt,
+            PenaltyAmt: appCommObj.AppCommissionDs[i].PenaltyAmt,
+            RowVersion: appCommObj.AppCommissionDs[i].RowVersion,
+          })
+        }
+      }
+      this.ReCalcListAllocated(indexFormObj);
+      this.tempDDLContentName.push(obj);
+      this.DDLContentName.splice(idxDDLContent, 1);
+      this.ChangeAllocPercentageBasedOnAmt(indexFormObj);
     }
-    this.ReCalcListAllocated(indexFormObj);
-    this.tempDDLContentName.push(obj);
-    this.DDLContentName.splice(idxDDLContent, 1);
-    this.ChangeAllocPercentageBasedOnAmt(indexFormObj);
   }
 
   ReCalcListAllocated(indexFormObj: number) {
