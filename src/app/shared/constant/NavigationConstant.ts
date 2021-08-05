@@ -1,5 +1,5 @@
-import { PathConstant } from "./PathConstant";
 import { PathConstantX } from "app/impl/shared/constant/PathConstantX";
+import { PathConstant } from "./PathConstant";
 
 export class NavigationConstant {
 
@@ -140,8 +140,8 @@ export class NavigationConstant {
 
   //#region CreditProcess
   public static NAP_CRD_PRCS_HEADER = PathConstant.LR_NAP + "/" + PathConstant.NAP_CRD_PRCS; //'Nap/CreditProcess'
-  public static NAP_CRD_PRCS_COMM_RSV_FUND_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.COMM_RSV_FUND_PAGING; //"/Nap/CreditProcess/CommissionReservedFund/Paging"
-  public static NAP_CRD_PRCS_COMM_RSV_FUND_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.COMM_RSV_FUND_DETAIL; //"/Nap/CreditProcess/CommissionReservedFund/Detail"
+  public static NAP_CRD_PRCS_COMM_RSV_FUND_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.COMM_RSV_FUND_PAGING; //"/Nap/CreditProcess/CommissionReservedFund/PagingX"
+  public static NAP_CRD_PRCS_COMM_RSV_FUND_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.COMM_RSV_FUND_DETAIL; //"/Nap/CreditProcess/CommissionReservedFund/DetailX"
   public static NAP_CRD_PRCS_CRD_APPRV_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_APPRV_PAGING; //"/Nap/CreditProcess/CreditApproval/Paging"
   public static NAP_CRD_PRCS_CRD_APPRV_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_APPRV_DETAIL; //"/Nap/CreditProcess/CreditApproval/Detail"
   public static NAP_CRD_PRCS_CRD_APPRV_CFNA_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_APPRV_CFNA_DETAIL; //"/Nap/CreditProcess/CreditApprovalCfna/Detail"

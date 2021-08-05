@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PhoneVerificationPagingComponent } from './phone-verification/phone-verification-paging/phone-verification-paging.component';
-import { CommissionReservedFundDetailComponent } from './commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component';
 import { CommissionReservedFundPagingComponent } from './commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component';
 import { PhoneVerificationSubjectComponent } from './phone-verification/phone-verification-subject/phone-verification-subject.component';
 import { PhoneVerificationSubjectVerifComponent } from './phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component';
@@ -22,6 +21,9 @@ import { CreditApprovalPagingComponent } from './credit-approval/credit-approval
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
 import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
+import { ComissionReservedFundDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-detail-x/comission-reserved-fund-detail-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { ComissionReservedFundPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-paging-x/comission-reserved-fund-paging-x.component';
 
 
 const routes: Routes = [
@@ -29,15 +31,15 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: PathConstant.COMM_RSV_FUND_PAGING,
-        component: CommissionReservedFundPagingComponent,
+        path: PathConstantX.COMM_RSV_FUND_PAGING,
+        component: ComissionReservedFundPagingXComponent,
         data: {
           title: 'Commission Reserved Fund Paging'
         }
       },
       {
-        path: PathConstant.COMM_RSV_FUND_DETAIL,
-        component: CommissionReservedFundDetailComponent,
+        path: PathConstantX.COMM_RSV_FUND_DETAIL,
+        component: ComissionReservedFundDetailXComponent,
         data: {
           title: 'Commission Reserved Fund Detail'
         }
