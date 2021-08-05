@@ -532,6 +532,14 @@ export class URLConstant {
   public static GetListAppGuarantorPersonalByAppId = environment.losUrl + "/v1" + "/AppGuarantor/GetListAppGuarantorPersonalByAppId"
   public static GetListAppGuarantorPersonalForView = environment.losUrl + "/v1" + "/AppCust/GetListAppGuarantorPersonalForView"
   public static GetListAppGuarantorCompanyForView = environment.losUrl + "/v1" + "/AppCust/GetListAppGuarantorCompanyForView"
+  public static GetAppCustCompanyMainDataByAppId = environment.losUrl + "/v1" + "/AppCust/GetAppCustCompanyMainDataByAppId"
+  
+  // AppCustCompanyMgmntShrholder
+  public static GetAppCustCompanyMgmntShrholdersByAppCustCompanyMgmntShrholderId = environment.losUrl + "/v1" + "/AppCustCompanyMgmntShrholder/GetAppCustCompanyMgmntShrholdersByAppCustCompanyMgmntShrholderId"
+  public static GetListManagementShareholderForListPagingByParentAppCustCompanyId = environment.losUrl + "/v1" + "/AppCustCompanyMgmntShrholder/GetListManagementShareholderForListPagingByParentAppCustCompanyId"
+  public static AddAppCustCompanyMgmntShrholderPublic = environment.losUrl + '/v1' + "/AppCustCompanyMgmntShrholder/AddAppCustCompanyMgmntShrholderPublic";
+  public static EditAppCustCompanyMgmntShrholderPublic = environment.losUrl + '/v1' + "/AppCustCompanyMgmntShrholder/EditAppCustCompanyMgmntShrholderPublic";
+  public static DeleteAppCustCompanyMgmntShrholderPublic = environment.losUrl + '/v1' + "/AppCustCompanyMgmntShrholder/DeleteAppCustCompanyMgmntShrholderPublic";
 
   // Vendor
   public static GetListVendorBankAccByVendorId = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListVendorBankAccByVendorId";
@@ -901,7 +909,9 @@ export class URLConstant {
 
   // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
+  public static GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes"
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
+  public static GetRuleForAttrContent = environment.FoundationR3Url + '/v1' + "/CustAttrContent/GetRuleForAttrContent";
 
   // APP CUST ATTR CONTENT
   public static GetListAppCustFinDataAttrContentByAppCustIdAndListAttrGroup = environment.losUrl + "/v1" + "/AppCustFinDataAttrContent/GetListAppCustFinDataAttrContentByAppCustIdAndListAttrGroup";
