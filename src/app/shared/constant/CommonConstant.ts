@@ -940,6 +940,10 @@ export class CommonConstant {
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
 
+  //WORFKLOW RETURN HANDLING
+  public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
+  public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
+
   //WORFKLOW PRODUCT
   public static WF_CODE_PROD_HO_APV = "PROD_HO_APV";
   public static ACT_CODE_PROD_HO_RVW = "PROD_HO_RVW";
