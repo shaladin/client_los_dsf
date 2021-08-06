@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { WorkflowApiObj, WorkflowApiV2Obj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
@@ -69,34 +69,20 @@ export class SimpleLeadMonitoringReviewComponent implements OnInit {
   }
 
   cancel(ev) {
-    if(environment.isCore){
-      let newWfObj = new WorkflowApiV2Obj();
-      newWfObj.TaskListId = ev.RowObj.ExecutionId;
-      newWfObj.TransactionNo = ev.RowObj.UploadNo;
-      newWfObj.ListValue = { "Status": "RJC" };
-      this.httpClient.post(URLConstant.CancelUploadV2, newWfObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["Message"]);
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
-          });
-        }
-      );
-    }
-    else{
-      let wfObj = new WorkflowApiObj();
-      wfObj.TaskListId = ev.RowObj.TaskListId;
-      wfObj.TransactionNo = ev.RowObj.UploadNo;
-      wfObj.ListValue = { "Status": "RJC" };
-      this.httpClient.post(URLConstant.CancelUpload, wfObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["Message"]);
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
-          });
-        }
-      );
-    }
-  }
+    let urlPost = environment.isCore? URLConstant.CancelUploadV2 : URLConstant.CancelUpload;
+    let tempTaskListId = environment.isCore? ev.RowObj.ExecutionId : ev.RowObj.TaskListId;
+    let wfObj = new WorkflowApiObj();
+    wfObj.TaskListId = tempTaskListId;
+    wfObj.TransactionNo = ev.RowObj.UploadNo;
+    wfObj.ListValue = { "Status": "RJC" };
+    this.httpClient.post(urlPost, wfObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["Message"]);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
+        });
+      }
+    );
+  }  
 
 }
