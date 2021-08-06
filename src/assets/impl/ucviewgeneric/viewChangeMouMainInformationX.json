@@ -58,7 +58,7 @@
         },
         {
           "type": "text",
-          "label": "Mou Factoring Type",
+          "label": "MOU Factoring Type",
           "property": "MouFctrType"
         }
       ],
