@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -7,7 +7,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustOtherInfoObj } from 'app/shared/model/AppCustOtherInfoObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { environment } from 'environments/environment';
+import { AttrContentComponentComponent } from '../attr-content-component/attr-content-component.component';
 
 @Component({
   selector: 'app-other-info-tab',
@@ -65,7 +68,8 @@ export class OtherInfoTabComponent implements OnInit {
         console.log(response);
         this.ResponseCustOtherInfo = response;
       });
-
+      
+    await this.GetExistingProfession();
     this.InputDebitorGroupLookupObj = new InputLookupObj();
     this.InputDebitorGroupLookupObj.urlJson = "./assets/uclookup/lookupDebitorGroup.json";
     this.InputDebitorGroupLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -115,6 +119,20 @@ export class OtherInfoTabComponent implements OnInit {
     this.IsLookupReady = true;
 
   }
+  
+  @ViewChild('CustAttrForm') custAttrForm: AttrContentComponentComponent;
+  async GetExistingProfession(custId: number = this.AppCustId) {
+    if (this.CustTypeCode != CommonConstant.CustTypePersonal || custId == 0) return;
+    await this.httpClient.post(URLConstant.GetAppCustMainDataByAppCustId, { Id: custId }).toPromise().then(
+      async (response: ResponseAppCustMainDataObj) => {
+        if (!response.AppCustPersonalJobDataObj.MrProfessionCode) return;
+        await this.httpClient.post(URLConstant.GetRefProfessionByCode, { Code: response.AppCustPersonalJobDataObj.MrProfessionCode }).subscribe(
+          (response: RefProfessionObj) => {
+            this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, response.ProfessionCode);
+          });
+      }
+    )
+  }
 
   SaveForm() {
     this.setAttrContent();
@@ -147,8 +165,10 @@ export class OtherInfoTabComponent implements OnInit {
     }
 
   }
+
+  identifierAttr: string = "AttrList";
   setAttrContent() {
-    var formValue = this.OtherInformationForm['controls']['AttrList'].value;
+    var formValue = this.OtherInformationForm['controls'][this.identifierAttr].value;
     this.custAttrRequest = new Array<Object>();
 
     if (Object.keys(formValue).length > 0 && formValue.constructor === Object) {

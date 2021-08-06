@@ -436,6 +436,7 @@ export class CommonConstant {
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
   public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
+  public static RefReasonTypeCodeReturnHandlingGeneral = "RTN_H_GEN";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -495,7 +496,7 @@ export class CommonConstant {
   public static ReturnHandlingEditCust = "RTN_EDIT_CUST";
   public static ReturnHandlingEditNAP4 = "RTN_EDIT_NAP4";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
-  public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SURVEY";
+  public static ReturnHandlingAddSurvey = "RTN_ADD_SRVY";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
@@ -915,8 +916,10 @@ export class CommonConstant {
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
-  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW"
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
+  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static PROD_OFF_APV = "PROD_OFF_APV";
+  public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
   
   // CUST ADDR TYPE
   public static CustAddrTypeLegal = "LEGAL";
@@ -936,6 +939,10 @@ export class CommonConstant {
   public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
+
+  //WORFKLOW RETURN HANDLING
+  public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
+  public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
 
   //WORFKLOW PRODUCT
   public static WF_CODE_PROD_HO_APV = "PROD_HO_APV";
