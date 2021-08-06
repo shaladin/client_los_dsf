@@ -4,7 +4,9 @@
       <div class="px-3">
         <div class="form-body">
           <h4 class="form-section card-title" translate>Change MOU View</h4>
-          <app-change-mou-main-info [arrValue]="arrValue"></app-change-mou-main-info>
+          <div *ngIf="arrValue.length>0">
+            <app-change-mou-main-info-x [arrValue]="arrValue" [MrMouTypeCode]="MrMouTypeCode"></app-change-mou-main-info-x>
+          </div>
           <mat-tab-group>
             <mat-tab label="MoU Detail">
               <ng-template matTabContent>

@@ -5,7 +5,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
@@ -29,12 +29,17 @@ export class MouMainInfoXComponent implements OnInit {
 
   ngOnInit() {
     this.whereValue.push(this.MouCustId);
-    this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewMouHeaderX.json";
     this.viewGenericObj.whereValue = this.whereValue;
 
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.MouCustObj  = response;
+
+        if(response['MrMouTypeCode']==CommonConstant.FACTORING){
+          this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewMouHeaderX.json";
+        }else{
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+        }
       });
   }
 
