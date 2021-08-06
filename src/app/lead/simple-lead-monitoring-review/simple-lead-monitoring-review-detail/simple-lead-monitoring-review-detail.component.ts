@@ -11,7 +11,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { UploadReviewCustomV2Obj } from 'app/shared/model/V2/UploadReviewObj.model';
+import { UploadReviewCustomObj } from 'app/shared/model/V2/UploadReviewObj.model';
 
 @Component({
   selector: 'app-simple-lead-monitoring-review-detail',
@@ -79,33 +79,18 @@ export class SimpleLeadMonitoringReviewDetailComponent implements OnInit {
   }
 
   uploadReview(status : string) {
-    if(environment.isCore){
-
-      var uploadV2Obj = new UploadReviewCustomV2Obj();
-      uploadV2Obj.TaskListId = this.taskListId;
-      uploadV2Obj.MrUploadStatusCode = status;
-      uploadV2Obj.UploadMonitoringNo = this.UploadNo;
-      
-      this.http.post(URLConstant.UploadReviewV2, uploadV2Obj).subscribe(
-        response => {
-          this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
-        }
-      );
-    }
-    else{
-      let uploadObj = {
-        MrUploadStatusCode: status,
-        TaskListId: this.taskListId,
-        UploadMonitoringNo: this.UploadNo
-      };
-      this.http.post(URLConstant.UploadReview, uploadObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
-        }
-      );
-    }
+    let UploadReviewUrl = environment.isCore? URLConstant.UploadReviewV2 : URLConstant.UploadReview;
+    
+    var uploadObj = new UploadReviewCustomObj();
+    uploadObj.TaskListId = this.taskListId;
+    uploadObj.MrUploadStatusCode = status;
+    uploadObj.UploadMonitoringNo = this.UploadNo;
+    this.http.post(UploadReviewUrl, uploadObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
+      }
+    );
   }
 
   claimTask() {
