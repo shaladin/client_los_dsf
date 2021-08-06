@@ -918,6 +918,8 @@ export class CommonConstant {
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
   public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
+  public static WF_MOU_FACTORING = "WF_MOU_FACTORING";
+  public static WF_MOU_DLFN = "WF_MOU_DLFN";
   public static MOU_REVIEW = "MOU_REVIEW";
   public static LEGAL_RVW = "LEGAL_RVW";
   public static MOU_RETURN = "MOU_RETURN";
@@ -943,7 +945,6 @@ export class CommonConstant {
   public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
-  public static WF_CODE_MOU_DLFN = "WF_MOU_DLFN";
 
   //WORKFLOW MOU
   public static WF_CHANGE_MOU = "WF_CHANGE_MOU";

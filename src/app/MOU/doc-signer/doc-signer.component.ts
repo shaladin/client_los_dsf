@@ -50,10 +50,10 @@ export class DocSignerComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKey = CommonConstant.WF_CODE_MOU_DLFN;
-      this.requestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
+      this.requestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
+      // this.requestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
       this.requestTaskModel.TaskDefinitionKey = CommonConstant.MOU_DOC_SIGNER;
-      this.requestTaskModel.RoleCode = this.user[CommonConstant.ROLE_CODE];
+      // this.requestTaskModel.RoleCode = this.user[CommonConstant.ROLE_CODE];
       this.requestTaskModel.OfficeRoleCodes = [this.user[CommonConstant.ROLE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
