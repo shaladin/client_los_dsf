@@ -253,7 +253,7 @@
           </lib-uc-show-errors>
         </div>
         <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>ID Type</label>
+        <label class="col-md-2 adins-required-label" translate>Owner ID Type</label>
         <div class="col-md-2">
           <select class="form-control" formControlName="MrIdType"
             (change)="ChangeIdType($event.target.value)"
@@ -275,8 +275,8 @@
           </lib-uc-show-errors>
         </div>
         <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Owner ID No.</label>
-        <div class="col-md-2">
+        <label class="col-md-2 adins-required-label" translate>Owner ID No</label>
+        <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerIdNo"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
           <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern" [submit]="enjiForm.submitted">
@@ -290,6 +290,13 @@
             [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
             [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
           </lib-uclookupgeneric>
+        </div>
+        <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Mobile Phone No</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
+          <lib-uc-show-errors [control]="AddCollForm.controls.OwnerMobilePhnNo" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row" *ngIf="!isSelfCust">
@@ -311,12 +318,8 @@
           </div>
         </div>
       </div>
-      <div class="form-group row">
-        <div class="col-md-12">
-          <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm"
-          [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
-        </div>
-      </div>
+      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm"
+      [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
     </div>
 
     <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
@@ -524,7 +527,7 @@
           </lib-uc-show-errors>
         </div>
         <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>ID Type</label>
+        <label class="col-md-2 adins-required-label" translate>Owner ID Type</label>
         <div class="col-md-2">
           <select class="form-control" formControlName="MrIdType"
             (change)="ChangeIdType($event.target.value)"
@@ -546,8 +549,8 @@
           </lib-uc-show-errors>
         </div>
         <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Owner ID No.</label>
-        <div class="col-md-2">
+        <label class="col-md-2 adins-required-label" translate>Owner ID No</label>
+        <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerIdNo"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
           <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern"[submit]="enjiForm.submitted">
@@ -561,6 +564,13 @@
             [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
             [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
           </lib-uclookupgeneric>
+        </div>
+        <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Mobile Phone No</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
+          <lib-uc-show-errors [control]="AddCollForm.controls.OwnerMobilePhnNo" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row" *ngIf="!isSelfCust">
@@ -583,7 +593,7 @@
         </div>
       </div>
       <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm"
-        [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+      [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
     </div>
 
     <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
