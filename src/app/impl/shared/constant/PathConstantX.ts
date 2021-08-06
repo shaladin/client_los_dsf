@@ -8,6 +8,7 @@ export class PathConstantX {
 
   //#region Common-Path
   public static CESSIE = "Cessie";
+  public static PROCESS = "Process";
   public static PAGING = "PagingX";
   public static ADD = "AddX";
   public static DETAIL_X = PathConstant.DETAIL + "X";
@@ -26,6 +27,18 @@ export class PathConstantX {
 
   //#region Cessie
   public static CESSIE_MONITORING = PathConstantX.CESSIE + "/" + PathConstantX.MONITORING;
+  public static FACTORING_REVIEW = "FactoringReview";
+  public static FACTORING_REVIEW_PAGING = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantX.FACTORING_REVIEW + "/" + PathConstant.PAGING;
+  public static ASSIGN_PROD = "AssignProd";
+  public static FACTORING_REVIEW_ASSIGN_PROD = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantX.FACTORING_REVIEW + "/" + PathConstantX.ASSIGN_PROD;
+  public static FACTORING_REVIEW_DETAIL = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantX.FACTORING_REVIEW + "/" + PathConstant.DETAIL;
+  public static CESSIE_PGL_PAGING = PathConstantX.CESSIE + "/" + PathConstant.PGL + "/" + PathConstant.PAGING;
+  public static CESSIE_PGL_DETAIL = PathConstantX.CESSIE + "/" + PathConstant.PGL + "/" + PathConstant.DETAIL;
+  public static CESSIE_PGL_APPRVL_PAGING = PathConstantX.CESSIE + "/" + PathConstant.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.PAGING;
+  public static CESSIE_PGL_APPRVL_DETAIL = PathConstantX.CESSIE + "/" + PathConstant.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.DETAIL;
+  public static CESSIE_CANCEL = "CessieCancellation";
+  public static CESSIE_CANCEL_PAGING = PathConstantX.CESSIE + "/" + PathConstantX.CESSIE_CANCEL + "/" + PathConstant.PAGING;
+  public static CESSIE_CANCEL_DETAIL = PathConstantX.CESSIE + "/" + PathConstantX.CESSIE_CANCEL + "/" + PathConstant.DETAIL;
   //#endregion
 
   //#region Change mou

@@ -441,5 +441,18 @@ export class NavigationConstant {
 
   //Cessie
   public static CESSIE_MONITORING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_MONITORING; //'/Impl/Cessie/Monitoring'
+  public static CESSIE_FACTORING_REVIEW_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.FACTORING_REVIEW_PAGING; //'/Impl/Cessie/Monitoring'
+  public static CESSIE_FACTORING_REVIEW_ASSIGN_PROD = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.FACTORING_REVIEW_ASSIGN_PROD; //'/Impl/Cessie/Process/FactoringReview/AssignProd'
+  public static CESSIE_FACTORING_REVIEW_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.FACTORING_REVIEW_DETAIL; //'/Impl/Cessie/Process/FactoringReview/Detail'
+  public static CESSIE_PGL_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_PGL_PAGING; //'/Impl/Cessie/Process/PreGoLive/Paging'
+  public static CESSIE_PGL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_PGL_DETAIL; //'/Impl/Cessie/Process/PreGoLive/Detail'
+  public static CESSIE_PGL_APPRVL_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_PGL_APPRVL_PAGING; //'/Impl/Cessie/Process/PreGoLive/Approval/Paging'
+  public static CESSIE_PGL_APPRVL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_PGL_APPRVL_DETAIL; //'/Impl/Cessie/Process/PreGoLive/Approval/Detail'
+  public static CESSIE_CANCEL_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_CANCEL_PAGING; //'/Impl/Cessie/CessieCancellation/Paging'
+  public static CESSIE_CANCEL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_CANCEL_DETAIL; //'/Impl/Cessie/CessieCancellation/Detail'
+  
+
+  
+  
   //EndCessie
 }
