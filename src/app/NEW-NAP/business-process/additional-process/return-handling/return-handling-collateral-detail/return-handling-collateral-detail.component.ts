@@ -421,7 +421,9 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   async GetAppCustPersonalJobData() {
     await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
       (response) => {
-        this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
+        if(response.AppCustPersonalJobDataObj != null){
+          this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
+        }
       }
     );
   }
