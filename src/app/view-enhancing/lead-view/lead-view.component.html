@@ -16,10 +16,14 @@
                 <app-view-lead-data> </app-view-lead-data>
               </ng-template>
             </mat-tab> 
-
             <mat-tab label="DOCUMENT">
               <ng-template matTabContent>
                 <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="SURVEY TASK RESULT">
+              <ng-template matTabContent>
+                <app-lead-view-srvy-task [LeadNo]="LeadNo"> </app-lead-view-srvy-task>
               </ng-template>
             </mat-tab>
 

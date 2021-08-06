@@ -4,7 +4,7 @@
       <i class="ft-plus-circle"></i> Add
     </button>
   </div>
-  <div *ngIf="listMgmntShrholder?.length == 0">
+  <!-- <div *ngIf="listMgmntShrholder?.length == 0">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -49,8 +49,8 @@
         </tr>
       </tbody>
     </table>
-  </div>
-  <div *ngIf="listMgmntShrholder?.length > 0">
+  </div> -->
+  <div>
     <lib-ucgridview [gridInput]="inputGridObj" (callback)="event($event)"></lib-ucgridview>
   </div>
   <div class="pull-right margin-15">
@@ -63,7 +63,7 @@
   <lib-ucSubsection [id]="'AddEditMgmntShrholderId'" [title]="'Add / Edit Management Shareholder'" [panel]="'AddEditMgmntShrholder'">
   </lib-ucSubsection>
   <div id="AddEditMgmntShrholder">
-    <app-cust-main-data [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId"
+    <app-cust-main-data [custMainDataMode]="custMainDataMode" [appId]="appId" [MrCustTypeCode]="MrCustTypeCode" [AppCustCompanyMgmntShrholderId]="AppCustCompanyMgmntShrholderId" [ParentAppCustCompanyId]="ParentAppCustCompanyId" [appCustId]="appCustId" [tempTotalSharePrct]="tempTotalSharePrct"
       [inputMode]="inputMode" (outputCancel)="close()" (outputAfterSave)="close()">
     </app-cust-main-data>
   </div>
