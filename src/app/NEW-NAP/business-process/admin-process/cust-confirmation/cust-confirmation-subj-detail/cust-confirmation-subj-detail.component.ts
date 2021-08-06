@@ -6,7 +6,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer/VerfQuestionAnswerCustom.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
-import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
+import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultD.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -52,7 +52,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   TaskListId: number;
   BizTemplateCode: string;
   SubjectResponse: KeyValueObj = new KeyValueObj();
-  cust: any;
   isFailed: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
@@ -169,7 +168,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   AppCustId: number = 0;
   async GetListCustData() {
     await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId }).toPromise().then(
-      (response : ResListCustMainDataObj) => {
+      (response: ResListCustMainDataObj) => {
         if (response.ListAppCustObj.length > 0) {
           for (let index = 0; index < response.ListAppCustObj.length; index++) {
             const element = response.ListAppCustObj[index];

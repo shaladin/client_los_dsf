@@ -23,7 +23,6 @@ export class NewNapCustFamilyComponent implements OnInit {
   isDetail: boolean = false;
   inputGridObj: InputGridObj;
   listFamily: Array<any> = new Array();
-  resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
   inputMode: string = "ADD";

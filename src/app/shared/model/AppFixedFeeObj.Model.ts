@@ -1,15 +1,15 @@
 export class AppFixedFeeObj {
-    AppFixedFeeId: any;
-    AppFixedId: any;
-    MrFeeTypeCode: any;
-    MrFeePaymentTypeCode: any;
-    StdFeeAmt: any;
-    SellFeeAmt: any;
-    StdFeePrcnt: any;
-    SellFeePrcnt: any;
-    MrFeeCptlzTypeCode: any;
-    CptlzPrnct: any;
-    CptlzAmt: any;
-    RowVersion: any;
+    AppFixedFeeId: number;
+    AppFixedId: number;
+    MrFeeTypeCode: string;
+    MrFeePaymentTypeCode: string;
+    StdFeeAmt: number;
+    SellFeeAmt: number;
+    StdFeePrcnt: number;
+    SellFeePrcnt: number;
+    MrFeeCptlzTypeCode: string;
+    CptlzPrnct: number;
+    CptlzAmt: number;
+    RowVersion: string;
   constructor() { this.AppFixedFeeId = 0; this.RowVersion = "" }
 }

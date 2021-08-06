@@ -1,11 +1,11 @@
 export class BankAccObj {
-    bankName : any;
-    bankBranch : any;
-    accountName : any;
-    bankBranchBiCode : any;
-    accountNo : any;
+    bankName : string;
+    bankBranch : string;
+    accountName : string;
+    bankBranchBiCode : string;
+    accountNo : string;
     bankStatement : Array<any>;
-    currentBalance : any;
-    beginningBalance : any;
-    bankCode : any;
+    currentBalance : number;
+    beginningBalance : number;
+    bankCode : string;
 }

@@ -15,9 +15,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 })
 export class MouCustFeeComponent implements OnInit {
   @Input() MouCustId: number;
-  @Output() ResponseMouCustFee: EventEmitter<any> = new EventEmitter<any>();
-  mouCustFeeList: any;
-  refFeeIdList : any;
+  @Output() ResponseMouCustFee: EventEmitter<any> = new EventEmitter();
+  mouCustFeeList: Array<MouCustFeeObj>;
+  refFeeIdList: Array<number>;
 
   constructor(
     private httpClient: HttpClient,
@@ -31,7 +31,7 @@ export class MouCustFeeComponent implements OnInit {
       (response) => {
         this.mouCustFeeList = response[CommonConstant.ReturnObj];
         for (var i = 0; i < this.mouCustFeeList.length; i++) {
-          this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
+          this.refFeeIdList.push(this.mouCustFeeList[i].RefFeeId);
         }
       }
     );
@@ -49,7 +49,7 @@ export class MouCustFeeComponent implements OnInit {
             this.mouCustFeeList = response[CommonConstant.ReturnObj];
             this.refFeeIdList = new Array();
             for (var i = 0; i < this.mouCustFeeList.length; i++) {
-              this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
+              this.refFeeIdList.push(this.mouCustFeeList[i].RefFeeId);
             }
             modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
           }
@@ -62,10 +62,8 @@ export class MouCustFeeComponent implements OnInit {
 
   deleteMouCustFee(mouCustFeeId, idx) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      var mouCustFee = new MouCustFeeObj();
-      mouCustFee.MouCustFeeId = mouCustFeeId;
       this.httpClient.post(URLConstant.DeleteMouCustFee, { Id: mouCustFeeId }).subscribe(
-        (response: any) => {
+        (response) => {
           this.mouCustFeeList.splice(idx, 1);
           this.refFeeIdList.splice(idx, 1);
           this.toastr.successMessage(response["message"]);

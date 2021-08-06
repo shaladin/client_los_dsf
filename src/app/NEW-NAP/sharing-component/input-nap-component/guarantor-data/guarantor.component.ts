@@ -37,7 +37,6 @@ export class GuarantorComponent implements OnInit {
   refMasterObj = {
     RefMasterTypeCode: "",
   };
-  getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
 
   CustDataForm = this.fb.group({
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
@@ -60,7 +59,7 @@ export class GuarantorComponent implements OnInit {
 
   bindCustTypeObj(MrCustTypeCode? : string) {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {

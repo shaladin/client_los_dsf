@@ -1,0 +1,185 @@
+{
+  "title": "Ltkm Return Handling Paging",
+  "exportExcel": true,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "LC.CUST_NO",
+      "id": "CustNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "LC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "LR.LTKM_NO",
+      "id": "LtkmNoId",
+      "value": "",
+      "label": "LTKM NO",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "LC.ID_NO",
+      "id": "IdNoId",
+      "value": "",
+      "label": "Id No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "WTL.CLAIM_STAT",
+      "id": "ActiveStatusId",
+      "label": "Task Claim Status",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "ddlType": "all",
+      "items": [
+        {
+          "key": "CLAIMED",
+          "value": "CLAIMED"
+        },
+        {
+          "key": "UNCLAIMED",
+          "value": "UNCLAIMED"
+        }
+      ],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "WTL.USERNAME",
+      "id": "claimById",
+      "value": "",
+      "label": "Claim By",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "SLA",
+      "name": "SlaColor"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "WTL.USERNAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "CUSTOMER NO",
+      "name": "LC.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "CUSTOMER NAME",
+      "name": "LC.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "LTKM NO",
+      "name": "LR.LTKM_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "TYPE",
+      "name": "LC.MR_CUST_TYPE_CODE"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "ID NO",
+      "name": "LC.ID_NO"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "ACTION"
+    }
+  ],
+  "querystring": {
+    "name": "searchLtkmReturnHandling"
+  },
+  "bodyList": [
+    {
+      "type": "sla",
+      "position": "center",
+      "property": "SlaColor"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ClaimBy"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "callback",
+      "key": "ltkmno",
+      "position": "left",
+      "property": "LtkmNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustTypeCode"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "IdNo"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "edit",
+          "path": "/Ltkm/ReturnHandling/Detail",
+          "param": [
+            {
+              "type": "WfTaskListId",
+              "property": "WfTaskListId"
+            },
+            {
+              "type": "LtkmNo",
+              "property": "LtkmNo"
+            },
+            {
+              "type": "MrCustTypeCode",
+              "property": "MrCustTypeCode"
+            },
+            {
+              "type": "LtkmCustId",
+              "property": "LtkmCustId"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

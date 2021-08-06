@@ -15,25 +15,25 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 
 @Component({
   selector: 'app-legal-review-detail',
   templateUrl: './legal-review-detail.component.html',
   providers: [NGXToastrService]
 })
+
 export class LegalReviewDetailComponent implements OnInit {
 
   MouCustId: number;
-  WfTaskListId: any;
-  responseObj: any;
-  responseRefMasterObj: any;
-  responseMouTcObj: any;
+  WfTaskListId: number;
+  responseRefMasterObj: Array<KeyValueObj>;
   items: FormArray;
   isItemsReady: boolean = false;
   termConditions: FormArray;
-  link: any;
-  mouCustObj: any;
-  resultData: any;
+  resultData: MouCustObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   LegalForm = this.fb.group(
     {
@@ -42,7 +42,7 @@ export class LegalReviewDetailComponent implements OnInit {
     }
   );
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
-  responseMouObj: Array<any> = new Array<any>();
+  responseMouObj: Array<MouCustLglReviewObj> = new Array<MouCustLglReviewObj>();
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;
@@ -54,7 +54,9 @@ export class LegalReviewDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private toastr: NGXToastrService, private cookieService: CookieService
+    private toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) this.MouCustId = params['MouCustId'];
@@ -64,7 +66,7 @@ export class LegalReviewDetailComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
@@ -73,8 +75,6 @@ export class LegalReviewDetailComponent implements OnInit {
 
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -116,14 +116,6 @@ export class LegalReviewDetailComponent implements OnInit {
     );
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
-  }
-
   SearchLegalReview(key, isRowVersion) {
     if (this.responseMouObj.length > 0) {
       for (var i = 0; i < this.responseMouObj.length; i++) {
@@ -140,7 +132,7 @@ export class LegalReviewDetailComponent implements OnInit {
     return '';
   }
 
-  SaveData(formObj: any, isSubmit: boolean) {
+  SaveData(formObj: FormGroup, isSubmit: boolean) {
     if (this.LegalForm.valid) {
       var mouObj = new ReqListMouCustLglReviewObj();
       for (let index = 0; index < this.responseRefMasterObj.length; index++) {

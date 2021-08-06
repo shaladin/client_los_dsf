@@ -13,12 +13,17 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { RegexService } from 'app/shared/services/regex.services';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-cust-personal-main-data-FL4W',
   templateUrl: './cust-personal-main-data-FL4W.component.html',
   styleUrls: [],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  providers: [RegexService]
 })
 
 export class CustPersonalMainDataFL4WComponent implements OnInit {
@@ -26,45 +31,37 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   @Input() appId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
-  @Input() custType: any;
+  @Input() custType: string;
   @Input() IsSpouseExist: boolean = false;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-  @Output() isMarried: EventEmitter<any> = new EventEmitter();
+  @Output() isMarried: EventEmitter<boolean> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-  countryObj = {
-    CountryCode: ""
-  };
-  selectedCustNo: any;
-  selectedNationalityCountryCode: any;
-  custDataObj: CustDataObj;
+  selectedCustNo: string;
+  selectedNationalityCountryCode: string;
 
-  InputLookupCustomerObj: any;
-  InputLookupCountryObj: any;
-  CustTypeObj: any;
-  IdTypeObj: any;
-  GenderObj: any;
-  MaritalStatObj: any;
-  NationalityObj: any;
-  EducationObj: any;
-  ReligionObj: any;
-
-  getRefMasterUrl: any;
-  getCountryUrl: any;
+  InputLookupCustomerObj: InputLookupObj;
+  InputLookupCountryObj: InputLookupObj;
+  IdTypeObj: Array<KeyValueObj>;
+  GenderObj: Array<KeyValueObj>;
+  MaritalStatObj:  Array<KeyValueObj>;
+  NationalityObj: Array<RefMasterObj>;
+  EducationObj: Array<KeyValueObj>;
+  ReligionObj: Array<KeyValueObj>;
   businessDt: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient, private cookieService: CookieService) {
+    private http: HttpClient, 
+    private cookieService: CookieService,
+    private regexService: RegexService,) {
 
   }
 
   async ngOnInit(): Promise<void> {
+    this.customPattern = new Array<CustomPatternObj>();
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -99,7 +96,6 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].enable();
     this.parentForm.controls[this.identifier]['controls']["IdNo"].enable();
     this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].enable();
-    this.initUrl();
     this.initLookup();
     await this.bindAllRefMasterObj();
     this.bindCustData();
@@ -191,10 +187,8 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.InputLookupCountryObj.addCritInput = arrCrit;
   }
 
-  setCountryName(countryCode) {
-    this.countryObj.CountryCode = countryCode;
-
-    this.http.post(this.getCountryUrl, {Code: countryCode}).subscribe(
+  setCountryName(countryCode: string) {
+    this.http.post(URLConstant.GetRefCountryByCountryCode, {Code: countryCode}).subscribe(
       (response) => {
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;
@@ -253,11 +247,6 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     }
   }
 
-  initUrl() {
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getCountryUrl = URLConstant.GetRefCountryByCountryCode;
-  }
-
   initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
@@ -288,8 +277,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindIdTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
@@ -309,13 +297,16 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
           this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.setValidators([Validators.required]);
           this.parentForm.controls[this.identifier]['controls'].IdExpiredDt.updateValueAndValidity();
         }
+        if(this.IdTypeObj != undefined)
+        {
+          this.getInitPattern();
+        }
       }
     );
   }
 
   async bindGenderObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -328,8 +319,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindMaritalStatObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if (this.MaritalStatObj.length > 0) {
@@ -358,8 +348,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindEducationObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeEducation;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeEducation }).toPromise().then(
       (response) => {
         this.EducationObj = response[CommonConstant.ReturnObj];
         if (this.EducationObj.length > 0) {
@@ -372,8 +361,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindReligionObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeReligion;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion }).toPromise().then(
       (response) => {
         this.ReligionObj = response[CommonConstant.ReturnObj];
         if (this.ReligionObj.length > 0) {
@@ -443,4 +431,70 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     obj.SpouseGender = this.parentForm.controls[this.identifier]['controls'].MrGenderCode.value;
     this.spouseObj.emit(obj);
   }
+
+  //START URS-LOS-041
+  controlNameIdNo: string = 'IdNo';
+  controlNameIdType: string = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  resultPattern: Array<KeyValueObj>;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if(this.resultPattern != undefined)
+        {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+    
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern();
+        }
+      }
+    );
+  }
+  // setValidatorPattern(){
+  //   let idTypeValue: string;
+
+  //   idTypeValue = this.parentForm.controls[this.identifier]['controls'][this.controlNameIdType].value;
+
+  //   if (this.resultPattern != undefined) {
+  //     var result = this.resultPattern.find(x => x.Key == idTypeValue)
+
+  //     if (result != undefined) {
+  //       var pattern = result.Value;
+  //       if (pattern != undefined) {
+  //         this.setValidator(pattern);
+  //       }
+  //     }
+  //   }
+  // }
+
+  setValidatorPattern() {
+    let idTypeValue: string;
+    idTypeValue = this.parentForm.controls[this.identifier]['controls'][this.controlNameIdType].value;
+    var pattern: string = '';
+    if (idTypeValue != undefined) {
+      if (this.resultPattern != undefined) {
+        var result = this.resultPattern.find(x => x.Key == idTypeValue)
+        if (result != undefined) {
+          pattern = result.Value;
+        }
+      }
+    }
+    this.setValidator(pattern);
+  }
+
+  setValidator(pattern: string) {
+    if (pattern != undefined) {
+      this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+      this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].updateValueAndValidity();
+    }
+  }
+  //END OF URS-LOS-041
+
 }

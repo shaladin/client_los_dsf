@@ -16,6 +16,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { CollateraldataComponent } from './report/factoring/collateraldata/collateraldata.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
+import { UcapprovalcreateModule} from '@adins/ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
@@ -23,7 +24,6 @@ import { CustomerGroupPlafondApvPagingDsfComponent } from './customer/customer-g
 import { CustomerGroupPlafondApvDetailDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-detail-dsf/customer-group-plafond-apv-detail-dsf.component';
 import { CustomerGroupPlafondApvInquiryDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-inquiry-dsf/customer-group-plafond-apv-inquiry-dsf.component';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
-import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
 export const customCurrencyMaskConfig = {     
 
   align: "right",     

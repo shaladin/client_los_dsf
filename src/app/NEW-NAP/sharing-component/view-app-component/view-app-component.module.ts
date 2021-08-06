@@ -39,9 +39,16 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
 import { ViewSummaryAppCfnaComponent } from './view-summary-app-cfna/view-summary-app-cfna.component';
 import { ViewSummaryAppROSComponent } from "./view-summary-app-ros/view-summary-app-ros.component";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { FraudDetectionResultComponent } from './fraud-detection-result/fraud-detection-result.component';
+import { FraudVerificationComponent } from './fraud-verification/fraud-verification.component';
+import { ViewFraudDetectionResultComponent } from './view-fraud-detection-result/view-fraud-detection-result.component';
+import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.component';
+import { ChangeMouViewModule } from "app/view-enhancing/change-mou-view/change-mou-view.module";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { createTranslateLoader } from "app/app.module";
 import { HttpClient } from "@angular/common/http";
+import { ViewSumamryAppCfnaDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/view-app-component-dsf/view-sumamry-app-cfna-dsf/view-sumamry-app-cfna-dsf.component";
+import { ViewAppScoreGradeDatarobotDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/view-app-component-dsf/view-app-score-grade-datarobot-dsf/view-app-score-grade-datarobot-dsf.component";
 
 @NgModule({
   exports: [
@@ -69,14 +76,24 @@ import { HttpClient } from "@angular/common/http";
     ApprovalHistComponent,
     ApprovalhistDevComponent,
     TabAppDataComponent,
+    FraudVerificationComponent,
+    ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewSummaryAppComponent,
     ViewAppScoreGradeScoringComponent,
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
+    FraudDetectionResultComponent,
     NewApplicationDataComponent,
     ViewSummaryAppCfnaComponent,
-    ViewSummaryAppROSComponent
+    ViewSummaryAppROSComponent,
+    ViewSumamryAppCfnaDsfComponent,
+    FraudDetectionResultComponent,
+    FraudVerificationComponent,
+    ViewFraudDetectionResultComponent,
+    ViewSurveyVerifComponent,
+    ChangeMouViewModule,
+    ViewAppScoreGradeDatarobotDsfComponent
   ],
   imports: [
     CommonModule,
@@ -118,15 +135,24 @@ import { HttpClient } from "@angular/common/http";
     ViewCollateralDataComponent,
     ViewCollateralMultiAssetComponent,
     ApprovalhistDevComponent,
+    FraudVerificationComponent,
     TabAppDataComponent,
     NewApplicationDataComponent,
+    FraudDetectionResultComponent,
+    ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewSummaryAppComponent,
     ViewAppScoreGradeScoringComponent,
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
     ViewSummaryAppCfnaComponent,
-    ViewSummaryAppROSComponent
+    ViewSummaryAppROSComponent,
+    ViewSumamryAppCfnaDsfComponent,
+    ViewAppScoreGradeDatarobotDsfComponent,
+    FraudDetectionResultComponent,
+    FraudVerificationComponent,
+    ViewFraudDetectionResultComponent,
+    ViewSurveyVerifComponent,
   ],
   providers: [
     NGXToastrService

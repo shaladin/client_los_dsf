@@ -1,9 +1,9 @@
 export class OrgMdlObj {
-    orgMdlId: any;
-    refOrgId: any;
-    orgMdlName: any;
-    orgMdlCode: any;
-    isActive: any;
+    orgMdlId: number;
+    refOrgId: number;
+    orgMdlName: string;
+    orgMdlCode: string;
+    isActive: boolean;
 
     constructor() { this.orgMdlId = 0; }
 }

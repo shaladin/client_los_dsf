@@ -1,0 +1,67 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" translate> Invoice Verification </h4>
+          </div>
+        </div>
+      </div><br>
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="InvoiceForm" #enjiForm="ngForm"
+            (ngSubmit)="enjiForm.valid && SaveForm()">
+            <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+            </lib-ucviewgeneric>
+            <div id="stepper1" class="bs-stepper">
+              <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+                <!-- your steps here -->
+                <div class="line"></div>
+                <div class="step" data-target="#invoice-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="invoice-tab"
+                    id="invoice-tab-trigger" (click)="ChangeTab('INVOICE')">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">List Of Invoice</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#TC-tab">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
+                    (click)="ChangeTab('TC')">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">Term & Conditions</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+              </div>
+              <br><br>
+              <div class="bs-stepper-content">
+                <!-- your steps content here -->
+                <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
+                  <invoice-verif-detail-list-of-invoice *ngIf="StepperIndex == 1" [AppId]="AppId"
+                    (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+                  </invoice-verif-detail-list-of-invoice>
+                </div>
+                <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
+                  <app-term-conditions *ngIf="StepperIndex == 2" [AppId]="AppId" [parentForm]="InvoiceForm"
+                    [enjiForm]="enjiForm">
+                  </app-term-conditions>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions right" *ngIf="StepperIndex == 2">
+              <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()">
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

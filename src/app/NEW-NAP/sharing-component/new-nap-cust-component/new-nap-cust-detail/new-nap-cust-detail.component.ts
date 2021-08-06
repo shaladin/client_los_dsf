@@ -21,6 +21,7 @@ import { AppCustOtherInfoObj } from 'app/shared/model/AppCustOtherInfoObj.model'
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
+import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
@@ -80,7 +81,7 @@ export class NewNapCustDetailComponent implements OnInit {
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj;
   AppCustPersonalFinData: AppCustPersonalFinDataObj;
   appCustOtherInfo : AppCustOtherInfoObj;
-  ResponseCustOtherInfo : any;
+  ResponseCustOtherInfo : AppOtherInfoObj;
   CustAttrRequestFinData: Array<Object>;
   ListAddress: Array<AppCustAddrObj>;
   AppCustBankAccList: Array<AppCustBankAccObj>;

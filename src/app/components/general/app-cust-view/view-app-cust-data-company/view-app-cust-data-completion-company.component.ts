@@ -8,6 +8,7 @@ import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cus
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ResAppCustAddrForViewObj, ResAppCustCompanyLegalDocForViewObj, ResAppCustCompanyMgmntShrholderForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataCompanyForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
 import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-company',
@@ -24,8 +25,15 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
   viewJobDataEmpObj: string;
   viewJobDataSmeObj: string;
   viewJobDataNonProfObj: string;
-  viewFinDataObj: UcViewGenericObj = new UcViewGenericObj();
   viewAppCustCompanyContactPersonObj: UcViewGenericObj = new UcViewGenericObj();
+
+  TitleCustFinDataSuffix:string = '';
+  IsShowCustFinDataDetail:boolean = false;
+  ListCustCoyFinData : Array<object> = new Array<object>();
+  CustCoyFinData : object;
+  attrSection:boolean = false;
+  currentCustFinDataIndex: number;
+  responseCustAttr: Array<object> = new Array<object>();
 
   customerTitle: string;
   arrValue = [];
@@ -58,10 +66,6 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
     }
     this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
-    
-    this.viewFinDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyFinData.json";
-    this.viewFinDataObj.viewEnvironment = environment.losUrl;
-    this.viewFinDataObj.whereValue = this.arrValue;
 
     this.viewAppCustCompanyContactPersonObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyContactPerson.json";
     this.viewAppCustCompanyContactPersonObj.viewEnvironment = environment.losUrl;
@@ -91,6 +95,8 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustCompanyLegalDocObjs = response.ListAppCustCompanyLegalDocObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
+        this.ListCustCoyFinData = response.ListAppCustCompanyFinData;
+        this.responseCustAttr = response.ListCustFinDataAttrContent;
 
         if(this.appCustObj.IsFamily) this.customerTitle = 'Family';
         else if(this.appCustObj.IsShareholder) this.customerTitle = 'Shareholder';
@@ -101,7 +107,8 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
         if(this.appCustGrpObjs && this.appCustGrpObjs.length > 0) {
           this.appCustGrpObjs = this.appCustGrpObjs.filter(item => item['CustNo'] || item['ApplicantNo'])
         }
-      });
+    });
+
   }
 
   viewDetailShareholderHandler(AppCustId, MrCustTypeCode) {
@@ -123,5 +130,20 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
 
   closeDetailHandler() {
     this.isShowDetail = false;
+  }
+
+  hideDetailCustFinData()
+  {
+    this.TitleCustFinDataSuffix = '';
+    this.IsShowCustFinDataDetail = false;
+    this.CustCoyFinData = null;
+  }
+
+  showDetailCustFinData(index:number){
+    let datePipe = new DatePipe("en-US");
+    this.currentCustFinDataIndex = index;
+    this.CustCoyFinData = this.ListCustCoyFinData[this.currentCustFinDataIndex];
+    this.TitleCustFinDataSuffix = ' Date as of '+datePipe.transform(this.CustCoyFinData['DateAsOf'], 'dd-MMM-yyyy')
+    this.IsShowCustFinDataDetail = true;
   }
 }

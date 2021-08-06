@@ -5,7 +5,6 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -22,6 +21,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -71,7 +73,9 @@ export class CreditReviewMainComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private ref: ApplicationRef,
-    private router: Router, private cookieService: CookieService) {
+    private router: Router, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -97,9 +101,7 @@ export class CreditReviewMainComponent implements OnInit {
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStepIndex = 0;
-    this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
-    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.ManualDeviationData = new Array();
     this.isExistedManualDeviationData = false;
     this.isReturnOn = false;
@@ -113,14 +115,14 @@ export class CreditReviewMainComponent implements OnInit {
     "DEVC": 3,
     "APV": 4,
   };
-  CustTypeCode;
-  Arr;
-  UserAccess;
-  ResponseExistCreditReview;
-  DDLRecommendation;
-  DDLReasonReturn;
+  CustTypeCode: string = "";
+  Arr: FormArray;
+  UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  ResponseExistCreditReview: AppCrdRvwHObj;
+  DDLRecommendation: Array<KeyValueObj>;
+  DDLReasonReturn: Array<KeyValueObj>;
   async ngOnInit() : Promise<void> {
-    this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.InitData();
 
     await this.GetAppNo();
@@ -151,9 +153,8 @@ export class CreditReviewMainComponent implements OnInit {
     if(this.SysConfigResultObj.ConfigValue == '1'){
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
-      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-      this.dmsObj.User = currentUserContext.UserName;
-      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.User = this.UserAccess.UserName;
+      this.dmsObj.Role = this.UserAccess.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
       var appObj = { Id: this.appId };
   
@@ -192,8 +193,7 @@ export class CreditReviewMainComponent implements OnInit {
 
 
   async GetAppNo() {
-    var obj = { Id: this.appId };
-    await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
+    await this.http.post<NapAppModel>(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
       (response) => {
         if (response != undefined) {
           this.GetCreditScoring(response["AppNo"]);
@@ -203,8 +203,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   GetCreditScoring(appNo: string) {
-    var obj = { ScoringResultH: { TrxNo: appNo } };
-    this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
+    this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, { TrxNo: appNo }).toPromise().then(
       (response) => {
         if (response["ScoringResultHObj"] != null) {
           var ScoringResult: ScoringResultHObj = response["ScoringResultHObj"];
@@ -220,12 +219,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async GetAppCustData() {
-    var obj = {
-      Id: this.appId,
-      RowVersion: ""
-    };
-
-    await this.http.post(URLConstant.GetAppCustByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.CustTypeCode = response["MrCustTypeCode"];
       });
@@ -248,8 +242,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    var Obj = { Id: this.appId };
-    await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppFinDataByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         // this.FormObj.patchValue({
         //   AppvAmt: response["ApvAmt"]
@@ -259,8 +252,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async GetExistingCreditReviewData() {
-    let Obj = { Id: this.appId };
-    await this.http.post(URLConstant.GetAppCrdRvwById, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCrdRvwById, { Id: this.appId }).toPromise().then(
       (response) => {
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
         if (this.ResponseExistCreditReview.appCrdRvwDObjs != null) {
@@ -439,18 +431,6 @@ export class CreditReviewMainComponent implements OnInit {
 
   }
 
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
-  }
-
   initInputApprovalObj(manualDevList = null) {
     var Attributes = []
     var attribute1 = {
@@ -473,9 +453,8 @@ export class CreditReviewMainComponent implements OnInit {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
 
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    this.InputObj.RequestedBy = this.UserAccess.UserName;
+    this.InputObj.OfficeCode = this.UserAccess.OfficeCode;
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
@@ -497,8 +476,6 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async GetIsUseDigitalization() {
-    var generalSettingObj = new GeneralSettingObj();
-    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response: GeneralSettingObj) => {
         this.IsUseDigitalization = response.GsValue;

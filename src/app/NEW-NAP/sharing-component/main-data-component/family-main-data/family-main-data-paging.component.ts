@@ -23,7 +23,6 @@ export class FamilyMainDataPagingComponent implements OnInit {
   isDetail: boolean = false;
   inputGridObj: InputGridObj;
   listFamily: Array<any> = new Array();
-  resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
   inputMode: string = "ADD";
@@ -52,6 +51,11 @@ export class FamilyMainDataPagingComponent implements OnInit {
       this.loadGuarantorListData();
       if(this.listFamily.length == 0 || this.listFamily.find(x=>x.MrCustRelationshipCode == 'SPOUSE') == null){
         this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_SPOUSE_DATA)
+        return;
+      }
+
+      if(this.listFamily.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") != null){
+        this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_FAMILY_DATA)
         return;
       }
     }

@@ -13,14 +13,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CollateralDataCfnaPagingComponent implements OnInit {
   @Input() AppId: number;
-  @Output() select: EventEmitter<number> = new EventEmitter<any>();
+  @Input() ParentAppId: number;
+  @Output() select: EventEmitter<number> = new EventEmitter<number>();
   @Output() list: EventEmitter<any> = new EventEmitter<any>();
   ListAppCollObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
-
+  @Output() emitIsFirstInit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isFirstInit: boolean = false;
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
-    this.GetListAppCollateralByAppId()
+    this.GetListAppCollateralByAppId();
+    this.emitIsFirstInit.emit(this.isFirstInit);
   }
 
   GetListAppCollateralByAppId() {
@@ -33,18 +36,16 @@ export class CollateralDataCfnaPagingComponent implements OnInit {
         this.list.emit(this.ListAppCollObj);
       });
   }
-
-  editData(AppCollateralId: number){
+  editData(AppCollateralId: number) {
     this.select.emit(AppCollateralId);
   }
-
-  deleteData(AppCollateralId: number){
+  deleteData(AppCollateralId: number) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-    this.http.post(URLConstant.DeleteAppCollateral, {AppCollateralId: AppCollateralId}).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.GetListAppCollateralByAppId();
-      });
+      this.http.post(URLConstant.DeleteAppCollateral, { AppCollateralId: AppCollateralId }).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.GetListAppCollateralByAppId();
+        });
     }
   }
 

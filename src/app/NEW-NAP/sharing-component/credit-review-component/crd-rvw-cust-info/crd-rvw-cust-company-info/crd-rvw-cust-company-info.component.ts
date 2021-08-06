@@ -19,8 +19,8 @@ import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditR
 export class CrdRvwCustCompanyInfoComponent implements OnInit {
 
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj;
-  @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter<any>();
-  @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
 
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;

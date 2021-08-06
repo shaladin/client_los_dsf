@@ -30,6 +30,11 @@
           <app-tab-app-data [AppId]=appId></app-tab-app-data>
         </ng-template>
       </mat-tab>
+      <mat-tab  label="Highlight Comment">
+        <ng-template matTabContent>
+          <app-view-highlight-comment [appId]="appId"></app-view-highlight-comment>
+        </ng-template>
+      </mat-tab>
       <mat-tab label="Deviation">
         <ng-template matTabContent>
           <app-tab-deviation  [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>        

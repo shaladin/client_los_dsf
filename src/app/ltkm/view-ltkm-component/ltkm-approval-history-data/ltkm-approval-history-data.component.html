@@ -1,0 +1,53 @@
+<div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header header-title">
+          <div class="row">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="px-3">
+            <div>
+              <div *ngIf="count1>0 && IsApvReady">
+                <lib-ucSubsection [id]="'CreditApprovalHistoryId'" [title]="'Credit Approval History'"
+                  [panel]="'CreditApprovalHistory'">
+                </lib-ucSubsection>
+                <div id="CreditApprovalHistory">
+                  <lib-ucapprovalHistory [InputObj]="listCreditApprvObj">
+                  </lib-ucapprovalHistory>
+                </div>
+              </div>
+  
+              <div *ngIf="count2>0 && IsApvReady">
+                <lib-ucSubsection [id]="'PackageValidityId'" [title]="'Package Validity Checking Approval History'"
+                  [panel]="'PackageValidity'">
+                </lib-ucSubsection>
+                <div id="PackageValidity">
+                  <lib-ucapprovalHistory [InputObj]="listPckgValObj">
+                  </lib-ucapprovalHistory>
+                </div>
+              </div>
+  
+              <div *ngIf="count3>0 && IsApvReady">
+                <lib-ucSubsection [id]="'PreGoId'" [title]="'Pre Go Live Approval'" [panel]="'PreGo'">
+                </lib-ucSubsection>
+                <div id="PreGo">
+                  <lib-ucapprovalHistory [InputObj]="listPreGoObj">
+                  </lib-ucapprovalHistory>
+                </div>
+              </div>
+  
+              <div *ngIf="count4>0 && IsApvReady">
+                <lib-ucSubsection [id]="'LtkmApvHistId'" [title]="'LTKM Verify Approval History'" [panel]="'LtkmApvHist'">
+                </lib-ucSubsection>
+                <div id="LtkmApvHist">
+                  <lib-ucapprovalHistory [InputObj]="listLtkmObj">
+                  </lib-ucapprovalHistory>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

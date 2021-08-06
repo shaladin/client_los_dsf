@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 
 @Component({
   selector: 'app-app-asset-data-detail',
@@ -16,7 +17,7 @@ export class AppAssetDataDetailComponent implements OnInit {
   appAsset: any;
   appAssetSupplEmp: any;
   appCollateralRegistration: any;
-  AssetTypeObj: any;
+  AssetTypeObj: AssetTypeObj;
   salesName: string;
   branchManagerName: string;
   adminHeadName: string;
@@ -48,7 +49,7 @@ export class AppAssetDataDetailComponent implements OnInit {
     );
 
     this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
-      (response: any) => {
+      (response: AssetTypeObj) => {
         this.AssetTypeObj = response;
       }
     );

@@ -11,6 +11,7 @@ import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrinci
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-even-principal-fctr',
@@ -24,8 +25,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
-    listInstallment: any;
-  responseCalc: any;
+  listInstallment: Array<InstallmentObj>;
   IsAppFeePrcntValid: boolean = true;
 
   constructor(
@@ -40,7 +40,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType  }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType }).subscribe(
       (response) => {
         this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
@@ -135,7 +135,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
     });
   }
 
-  EstEffDtFocusOut(event){
+  EstEffDtFocusOut(event) {
     var maturityDate: Date = new Date(this.ParentForm.get("EstEffDt").value);
     maturityDate.setMonth(maturityDate.getMonth() + this.ParentForm.get("Tenor").value);
 

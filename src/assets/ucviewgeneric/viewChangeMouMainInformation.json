@@ -1,0 +1,65 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustMainInfoHeaderId",
+        "subSectionTitle": "Mou Detail",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Transaction No",
+            "property": "ChangeMouTrxNo"
+          },
+          {
+            "type": "link",
+            "label": "Mou No",
+            "property": "MouCustNo",
+            "name": "MouCustNo",
+            "path": "/View/Mou/CustView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          },
+          {
+            "type": "callback",
+            "key": "CustView",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Transaction Type",
+            "property": "TrxType"
+          },
+          {
+            "type": "text",
+            "label": "Status",
+            "property": "Stat"
+          },
+          {
+            "type": "date",
+            "label": "Request Date",
+            "property": "RequestDt"
+          },
+          {
+            "type": "date",
+            "label": "Exec Date",
+            "property": "ExecutionDt"
+          },
+          {
+            "type": "text",
+            "label": "Notes",
+            "property": "Notes"
+          }
+        ],
+        "querystring": {
+          "name": "viewChangeMouMainInformation"
+        }
+      }
+    ]
+  }

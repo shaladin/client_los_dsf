@@ -1,9 +1,9 @@
 export class AppCrdRvwDObj{
-    AppCrdRvwDId: any;
-    AppCrdRvwHId: any;
-    MrAnalysisItemCode: any;
+    AppCrdRvwDId: number;
+    AppCrdRvwHId: number;
+    MrAnalysisItemCode: string;
     AnalysisResult: any;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor(){
         this.RowVersion = "";

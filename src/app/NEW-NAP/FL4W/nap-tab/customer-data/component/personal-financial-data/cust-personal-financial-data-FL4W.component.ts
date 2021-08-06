@@ -6,6 +6,7 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-personal-financial-data-FL4W',
@@ -19,7 +20,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj;
   @Input() isMarried: boolean;
   totalMonthlyIncome: number;
@@ -31,10 +32,7 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
   };
   custDataObj: CustDataObj;
 
-  SourceOfIncomeObj: any;
-
-  getRefMasterUrl: any;
-
+  SourceOfIncomeObj: Array<KeyValueObj>;
 
   constructor(
     private fb: FormBuilder, 
@@ -66,7 +64,6 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
       SpouseMonthlyIncomeAmt: [0, Validators.min(0)]
     }));
 
-    this.initUrl();
     this.bindSourceOfIncomeObj();
     this.bindAppCustPersonalFinData();
   }
@@ -97,13 +94,9 @@ export class CustPersonalFinancialDataFL4WComponent implements OnInit {
     }
   }
   
-  initUrl(){
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-  }
-
   bindSourceOfIncomeObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSourceIncome;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.SourceOfIncomeObj = response[CommonConstant.ReturnObj];
         if(this.SourceOfIncomeObj.length > 0){

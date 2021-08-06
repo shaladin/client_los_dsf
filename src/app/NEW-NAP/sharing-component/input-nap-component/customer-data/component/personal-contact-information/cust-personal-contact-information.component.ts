@@ -15,13 +15,19 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { RegexService } from 'app/shared/services/regex.services';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-personal-contact-information',
   templateUrl: './cust-personal-contact-information.component.html',
-  styleUrls: [],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
-
+  styles:[
+    '.disabledLink { color: #ccc; pointer-events:none;}'
+  ],
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  providers: [RegexService]
 })
 
 export class CustPersonalContactInformationComponent implements OnInit {
@@ -32,14 +38,12 @@ export class CustPersonalContactInformationComponent implements OnInit {
   @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
   @Input() isMarried: boolean = true;
   @Input() spouseGender: string = "";
+  @Input() isLockMode: boolean = false;
 
-  mode: any;
-  currentEditedIndex: any;
-  closeResult: any;
-  selectedProfessionCode: any;
-  getCustContactPersonPersonalUrl: any;
-  getRefMasterUrl: any;
-  getRefProfessionUrl: any;
+  mode: string;
+  currentEditedIndex: number;
+  closeResult: string;
+  selectedProfessionCode: string;
   appCustPersonalContactPersonObj: AppCustPersonalContactPersonObj;
   refMasterObj = {
     RefMasterTypeCode: ""
@@ -47,7 +51,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   professionObj = {
     ProfessionCode: ""
   };
-  copyToContactPersonAddrObj: any = [
+  copyToContactPersonAddrObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -61,23 +65,23 @@ export class CustPersonalContactInformationComponent implements OnInit {
       Value: "Mailing"
     }
   ];
-  copyFromContactPerson: any;
+  copyFromContactPerson: string;
   contactPersonAddrObj: AddrObj;
   inputFieldContactPersonObj: InputFieldObj;
-  GenderObj: any;
-  IdTypeObj: any;
-  CustRelationshipObj: any;
-  CustContactRelationshipObj: any;
-  CustGuarantorRelationshipObj: any;
-  InputLookupProfessionObj: any;
-  defaultGender: any;
-  defaultIdType: any;
-  defaultCustRelationship: any;
-  selectedGenderName: any;
-  selectedRelationshipName: any;
-  defaultGenderName: any;
-  defaultRelationshipName: any;
-  UserAccess: any;
+  GenderObj: Array<KeyValueObj>;
+  IdTypeObj: Array<KeyValueObj>;
+  CustRelationshipObj: Array<KeyValueObj>;
+  CustContactRelationshipObj: Array<KeyValueObj>;
+  CustGuarantorRelationshipObj: Array<KeyValueObj>;
+  InputLookupProfessionObj: InputLookupObj;
+  defaultGender: string;
+  defaultIdType: string;
+  defaultCustRelationship: string;
+  selectedGenderName: string;
+  selectedRelationshipName: string;
+  defaultGenderName: string;
+  defaultRelationshipName: string;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
 
 
@@ -102,6 +106,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
 
   constructor(
+    private regexService: RegexService,
     private fb: FormBuilder,
     private http: HttpClient,
     private modalService: NgbModal,
@@ -110,11 +115,11 @@ export class CustPersonalContactInformationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.customPattern = new Array<CustomPatternObj>();
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
     this.initLookup();
-    this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
     this.CheckSpouse();
@@ -161,6 +166,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   add(content) {
     this.mode = "Add";
     this.clearForm();
+    this.setValidatorPattern(true);
     this.open(content);
   }
 
@@ -202,6 +208,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.setProfessionName(this.listContactPersonPersonal[i].MrJobProfessionCode);
     this.CheckGuarantor();
     this.CheckSpouse();
+    this.setValidatorPattern();
     this.open(content);
   }
 
@@ -315,7 +322,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   setProfessionName(professionCode) {
     this.professionObj.ProfessionCode = professionCode;
-    this.http.post(this.getRefProfessionUrl, {Code : professionCode}).subscribe(
+    this.http.post(URLConstant.GetRefProfessionByCode, {Code : professionCode}).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;
@@ -342,12 +349,6 @@ export class CustPersonalContactInformationComponent implements OnInit {
     this.InputLookupProfessionObj.isRequired = false;
   }
 
-  initUrl() {
-    this.getCustContactPersonPersonalUrl = URLConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefProfessionUrl = URLConstant.GetRefProfessionByCode;
-  }
-
   bindCopyFrom() {
     this.ContactInfoPersonalForm.patchValue({
       CopyFromContactPerson: this.copyToContactPersonAddrObj[0].Key
@@ -362,7 +363,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   bindGenderObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -375,11 +376,15 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
           this.defaultIdType = this.IdTypeObj[0].Key;
+        }
+        if(this.IdTypeObj != undefined)
+        {
+          this.getInitPattern();
         }
       }
     );
@@ -387,7 +392,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
   bindCustRelationshipObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustContactRelationshipObj = response[CommonConstant.ReturnObj];
         this.CustRelationshipObj = this.CustContactRelationshipObj;
@@ -399,7 +404,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     );
 
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGuarPersonalRelationship;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustGuarantorRelationshipObj = response[CommonConstant.ReturnObj];
       }
@@ -493,5 +498,65 @@ export class CustPersonalContactInformationComponent implements OnInit {
       }
     }
   }
+
+  //START URS-LOS-041
+
+  onOptionsSelected(event){  
+    this.setValidatorPattern();
+  }
+
+  controlNameIdNo: string = 'IdNo';
+  controlNameIdType: string = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  resultPattern: Array<KeyValueObj>;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if(this.resultPattern != undefined)
+        {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+    
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern(true);
+        }
+      }
+    );
+  }
+  setValidatorPattern(onInit: boolean = false){
+    console.log("hi");
+    let idTypeValue: string;
+
+    if(onInit){
+      idTypeValue = this.defaultIdType;
+    }else{
+      idTypeValue = this.ContactInfoPersonalForm.controls[this.controlNameIdType].value;
+    }
+
+    if (this.resultPattern != undefined) {
+      var result = this.resultPattern.find(x => x.Key == idTypeValue)
+
+      if (result != undefined) {
+        var pattern = result.Value;
+        if (pattern != undefined) {
+          this.setValidator(pattern);
+        }
+      }
+    }
+  }
+  setValidator(pattern: string) {
+    if (pattern != undefined) {
+      this.ContactInfoPersonalForm.controls[this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+      this.ContactInfoPersonalForm.controls[this.controlNameIdNo].updateValueAndValidity();
+    }
+  }
+  //END OF URS-LOS-041
+
 
 }

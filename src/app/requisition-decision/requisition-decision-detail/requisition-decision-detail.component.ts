@@ -5,13 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 
@@ -62,7 +62,9 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private toastr: NGXToastrService,
-    private fb: FormBuilder, private cookieService: CookieService) {
+    private fb: FormBuilder, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -74,7 +76,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.WfTaskListId);
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.urlQryPaging = URLConstant.GetAssetStockPagingFromAms;
     this.InputLookupAssetObj.urlEnviPaging = environment.AMSUrl;
@@ -85,18 +87,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
     await this.SetMainInfo();
     await this.SetListOfAsset();
-  }
-
-  
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   async SetMainInfo() {

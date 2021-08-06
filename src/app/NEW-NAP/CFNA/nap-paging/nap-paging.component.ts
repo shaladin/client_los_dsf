@@ -11,6 +11,7 @@ import { CenterGrpOfficeMbrObj } from 'app/shared/model/RefOffice/CenterGrpOffic
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-paging',
@@ -18,8 +19,8 @@ import { CookieService } from 'ngx-cookie';
 })
 export class NapPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
-  userAccess: any;
+  arrCrit: Array<CriteriaObj>;
+  userAccess: CurrentUserContext;
 
   constructor(
     private http: HttpClient,

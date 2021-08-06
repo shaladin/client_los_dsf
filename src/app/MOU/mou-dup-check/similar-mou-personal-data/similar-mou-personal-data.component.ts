@@ -26,11 +26,11 @@ export class SimilarMouPersonalDataComponent implements OnInit {
   MouCustObj: MouCustObj;
   MouCustPersonalObj: MouCustPersonalObj;
   MouCustAddrObj: MouCustAddrObj;
-  ListCustomerDuplicate: any;
-  ListNegativeCust: any;
-  ListAppCustDuplicate: any;
-  RowVersion: any;
-  ListMouCustDuplicate: any;
+  ListCustomerDuplicate: any; 
+  ListNegativeCust: any; 
+  ListAppCustDuplicate: any; 
+  RowVersion: string;
+  ListMouCustDuplicate: any; 
 
   constructor(
     private http: HttpClient,
@@ -52,8 +52,7 @@ export class SimilarMouPersonalDataComponent implements OnInit {
     this.MouCustPersonalObj = new MouCustPersonalObj();
     this.MouCustAddrObj = new MouCustAddrObj();
 
-    //Get App Cust Data
-    this.http.post(URLConstant.GetMouCustByMouCustId, {"Id": this.MouCustId}).subscribe(
+    this.http.post(URLConstant.GetMouCustByMouCustId, {Id: this.MouCustId}).subscribe(
       response => {
         this.MouCustObj = response['MouCustObj'];
         this.RowVersion = response['MouCustObj'].RowVersion;

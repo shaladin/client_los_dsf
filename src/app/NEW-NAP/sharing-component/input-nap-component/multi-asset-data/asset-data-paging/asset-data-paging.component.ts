@@ -201,10 +201,15 @@ export class AssetDataPagingComponent implements OnInit {
 
   CopyAsset() {
     if (this.units == 0) {
-      this.toastr.warningMessage("Unit cannot be 0.");
+      this.toastr.warningMessage(ExceptionConstant.UNIT_CANT_BE_ZERO);
     }
     else {
       var splitted = this.selectedAsset.split(";");
+
+      if(splitted.length == 1){
+        this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
+        return;
+      }
 
       this.http.post(URLConstant.CopyAppAsset, {
         AppId: this.AppId,
@@ -314,6 +319,15 @@ export class AssetDataPagingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;
     }
+    else {
+      for(let i=0;i< this.gridAssetDataObj.resultData.Data.length ;i++){
+        if(this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == ""  || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null){
+          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
+          return;
+        }
+      }
+    }
+      
     if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
 
       if (!this.IsCalledIntegrator) {

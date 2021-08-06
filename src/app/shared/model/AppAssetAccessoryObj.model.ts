@@ -1,14 +1,14 @@
 export class AppAssetAccessoryObj {
-  AppAssetAccessoryId: any;
-  AppAssetId: any;
-  AssetAccessoryCode: any;
-  AssetAccessoryName: any;
-  SupplCode: any;
-  SupplName: any;
-  AccessoryPriceAmt: any;
-  DownPaymentAmt: any;
-  AccessoryNotes: any;
-  RowVersion: any;
+  AppAssetAccessoryId: number;
+  AppAssetId: number;
+  AssetAccessoryCode: string;
+  AssetAccessoryName: string;
+  SupplCode: string;
+  SupplName: string;
+  AccessoryPriceAmt: number;
+  DownPaymentAmt: number;
+  AccessoryNotes: string;
+  RowVersion: string;
 
   constructor() {
     this.AppAssetAccessoryId = 0;

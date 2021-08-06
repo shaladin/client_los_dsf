@@ -1,50 +1,75 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "AssetDataId",
-        "subSectionTitle": "Asset Data",
-        "mainInfoPath": "/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "text",
-            "label": "Full Asset Name",
-            "property": "FullAssetName"
-          },
-          {
-            "type": "text",
-            "label": "Asset Condition",
-            "property": "AssetCondition"
-          },
-          {
-            "type": "text",
-            "label": "Manufacturing Year",
-            "property": "ManufacturingYear"
-          },
-          {
-            "type": "text",
-            "label": "Asset Price",
-            "property": "AssetPriceAmt"
-          },
-          {
-            "type": "text",
-            "label": "Down Payment Type",
-            "property": "DownPaymentType"
-          },
-          {
-            "type": "currency",
-            "label": "Down Payment",
-            "property": "DownPaymentAmt"
-          },
-          {
-            "type": "text",
-            "label": "License Plate No.",
-            "property": "SerialNo1"
-          }
-        ],
-        "querystring": {
-          "name": "viewLeadAssetData"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AssetDataId",
+      "subSectionTitle": "Asset Data",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Full Asset Name",
+          "property": "FullAssetName"
+        },
+        {
+          "type": "text",
+          "label": "Asset Condition",
+          "property": "AssetCondition"
+        },
+        {
+          "type": "text",
+          "label": "Manufacturing Year",
+          "property": "ManufacturingYear"
+        },
+        {
+          "type": "text",
+          "label": "Asset Price",
+          "property": "AssetPriceAmt"
+        },
+        {
+          "type": "text",
+          "label": "Down Payment Type",
+          "property": "DownPaymentType"
+        },
+        {
+          "type": "currency",
+          "label": "Down Payment Amount",
+          "property": "DownPaymentAmt"
+        },
+        {
+          "type": "decimal",
+          "label": "Down Payment Percentage",
+          "property": "DownPaymentPrcnt"
+        },
+        {
+          "type": "text",
+          "label": "Serial No 1",
+          "property": "SerialNo1AndLabel"
+        },
+        {
+          "type": "text",
+          "label": "Serial No 2",
+          "property": "SerialNo2AndLabel"
+        },
+        {
+          "type": "text",
+          "label": "Serial No 3",
+          "property": "SerialNo3AndLabel"
+        },
+        {
+          "type": "text",
+          "label": "Serial No 4",
+          "property": "SerialNo4AndLabel"
+        },
+        {
+          "type": "text",
+          "label": "Serial No 5",
+          "property": "SerialNo5AndLabel"
         }
+      ],
+      "querystring": {
+        "name": "viewLeadAssetData"
       }
-    ]
-  }
+    }
+  ]
+}

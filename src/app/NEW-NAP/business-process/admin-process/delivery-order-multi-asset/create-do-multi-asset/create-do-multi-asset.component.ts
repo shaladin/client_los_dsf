@@ -13,6 +13,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-create-do-multi-asset',
@@ -28,8 +30,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
   @Input() AgrmntId: number;
   @Input() Mode: string;
   @Input() DeliveryOrderHId: number;
-  relationshipList: any;
-  context: any;
+  relationshipList: Array<KeyValueObj>;
   PODt: Date;
 
   DeliveryOrderForm = this.fb.group({
@@ -60,15 +61,14 @@ export class CreateDoMultiAssetComponent implements OnInit {
         this.PODt = new Date(response["PurchaseOrderDt"]);
       });
 
-    this.context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
     if (this.Mode == "add") {
       this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
-        (response) => {
-          this.relationshipList = response;
+        (response: GenericListObj) => {
+          this.relationshipList = response.ReturnObject;
           this.DeliveryOrderForm.patchValue({
-            MrCustRelationshipCode: this.relationshipList.ReturnObject[0].Key
+            MrCustRelationshipCode: this.relationshipList[0].Key
           });
         });
     }
@@ -87,7 +87,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
         (response) => {
           var deliveryOrderHData = response[0];
           var relationResponse = response[1];
-          this.relationshipList = relationResponse;
+          this.relationshipList = relationResponse[CommonConstant.ReturnObj];
           deliveryOrderHData["DeliveryDt"] = datePipe.transform(deliveryOrderHData["DeliveryDt"], "yyyy-MM-dd");
           this.DeliveryOrderForm.patchValue({
             ...deliveryOrderHData

@@ -3,7 +3,7 @@ import { LifeInsDObj } from "./LifeInsDObj.Model";
 export class LifeInsObj {
     AppLifeInsHId: number;
     AppId: number;
-    RowVersion: any;
+    RowVersion: string;
     MrLifeInsPaidMethodCode : string;
     IsCustCover : boolean = false;
     IsSpouseCover : boolean = false;

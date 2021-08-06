@@ -1,0 +1,37 @@
+<form class="form form-horizontal" [formGroup]="MOUCustAssetForm" #enjiForm="ngForm" novalidate
+  (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+  <div class="modal-header">
+    <h4 class="modal-title">Add MoU Customer Asset</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="">
+        <div class="">
+          <div class="px-3">
+            <div class="form-body">
+              <div id="NegativeAssetSection">
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel" for="CustNo" translate>Brand</label>
+                  <div class="col-md-9">
+                    <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='MOUCustAssetForm' [enjiForm]='enjiForm' [identifier]="'MouAssetLookup'"
+                      (lookup)="getLookupResponse($event)"></lib-uclookupgeneric>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer"> 
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')"> <i class="ft-x"></i> Cancel</button>
+    <button type="submit" class="btn btn-raised btn-primary">
+      <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
+</form>
+

@@ -1,0 +1,104 @@
+{
+  "title": "MOU Freeze Unfreeze Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "P.MOU_FREEZE_TRX_NO",
+      "id": "TrxNo",
+      "value": "",
+      "label": "Trx No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "MU.CUST_NAME",
+      "id": "CustName",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "MU.MOU_CUST_NO",
+      "id": "MouCustNo",
+      "value": "",
+      "label": "MOU No",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "querystring": {
+    "name": "searchInquiryFreezeUnfreeze"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Trx No",
+      "name": "MOU_FREEZE_TRX_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer Name",
+      "name": "CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "MOU No",
+      "name": "MOU_CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Status",
+      "name": "STATUS"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "View"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "TrxNo"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustName"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "MouCustNo",
+      "path": "VIEW_MOU_CUST",
+      "target": "_blank",
+      "param": [
+        {
+          "type": "MouCustId",
+          "property": "MouCustId"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "Status"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "View"
+        }
+      ]
+    }
+  ]
+}

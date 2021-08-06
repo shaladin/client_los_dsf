@@ -23,7 +23,7 @@
       "name": "A.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
-      "label": "Prod Offering Name",
+      "label": "Product Offering Name",
       "placeholder": "Placeholder"
     },
     {
@@ -235,6 +235,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "MrCustTypeCode",
+                    "property": "MrCustTypeCode"
                   }
                 ]
               },

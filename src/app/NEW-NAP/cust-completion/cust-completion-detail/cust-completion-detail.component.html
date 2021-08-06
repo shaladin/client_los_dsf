@@ -1,8 +1,16 @@
 <div class="col-md-12 text-left">
   <div class="card">
     <div class="card-body">
-      <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd> </lib-ucviewgeneric>
-      <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:0px">
+      <div class="card-header header-title" style="margin-bottom: 10px;"> 
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" id="horz-layout-colored-controls" translate> CUSTOMER MAIN DATA
+            </h4>
+          </div>
+        </div>
+      </div> 
+      <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
+      <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:10px">
         <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()" translate>
           <i class="fa fa-arrow-left"></i> Back
         </button>

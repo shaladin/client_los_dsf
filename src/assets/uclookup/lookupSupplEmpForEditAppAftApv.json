@@ -1,0 +1,68 @@
+{
+    "title": "Lookup Supplier Employee For Edit App After Approval",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "AASE.SUPPL_EMP_NO",
+        "id": "SupplEmpNoId",
+        "value": "",
+        "label": "Supplier Employee No",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "AASE.SUPPL_EMP_NAME",
+        "id": "SupplEmpNameId",
+        "value": "",
+        "label": "Supplier Employee Name",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+      "name": "lookupSupplEmpForEditAppAftApv"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Supplier Employee No",
+        "name": "AASE.SUPPL_EMP_NO"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Supplier Employee Name",
+        "name": "AASE.SUPPL_EMP_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Select"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "SupplEmpNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "SupplEmpName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "SupplEmpNo"
+          }
+        ]
+      }
+    ],
+    "propertyId": "SupplEmpNo",
+    "propertyName": "SupplEmpName"
+  }
+  

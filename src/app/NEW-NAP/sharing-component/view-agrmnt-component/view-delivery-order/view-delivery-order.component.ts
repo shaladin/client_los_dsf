@@ -14,12 +14,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewDeliveryOrderComponent implements OnInit {
-  DeliveryDt: any;
-  @Input() agrmntId: any;
-
-  agrmntObj = {
-    AgrmntId: 0,
-  };
+  DeliveryDt: string;
+  @Input() agrmntId: number;
 
   DeliverOrderData: any;
 
@@ -34,7 +30,6 @@ export class ViewDeliveryOrderComponent implements OnInit {
 
 
   ngOnInit() {
-    this.agrmntObj.AgrmntId = this.agrmntId;
     this.GetDeliveryOrderData();
   }
 

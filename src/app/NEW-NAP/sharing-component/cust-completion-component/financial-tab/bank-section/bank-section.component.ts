@@ -151,14 +151,12 @@ export class BankSectionComponent implements OnInit {
   }
 
   ClearForm() {
-    this.BankAccStmntForm.patchValue({
-      BankCode: "",
-      BankBranch: "",
-      BankAccName: "",
-      BankAccNo: "",
-      IsDefault: false,
-      IsActive: false
-    })
+    this.BankAccStmntForm.reset();
+
+      this.BankAccStmntForm.patchValue({
+        IsActive: false,
+        IsDefault: false
+      });
 
     this.InputLookupBankObj.nameSelect = "";
     this.InputLookupBankObj.jsonSelect = { BankName: "" };

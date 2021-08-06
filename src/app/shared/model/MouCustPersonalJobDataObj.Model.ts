@@ -12,7 +12,7 @@ export class MouCustPersonalJobDataObj {
     IndustryTypeCode: string;
     MrCompanyScaleCode: string;
     EstablishmentDt: Date;
-    MrJobTitleCode: string;
+    JobTitleName: string;
     ProfessionalNo: string;
     MrInvestmentTypeCode: string;
     NumOfEmployee: number;

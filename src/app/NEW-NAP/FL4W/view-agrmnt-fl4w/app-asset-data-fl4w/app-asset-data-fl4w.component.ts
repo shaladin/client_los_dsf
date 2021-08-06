@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailFl4wComponent } from './app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 
 @Component({
   selector: 'app-app-asset-data-fl4w',
@@ -11,8 +12,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 })
 export class AppAssetDataFl4wComponent implements OnInit {
   @Input() AgrmntId: number;
-  appAssetList: Array<any>;
-  AppId: any;
+  appAssetList: Array<AppAssetObj>;
 
   constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 

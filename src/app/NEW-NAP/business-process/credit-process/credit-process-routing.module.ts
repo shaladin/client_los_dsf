@@ -22,6 +22,15 @@ import { CreditApprovalPagingComponent } from './credit-approval/credit-approval
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
 import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
+import { CreditReviewPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-paging-dsf/credit-review-paging-dsf.component';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { CreditReviewCfnaPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-paging-dsf/credit-review-cfna-paging-dsf.component';
+import { CreditReviewDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-detail-dsf/credit-review-detail-dsf.component';
+import { CreditReviewCfnaDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-detail-dsf/credit-review-cfna-detail-dsf.component';
+import { CreditApprovalDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-dsf/credit-approval-detail-dsf/credit-approval-detail-dsf.component';
+import { CreditApprovalPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-dsf/credit-approval-paging-dsf/credit-approval-paging-dsf.component';
+import { CreditApprovalCfnaPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-cfna-dsf/credit-approval-cfna-paging-dsf/credit-approval-cfna-paging-dsf.component';
+import { CreditApprovalCfnaDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-cfna-dsf/credit-approval-cfna-detail-dsf/credit-approval-cfna-detail-dsf.component';
 
 
 const routes: Routes = [
@@ -92,26 +101,40 @@ const routes: Routes = [
         }
       },
       {
-          path: PathConstant.CRD_REVIEW_CR_PAGING,
-          component: CreditReviewCrPagingComponent,
-          data: {
-              title: 'Credit Review Paging'
-          }
+        path: PathConstant.CRD_REVIEW_CR_PAGING,
+        component: CreditReviewCrPagingComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
       },
       {
-          path: PathConstant.CRD_REVIEW_CR_DETAIL,
-          component: CreditReviewCrDetailComponent,
-          data: {
-              title: 'Credit Review Detail'
-          }
+        path: PathConstant.CRD_REVIEW_CR_DETAIL,
+        component: CreditReviewCrDetailComponent,
+        data: {
+          title: 'Credit Review Detail'
+        }
       },
       {
-          path: PathConstant.CRD_APPRV_CR_PAGING,
-          component: CreditApprovalCrPagingComponent,
-          data: {
-              title: 'Credit Approval Paging'
-          }
+        path: PathConstantDsf.CRD_REVIEW_DETAIL,
+        component: CreditReviewDetailDsfComponent,
+        data: {
+            title: 'Credit Review Detail Dsf'
+        }
       },
+      {
+        path: PathConstant.CRD_APPRV_CR_PAGING,
+        component: CreditApprovalCrPagingComponent,
+        data: {
+            title: 'Credit Approval Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.CRD_APPRV_CR_PAGING,
+        component: CreditApprovalPagingDsfComponent,
+        data: {
+            title: 'Credit Approval Paging Dsf'
+        }
+    },
       {
           path: PathConstant.CRD_APPRV_CR_DETAIL,
           component: CreditApprovalCrDetailComponent,
@@ -120,10 +143,24 @@ const routes: Routes = [
           }
       },
       {
+        path: PathConstantDsf.CRD_APPRV_CR_DETAIL,
+        component: CreditApprovalDetailDsfComponent,
+        data: {
+            title: 'Credit Approval Detail Dsf'
+        }
+    },
+      {
         path: PathConstant.CRD_REVIEW_PAGING,
         component: CreditReviewPagingComponent,
         data: {
           title: 'Credit Review Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.CRD_REVIEW_PAGING,
+        component: CreditReviewPagingDsfComponent,
+        data: {
+          title: 'Credit Review Paging Dsf'
         }
       },
       {
@@ -141,10 +178,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CRD_REVIEW_CFNA_PAGING,
+        component: CreditReviewCfnaPagingDsfComponent,
+        data: {
+          title: 'Credit Review Paging Dsf'
+        }
+      },
+      {
         path: PathConstant.CRD_REVIEW_CFNA_MAIN,
         component: CreditReviewCfnaDetailComponent,
         data: {
           title: 'Credit Review Main'
+        }
+      },
+      {
+        path: PathConstantDsf.CRD_REVIEW_CFNA_MAIN,
+        component: CreditReviewCfnaDetailDsfComponent,
+        data: {
+          title: 'Credit Review Main Dsf'
         }
       },
       {
@@ -169,10 +220,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CRD_APPRV_CFNA_PAGING,
+        component: CreditApprovalCfnaPagingDsfComponent,
+        data: {
+          title: 'Credit Approval Paging Dsf'
+        }
+      },
+      {
         path: PathConstant.CRD_APPRV_CFNA_DETAIL,
         component: CreditApprovalCfnaDetailComponent,
         data: {
           title: 'Credit Approval Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.CRD_APPRV_CFNA_DETAIL,
+        component: CreditApprovalCfnaDetailDsfComponent,
+        data: {
+          title: 'Credit Approval Detail Dsf'
         }
       }
     ]

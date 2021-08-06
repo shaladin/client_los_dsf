@@ -64,6 +64,8 @@ import { PreGoLiveOplDetailComponent } from './pre-go-live-opl/pre-go-live-opl-d
 import { PreGoLiveOplService } from "./pre-go-live-opl/pre-go-live-opl.service";
 import { AssetAllocationPagingComponent } from "./asset-allocation/asset-allocation-paging/asset-allocation-paging.component";
 import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocation-detail/asset-allocation-detail.component";
+import { InvoiceVerifDetailListOfInvoiceComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component";
+import { InvoiceVerifDetailDFComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component";
 
 export const customCurrencyMaskConfig = {     
   align: "left",
@@ -139,7 +141,9 @@ export const customCurrencyMaskConfig = {
     PreGoLiveOplPagingComponent,
     PreGoLiveOplDetailComponent,
     AssetAllocationPagingComponent,
-    AssetAllocationDetailComponent
+    AssetAllocationDetailComponent,
+    InvoiceVerifDetailListOfInvoiceComponent,
+    InvoiceVerifDetailDFComponent
   ],
   providers: [
     NGXToastrService,
