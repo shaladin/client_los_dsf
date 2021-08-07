@@ -1,11 +1,12 @@
+import { environment } from "environments/environment";
+
 export class ReqListMouCustLglReviewObj {
     MouCustLglReviewObjs = new Array();
-    WfTaskListId : number;
+    WfTaskListId : any;
     IsSubmit : boolean;
-}
 
-export class ReqListMouCustLglReviewV2Obj {
-    MouCustLglReviewObjs = new Array();
-    WfTaskListId : string;
-    IsSubmit : boolean;
+    constructor(){
+        this.WfTaskListId = environment.isCore ? "" : 0;
+        this.IsSubmit = false;
+    }
 }

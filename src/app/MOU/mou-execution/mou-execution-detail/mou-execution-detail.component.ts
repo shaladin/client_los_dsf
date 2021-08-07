@@ -108,21 +108,12 @@ export class MouExecutionDetailComponent implements OnInit {
 
     if (this.ValidateDate()) {
 
-      if(environment.isCore){
-        this.httpClient.post(URLConstant.MouCustExecutionHumanActivityV2, request).subscribe(
-          (response: any) => {
-            this.toastr.successMessage(response["Message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
-        });
-      }
-      else{
-        this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
-          (response: any) => {
-            this.toastr.successMessage(response["Message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
-        });
-      }
-      
+      let mouCustExecutionHumanActivityUrl = environment.isCore ? URLConstant.MouCustExecutionHumanActivityV2 : URLConstant.MouCustExecutionHumanActivity;
+      this.httpClient.post(mouCustExecutionHumanActivityUrl, request).subscribe(
+        (response: any) => {
+          this.toastr.successMessage(response["Message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
+      });
     }
   }
 
@@ -177,11 +168,13 @@ export class MouExecutionDetailComponent implements OnInit {
   }
 
   claimTask() {
-    if(environment.isCore){
-      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
-    }
-    else{
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    if(environment.isCore){	
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId > 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }	
   }
 }
