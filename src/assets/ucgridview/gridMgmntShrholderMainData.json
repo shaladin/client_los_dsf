@@ -70,9 +70,14 @@
           "property": "IsActive"
       },
       {
-        "type": "decimal",
-        "position": "right",
-        "property": "SharePrcnt"
+          "type": "concat",
+          "position": "right",
+          "propertyList": [
+              {
+                  "property": "SharePrcnt",
+                  "suffix": "%"
+              }
+          ]
       },
       {
         "type": "action",

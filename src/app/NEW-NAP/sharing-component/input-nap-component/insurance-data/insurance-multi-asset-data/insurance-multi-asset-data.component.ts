@@ -991,10 +991,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             TotalInscoFeeAmt: this.ruleObj.AdminFeeFromInsco + this.ruleObj.InscoStampdutyFeeToCust
           });
           this.GenerateMainAndAddCvgTable();
-          this.isGenerate = true;
         } else {
           this.GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj);
         }
+        this.isGenerate = true;
         this.bindInsFeeBehaviorRuleObj();
         this.showGenerate = true;
         this.checkPaidBy();

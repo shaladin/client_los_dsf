@@ -6,6 +6,7 @@ import { UcgridviewModule } from '@adins/ucgridview';
 import { AppTcComponent } from './app-tc/app-tc.component';
 import { ViewAssetDataComponent } from './view-asset-data/view-asset-data.component';
 import { ViewInsuranceComponent } from './view-insurance/view-insurance.component';
+import { ViewCollateralDataComponent } from './view-collateral-data/view-collateral-data.component';
 
 @NgModule({
     imports: [
@@ -17,12 +18,14 @@ import { ViewInsuranceComponent } from './view-insurance/view-insurance.componen
     declarations: [
         AppTcComponent,
         ViewAssetDataComponent,
-        ViewInsuranceComponent
+        ViewInsuranceComponent,
+        ViewCollateralDataComponent
     ],
     exports: [
         AppTcComponent,
         ViewAssetDataComponent,
-        ViewInsuranceComponent
+        ViewInsuranceComponent,
+        ViewCollateralDataComponent
     ]
 })
 export class AppViewComponentsModule { }
