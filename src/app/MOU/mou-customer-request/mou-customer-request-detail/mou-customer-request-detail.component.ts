@@ -94,9 +94,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         }
       });
 
-    if (this.WfTaskListId != null || this.WfTaskListId > 0){
-      this.claimTask();
-    }
+    this.claimTask();
 
     this.GetMouTypeDesc();
     var datePipe = new DatePipe("en-US");
@@ -249,11 +247,13 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   claimTask() {
-    if(environment.isCore){
-      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
-    }
-    else{
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    if(environment.isCore){	
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId > 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }	
   }
 }

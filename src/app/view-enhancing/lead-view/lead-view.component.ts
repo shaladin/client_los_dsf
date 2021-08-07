@@ -6,6 +6,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CookieService } from 'ngx-cookie';
@@ -16,8 +17,10 @@ import { CookieService } from 'ngx-cookie';
 })
 
 export class LeadViewComponent implements OnInit {
-
+  ReqByIdObj: GenericObj = new GenericObj();
   LeadId: number;
+  SrvyOrderId: number = 0;
+  LeadNo: string = "";
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
@@ -33,7 +36,16 @@ export class LeadViewComponent implements OnInit {
 
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
+    await this.getLeadNo();
     await this.InitDms();
+  }
+
+  async getLeadNo(){
+    this.ReqByIdObj.Id = this.LeadId;
+    await this.http.post(URLConstant.GetLeadByLeadId, this.ReqByIdObj).toPromise().then(
+      response => {
+        this.LeadNo = response["LeadNo"];      
+      });
   }
 
   async InitDms() {

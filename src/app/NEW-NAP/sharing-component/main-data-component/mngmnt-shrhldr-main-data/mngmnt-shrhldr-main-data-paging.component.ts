@@ -73,34 +73,19 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       }
     );
 
-    // if (this.CekRelationshipCode()) return;
-
-    if (this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x => x.IsOwner == true) == null) {
-      this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
+    if (this.listMgmntShrholder.length == 0) {
+      this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
-    if (this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x => x.IsActive == true && x.IsSigner == true && x.ShareholderType == CommonConstant.CustTypePersonal) == null) {
-      this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_ACTIVE_SIGNER);
-      return false;
+    if (!this.tempIsOwner) {
+      this.toastr.warningMessage(ExceptionConstant.Add_Min_1_Owner);
+      return;
     }
-
-    // if (this.listMgmntShrholder.length > 0 && (this.listMgmntShrholder.find(x => x.MrCustModelCode == null || x.MrCustModelCode == "") != null)) {
-    //   this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
-    //   return;
-    // }
-
-    // if (this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x => x.MrCustRelationshipCode == null || x.MrCustRelationshipCode == "") != null) {
-    //   this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_SHAREHOLDER_DATA)
-    //   return;
-    // }
-
-    var totalSharePrcnt = 0;
-
-    for (let i = 0; i < this.listMgmntShrholder.length; i++) {
-      totalSharePrcnt += this.listMgmntShrholder[i].SharePrcnt;
+    if (!this.tempIsSigner) {
+      this.toastr.warningMessage(ExceptionConstant.Add_Min_1_Active_Signer);
+      return;
     }
-
-    if (totalSharePrcnt != 100) {
+    if (this.tempTotalSharePrct != 100) {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_MUST_100);
       return;
     }
@@ -119,6 +104,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       this.isDetail = true;
       this.inputMode = "EDIT";
       this.appCustId = ev.RowObj.AppCustId;
+      this.tempTotalSharePrct -= ev.RowObj.SharePrcnt;
       this.MrCustTypeCode = ev.RowObj.ShareholderType;
       this.AppCustCompanyMgmntShrholderId = ev.RowObj.AppCustCompanyMgmntShrholderId;
     }
@@ -145,6 +131,10 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   }
 
   ParentAppCustCompanyId: number = 0;
+  tempTotalSharePrct: number = 0;
+  tempIsOwner: boolean = false;
+  tempIsSigner: boolean = false;
+  listCustNoToExclude: Array<string> = new Array();
   async loadMgmntShrholderListData() {
     await this.http.post(URLConstant.GetAppCustCompanyMainDataByAppId, { Id: this.appId }).toPromise().then(
       (response: AppCustCompanyObj) => {
@@ -154,9 +144,31 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
             this.inputGridObj.resultData = {
               Data: ""
             }
+            let tempTotalSharePrct: number = 0;
+            let tempIsOwner: boolean = false;
+            let tempIsSigner: boolean = false;
+            this.listCustNoToExclude = new Array();
+            this.listMgmntShrholder = response2.ReturnObject;
+            for (let index = 0; index < this.listMgmntShrholder.length; index++) {
+              const element = this.listMgmntShrholder[index];
+              if (element.IsActive) {
+                tempTotalSharePrct += element.SharePrcnt;
+              }
+              if (element.IsOwner) {
+                tempIsOwner = true;
+              }
+              if (element.IsActive && element.IsSigner) {
+                tempIsSigner = true;
+              }
+              if (element.CustNo) {
+                this.listCustNoToExclude.push(element.CustNo);
+              }
+            }
+            this.tempTotalSharePrct = tempTotalSharePrct;
+            this.tempIsOwner = tempIsOwner;
+            this.tempIsSigner = tempIsSigner;
             this.inputGridObj.resultData["Data"] = new Array();
             this.inputGridObj.resultData.Data = response2.ReturnObject;
-            this.listMgmntShrholder = response2.ReturnObject;
           }
         )
       }

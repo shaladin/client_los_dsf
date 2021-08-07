@@ -166,6 +166,7 @@ export class CustAttrFormComponent implements OnInit {
   SetSearchListInputType(attrCode: string, ProfessionCode: string) {
     this.http.post(URLConstant.GetRuleForAttrContent, { RuleSetName: this.dictRuleSetName[attrCode], Code: ProfessionCode }).subscribe(
       (response: GenericListObj) => {
+        console.log(response);
         let tempList: Array<KeyValueObj> = response.ReturnObject;
         this.dictMultiOptions[attrCode] = new Array();
         if (tempList) {
@@ -175,6 +176,7 @@ export class CustAttrFormComponent implements OnInit {
               this.selectedMultiDDLItems[attrCode] = new Array();
               this.selectedMultiDDLItems[attrCode].push({ item_id: element.Key, item_text: element.Value });
               this.onMultiDDLChangeEvent(attrCode);
+              this.tempExistingValueSelected[attrCode] = "";
             }
             this.dictMultiOptions[attrCode].push({ item_id: element.Key, item_text: element.Value });
           }

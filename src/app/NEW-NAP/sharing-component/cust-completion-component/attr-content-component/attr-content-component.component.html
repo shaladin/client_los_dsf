@@ -112,6 +112,23 @@
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
           </div>
+          <div class="row col-md-12" *ngIf="attr.AttrInputType == AttrInputTypeSearchList" [formGroupName]="attr.AttrCode"
+            style="margin: 0;">
+            <label class="col-md-3 adInsLabel " style="padding-left: 0;"
+              [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+              translate>{{attr.AttrName}}</label>
+            <div class="col-md-9" style="padding-right: 0; display: inline-block;">
+              <ng-multiselect-dropdown [placeholder]="'Search'"
+                [data]="dictMultiOptions[attr['AttrCode']]"
+                [(ngModel)]="selectedMultiDDLItems[attr['AttrCode']]" [ngModelOptions]="{standalone: true}"
+                [settings]="dropdownSettings"
+                (onDropDownClose)="onMultiDDLChangeEvent(attr['AttrCode'])">
+              </ng-multiselect-dropdown>
+              <lib-uc-show-errors
+                [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+          </div>
         </div>
       </div>
     </div>

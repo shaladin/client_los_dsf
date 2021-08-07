@@ -15,7 +15,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqMouCustSignerObj, ReqMouCustSignerV2Obj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
+import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
@@ -31,7 +31,6 @@ export class DocSignerDetailComponent implements OnInit {
   MouCustId: number;
   MouType: string;
   mouCustSignerObj: ReqMouCustSignerObj;
-  mouCustSignerV2Obj: ReqMouCustSignerV2Obj;
   returnMouCust: MouCustObj;
   @ViewChild('LookupEmp1') ucLookupEmp1: UclookupgenericComponent;
   @ViewChild('LookupEmp2') ucLookupEmp2: UclookupgenericComponent;
@@ -140,9 +139,9 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.WfTaskListId > 0 || this.WfTaskListId != null) {
-      this.claimTask();
-    }
+
+    this.claimTask();
+    
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.urlEnviPaging = environment.losUrl + "/v1";
@@ -215,75 +214,46 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   setMouCustSigner() {
-    if(environment.isCore){
-        this.mouCustSignerV2Obj.WfTaskListId = this.WfTaskListId;
-        this.mouCustSignerV2Obj.MouCustId = this.MouCustId;
-    
-        this.mouCustSignerV2Obj.MfSignerName1 = this.tempEmployee1;
-        this.mouCustSignerV2Obj.MfSignerJobPosition1 = this.tempEmployeePosition1;
-        this.mouCustSignerV2Obj.MfSignerName2 = this.tempEmployee2;
-        this.mouCustSignerV2Obj.MfSignerJobPosition2 = this.tempEmployeePosition2;
-    
-        if (this.MrCustTypeCode == "COMPANY") {
-          this.mouCustSignerV2Obj.CustSignerName1 = this.tempShareholder1;
-          this.mouCustSignerV2Obj.CustSignerJobPosition1 = this.tempShareholderPosition1;
-          this.mouCustSignerV2Obj.CustSignerName2 = this.tempShareholder2;
-          this.mouCustSignerV2Obj.CustSignerJobPosition2 = this.tempShareholderPosition2;
-        }
-        else if (this.MrCustTypeCode == "PERSONAL") {
-          this.mouCustSignerV2Obj.CustSignerName1 = this.tempCustomer1;
-          this.mouCustSignerV2Obj.CustSignerJobPosition1 = this.tempCustomerPosition1;
-        }
-    }
-    else{
-        this.mouCustSignerObj.WfTaskListId = this.WfTaskListId;
-        this.mouCustSignerObj.MouCustId = this.MouCustId;
-    
-        this.mouCustSignerObj.MfSignerName1 = this.tempEmployee1;
-        this.mouCustSignerObj.MfSignerJobPosition1 = this.tempEmployeePosition1;
-        this.mouCustSignerObj.MfSignerName2 = this.tempEmployee2;
-        this.mouCustSignerObj.MfSignerJobPosition2 = this.tempEmployeePosition2;
-    
-        if (this.MrCustTypeCode == "COMPANY") {
-          this.mouCustSignerObj.CustSignerName1 = this.tempShareholder1;
-          this.mouCustSignerObj.CustSignerJobPosition1 = this.tempShareholderPosition1;
-          this.mouCustSignerObj.CustSignerName2 = this.tempShareholder2;
-          this.mouCustSignerObj.CustSignerJobPosition2 = this.tempShareholderPosition2;
-        }
-        else if (this.MrCustTypeCode == "PERSONAL") {
-          this.mouCustSignerObj.CustSignerName1 = this.tempCustomer1;
-          this.mouCustSignerObj.CustSignerJobPosition1 = this.tempCustomerPosition1;
-        }
-    }
+      this.mouCustSignerObj.WfTaskListId = this.WfTaskListId;
+      this.mouCustSignerObj.MouCustId = this.MouCustId;
+  
+      this.mouCustSignerObj.MfSignerName1 = this.tempEmployee1;
+      this.mouCustSignerObj.MfSignerJobPosition1 = this.tempEmployeePosition1;
+      this.mouCustSignerObj.MfSignerName2 = this.tempEmployee2;
+      this.mouCustSignerObj.MfSignerJobPosition2 = this.tempEmployeePosition2;
+  
+      if (this.MrCustTypeCode == "COMPANY") {
+        this.mouCustSignerObj.CustSignerName1 = this.tempShareholder1;
+        this.mouCustSignerObj.CustSignerJobPosition1 = this.tempShareholderPosition1;
+        this.mouCustSignerObj.CustSignerName2 = this.tempShareholder2;
+        this.mouCustSignerObj.CustSignerJobPosition2 = this.tempShareholderPosition2;
+      }
+      else if (this.MrCustTypeCode == "PERSONAL") {
+        this.mouCustSignerObj.CustSignerName1 = this.tempCustomer1;
+        this.mouCustSignerObj.CustSignerJobPosition1 = this.tempCustomerPosition1;
+      }
   }
 
   SaveForm() {
-    if(environment.isCore){
-      this.mouCustSignerV2Obj = new ReqMouCustSignerV2Obj();
-      this.setMouCustSigner();
-      this.http.post(URLConstant.AddMouCustSignerV2, this.mouCustSignerV2Obj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DOC_SIGNER_PAGING], {});
-      });
-    }
-    else{
-      this.mouCustSignerObj = new ReqMouCustSignerObj();
-      this.setMouCustSigner();
-      this.http.post(URLConstant.AddMouCustSigner, this.mouCustSignerObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DOC_SIGNER_PAGING], {});
-      });
-    }
+    let addMouCustSignerUrl = environment.isCore ? URLConstant.AddMouCustSignerV2 : URLConstant.AddMouCustSigner;
+
+    this.mouCustSignerObj = new ReqMouCustSignerObj();
+    this.setMouCustSigner();
+    this.http.post(addMouCustSignerUrl, this.mouCustSignerObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DOC_SIGNER_PAGING], {});
+    });    
   }
 
   claimTask() {
-    if(environment.isCore){
-      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
-    }
-    else{
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    if(environment.isCore){	
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId > 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }	
   }
 }
