@@ -79,7 +79,7 @@ export class SchmBalloonComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmBalloon) !== -1);
 
-        if (this.CalcBaseOptions.length == 1) {
+        if (this.CalcBaseOptions.length > 0) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
