@@ -93,7 +93,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     OwnerAreaCode4: ['', Validators.maxLength(50)],
     OwnerCity: ['', Validators.maxLength(50)],
     OwnerZipcode: ['', Validators.maxLength(50)],
-    OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+    OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.required]],
     OwnerProfessionCode: [''],
     LocationAddr: [''],
     LocationAreaCode1: ['', Validators.maxLength(50)],
@@ -421,7 +421,9 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   async GetAppCustPersonalJobData() {
     await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
       (response) => {
-        this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
+        if(response.AppCustPersonalJobDataObj != null){
+          this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
+        }
       }
     );
   }
