@@ -45,6 +45,9 @@ import { AssetAllocationPagingComponent } from './asset-allocation/asset-allocat
 import { AssetAllocationDetailComponent } from './asset-allocation/asset-allocation-detail/asset-allocation-detail.component';
 import { InvoiceVerifDetailListOfInvoiceComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component';
 import { InvoiceVerifDetailDFComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { DocSignerPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/doc-signer-dsf/doc-signer-paging-dsf/doc-signer-paging-dsf.component';
+import { DocSignerDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/doc-signer-dsf/doc-signer-detail-dsf/doc-signer-detail-dsf.component';
 
 const routes: Routes = [
   {
@@ -226,10 +229,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.NAP_DOC_SIGNER_PAGING,
+        component: DocSignerPagingDsfComponent,
+        data: {
+          title: 'Document Signer Paging Dsf'
+        }
+      },
+      {
         path: PathConstant.NAP_DOC_SIGNER_DETAIL,
         component: DocSignerDetailComponent,
         data: {
           title: 'Document Signer Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.NAP_DOC_SIGNER_DETAIL,
+        component: DocSignerDetailDsfComponent,
+        data: {
+          title: 'Document Signer Detail Dsf'
         }
       },
       {

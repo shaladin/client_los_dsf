@@ -66,6 +66,8 @@ import { AssetAllocationPagingComponent } from "./asset-allocation/asset-allocat
 import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocation-detail/asset-allocation-detail.component";
 import { InvoiceVerifDetailListOfInvoiceComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component";
 import { InvoiceVerifDetailDFComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component";
+import { DocSignerPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/doc-signer-dsf/doc-signer-paging-dsf/doc-signer-paging-dsf.component";
+import { DocSignerDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/doc-signer-dsf/doc-signer-detail-dsf/doc-signer-detail-dsf.component";
 
 export const customCurrencyMaskConfig = {     
   align: "left",
@@ -143,7 +145,9 @@ export const customCurrencyMaskConfig = {
     AssetAllocationPagingComponent,
     AssetAllocationDetailComponent,
     InvoiceVerifDetailListOfInvoiceComponent,
-    InvoiceVerifDetailDFComponent
+    InvoiceVerifDetailDFComponent,
+    DocSignerPagingDsfComponent,
+    DocSignerDetailDsfComponent
   ],
   providers: [
     NGXToastrService,

@@ -1,0 +1,268 @@
+<div class="row text-left">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Document Signer-Detail</h4>
+              <app-doc-signer-main-info [AppId]="AppId"></app-doc-signer-main-info>
+              <div class="px-3">
+                  <form class="form form-horizontal" [formGroup]="DocSignerForm"
+                      (ngSubmit)="DocSignerForm.valid && SaveForm()" #enjiForm="ngForm">
+                      <div *ngIf="MrCustTypeCode == 'COMPANY'">
+                          <div [hidden]="isHidden">
+                              <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
+                                  [panel]="'SupplierSigner'">
+                              </lib-ucSubsection>
+                              <div class="form-body" id="SupplierSigner">
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel  adins-required-label" translate>Supplier Officer Name</label>
+                                      <div class="col-md-5">
+                                          <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
+                                              [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                              [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
+                                              *ngIf="inputLookupBranchEmpObj.isReady"> 
+                                          </lib-uclookupgeneric>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel" translate>Supplier Employee Position</label>
+                                      <div class="col-md-5">
+                                          <input type="text" class="form-control adInsInput width-75-per"
+                                              formControlName="MrJobPositionSupplBranchEmpName" readonly>
+                                          <lib-uc-show-errors
+                                              [control]="DocSignerForm.controls.MrJobPositionSupplBranchEmpName"
+                                              [submit]="enjiForm.submitted">
+                                          </lib-uc-show-errors>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                              <lib-ucSubsection [id]="'CompanySignerId'" [title]="'Company Signer'"
+                                  [panel]="'CompanySigner'">
+                              </lib-ucSubsection>
+                              <div class="form-body" id="CompanySigner">
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel  adins-required-label" translate>Company Officer Name
+                                          1</label>
+                                      <div class="col-md-5">
+                                          <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp1Obj"
+                                              [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                              [identifier]="'lookupOfficeEmp1'" (lookup)="getLookupOfficeEmp1($event)"
+                                              *ngIf="inputLookupOfficeEmp1Obj.isReady">
+                                          </lib-uclookupgeneric>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel" translate>Company Position 1</label>
+                                      <div class="col-md-5">
+                                          <input type="text" class="form-control adInsInput width-75-per"
+                                              formControlName="MrJobPositionMfEmpNo1Name" readonly>
+                                          <lib-uc-show-errors
+                                              [control]="DocSignerForm.controls.MrJobPositionMfEmpNo1Name"
+                                              [submit]="enjiForm.submitted">
+                                          </lib-uc-show-errors>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel" translate>Company Officer Name 2</label>
+                                      <div class="col-md-5">
+                                          <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
+                                              [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                              [identifier]="'lookupOfficeEmp2'" (lookup)="getLookupOfficeEmp2($event)"
+                                              *ngIf="inputLookupOfficeEmp2Obj.isReady">
+                                          </lib-uclookupgeneric>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel" translate>Company Position 2</label>
+                                      <div class="col-md-5">
+                                          <input type="text" class="form-control adInsInput width-75-per"
+                                              formControlName="MrJobPositionMfEmpNo2Name" readonly>
+                                          <lib-uc-show-errors
+                                              [control]="DocSignerForm.controls.MrJobPositionMfEmpNo2Name"
+                                              [submit]="enjiForm.submitted">
+                                          </lib-uc-show-errors>
+                                      </div>
+                                  </div>
+                              </div>
+                              <lib-ucSubsection [id]="'ManagementShareholderSignerId'"
+                                  [title]="'Management / Shareholder Signer'" [panel]="'ManagementShareholderSigner'">
+                              </lib-ucSubsection>
+                              <div class="form-body" id="ManagementShareholderSigner">
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel adins-required-label" translate>Management /
+                                          Shareholder 1</label>
+                                      <div class="col-md-5">
+                                          <lib-uclookupgeneric
+                                              [lookupInput]="inputLookupAppCustCompanyShareHolder1Obj"
+                                              [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                              [identifier]="'lookupAppCustCompanyShareHolder1'"
+                                              (lookup)="getLookupAppCustCompanyShareHolder1($event)"
+                                              *ngIf="inputLookupAppCustCompanyShareHolder1Obj.isReady">
+                                          </lib-uclookupgeneric>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel" translate>Management / Shareholder Position 1</label>
+                                      <div class="col-md-5">
+                                          <input type="text" class="form-control adInsInput width-75-per"
+                                              formControlName="MrJobPositionMgmntShrholder1Name" readonly>
+                                          <lib-uc-show-errors
+                                              [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder1Code"
+                                              [submit]="enjiForm.submitted">
+                                          </lib-uc-show-errors>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-5 adInsLabel" translate>Management /
+                                        Shareholder 2</label>
+                                    <div class="col-md-5">
+                                        <lib-uclookupgeneric
+                                            [lookupInput]="inputLookupAppCustCompanyShareHolder2Obj"
+                                            [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                            [identifier]="'lookupAppCustCompanyShareHolder2'"
+                                            (lookup)="getLookupAppCustCompanyShareHolder2($event)"
+                                            *ngIf="inputLookupAppCustCompanyShareHolder2Obj.isReady">
+                                        </lib-uclookupgeneric>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-5 adInsLabel" translate>Management / Shareholder Position 2</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control adInsInput width-75-per"
+                                            formControlName="MrJobPositionMgmntShrholder2Name" readonly>
+                                        <lib-uc-show-errors
+                                            [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder2Code"
+                                            [submit]="enjiForm.submitted">
+                                        </lib-uc-show-errors>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-5 adInsLabel" translate>Management /
+                                      Shareholder 3</label>
+                                  <div class="col-md-5">
+                                      <lib-uclookupgeneric
+                                          [lookupInput]="inputLookupAppCustCompanyShareHolder3Obj"
+                                          [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                          [identifier]="'lookupAppCustCompanyShareHolder3'"
+                                          (lookup)="getLookupAppCustCompanyShareHolder3($event)"
+                                          *ngIf="inputLookupAppCustCompanyShareHolder3Obj.isReady">
+                                      </lib-uclookupgeneric>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-md-5 adInsLabel" translate>Management / Shareholder Position 3</label>
+                                  <div class="col-md-5">
+                                      <input type="text" class="form-control adInsInput width-75-per"
+                                          formControlName="MrJobPositionMgmntShrholder3Name" readonly>
+                                      <lib-uc-show-errors
+                                          [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder3Code"
+                                          [submit]="enjiForm.submitted">
+                                      </lib-uc-show-errors>
+                                  </div>
+                              </div>
+                              </div>
+                      </div>
+                      <div *ngIf="MrCustTypeCode == 'PERSONAL'">
+                          <div [hidden]="isHidden">
+                              <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
+                                  [panel]="'SupplierSigner'">
+                              </lib-ucSubsection>
+                              <div class="form-body" id="SupplierSigner">
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel adins-required-label" translate>Supplier Officer Name</label>
+                                      <div class="col-md-5">
+                                          <lib-uclookupgeneric [lookupInput]="inputLookupBranchEmpObj"
+                                              [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                              [identifier]="'lookupBranchEmp'" (lookup)="getLookupBranchEmp($event)"
+                                              *ngIf="inputLookupBranchEmpObj.isReady">
+                                          </lib-uclookupgeneric>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <label class="col-md-5 adInsLabel" translate>Supplier Employee Position</label>
+                                      <div class="col-md-5">
+                                          <input type="text" class="form-control adInsInput width-75-per"
+                                              formControlName="MrJobPositionSupplBranchEmpName" readonly>
+                                          <lib-uc-show-errors
+                                              [control]="DocSignerForm.controls.MrJobPositionSupplBranchEmpName"
+                                              [submit]="enjiForm.submitted">
+                                          </lib-uc-show-errors>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <lib-ucSubsection [id]="'CompanySignerId'" [title]="'Company Signer'"
+                              [panel]="'CompanySigner'">
+                          </lib-ucSubsection>
+                          <div class="form-body" id="CompanySigner">
+                              <div class="form-group row">
+                                  <label class="col-md-5 adInsLabel adins-required-label" translate>Company Officer Name
+                                      1</label>
+                                  <div class="col-md-5">
+                                      <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp1Obj"
+                                          [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                          [identifier]="'lookupOfficeEmp1'" (lookup)="getLookupOfficeEmp1($event)"
+                                          *ngIf="inputLookupOfficeEmp1Obj.isReady">
+                                      </lib-uclookupgeneric>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-md-5 adInsLabel" translate>Company Position 1</label>
+                                  <div class="col-md-5">
+                                      <input type="text" class="form-control adInsInput width-75-per"
+                                          formControlName="MrJobPositionMfEmpNo1Name" readonly>
+                                      <lib-uc-show-errors [control]="DocSignerForm.controls.MrJobPositionMfEmpNo1Name"
+                                          [submit]="enjiForm.submitted">
+                                      </lib-uc-show-errors>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-md-5 adInsLabel" translate>Company Officer Name 2</label>
+                                  <div class="col-md-5">
+                                      <lib-uclookupgeneric [lookupInput]="inputLookupOfficeEmp2Obj"
+                                          [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                          [identifier]="'lookupOfficeEmp2'" (lookup)="getLookupOfficeEmp2($event)"
+                                          *ngIf="inputLookupOfficeEmp2Obj.isReady">
+                                      </lib-uclookupgeneric>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-md-5 adInsLabel" translate>Company Position 2</label>
+                                  <div class="col-md-5">
+                                      <input type="text" class="form-control adInsInput width-75-per"
+                                          formControlName="MrJobPositionMfEmpNo2Name" readonly>
+                                      <lib-uc-show-errors [control]="DocSignerForm.controls.MrJobPositionMfEmpNo2Name"
+                                          [submit]="enjiForm.submitted">
+                                      </lib-uc-show-errors>
+                                  </div>
+                              </div>
+                          </div>
+                          <lib-ucSubsection [id]="'CustomerSignerId'" [title]="'Customer Signer'"
+                                  [panel]="'CustomerSigner'">
+                              </lib-ucSubsection>
+                          <div class="form-body" id="CustomerSigner">
+                          <div class="form-group row">
+                              <label class="col-md-5 adInsLabel" translate>Customer Signer</label>
+                              <label class="col-md-5 adInsLabel">{{this.CustFullName}}</label>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-md-5 adInsLabel" translate>Customer's Spouse</label>
+                              <label class="col-md-5 adInsLabel">{{this.ContactPersonName}}</label>
+                          </div>
+                      </div>
+                  </div>
+                      <div class="form-actions right">
+                          <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CanceLink]"
+                              [queryParams]="{'BizTemplateCode': BizTemplateCode}" translate>
+                              <i class="fa fa-times "></i> Cancel
+                          </button>
+                          <button type="submit" class="btn btn-raised btn-primary" translate>
+                              <i class="far fa-check-square"></i> Save
+                          </button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

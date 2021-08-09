@@ -14,4 +14,6 @@ export class URLConstantDsf {
     public static AddCustomerGroupPlafondRequestDsf = environment.losUrl + "/CustomerGroupPlafondDsf/AddCustomerGroupPlafondRequestDsf";
     public static CustomerGroupPlafondApproval = environment.losUrl + "/ApprovalDsf/CustomerGroupPlafondApprovalDsf";
     public static GetCustomerGroupPlafondDsfByCustomerGroupPlafondId = environment.losUrl + "/CustomerGroupPlafondDsf/GetCustomerGroupPlafondDsfByCustomerGroupPlafondId";
+
+    public static GetSignerRoleCode = environment.losUrl + "/DocumentDsf/GetDocSignerRoleCodeDsf";
 }

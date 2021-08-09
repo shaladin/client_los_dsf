@@ -1,0 +1,78 @@
+{
+    "title": "Office Employee",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "RE.EMP_NO",
+            "id": "OfficeEmpNoId",
+            "value": "",
+            "label": "Office Employee No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "RE.EMP_NAME",
+            "id": "OfficeEmpNameId",
+            "value": "",
+            "label": "Office Employee Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "lookupOfficeEmpDsf"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Employee No",
+            "name": "RE.EMP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Employee Name",
+            "name": "RE.EMP_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Employee Position",
+            "name": "RJT.JOB_TITLE_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "OfficeEmpNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeEmpName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "JobTitleName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "OfficeEmpNo"
+                }
+            ]
+        }
+    ],
+    "propertyId": "OfficeEmpNo",
+    "propertyName": "OfficeEmpName"
+}

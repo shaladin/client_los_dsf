@@ -70,6 +70,12 @@ export class PathConstantDsf {
     public static CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.INQUIRY;
     //#endregion
 
+    //#region Doc-Signer
+    public static NAP_DOC_SIGNER = "DocumentSignerDsf";
+    public static NAP_DOC_SIGNER_PAGING = PathConstantDsf.NAP_DOC_SIGNER + "/" + PathConstant.PAGING;
+    public static NAP_DOC_SIGNER_DETAIL = PathConstantDsf.NAP_DOC_SIGNER + "/" + PathConstant.DETAIL;
+    //#endregion
+
     
 
 }

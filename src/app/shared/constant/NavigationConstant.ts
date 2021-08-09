@@ -446,4 +446,8 @@ export class NavigationConstant {
   public static CUSTOMER_GROUP_PLAFOND_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_DETAIL;
   public static CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL;
   //#endregion
+
+  //#region  DOC SIGNER DSF
+  public static NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.NAP_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/DocumentSigner/Detail'
+  //#endregion
 }
