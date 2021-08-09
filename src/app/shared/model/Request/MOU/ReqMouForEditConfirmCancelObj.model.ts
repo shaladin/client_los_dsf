@@ -1,21 +1,13 @@
+import { environment } from "environments/environment";
+
 export class ReqMouForEditConfirmCancelObj {
     MouStat: string;
     MouCustId: number;
-    WfTaskListId: number;
+    WfTaskListId: any;
     RowVersion: string;
 
     MouCustConfirmCancelObj() {
-        this.RowVersion = "";
-    }
-}
-
-export class ReqMouForEditConfirmCancelV2Obj {
-    MouStat: string;
-    MouCustId: number;
-    WfTaskListId: string;
-    RowVersion: string;
-
-    MouCustConfirmCancelObj() {
+        this.WfTaskListId = environment.isCore ? "" : 0;
         this.RowVersion = "";
     }
 }

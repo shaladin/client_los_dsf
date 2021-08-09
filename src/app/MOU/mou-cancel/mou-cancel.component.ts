@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqMouForEditConfirmCancelObj, ReqMouForEditConfirmCancelV2Obj } from 'app/shared/model/Request/MOU/ReqMouForEditConfirmCancelObj.model';
+import { ReqMouForEditConfirmCancelObj } from 'app/shared/model/Request/MOU/ReqMouForEditConfirmCancelObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { environment } from 'environments/environment';
@@ -44,9 +44,9 @@ export class MouCancelComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchMouCancelV2.json";
       this.inputPagingObj.isJoinExAPI = true;
       
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_MOU_DLFN;
-      this.RequestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
-      this.RequestTaskModel.RoleCode = this.user[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
+      //this.RequestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
+      //this.RequestTaskModel.RoleCode = this.user[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [this.user[CommonConstant.ROLE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
@@ -78,20 +78,11 @@ export class MouCancelComponent implements OnInit {
     }
     else if (event.Key == "cancel") {
       if (confirm("Are you sure to cancel this?")) {
-        let mouCancel;
-        if(environment.isCore){
-          mouCancel =  new ReqMouForEditConfirmCancelV2Obj();
-          mouCancel.MouStat = CommonConstant.MouStatCancel;
-          mouCancel.MouCustId = event.RowObj.MouCustId;
-          mouCancel.WfTaskListId = event.RowObj.ExecutionId;
-          mouCancel.RowVersion = event.RowObj.RowVersions;
-        }else{
-          mouCancel =  new ReqMouForEditConfirmCancelObj();
-          mouCancel.MouStat = CommonConstant.MouStatCancel;
-          mouCancel.MouCustId = event.RowObj.MouCustId;
-          mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
-          mouCancel.RowVersion = event.RowObj.RowVersions;
-        }
+        let mouCancel =  new ReqMouForEditConfirmCancelObj();
+        mouCancel.MouStat = CommonConstant.MouStatCancel;
+        mouCancel.MouCustId = event.RowObj.MouCustId;
+        mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
+        mouCancel.RowVersion = event.RowObj.RowVersions;
 
         let EditMouForCancelByMouIdUrl = environment.isCore ? URLConstant.EditMouForCancelByMouIdV2 : URLConstant.EditMouForCancelByMouId;
         this.http.post(EditMouForCancelByMouIdUrl, mouCancel).subscribe(
