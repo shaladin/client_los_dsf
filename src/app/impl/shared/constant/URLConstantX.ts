@@ -34,6 +34,10 @@ export class URLConstantX {
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";
 
+  // MOU CUST DLFN X
+  public static GetMouDfOsPlafondByIdX = environment.losUrl + '/v1' + "/MouCustDlrFncngX/GetMouDfOsPlafondById";
+  public static GetMouDfOsPlafondByAppIdX = environment.losUrl + '/v1' + "/MouCustDlrFncngX/GetMouDfOsPlafondByAppId";
+
   // MOU CUST COLLATERAL X
   public static GetMouCustCollateralStatXByMouCustCollateralIdX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetMouCustCollateralStatXByMouCustCollateralId';
   public static GetMouCustCollateralForMouViewByMouCustIdX = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralForMouViewByMouCustId";

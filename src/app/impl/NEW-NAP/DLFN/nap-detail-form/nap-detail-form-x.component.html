@@ -88,16 +88,16 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-dlfn *ngIf="AppStepIndex == 1" [AppId]="appId"
-                (outputTab)="NextStep('INVOICE')" (outputCancel)="Cancel()"></app-application-data-dlfn>
+              <app-application-data-dlfn-x *ngIf="AppStepIndex == 1" [AppId]="appId"
+                (outputTab)="NextStep('INVOICE')" (outputCancel)="Cancel()"></app-application-data-dlfn-x>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
               <app-invoice-data-dlfn *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
               </app-invoice-data-dlfn>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-dlfn *ngIf="AppStepIndex == 3" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
-              </app-financial-data-dlfn>
+              <app-financial-data-dlfn-x *ngIf="AppStepIndex == 3" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              </app-financial-data-dlfn-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
