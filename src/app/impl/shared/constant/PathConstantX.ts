@@ -62,6 +62,7 @@ export class PathConstantX {
   public static CHANGE_MOU_EXEC_DETAIL_X = PathConstant.CHANGE_MOU + '/ExecDetailX';
   public static CHANGE_MOU_REQ_DETAIL_CUST_X = PathConstant.CHANGE_MOU_REQ + '/' + PathConstant.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X;
   public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X = PathConstant.CHANGE_MOU_REQ + '/' + PathConstant.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X + '/:MOUType';
+  public static CHANGE_MOU_RVW_PAGING_X = PathConstant.CHANGE_MOU + "/ReviewPagingX";
   //#endregion
 
   //region New Approval

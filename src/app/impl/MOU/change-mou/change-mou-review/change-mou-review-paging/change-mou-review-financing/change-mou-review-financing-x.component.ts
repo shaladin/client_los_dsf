@@ -201,16 +201,11 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
     this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [];
     var attribute1 = {
-      "AttributeName": "Approval Amount",
+      "AttributeName": "PlafondAmt",
       "AttributeValue": this.PlafondAmt
     };
 
-    var attribute2 = {
-      "AttributeName": "Scoring",
-      "AttributeValue": this.ScoreResult
-    };
     Attributes.push(attribute1);
-    Attributes.push(attribute2);
 
     var TypeCode = {
       TypeCode: "CHG_MOU_APV_TYPE",
