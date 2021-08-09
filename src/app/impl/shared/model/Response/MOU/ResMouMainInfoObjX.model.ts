@@ -1,4 +1,4 @@
-export class ResMainInfoObjX {
+export class ResMouMainInfoObjX {
   MouCustNo: string
   IsFreeze: boolean
   MouCustDt: Date

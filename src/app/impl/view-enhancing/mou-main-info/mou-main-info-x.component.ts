@@ -8,9 +8,10 @@ import {MouCustObj} from 'app/shared/model/MouCustObj.Model';
 import {GenericObj} from 'app/shared/model/Generic/GenericObj.Model';
 import {CommonConstant} from 'app/shared/constant/CommonConstant';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {ResMainInfoObjX} from '../../shared/model/Response/MOU/ResMainInfoObjX.model';
-import {NavigationConstant} from '../../../shared/constant/NavigationConstant';
+import {ResMouMainInfoObjX} from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjX.model';
+import {NavigationConstant} from 'app/shared/constant/NavigationConstant';
 import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-mou-main-info-x',
@@ -20,14 +21,14 @@ export class MouMainInfoXComponent implements OnInit {
   @Input() MouCustId: number;
   MouCustObj: MouCustObj = new MouCustObj();
   CustNoObj: GenericObj = new GenericObj();
-  MouMainInfo: ResMainInfoObjX;
+  MouMainInfo: ResMouMainInfoObjX;
 
   constructor(private http: HttpClient,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.http.post<ResMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, {Id: this.MouCustId}).subscribe(
+    this.http.post<ResMouMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, {Id: this.MouCustId}).subscribe(
       (response) => {
         this.MouMainInfo = response;
         if(this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
