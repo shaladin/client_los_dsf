@@ -13,7 +13,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ReqListMouCustLglReviewObj, ReqListMouCustLglReviewV2Obj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
+import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -133,57 +133,37 @@ export class LegalReviewDetailComponent implements OnInit {
 
   SaveData(formObj: FormGroup, isSubmit: boolean) {
     if (this.LegalForm.valid) {
-      if(environment.isCore){
-        var mouV2Obj = new ReqListMouCustLglReviewV2Obj();
-        for (let index = 0; index < this.responseRefMasterObj.length; index++) {
-          var tempMouObj = {
-            MouCustId: this.MouCustId,
-            MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
-            LglReviewResult: formObj.value.items[index].values,
-            RowVersion: formObj.value.items[index].RowVersion
-          }
-          mouV2Obj.MouCustLglReviewObjs.push(tempMouObj);
+      let addMouLglRvwUrl = environment.isCore ? URLConstant.AddRangeMouCustLglReviewV2 : URLConstant.AddRangeMouCustLglReview;
+      var mouLglRvwObj = new ReqListMouCustLglReviewObj();
+      for (let index = 0; index < this.responseRefMasterObj.length; index++) {
+        var tempMouObj = {
+          MouCustId: this.MouCustId,
+          MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
+          LglReviewResult: formObj.value.items[index].values,
+          RowVersion: formObj.value.items[index].RowVersion
         }
-        mouV2Obj.WfTaskListId = this.WfTaskListId;
-        mouV2Obj.IsSubmit = isSubmit;
-        this.http.post(URLConstant.AddRangeMouCustLglReviewV2, mouV2Obj).subscribe(
-          response => {
-            this.toastr.successMessage(response['message']);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
-  
-          });
-        this.mouTc.Save();
+        mouLglRvwObj.MouCustLglReviewObjs.push(tempMouObj);
       }
-      else{
-        var mouObj = new ReqListMouCustLglReviewObj();
-        for (let index = 0; index < this.responseRefMasterObj.length; index++) {
-          var tempMouObj = {
-            MouCustId: this.MouCustId,
-            MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
-            LglReviewResult: formObj.value.items[index].values,
-            RowVersion: formObj.value.items[index].RowVersion
-          }
-          mouObj.MouCustLglReviewObjs.push(tempMouObj);
-        }
-        mouObj.WfTaskListId = this.WfTaskListId;
-        mouObj.IsSubmit = isSubmit;
-        this.http.post(URLConstant.AddRangeMouCustLglReview, mouObj).subscribe(
-          response => {
-            this.toastr.successMessage(response['message']);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
-  
-          });
-        this.mouTc.Save();
-      }
+      mouLglRvwObj.WfTaskListId = this.WfTaskListId;
+      mouLglRvwObj.IsSubmit = isSubmit;
+      this.http.post(addMouLglRvwUrl, mouLglRvwObj).subscribe(
+        response => {
+          this.toastr.successMessage(response['message']);
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
+
+        });
+      this.mouTc.Save();
     }
   }
 
   claimTask() {
-    if(environment.isCore){
-      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
-    }
-    else{
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    if(environment.isCore){	
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId > 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }	
   }
 }

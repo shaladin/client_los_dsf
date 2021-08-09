@@ -15,6 +15,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -117,7 +118,8 @@ export class ReturnHandlingDetailComponent implements OnInit {
       reqObj.AppId = this.appId;
       reqObj.RowVersion = item.RowVersion;
 
-      this.http.post(URLConstant.RequestReturnTask, reqObj).subscribe(
+      let RequestReturnTaskUrl = environment.isCore ? URLConstant.RequestReturnTaskV2 : URLConstant.RequestReturnTask;
+      this.http.post(RequestReturnTaskUrl, reqObj).subscribe(
         (response) => {
           this.GetListReturnHandlingDByReturnHandlingHId();
           this.toastr.successMessage(response["message"]);
@@ -167,6 +169,18 @@ export class ReturnHandlingDetailComponent implements OnInit {
             MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
           });
           this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
+        }else if(this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.AppStepComm || this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.AppStepRSVFund){        
+          if(this.lobCode == CommonConstant.CFNA){
+            this.taskObj = this.taskObj.filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
+          }else{
+            this.taskObj = this.taskObj.filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstant.ReturnHandlingAddSurvey);
+          }
+
+          if (this.taskObj.length > 0) {
+            this.ReturnHandlingForm.patchValue({
+              MrReturnTaskCode: this.taskObj[0].Key
+            });
+          }
         }
       }
     );

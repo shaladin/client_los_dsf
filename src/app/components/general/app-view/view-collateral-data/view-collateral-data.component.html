@@ -1,0 +1,74 @@
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <div *ngIf="isMulti">
+        <span>
+          <button type="button" class="btn btn-raised btn-warning mr-1 mt-3" (click)="Back()" translate><i class="ft-arrow-left"></i> Back</button>
+        </span>
+      </div>
+    </div>
+    <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
+    <div class="px-3">
+      <div *ngIf="AppCollateralDocs?.length">
+        <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
+        </lib-ucSubsection>
+        <div class="form-body" id="AddCollDocument">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header">Document</span></th>
+                <th><span translate class="thead-header">Received</span></th>
+                <th><span translate class="thead-header">Document No</span></th>
+                <th><span translate class="thead-header">Expired Date</span></th>
+                <th><span translate class="thead-header">Document Notes</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of this.AppCollateralDocs">
+                <td>
+                  {{item.DocCode}}
+                </td>
+                <td *ngIf="item.IsReceived == true">
+                  Yes
+                </td>
+                <td *ngIf="item.IsReceived == false">
+                  No
+                </td>
+                <td>
+                  {{item.DocNo}}
+                </td>
+                <td>
+                  {{item.ExpiredDt | date: 'yyyy-MM-dd'}}
+                </td>
+                <td>
+                  {{item.DocNotes}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <lib-ucSubsection *ngIf="AppCollateralAttrObjs?.length" [id]="'collAttrId'"
+        [title]="'Collateral Attribute'" [panel]="'collAttr'">
+      </lib-ucSubsection>
+      <div class="col-md-12" id="collAttr">
+        <div  class="row" *ngIf="AppCollateralAttrObjs?.length">
+          <div class="col-md-12">
+            <div class="col-md-12" *ngFor="let item of this.AppCollateralAttrObjs;">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel"> {{item.CollateralAttrName}} </label>
+                <label class="col-md-9 adInsLabel"> {{item.AttrValue}} </label>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <lib-ucSubsection [id]="'collateralAccessoriesId'" [title]="'Collateral Accessories'" [panel]="'collateralAccessories'">
+      </lib-ucSubsection>
+      <div id="collateralAccessories">
+        <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
+      </div>
+    </div>
+    <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewUOLObj"></lib-ucviewgeneric>
+  </div>
+</div>

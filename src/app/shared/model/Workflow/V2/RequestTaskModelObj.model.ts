@@ -18,7 +18,7 @@ export class RequestTaskModelObj {
         this.RoleCode = "";
         this.OfficeCode = "";
         this.IncludeAssignedTasks= true;
-        this.OfficeRoleCodes= new Array<string>();
+        this.OfficeRoleCodes = new Array<string>();
     }
 
 }

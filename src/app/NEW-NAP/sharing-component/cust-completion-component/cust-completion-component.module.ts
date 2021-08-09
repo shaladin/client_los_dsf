@@ -21,6 +21,7 @@ import { FinancialPersonalComponent } from "./financial-tab/financial-personal/f
 import { CcAddressPagingComponent } from './address-tab/cc-address-paging/cc-address-paging.component';
 import { CcAddressDetailComponent } from './address-tab/cc-address-detail/cc-address-detail.component';
 import { MgmntShrholderComponent } from './mgmnt-shrholder/mgmnt-shrholder.component';
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -54,6 +55,7 @@ export const customCurrencyMaskConfig = {
         AdInsModule,
         MatRadioModule,
         MainDataComponentModule,
+        NgMultiSelectDropDownModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [

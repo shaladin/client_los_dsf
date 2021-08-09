@@ -33,6 +33,7 @@ import { MouViewFreezeUnfreezeHistoryComponent } from "./mou-view-freeze-unfreez
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewModule } from "../view.module";
 import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-recommendation/mou-view-approval-recommendation.component";
+import { MouViewSrvyTaskComponent } from "./mou-view-srvy-task/mou-view-srvy-task.component";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -68,6 +69,7 @@ import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-reco
         MouViewListedCustFactoringComponent,
         MouViewSurveyComponent,
         MouViewTcComponent,
+        MouViewSrvyTaskComponent,
         MouViewChangeMouHistoryComponent,
         MouViewFreezeUnfreezeHistoryComponent,
         MouViewApprovalRecommendationComponent
