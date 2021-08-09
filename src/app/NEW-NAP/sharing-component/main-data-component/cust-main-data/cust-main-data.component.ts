@@ -409,6 +409,14 @@ export class CustMainDataComponent implements OnInit {
     this.professionLookUpObj.urlJson = "./assets/uclookup/customer/lookupCustomerProfession.json";
     this.professionLookUpObj.pagingJson = "./assets/uclookup/customer/lookupCustomerProfession.json";
     this.professionLookUpObj.genericJson = "./assets/uclookup/customer/lookupCustomerProfession.json";
+    let listCriteriaObj: Array<CriteriaObj> = new Array();
+    let criteriaCustObj = new CriteriaObj();
+    criteriaCustObj.DataType = "text";
+    criteriaCustObj.restriction = AdInsConstant.RestrictionEq;
+    criteriaCustObj.propName = 'MR_CUST_MODEL_CODE';
+    criteriaCustObj.value = "";
+    listCriteriaObj.push(criteriaCustObj);
+    this.professionLookUpObj.addCritInput = listCriteriaObj;
   }
 
   AppCustData: AppCustObj = new AppCustObj();
