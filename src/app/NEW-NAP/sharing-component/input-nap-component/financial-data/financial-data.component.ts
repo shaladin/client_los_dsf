@@ -173,6 +173,7 @@ export class FinancialDataComponent implements OnInit {
 
           EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
+          FlatRatePrcnt: this.appFinDataObj.FlatRatePrcnt,
 
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
@@ -262,6 +263,7 @@ export class FinancialDataComponent implements OnInit {
         this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
     }
+    this.LoadAppFinData();
   }
 
   SetInputByCalcBase(calcBase) {

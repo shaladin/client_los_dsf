@@ -283,6 +283,15 @@
           </lib-uc-show-errors>
         </div>
       </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Owner Profession</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+            [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
+            [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+          </lib-uclookupgeneric>
+        </div>
+      </div>
       <div class="form-group row" *ngIf="!isSelfCust">
         <label class="col-md-2" translate>Copy Address From</label>
         <div class="col-md-4">
@@ -302,8 +311,12 @@
           </div>
         </div>
       </div>
-      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm"
-        [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+      <div class="form-group row">
+        <div class="col-md-12">
+          <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm"
+          [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+        </div>
+      </div>
     </div>
 
     <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
@@ -539,6 +552,15 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
           <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern"[submit]="enjiForm.submitted">
           </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Owner Profession</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+            [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
+            [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+          </lib-uclookupgeneric>
         </div>
       </div>
       <div class="form-group row" *ngIf="!isSelfCust">

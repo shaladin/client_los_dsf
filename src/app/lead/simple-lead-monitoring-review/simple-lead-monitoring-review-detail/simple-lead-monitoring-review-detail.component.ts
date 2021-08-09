@@ -7,12 +7,11 @@ import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CookieService } from 'ngx-cookie';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { UploadReviewCustomObj } from 'app/shared/model/V2/UploadReviewObj.model';
 
 @Component({
   selector: 'app-simple-lead-monitoring-review-detail',
@@ -25,14 +24,14 @@ export class SimpleLeadMonitoringReviewDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   UploadMonitoringHId: number;
   UploadNo: string;
-  taskListId: number;
+  taskListId: any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private cookieService: CookieService
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["UploadMonitoringHId"] != null) {
@@ -48,9 +47,7 @@ export class SimpleLeadMonitoringReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.taskListId > 0) {
-      this.claimTask();
-    }
+    this.claimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewReviewMonitoringLead.json";
 
     this.inputPagingObj = new UcPagingObj();
@@ -81,13 +78,14 @@ export class SimpleLeadMonitoringReviewDetailComponent implements OnInit {
     this.inputPagingObj.addCritInput = arrCrit;
   }
 
-  uploadReview(status) {
-    let uploadObj = {
-      MrUploadStatusCode: status,
-      TaskListId: this.taskListId,
-      UploadMonitoringNo: this.UploadNo
-    };
-    this.http.post(URLConstant.UploadReview, uploadObj).subscribe(
+  uploadReview(status : string) {
+    let UploadReviewUrl = environment.isCore? URLConstant.UploadReviewV2 : URLConstant.UploadReview;
+    
+    var uploadObj = new UploadReviewCustomObj();
+    uploadObj.TaskListId = this.taskListId;
+    uploadObj.MrUploadStatusCode = status;
+    uploadObj.UploadMonitoringNo = this.UploadNo;
+    this.http.post(UploadReviewUrl, uploadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
@@ -96,11 +94,12 @@ export class SimpleLeadMonitoringReviewDetailComponent implements OnInit {
   }
 
   claimTask() {
-    let currentUserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: this.taskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => { }
-    );
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskV2(this.taskListId);
+    }
+    else{
+      this.claimTaskService.ClaimTask(this.taskListId);
+    }
   }
 
 }

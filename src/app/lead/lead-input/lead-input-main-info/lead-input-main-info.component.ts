@@ -234,6 +234,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.http.post(URLConstant.GetListKvpRefAppSrcForAppOrLead, obj).subscribe(
       (response) => {
         this.listLeadSource = response[CommonConstant.ReturnObj];
+        this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
       });
 
     if (this.pageType == "edit" || this.pageType == "update") {

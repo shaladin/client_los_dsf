@@ -127,7 +127,7 @@ export class NewNapCustDetailComponent implements OnInit {
     MotherMaidenName: ['', Validators.required],
     MrCompanyTypeCode: [''],
     MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
-    Email1: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+    Email1: ['', [Validators.required, Validators.pattern(CommonConstant.regexEmail)]],
     MrJobPositionCode: [''],
     EstablishmentDt: [''],
     SharePrcnt: [0],
@@ -199,7 +199,7 @@ export class NewNapCustDetailComponent implements OnInit {
     MrCustRelationshipCode: ['', Validators.required],
     MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     MobilePhnNo2: ['', Validators.pattern("^[0-9]+$")],
-    Email: ['', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')],
+    Email: ['', Validators.pattern(CommonConstant.regexEmail)],
     CopyAddrFrom: [''],
     RowVersion: ['']
   });
@@ -244,8 +244,8 @@ export class NewNapCustDetailComponent implements OnInit {
     MrCustRelationshipCode: [''],
     MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     MobilePhnNo2: ['', Validators.pattern("^[0-9]*$")],
-    Email1: ['', Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
-    Email2: ['', Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+    Email1: ['', Validators.pattern(CommonConstant.regexEmail)],
+    Email2: ['', Validators.pattern(CommonConstant.regexEmail)],
     PhnArea1: ['', Validators.pattern("^[0-9]*$")],
     PhnArea2: ['', Validators.pattern("^[0-9]*$")],
     Phn1: ['', Validators.pattern("^[0-9]*$")],

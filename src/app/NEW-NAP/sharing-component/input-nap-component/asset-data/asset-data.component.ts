@@ -41,6 +41,8 @@ import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { RefProvDistrictObj } from 'app/shared/model/RefProvDistrictObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ResAssetValidationRuleObj } from 'app/shared/model/Rule/ResAssetValidationRuleObj.model';
+import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
+import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 
 @Component({
   selector: 'app-asset-data',
@@ -159,6 +161,7 @@ export class AssetDataComponent implements OnInit {
     LocationAreaCode4: ['', Validators.maxLength(50)],
     LocationCity: ['', Validators.maxLength(50)],
     LocationZipcode: ['', Validators.maxLength(50)],
+    OwnerProfessionCode: [''],
 
     LocationAddrType: [''],
     DelivAddrType: [''],
@@ -237,6 +240,7 @@ export class AssetDataComponent implements OnInit {
   InputLookupSupplAccObj: InputLookupObj;
   InputLookupAccObj: InputLookupObj;
   InputLookupAccSupObj: InputLookupObj;
+  InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
 
   EmpObj: Array<VendorEmpObj>;
   AdminHeadObj: any;
@@ -261,6 +265,7 @@ export class AssetDataComponent implements OnInit {
   VendorAdminHeadObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
   VendorEmpBMObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
   AppCustObj: any;
+  AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   RefProdCmptAssetType: ProdOfferingDObj;
   RefProdCmptAssetCond: ProdOfferingDObj;
   RefProdCmptSupplSchm: ProdOfferingDObj;
@@ -340,6 +345,7 @@ export class AssetDataComponent implements OnInit {
     await this.GetAppData();
     await this.GetRefProdCompt();
     await this.GetAppCust();
+    await this.GetAppCustPersonalJobData();
     await this.GetAppCustPhone();
     await this.bindAllRefMasterObj();
     this.initLookup();
@@ -1054,6 +1060,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.MrIdTypeCode = this.AssetDataForm.controls.MrIdTypeCode.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.AssetDataForm.controls.OwnerIdNo.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AssetDataForm.controls.MrOwnerRelationshipCode.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AssetDataForm.controls.OwnerProfessionCode.value;
 
     if (this.BizTemplateCode !== "OPL") {
       for (var i = 0; i < this.items.length; i++) {
@@ -1351,6 +1358,7 @@ export class AssetDataComponent implements OnInit {
         OwnerZipcode: this.AddrLegalObj[0].Zipcode,
         OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
         OwnerAddrType: CommonConstant.AddrTypeLegal,
+        OwnerProfessionCode: this.AppCustPersonalJobData.MrProfessionCode
       });
       this.inputFieldOwnerAddrObj = new InputFieldObj();
       this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -1365,8 +1373,11 @@ export class AssetDataComponent implements OnInit {
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
       this.inputAddressObjForOwner.default = this.ownerAddrObj;
       this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
+      this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
+      this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName };
 
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = true;
+      this.InputLookupProfessionObj.isDisable = true;
       this.AssetDataForm.controls["OwnerName"].disable();
       this.AssetDataForm.controls["MrIdTypeCode"].disable();
       this.AssetDataForm.controls["OwnerIdNo"].disable();
@@ -1377,6 +1388,7 @@ export class AssetDataComponent implements OnInit {
     }
     else {
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
+      this.InputLookupProfessionObj.isDisable = false;
       this.AssetDataForm.controls["OwnerName"].enable();
       this.AssetDataForm.controls["MrIdTypeCode"].enable();
       this.AssetDataForm.controls["OwnerIdNo"].enable();
@@ -1466,6 +1478,15 @@ export class AssetDataComponent implements OnInit {
           }
 
           if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
+            let reqByCode: GenericObj = new GenericObj();
+            reqByCode.Code = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
+            this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).subscribe(
+              (response) =>{
+                this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+                this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
+              }
+            );
+
             this.AssetDataForm.patchValue({
               UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
               MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
@@ -1489,7 +1510,8 @@ export class AssetDataComponent implements OnInit {
               LocationCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity,
               LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
               SelfUsage: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF"),
-              SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
+              SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
+              OwnerProfessionCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode
             });
 
             this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
@@ -1731,6 +1753,12 @@ export class AssetDataComponent implements OnInit {
 
     this.InputLookupAccObj = this.initLookupAcc();
     this.isOnlookup = true;
+
+    this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.isRequired = false;
+    this.InputLookupProfessionObj.isReady = true;
   }
 
   initLookupAcc() {
@@ -1913,6 +1941,12 @@ export class AssetDataComponent implements OnInit {
         this.setValidatorBpkb();
       }
     );
+  }
+
+  GetProfession(event) {
+    this.AssetDataForm.patchValue({
+      OwnerProfessionCode: event.ProfessionCode
+    });
   }
 
   async GetVendor() {
@@ -2210,10 +2244,10 @@ export class AssetDataComponent implements OnInit {
         AssetAccessoryName: ['', [Validators.maxLength(100)]],
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: [0, Validators.required],
+        AccessoryPriceAmt: [0, [Validators.required,Validators.min(0.00)]],
         AccessoryDownPaymentType: [''],
         AccessoryDownPaymentPrcnt: [0, Validators.required],
-        AccessoryDownPaymentAmt: [0, Validators.required],
+        AccessoryDownPaymentAmt: [0, [Validators.required,Validators.min(0.00)]],
         AccessoryNotes: ['']
       })
     }
@@ -2224,10 +2258,10 @@ export class AssetDataComponent implements OnInit {
         AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(100)]],
         SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, Validators.required],
+        AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required,Validators.min(0.00)]],
         AccessoryDownPaymentType: [this.DpObj[0].Key],
         AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, Validators.required],
-        AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, Validators.required],
+        AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, [Validators.required,Validators.min(0.00)]],
         AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]
       })
     }
@@ -2426,6 +2460,14 @@ export class AssetDataComponent implements OnInit {
           this.AssetDataForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
           this.AssetDataForm.controls.MrIdTypeCode.updateValueAndValidity();
         }
+      }
+    );
+  }
+
+  async GetAppCustPersonalJobData() {
+    await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
+      (response) => {
+        this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
       }
     );
   }

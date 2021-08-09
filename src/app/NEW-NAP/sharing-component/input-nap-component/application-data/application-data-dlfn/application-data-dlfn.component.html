@@ -50,7 +50,7 @@
                         <label class="col-md-3 adins-required-label" translate>MOU No</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto"
-                            (change)="SetPayFreq(SalesAppInfoForm.controls.MouCustId.value)" formControlName="MouCustId"
+                            (change)="SetPayFreq(SalesAppInfoForm.controls.MouCustId.value, false)" formControlName="MouCustId"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MouCustId.invalid }">
                             <option *ngFor="let cm of allMouCust" value="{{cm.MouCustId}}">
                               {{cm.MouNo}}</option>
@@ -81,7 +81,7 @@
                           [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                         </div>
-                        
+
                       </div>
                       <div class="form-group row">
                         <label class="col-md-3 adins-required-label" translate>Installment Type</label>
@@ -124,7 +124,7 @@
                         <label class="col-md-3 adins-required-label" translate>Tenor</label>
                         <div class="col-md-9">
                           <input type="text" class="form-control adInsInput width-30-per" formControlName="Tenor"
-                            (change)="CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value)"
+                            (change)="CalculateNumOfInst()"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.Tenor.invalid }">
                           <lib-uc-show-errors [control]="SalesAppInfoForm.controls.Tenor" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
@@ -134,9 +134,10 @@
                         <div class="form-group row">
                           <label class="col-md-3 adins-required-label" translate>Payment Frequency</label>
                           <div class="col-md-9">
-                            <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode">
-                              <option value="{{allPayFreq?.PayFreqCode}}">
-                                {{allPayFreq?.Descr}}</option>
+                            <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"  (change)="changePaymentFreq()">
+                              <option value="">-Select One-</option>
+                              <option *ngFor="let it of listPayFreq" value="{{it.PayFreqCode}}">
+                                {{it.Descr}}</option>
                             </select>
                             <lib-uc-show-errors [control]="SalesAppInfoForm.controls.PayFreqCode"
                               [submit]="enjiForm.submitted">

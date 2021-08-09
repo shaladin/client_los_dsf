@@ -382,7 +382,7 @@
                             <div class="col-md-6" >
                               <input type="" currencyMask id="AccessoryDownPaymentAmt{{i}}" class="form-control"
                                 (focusout)="CheckAccessoryDPValue(i, 'AMT')" formControlName="AccessoryDownPaymentAmt"
-                                [options]="{ nullable: true }"
+                                [options]="{ min: 0 }"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
                               <lib-uc-show-errors
                                 [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt"
@@ -487,24 +487,12 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2" translate>Copy Address</label>
+                  <label class="col-md-2" translate>Owner Profession</label>
                   <div class="col-md-4">
-                    <div class="input-group">
-                      <select class="form-control" formControlName="OwnerAddrType"
-                        [(ngModel)]="copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
-                        <option value="">-Select One-</option>
-                        <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
-                          {{item.MrCustAddrTypeCode}}
-                        </option>
-                      </select>
-                      <div class="input-group-append">
-                        <span class="input-group-btn" *ngIf="!AssetDataForm.controls.SelfOwner.value">
-                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()" translate>
-                            <i class="fa fa-check-square-o"></i>Copy
-                          </button>
-                        </span>
-                      </div>
-                    </div>
+                    <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+                      [lookupInput]="InputLookupProfessionObj" [parentForm]="AssetDataForm"
+                      [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+                    </lib-uclookupgeneric>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
                   <div class="col-md-4">
@@ -512,6 +500,27 @@
                     <lib-uc-show-errors [control]="AssetDataForm.controls.OwnerMobilePhnNo"
                       [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" translate>Copy Address</label>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <select class="form-control" formControlName="OwnerAddrType"
+                      [(ngModel)]="copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
+                        {{item.MrCustAddrTypeCode}}
+                      </option>
+                    </select>
+                    <div class="input-group-append">
+                      <span class="input-group-btn" *ngIf="!AssetDataForm.controls.SelfOwner.value">
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()" translate>
+                          <i class="fa fa-check-square-o"></i>Copy
+                        </button>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
