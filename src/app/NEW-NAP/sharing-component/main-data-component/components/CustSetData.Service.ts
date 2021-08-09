@@ -1,9 +1,12 @@
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
+import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
 import { InputAddressObj } from "app/shared/model/InputAddressObj.Model";
 import { InputFieldObj } from "app/shared/model/InputFieldObj.Model";
 import { InputLookupObj } from "app/shared/model/InputLookupObj.Model";
+import { UcDropdownListObj } from "app/shared/model/library/UcDropdownListObj.model";
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from "app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model";
 import { UcAddressObj } from "app/shared/model/UcAddressObj.Model";
 
 export class CustSetData {
@@ -85,5 +88,22 @@ export class CustSetData {
     criteriaListCust.push(criteriaCustObj);
 
     return criteriaListCust;
+  }
+  
+  public static initDdlRefMaster(refMasterTypeCode: string, mappingCode: string = null, isSelectOutput: boolean = false, apiUrl: string = URLConstant.GetListActiveRefMaster): UcDropdownListObj {
+    let tempDdlObj: UcDropdownListObj = new UcDropdownListObj();
+    let ReqRefMasterObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
+      RefMasterTypeCode: refMasterTypeCode,
+      MappingCode: mappingCode
+    };
+    tempDdlObj.apiUrl = apiUrl;
+    tempDdlObj.requestObj = ReqRefMasterObj;
+    tempDdlObj.isSelectOutput = isSelectOutput;
+    if (apiUrl == URLConstant.GetListActiveRefMaster) {
+      tempDdlObj.customKey = "MasterCode";
+      tempDdlObj.customValue = "Descr";
+    }
+    tempDdlObj.isReady = true;
+    return tempDdlObj;
   }
 }
