@@ -1,10 +1,12 @@
-export class UploadReviewCustomV2Obj{
-    TaskListId : string;
+import { environment } from "environments/environment";
+
+export class UploadReviewCustomObj{
+    TaskListId : any;
     UploadMonitoringNo : string;
     MrUploadStatusCode : string;
 
     constructor() {
-        this.TaskListId = "";
+        this.TaskListId = environment.isCore ? "" : 0;
         this.UploadMonitoringNo = "";
         this.MrUploadStatusCode = "";
     }
