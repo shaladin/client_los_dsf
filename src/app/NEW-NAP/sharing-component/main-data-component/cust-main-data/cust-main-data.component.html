@@ -42,7 +42,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6" *ngIf="MrCustTypeCode == 'PERSONAL'">
+            <div class="col-md-6" *ngIf="MrCustTypeCode == CustTypePersonal">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Gender</label>
                 <div class="col-md-6">
@@ -51,7 +51,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6" *ngIf="MrCustTypeCode == 'COMPANY'">
+            <div class="col-md-6" *ngIf="MrCustTypeCode == CustTypeCompany">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Company Type</label>
                 <div class="col-md-6">
@@ -61,10 +61,10 @@
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="MrCustTypeCode == 'COMPANY'">
+          <div class="row" *ngIf="MrCustTypeCode == CustTypeCompany">
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}" translate>Tax
+                <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == CustTypeCompany}" translate>Tax
                   Id No</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
@@ -78,23 +78,14 @@
             <div class="col-md-6">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Customer Model</label>
-                <div class="col-md-8">
+                <div class="col-md-6">
                   <lib-ucdropdownlist *ngIf="isDdlMrCustModelReady" [dropdownListObj]="ddlCustModelObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
                     [identifier]="'MrCustModelCode'" [genericList]="CustModelObj" [isDisabled]="isExisting"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="MrCustTypeCode == 'PERSONAL'">
-            <div class="col-md-6">
-              <div class="form-group row">
-                <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
-                <div class="col-md-6">
-                  <lib-ucdropdownlist *ngIf="isDdlIdTypeReady" [dropdownListObj]="ddlIdTypeObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
-                    [identifier]="'MrIdTypeCode'" [genericList]="IdTypeObj" (callback)="ChangeIdType($event.selectedValue)" [isDisabled]="isExisting"></lib-ucdropdownlist>
-                </div>
-              </div>
-            </div>
+          <div class="row" *ngIf="MrCustTypeCode == CustTypePersonal">
             <div class="col-md-6">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Birth Place</label>
@@ -109,24 +100,33 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate>Id No</label>
-                <div class="col-md-8">
-                  <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
-                    formControlName="IdNo"
-                    [ngClass]="{'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
-                  <lib-uc-show-errors [customPattern]="customPattern" [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Birth Date</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}"
                     class="form-control" formControlName="BirthDt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthDt.invalid}">
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.BirthDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
+                <div class="col-md-6">
+                  <lib-ucdropdownlist *ngIf="isDdlIdTypeReady" [dropdownListObj]="ddlIdTypeObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'MrIdTypeCode'" [genericList]="IdTypeObj" (callback)="ChangeIdType($event.selectedValue)" [isDisabled]="isExisting"></lib-ucdropdownlist>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4 adins-required-label" translate>Id No</label>
+                <div class="col-md-8">
+                  <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                    formControlName="IdNo"
+                    [ngClass]="{'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
+                  <lib-uc-show-errors [customPattern]="customPattern" [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -151,7 +151,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}" translate>Tax
+                <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == CustTypeCompany}" translate>Tax
                   Id No</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
@@ -186,35 +186,6 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate>Customer Model</label>
-                <div class="col-md-6">
-                  <lib-ucdropdownlist *ngIf="isDdlMrCustModelReady" [dropdownListObj]="ddlCustModelObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
-                    [identifier]="'MrCustModelCode'" [genericList]="CustModelObj" (callback)="changeCustModel()"></lib-ucdropdownlist>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6" *ngIf="custMainDataMode == CustMainDataMgmntShrholder || custMainDataMode == CustMainDataFamily">
-              <div class="form-group row">
-                <label class="col-md-4 adInsLabel" translate> Profession Name </label>
-                <div class="col-md-8">
-                  <lib-uclookupgeneric *ngIf="professionLookUpObj.isReady" [lookupInput]="professionLookUpObj" [parentForm]="CustMainDataForm"
-                    [enjiForm]="enjiForm" [identifier]="'JobProfession'" (lookup)=getLookUpProfession($event) #LookupProfession>
-                  </lib-uclookupgeneric>
-                </div>
-              </div>
-              <div class="form-group row" *ngIf="custMainDataMode == CustMainDataFamily">
-                <label class="col-md-4 adInsLabel" translate>Employee Establishment Date</label>
-                <div class="col-md-8">
-                  <input type="date" class="form-control adInsInput" formControlName="EmploymentEstablishmentDt"
-                    [max]="businessDtMin | date: 'yyyy-MM-dd'"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.EmploymentEstablishmentDt.invalid}">
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.EmploymentEstablishmentDt" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Mobile Phone</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
@@ -237,9 +208,25 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row" *ngIf="custMainDataMode == CustMainDataMgmntShrholder || custMainDataMode == CustMainDataFamily">
-            <div class="col-md-6" *ngIf="MrCustTypeCode == 'PERSONAL'">
+            <div class="col-md-6" *ngIf="custMainDataMode == CustMainDataMgmntShrholder ||custMainDataMode == CustMainDataFamily">
+              <div class="form-group row" *ngIf="custMainDataMode == CustMainDataFamily">      
+                <label class="col-md-4 adInsLabel" translate>Nationality</label>
+                <div class="col-md-8" *ngIf="DictUcDDLObj[RefMasterTypeCodeNationality]?.isReady">
+                  <lib-ucdropdownlist [dropdownListObj]="DictUcDDLObj[RefMasterTypeCodeNationality]"
+                    [parentForm]="CustMainDataForm" [enjiForm]="enjiForm" [identifier]="'MrNationalityCode'" (callback)="onOptionsNationality($event)"></lib-ucdropdownlist>
+                </div>
+              </div>
+          
+              <div class="form-group row"*ngIf="custMainDataMode == CustMainDataFamily">
+                <label class="col-md-4 adInsLabel" translate>Country </label>
+                <div class="col-md-8" [hidden]="!IsLocal" translate>{{CountryName}} </div>
+                <div class="col-md-8" *ngIf="lookUpObjCountry?.isReady" [hidden]="IsLocal">
+                  <lib-uclookupgeneric [lookupInput]="lookUpObjCountry" [parentForm]="CustMainDataForm"
+                    [enjiForm]="enjiForm" [identifier]="'Country'" (lookup)=getLookUpCountry($event)>
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              
               <div class="form-group row">
                 <label class="col-md-4 adInsLabel" translate>Job Position</label>
                 <!-- <div class="col-md-6">
@@ -251,20 +238,44 @@
                     [enjiForm]="enjiForm" [identifier]="'JobPosition'" (lookup)=getLookUpJobPosition($event)>
                   </lib-uclookupgeneric>
                 </div>
-              </div>          
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="custMainDataMode == CustMainDataMgmntShrholder || custMainDataMode == CustMainDataFamily">
+              <div class="form-group row">
+                <label class="col-md-4 adins-required-label" translate>Customer Model</label>
+                <div class="col-md-6">
+                  <lib-ucdropdownlist *ngIf="isDdlMrCustModelReady" [dropdownListObj]="ddlCustModelObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'MrCustModelCode'" [genericList]="CustModelObj" (callback)="changeCustModel()"></lib-ucdropdownlist>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 adInsLabel" translate> Profession Name </label>
+                <div class="col-md-8">
+                  <lib-uclookupgeneric *ngIf="professionLookUpObj.isReady" [lookupInput]="professionLookUpObj" [parentForm]="CustMainDataForm"
+                    [enjiForm]="enjiForm" [identifier]="'JobProfession'" (lookup)=getLookUpProfession($event) #LookupProfession>
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="custMainDataMode == CustMainDataFamily">
+                <label class="col-md-4 adInsLabel" translate>Employee Establishment Date</label>
+                <div class="col-md-8">
+                  <input type="date" class="form-control adInsInput" formControlName="EmploymentEstablishmentDt"
+                    [max]="businessDtMin | date: 'yyyy-MM-dd'"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.EmploymentEstablishmentDt.invalid}">
+                  <lib-uc-show-errors [control]="CustMainDataForm.controls.EmploymentEstablishmentDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row" *ngIf="custMainDataMode == CustMainDataMgmntShrholder">
-            <div class="col-md-6" *ngIf="MrCustTypeCode == 'COMPANY'">
+            <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate>Establishment Date</label>
-                <div class="col-md-8">
-                  <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"
-                    formControlName="EstablishmentDt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.EstablishmentDt.invalid}">
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.EstablishmentDt"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                <label class="col-md-4 adins-required-label" translate> Position SLIK </label>
+                <div class="col-md-8" *ngIf="positionSlikLookUpObj.isReady">
+                  <lib-uclookupgeneric [lookupInput]="positionSlikLookUpObj" [parentForm]="CustMainDataForm"
+                    [enjiForm]="enjiForm" [identifier]="'PositionSlikCode'" (lookup)=getLookUpSlik($event)>
+                  </lib-uclookupgeneric>
                 </div>
               </div>
             </div>
@@ -280,21 +291,16 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="MrCustTypeCode == CustTypePersonal">
               <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate> Position SLIK </label>
-                <div class="col-md-8" *ngIf="positionSlikLookUpObj.isReady">
-                  <lib-uclookupgeneric [lookupInput]="positionSlikLookUpObj" [parentForm]="CustMainDataForm"
-                    [enjiForm]="enjiForm" [identifier]="'PositionSlikCode'" (lookup)=getLookUpSlik($event)>
-                  </lib-uclookupgeneric>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6" [hidden]="custMainDataMode == CustMainDataMgmntShrholder && MrCustTypeCode == 'COMPANY'">
-              <div class="form-group row">
-                <label class="col-md-4" translate>Is Signer</label>
+                <label class="col-md-4 adins-required-label" translate>Establishment Date</label>
                 <div class="col-md-8">
-                  <input type="checkbox" formControlName="IsSigner" />
+                  <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"
+                    formControlName="EstablishmentDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.EstablishmentDt.invalid}">
+                  <lib-uc-show-errors [control]="CustMainDataForm.controls.EstablishmentDt"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </div>
@@ -311,6 +317,14 @@
                 <label class="col-md-4" translate>Is Owner</label>
                 <div class="col-md-8">
                   <input type="checkbox" formControlName="IsOwner" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" [hidden]="custMainDataMode == CustMainDataMgmntShrholder && MrCustTypeCode == CustTypeCompany">
+              <div class="form-group row">
+                <label class="col-md-4" translate>Is Signer</label>
+                <div class="col-md-8">
+                  <input type="checkbox" formControlName="IsSigner" />
                 </div>
               </div>
             </div>
