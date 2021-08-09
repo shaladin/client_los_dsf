@@ -22,6 +22,9 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="listCollateralData==null || listCollateralData?.length==0">
+          <td colspan="100%">No Data Available</td>
+        </tr>
         <tr *ngFor="let item of listCollateralData; let i = index">
           <td>{{item.CollateralNo}}</td>
           <td align="left">{{item.FullAssetName}}</td>
