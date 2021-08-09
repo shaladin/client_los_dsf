@@ -313,10 +313,10 @@ export class NavigationConstant {
   public static CHANGE_MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_PAGING; //"/Mou/ChangeMouRequest/Paging"
   public static CHANGE_MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_X; //"/Mou/ChangeMouRequest/DetailX"
   public static CHANGE_MOU_REQ_DETAIL_CUSTOMER = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_X; //"/Mou/ChangeMouRequest/Detail/CustomerX"
-  public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_PAGING; //"/Mou/ChangeMou/ReviewPaging"
+  public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_PAGING_X; //"/Mou/ChangeMou/ReviewPagingX"
   public static CHANGE_MOU_RVW_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_FCTR_X; //"/Mou/ChangeMou/ReviewDetailFctrX"
   public static CHANGE_MOU_RVW_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_FIN_X; //"/Mou/ChangeMou/ReviewFinancingX"
-  public static CHANGE_MOU_RVW_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_GEN_X; //"/Mou/ChangeMou/ReviewDetailGen"
+  public static CHANGE_MOU_RVW_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_GEN_X; //"/Mou/ChangeMou/ReviewDetailGenX"
   public static CHANGE_MOU_APV_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_PAGING; //"/Mou/ChangeMou/ApvPaging"
   public static CHANGE_MOU_APV_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_DETAIL_GEN; //"/Mou/ChangeMou/ApvDetailGen"
   public static CHANGE_MOU_APV_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_APV_DETAIL_FCTR_X; //"/Mou/ChangeMou/ApvDetailFctrX"
@@ -327,7 +327,7 @@ export class NavigationConstant {
   public static CHANGE_MOU_RTN_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RTN_PAGING; //"/Mou/ChangeMou/ReturnPaging"
   public static CHANGE_MOU_RTN_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RTN_DETAIL; //"/Mou/ChangeMou/ReturnDetail"
   public static CHANGE_MOU_REQ_ADD_COLL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X; //"/Mou/ChangeMou/RequestAddColl"
-  public static CHANGE_MOU_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_INQUIRY; //"/Mou/ChangeMou/Inquiry"
+  public static CHANGE_MOU_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_INQUIRY_X; //"/Mou/ChangeMou/InquiryX"
   //#endregion
 
   //#region LEAD

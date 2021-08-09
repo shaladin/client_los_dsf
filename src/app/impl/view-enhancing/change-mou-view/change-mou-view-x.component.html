@@ -10,7 +10,7 @@
           <mat-tab-group>
             <mat-tab label="MoU Detail">
               <ng-template matTabContent>
-                <app-change-mou-view-detail *ngIf="isReady" [MouCustId]="MouCustId" [MouType]="MrMouTypeCode"></app-change-mou-view-detail>
+                <app-change-mou-view-detail-x *ngIf="isReady" [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MrMouTypeCode"></app-change-mou-view-detail-x>
               </ng-template>
             </mat-tab>
             <mat-tab label="Collateral">

@@ -35,6 +35,7 @@ import { ViewModule } from "../view.module";
 import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-recommendation/mou-view-approval-recommendation.component";
 import {MouViewXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-x.component';
 import {MouViewAddcollXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
+import { MouViewDetailXComponent } from "app/impl/view-enhancing/mou-view/mou-view-detail/mou-view-detail-x.component";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -74,7 +75,9 @@ import {MouViewAddcollXComponent} from 'app/impl/view-enhancing/mou-view/mou-vie
         MouViewFreezeUnfreezeHistoryComponent,
         MouViewApprovalRecommendationComponent,
         MouViewXComponent,
-        MouViewAddcollXComponent
+        MouViewAddcollXComponent,
+        MouViewDetailXComponent,
+        MouViewXComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

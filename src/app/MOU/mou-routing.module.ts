@@ -80,6 +80,9 @@ import {ChangeMouReviewGeneralXComponent} from 'app/impl/MOU/change-mou/change-m
 import {ChangeMouApprovalFinancingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-financing/change-mou-approval-financing-x.component';
 import {ChangeMouApprovalGeneralXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-general/change-mou-approval-general-x.component';
 import {MouReviewGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-general/mou-review-general-x.component';
+import { ChangeMouInquiryXComponent } from 'app/impl/MOU/change-mou/change-mou-inquiry/change-mou-inquiry-x.component';
+import { ChangeMouReviewPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component';
+
 
 const routes: Routes = [
   {
@@ -580,14 +583,14 @@ const routes: Routes = [
         path: PathConstant.CHANGE_MOU_APV_DETAIL_FIN,
         component: ChangeMouApprovalFinancingComponent,
         data: {
-          title: "Change MOU Approval Factoring"
+          title: "Change MOU Approval Financing"
         }
       },
       {
         path: PathConstantX.CHANGE_MOU_APV_DETAIL_FIN_X,
         component: ChangeMouApprovalFinancingXComponent,
         data: {
-          title: "Change MOU Approval Factoring X"
+          title: "Change MOU Approval Financing X"
         }
       },
       {
@@ -637,6 +640,41 @@ const routes: Routes = [
         component: MouRequestAddcollXComponent,
         data: {
           title: 'MOU Collateral X'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_RVW_FCTR_X,
+        component: MouReviewFactoringXComponent,
+        data: {
+          title: 'MOU Review Factoring X'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_APPRV_FCTR_X,
+        component: MouApprovalFactoringXComponent,
+        data: {
+          title: 'MOU Approval Factoring X'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_RVW_DFLN_X,
+        component: MouReviewDlfnXComponent,
+        data: {
+          title: 'MOU Review Dealer Financing X'
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_INQUIRY_X,
+        component: ChangeMouInquiryXComponent,
+        data: {
+          title: "Change MOU Inquiry X"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_RVW_PAGING_X,
+        component: ChangeMouReviewPagingXComponent,
+        data: {
+          title: "Change MOU Review X"
         }
       },
     ]
