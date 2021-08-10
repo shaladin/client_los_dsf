@@ -19,6 +19,7 @@ import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import {URLConstantX} from '../../../../../../shared/constant/URLConstantX';
 
 @Component({
     selector: 'invoice-verif-detail-DF-x',
@@ -37,7 +38,10 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
     IsReady: boolean = false;
 
     appTC: AppTCObj;
-    RlistAppTCObj: { ListAppTcObj: Array<AppTCObj> };
+    RlistAppTCObj: {
+      ListAppTcObj: Array<AppTCObj>,
+      AppId: number
+    };
 
     InvoiceForm = this.fb.group({
         Invoices: this.fb.array([])
@@ -61,7 +65,8 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
         var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
 
         this.RlistAppTCObj = {
-            ListAppTcObj: []
+            ListAppTcObj: [],
+            AppId : this.AppId
         }
         this.RlistAppTCObj.ListAppTcObj = new Array();
 
@@ -92,7 +97,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
             }
             this.RlistAppTCObj.ListAppTcObj.push(this.appTC);
         }
-        this.httpClient.post(URLConstant.EditAppTc, this.RlistAppTCObj).subscribe(
+        this.httpClient.post(URLConstantX.EditAppTcX, this.RlistAppTCObj).subscribe(
             (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.ResumeWf();
