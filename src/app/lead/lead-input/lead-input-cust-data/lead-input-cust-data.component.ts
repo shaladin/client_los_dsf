@@ -103,7 +103,7 @@ export class LeadInputCustDataComponent implements OnInit {
     IdNo: [''],
     MrMaritalStatCode: ['', [Validators.required]],
     Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
-    Email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+    Email: ['', [Validators.required, Validators.pattern(CommonConstant.regexEmail)]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$")]],
     MobilePhone2: ['', Validators.pattern("^[0-9]+$")],
     Facebook: [''],
@@ -209,8 +209,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj = new InputLookupObj();
     this.professionLookUpObj.isRequired = false;
     this.professionLookUpObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.professionLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.professionLookUpObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.isRequired = true;

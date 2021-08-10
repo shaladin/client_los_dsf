@@ -174,28 +174,16 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
 
   async initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
 
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
-    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
-    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
-    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
-    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
-    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
-    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
-    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
-    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
-    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }

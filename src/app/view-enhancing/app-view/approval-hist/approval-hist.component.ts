@@ -39,15 +39,12 @@ export class ApprovalHistComponent implements OnInit {
     }
     else {
       this.OfferingObj = new UcInputApprovalHistoryObj();
-      this.OfferingObj.EnvUrl = environment.FoundationR3Url;
       this.OfferingObj.PathUrl = "/Approval/GetTaskHistory";
 
       this.CrdApvObj = new UcInputApprovalHistoryObj();
-      this.CrdApvObj.EnvUrl = environment.FoundationR3Url;
       this.CrdApvObj.PathUrl = "/Approval/GetTaskHistory";
 
       this.PregoliveApvObj = new UcInputApprovalHistoryObj();
-      this.PregoliveApvObj.EnvUrl = environment.FoundationR3Url;
       this.PregoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
       this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
         (response) => {
@@ -89,15 +86,9 @@ export class ApprovalHistComponent implements OnInit {
 
   async GetApvOpl() {
     this.ApvHistObj = new UcInputApprovalHistoryObj();
-    this.ApvHistObj.EnvUrl = environment.FoundationR3Url;
     this.ApvHistObj.PathUrl = "/Approval/GetTaskHistory";
 
-    // this.ReturnHandlingApvObj = new UcInputApprovalHistoryObj();
-    // this.ReturnHandlingApvObj.EnvUrl = environment.FoundationR3Url;
-    // this.ReturnHandlingApvObj.PathUrl = "/Approval/GetTaskHistory";
-
     this.DocChecklistApvObj = new UcInputApprovalHistoryObj();
-    this.DocChecklistApvObj.EnvUrl = environment.FoundationR3Url;
     this.DocChecklistApvObj.PathUrl = "/Approval/GetTaskHistory";
 
     this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(

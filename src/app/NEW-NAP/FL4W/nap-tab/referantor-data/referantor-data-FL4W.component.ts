@@ -81,7 +81,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupVendor.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.addCritInput = this.arrAddCrit;

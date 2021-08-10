@@ -85,7 +85,7 @@ export class CustomerDataComponent implements OnInit {
     MotherName: ['', [Validators.required]],
     IdNo: [''],
     MrMaritalStatCode: ['', [Validators.required]],
-    Npwp: ['', Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)],
+    Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     Email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]],
     MobilePhone1: [''],
     MobilePhone2: [''],
@@ -312,8 +312,7 @@ export class CustomerDataComponent implements OnInit {
     this.professionLookUpObj = new InputLookupObj();
     this.professionLookUpObj.isRequired = false;
     this.professionLookUpObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.professionLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url; + "/v1"
     this.professionLookUpObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.isRequired = true;

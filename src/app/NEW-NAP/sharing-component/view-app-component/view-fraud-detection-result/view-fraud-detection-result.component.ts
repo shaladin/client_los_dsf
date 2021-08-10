@@ -31,11 +31,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   @Input() isView: boolean = false;
 
   viewDukcapilMainDataObj: string;
-  losUrl = environment.losUrl;
-  foundationUrl = environment.FoundationR3Url;
   getAppById = URLConstant.GetAppById;
   getCustDataByAppId = URLConstant.GetCustDataByAppId;
-  getAppDupCheckCustByAppId = URLConstant.GetCustomerDuplicateCheck;
+  GetCustomerDuplicateCheck = URLConstant.GetCustomerDuplicateCheck;
   getFraudDukcapilByIdNo = URLConstant.GetFraudDukcapilByIdNo;
   getAppAssetByAppId = URLConstant.GetAppAssetByAppId;
   getAssetNegativeDuplicateCheck = URLConstant.GetAssetNegativeDuplicateCheck;
@@ -72,11 +70,9 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     await this.getAppCust();
     this.arrValue.push(this.appId);
     this.viewDukcapilObj.viewInput = "./assets/ucviewgeneric/viewDukcapilMainInfo.json";
-    this.viewDukcapilObj.viewEnvironment = environment.losUrl;
     this.viewDukcapilObj.whereValue = this.arrValue;
     
     this.viewFraudVerifResultObj.viewInput = "./assets/ucviewgeneric/viewFraudVerifResult.json";
-    this.viewFraudVerifResultObj.viewEnvironment = environment.losUrl;
     this.viewFraudVerifResultObj.whereValue = this.arrValue;
   }
 
@@ -167,7 +163,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   }
 
   getAppDupCheckCust(appId) {
-    this.http.post(this.getAppDupCheckCustByAppId, appId).subscribe(
+    this.http.post(this.GetCustomerDuplicateCheck, appId).subscribe(
       (response) => {
         this.listCustDuplicate = response[CommonConstant.ReturnObj]["CustDuplicate"];
         var idxSelected = this.listCustDuplicate.findIndex(x => x.CustNo == this.appCustObj.CustNo);

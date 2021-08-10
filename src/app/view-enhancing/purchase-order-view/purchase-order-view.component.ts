@@ -36,15 +36,9 @@ export class PurchaseOrderViewComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAssetPOView.json";
-
     this.POInfo.viewInput = "./assets/ucviewgeneric/viewPOInfo.json";
-    this.POInfo.viewEnvironment = environment.losUrl;
-
     this.ADFinancialInfo.viewInput = "./assets/ucviewgeneric/viewADFinancialInfo.json";
-    this.ADFinancialInfo.viewEnvironment = environment.losUrl;
-
     this.ARFinancialInfo.viewInput = "./assets/ucviewgeneric/viewARFinancialInfo.json";
-    this.ARFinancialInfo.viewEnvironment = environment.losUrl;
 
     let GetPOObj = new ReqGetPurchaseOrderHDetailObj();
      GetPOObj.AgrmntId = this.AgrmntId;

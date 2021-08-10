@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { CrdRvwAssetObj } from 'app/shared/model/CreditReview/CrdRvwAssetObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-asset',
@@ -19,13 +21,20 @@ export class CrdRvwAssetComponent implements OnInit {
 
   crdRvwAssetObj: CrdRvwAssetObj = new CrdRvwAssetObj();
   ListCrdRvwAssetObj: Array<CrdRvwAssetObj> = new Array<CrdRvwAssetObj>();
+  totalAccessoryPriceAmt: number = 0;
+  totalAccessoryDownPaymentAmt: number = 0;
+  totalAccessoryDownPaymentPrcnt: number = 0;
+
 
   constructor(
     private http: HttpClient,
   ) { }
 
   async ngOnInit() {
-    await this.GetCrdRvwAssetData()
+    await this.GetCrdRvwAssetData();
+    if(!this.isMultiAsset){
+      await this.GetAppAssetData();
+    }
   }
 
   async GetCrdRvwAssetData() {
@@ -44,5 +53,17 @@ export class CrdRvwAssetComponent implements OnInit {
         }
       );
     }
+  }
+
+  async GetAppAssetData() {
+    let reqById: GenericObj = new GenericObj();
+    reqById.Id = this.crdRvwCustInfoObj.AppId
+    await this.http.post<AppAssetObj>(URLConstant.GetAppAssetByAppId, reqById).toPromise().then(
+      (response) => {
+        this.totalAccessoryPriceAmt = response.TotalAccessoryPriceAmt;
+        this.totalAccessoryDownPaymentAmt = response.TotalAccessoryDownPaymentAmt;
+        this.totalAccessoryDownPaymentPrcnt = (this.totalAccessoryDownPaymentAmt / this.totalAccessoryPriceAmt) * 100;
+      }
+    );
   }
 }

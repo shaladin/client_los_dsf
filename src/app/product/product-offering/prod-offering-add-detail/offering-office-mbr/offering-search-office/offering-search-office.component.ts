@@ -40,7 +40,7 @@ export class OfferingSearchOfficeComponent implements OnInit {
   ngOnInit() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
-    this.TempPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.TempPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     
     this.TempPagingObj.addCritInput = new Array();

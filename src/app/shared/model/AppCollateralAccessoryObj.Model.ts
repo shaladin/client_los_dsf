@@ -4,6 +4,7 @@ export class AppCollateralAccessoryObj {
   CollateralAccessoryCode: string;
   CollateralAccessoryName: string;
   AccessoryPriceAmt: number;
+  DownPaymentPrcnt: number;
   DownPaymentAmt: number;
   AccessoryNotes: string;
   RowVersion: string;
@@ -14,6 +15,7 @@ export class AppCollateralAccessoryObj {
     this.CollateralAccessoryCode = "";
     this.CollateralAccessoryName = "";
     this.AccessoryPriceAmt = 0;
+    this.DownPaymentPrcnt = 0;
     this.DownPaymentAmt = 0;
     this.AccessoryNotes = "";
     this.RowVersion = "";

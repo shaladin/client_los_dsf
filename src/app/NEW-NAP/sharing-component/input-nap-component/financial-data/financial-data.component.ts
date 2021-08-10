@@ -71,6 +71,10 @@ export class FinancialDataComponent implements OnInit {
         LifeInsCptlzAmt: 0,
         DownPaymentGrossAmt: 0,
         DownPaymentNettAmt: 0,
+        TotalAccessoryPriceAmt: 0,
+        TotalAccessoryDownPaymentAmt: 0,
+        PrcntDp: 0,
+        PrcntDpNett: 0,
 
         TotalDownPaymentNettAmt: 0, //muncul di layar
         TotalDownPaymentGrossAmt: 0, //inmemory
@@ -154,6 +158,7 @@ export class FinancialDataComponent implements OnInit {
 
         this.FinDataForm.patchValue({
           TotalAssetPriceAmt: this.appFinDataObj.TotalAssetPriceAmt,
+          TotalAccessoryPriceAmt: this.appFinDataObj.TotalAccessoryPriceAmt,
           TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
@@ -163,9 +168,12 @@ export class FinancialDataComponent implements OnInit {
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
+          PrcntDp: this.appFinDataObj.DownPaymentGrossAmt/(this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt)*100,
+          PrcntDpNett: this.appFinDataObj.DownPaymentNettAmt/(this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt)*100,
 
           EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
+          FlatRatePrcnt: this.appFinDataObj.FlatRatePrcnt,
 
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
@@ -255,6 +263,7 @@ export class FinancialDataComponent implements OnInit {
         this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
     }
+    this.LoadAppFinData();
   }
 
   SetInputByCalcBase(calcBase) {

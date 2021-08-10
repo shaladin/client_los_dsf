@@ -23,6 +23,7 @@ export class MouCustCollateralRegistrationObj {
     LocationCity: string;
     LocationZipcode: string;
     Notes: string;
+    OwnerProfessionCode: string;
     Phn1: string;
     Phn2: string;
     PhnArea1: string;

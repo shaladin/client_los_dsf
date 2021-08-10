@@ -1,4 +1,9 @@
 export class CommonConstant {
+  
+  // REGEX
+  public static regexAPI = "\\/[v,V][1-9]\\d*(\\.[1-9]\\d*)*";
+  public static regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+
   //FORM
   public static INVALID_FORM = "INVALID";
 
@@ -10,13 +15,22 @@ export class CommonConstant {
   public static CANCEL = 'Cancel';
   public static REQ = 'request';
   public static RTN = 'return';
-
+  
   // Behaviour
   public static DEFAULT = 'DEF';
 
   // MOU
   public static MOU_FRZ_REQ = 'REQ';
   public static MOU_FRZ_APV = 'APV';
+
+  // REF CHANGE ITEM STAT
+  public static ChangeItemCodeAssetDataSerialNo1 = 'ASSET_DATA_SERIAL_NO_1';
+  public static ChangeItemCodeAssetDataSerialNo2 = 'ASSET_DATA_SERIAL_NO_2';
+  public static ChangeItemCodeAssetDataSerialNo3 = 'ASSET_DATA_SERIAL_NO_3';
+  public static ChangeItemCodeAssetDataSerialNo4 = 'ASSET_DATA_SERIAL_NO_4';
+  public static ChangeItemCodeAssetDataSerialNo5 = 'ASSET_DATA_SERIAL_NO_5';
+  public static ChangeItemCodeAssetDataManufacturYear = 'ASSET_DATA_MANUFACTURE_YEAR';
+  public static ChangeItemCodeAssetDataColor = 'ASSET_DATA_COLOR';
 
   //PHN VERF SUBJECT DATA
   public static PHN_VERF_RES_SCS = "SCS";
@@ -44,6 +58,7 @@ export class CommonConstant {
   // Module
   public static LOAN_ORIGINATION = "LOS";
   public static FOUNDATION = "FOUNDATION";
+  public static MODULE_LMS = "LMS";
 
   // COMPONENTS
   public static LINE = 'Line';
@@ -61,6 +76,7 @@ export class CommonConstant {
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
   public static CustTypeCompany = "COMPANY";
+  public static CustTypePublic = "PUBLIC";
   public static GuarantorTypeCodePersonal = "PERSONAL";
   public static GuarantorTypeCodeCompany = "COMPANY";
   public static CustGrupIndentifierTypePersonal = "custGrpMember";
@@ -159,6 +175,7 @@ export class CommonConstant {
 
   //OFFICE TYPE
   public static HeadOffice = "HO";
+  public static SuperUser = "SUPUSR";
   public static HeadOfficeName = "Head Office";
   public static CenterGroup = "Center Group"
 
@@ -248,7 +265,7 @@ export class CommonConstant {
   public static AppCollateralAttrTaxCityIssuer = "TAX_CITY_ISSUER";
   public static AppCollateralAttrBpkbIssueDate = "BPKB_ISSUE_DATE";
 
-  //APP CUST 
+  //ATTR GROUP 
   public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
   public static AttrGroupCustPersonalOther = "CUST_PERSONAL_OTH"
   public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
@@ -259,7 +276,22 @@ export class CommonConstant {
   public static AttrGroupCustCompanyFinDataIncome = "CUST_COMPANY_FINDATA_INCOME"
   public static AttrGroupCustCompanyFinDataExpense = "CUST_COMPANY_FINDATA_EXPENSE"
   public static AttrGroupCustCompanyFinDataOther = "CUST_COMPANY_FINDATA_OTHER"
+  public static AttrGroupApplicationData = "APPLICATION_DATA";
 
+  //ATTR INTPUT TYPE
+  public static AttrInputTypeDate = "D";
+  public static AttrInputTypeNum = "N";
+  public static AttrInputTypeNumPerc = "P";
+  public static AttrInputTypeList = "L";
+  public static AttrInputTypeSearchList = "SL";
+  public static AttrInputTypeText = "T";
+  public static AttrInputTypeTextArea = "TA";
+  public static AttrInputTypeRefMaster = "RM";
+
+  //ATTR CODE
+  public static AttrCodeDeptAml = "DEPT_AML";
+  public static AttrCodeAuthAml = "AUTH_AML";
+  
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 
@@ -329,6 +361,7 @@ export class CommonConstant {
   public static AddrTypeCompany = "COMPANY";
   public static AddrTypeEmergency = "EMERGENCY";
   public static AddrTypeContactInfo = "CONTACT";
+  public static AddrTypeBiz = "BIZ";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";
@@ -403,6 +436,7 @@ export class CommonConstant {
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
   public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
+  public static RefReasonTypeCodeReturnHandlingGeneral = "RTN_H_GEN";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -462,7 +496,7 @@ export class CommonConstant {
   public static ReturnHandlingEditCust = "RTN_EDIT_CUST";
   public static ReturnHandlingEditNAP4 = "RTN_EDIT_NAP4";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
-  public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SURVEY";
+  public static ReturnHandlingAddSurvey = "RTN_ADD_SRVY";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
@@ -480,6 +514,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeDisbToDlrFncng = "DISB_TO_DLR_FNCNG";
   public static RefMasterTypeCodeDisbToFctr = "DISB_TO_FCTR";
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
+  public static RefMasterTypeCodeShareholderCustType = "SHR_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
   public static RefMasterTypeCodeWOP = "WOP";
   public static RefMasterTypeCodeInstSchm = "INST_SCHM";
@@ -548,6 +583,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeInterestInputType = "INTEREST_INPUT_TYPE";
   public static RefMasterTypeCodeAppPaidBy = "APP_PAID_BY";
   public static RefMasterTypeCodeInterestTypeGeneral = "INTRSTTYPE";
+  public static APP_APV = "APP_APV";
   public static RefMasterTypeCodeInterestTypeFactoring = "INTEREST_TYPE";
   public static RefMasterTypeCodeTopCalcBased = "TOP_CALC_BASED";
   public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE";
@@ -573,6 +609,9 @@ export class CommonConstant {
   public static RefMasterTypeCodeLob = "LOB";
   public static RefMasterTypeCodeAppSrcType = "APP_SRC_TYPE";
   public static RefMasterTypeCodeMouType = "MOU_TYPE";
+  public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
+  public static RefMasterTypeCodePublicType = "PUBLIC_TYPE";
+  public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
@@ -687,6 +726,8 @@ export class CommonConstant {
 
   //Serial Item
   public static Chassis_No = "Chassis No";
+  public static License_Plate_No = "License Plate No";
+  public static Engine_No = "Engine No";
 
   // Cust Type  
   public static WhiteIndicator = "WHITE";
@@ -731,6 +772,7 @@ export class CommonConstant {
   public static CAT_CODE_APV_RES_EXP_D = "CR_APV_RES_EXP_D_CAT";
   public static SCHM_CODE_CR_APV_RES_EXP_D = "CR_APV_RES_EXP_D_SCM";
   public static APV_TYPE_MOU_FRZ_UNFRZ_APV_TYPE = "MOU_FRZ_UNFRZ_APV_TYPE";
+  public static APV_TYPE_CHG_MOU_APV_TYPE = "CHG_MOU_APV_TYPE";
 
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";
@@ -809,9 +851,9 @@ export class CommonConstant {
   public static CashFlowItemMasterCodeOdb = "CASHFLOW_ODB";
 
   //oth expense opl
-  public static OtherExpenseMasterCodeExpStn = "EXP_STN";
+  public static OtherExpenseMasterCodeExpStn = "STNKEXP";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
-  public static OtherExpenseMasterCodeExpRc = "RC";
+  public static OtherExpenseMasterCodeExpRc = "RCEXP";
 
   //SYS CONFIG
   public static ConfigCodeIsUseDms = "IS_USE_DMS";
@@ -874,4 +916,50 @@ export class CommonConstant {
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";
+  public static WF_UPL_LEAD = "WF_UPL_LEAD";
+  public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static WF_UPL_SMPL_LEAD = "WF_UPL_SMPL_LEAD";
+  public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
+  public static PROD_OFF_APV = "PROD_OFF_APV";
+  public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
+  
+  // CUST ADDR TYPE
+  public static CustAddrTypeLegal = "LEGAL";
+  public static CustAddrTypeContact = "CONTACT";
+  public static CustAddrTypeCompany = "COMPANY";
+  public static CustAddrTypeResidence = "RESIDENCE";
+  public static CustAddrTypeEmergency = "EMERGENCY";
+  public static CustAddrTypeJob = "JOB";
+  public static CustAddrTypeOthBiz = "OTHERBIZ";
+  public static CustAddrTypePreJob = "PREV_JOB";
+  public static CustAddrTypeBiz = "BIZ";
+
+  //WORFKLOW LEAD
+  public static WF_CODE_LEAD = "WF_LEAD";
+  public static WF_CODE_SIMPLE_LEAD = "WF_SIMPLE_LEAD";
+  public static ACT_CODE_SIMPLE_FRAUD_VERIFICATION = "SIMPLE_FRAUD_VERIFICATION";
+  public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
+  public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
+  public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
+
+  //WORFKLOW RETURN HANDLING
+  public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
+  public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
+
+  //WORFKLOW PRODUCT
+  public static WF_CODE_PROD_HO_APV = "PROD_HO_APV";
+  public static ACT_CODE_PROD_HO_RVW = "PROD_HO_RVW";
+  
+  //WORKFLOW MOU
+  public static WF_CHANGE_MOU = "WF_CHANGE_MOU";
+  public static ACT_CODE_CHNG_MOU_REVIEW = "CHNG_MOU_REVIEW";
+  public static ACT_CODE_CHNG_MOU_APV = "CHNG_MOU_APV";
+  public static ACT_CODE_CHG_MOU_RTRN = "CHG_MOU_RTRN";
+
+  //Lead Step
+  public static LeadStepSimpleLeadFraudVerif = "FRV_SMPL";
+  public static LeadStepLeadVerf = "LVR";
+  public static LeadStepTeleVerf = "TVR";
+  public static LeadStepLeadUpd = "LUP";
+  
 }

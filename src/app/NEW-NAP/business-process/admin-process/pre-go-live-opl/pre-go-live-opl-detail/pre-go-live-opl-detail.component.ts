@@ -39,6 +39,7 @@ export class PreGoLiveOplDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   inputGridObj: InputGridObj = new InputGridObj();
+  LastDeliveryDate : string ;
 
   PreGoLiveForm = this.fb.group({
     EffDt: ['', [Validators.required]],
@@ -71,15 +72,23 @@ export class PreGoLiveOplDetailComponent implements OnInit {
 
   async SetMainInfo() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
   }
 
   async SetListItem() {
+    var tempdate;
     if(this.preGoLiveOplService.getList() !== undefined){
       if(this.preGoLiveOplService.getList().length > 0){
         this.preGoLiveOplService.getList().forEach(element => {
           this.ListItem.push(element);
           this.ListAppAssetId.push(element.AppAssetId);
+          if(tempdate == null)
+          {tempdate = element.DlvryDt;}
+          else if(element.DlvryDt > tempdate)
+          {tempdate = element.DlvryDt;}
+          this.LastDeliveryDate = formatDate(tempdate, 'yyyy-MM-dd', 'en-US')
+        });
+        this.PreGoLiveForm.patchValue({
+          EffDt: this.LastDeliveryDate,
         });
         this.ApvDt = formatDate(this.ListItem[0].ApvDt,'yyyy-MM-dd','en-US');
         this.preGoLiveOplService.clearList();

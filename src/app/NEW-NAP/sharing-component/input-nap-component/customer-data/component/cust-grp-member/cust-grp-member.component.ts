@@ -81,16 +81,6 @@ export class CustGrpMemberComponent implements OnInit {
 
     this.CustRelationshipObjs.push({list: []});
 
-    // if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
-    //   this.CustRelationshipObjs.push({list: []});
-    // }
-
-    // if(this.identifier == AdInsConstant.CustGrupIndentifierTypeCompany){
-    //   this.CustRelationshipObjs.push({list: this.CustRelationshipCompanyObj});
-    //   this.parentForm.controls[this.identifier]["controls"][max].patchValue({
-    //     MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
-    //   });
-    // }
   }
 
   deleteCustGrp(i){

@@ -40,8 +40,8 @@
           <label class="col-md-9 adInsLabel">{{appAsset?.FullAssetName}}</label>
         </div>
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>Down Payment</label>
-          <label class="col-md-9 adInsLabel">{{appAsset?.DownPaymentAmt | number:'.2':'en-US'}}</label>
+          <label class="col-md-3 adInsLabel" translate>Security Deposit (% / Amount)</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.DownPaymentPrcnt | number:'.2':'en-US'}} | {{appAsset?.DownPaymentAmt | number:'.2':'en-US'}}</label>
         </div>
       </div>
 
@@ -136,35 +136,7 @@
     [title]="'Asset Accessory'" [panel]="'assetAcc'">
   </lib-ucSubsection>
   <div id="assetAcc">
-    <table class="table table-responsive-md table-hover" matSort>
-      <thead>
-        <tr class="table-header">
-          <th class="text-center"><span translate class="thead-header">No. </span>
-          </th>
-          <th class="text-left"><span translate class="thead-header" mat-sort-header="Accessory">Accessory</span>
-          </th>
-          <th class="text-left"><span translate class="thead-header" mat-sort-header="Supplier">Supplier</span>
-          </th>
-          <th class="text-center"><span translate class="thead-header" mat-sort-header="Price">Price</span>
-          </th>
-          <th class="text-center"><span translate class="thead-header" mat-sort-header="DownPayment">Down
-              Payment</span>
-          </th>
-          <th class="text-center"><span translate class="thead-header" mat-sort-header="Notes">Notes</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of appAsset?.ResponseAppAssetAccessoryObjs; let i = index">
-          <td class="text-center">{{ i + 1 }}</td>
-          <td class="text-left">{{ item.AssetAccessoryName }}</td>
-          <td class="text-left">{{ item.SupplName }}</td>
-          <td class="text-center">{{ item.AccessoryPriceAmt }}</td>
-          <td class="text-center">{{ item.DownPaymentAmt }}</td>
-          <td class="text-center">{{ item.AccessoryNotes }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
   </div>
 
   <lib-ucSubsection [id]="'AssetUserId'" [title]="'ASSET USER'" [panel]="'AssetUserSection'"></lib-ucSubsection>
