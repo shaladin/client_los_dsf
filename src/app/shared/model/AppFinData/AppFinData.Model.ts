@@ -4,7 +4,9 @@ export class AppFinDataObj {
     AppFinDataId: number;
     AppId: number;
     MrInstSchemeCode: string;
-    InstSchemeName: string;
+    MrInstSchemeName: string;
+    MrFirstInstTypeCode: string;
+    MrFirstInstTypeName: string;
     NumOfInst: number;
     RateType: string;
     TotalAR: number;

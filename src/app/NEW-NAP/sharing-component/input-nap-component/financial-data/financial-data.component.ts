@@ -110,6 +110,9 @@ export class FinancialDataComponent implements OnInit {
 
         NumOfStep: 0,
         MrInstSchemeCode: "",
+        MrInstSchemeName: "",
+        MrFirstInstTypeCode: "",
+        MrFirstInstTypeName: "",
         CummulativeTenor: 0,
         StepUpStepDownInputType: "",
 
@@ -170,8 +173,8 @@ export class FinancialDataComponent implements OnInit {
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
-          PrcntDp: this.appFinDataObj.DownPaymentGrossAmt/(this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt)*100,
-          PrcntDpNett: this.appFinDataObj.DownPaymentNettAmt/(this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt)*100,
+          PrcntDp: this.appFinDataObj.DownPaymentGrossAmt / (this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt) * 100,
+          PrcntDpNett: this.appFinDataObj.DownPaymentNettAmt / (this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt) * 100,
 
           EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
@@ -188,6 +191,9 @@ export class FinancialDataComponent implements OnInit {
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
+          MrInstSchemeName: this.appFinDataObj.MrInstSchemeName,
+          MrFirstInstTypeCode: this.appFinDataObj.MrFirstInstTypeCode,
+          MrFirstInstTypeName: this.appFinDataObj.MrFirstInstTypeName,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
           TdpPaidCoyAmt: this.appFinDataObj.TdpPaidCoyAmt,
           NtfAmt: this.appFinDataObj.NtfAmt,
