@@ -4,12 +4,15 @@ export class AppFinDataObj {
     AppFinDataId: number;
     AppId: number;
     MrInstSchemeCode: string;
-    InstSchemeName: string;
+    MrInstSchemeName: string;
+    MrFirstInstTypeCode: string;
+    MrFirstInstTypeName: string;
     NumOfInst: number;
     RateType: string;
     TotalAR: number;
     TotalAssetPriceAmt: number;
     TotalAccessoryPriceAmt: number;
+    TotalAssetPriceAmtOnly: number;
     TotalInterestAmt: number;
     GrossYieldPrcnt: number;
     TdpPaidCoyAmt: number;
