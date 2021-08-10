@@ -549,6 +549,8 @@ export class FormCommissionGenerateComponent implements OnInit {
           var allocAmt = 0;
           if (this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["value"][idxFromRuleObj].AllocationBehaviour != "LOCK") {
             allocAmt = appCommObj.AppCommissionDs[i].CommissionAmt;
+          }else{
+            allocAmt = temp.find(x => x.AllocationFrom == appCommObj.AppCommissionDs[i].MrCommissionSourceCode).AllocationAmount;
           }
           this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][idxFromRuleObj].patchValue({
             AppCommissionDId: appCommObj.AppCommissionDs[i].AppCommissionDId,

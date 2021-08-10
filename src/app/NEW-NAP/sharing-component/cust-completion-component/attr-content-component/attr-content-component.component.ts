@@ -349,9 +349,18 @@ export class AttrContentComponentComponent implements OnInit {
     if (this.AttrContent.AttrValue) {
       this.tempExistingValueSelected[AttrCode] = this.AttrContent.AttrValue;
     }
+    if (this.dictProf[AttrCode] != undefined) {
+      this.SetSearchListInputType(AttrCode, this.dictProf[AttrCode]);
+      this.dictProf[AttrCode] = undefined;
+    }
   }
 
+  dictProf: { [id: string]: string } = {};
   SetSearchListInputType(attrCode: string, ProfessionCode: string) {
+    if (this.dictRuleSetName[attrCode] == undefined) {
+      this.dictProf[attrCode] = ProfessionCode;
+      return;
+    }
     this.httpClient.post(URLConstant.GetRuleForAttrContent, { RuleSetName: this.dictRuleSetName[attrCode], Code: ProfessionCode }).subscribe(
       (response: GenericListObj) => {
         let tempList: Array<KeyValueObj> = response.ReturnObject;

@@ -53,7 +53,7 @@ export class CustPublicComponent implements OnInit {
       PublicName: [item == null ? '' : item.PublicName, Validators.required],
       PublicIdentityNo: [item == null ? '' : item.PublicIdentityNo, Validators.required],
       SharePrcnt: [item == null ? 0 : item.SharePrcnt, [Validators.required, Validators.min(0), Validators.max(100)]],
-      IsActive: [item == null ? false : item.IsActive, Validators.required],
+      IsActive: [item == null ? true : item.IsActive, Validators.required],
     });
 
     if (item != null) {
