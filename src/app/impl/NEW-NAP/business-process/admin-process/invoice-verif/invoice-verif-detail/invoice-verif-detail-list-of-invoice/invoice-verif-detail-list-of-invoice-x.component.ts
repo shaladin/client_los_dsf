@@ -15,7 +15,8 @@ import { ResDisbInfo, ResGetAllNtfAppAmt } from 'app/shared/model/Response/AppIn
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CookieService } from 'ngx-cookie';
-import {URLConstantX} from '../../../../../../shared/constant/URLConstantX';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'invoice-verif-detail-list-of-invoice-x',
@@ -51,7 +52,14 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     Invoices: this.fb.array([])
   });
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private httpClient: HttpClient,
+    private router: Router,
+    private cookieService: CookieService,
+    private toastr: NGXToastrService
+  ) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["TaskListId"];
@@ -96,42 +104,29 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
       this.PlafondAmt = responseMou["PlafondAmt"];
       this.MrMouTypeCode = responseMou["MrMouTypeCode"];
 
-      if (this.MrMouTypeCode == CommonConstant.FACTORING) {
-        this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
-          this.listInvoice = response["AppInvoiceFctrObjs"];
-          var totalInvoice = 0;
+      // var GetByMouCustId: GenericObj = new GenericObj();
+      // GetByMouCustId.Id = responseMou["MouCustId"];
+
+      this.httpClient.post(URLConstant.GetListAppInvoiceAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
+        (response) => {
+          this.listInvoice = response["AppInvoiceDlrFncngHObj"];
+          let totalInvoiceDF = 0;
           for (let i = 0; i < this.listInvoice.length; i++) {
-            var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+            const fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
             fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-            totalInvoice += this.listInvoice[i].InvoiceAmt;
-          }
-          this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
-        });
-      } else {
-        let GetByMouCustId: GenericObj = new GenericObj();
-        GetByMouCustId.Id = responseMou["MouCustId"];
-
-        this.httpClient.post(URLConstant.GetListAppInvoiceAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
-          (response) => {
-            this.listInvoice = response["AppInvoiceDlrFncngHObj"];
-            var totalInvoiceDF = 0;
-            for (let i = 0; i < this.listInvoice.length; i++) {
-              var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-              fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-              if(this.listInvoice[i].IsApproved == true)
-              {
-                totalInvoiceDF += this.listInvoice[i].InvoiceAmt;
-              }
+            if(this.listInvoice[i].IsApproved == true)
+            {
+              totalInvoiceDF += this.listInvoice[i].InvoiceAmt;
             }
-            // this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
-            //   (responseNtfAmt) => {
-            //     this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
-            //   }
-            // )
+          }
+          // this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
+          //   (responseNtfAmt) => {
+          //     this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
+          //   }
+          // )
 
-            this.OsPlafondAmt = this.PlafondAmt - totalInvoiceDF;
-          });
-      }
+          this.OsPlafondAmt = this.PlafondAmt - totalInvoiceDF;
+        });
     })
   }
 
@@ -157,15 +152,19 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {"BizTemplateCode":this.bizTemplateCode});
   }
   SaveData() {
-    var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
+    if(this.OsPlafondAmt<0){
+      this.toastr.warningMessage("Available Plafond is less than application amount");
+      return;
+    }
+    const fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
     for (let i = 0; i < fa_listInvoice.length; i++) {
-      var item = fa_listInvoice.at(i);
+      const item = fa_listInvoice.at(i);
       this.listInvoice[i].IsApproved = item.get("Verification").value == "APV" ? true : false;
       this.listInvoice[i].InvoiceStat = item.get("Verification").value;
       this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
       this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
-    var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId, IsDF: true };
+    const request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId, IsDF: true };
 
     this.httpClient.post(URLConstant.UpdateAppInvoiceDlfn, request).subscribe(() => {
       this.outputTab.emit();
