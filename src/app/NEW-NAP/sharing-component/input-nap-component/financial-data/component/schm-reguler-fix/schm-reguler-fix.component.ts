@@ -32,7 +32,7 @@ export class SchmRegulerFixComponent implements OnInit {
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
   calcRegFixObjForTrialCalc: CalcRegularFixObjForTrialCalc = new CalcRegularFixObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
-  PriceLabel: string = "Asset Price";
+  PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
 
   constructor(private fb: FormBuilder,

@@ -62,6 +62,8 @@ export class FinancialDataComponent implements OnInit {
         AppId: this.AppId,
 
         TotalAssetPriceAmt: 0,
+        TotalAccessoryPriceAmt: 0,
+        TotalAssetPriceAmtOnly: 0,
         TotalFeeAmt: 0,
         TotalFeeCptlzAmt: 0,
         TotalInsCustAmt: 0,
@@ -71,7 +73,6 @@ export class FinancialDataComponent implements OnInit {
         LifeInsCptlzAmt: 0,
         DownPaymentGrossAmt: 0,
         DownPaymentNettAmt: 0,
-        TotalAccessoryPriceAmt: 0,
         TotalAccessoryDownPaymentAmt: 0,
         PrcntDp: 0,
         PrcntDpNett: 0,
@@ -159,6 +160,7 @@ export class FinancialDataComponent implements OnInit {
         this.FinDataForm.patchValue({
           TotalAssetPriceAmt: this.appFinDataObj.TotalAssetPriceAmt,
           TotalAccessoryPriceAmt: this.appFinDataObj.TotalAccessoryPriceAmt,
+          TotalAssetPriceAmtOnly: this.appFinDataObj.TotalAssetPriceAmtOnly,
           TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,

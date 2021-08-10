@@ -10,6 +10,7 @@ export class AppFinDataObj {
     TotalAR: number;
     TotalAssetPriceAmt: number;
     TotalAccessoryPriceAmt: number;
+    TotalAssetPriceAmtOnly: number;
     TotalInterestAmt: number;
     GrossYieldPrcnt: number;
     TdpPaidCoyAmt: number;
