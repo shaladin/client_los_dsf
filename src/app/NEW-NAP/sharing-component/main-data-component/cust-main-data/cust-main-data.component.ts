@@ -224,6 +224,8 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.showSubsection = false;
     this.inputAddressObj.showAllPhn = false;
     this.inputAddressObj.showFax = false;
+    this.inputAddressObj.showOwnership = true;
+    this.inputAddressObj.requiredOwnership = true;
     this.isUcAddressReady = true;
 
     this.http.post(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GS_MAX_DAYS_CUST_THIRD_PARTY_CHECK }).toPromise().then(
@@ -334,6 +336,7 @@ export class CustMainDataComponent implements OnInit {
   }
   //#endregion
 
+  isCopyBtnLock: boolean = false;
   async initcustMainDataMode() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
@@ -341,6 +344,7 @@ export class CustMainDataComponent implements OnInit {
 
     switch (this.custMainDataMode) {
       case CommonConstant.CustMainDataModeCust:
+        this.isCopyBtnLock = true;
         this.isIncludeCustRelation = false;
         this.custDataObj.IsCustomer = true;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
@@ -870,6 +874,7 @@ export class CustMainDataComponent implements OnInit {
         this.legalAddrObj.AreaCode3 = response.AreaCode3;
         this.legalAddrObj.AreaCode4 = response.AreaCode4;
         this.legalAddrObj.City = response.City;
+        this.legalAddrObj.MrHouseOwnershipCode = response.MrHouseOwnershipCode;
 
         this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
         this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
@@ -909,6 +914,7 @@ export class CustMainDataComponent implements OnInit {
 
   disableInput() {
     this.isExisting = true;
+    this.isCopyBtnLock = true;
     // this.CustMainDataForm.controls.MrGenderCode.disable();
     // this.CustMainDataForm.controls.MrIdTypeCode.disable();
     // this.CustMainDataForm.controls.MrMaritalStatCode.disable();
@@ -921,6 +927,7 @@ export class CustMainDataComponent implements OnInit {
 
   enableInput() {
     this.isExisting = false;
+    if(this.custMainDataMode != CommonConstant.CustMainDataModeCust)this.isCopyBtnLock = false;
     // this.CustMainDataForm.controls.MrGenderCode.enable();
     // this.CustMainDataForm.controls.MrIdTypeCode.enable();
     // this.CustMainDataForm.controls.MrMaritalStatCode.enable();
@@ -1083,6 +1090,7 @@ export class CustMainDataComponent implements OnInit {
       this.legalAddrObj.AreaCode3 = response.AreaCode3;
       this.legalAddrObj.AreaCode4 = response.AreaCode4;
       this.legalAddrObj.City = response.City;
+      this.legalAddrObj.MrHouseOwnershipCode = response.MrBuildingOwnershipCode ? response.MrBuildingOwnershipCode : response.MrHouseOwnershipCode;
 
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
@@ -1133,6 +1141,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustAddrLegalObj.AreaCode2 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode2.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
     this.custDataPersonalObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
+    this.custDataPersonalObj.AppCustAddrLegalObj.MrHouseOwnershipCode = this.CustMainDataForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
     
     if (this.custDataPersonalObj.AppCustObj.IsFamily) {
       this.custDataPersonalObj.AppCustPersonalObj.MrNationalityCode = this.CustMainDataForm.controls.MrNationalityCode.value;
@@ -1196,6 +1205,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustAddrLegalObj.AreaCode2 = this.CustMainDataForm.controls["Address"]["controls"].AreaCode2.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.City = this.CustMainDataForm.controls["Address"]["controls"].City.value;
     this.custDataCompanyObj.AppCustAddrLegalObj.SubZipcode = this.CustMainDataForm.controls["Address"]["controls"].SubZipcode.value;
+    this.custDataCompanyObj.AppCustAddrLegalObj.MrHouseOwnershipCode = this.CustMainDataForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
 
     if (this.custDataCompanyObj.AppCustObj.IsShareholder) {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt = this.CustMainDataForm.controls.SharePrcnt.value;
