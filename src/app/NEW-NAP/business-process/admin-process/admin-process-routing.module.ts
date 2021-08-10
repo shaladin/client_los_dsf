@@ -54,6 +54,7 @@ import { EndDateForGoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/busin
 import { GoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-paging/go-live-approval-paging-x.component';
 import { GoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-detail/go-live-approval-detail-x.component';
 import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
+import {InvoiceVerifDetailDFXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF-x.component';
 
 const routes: Routes = [
   {
@@ -372,6 +373,13 @@ const routes: Routes = [
         component:InvoiceVerifDetailDFComponent,
         data:{
           title: 'Invoice Detail DF'
+        }
+      },
+      {
+        path: PathConstantX.INVOICE_VERIF_INV_DSF_X,
+        component:InvoiceVerifDetailDFXComponent,
+        data:{
+          title: 'Invoice Detail DF X'
         }
       },
       {
