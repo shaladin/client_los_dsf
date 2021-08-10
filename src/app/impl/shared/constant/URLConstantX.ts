@@ -30,6 +30,7 @@ export class URLConstantX {
   public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
   public static MouCustExecutionHumanActivityX = environment.losUrl +'/v1' + "/MouCustX/MouCustExecutionHumanActivity";
   public static GetMouMainInfoByIdX = environment.losUrl +'/v1' + "/MouCustX/GetMouMainInfoById";
+  public static GetMouCustByAppIdForInvoiceVerifX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppIdForInvoiceVerif";
 
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";

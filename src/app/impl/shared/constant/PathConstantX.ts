@@ -35,6 +35,10 @@ export class PathConstantX {
   public static CUST_CONFIRM_DETAIL_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
   //#endregion
 
+  //#region Nap-Admin-Prcs
+  public static INVOICE_VERIF_INV_DSF_X = PathConstant.INVOICE_VERIF + "/InvoiceDetailDFX";
+  //#endregion
+
   //#region Cessie
   public static CESSIE_MONITORING = PathConstantX.CESSIE + '/' + PathConstantX.MONITORING;
   //#endregion

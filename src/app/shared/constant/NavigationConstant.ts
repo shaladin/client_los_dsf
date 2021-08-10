@@ -115,6 +115,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_INVOICE_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.INVOICE_DETAIL; //"/Nap/AdminProcess/Invoice/Detail"
   public static NAP_ADM_PRCS_INVOICE_VERIF_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.INVOICE_VERIF_PAGING; //"/Nap/AdminProcess/InvoiceVerif/Paging"
   public static NAP_ADM_PRCS_INVOICE_VERIF_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.INVOICE_VERIF_DETAIL_X; //"/Nap/AdminProcess/InvoiceVerif/DetailX"
+  public static NAP_ADM_PRCS_INVOICE_VERIF_INV_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.INVOICE_VERIF_INV_DSF_X; //"/Nap/AdminProcess/InvoiceVerif/InvoiceDetailDFX"
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_APPRV_PAGING; //"/Nap/AdminProcess/OfferingValidityApproval/Paging"
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_APPRV_DETAIL; //"/Nap/AdminProcess/OfferingValidityApproval/Detail"
   public static NAP_ADM_PRCS_PGL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_PAGING; //'/Nap/AdminProcess/PreGoLive/Paging'
