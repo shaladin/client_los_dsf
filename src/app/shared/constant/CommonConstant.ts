@@ -938,6 +938,7 @@ export class CommonConstant {
   public static WF_CODE_LEAD = "WF_LEAD";
   public static WF_CODE_SIMPLE_LEAD = "WF_SIMPLE_LEAD";
   public static ACT_CODE_SIMPLE_FRAUD_VERIFICATION = "SIMPLE_FRAUD_VERIFICATION";
+  public static ACT_CODE_SIMPLE_LEAD_UPD = "SIMPLE_LEAD_UPD";
   public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
