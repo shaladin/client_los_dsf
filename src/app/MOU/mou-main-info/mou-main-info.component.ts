@@ -9,7 +9,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
-  selector: 'app-mou-main-info',
+  selector: 'app-mou-main-info-core',
   templateUrl: './mou-main-info.component.html',
   styleUrls: ['./mou-main-info.component.scss']
 })
@@ -54,7 +54,7 @@ export class MouMainInfoComponent implements OnInit {
             if(responseCust['MrCustTypeCode'] == CommonConstant.CustTypeCompany){
               AdInsHelper.OpenCustomerCoyViewByCustId(responseCust["CustId"]);
             }
-            
+
             if(responseCust['MrCustTypeCode'] == CommonConstant.CustTypePersonal){
               AdInsHelper.OpenCustomerViewByCustId(responseCust["CustId"]);
             }
