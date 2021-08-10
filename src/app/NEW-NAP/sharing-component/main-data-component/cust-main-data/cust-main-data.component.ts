@@ -107,6 +107,7 @@ export class CustMainDataComponent implements OnInit {
   subjectTitle: string = 'Customer';
   MaritalStatLookup: string = "";
   MaxDate: Date;
+  max17Yodt: Date;
   positionSlikLookUpObj: InputLookupObj = new InputLookupObj();
   InputLookupCustObj: InputLookupObj = new InputLookupObj();
   InputLookupCustCoyObj: InputLookupObj = new InputLookupObj();
@@ -203,6 +204,8 @@ export class CustMainDataComponent implements OnInit {
     this.ddlIdTypeObj.customValue = "Descr";
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
+    this.max17Yodt = new Date(this.MaxDate);
+    this.max17Yodt.setFullYear(this.max17Yodt.getFullYear() - 17);
 
     this.DictUcDDLObj[this.RefMasterTypeCodeNationality] = CustSetData.initDdlRefMaster(this.RefMasterTypeCodeNationality, null, true);
     if (this.MrCustTypeCode == CommonConstant.CustTypePublic) {
@@ -695,12 +698,15 @@ export class CustMainDataComponent implements OnInit {
     );
   }
 
+  appCustPersonalJobDataRowVersion: string[] = null;
   async setDataCustPersonalJobData(AppCustPersonalJobDataObj: AppCustPersonalJobDataObj) {
+    if(!AppCustPersonalJobDataObj) return;
     this.CustMainDataForm.patchValue({
       MrJobPositionCode: AppCustPersonalJobDataObj.MrJobPositionCode,
       MrProfessionCode: AppCustPersonalJobDataObj.MrProfessionCode,
     });
 
+    this.appCustPersonalJobDataRowVersion = AppCustPersonalJobDataObj.RowVersion;
     if (AppCustPersonalJobDataObj.MrJobPositionCode != undefined && AppCustPersonalJobDataObj.MrJobPositionCode != "") {
       let tempDesc: string = await this.PatchValueDesc(AppCustPersonalJobDataObj.MrJobPositionCode, CommonConstant.RefMasterTypeCodeJobPosition);
       this.jobPositionLookupObj.nameSelect = tempDesc;
@@ -877,7 +883,7 @@ export class CustMainDataComponent implements OnInit {
     this.MrCustTypeCode = custType;
     this.CustMainDataForm.patchValue({
       SharePrcnt: 0,
-      IsActive: false,
+      IsActive: true,
       IsSigner: false,
       IsOwner: false
     });
@@ -1215,8 +1221,13 @@ export class CustMainDataComponent implements OnInit {
 
     tempReqObj.MrProfessionCode = tempForm["MrProfessionCode"];
     tempReqObj.MrJobPositionCode = tempForm["MrJobPositionCode"];
-    if (this.custMainDataMode == this.CustMainDataFamily) tempReqObj.EmploymentEstablishmentDt = tempForm["EmploymentEstablishmentDt"];
-    if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode) tempReqObj = null;
+    tempReqObj.RowVersion = this.appCustPersonalJobDataRowVersion;
+    if (this.custMainDataMode == this.CustMainDataFamily) {
+      tempReqObj.EmploymentEstablishmentDt = tempForm["EmploymentEstablishmentDt"];
+      if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode && !tempReqObj.EmploymentEstablishmentDt) tempReqObj = null;
+    } else {
+      if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode) tempReqObj = null;
+    }
     return tempReqObj
   }
 
@@ -1447,6 +1458,7 @@ export class CustMainDataComponent implements OnInit {
     let response = this.MapFouCustResponseToLosCust(resp, resp0)
     this.MrCustTypeCode = CommonConstant.CustTypePersonal
     await this.setDataCustomerPersonal(response.AppCustObj, response.AppCustPersonalObj, response.AppCustAddrLegalObj, response.AppCustCompanyMgmntShrholderObj);
+    await this.setDataCustPersonalJobData(response.AppCustPersonalJobDataObj);
     if (response.AppCustObj.IsExistingCust) {
       this.disableInput();
     }
@@ -1699,6 +1711,7 @@ export class CustMainDataComponent implements OnInit {
     }
 
     if (resp.CustPersonalJobDataObj) {
+      this.appCustPersonalJobDataRowVersion = resp.CustPersonalJobDataObj.RowVersion;
       response.AppCustPersonalJobDataObj = {
         AppCustPersonalJobDataId: resp.CustPersonalJobDataObj.AppCustPersonalJobDataId,
         MrProfessionCode: resp.CustPersonalJobDataObj.MrProfessionCode,
