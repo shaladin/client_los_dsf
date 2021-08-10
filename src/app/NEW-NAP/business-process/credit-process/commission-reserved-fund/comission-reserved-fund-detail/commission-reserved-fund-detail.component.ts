@@ -18,6 +18,7 @@ import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -80,7 +81,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ngOnInit() {
     this.isShow = false;
-    this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    this.claimTask();
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
@@ -228,7 +229,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.HandlingForm.controls['ReturnHandlingExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         () => {
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode });
@@ -266,5 +268,16 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   GetDictRemaining(ev) {
     this.DictRemainingIncomeForm = ev;
     this.isShow = true;
+  }
+
+  claimTask(){
+    if(environment.isCore){
+      if(this.ReturnHandlingHObj.WfTaskListId!= "" && this.ReturnHandlingHObj.WfTaskListId!= undefined){
+        this.claimTaskService.ClaimTaskV2(this.ReturnHandlingHObj.WfTaskListId);
+      }
+    }
+    else if (this.ReturnHandlingHObj.WfTaskListId> 0) {
+        this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    }
   }
 }
