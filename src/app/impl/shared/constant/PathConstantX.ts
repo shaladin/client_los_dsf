@@ -52,6 +52,7 @@ export class PathConstantX {
   public static MOU_CUST_RVW_DFLN_X = PathConstant.MOU_CUST + '/ReviewDLFNX';
   public static MOU_CUST_RVW_GENERAL_X = PathConstant.MOU_CUST + '/ReviewGeneralX';
   public static MOU_EXECUTION_DETAIL_X = PathConstant.MOU_EXECUTION + '/' + PathConstantX.DETAIL_X;
+  public static MOU_EXECUTION_PAGING_X = PathConstant.MOU_EXECUTION + "/" + PathConstantX.PAGING;
   //#endregion
 
   //#region Change mou
