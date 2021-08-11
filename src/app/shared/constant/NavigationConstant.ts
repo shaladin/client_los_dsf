@@ -295,7 +295,7 @@ export class NavigationConstant {
   public static MOU_DUP_CHECK_EXIST_PERSONAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_EXIST_PERSONAL; //"/Mou/DuplicateCheck/ExistingPersonal"
   public static MOU_DUP_CHECK_SIMILAR_COY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_SIMILAR_COY; //"/Mou/DuplicateCheck/SimilarCompany"
   public static MOU_DUP_CHECK_EXIST_COY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_EXIST_COY; //"/Mou/DuplicateCheck/ExistingCompany"
-  public static MOU_EXECUTION_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_EXECUTION_PAGING; //"/Mou/Execution/Paging"
+  public static MOU_EXECUTION_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_EXECUTION_PAGING_X; //"/Mou/Execution/PagingX"
   public static MOU_EXECUTION_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_EXECUTION_DETAIL_X; //"/Mou/Execution/DetailX"
   public static MOU_CUST_OUTSTANDING_TC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_OUTSTANDING_TC_PAGING; //"/Mou/Cust/OutstandingTC/Paging"
   public static MOU_CUST_OUTSTANDING_TC_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_OUTSTANDING_TC_DETAIL; //"/Mou/Cust/OutstandingTC/Detail"
