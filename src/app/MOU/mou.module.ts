@@ -129,6 +129,7 @@ import {ChangeMouReviewGeneralXComponent} from 'app/impl/MOU/change-mou/change-m
 import {ChangeMouApprovalGeneralXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-general/change-mou-approval-general-x.component';
 import {MouReviewGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-general/mou-review-general-x.component';
 import {ChangeMouReviewPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component';
+import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-execution-paging/mou-execution-paging-x.component';
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -164,8 +165,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     SharedModule,
-    NgMultiSelectDropDownModule,
-    ViewModule
+    NgMultiSelectDropDownModule
   ],
   declarations: [
     DocSignerComponent,
@@ -283,7 +283,9 @@ export const customCurrencyMaskConfig = {
     ChangeMouExecutionDetailXComponent,
     ChangeMouAddcollXComponent,
     MouReviewGeneralXComponent,
-    ChangeMouReviewPagingXComponent
+    ChangeMouReviewPagingXComponent,
+    MouExecutionPagingXComponent,
+    MouMainInfoXComponent,
   ],
   exports: [],
   providers: [NGXToastrService],

@@ -31,6 +31,8 @@ export class URLConstantX {
   public static MouCustExecutionHumanActivityX = environment.losUrl +'/v1' + "/MouCustX/MouCustExecutionHumanActivity";
   public static GetMouMainInfoByIdX = environment.losUrl +'/v1' + "/MouCustX/GetMouMainInfoById";
   public static GetMouCustByAppIdForInvoiceVerifX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppIdForInvoiceVerif";
+  
+  public static CheckMouActiveR2 = environment.losUrl +'/v1' + "/MouCustX/CheckMouActiveR2";
 
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";
