@@ -918,6 +918,8 @@ export class CommonConstant {
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static WF_UPL_SMPL_LEAD = "WF_UPL_SMPL_LEAD";
+  public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
   public static PROD_OFF_APV = "PROD_OFF_APV";
   public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
   
@@ -959,4 +961,7 @@ export class CommonConstant {
   public static LeadStepLeadVerf = "LVR";
   public static LeadStepTeleVerf = "TVR";
   public static LeadStepLeadUpd = "LUP";
+
+  // Financial Data
+  public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
 }

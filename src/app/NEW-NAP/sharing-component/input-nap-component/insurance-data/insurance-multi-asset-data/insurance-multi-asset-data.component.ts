@@ -1965,6 +1965,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           InscoAdminFeeAmt: this.appInsObjObj.InscoAdminFeeAmt,
           CustAdminFeeAmt: this.appInsObjObj.CustAdminFeeAmt,
           CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
+          InscoStampDutyFeeAmt: this.appInsObjObj.InscoStampDutyFee,
           TotalCustFeeAmt: this.appInsObjObj.CustAdminFeeAmt + this.appInsObjObj.CustStampDutyFee,
           CvgAmt: this.appInsObjObj.CvgAmt,
           TotalCustDiscAmt: this.appInsObjObj.TotalCustDiscAmt,
