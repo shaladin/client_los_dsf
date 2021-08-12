@@ -116,12 +116,12 @@ export class MouReviewDlfnComponent implements OnInit {
   }
 
   async claimTask() {
-    if(environment.isCore){
-      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
-    }else{
-      if (this.WfTaskListId > 0) {
-        this.claimTaskService.ClaimTask(this.WfTaskListId);
+    if (environment.isCore) {
+      if (this.WfTaskListId != undefined && this.WfTaskListId != "") {
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
       }
+    } else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }
 
