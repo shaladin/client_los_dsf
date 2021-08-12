@@ -33,8 +33,7 @@ export class ChangeMouCustAssetDetailComponent implements OnInit {
   ngOnInit() {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/MOU/lookupMOUCustAsset.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/MOU/lookupMOUCustAsset.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/MOU/lookupMOUCustAsset.json";
 

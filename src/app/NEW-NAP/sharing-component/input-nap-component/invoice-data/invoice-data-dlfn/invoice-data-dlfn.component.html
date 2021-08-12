@@ -131,24 +131,57 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-              <div class="form-group row">
-                <label class="col-md-3 adins-required-label" translate>Chassis No</label>
+              <div class="form-group row" *ngIf="AssetType != null && AssetType.SerialNo1Label != null && AssetType.SerialNo1Label != ''">
+                <label class="col-md-3 " [ngClass]="{'adins-required-label' : AssetType.IsMndtrySerialNo1}" translate>{{AssetType.SerialNo1Label}}</label>
                 <div class="col-md-9">
-                  <input type="text" class="form-control" formControlName="ChassisNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.ChassisNo.invalid }">
-                  <lib-uc-show-errors [control]="InvoiceForm.controls.ChassisNo" [submit]="enjiForm.submitted">
+                  <input type="text" class="form-control" formControlName="SerialNo1"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.SerialNo1.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.SerialNo1" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
-              <div class="form-group row">
-                <label class="col-md-3 adins-required-label" translate>Engine No</label>
+
+              <div class="form-group row" *ngIf="AssetType != null && AssetType.SerialNo2Label != null && AssetType.SerialNo2Label != ''">
+                <label class="col-md-3 " [ngClass]="{'adins-required-label' : AssetType.IsMndtrySerialNo2}" translate>{{AssetType.SerialNo2Label}}</label>
                 <div class="col-md-9">
-                  <input type="text" class="form-control" formControlName="EngineNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.EngineNo.invalid }">
-                  <lib-uc-show-errors [control]="InvoiceForm.controls.EngineNo" [submit]="enjiForm.submitted">
+                  <input type="text" class="form-control" formControlName="SerialNo2"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.SerialNo2.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.SerialNo2" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
+
+              <div class="form-group row" *ngIf="AssetType != null && AssetType.SerialNo3Label != null && AssetType.SerialNo3Label != ''">
+                <label class="col-md-3 " [ngClass]="{'adins-required-label' : AssetType.IsMndtrySerialNo3}" translate>{{AssetType.SerialNo3Label}}</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="SerialNo3"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.SerialNo3.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.SerialNo3" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row" *ngIf="AssetType != null && AssetType.SerialNo4Label != null && AssetType.SerialNo4Label != ''">
+                <label class="col-md-3 " [ngClass]="{'adins-required-label' : AssetType.IsMndtrySerialNo4}" translate>{{AssetType.SerialNo4Label}}</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="SerialNo4"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.SerialNo4.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.SerialNo4" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row" *ngIf="AssetType != null && AssetType.SerialNo5Label != null && AssetType.SerialNo5Label != ''">
+                <label class="col-md-3 " [ngClass]="{'adins-required-label' : AssetType.IsMndtrySerialNo5}" translate>{{AssetType.SerialNo5Label}}</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="SerialNo5"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.SerialNo5.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.SerialNo5" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              
               <div class="form-actions right">
                 <button type="button" (click)="SaveDetail()" class="btn btn-raised btn-primary" translate>
                   <i class="fa fa-check-square-o"></i> Add

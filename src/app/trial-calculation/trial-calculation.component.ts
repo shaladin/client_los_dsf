@@ -163,8 +163,7 @@ export class TrialCalculationComponent implements OnInit {
     bizTmpltCrit.push(critSuppObj);
 
     this.InputLookupProductOfferingObj.urlJson = "./assets/uclookup/lookupProductOffering.json";
-    this.InputLookupProductOfferingObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.InputLookupProductOfferingObj.urlEnviPaging = environment.losUrl;
+    this.InputLookupProductOfferingObj.urlEnviPaging = environment.losUrl + "/v1";
     this.InputLookupProductOfferingObj.pagingJson = "./assets/uclookup/lookupProductOffering.json";
     this.InputLookupProductOfferingObj.genericJson = "./assets/uclookup/lookupProductOffering.json";
     this.InputLookupProductOfferingObj.isReadonly = false;

@@ -32,9 +32,11 @@ export class ReportParamObj {
   paramKey: string;
   paramValue: string;
   paramAssignment: number;
+  paramLabel: string;
   constructor() {
     this.paramKey = "";
     this.paramValue = "";
     this.paramAssignment = 0;
+    this.paramLabel = "";
   }
 }

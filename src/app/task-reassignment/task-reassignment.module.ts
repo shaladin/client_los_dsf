@@ -27,7 +27,7 @@ export const customCurrencyMaskConfig = {
   suffix: "",
   thousands: ",",
   nullable: false,
-  inputMode: CurrencyMaskInputMode.FINANCIAL
+  inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({

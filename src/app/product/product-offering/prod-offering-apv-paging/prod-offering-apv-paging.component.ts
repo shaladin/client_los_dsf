@@ -13,6 +13,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'app-prod-offering-apv-paging',
   templateUrl: './prod-offering-apv-paging.component.html'
@@ -29,31 +30,60 @@ export class ProdOfferingApvPagingComponent implements OnInit {
               private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingApproval.json";
-    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingApproval.json";
+    if(environment.isCore){
+      this.InputPagingObj._url = "./assets/ucpaging/V2/searchProductOfferingApprovalV2.json";
+      this.InputPagingObj.pagingJson = "./assets/ucpaging/V2/searchProductOfferingApprovalV2.json";
 
-    let critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'CATEGORY_CODE';
-    critObj.value = 'PRD_OFR_APV';
-    this.ArrCrit.push(critObj);
+      let critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'TL.CATEGORY_CODE';
+      critObj.value = 'PRD_OFR_APV';
+      this.ArrCrit.push(critObj);
 
-    critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'CURRENT_USER_ID';
-    critObj.value = this.UserContext.UserName;
-    this.ArrCrit.push(critObj);
-    
-    critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionOr;
-    critObj.propName = 'MAIN_USER_ID';
-    critObj.value = this.UserContext.UserName;
-    this.ArrCrit.push(critObj);
+      critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'TL.CURRENT_USER_ID';
+      critObj.value = this.UserContext.UserName;
+      this.ArrCrit.push(critObj);
 
-    this.InputPagingObj.addCritInput = this.ArrCrit;
+      critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionOr;
+      critObj.propName = 'TL.MAIN_USER_ID';
+      critObj.value = this.UserContext.UserName;
+      this.ArrCrit.push(critObj);
+
+      this.InputPagingObj.addCritInput = this.ArrCrit;
+    }
+    else{
+      this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingApproval.json";
+      this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingApproval.json";
+  
+      let critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'TL.CATEGORY_CODE';
+      critObj.value = 'PRD_OFR_APV';
+      this.ArrCrit.push(critObj);
+  
+      critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'TL.CURRENT_USER_ID';
+      critObj.value = this.UserContext.UserName;
+      this.ArrCrit.push(critObj);
+      
+      critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionOr;
+      critObj.propName = 'TL.MAIN_USER_ID';
+      critObj.value = this.UserContext.UserName;
+      this.ArrCrit.push(critObj);
+  
+      this.InputPagingObj.addCritInput = this.ArrCrit;
+    }
   }
 
   CallBackHandler(ev) {

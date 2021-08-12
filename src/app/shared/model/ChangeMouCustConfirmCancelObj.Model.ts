@@ -1,7 +1,7 @@
 export class ChangeMouCustConfirmCancelObj {
     Status: string;
     ChangeMouTrxId: number;
-    WfTaskListId: number;
+    WfTaskListId: any;
     RowVersion: string;
     TrxNo: string;
 

@@ -47,27 +47,21 @@ export class ViewLtkmCustDataPersonalDataComponent implements OnInit {
     await this.getCustData();
     this.arrValue.push(this.ltkmCustObj.LtkmCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalMainData.json";
-    this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
 
     this.viewJobDataProfObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalJobDataProf.json";
-    this.viewJobDataProfObj.viewEnvironment = environment.losUrl;
     this.viewJobDataProfObj.whereValue = this.arrValue;
 
     this.viewJobDataEmpObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalJobDataEmp.json";
-    this.viewJobDataEmpObj.viewEnvironment = environment.losUrl;
     this.viewJobDataEmpObj.whereValue = this.arrValue;
 
     this.viewJobDataSmeObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalJobDataSme.json";
-    this.viewJobDataSmeObj.viewEnvironment = environment.losUrl;
     this.viewJobDataSmeObj.whereValue = this.arrValue;
 
     this.viewJobDataNonProfObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalJobDataNonProf.json";
-    this.viewJobDataNonProfObj.viewEnvironment = environment.losUrl;
     this.viewJobDataNonProfObj.whereValue = this.arrValue;
 
     this.viewFinDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalFinData.json";
-    this.viewFinDataObj.viewEnvironment = environment.losUrl;
     this.viewFinDataObj.whereValue = this.arrValue;
 
     this.isDataAlreadyLoaded = true;

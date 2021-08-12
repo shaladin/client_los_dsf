@@ -1,0 +1,197 @@
+{
+    "title": "LEAD VERIFICATION",
+    "keyProperty": "LeadId",
+    "keyPropCriteria": "L.LEAD_ID",
+    "component": [
+        {
+            "type": "dropdown",
+            "name": "L.ORI_OFFICE_CODE",
+            "id": "OriOfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "isQueryIn":true,
+            "ddlType": "all",
+            "url": "",
+            "environment":"FOU",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "name": "L.MR_LEAD_SOURCE_CODE",
+            "id": "LeadSourceCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment":"FOU",
+            "path":"/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Lead Source",
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "LEAD_SOURCE",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "L.LEAD_NO",
+            "id": "LeadNoId",
+            "value": "",
+            "label": "Lead No.",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "L.ORDER_NO",
+            "id": "OrderNoId",
+            "value": "",
+            "label": "Order No.",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "LA.FULL_ASSET_NAME",
+            "id": "FullAssetNameId",
+            "value": "",
+            "label": "Full Asset Name",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "LC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+          {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "AssigneeId",
+            "value": "",
+            "label": "Claim By",
+            "placeholder": "Placeholder"
+          }
+    ],
+  "querystring": {
+    "name": "LeadVerifTempPagingV2"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Claim By",
+            "name": "Assignee"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Lead No",
+            "name": "L.LEAD_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office Name",
+            "name": "RO.OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Order No",
+            "name": "L.ORDER_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "LC.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Source",
+            "name": "RM.DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Full Asset Name",
+            "name": "LA.FULL_ASSET_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Duplicate Lead No",
+            "name": "DL.LEAD_NO"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "LeadNo",
+            "path": "VIEW_LEAD",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "LeadId",
+                    "property": "LeadId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "OrderNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "LeadSource"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "DuplicateLeadNo",
+            "path": "VIEW_LEAD",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "LeadId",
+                    "property": "DuplicateLeadId"
+                }
+            ]
+        }
+    ]
+}

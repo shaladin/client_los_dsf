@@ -43,8 +43,7 @@ export class AppAssetCancelDetailComponent implements OnInit {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
     }
 
-    this.ddlReason = new UcDropdownListObj;
-    this.ddlReason.enviromentUrl = environment.FoundationR3Url;
+    this.ddlReason = new UcDropdownListObj();
     this.ddlReason.apiPath = "/RefReason/GetListActiveRefReason";
     this.ddlReason.ddlType = "one";
     this.ddlReason.requestObj = refReasonObj;

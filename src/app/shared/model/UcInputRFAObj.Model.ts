@@ -26,7 +26,7 @@ export class UcInputRFAObj {
         this.RequestedBy = context[CommonConstant.USER_NAME];
         this.OfficeCode = context[CommonConstant.OFFICE_CODE];
         this.ApvTypecodes = [];
-        this.EnvUrl = environment.FoundationR3Url;
+        this.EnvUrl = environment.FoundationR3Url + "/v1";
         this.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
         this.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
         this.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;

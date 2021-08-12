@@ -16,7 +16,7 @@ export class LookupTaxCityIssuerComponent implements OnInit {
 
   ngOnInit() {
     this.inputObj._url = "./assets/uclookup/NAP/lookupDistrict.json";
-    this.inputObj.enviromentUrl = environment.FoundationR3Url;
+    this.inputObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.inputObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     var disCrit = new Array();
     var critDisObj = new CriteriaObj();

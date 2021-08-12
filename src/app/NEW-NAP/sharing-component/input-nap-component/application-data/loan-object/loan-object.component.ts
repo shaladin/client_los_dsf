@@ -227,12 +227,12 @@ export class LoanObjectComponent implements OnInit {
   setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl;
+    this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
     this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
 
     this.supplierInputLookupObj = new InputLookupObj();
-    this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.supplierInputLookupObj.addCritInput = new Array();
 
 

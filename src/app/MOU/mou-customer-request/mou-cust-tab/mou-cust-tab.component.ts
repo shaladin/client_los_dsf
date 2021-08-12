@@ -268,6 +268,17 @@ export class MouCustTabComponent implements OnInit {
           }
         }
       }
+      var groupedCustLegalDoc = this.groupBy(this.custDataCompanyObj.MouCustCompanyLegalDocObjs, function (item) {
+        return [item.MrLegalDocTypeCode, item.DocNo];
+      });
+  
+      var duplCustLegalDoc = groupedCustLegalDoc.find(x => x.length > 1);
+  
+      if(duplCustLegalDoc != undefined){
+        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
+        return;
+      }
+      
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       if (this.confirmFraudCheck()) {
         if (this.MouCustCompanyId == 0) {
@@ -296,6 +307,18 @@ export class MouCustTabComponent implements OnInit {
         }
       }
     }
+  }
+
+  groupBy(array, f) {
+    let groups = {};
+    array.forEach(function (o) {
+      var group = JSON.stringify(f(o));
+      groups[group] = groups[group] || [];
+      groups[group].push(o);
+    });
+    return Object.keys(groups).map(function (group) {
+      return groups[group];
+    })
   }
 
   Cancel() {

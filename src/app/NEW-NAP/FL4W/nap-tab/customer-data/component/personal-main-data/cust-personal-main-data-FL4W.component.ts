@@ -250,8 +250,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
@@ -259,8 +258,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
 
     this.InputLookupCountryObj = new InputLookupObj();
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.isRequired = false;
