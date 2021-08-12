@@ -18,6 +18,7 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -28,7 +29,7 @@ import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model'
 export class LegalReviewDetailComponent implements OnInit {
 
   MouCustId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   responseRefMasterObj: Array<KeyValueObj>;
   items: FormArray;
   isItemsReady: boolean = false;
@@ -65,9 +66,7 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    if (this.WfTaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    this.claimTask();
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -134,7 +133,8 @@ export class LegalReviewDetailComponent implements OnInit {
 
   SaveData(formObj: FormGroup, isSubmit: boolean) {
     if (this.LegalForm.valid) {
-      var mouObj = new ReqListMouCustLglReviewObj();
+      let addMouLglRvwUrl = environment.isCore ? URLConstant.AddRangeMouCustLglReviewV2 : URLConstant.AddRangeMouCustLglReview;
+      var mouLglRvwObj = new ReqListMouCustLglReviewObj();
       for (let index = 0; index < this.responseRefMasterObj.length; index++) {
         var tempMouObj = {
           MouCustId: this.MouCustId,
@@ -142,11 +142,11 @@ export class LegalReviewDetailComponent implements OnInit {
           LglReviewResult: formObj.value.items[index].values,
           RowVersion: formObj.value.items[index].RowVersion
         }
-        mouObj.MouCustLglReviewObjs.push(tempMouObj);
+        mouLglRvwObj.MouCustLglReviewObjs.push(tempMouObj);
       }
-      mouObj.WfTaskListId = this.WfTaskListId;
-      mouObj.IsSubmit = isSubmit;
-      this.http.post(URLConstant.AddRangeMouCustLglReview, mouObj).subscribe(
+      mouLglRvwObj.WfTaskListId = this.WfTaskListId;
+      mouLglRvwObj.IsSubmit = isSubmit;
+      this.http.post(addMouLglRvwUrl, mouLglRvwObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
@@ -154,5 +154,16 @@ export class LegalReviewDetailComponent implements OnInit {
         });
       this.mouTc.Save();
     }
+  }
+
+  claimTask() {
+    if(environment.isCore){	
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId > 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }	
   }
 }

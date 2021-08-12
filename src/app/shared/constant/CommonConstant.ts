@@ -918,6 +918,15 @@ export class CommonConstant {
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
+  public static WF_MOU_FACTORING = "WF_MOU_FACTORING";
+  public static WF_MOU_DLFN = "WF_MOU_DLFN";
+  public static MOU_REVIEW = "MOU_REVIEW";
+  public static LEGAL_RVW = "LEGAL_RVW";
+  public static MOU_RETURN = "MOU_RETURN";
+  public static MOU_APV = "MOU_APV";
+  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER";
+  public static MOU_EXECUTION = "MOU_EXECUTION";
   public static WF_UPL_SMPL_LEAD = "WF_UPL_SMPL_LEAD";
   public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
   public static PROD_OFF_APV = "PROD_OFF_APV";
@@ -968,7 +977,5 @@ export class CommonConstant {
   public static LeadStepLeadUpd = "LUP";
 
   // Financial Data
-
-public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
-  
+  public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
 }

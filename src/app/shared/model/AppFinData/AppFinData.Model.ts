@@ -5,6 +5,7 @@ export class AppFinDataObj {
     AppId: number;
     MrInstSchemeCode: string;
     MrInstSchemeName: string;
+    InstSchemeName: string;
     MrFirstInstTypeCode: string;
     MrFirstInstTypeName: string;
     NumOfInst: number;
