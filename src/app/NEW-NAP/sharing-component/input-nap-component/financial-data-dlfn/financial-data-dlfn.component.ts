@@ -87,7 +87,7 @@ export class FinancialDataDlfnComponent implements OnInit {
 
         NumOfStep: 0,
         MrInstSchemeCode: "",
-        InstSchemeName: "",
+        MrInstSchemeName: "",
         CummulativeTenor: 0,
         StepUpStepDownInputType: "",
 
@@ -174,7 +174,7 @@ export class FinancialDataDlfnComponent implements OnInit {
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
-          InstSchemeName: this.appFinDataObj.InstSchemeName,
+          MrInstSchemeName: this.appFinDataObj.MrInstSchemeName,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
           TotalInterestAmt: this.appFinDataObj.TotalInterestAmt,
 

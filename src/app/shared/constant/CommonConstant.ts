@@ -970,5 +970,9 @@ export class CommonConstant {
   public static LeadStepLeadVerf = "LVR";
   public static LeadStepTeleVerf = "TVR";
   public static LeadStepLeadUpd = "LUP";
+
+  // Financial Data
+
+public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
   
 }

@@ -917,6 +917,7 @@ export class URLConstant {
   // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
   public static GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes"
+  public static GetListAppCustAttrContentsByAppCustIdAndListAttrGroups = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentsByAppCustIdAndListAttrGroups"
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
   public static GetRuleForAttrContent = environment.FoundationR3Url + '/v1' + "/CustAttrContent/GetRuleForAttrContent";
 
