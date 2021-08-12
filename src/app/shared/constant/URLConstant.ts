@@ -652,6 +652,7 @@ export class URLConstant {
   public static ReturnMouReview = environment.losUrl + "/v1" + "/MouCust/ReturnMouReview";
   public static ReturnMouReviewV2 = environment.losUrl + "/v2" + "/MouCust/ReturnMouReview";
   public static EditMouForCancelByMouId = environment.losUrl + "/v1" + "/MouCust/EditMouForCancelByMouId";
+  public static EditMouForCancelByMouIdV2 = environment.losUrl + "/v2" + "/MouCust/EditMouForCancelByMouId";
   public static GetListMouByAppIdAndMouType = environment.losUrl + "/v1" + "/MouCust/GetListMouByAppIdAndMouType";
   public static GetListMouByAppIdAndMouTypeDF = environment.losUrl + "/v1" + "/MouCust/GetListMouByAppIdAndMouTypeDF";
   public static GetListMouCustByCustNo = environment.losUrl + "/v1" + "/MouCust/GetListMouCustByCustNo";
@@ -685,6 +686,7 @@ export class URLConstant {
 
   // MOU Freeze Unfreeze
   public static SubmitMouFreezeUnfreeze = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
+  public static SubmitMouFreezeUnfreezeV2 = environment.losUrl + "/v2" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
   public static GetListMouFreezeUnfreezeByMouCustId = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/GetListMouFreezeUnfreezeByMouCustId";
 
   // MOU CUST FCTR
