@@ -192,7 +192,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   //#region DDL Data
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
-  readonly DDLRecomendation: string = "RECOMENDED";
+  readonly DDLRecomendation: string = CommonConstant.RefReasonTypeCodeCrdReview;
   async BindDDLRecommendation() {
     let Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
@@ -201,7 +201,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
       });
   }
 
-  readonly DDLReason: string = "REASON";
+  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
   async BindDDLReasonReturn() {
     let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(

@@ -63,8 +63,8 @@ export class ReservedFundComponent implements OnInit {
   // totalExpenseAmt: number = 0;
   isReturnOn: boolean = false;
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
-  readonly DDLReason: string = "REASON";
-  readonly DDLTask: string = "TASK";
+  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
+  readonly DDLTask: string = CommonConstant.ReturnTask;
 
 
   FormReturnObj  =this.fb.group({

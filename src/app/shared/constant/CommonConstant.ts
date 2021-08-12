@@ -357,7 +357,7 @@ export class CommonConstant {
   public static AddrTypeMailing = "MAILING";
   public static AddrTypeJob = "JOB";
   public static AddrTypePrevJob = "PREV_JOB";
-  public static AddrTypeOthBiz = "OTHERBIZ";
+  public static AddrTypeOthBiz = "OTH_BIZ";
   public static AddrTypeCompany = "COMPANY";
   public static AddrTypeEmergency = "EMERGENCY";
   public static AddrTypeContactInfo = "CONTACT";
@@ -503,6 +503,7 @@ export class CommonConstant {
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
+  public static ReturnTask = "RETURN_TASK";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
@@ -939,7 +940,7 @@ export class CommonConstant {
   public static CustAddrTypeResidence = "RESIDENCE";
   public static CustAddrTypeEmergency = "EMERGENCY";
   public static CustAddrTypeJob = "JOB";
-  public static CustAddrTypeOthBiz = "OTHERBIZ";
+  public static CustAddrTypeOthBiz = "OTH_BIZ";
   public static CustAddrTypePreJob = "PREV_JOB";
   public static CustAddrTypeBiz = "BIZ";
 
