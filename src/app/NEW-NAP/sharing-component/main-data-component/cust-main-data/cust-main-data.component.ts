@@ -906,6 +906,15 @@ export class CustMainDataComponent implements OnInit {
       });
     }
 
+    if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
+      if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+        //note: dari html cmn company yang ditampilkan
+        this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
+      }else{
+        this.CustMainDataForm.controls.EstablishmentDt.clearValidators();
+      }
+      this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
+    }
     this.enableInput();
 
     this.SetCustModel();
