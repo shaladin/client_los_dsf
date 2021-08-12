@@ -166,17 +166,11 @@ export class MouRequestAddcollComponent implements OnInit {
     this.customPattern = new Array<CustomPatternObj>();
     this.inputAddressObjForLegalAddr = new InputAddressObj();
     this.inputAddressObjForLegalAddr.showSubsection = false;
-    this.inputAddressObjForLegalAddr.showPhn1 = false;
-    this.inputAddressObjForLegalAddr.showPhn2 = false;
-    this.inputAddressObjForLegalAddr.showPhn3 = false;
-    this.inputAddressObjForLegalAddr.showFax = false;
+    this.inputAddressObjForLegalAddr.showAllPhn = false;
 
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
-    this.inputAddressObjForLocAddr.showPhn1 = false;
-    this.inputAddressObjForLocAddr.showPhn2 = false;
-    this.inputAddressObjForLocAddr.showPhn3 = false;
-    this.inputAddressObjForLocAddr.showFax = false;
+    this.inputAddressObjForLocAddr.showAllPhn = false;
 
     this.items = this.AddCollForm.get('items') as FormArray;
     this.bindUcLookup()
@@ -506,16 +500,10 @@ export class MouRequestAddcollComponent implements OnInit {
   ResetForm() {
     this.inputAddressObjForLegalAddr = new InputAddressObj();
     this.inputAddressObjForLegalAddr.showSubsection = false;
-    this.inputAddressObjForLegalAddr.showPhn1 = false;
-    this.inputAddressObjForLegalAddr.showPhn2 = false;
-    this.inputAddressObjForLegalAddr.showPhn3 = false;
-    this.inputAddressObjForLegalAddr.showFax = false;
+    this.inputAddressObjForLegalAddr.showAllPhn = false;
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
-    this.inputAddressObjForLocAddr.showPhn1 = false;
-    this.inputAddressObjForLocAddr.showPhn2 = false;
-    this.inputAddressObjForLocAddr.showPhn3 = false;
-    this.inputAddressObjForLocAddr.showFax = false;
+    this.inputAddressObjForLocAddr.showAllPhn = false;
 
     this.AddCollForm.patchValue({
       MouCustCollateralId: 0,

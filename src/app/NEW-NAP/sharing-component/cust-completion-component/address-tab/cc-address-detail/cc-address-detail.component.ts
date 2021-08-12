@@ -161,6 +161,7 @@ export class CcAddressDetailComponent implements OnInit {
         this.AddrObj.PhnExt1 = response["PhnExt1"];
         this.AddrObj.PhnExt2 = response["PhnExt2"];
         this.AddrObj.PhnExt3 = response["PhnExt3"];
+        this.AddrObj.MrHouseOwnershipCode = response["MrBuildingOwnershipCode"];
 
         this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
         this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };

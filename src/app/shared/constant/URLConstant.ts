@@ -645,15 +645,20 @@ export class URLConstant {
   public static DeleteMouCustListedCustFctr = environment.losUrl + "/v1" + "/MouCustListedCustFctr/DeleteMouCustListedCustFctr";
   public static AddMouCustListedCustFctr = environment.losUrl + "/v1" + "/MouCustListedCustFctr/AddMouCustListedCustFctr";
   public static SubmitWorkflowMouRequest = environment.losUrl + "/v1" + "/MouCust/SubmitWorkflowMouRequest";
+  public static SubmitWorkflowMouRequestV2 = environment.losUrl + "/v2" + "/MouCust/SubmitWorkflowMouRequest";
   public static SubmitMouReview = environment.losUrl + "/v1" + "/MouCust/SubmitMouReview";
   public static SubmitMouReviewNew = environment.losUrl + "/v1" + "/MouCust/SubmitMouReviewNew";
+  public static SubmitMouReviewNewV2 = environment.losUrl + "/v2" + "/MouCust/SubmitMouReviewNew";
   public static ReturnMouReview = environment.losUrl + "/v1" + "/MouCust/ReturnMouReview";
+  public static ReturnMouReviewV2 = environment.losUrl + "/v2" + "/MouCust/ReturnMouReview";
   public static EditMouForCancelByMouId = environment.losUrl + "/v1" + "/MouCust/EditMouForCancelByMouId";
+  public static EditMouForCancelByMouIdV2 = environment.losUrl + "/v2" + "/MouCust/EditMouForCancelByMouId";
   public static GetListMouByAppIdAndMouType = environment.losUrl + "/v1" + "/MouCust/GetListMouByAppIdAndMouType";
   public static GetListMouByAppIdAndMouTypeDF = environment.losUrl + "/v1" + "/MouCust/GetListMouByAppIdAndMouTypeDF";
   public static GetListMouCustByCustNo = environment.losUrl + "/v1" + "/MouCust/GetListMouCustByCustNo";
   public static GetMouCustByAppId = environment.losUrl + "/v1" + "/MouCust/GetMouCustByAppId";
   public static MouCustExecutionHumanActivity = environment.losUrl + "/v1" + "/MouCust/MouCustExecutionHumanActivity";
+  public static MouCustExecutionHumanActivityV2 = environment.losUrl + "/v2" + "/MouCust/MouCustExecutionHumanActivity";
   public static CheckMouActiveR2 = environment.losUrl + "/v1" + "/MouCustX/CheckMouActiveR2";
   public static IsMouUsedByAppOnProgress = environment.losUrl + "/v1" + "/MouCust/IsMouUsedByAppOnProgress";
 
@@ -681,6 +686,7 @@ export class URLConstant {
 
   // MOU Freeze Unfreeze
   public static SubmitMouFreezeUnfreeze = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
+  public static SubmitMouFreezeUnfreezeV2 = environment.losUrl + "/v2" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
   public static GetListMouFreezeUnfreezeByMouCustId = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/GetListMouFreezeUnfreezeByMouCustId";
 
   // MOU CUST FCTR
@@ -730,6 +736,7 @@ export class URLConstant {
   // MOU CUST LEGAL REVIEW
   public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/v1" + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
   public static AddRangeMouCustLglReview = environment.losUrl + "/v1" + "/MouCustLglReview/AddRangeMouCustLglReview";
+  public static AddRangeMouCustLglReviewV2 = environment.losUrl + "/v2" + "/MouCustLglReview/AddRangeMouCustLglReview";
   public static EditRangeMouCustLglReview = environment.losUrl + "/v1" + "/MouCustLglReview/EditRangeMouCustLglReview";
 
   // MOU CUST TC
@@ -739,6 +746,7 @@ export class URLConstant {
 
   // MOU DOC SIGNER
   public static AddMouCustSigner = environment.losUrl + "/v1" + "/MouCustSigner/AddMouCustSigner";
+  public static AddMouCustSignerV2 = environment.losUrl + "/v2" + "/MouCustSigner/AddMouCustSigner";
   public static GetMouCustSignerByMouCustId = environment.losUrl + "/v1" + "/MouCustSigner/GetMouCustSignerByMouCustId";
 
   // MOU CUST DOC PRINT
@@ -910,6 +918,7 @@ export class URLConstant {
   // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
   public static GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes"
+  public static GetListAppCustAttrContentsByAppCustIdAndListAttrGroups = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentsByAppCustIdAndListAttrGroups"
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
   public static GetRuleForAttrContent = environment.FoundationR3Url + '/v1' + "/CustAttrContent/GetRuleForAttrContent";
 

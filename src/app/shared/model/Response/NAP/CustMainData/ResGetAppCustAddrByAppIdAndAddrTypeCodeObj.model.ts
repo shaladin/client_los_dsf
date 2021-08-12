@@ -6,6 +6,7 @@ export class ResGetAppCustAddrByAppIdAndAddrTypeCodeObj {
     AreaCode4 : string;
     City : string;
     Zipcode : string;
+    MrHouseOwnershipCode : string;
 
     constructor(){
         this.Addr = "";
@@ -15,5 +16,6 @@ export class ResGetAppCustAddrByAppIdAndAddrTypeCodeObj {
         this.AreaCode4 = "";
         this.City = "";
         this.Zipcode = "";
+        this.MrHouseOwnershipCode = "";
     }
 }
