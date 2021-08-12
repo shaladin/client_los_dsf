@@ -431,7 +431,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
     this.inputLookupObj.pagingJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.genericJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.jsonSelect = {SalesOfficerName: this.resultData.SalesOfficerName};
