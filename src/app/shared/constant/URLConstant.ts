@@ -685,6 +685,7 @@ export class URLConstant {
 
   // MOU Freeze Unfreeze
   public static SubmitMouFreezeUnfreeze = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
+  public static SubmitMouFreezeUnfreezeV2 = environment.losUrl + "/v2" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
   public static GetListMouFreezeUnfreezeByMouCustId = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/GetListMouFreezeUnfreezeByMouCustId";
 
   // MOU CUST FCTR

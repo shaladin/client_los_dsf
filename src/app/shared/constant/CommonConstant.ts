@@ -972,7 +972,5 @@ export class CommonConstant {
   public static LeadStepLeadUpd = "LUP";
 
   // Financial Data
-
-public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
-  
+  public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
 }
