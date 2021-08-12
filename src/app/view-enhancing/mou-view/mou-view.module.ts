@@ -83,6 +83,9 @@ import {MouViewAddcollXComponent} from 'app/impl/view-enhancing/mou-view/mou-vie
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
+    ],
+    exports:[
+      MouViewAddcollXComponent
     ]
 
 })
