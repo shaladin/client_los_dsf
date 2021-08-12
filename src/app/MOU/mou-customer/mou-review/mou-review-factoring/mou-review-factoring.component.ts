@@ -66,9 +66,9 @@ export class MouReviewFactoringComponent implements OnInit {
       (response) => {
         this.SysConfigResultObj = response
       });
-    if (this.WfTaskListId != null || this.WfTaskListId > 0) {
-      this.claimTask();
-    }
+
+    this.claimTask();
+    
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -175,13 +175,13 @@ export class MouReviewFactoringComponent implements OnInit {
 
   claimTask() {
     if(environment.isCore){	
-      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
-        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
-      }	
-    }	
-    else if (this.WfTaskListId > 0) {	
-        this.claimTaskService.ClaimTask(this.WfTaskListId);	
-    }		
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId > 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }		
   }
 
 }
