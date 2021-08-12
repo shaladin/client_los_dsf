@@ -58,4 +58,7 @@ export class URLConstantX {
 
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
+
+  //APP INVOICE X
+  public static SubmitInvoiceVerifDlfn = environment.losUrl  + '/v1' + "/AppInvoiceX/SubmitInvoiceVerifDlfn";
 }
