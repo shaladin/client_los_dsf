@@ -503,6 +503,7 @@ export class CommonConstant {
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
+  public static ReturnTask = "RETURN_TASK";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
