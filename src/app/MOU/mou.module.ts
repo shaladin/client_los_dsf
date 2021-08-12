@@ -112,7 +112,6 @@ import {ChangeMouRequestDetailCustomerXComponent} from 'app/impl/MOU/change-mou/
 import {ChangeMouRequestAddcollXComponent} from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
 import {MouCustomerRequestDetailXComponent} from 'app/impl/MOU/mou-customer-request/mou-customer-request-detail/mou-customer-request-detail-x.component';
 import {MouReviewFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-factoring/mou-review-factoring-x.component';
-import {MouMainInfoXComponent} from 'app/impl/view-enhancing/mou-main-info/mou-main-info-x.component';
 import {MouApprovalFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring-x.component';
 import {MouExecutionDetailXComponent} from 'app/impl/MOU/mou-execution/mou-execution-detail/mou-execution-detail-x.component';
 import {ChangeMouRequestDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail/change-mou-request-detail-x.component';
@@ -121,7 +120,6 @@ import {ChangeMouApprovalFactoringXComponent} from 'app/impl/MOU/change-mou/chan
 import {ChangeMouExecutionDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-execution/change-mou-execution-detail/change-mou-execution-detail-x.component';
 import {ChangeMouAddcollXComponent} from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll/change-mou-addcoll-x.component';
 import {MouReviewDlfnXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-dlfn/mou-review-dlfn-x.component';
-import {MouViewAddcollXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
 import {MouApprovalGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general-x.component';
 import {ChangeMouApprovalFinancingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-financing/change-mou-approval-financing-x.component';
 import {ChangeMouReviewFinancingXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-financing/change-mou-review-financing-x.component';
@@ -130,9 +128,7 @@ import {ChangeMouApprovalGeneralXComponent} from 'app/impl/MOU/change-mou/change
 import {MouReviewGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-general/mou-review-general-x.component';
 import {ChangeMouReviewPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component';
 import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-execution-paging/mou-execution-paging-x.component';
-import {ViewModule} from 'app/view-enhancing/view.module';
 import {MouViewModule} from '../view-enhancing/mou-view/mou-view.module';
-import {MouMainInfoComponent} from './mou-main-info/mou-main-info.component';
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -277,7 +273,6 @@ export const customCurrencyMaskConfig = {
     MouApprovalGeneralXComponent,
     MouApprovalFactoringXComponent,
     MouExecutionDetailXComponent,
-    MouViewAddcollXComponent,
     ChangeMouRequestDetailXComponent,
     ChangeMouReviewFactoringXComponent,
     ChangeMouReviewFinancingXComponent,
@@ -290,7 +285,6 @@ export const customCurrencyMaskConfig = {
     MouReviewGeneralXComponent,
     ChangeMouReviewPagingXComponent,
     MouExecutionPagingXComponent,
-    MouMainInfoXComponent,
   ],
   exports: [],
   providers: [NGXToastrService],
