@@ -959,7 +959,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
             OwnerIdNo: this.AppCustObj.IdNo,
             OwnerMobilePhnNo: typeof(response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : '',
-            OwnerProfessionCode: this.AppCustPersonalJobData.MrProfessionCode
+            OwnerProfessionCode: typeof(response['AppCustPersonalJobDataObj']) != 'undefined' ? this.AppCustPersonalJobData.MrProfessionCode : '' 
           })
           this.OwnerAddrObj.Addr = this.AppCustAddrObj.Addr
           this.OwnerAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1
@@ -972,9 +972,14 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
           this.inputAddressObjForOwner.default = this.OwnerAddrObj;
           this.inputAddressObjForOwner.inputField = this.inputFieldLegalObj;
 
-          await this.GetProfessionName(this.AppCustPersonalJobData.MrProfessionCode);
-          this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
-          this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName }
+          this.InputLookupProfessionObj.nameSelect = "";
+          this.InputLookupProfessionObj.jsonSelect = "";
+
+          if(typeof(response['AppCustPersonalJobDataObj']) != 'undefined'){
+            await this.GetProfessionName(this.AppCustPersonalJobData.MrProfessionCode);
+            this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName }
+          }
         }
       )
     }
@@ -992,7 +997,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   async GetProfessionName(professionCode: string) {
     await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
       (response) => {
-        this.AppCustPersonalJobData.MrProfessionName = response["ProfessionName"]
+        this.AppCustPersonalJobData.MrProfessionName = response["ProfessionName"];
       }
     ).catch(
       (error) => {
@@ -1063,7 +1068,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.setCollateralPercentage();
     this.setCollateralAttribute();
     for (const key in this.appCollateralDataObj.AppCollateralRegistrationObj) {
-      console.log(key + ": " + this.appCollateralDataObj.AppCollateralRegistrationObj[key]);
       if(key === "Id" || key === "AppCollateralRegistrationId" || key === "AppCollateralId" || key === "RowVersion" || key === "Notes" || key === "OwnerProfessionCode"){
         continue;
       }
