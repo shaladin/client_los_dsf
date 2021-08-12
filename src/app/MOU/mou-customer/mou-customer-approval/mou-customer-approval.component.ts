@@ -40,7 +40,7 @@ export class MouCustomerApprovalComponent implements OnInit {
       critObj.DataType = 'text';
       critObj.restriction = AdInsConstant.RestrictionIn;
       critObj.propName = 'TL.CATEGORY_CODE';
-      critObj.listValue = ['MOUC_GEN_APV', 'MOUC_FCTR_APV'];
+      critObj.listValue = ['MOUC_GEN_APV', 'MOUC_FCTR_APV', 'MOUC_DLFN_APV'];
       this.arrCrit.push(critObj);
   
       critObj = new CriteriaObj();
