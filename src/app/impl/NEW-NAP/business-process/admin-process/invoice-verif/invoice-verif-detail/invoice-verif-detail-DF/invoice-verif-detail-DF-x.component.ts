@@ -186,14 +186,14 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
     }
 
     ResumeWf() {
-        // var workflowApiObj = new WorkflowApiObj();
-        // workflowApiObj.TaskListId = this.WfTaskListId;
-        // workflowApiObj.ListValue["pBookmarkValue"] = CommonConstant.BOOKMARK_DONE;
-        // this.httpClient.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
-        //     response => {
-        //         this.toastr.successMessage(response["message"]);
-        //         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
-        //     }
-        // );
+        var workflowApiObj = new WorkflowApiObj();
+        workflowApiObj.TaskListId = this.WfTaskListId;
+        workflowApiObj.ListValue["pBookmarkValue"] = CommonConstant.BOOKMARK_DONE;
+        this.httpClient.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
+            response => {
+                this.toastr.successMessage(response["message"]);
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+            }
+        );
     }
 }
