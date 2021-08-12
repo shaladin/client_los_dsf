@@ -81,6 +81,11 @@ export class PathConstantX {
   //endregion
 
   public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + '/' + PathConstantX.DETAIL_X;
+
+
+  //#region Nap-Admin-Prcs
+  public static AGRMNT_ACT_DETAIL = PathConstant.AGRMNT_ACT + "/" + PathConstantX.DETAIL_X;
+  //endregion
 }
 
 

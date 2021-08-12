@@ -76,6 +76,7 @@ import { EndDateForGoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/busin
 import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
 import {InvoiceVerifDetailDFXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF-x.component';
 import {InvoiceVerifDetailListOfInvoiceXComponent} from '../../../impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
+import { AgrmntActivationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -163,7 +164,8 @@ export const customCurrencyMaskConfig = {
     EndDateForGoLiveApprovalDetailXComponent,
     InvoiceVerifDetailXComponent,
     InvoiceVerifDetailDFXComponent,
-    InvoiceVerifDetailListOfInvoiceXComponent
+    InvoiceVerifDetailListOfInvoiceXComponent,
+    AgrmntActivationDetailXComponent
   ],
   providers: [
     NGXToastrService,

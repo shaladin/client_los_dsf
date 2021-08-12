@@ -58,4 +58,8 @@ export class URLConstantX {
 
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
+
+
+    //AGRMNT ACTIVATION
+    public static SubmitAgrmntActivationByHuman = environment.losUrl + '/v1' + "/AgrmntActivationX/SubmitAgrmntActivationByHuman";
 }
