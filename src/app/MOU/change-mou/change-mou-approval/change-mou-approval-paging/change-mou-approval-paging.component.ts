@@ -9,6 +9,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 
 @Component({
   selector: 'app-change-mou-approval-paging',
@@ -16,19 +18,23 @@ import { CookieService } from 'ngx-cookie';
 })
 export class ChangeMouApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
   arrCrit: Array<CriteriaObj>;
-  user: CurrentUserContext;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouApv.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouApv.json";
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/mou/V2/searchChangeMouApvV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchChangeMouApvV2.json";
+    }
   }
 
   getEvent(event) {

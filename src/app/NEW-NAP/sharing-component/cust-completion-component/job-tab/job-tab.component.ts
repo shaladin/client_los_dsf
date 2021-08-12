@@ -546,18 +546,18 @@ export class JobTabComponent implements OnInit {
 
   async InitLookup() {
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.addCritInput = new Array();
 
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
 
     this.InputLookupCompanyObj.urlJson = "./assets/uclookup/customer/lookupCompany.json";
-    this.InputLookupCompanyObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCompanyObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCompanyObj.pagingJson = "./assets/uclookup/customer/lookupCompany.json";
     this.InputLookupCompanyObj.genericJson = "./assets/uclookup/customer/lookupCompany.json";
     this.InputLookupCompanyObj.addCritInput = new Array();

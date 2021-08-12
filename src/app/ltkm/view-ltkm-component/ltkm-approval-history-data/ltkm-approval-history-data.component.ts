@@ -31,23 +31,18 @@ export class LtkmApprovalHistComponent implements OnInit {
   ngOnInit() {
 
     this.ListRfaLogObj = new UcInputApprovalHistoryObj();
-    this.ListRfaLogObj.EnvUrl = environment.FoundationR3Url;
     this.ListRfaLogObj.PathUrl = "/Approval/GetTaskHistory";
 
     this.listCreditApprvObj = new UcInputApprovalHistoryObj();
-    this.listCreditApprvObj.EnvUrl = environment.FoundationR3Url;
     this.listCreditApprvObj.PathUrl = "/Approval/GetTaskHistory";
 
     this.listPckgValObj = new UcInputApprovalHistoryObj();
-    this.listPckgValObj.EnvUrl = environment.FoundationR3Url;
     this.listPckgValObj.PathUrl = "/Approval/GetTaskHistory";
 
     this.listPreGoObj = new UcInputApprovalHistoryObj();
-    this.listPreGoObj.EnvUrl = environment.FoundationR3Url;
     this.listPreGoObj.PathUrl = "/Approval/GetTaskHistory";
 
     this.listLtkmObj = new UcInputApprovalHistoryObj();
-    this.listLtkmObj.EnvUrl = environment.FoundationR3Url;
     this.listLtkmObj.PathUrl = "/Approval/GetTaskHistory";
 
     this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.LtkmNo }).subscribe(

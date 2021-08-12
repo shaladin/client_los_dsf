@@ -113,14 +113,14 @@ export class NapAddComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.isRequired = false;
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -265,7 +265,7 @@ export class NapAddComponent implements OnInit {
 
     this.http.post(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
-        setTimeout(() => { this.spinner.show(); }, 10);
+        setTimeout(() => { this.spinner.hide(); }, 1500);
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_ADD_DETAIL], { "AppId": response["AppId"] });
       });

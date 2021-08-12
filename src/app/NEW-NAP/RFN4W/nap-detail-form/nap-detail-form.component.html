@@ -120,7 +120,7 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data *ngIf="AppStepIndex == 2 && IsDataReady" [appId]="appId" [isCollateral]="false"
-                [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel"
+                [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel" [BizTemplateCode]="CFRFN4W"
                 (outputTab)="NextStep('COLL')"></app-application-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">

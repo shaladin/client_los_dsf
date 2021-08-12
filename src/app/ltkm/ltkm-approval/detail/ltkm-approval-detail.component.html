@@ -32,14 +32,15 @@
 
     </mat-tab-group>
     <div class="card-body">
-      <div class="px-3">
-        <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
-        </lib-ucapprovalgeneralinfo>
-        <!-- <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">
-        </lib-ucapprovalHistory> -->
-        <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady && !isReturnOn" (result)="onApprovalSubmited($event)"
-          (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+      
+      <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
+      </lib-ucapprovalgeneralinfo>
+      <!-- <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">
+      </lib-ucapprovalHistory> -->
+      <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady && !isReturnOn" (result)="onApprovalSubmited($event)"
+        (onCancel)="onCancelClick()"></lib-ucapprovalR3>
 
+      <div class="px-3">
         <form class="form form-horizontal" (ngSubmit)="FormObj.valid &&SaveForm()" [formGroup]="FormObj" #enjiForm="ngForm">
           <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return LTKM'"
             [panel]="'formReturnCreditReview'">

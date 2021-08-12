@@ -5,6 +5,7 @@ export class NavigationConstant {
 
   public static PAGES_LOGIN = PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CONTENT_PAGE_LOGIN; //'Pages/Login'
   public static PAGES_CONTENT = PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CONTENT_PAGE; //'Pages/Content'
+  public static DASHEMPTY = "/" + PathConstant.LR_DASHBOARD + "/" + PathConstant.DASHEMPTY; //'/Dashboard/Dash-Empty'
   public static DASHBOARD = "/" + PathConstant.LR_DASHBOARD + "/" + PathConstant.DASHBOARD; //'/Dashboard/Dash-Board'
   public static BACK_TO_REQ_PASSWORD = '..' + "/" + PathConstant.CONTENT_PAGE_REQ_PASSWORD; //'../RequestPassword'
   public static BACK_TO_PAGING = '..' + "/" + PathConstant.PAGING; //'../Paging'
@@ -63,6 +64,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_ADD_TC_DETAIL; //'/Nap/AddProcess/ReturnHandlingAddTc/Detail'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_PAGING; //'/Nap/AddProcess/ReturnHandlingCollateral/Paging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_EDIT; //'/Nap/AddProcess/ReturnHandlingCollateral/Edit'
+  public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_DETAIL; //'/Nap/AddProcess/ReturnHandlingCollateral/Detail'
   public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_PAGING; //'/Nap/AddProcess/ReturnHandling/Paging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_APP_PAGING; //'Nap/AddProcess/ReturnHandling/EditAppPaging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_CUST_PAGING; //'Nap/AddProcess/ReturnHandling/editcustpaging'
@@ -295,7 +297,7 @@ export class NavigationConstant {
   public static MOU_DUP_CHECK_EXIST_PERSONAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_EXIST_PERSONAL; //"/Mou/DuplicateCheck/ExistingPersonal"
   public static MOU_DUP_CHECK_SIMILAR_COY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_SIMILAR_COY; //"/Mou/DuplicateCheck/SimilarCompany"
   public static MOU_DUP_CHECK_EXIST_COY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DUP_CHECK_EXIST_COY; //"/Mou/DuplicateCheck/ExistingCompany"
-  public static MOU_EXECUTION_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_EXECUTION_PAGING; //"/Mou/Execution/Paging"
+  public static MOU_EXECUTION_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_EXECUTION_PAGING_X; //"/Mou/Execution/PagingX"
   public static MOU_EXECUTION_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_EXECUTION_DETAIL_X; //"/Mou/Execution/DetailX"
   public static MOU_CUST_OUTSTANDING_TC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_OUTSTANDING_TC_PAGING; //"/Mou/Cust/OutstandingTC/Paging"
   public static MOU_CUST_OUTSTANDING_TC_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_OUTSTANDING_TC_DETAIL; //"/Mou/Cust/OutstandingTC/Detail"
@@ -314,7 +316,7 @@ export class NavigationConstant {
   public static CHANGE_MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_PAGING; //"/Mou/ChangeMouRequest/Paging"
   public static CHANGE_MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_X; //"/Mou/ChangeMouRequest/DetailX"
   public static CHANGE_MOU_REQ_DETAIL_CUSTOMER = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_X; //"/Mou/ChangeMouRequest/Detail/CustomerX"
-  public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_PAGING; //"/Mou/ChangeMou/ReviewPaging"
+  public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_PAGING_X; //"/Mou/ChangeMou/ReviewPagingX"
   public static CHANGE_MOU_RVW_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_FCTR_X; //"/Mou/ChangeMou/ReviewDetailFctrX"
   public static CHANGE_MOU_RVW_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_FIN_X; //"/Mou/ChangeMou/ReviewFinancingX"
   public static CHANGE_MOU_RVW_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_GEN_X; //"/Mou/ChangeMou/ReviewDetailGen"
@@ -346,6 +348,8 @@ export class NavigationConstant {
   public static LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_PAGING; //"/Lead/Lead/Paging"
   public static LEAD_INPUT_PAGE = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_INPUT_PAGE; //"/Lead/LeadInput/Page"
   public static LEAD_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.VERIF; //'/Lead/Verif'
+  public static LEAD_UPLOAD = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_MONITORING; //'/Lead/Monitoring'
+  public static LEAD_REVIEW_MONITORING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_RVW_MONITORING_PAGING; //'/Lead/ReviewMonitoring/Paging'
   public static SIMPLE_LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLead/Paging'
   public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLead/Detail'
   public static SIMPLE_LEAD_MAIN_INFO = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLead/MainInfo'

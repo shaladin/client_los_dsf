@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ControlContainer, FormArray, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -13,6 +13,8 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMast
 import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 @Component({
   selector: 'app-attr-content-component',
   templateUrl: './attr-content-component.component.html',
@@ -26,29 +28,42 @@ export class AttrContentComponentComponent implements OnInit {
   @Input() AttrGroups: Array<string> = [];
   @Input() AppCustId: number;
   @Input() title: string;
-  @Output() IncomeAmt: EventEmitter<{Index: number, Amount: number}> = new EventEmitter();
-  @Output() ExpenseAmt: EventEmitter<{Index: number, Amount: number}> = new EventEmitter();
-  
+  @Output() IncomeAmt: EventEmitter<{ Index: number, Amount: number }> = new EventEmitter();
+  @Output() ExpenseAmt: EventEmitter<{ Index: number, Amount: number }> = new EventEmitter();
+
   ListAttrContent: Array<ResGetAppCustAttrContentObj> = new Array();
   RefAttrList: Array<RefAttr> = new Array<RefAttr>();
   ListInputLookUpObj = new Array();
   IsFormReady: boolean = false;
   tempLookup = {};
   AttrContent: AttrContent;
-  AttrGroupCustPersonalFinData:string = CommonConstant.AttrGroupCustPersonalFinData;
+  AttrGroupCustPersonalFinData: string = CommonConstant.AttrGroupCustPersonalFinData;
   AttrGroupCustPersonalFinDataIncome: string = CommonConstant.AttrGroupCustPersonalFinDataIncome;
   AttrGroupCustPersonalFinDataExpense: string = CommonConstant.AttrGroupCustPersonalFinDataExpense;
   AttrGroupCustPersonalFinDataOther: string = CommonConstant.AttrGroupCustPersonalFinDataOther;
 
+  dropdownSettings: IDropdownSettings = {
+    singleSelection: true,
+    idField: 'item_id',
+    textField: 'item_text',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 5,
+    allowSearchFilter: true
+  };
+
+  dictMultiOptions: { [key: string]: Array<{ item_id: string, item_text: string }>; } = {};
+  selectedMultiDDLItems: { [key: string]: Array<{ item_id: string, item_text: string }>; } = {};
+
   constructor(private httpClient: HttpClient,
     private fb: FormBuilder) { }
-  
+
   async ngOnInit() {
-    if(this.AttrGroup !== undefined) {
+    if (this.AttrGroup !== undefined) {
       let custGrp: ReqRefAttrByAttrGroupObj = new ReqRefAttrByAttrGroupObj();
       custGrp.AttrGroup = this.AttrGroup;
       await this.httpClient.post(URLConstant.GetListAppCustAttrContentByAppCustIdAndAttrGroup, { AppCustId: this.AppCustId, AttrGroup: this.AttrGroup }).toPromise().then(
-        async (response : ResGetListAppCustAttrContentObj) => {
+        async (response: ResGetListAppCustAttrContentObj) => {
           this.ListAttrContent = response.ResponseAppCustAttrContentObjs;
           await this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).toPromise().then(
             async (response) => {
@@ -83,12 +98,12 @@ export class AttrContentComponentComponent implements OnInit {
         }
       );
     }
-    else if(this.AttrGroups !== undefined) {
+    else if (this.AttrGroups !== undefined) {
       await this.httpClient.post(URLConstant.GetListAppCustFinDataAttrContentByAppCustIdAndListAttrGroup, { AppCustId: this.AppCustId, AttrGroups: this.AttrGroups }).toPromise().then(
         async (response) => {
           this.ListAttrContent = response[CommonConstant.ReturnObj];
           var parentFormGroup = new Object();
-          
+
           await this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByListAttrGroup, { AttrGroups: this.AttrGroups }).toPromise().then(
             async (response) => {
               this.RefAttrList = response[CommonConstant.ReturnObj];
@@ -148,11 +163,11 @@ export class AttrContentComponentComponent implements OnInit {
       }
       else if (refAttr.AttrInputType == 'L') {
         var temp = refAttr.AttrValue.split(";");
-        if(refAttr.IsMandatory == false){
+        if (refAttr.IsMandatory == false) {
           formGroupObject["AttrValue"] = [temp[0]];
         }
-        else{
-            formGroupObject["AttrValue"] = [""];
+        else {
+          formGroupObject["AttrValue"] = [""];
         }
       }
       else if (refAttr.AttrInputType == 'P' || refAttr.AttrInputType == 'N') {
@@ -178,10 +193,14 @@ export class AttrContentComponentComponent implements OnInit {
       }
     }
 
+    if (refAttr.AttrInputType == this.AttrInputTypeSearchList) {
+      this.setAttrInputTypeSearchList(refAttr.AttrCode, refAttr.AttrValue);
+    }
+
     if (refAttr.IsMandatory == true && refAttr.AttrInputType != 'T') {
-      if(refAttr.AttrInputType == 'N'){
+      if (refAttr.AttrInputType == 'N') {
         formGroupObject["AttrValue"].push([Validators.required, Validators.min(1.00)])
-      }else{
+      } else {
         formGroupObject["AttrValue"].push(Validators.required)
       }
     }
@@ -190,7 +209,7 @@ export class AttrContentComponentComponent implements OnInit {
     if (refAttr.AttrInputType == 'RM') {
       this.tempLookup[refAttr.AttrCode] = new InputLookupObj();
       this.tempLookup[refAttr.AttrCode].urlJson = "./assets/uclookup/lookupRefMaster.json";
-      this.tempLookup[refAttr.AttrCode].urlEnviPaging = environment.FoundationR3Url;
+      this.tempLookup[refAttr.AttrCode].urlEnviPaging = environment.FoundationR3Url + "/v1";
       this.tempLookup[refAttr.AttrCode].pagingJson = "./assets/uclookup/lookupRefMaster.json";
       this.tempLookup[refAttr.AttrCode].genericJson = "./assets/uclookup/lookupRefMaster.json";
       this.tempLookup[refAttr.AttrCode].title = refAttr["AttrName"];
@@ -226,6 +245,7 @@ export class AttrContentComponentComponent implements OnInit {
     }
   }
 
+  readonly AttrInputTypeSearchList: string = CommonConstant.AttrInputTypeSearchList;
   async setFormGroupValueForAttrGroups(refAttr: RefAttr, formGroupObject: object, parentFormGroup, isUpdateValue: boolean, index: number) {
     if (isUpdateValue == false) {
       if (refAttr.AttrInputType == 'T' && refAttr.PatternValue != "" && refAttr.PatternValue != null) {
@@ -237,11 +257,11 @@ export class AttrContentComponentComponent implements OnInit {
       }
       else if (refAttr.AttrInputType == 'L') {
         var temp = refAttr.AttrValue.split(";");
-        if(refAttr.IsMandatory == false){
+        if (refAttr.IsMandatory == false) {
           formGroupObject["AttrValue"] = [temp[0]];
         }
-        else{
-            formGroupObject["AttrValue"] = [""];
+        else {
+          formGroupObject["AttrValue"] = [""];
         }
       }
       else if (refAttr.AttrInputType == 'P' || refAttr.AttrInputType == 'N') {
@@ -268,10 +288,14 @@ export class AttrContentComponentComponent implements OnInit {
       }
     }
 
+    if (refAttr.AttrInputType == this.AttrInputTypeSearchList) {
+      this.setAttrInputTypeSearchList(refAttr.AttrCode, refAttr.AttrValue);
+    }
+
     if (refAttr.IsMandatory == true && refAttr.AttrInputType != 'T') {
-      if(refAttr.AttrInputType == 'N'){
+      if (refAttr.AttrInputType == 'N') {
         formGroupObject["AttrValue"].push([Validators.required, Validators.min(1.00)])
-      }else{
+      } else {
         formGroupObject["AttrValue"].push(Validators.required)
       }
     }
@@ -280,7 +304,7 @@ export class AttrContentComponentComponent implements OnInit {
     if (refAttr.AttrInputType == 'RM') {
       this.tempLookup[refAttr.AttrCode] = new InputLookupObj();
       this.tempLookup[refAttr.AttrCode].urlJson = "./assets/uclookup/lookupRefMaster.json";
-      this.tempLookup[refAttr.AttrCode].urlEnviPaging = environment.FoundationR3Url;
+      this.tempLookup[refAttr.AttrCode].urlEnviPaging = environment.FoundationR3Url + "/v1";
       this.tempLookup[refAttr.AttrCode].pagingJson = "./assets/uclookup/lookupRefMaster.json";
       this.tempLookup[refAttr.AttrCode].genericJson = "./assets/uclookup/lookupRefMaster.json";
       this.tempLookup[refAttr.AttrCode].title = refAttr["AttrName"];
@@ -316,12 +340,54 @@ export class AttrContentComponentComponent implements OnInit {
     }
   }
 
-  CalculateAmt(attrGroup: string, amount: string, index: number) {
-    if(attrGroup === this.AttrGroupCustPersonalFinDataIncome) {
-      this.IncomeAmt.emit({Index: index, Amount: parseFloat(amount.replace(/,/g, ''))});
+  dictRuleSetName: { [Id: string]: string } = {};
+  tempExistingValueSelected: { [Id: string]: string } = {};
+  setAttrInputTypeSearchList(AttrCode: string, ruleSetName: string) {
+    this.dictRuleSetName[AttrCode] = ruleSetName;
+    this.selectedMultiDDLItems[AttrCode] = new Array();
+    this.tempExistingValueSelected[AttrCode] = "";
+    if (this.AttrContent.AttrValue) {
+      this.tempExistingValueSelected[AttrCode] = this.AttrContent.AttrValue;
     }
-    else if(attrGroup === this.AttrGroupCustPersonalFinDataExpense) {
-      this.ExpenseAmt.emit({Index: index, Amount: parseFloat(amount.replace(/,/g, ''))});
+  }
+
+  SetSearchListInputType(attrCode: string, ProfessionCode: string) {
+    this.httpClient.post(URLConstant.GetRuleForAttrContent, { RuleSetName: this.dictRuleSetName[attrCode], Code: ProfessionCode }).subscribe(
+      (response: GenericListObj) => {
+        let tempList: Array<KeyValueObj> = response.ReturnObject;
+        this.dictMultiOptions[attrCode] = new Array();
+        if (tempList) {
+          for (let index = 0; index < tempList.length; index++) {
+            const element = tempList[index];
+            if (element.Key == this.tempExistingValueSelected[attrCode]) {
+              this.selectedMultiDDLItems[attrCode] = new Array();
+              this.selectedMultiDDLItems[attrCode].push({ item_id: element.Key, item_text: element.Value });
+              this.onMultiDDLChangeEvent(attrCode);
+              this.tempExistingValueSelected[attrCode] = "";
+            }
+            this.dictMultiOptions[attrCode].push({ item_id: element.Key, item_text: element.Value });
+          }
+        }
+      }
+    )
+  }
+
+  onMultiDDLChangeEvent(attrCode: string) {
+    if (this.selectedMultiDDLItems[attrCode] && this.selectedMultiDDLItems[attrCode].length > 0) {
+      let selectedId = this.selectedMultiDDLItems[attrCode].map(x => x.item_id);
+      // let selectedText = this.selectedMultiDDLItems[attrCode].map(x => x.item_text);
+      let tempArray = this.parentForm.get(this.identifier) as FormArray;
+      let tempFb = tempArray.get(attrCode) as FormGroup;
+      tempFb.get("AttrValue").patchValue(selectedId[0]);
+    }
+  }
+
+  CalculateAmt(attrGroup: string, amount: string, index: number) {
+    if (attrGroup === this.AttrGroupCustPersonalFinDataIncome) {
+      this.IncomeAmt.emit({ Index: index, Amount: parseFloat(amount.replace(/,/g, '')) });
+    }
+    else if (attrGroup === this.AttrGroupCustPersonalFinDataExpense) {
+      this.ExpenseAmt.emit({ Index: index, Amount: parseFloat(amount.replace(/,/g, '')) });
     }
   }
 }

@@ -1,3 +1,4 @@
+import { environment } from "environments/environment";
 import { ProdOfferingDObj } from "../../Product/ProdOfferingDObj.model";
 import { ReqRFAObj } from "../RFA/ReqRFAObj.model";
 
@@ -81,12 +82,12 @@ export class ReqUpdateProdOfferingPostApprovalObj {
 export class ReqReviewProdOfferingObj {
   ProdOfferingHId: number;
   ProdOfferingId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   RequestRFAObj: any;
 
   constructor() {
     this.ProdOfferingHId = 0;
     this.ProdOfferingId = 0;
-    this.WfTaskListId = 0;
+    this.WfTaskListId = environment.isCore? "" : 0;
   }
 }
