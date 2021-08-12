@@ -193,8 +193,7 @@ export class CollateralDetailComponent implements OnInit {
   SetInputLookupCollExisting() {
     this.inputLookupExistColl = new InputLookupObj();
     this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
-    this.inputLookupExistColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.isRequired = false;
@@ -257,8 +256,7 @@ export class CollateralDetailComponent implements OnInit {
   SetInputLookupColl() {
     this.inputLookupColl = new InputLookupObj();
     this.inputLookupColl.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupColl.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupColl.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
   }

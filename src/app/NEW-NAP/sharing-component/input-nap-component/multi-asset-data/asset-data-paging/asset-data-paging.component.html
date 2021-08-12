@@ -11,16 +11,15 @@
   <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
 </div>
 <div *ngIf="listDataAsset.length > 0" class="form-group row">
-  <div class="col-md-4"></div>
-  <label class="col-md-2 adInsLabel" style="padding: 0.75em; text-align: right" translate>Copy Asset</label>
-  <div class="col-md-2">
+  <label class="col-md-2 adInsLabel px-3" style="padding: 0.75em" translate>Copy Asset</label>
+  <div class="col-md-7">
     <select class="form-control" style="width: inherit" [(ngModel)]="selectedAsset" name="selectAsset">
       <option *ngFor="let item of listDataAsset" [value]="item.Code">
         {{item.Descr}}
       </option>
     </select>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-1">
     <input class="form-control" type="number" [(ngModel)]="units" name="unit">
   </div>
   <label class="col-md-1 adInsLabel" style="padding: 0.75em" translate>Unit</label>

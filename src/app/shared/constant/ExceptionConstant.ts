@@ -85,6 +85,8 @@ export class ExceptionConstant {
     public static OTHER_BANK_ACCOUNT_ALREADY_DEFAULT = "Other bank account is already default";
     public static INPUT_MIN_1_INVOICE = "Please Input At Least 1 invoice";
     public static ADD_MIN_1_DATA = "Please add at least one data";
+    public static Add_Min_1_Owner = "Please Input at least 1 Owner";
+    public static Add_Min_1_Active_Signer = "Please Input at least 1 Active Signer";
     public static INPUT_MIN_1_COLLATERAL_DATA = "Please Input At Least 1 Collateral Data";
     public static MIN_1_SUBJECT = "Minimal 1 Subject";
     public static MIN_1_ASSET = "Asset minimum is 1";
@@ -107,11 +109,14 @@ export class ExceptionConstant {
     public static MUST_INPUT_OWNER_DATA = "Please Input Owner Data in Management/Shareholder!";
     public static MUST_INPUT_ACTIVE_SIGNER = "At Least 1 Active Signer is Required";
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
+    public static TOTAL_SHARE_CAN_NOT_100 = "Total Share can not more than 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
     public static SUPPLIER_BANK_ACC_NOT_SET = "Please input a valid Bank Account Data for this supplier";
     public static MUST_COMPLETE_FAMILY_DATA = "Please complete customer family data";
     public static COMPLETE_SHAREHOLDER_COMPANY_MODEL = "Please complete all shareholder company model";
     public static MUST_COMPLETE_SHAREHOLDER_DATA = "Please complete all shareholder data";
+    public static DUPLICATE_LEGAL_DOC = "Document with Legal Document Type {0} and Document No {1} already exists";
+
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
@@ -169,6 +174,13 @@ export class ExceptionConstant {
     public static MOU_DT_MUST_GREATER_THAN_BUSINESS_DT = "MOU Date Must be Greater than Equal D - 1 Business Date";
     public static START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT = "Start Date Must be Greater than Equal Business Date";
     public static COVERAGE_CANT_0_LESS = "Coverage Amount Cant be 0 or less";
+
+    public static PLEASE_COMPLETE_RESIDENCE_ADDRESS = "Please complete Residence Address First";
+    public static PLEASE_COMPLETE_BIZ_ADDRESS = "Please Complete Business Address First";
+    public static CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE = " can't be higher than Accessory Price"
+    public static ACCESSORY_PRICE_NOT_SET = "Please Input Accessory Price";
+
+    public static PLEASE_COMPLETE_FOLLOWING_FIELD = "Please Complete the following field : ";
     
 }
 

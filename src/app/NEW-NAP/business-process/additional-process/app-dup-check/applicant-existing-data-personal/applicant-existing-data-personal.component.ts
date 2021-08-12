@@ -24,7 +24,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
 
   AppId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
   AppCustObj: AppCustObj;
   AppCustPersonalObj: AppCustPersonalObj;
   ListSpouseDuplicate: any;

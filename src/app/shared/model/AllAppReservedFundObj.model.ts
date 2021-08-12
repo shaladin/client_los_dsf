@@ -10,6 +10,7 @@ export class AllAppReservedFundObj {
   IsPersonal: boolean;
   GrossYield: number;
   TotalReservedFundAmt: number;
+  IsReturn: boolean
 
   constructor() {
     this.AppId = 0;
@@ -18,5 +19,6 @@ export class AllAppReservedFundObj {
     this.ReturnHandlingExecNotes = "";
     this.WfTaskIdListId = -999;
     this.IsPersonal = true;
+    this.IsReturn = false;
   }
 }

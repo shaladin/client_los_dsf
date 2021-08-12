@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { InputCustomAddrCustCmpltObj } from 'app/shared/model/InputCustomAddrCustCmpltObj.Model';
@@ -85,11 +86,17 @@ export class CcAddressPagingComponent implements OnInit {
     if(this.MrCustTypeCode == CommonConstant.CustTypePersonal){
       if(this.ListAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence) != null) {
         this.OutputTab.emit();
-      }else{
-        this.toastr.warningMessage("Please input Legal Address And Residence Address Data!")
+      }
+      else{
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_RESIDENCE_ADDRESS);
       }
     }else if(this.MrCustTypeCode == CommonConstant.CustTypeCompany){
-      this.OutputTab.emit();
+      if(this.ListAddress.find(x=>x.MrCustAddrTypeCode == CommonConstant.AddrTypeBiz) != null) {
+        this.OutputTab.emit();
+      }
+      else{
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_BIZ_ADDRESS)
+      }
     }
   }
 }

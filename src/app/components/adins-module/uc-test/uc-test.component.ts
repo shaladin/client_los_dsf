@@ -69,6 +69,58 @@ export class UcTestComponent implements OnInit {
     },
   ];
 
+  ListOfMonth: Array<any> = [
+    {
+      "key": "1",
+      "value": "January"
+    },
+    {
+      "key": "2",
+      "value": "February"
+    },
+    {
+      "key": "3",
+      "value": "March"
+    },
+    {
+      "key": "4",
+      "value": "April"
+    },
+    {
+      "key": "5",
+      "value": "May"
+    },
+    {
+      "key": "6",
+      "value": "June"
+    },
+    {
+      "key": "7",
+      "value": "July"
+    },
+    {
+      "key": "8",
+      "value": "August"
+    },
+    {
+      "key": "9",
+      "value": "September"
+    },
+    {
+      "key": "10",
+      "value": "October"
+    },
+    {
+      "key": "11",
+      "value": "November"
+    },
+    {
+      "key": "12",
+      "value": "December"
+    }
+  ];
+  ListOfYear: Array<any> = new Array<any>();
+
   ExportType: number = 0;
 
   pageNow: number = 1;
@@ -181,6 +233,64 @@ export class UcTestComponent implements OnInit {
           data.component[i].value = parseFloat(data.component[i].value).toLocaleString('en');
         }
 
+        // value month u 0 / 1
+        //pengecekan ddl
+        if (data.component[i].type == "dropdown") {
+          if (data.component[i].dtmType != undefined) {
+            if (data.component[i].dtmType == "month") {
+              data.component[i].items = this.ListOfMonth;
+              if (data.component[i].value != undefined && data.component[i].value.includes("BD")) {
+                let businessDate = new Date();
+                businessDate = new Date(this.BisDt);
+                data.component[i].value = businessDate.getMonth() + 1;
+              }
+            }
+            if (data.component[i].dtmType.includes("year")) {
+              let equation = data.component[i].dtmType.match("[\\/+][-]|[-][\\/+]|\\/+|-");
+              let minMax: number = parseInt(data.component[i].dtmType.substring(equation.index + equation[0].length));
+              let businessDate = new Date();
+              businessDate = new Date(this.BisDt);
+              this.ListOfYear.push(
+                {
+                  "key": businessDate.getFullYear(),
+                  "value": businessDate.getFullYear()
+                });
+
+              if (equation[0] == "-+" || equation[0] == "+-") {
+                let toMin: number = businessDate.getFullYear();
+                let toMax: number = businessDate.getFullYear();
+                for (let q = 0; q < minMax; q++) {
+                  toMin--;
+                  toMax++;
+                  this.ListOfYear.push(
+                    {
+                      "key": toMin,
+                      "value": toMin
+                    },
+                    {
+                      "key": toMax,
+                      "value": toMax
+                    }
+                  );
+                }
+                this.ListOfYear.sort((a, b) => {
+                  return a.key - b.key;
+                });
+                data.component[i].items = this.ListOfYear;
+              } else if (equation[0] == "-") {
+
+              } else if (equation[0] == "+") {
+
+              }
+              if (data.component[i].value != undefined && data.component[i].value.includes("BD")) {
+                let businessDate = new Date();
+                businessDate = new Date(this.BisDt);
+                data.component[i].value = businessDate.getFullYear();
+              }
+            }
+          }
+        }
+
         //pengecekan tanggal
         if (data.component[i].type == "datepicker") {
           if (data.component[i].value.includes("BD")) {
@@ -205,13 +315,13 @@ export class UcTestComponent implements OnInit {
             data.component[i].value = dateText;
           }
 
-          if(data.component[i].restriction != undefined && data.component[i].restriction != ""){
+          if (data.component[i].restriction != undefined && data.component[i].restriction != "") {
             if (data.component[i].restriction.toUpperCase() == "GT") {//&& (data.component[i].minDate != undefined || data.component[i].minDate != "")
               let minDate = new Date(this.datePipe.transform(data.component[i].minDate, 'yyyy-MM-dd'));
               minDate.setDate(minDate.getDate() + 1);
               data.component[i].minDate = minDate;
-              } else if (data.component[i].restriction.toUpperCase() == "LT") {
-                let maxDate = new Date(this.datePipe.transform(data.component[i].maxDate, 'yyyy-MM-dd'));
+            } else if (data.component[i].restriction.toUpperCase() == "LT") {
+              let maxDate = new Date(this.datePipe.transform(data.component[i].maxDate, 'yyyy-MM-dd'));
               maxDate.setDate(maxDate.getDate() - 1);
               data.component[i].maxDate = maxDate;
             }
@@ -647,7 +757,7 @@ export class UcTestComponent implements OnInit {
     if (MinComponent != undefined) {
       minDateVal = this.myForm.nativeElement[MinComponent.id].min == "" ? null : new Date(this.myForm.nativeElement[MinComponent.id].min);
       label = MinComponent.label.split(">", 2);
-      if(minDateVal != null){
+      if (minDateVal != null) {
         if (MinComponent.restriction.toUpperCase() == "GT") {
           minDateVal.setDate(minDateVal.getDate() - 1);
           errorMessage.push(" must be greater than ");
@@ -661,7 +771,7 @@ export class UcTestComponent implements OnInit {
     if (MaxComponent != undefined) {
       maxDateVal = this.myForm.nativeElement[MaxComponent.id].max == "" ? null : new Date(this.myForm.nativeElement[MaxComponent.id].max);
       label = MaxComponent.label.split("<", 2);
-      if(maxDateVal != null){
+      if (maxDateVal != null) {
         if (MaxComponent.restriction.toUpperCase() == "LT") {
           maxDateVal.setDate(maxDateVal.getDate() + 1);
           errorMessage.push(" must be less than ");

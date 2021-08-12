@@ -33,6 +33,7 @@ export class AppCollateralRegistrationObj {
   LocationZipcode: string;
   LocationOwnership: string;
   Notes: string;
+  OwnerProfessionCode: string;
   RowVersion: string;
 
 
@@ -62,6 +63,7 @@ export class AppCollateralRegistrationObj {
     this.LocationCity = "";
     this.LocationZipcode = "";
     this.Notes = "";
+    this.OwnerProfessionCode = "";
     this.RowVersion = "";
   }
 }

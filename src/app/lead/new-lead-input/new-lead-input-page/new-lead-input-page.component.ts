@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -26,7 +27,7 @@ export class NewLeadInputPageComponent implements OnInit {
   CopyFrom: number;
   isCustData: boolean;
   isLeadData: boolean;
-  TaskListId: number;
+  WfTaskListId: any;
   titlePageType: string;
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
@@ -38,13 +39,18 @@ export class NewLeadInputPageComponent implements OnInit {
   isDmsReady: boolean = false;
   isDmsData: boolean;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, 
+              private http: HttpClient, 
+              private router: Router, 
+              private componentFactoryResolver: ComponentFactoryResolver, 
+              private cookieService: CookieService,
+              private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
       }
-      if (params["TaskListId"] != null) {
-        this.TaskListId = params["TaskListId"];
+      if (params["WfTaskListId"] != null) {
+        this.WfTaskListId = params["WfTaskListId"];
       }
       if (params["mode"] == "update") {
         this.pageType = params["mode"];
@@ -81,11 +87,15 @@ export class NewLeadInputPageComponent implements OnInit {
           console.log('dmsobj = ', JSON.stringify(this.dmsObj));
         });
 
-    if (this.TaskListId > 0) {
-      this.claimTask();
+    if (environment.isCore) {
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }
+    else if(this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewLeadHeaderMainInfo.viewEnvironment = environment.losUrl;
     this.viewLeadHeaderMainInfo.ddlEnvironments = [
       {
         name: "LeadNo",
@@ -187,13 +197,6 @@ export class NewLeadInputPageComponent implements OnInit {
     component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
   }
 
-  async claimTask() {
-    let currentUserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   endOfTab() {
     this.http.post(URLConstant.GetLeadAssetByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
       (response) => {
@@ -207,7 +210,7 @@ export class NewLeadInputPageComponent implements OnInit {
             if (this.customObj.typePage != "edit" || this.customObj.typePage != "update") {
               if (this.customObj["lobKta"] != undefined) {
                 if (this.customObj.lobKta.includes(this.customObj.returnLobCode) == true) {
-                  urlPost = URLConstant.SubmitWorkflowSimpleLeadInput;
+                  urlPost = environment.isCore ? URLConstant.SubmitWorkflowSimpleLeadInputV2 : URLConstant.SubmitWorkflowSimpleLeadInput;
                 }
               }
             }

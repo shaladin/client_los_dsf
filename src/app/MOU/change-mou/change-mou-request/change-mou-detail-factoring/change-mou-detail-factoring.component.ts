@@ -259,8 +259,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson =
       "./assets/uclookup/NAP/lookupSupplier.json";
     this.inputLookupObj.genericJson =

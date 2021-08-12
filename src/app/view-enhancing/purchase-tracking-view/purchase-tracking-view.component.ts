@@ -37,7 +37,6 @@ export class PurchaseTrackingViewComponent implements OnInit {
 
   ngOnInit() {
     this.viewPurchaseTrackingMainInfoObj.viewInput = "./assets/ucviewgeneric/viewPurchaseTrackingMainInfo.json";
-    this.viewPurchaseTrackingMainInfoObj.viewEnvironment = environment.losUrl;
 
     if(this.AppAssetId !== "null") {
       var requestAppAssetId = { Id: this.AppAssetId };
@@ -100,7 +99,7 @@ export class PurchaseTrackingViewComponent implements OnInit {
       AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
     }
     else if(event.Key == "Agreement") {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(event.ViewObj.AgrmntId);
+      window.open(environment.lmsR3web + "/view/agrmntview?AgrmntNo=" + event.ViewObj.AgrmntNo, "_blank");
     }
     else if(event.Key == "AppAsset") {
       window.open(environment.losR3Web + "/View/AppAsset?AppId=" + event.ViewObj.AppId + "&AppAssetId=" + event.ViewObj.AppAssetId, "_blank");
@@ -109,7 +108,7 @@ export class PurchaseTrackingViewComponent implements OnInit {
 
   OpenView(key: string) {
     if (key == 'AGR') {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntObj.AgrmntId);
+      window.open(environment.lmsR3web + "/view/agrmntview?AgrmntNo=" + this.AgrmntObj.AgrmntNo, "_blank");
     }
   }
 }

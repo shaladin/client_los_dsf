@@ -194,7 +194,8 @@
                         </lib-uc-show-errors>
                       </td>
                       <td>
-                        <input type="text" class="form-control width-100-per" formControlName="DocNotes">
+                        <textarea class="form-control adInsInput width-75-per" formControlName="DocNotes"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.DocNotes.invalid }"></textarea>
                         <lib-uc-show-errors [control]="AddCollForm.controls.DocNotes" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                       </td>

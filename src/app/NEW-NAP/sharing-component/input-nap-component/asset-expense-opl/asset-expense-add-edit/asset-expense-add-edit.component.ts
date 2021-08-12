@@ -1511,6 +1511,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
             if (response["AppAssetFeeOplObjs"][i].FeeCapBehaviourCode == "LOCK") {
               this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["CptlzAmt"].disable();
             }
+            this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["VATAmt"].disable();
             this.calculateFee();
             this.calculateVAT();
             this.calculateCptlz();
@@ -1785,8 +1786,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
     this.InputLookupServiceObj = new InputLookupObj();
     this.InputLookupServiceObj.urlJson = "./assets/uclookup/NAP/lookupServiceExpense.json";
-    this.InputLookupServiceObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupServiceObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupServiceObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupServiceObj.pagingJson = "./assets/uclookup/NAP/lookupServiceExpense.json";
     this.InputLookupServiceObj.genericJson = "./assets/uclookup/NAP/lookupServiceExpense.json";
     this.InputLookupServiceObj.addCritInput = arrAddCrit;
@@ -1875,8 +1875,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
     this.InputLookupSparePartObj = new InputLookupObj();
     this.InputLookupSparePartObj.urlJson = "./assets/uclookup/NAP/lookupSparePartExpense.json";
-    this.InputLookupSparePartObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupSparePartObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupSparePartObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupSparePartObj.pagingJson = "./assets/uclookup/NAP/lookupSparePartExpense.json";
     this.InputLookupSparePartObj.genericJson = "./assets/uclookup/NAP/lookupSparePartExpense.json";
     this.InputLookupSparePartObj.addCritInput = arrAddCrit;
@@ -2020,9 +2019,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
       otherExpenseObj.push(this.addGroupOtherExpense(undefined, max + 1));
     }
 
-
     var otherExpObj = this.otherExpenseObj;
-
     this.dictOtherExpense[max + 1] = otherExpObj;
   }
 
@@ -2036,7 +2033,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
         IsLock: [false],
         BehaviourCode: ['DEFAULT']
       })
-    } else {
+    }
+    else {
       return this.fb.group({
         No: [i],
         OthExpenseCode: [appAssetOtherExpenseObj.OthExpenseCode, [Validators.required, Validators.maxLength(50)]],
@@ -2055,7 +2053,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
       this.calculateExpense();
     }
   }
-
 
   async getFeeExpense() {
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFeeTypeOpl };
@@ -2090,6 +2087,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
         this.GetGSValueInputFeeTypeBehaviour();
       });
   }
+
   isInputTypeLock: boolean = false;
   async GetGSValueInputFeeTypeBehaviour() {
     await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeInputOPLFeeBehaviour }).toPromise().then(
@@ -2100,8 +2098,10 @@ export class AssetExpenseAddEditComponent implements OnInit {
         else {
           this.isInputTypeLock = false;;
         }
-      });
+      }
+    );
   }
+
   isIncludeVAT: boolean = false;  
   changeInputFee() {
     if (this.InsuranceDataForm.controls.FeeInputType.value == "VAT") {
@@ -2112,7 +2112,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
     }
     for (let i = 0; i < this.InsuranceDataForm.controls["FeeObjs"]["controls"].length; i++) {
       this.calculateChangeVAT(i)
-
     }
   }
 
@@ -2187,11 +2186,13 @@ export class AssetExpenseAddEditComponent implements OnInit {
       })
     }
   }
+
   calculateAssetExpense() {
     this.InsuranceDataForm.patchValue({
       TotalAssetExpense: this.InsuranceDataForm["controls"]["TotalInsInscoAmt"].value + this.InsuranceDataForm["controls"]["TotalServiceAmt"].value + this.InsuranceDataForm["controls"]["TotalSparepartAmt"].value + this.InsuranceDataForm["controls"]["TotalOthExpenseAmt"].value + this.InsuranceDataForm["controls"]["TotalFeeCptlzAmt"].value
     });
   }
+
   calculateService() {
     this.InsuranceDataForm.patchValue({
       TotalServiceAmt: 0
@@ -2286,16 +2287,5 @@ export class AssetExpenseAddEditComponent implements OnInit {
       });
     }
     this.calculateAssetExpense();
-  }
-
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.InsuranceDataForm.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-    console.log(invalid);
   }
 }

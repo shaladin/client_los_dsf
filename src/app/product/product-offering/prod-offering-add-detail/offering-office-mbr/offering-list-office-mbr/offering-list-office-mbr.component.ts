@@ -10,6 +10,7 @@ import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj }
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-offering-list-office-mbr',
@@ -68,8 +69,10 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   DoneForm() {
+    let urlPost = environment.isCore? URLConstant.SubmitProdOfferingV2 : URLConstant.SubmitProdOffering;
     this.GenericByIdObj.Id = this.ProdOfferingHId;
-    this.http.post(URLConstant.SubmitProdOffering, this.GenericByIdObj).subscribe(
+      
+    this.http.post(urlPost, this.GenericByIdObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
       }

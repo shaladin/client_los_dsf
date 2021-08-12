@@ -28,11 +28,13 @@ export class TermConditionsComponent implements OnInit {
   @Input() identifier: string = "TCList";
   @Input() IsNap: boolean = false;
   businessDt: Date;
+  IsOpl: boolean = false;
 
   MinDate: Date;
   IsPromisedDtLowerThanBusinessDt: boolean = true;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private cookieService: CookieService) { }
+  constructor(private http: HttpClient,
+    private fb: FormBuilder, private cookieService: CookieService) { }
 
   ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -49,6 +51,9 @@ export class TermConditionsComponent implements OnInit {
     var appObj = { Id: this.AppId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (responseApp: AppObj) => {
+        if(responseApp.BizTemplateCode === CommonConstant.OPL) {
+          this.IsOpl = true;
+        }
         this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
           (response) => {
             this.AppTcList = response["AppTcs"];
@@ -74,18 +79,21 @@ export class TermConditionsComponent implements OnInit {
                 }) as FormGroup;
     
                 if (this.AppTcList[i].IsMandatory == true) {
-                  if(this.AppTcList[i].PriorTo == responseApp.AppCurrStep){
-                    if(!this.AppTcList[i].IsWaived){
+                  if(this.AppTcList[i].PriorTo == responseApp.AppCurrStep) {
+                    if(!this.AppTcList[i].IsWaived) {
                       TCDetail.controls.PromisedDt.setValidators([Validators.required]);
                     }
                   }
                 }
+
                 if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
                   this.IsCheckedAll = false;
                 }
+
                 if (this.AppTcList[i].IsChecked == false) {
                   TCDetail.controls.ExpiredDt.disable();
-                } else if(this.AppTcList[i].IsChecked == true && this.IsNap == false) {
+                }
+                else if(this.AppTcList[i].IsChecked == true && this.IsNap == false) {
                   TCDetail.controls.PromisedDt.disable();
                   TCDetail.controls.IsChecked.disable();
                   if(!this.AppTcList[i].IsExpDtMandatory){
@@ -95,12 +103,12 @@ export class TermConditionsComponent implements OnInit {
     
                 listTC.push(TCDetail);
                 this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
-    
               }
     
               this.ReconstructForm();
               this.OutputMode.emit("edit");
-            } else {
+            }
+            else {
               this.http.post(URLConstant.GetListTCbyAppIdFromRule, appTcObj).subscribe(
                 (response) => {
                   this.AppTcList = response["AppTcs"];
@@ -131,18 +139,20 @@ export class TermConditionsComponent implements OnInit {
                         }
                       }
                     }
+
                     if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
                       this.IsCheckedAll = false;
                     }
                   
-                      if (this.AppTcList[i].IsChecked == false) {
+                    if (this.AppTcList[i].IsChecked == false) {
+                      TCDetail.controls.ExpiredDt.disable();
+                    }
+                    else {
+                      TCDetail.controls.PromisedDt.disable(); 
+                      if(!this.AppTcList[i].IsExpDtMandatory){
                         TCDetail.controls.ExpiredDt.disable();
-                      } else {
-                        TCDetail.controls.PromisedDt.disable(); 
-                        if(!this.AppTcList[i].IsExpDtMandatory){
-                          TCDetail.controls.ExpiredDt.disable();
-                        }
-                    }  
+                      }
+                    }
      
                     listTC.push(TCDetail);
                     this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
@@ -153,7 +163,8 @@ export class TermConditionsComponent implements OnInit {
                 }
               );
             }
-          }); 
+          }
+        ); 
       },
       (error) => {
         console.log(error);

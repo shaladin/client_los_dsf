@@ -1,0 +1,48 @@
+<lib-ucSubsection [id]="'AssetAccId'" [title]="'Asset Accessory Information'" [panel]="'AssetAcc'">
+</lib-ucSubsection>
+<div id="AssetAcc">
+  <div class="card-body">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;" *ngIf="isMultiAsset">
+            <span  name='No' translate>Asset Seq No</span>
+          </th>
+          <th style="text-align: center;" *ngIf="!isMultiAsset">
+            <span  name='No' translate>No</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='AssetName' translate>Accessory Name</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='AssetPrice' translate>Accessory Price</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='DPAmt_Prcnt' translate>DP Amount/Percentage</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="ListAppAssetAccessory.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="ListAppAssetAccessory.length > 0 && isMultiAsset">
+        <tr *ngFor="let item of ListAppAssetAccessory">
+          <td style="text-align: center;">{{item.AssetSeqNo}}</td>
+          <td style="text-align: left;">{{item.AssetAccessoryName}}</td>
+          <td style="text-align: left;">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
+          <td style="text-align: left;">{{item.DownPaymentAmt | number:'.2':'en-US'}} / {{item.DownPaymentPrcnt}}%</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="ListAppAssetAccessory.length > 0 && !isMultiAsset">
+        <tr *ngFor="let item of ListAppAssetAccessory; let i = index">
+          <td style="text-align: center;">{{i+1}}</td>
+          <td style="text-align: left;">{{item.AssetAccessoryName}}</td>
+          <td style="text-align: left;">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
+          <td style="text-align: left;">{{item.DownPaymentAmt | number:'.2':'en-US'}} / {{item.DownPaymentPrcnt}}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
