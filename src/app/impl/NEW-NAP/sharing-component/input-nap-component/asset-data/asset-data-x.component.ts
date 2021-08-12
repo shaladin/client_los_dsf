@@ -41,6 +41,8 @@ import { AssetTypeSerialNoLabelObj } from "app/shared/model/SerialNo/AssetTypeSe
 import { VendorObj } from "app/shared/model/Vendor.Model";
 import { VendorEmpObj } from "app/shared/model/VendorEmp.Model";
 import { environment } from "environments/environment";
+import { AppCustPersonalJobDataObj } from "app/shared/model/AppCustPersonalJobDataObj.Model";
+import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPersonalObj.Model";
 
 @Component({
     selector: 'app-asset-data-x',
@@ -159,6 +161,7 @@ import { environment } from "environments/environment";
       LocationAreaCode4: ['', Validators.maxLength(50)],
       LocationCity: ['', Validators.maxLength(50)],
       LocationZipcode: ['', Validators.maxLength(50)],
+      OwnerProfessionCode: [''],
   
       LocationAddrType: [''],
       DelivAddrType: [''],
@@ -237,6 +240,7 @@ import { environment } from "environments/environment";
     InputLookupSupplAccObj: InputLookupObj;
     InputLookupAccObj: InputLookupObj;
     InputLookupAccSupObj: InputLookupObj;
+    InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
   
     EmpObj: Array<VendorEmpObj>;
     AdminHeadObj: any;
@@ -266,6 +270,7 @@ import { environment } from "environments/environment";
     VendorAdminHeadObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
     VendorEmpBMObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
     AppCustObj: any;
+    AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
     RefProdCmptAssetType: ProdOfferingDObj;
     RefProdCmptAssetCond: ProdOfferingDObj;
     RefProdCmptSupplSchm: ProdOfferingDObj;
@@ -345,6 +350,7 @@ import { environment } from "environments/environment";
       await this.GetAppData();
       await this.GetRefProdCompt();
       await this.GetAppCust();
+      await this.GetAppCustPersonalJobData();
       await this.GetAppCustPhone();
       await this.bindAllRefMasterObj();
       this.initLookup();
@@ -377,8 +383,7 @@ import { environment } from "environments/environment";
         await this.getListAllAssetData();
       }
       else if(this.mode == 'editAsset') {
-        // await this.getAllAssetData();
-        await this.getAllAssetData2();
+        await this.getAllAssetData();
       }
   
       this.GenerataAppAssetAttr(false);
@@ -1106,6 +1111,7 @@ import { environment } from "environments/environment";
       this.allAssetDataObj.AppCollateralRegistrationObj.MrIdTypeCode = this.AssetDataForm.controls.MrIdTypeCode.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.AssetDataForm.controls.OwnerIdNo.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AssetDataForm.controls.MrOwnerRelationshipCode.value;
+      this.allAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AssetDataForm.controls.OwnerProfessionCode.value;
   
       if (this.BizTemplateCode !== "OPL") {
         for (var i = 0; i < this.items.length; i++) {
@@ -1402,6 +1408,7 @@ import { environment } from "environments/environment";
           OwnerZipcode: this.AddrLegalObj[0].Zipcode,
           OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
           OwnerAddrType: CommonConstant.AddrTypeLegal,
+          OwnerProfessionCode: this.AppCustPersonalJobData.MrProfessionCode
         });
         this.inputFieldOwnerAddrObj = new InputFieldObj();
         this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -1416,8 +1423,11 @@ import { environment } from "environments/environment";
         this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
         this.inputAddressObjForOwner.default = this.ownerAddrObj;
         this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
+        this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName };
   
         this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = true;
+        this.InputLookupProfessionObj.isDisable = true;
         this.AssetDataForm.controls["OwnerName"].disable();
         this.AssetDataForm.controls["MrIdTypeCode"].disable();
         this.AssetDataForm.controls["OwnerIdNo"].disable();
@@ -1428,6 +1438,7 @@ import { environment } from "environments/environment";
       }
       else {
         this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
+        this.InputLookupProfessionObj.isDisable = false;
         this.AssetDataForm.controls["OwnerName"].enable();
         this.AssetDataForm.controls["MrIdTypeCode"].enable();
         this.AssetDataForm.controls["OwnerIdNo"].enable();
@@ -1438,9 +1449,7 @@ import { environment } from "environments/environment";
       };
     }
 
-    async getAllAssetData2() {
-      // this.appAssetObj = new AppAssetObj();
-      // this.appAssetObj.AppAssetId = this.AppAssetId;
+    async getAllAssetData() {
       let appAssetObj = { Id: this.AppAssetId };
       await this.http.post(URLConstant.GetAllAssetDataByAppAssetId, appAssetObj).toPromise().then(
         (response) => {
@@ -1519,6 +1528,15 @@ import { environment } from "environments/environment";
       }
 
       if (this.returnAppCollateralRegistObj != null) {
+        let reqByCode: GenericObj = new GenericObj();
+        reqByCode.Code = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
+        this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).subscribe(
+          (response) =>{
+            this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
+          }
+        );
+
         this.AssetDataForm.patchValue({
           UserName: this.returnAppCollateralRegistObj.UserName,
           MrUserRelationshipCode: this.returnAppCollateralRegistObj.MrUserRelationshipCode,
@@ -1542,8 +1560,12 @@ import { environment } from "environments/environment";
           LocationCity: this.returnAppCollateralRegistObj.LocationCity,
           LocationZipcode: this.returnAppCollateralRegistObj.LocationZipcode,
           SelfUsage: (this.returnAppCollateralRegistObj.MrUserRelationshipCode == "SELF"),
-          SelfOwner: (this.returnAppCollateralRegistObj.MrOwnerRelationshipCode == "SELF")
+          SelfOwner: (this.returnAppCollateralRegistObj.MrOwnerRelationshipCode == "SELF"),
+          OwnerProfessionCode: this.returnAppCollateralRegistObj.OwnerProfessionCode
         });
+
+        this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
+        this.SelfOwnerChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")});
       }
       
       this.AssetConditionChanged(this.mode);
@@ -1574,145 +1596,6 @@ import { environment } from "environments/environment";
           }
         }
       }
-      ///-=====================================
-    }
-  
-    async getAllAssetData() {
-      this.appData = new AppDataObj();
-      this.appData.AppId = this.AppId;
-      var appData = { Id: this.AppId };
-      await this.http.post(URLConstant.GetAllAssetDataByAppId, appData).toPromise().then(
-        (response) => {
-          this.appAssetObj = response;
-  
-  
-          if (this.appAssetObj.ResponseAppAssetObj != null) {
-            this.appCollateralRegistObj = new AppCollateralRegistrationObj();
-            this.appCollateralRegistObj.AppCollateralId = this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId'];
-            this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
-              (response: any) => {
-                this.returnAppCollateralRegistObj = response;
-              });
-              
-            let mode = this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0 ? "edit" : "add";
-            this.AssetDataForm.patchValue({
-              FullAssetCode: this.appAssetObj.ResponseAppAssetObj.FullAssetCode,
-              FullAssetName: this.appAssetObj.ResponseAppAssetObj.FullAssetName,
-              MrAssetConditionCode: this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode,
-              MrAssetUsageCode: this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode,
-              SupplName: this.appAssetObj.ResponseAppAssetObj.SupplName,
-              SupplCode: this.appAssetObj.ResponseAppAssetObj.SupplCode,
-              ManufacturingYear: this.appAssetObj.ResponseAppAssetObj.ManufacturingYear,
-              AssetPriceAmt: this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt,
-              Discount: this.appAssetObj.ResponseAppAssetObj.Discount,
-              ExpectedDelivDt: this.appAssetObj.ResponseAppAssetObj.ExpectedDelivDt,
-              IsNeedReplacementCar: this.appAssetObj.ResponseAppAssetObj.IsNeedReplacementCar,
-              DownPaymentAmt: this.appAssetObj.ResponseAppAssetObj.DownPaymentAmt,
-              DownPaymentPrctg: this.appAssetObj.ResponseAppAssetObj.DownPaymentPrctg,
-              AssetNotes: this.appAssetObj.ResponseAppAssetObj.AssetNotes,
-              Color: this.appAssetObj.ResponseAppAssetObj.Color,
-              TaxCityIssuer: this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer,
-              AssetSeqNo: this.appAssetObj.ResponseAppAssetObj.AssetSeqNo,
-              AssetStat: this.appAssetObj.ResponseAppAssetObj.AssetStat,
-              AssetTypeCode: this.appAssetObj.ResponseAppAssetObj.AssetTypeCode,
-              AssetCategoryCode: this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode,
-              IsCollateral: this.appAssetObj.ResponseAppAssetObj.IsCollateral,
-              IsInsurance: this.appAssetObj.ResponseAppAssetObj.IsInsurance,
-              IsEditableDp: this.appAssetObj.ResponseAppAssetObj.IsEditableDp,
-              selectedDpType: 'AMT'
-            });
-            this.setValidatorBpkb();
-  
-            if (this.appAssetObj.ResponseAppAssetObj.TaxIssueDt != null) {
-              this.AssetDataForm.patchValue({
-                TaxIssueDt: formatDate(this.appAssetObj.ResponseAppAssetObj.TaxIssueDt, 'yyyy-MM-dd', 'en-US')
-              });
-            }
-  
-            if (this.appAssetObj.ResponseBranchManagerSupp != null) {
-              this.AssetDataForm.patchValue({
-                BranchManagerName: this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName,
-                BranchManagerNo: this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo,
-                BranchManagerPositionCode: this.appAssetObj.ResponseBranchManagerSupp.MrSupplEmpPositionCode
-              });
-              this.BranchManagerName = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName;
-            }
-  
-            if (this.appAssetObj.ResponseAdminHeadSupp != null) {
-              this.AssetDataForm.patchValue({
-                AdminHeadName: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName,
-                AdminHeadNo: this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo,
-                AdminHeadPositionCode: this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode,
-              })
-            }
-  
-            if (this.appAssetObj.ResponseSalesPersonSupp != null) {
-              this.AssetDataForm.patchValue({
-                SalesPersonName: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName,
-                SalesPersonNo: this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo,
-                SalesPersonPositionCode: this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode,
-              });
-            }
-  
-            if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
-              this.AssetDataForm.patchValue({
-                UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
-                MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
-                OwnerName: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerName,
-                MrIdTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode,
-                OwnerIdNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerIdNo,
-                MrOwnerRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode,
-                OwnerAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAddr,
-                OwnerAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode1,
-                OwnerAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode2,
-                OwnerAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode3,
-                OwnerAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode4,
-                OwnerCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerCity,
-                OwnerZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode,
-                OwnerMobilePhnNo: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerMobilePhnNo,
-                LocationAddr: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAddr,
-                LocationAreaCode1: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode1,
-                LocationAreaCode2: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode2,
-                LocationAreaCode3: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode3,
-                LocationAreaCode4: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4,
-                LocationCity: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity,
-                LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
-                SelfUsage: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF"),
-                SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
-              });
-            }
-  
-            this.AssetConditionChanged(mode);
-            this.appAssetAccessoriesObjs = this.appAssetObj.ResponseAppAssetAccessoryObjs;
-            this.appAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
-            this.appAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
-  
-            if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
-              this.setAddrOwnerObj();
-              this.setAddrDelivObj();
-              this.setAddrLocationObj();
-            }
-  
-            this.DpTypeBefore = "AMT";
-            this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-            this.GetAssetMaster(this.assetMasterObj);
-            this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
-            this.GetVendorForView();
-            this.districtObj.ProvDistrictCode = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
-            this.GetProvDistrict();
-            this.bindAccessories();
-            this.updateValueDownPaymentPrctg();
-  
-            if (this.appAssetObj != null) {
-              for (var i = 0; i < this.items.length; i++) {
-                if (this.items.controls[i] != null) {
-                  this.items.controls[i]["controls"]["SerialNoValue"].value = this.appAssetObj["SerialNo" + (i + 1)];
-                }
-              }
-            }
-          }
-        }
-      );
     }
   
     async getListAllAssetData() {
@@ -1918,6 +1801,12 @@ import { environment } from "environments/environment";
   
       this.InputLookupAccObj = this.initLookupAcc();
       this.isOnlookup = true;
+
+      this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
+      this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
+      this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
+      this.InputLookupProfessionObj.isRequired = false;
+      this.InputLookupProfessionObj.isReady = true;
     }
   
     initLookupAcc() {
@@ -2101,6 +1990,12 @@ import { environment } from "environments/environment";
           this.setValidatorBpkb();
         }
       );
+    }
+
+    GetProfession(event) {
+      this.AssetDataForm.patchValue({
+        OwnerProfessionCode: event.ProfessionCode
+      });
     }
   
     async GetVendor() {
@@ -2613,6 +2508,14 @@ import { environment } from "environments/environment";
       );
     }
   
+    async GetAppCustPersonalJobData() {
+      await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
+        (response) => {
+          this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
+        }
+      );
+    }
+
     async GetAppCustPhone() {
       if (typeof (this.AppCustObj) != 'undefined') {
         var appObj = {

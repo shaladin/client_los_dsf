@@ -125,9 +125,9 @@
               (outputCancel)="Cancel()"></app-multi-asset-data-x>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
-              </app-insurance-data>
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady"
+                [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
+              </app-insurance-multi-asset-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
               <app-life-insurance-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
@@ -226,9 +226,9 @@
               (outputCancel)="Cancel()"></app-multi-asset-data-x>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
-              </app-insurance-data>
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady"
+                [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
+              </app-insurance-multi-asset-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <app-financial-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" [AppObj]="NapObj"
