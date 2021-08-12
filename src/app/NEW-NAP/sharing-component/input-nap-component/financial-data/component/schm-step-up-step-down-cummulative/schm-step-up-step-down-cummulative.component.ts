@@ -32,7 +32,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  PriceLabel: string = "Asset Price";
+  PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
 
   constructor(private fb: FormBuilder,
@@ -89,7 +89,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmStepUpStepDownCummulative) !== -1);
 
-        if (this.CalcBaseOptions.length == 1) {
+        if (this.CalcBaseOptions.length > 0) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
