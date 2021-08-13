@@ -44,6 +44,7 @@ export class URLConstant {
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/v1" + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/v1" + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/v1" + "/Application/SubmitNAP";
+  public static SubmitNAPV2 = environment.losUrl + "/v2" + "/Application/SubmitNAP";
   public static SubmitNapCustMainData = environment.losUrl + "/v1" + "/Application/SubmitNAPCustMainData";
   public static SubmitNapCustMainDataV2 = environment.losUrl + "/v2" + "/Application/SubmitNAPCustMainData";
   public static CreateWorkflowDuplicateCheck = environment.losUrl + "/v1" + "/Application/CreateWorkflowDuplicateCheck";
