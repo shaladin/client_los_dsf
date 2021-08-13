@@ -30,8 +30,7 @@ export class URLConstantX {
   public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
   public static MouCustExecutionHumanActivityX = environment.losUrl +'/v1' + "/MouCustX/MouCustExecutionHumanActivity";
   public static GetMouMainInfoByIdX = environment.losUrl +'/v1' + "/MouCustX/GetMouMainInfoById";
-  public static GetMouCustByAppIdForInvoiceVerifX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppIdForInvoiceVerif";
-  
+
   public static CheckMouActiveR2 = environment.losUrl +'/v1' + "/MouCustX/CheckMouActiveR2";
 
   // MOU CUST FCTR X
@@ -62,6 +61,9 @@ export class URLConstantX {
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/AppX/AddNewApplicationFromCopy";
 
 
-    //AGRMNT ACTIVATION
-    public static SubmitAgrmntActivationByHuman = environment.losUrl + '/v1' + "/AgrmntActivationX/SubmitAgrmntActivationByHuman";
+  //AGRMNT ACTIVATION
+  public static SubmitAgrmntActivationByHuman = environment.losUrl + '/v1' + "/AgrmntActivationX/SubmitAgrmntActivationByHuman";
+
+  //APP INVOICE X
+  public static SubmitInvoiceVerifDlfn = environment.losUrl  + '/v1' + "/AppInvoiceX/SubmitInvoiceVerifDlfn";
 }

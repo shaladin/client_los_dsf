@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -92,7 +93,10 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
             }
             this.RlistAppTCObj.ListAppTcObj.push(this.appTC);
         }
-        this.httpClient.post(URLConstant.EditAppTc, this.RlistAppTCObj).subscribe(
+
+        var request = {ListAppTcObj: this.RlistAppTCObj.ListAppTcObj, AppId: this.AppId};
+
+        this.httpClient.post(URLConstantX.SubmitInvoiceVerifDlfn, request).subscribe(
             (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.ResumeWf();
