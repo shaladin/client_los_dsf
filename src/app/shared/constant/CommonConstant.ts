@@ -357,7 +357,7 @@ export class CommonConstant {
   public static AddrTypeMailing = "MAILING";
   public static AddrTypeJob = "JOB";
   public static AddrTypePrevJob = "PREV_JOB";
-  public static AddrTypeOthBiz = "OTHERBIZ";
+  public static AddrTypeOthBiz = "OTH_BIZ";
   public static AddrTypeCompany = "COMPANY";
   public static AddrTypeEmergency = "EMERGENCY";
   public static AddrTypeContactInfo = "CONTACT";
@@ -503,6 +503,7 @@ export class CommonConstant {
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
+  public static ReturnTask = "RETURN_TASK";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
@@ -939,7 +940,7 @@ export class CommonConstant {
   public static CustAddrTypeResidence = "RESIDENCE";
   public static CustAddrTypeEmergency = "EMERGENCY";
   public static CustAddrTypeJob = "JOB";
-  public static CustAddrTypeOthBiz = "OTHERBIZ";
+  public static CustAddrTypeOthBiz = "OTH_BIZ";
   public static CustAddrTypePreJob = "PREV_JOB";
   public static CustAddrTypeBiz = "BIZ";
 
@@ -947,6 +948,7 @@ export class CommonConstant {
   public static WF_CODE_LEAD = "WF_LEAD";
   public static WF_CODE_SIMPLE_LEAD = "WF_SIMPLE_LEAD";
   public static ACT_CODE_SIMPLE_FRAUD_VERIFICATION = "SIMPLE_FRAUD_VERIFICATION";
+  public static ACT_CODE_SIMPLE_LEAD_UPD = "SIMPLE_LEAD_UPD";
   public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";

@@ -16,7 +16,6 @@ export class ViewAgrmntSummaryComponent implements OnInit {
   };
   totalInsPremi: any;
   SummaryObj: any;
-  totalRsvFund: any;
 
   installmentScheme: any;
   firstInstType: any;

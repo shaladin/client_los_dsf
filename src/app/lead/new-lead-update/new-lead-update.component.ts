@@ -35,7 +35,7 @@ export class NewLeadUpdateComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchSimpleLeadUpdate.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchSimpleLeadUpdate.json";
 
-    if(environment.isCore){
+    if (environment.isCore) {
       let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchSimpleLeadUpdateV2.json";
@@ -44,16 +44,16 @@ export class NewLeadUpdateComponent implements OnInit {
 
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_SIMPLE_LEAD;
       this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_FRAUD_VERIFICATION;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_LEAD_UPD;
       this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
-      
+
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "LeadNo";
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
-      
+
       let AddCrit = new CriteriaObj();
       AddCrit.DataType = "text";
       AddCrit.propName = "L.LEAD_STEP";
@@ -83,5 +83,4 @@ export class NewLeadUpdateComponent implements OnInit {
       );
     }
   }
-
 }
