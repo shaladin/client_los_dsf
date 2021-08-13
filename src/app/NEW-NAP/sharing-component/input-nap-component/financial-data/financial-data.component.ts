@@ -249,7 +249,7 @@ export class FinancialDataComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  CheckSubsidyRate(event) {
+  CheckSubsidyRate(event, isRefresh = false) {
     if (this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix || this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmBalloon) {
       var listSubsidy: Array<AppSubsidyObj> = event;
 
@@ -271,7 +271,10 @@ export class FinancialDataComponent implements OnInit {
         this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
     }
-    this.LoadAppFinData();
+
+    if(isRefresh){
+      this.LoadAppFinData();
+    }
   }
 
   SetInputByCalcBase(calcBase) {
