@@ -10,6 +10,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { environment } from 'environments/environment';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 
 @Component({
   selector: 'app-mou-customer-approval',
@@ -19,6 +22,8 @@ export class MouCustomerApprovalComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj>;
+  requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
   user: CurrentUserContext;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
@@ -26,17 +31,48 @@ export class MouCustomerApprovalComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
 
-    this.arrCrit = new Array<CriteriaObj>();
-    var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'A.MOU_STAT';
-    critObj.value = 'MAP';
-    this.arrCrit.push(critObj);
-    this.inputPagingObj.addCritInput = this.arrCrit;
+      this.arrCrit = new Array();
+      var critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionIn;
+      critObj.propName = 'TL.CATEGORY_CODE';
+      critObj.listValue = ['MOUC_GEN_APV', 'MOUC_FCTR_APV', 'MOUC_DLFN_APV'];
+      this.arrCrit.push(critObj);
+  
+      critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'TL.CURRENT_USER_ID';
+      critObj.value = this.user.UserName;
+      this.arrCrit.push(critObj);
+  
+      critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionOr;
+      critObj.propName = 'TL.MAIN_USER_ID';
+      critObj.value = this.user.UserName;
+      this.arrCrit.push(critObj);
+  
+      this.inputPagingObj.addCritInput = this.arrCrit
+    }
+    else{
+      this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
+  
+      this.arrCrit = new Array<CriteriaObj>();
+      var critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'A.MOU_STAT';
+      critObj.value = 'MAP';
+      this.arrCrit.push(critObj);
+      this.inputPagingObj.addCritInput = this.arrCrit;
+    }
+    
   }
   
   getEvent(event) {

@@ -44,10 +44,11 @@ export class LeadUpdateComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLeadUpdateV2.json";
       this.inputPagingObj.isJoinExAPI = true
       
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_LEAD,
-      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE],
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_LEAD_UPD,
-      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE]
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_LEAD;
+      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_LEAD_UPD;
+      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
@@ -73,7 +74,6 @@ export class LeadUpdateComponent implements OnInit {
       leadReject.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId;  //ExecutionId = WF Instance GUID Versi Camunda
 
       let RejectLeadUrl = environment.isCore ? URLConstant.RejectLeadV2 : URLConstant.RejectLead;
-      
       this.http.post(RejectLeadUrl, leadReject).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);

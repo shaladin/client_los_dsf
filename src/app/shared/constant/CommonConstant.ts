@@ -357,7 +357,7 @@ export class CommonConstant {
   public static AddrTypeMailing = "MAILING";
   public static AddrTypeJob = "JOB";
   public static AddrTypePrevJob = "PREV_JOB";
-  public static AddrTypeOthBiz = "OTHERBIZ";
+  public static AddrTypeOthBiz = "OTH_BIZ";
   public static AddrTypeCompany = "COMPANY";
   public static AddrTypeEmergency = "EMERGENCY";
   public static AddrTypeContactInfo = "CONTACT";
@@ -503,6 +503,7 @@ export class CommonConstant {
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
+  public static ReturnTask = "RETURN_TASK";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
@@ -918,6 +919,15 @@ export class CommonConstant {
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
+  public static WF_MOU_FACTORING = "WF_MOU_FACTORING";
+  public static WF_MOU_DLFN = "WF_MOU_DLFN";
+  public static MOU_REVIEW = "MOU_REVIEW";
+  public static LEGAL_RVW = "LEGAL_RVW";
+  public static MOU_RETURN = "MOU_RETURN";
+  public static MOU_APV = "MOU_APV";
+  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER";
+  public static MOU_EXECUTION = "MOU_EXECUTION";
   public static WF_UPL_SMPL_LEAD = "WF_UPL_SMPL_LEAD";
   public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
   public static PROD_OFF_APV = "PROD_OFF_APV";
@@ -930,7 +940,7 @@ export class CommonConstant {
   public static CustAddrTypeResidence = "RESIDENCE";
   public static CustAddrTypeEmergency = "EMERGENCY";
   public static CustAddrTypeJob = "JOB";
-  public static CustAddrTypeOthBiz = "OTHERBIZ";
+  public static CustAddrTypeOthBiz = "OTH_BIZ";
   public static CustAddrTypePreJob = "PREV_JOB";
   public static CustAddrTypeBiz = "BIZ";
 
@@ -938,6 +948,7 @@ export class CommonConstant {
   public static WF_CODE_LEAD = "WF_LEAD";
   public static WF_CODE_SIMPLE_LEAD = "WF_SIMPLE_LEAD";
   public static ACT_CODE_SIMPLE_FRAUD_VERIFICATION = "SIMPLE_FRAUD_VERIFICATION";
+  public static ACT_CODE_SIMPLE_LEAD_UPD = "SIMPLE_LEAD_UPD";
   public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
@@ -966,5 +977,7 @@ export class CommonConstant {
   public static LeadStepLeadVerf = "LVR";
   public static LeadStepTeleVerf = "TVR";
   public static LeadStepLeadUpd = "LUP";
-  
+
+  // Financial Data
+  public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
 }
