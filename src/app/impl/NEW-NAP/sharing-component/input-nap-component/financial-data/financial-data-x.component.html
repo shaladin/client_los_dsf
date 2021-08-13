@@ -1,0 +1,30 @@
+<form class="form-horizontal" [formGroup]="FinDataForm" *ngIf="isReady" (ngSubmit)="FinDataForm.valid && SaveAndContinue()" #enjiForm="ngForm">
+  <div *ngIf="AppData.BizTemplateCode != 'CF4W' || AppData.BizTemplateCode !='FL4W'">
+    <app-subsidy *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode" (emitData)="CheckSubsidyRate($event)"></app-subsidy>
+  </div>
+  <div *ngIf="AppData.BizTemplateCode == 'CF4W' || AppData.BizTemplateCode =='FL4W'">
+    <app-view-subsidy-x *ngIf="IsParentLoaded" [AppId]="AppId" [appFinDataObj]="appFinDataObj" [BizTemplateCode]="AppData.BizTemplateCode"></app-view-subsidy-x>
+  </div>
+  <app-fee-x *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-x>
+  <app-schm-reguler-fix-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF'" [AppId]="AppId" [InstAmt]="instAmt" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode" (RefreshSubsidy)="RefreshSubsidy($event)"></app-schm-reguler-fix-x>
+  <app-schm-irregular-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'IR'" [AppId]="AppId" [InstAmt]="instAmt" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode" [NumOfInst]="NumOfInst"> </app-schm-irregular-x>
+  <app-schm-step-up-step-down-normal-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STNM'" [AppId]="AppId" [InstAmt]="instAmt" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode"></app-schm-step-up-step-down-normal-x>
+  <app-schm-step-up-step-down-leasing-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STLS'" [AppId]="AppId" [InstAmt]="instAmt" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode"></app-schm-step-up-step-down-leasing-x>
+  <app-schm-step-up-step-down-cummulative-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'STCM'" [AppId]="AppId" [InstAmt]="instAmt" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode"></app-schm-step-up-step-down-cummulative-x>
+  <app-schm-balloon-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'BL'" [AppId]="AppId" [InstAmt]="instAmt" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode" (RefreshSubsidy)="RefreshSubsidy($event)"></app-schm-balloon-x>
+  <app-schm-even-principal-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP'" [AppId]="AppId" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode"></app-schm-even-principal-x>
+
+  <div class="form-inline-right">
+    <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+      <i class="ft-x"></i> Cancel
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary" translate>
+      <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
+    
+</form>
+
+ <!-- <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="test()">
+  Test
+</button> -->

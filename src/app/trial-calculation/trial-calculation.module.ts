@@ -16,6 +16,7 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { InputNapFL4WModule } from "app/NEW-NAP/FL4W/input-nap.module";
 import { InputNapCFNAModule } from "app/NEW-NAP/CFNA/input-nap.module";
 import { InputNapFCTRModule } from "app/NEW-NAP/FCTR/input-nap.module";
+import { TrialCalculationXComponent } from "app/impl/trial-calculation/trial-calculation-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -51,7 +52,8 @@ export const customCurrencyMaskConfig = {
     // InputNapFCTRModule
   ],
   declarations: [
-    TrialCalculationComponent
+    TrialCalculationComponent,
+    TrialCalculationXComponent
   ],
   exports: [],
   providers: [NGXToastrService],
