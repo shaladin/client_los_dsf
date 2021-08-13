@@ -43,27 +43,6 @@
       "isQueryIn":true
     },
     {
-      "type": "dropdown",
-      "name": "WTL.CLAIM_STAT",
-      "id": "ActiveStatusId",
-      "label": "Task Claim Status",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": false,
-      "ddlType": "all",
-      "items": [
-        {
-          "key": "CLAIMED",
-          "value": "CLAIMED"
-        },
-        {
-          "key": "UNCLAIMED",
-          "value": "UNCLAIMED"
-        }
-      ],
-      "itemsUrl": []
-    },
-    {
       "type": "textbox",
       "name": "Assignee",
       "id": "claimById",

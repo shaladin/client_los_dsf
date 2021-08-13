@@ -9,6 +9,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'nap-detail-paging',
@@ -20,6 +23,9 @@ export class NapDetailPagingComponent implements OnInit {
   bizTemplateCode: string;
   userAccess: CurrentUserContext;
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  IntegrationObj: IntegrationObj = new IntegrationObj();
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute, private cookieService: CookieService) {
@@ -35,22 +41,25 @@ export class NapDetailPagingComponent implements OnInit {
   }
 
   makeCriteria() {
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "NAPD_MD_" + this.bizTemplateCode;
-    this.arrCrit.push(critObj);
-
+    if(environment.isCore){
+      var critObj2 = new CriteriaObj();
+      critObj2.restriction = AdInsConstant.RestrictionIn;
+      critObj2.propName = 'a.APP_CURR_STEP';
+      critObj2.listValue = [CommonConstant.AppStepCust, CommonConstant.AppStepFamily, CommonConstant.AppStepGuar, CommonConstant.AppStepShr];
+      this.arrCrit.push(critObj2);
+    }else{
+      var critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionLike;
+      critObj.propName = 'WTL.ACT_CODE';
+      critObj.value = "CUST_MD_" + this.bizTemplateCode;
+      this.arrCrit.push(critObj);
+    }
+  
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.BIZ_TEMPLATE_CODE';
     critObj.value = this.bizTemplateCode;
     this.arrCrit.push(critObj);
-    // var critObj2 = new CriteriaObj();
-    // critObj2.restriction = AdInsConstant.RestrictionNotIn;
-    // critObj2.propName = 'a.APP_CURR_STEP';
-    // critObj2.listValue = this.initListValueCurrStep();
-    // this.arrCrit.push(critObj2);
   }
 
   async ngOnInit() {
@@ -63,6 +72,24 @@ export class NapDetailPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.addCritInput = this.arrCrit;
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+      this.inputPagingObj.isJoinExAPI = true
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_NAPD_MD + this.bizTemplateCode;
+      this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];
+      this.RequestTaskModel.OfficeRoleCodes = this.userAccess[CommonConstant.ROLE_CODE];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "AppNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
   }
 
   GetCallBack(ev: any) {
