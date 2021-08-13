@@ -28,6 +28,10 @@ export class MouMainInfoXComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ReloadUcViewGeneric();
+  }
+
+  ReloadUcViewGeneric() {
     this.http.post<ResMouMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, {Id: this.MouCustId}).subscribe(
       (response) => {
         this.MouMainInfo = response;

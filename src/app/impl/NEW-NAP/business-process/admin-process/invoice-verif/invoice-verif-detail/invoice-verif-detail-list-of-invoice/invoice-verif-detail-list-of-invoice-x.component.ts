@@ -100,7 +100,7 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
         }
       });
 
-    this.httpClient.post(URLConstantX.GetMouCustByAppIdForInvoiceVerifX, request).subscribe((responseMou) => {
+    this.httpClient.post(URLConstantX.GetMouCustByAppIdX, request).subscribe((responseMou) => {
       this.PlafondAmt = responseMou["PlafondAmt"];
       this.MrMouTypeCode = responseMou["MrMouTypeCode"];
 
