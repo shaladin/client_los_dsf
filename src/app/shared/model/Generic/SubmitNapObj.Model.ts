@@ -4,5 +4,6 @@ export class SubmitNapObj {
     constructor() {
         this.AppId = 0;
         this.WfTaskListId = 0;
+        
     }
 }
