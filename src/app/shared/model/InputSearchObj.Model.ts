@@ -17,17 +17,17 @@ export class InputSearchObj {
     switchValue: Array<SwitchValueObj>;
     integrationObj: IntegrationObj;
     isJoinExAPI: boolean;
-    
+
     constructor() {
         this._url = "";
-        this.enviromentUrl = environment.losUrl;
+        this.enviromentUrl = environment.losUrl + "/v1";
         this.title = "";
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.arrCritObj = null;
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
         this.listEnvironments = new Array<EnvisObj>();
-        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url + "/v1" });
         this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
         this.whereValue = new Array<WhereValueObj>();
         this.switchValue = new Array<SwitchValueObj>();

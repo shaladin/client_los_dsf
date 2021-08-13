@@ -94,8 +94,7 @@ export class CustUcaddressComponent implements OnInit {
 
     
     this.inputField.inputLookupObj.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
-    this.inputField.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputField.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputField.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputField.inputLookupObj.pagingJson = "./assets/uclookup/zipcode/lookupZipcode.json";
     this.inputField.inputLookupObj.genericJson = "./assets/uclookup/zipcode/lookupZipcode.json";
     this.inputField.inputLookupObj.isRequired = this.isRequired;

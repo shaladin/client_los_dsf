@@ -33,19 +33,10 @@ export class ViewCustomerDataComponent implements OnInit {
 
   ngOnInit() {
     this.viewLeadCustomerPersonalMaindata.viewInput = "./assets/ucviewgeneric/viewLeadCustomerPersonal.json";
-    this.viewLeadCustomerPersonalMaindata.viewEnvironment = environment.losUrl;
-
     this.viewLeadAddressLegal.viewInput = "./assets/ucviewgeneric/viewLeadAddressLegal.json";
-    this.viewLeadAddressLegal.viewEnvironment = environment.losUrl;
-
     this.viewLeadAddressResidence.viewInput = "./assets/ucviewgeneric/viewLeadAddressResidence.json";
-    this.viewLeadAddressResidence.viewEnvironment = environment.losUrl;
-
     this.viewLeadCustPersonalJobData.viewInput = "./assets/ucviewgeneric/viewLeadCustPersonalJobData.json";
-    this.viewLeadCustPersonalJobData.viewEnvironment = environment.losUrl;
-
     this.viewLeadCustPersonalFinData.viewInput = "./assets/ucviewgeneric/viewLeadCustPersonalFinData.json";
-    this.viewLeadCustPersonalFinData.viewEnvironment = environment.losUrl;
 
     this.leadCustObj.LeadId = this.LeadId;
 

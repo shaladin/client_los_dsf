@@ -295,8 +295,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
   initLookup() {
     this.InputLookupProfessionObj = new InputLookupObj();
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.InputLookupProfessionObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.isRequired = false;

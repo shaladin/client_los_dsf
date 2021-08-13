@@ -12,6 +12,7 @@ import { String } from 'typescript-string-operations';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
+import { ReqCopyAssetObj } from 'app/shared/model/Request/AppAsset/ReqCopyAssetObj.model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -163,6 +164,7 @@ export class AssetDataPagingComponent implements OnInit {
             this.gridAssetDataObj.resultData = DetailForGridAsset;
             this.IsCalledIntegrator = false;
             this.getGridCollateral();
+            this.getListDataAsset();
           }
         );
       }
@@ -204,23 +206,26 @@ export class AssetDataPagingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.UNIT_CANT_BE_ZERO);
     }
     else {
-      var splitted = this.selectedAsset.split(";");
+      let splitted = this.selectedAsset.split(";");
 
       if(splitted.length == 1){
         this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
         return;
       }
 
-      this.http.post(URLConstant.CopyAppAsset, {
-        AppId: this.AppId,
-        Code: this.selectedAsset,
-        count: this.units,
-        FullAssetCode: splitted[0],
-        ManufacturingYear: splitted[1],
-        Color: splitted[2],
-        MrAssetConditionCode: splitted[3],
-        AssetPriceAmt: +splitted[4]
-      }).subscribe(
+      let reqCopyAssetObj: ReqCopyAssetObj = new ReqCopyAssetObj();
+      reqCopyAssetObj.AppId = this.AppId;
+      reqCopyAssetObj.Code = this.selectedAsset;
+      reqCopyAssetObj.count = this.units;
+      reqCopyAssetObj.FullAssetCode = splitted[0];
+      reqCopyAssetObj.ManufacturingYear = splitted[1];
+      reqCopyAssetObj.Color = splitted[2];
+      reqCopyAssetObj.MrAssetConditionCode = splitted[3];
+      reqCopyAssetObj.AssetPriceAmt = +splitted[4];
+      reqCopyAssetObj.MrAssetUsageCode = splitted[5];
+      reqCopyAssetObj.TotalAccessoryPriceAmt = +splitted[6];
+      
+      this.http.post(URLConstant.CopyAppAsset, reqCopyAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.ngOnInit();
@@ -322,7 +327,7 @@ export class AssetDataPagingComponent implements OnInit {
     else {
       for(let i=0;i< this.gridAssetDataObj.resultData.Data.length ;i++){
         if(this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == ""  || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null){
-          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
+          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i+1) + ')');
           return;
         }
       }

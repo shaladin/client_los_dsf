@@ -16,6 +16,10 @@ import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model'
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/AppCommissionRsvFund/ReqReturnHandlingCommRsvFundObj.Model';
 
 @Component({
   selector: "reserved-fund",
@@ -34,6 +38,7 @@ export class ReservedFundComponent implements OnInit {
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: object = {};
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
+  @Input() BizTemplateCode: string;
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
@@ -56,6 +61,17 @@ export class ReservedFundComponent implements OnInit {
   show: boolean = false;
   maxAllocatedRefundAmt: number = 0;
   // totalExpenseAmt: number = 0;
+  isReturnOn: boolean = false;
+  DDLData: { [id: string]: Array<KeyValueObj> } = {};
+  readonly DDLReason: string = "REASON";
+  readonly DDLTask: string = "TASK";
+
+
+  FormReturnObj  =this.fb.group({
+    ReturnTo: [''],
+    Reason: [''],
+    Notes: ['']
+  });
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -76,6 +92,8 @@ export class ReservedFundComponent implements OnInit {
     // this.GetMaxAllocAmt(appObj);
     this.GetAppFee(appObj);
     this.GetAppCust(appObj);
+    await this.bindDDLReasonReturn();
+    await this.bindTaskObj();
   }
 
   SaveForm() {
@@ -308,5 +326,93 @@ export class ReservedFundComponent implements OnInit {
   
   Cancel(){
     this.outputCancel.emit();
+  }
+
+  switchForm() {
+    this.FormReturnObj.patchValue({
+      ReturnTo: "",
+      Reason: "",
+      Notes: ""
+    });
+
+    if (!this.isReturnOn) {
+      this.isReturnOn = true;
+      this.FormReturnObj.controls.ReturnTo.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
+    } else {
+      this.isReturnOn = false;
+      this.FormReturnObj.controls.ReturnTo.clearValidators();
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
+    }
+    this.FormReturnObj.controls.ReturnTo.updateValueAndValidity();
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
+
+  }
+
+  async bindDDLReasonReturn() {
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
+    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
+      });
+  }
+
+  async bindTaskObj() {
+    let refMasterTypeCode = '';
+    switch (this.BizTemplateCode) {
+      case CommonConstant.CF4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCF4W;
+        break;
+      case CommonConstant.CFNA:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFNA;
+        break;
+      case CommonConstant.CFRFN4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFRFN4W;
+        break;
+      case CommonConstant.FL4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFL4W;
+        break;
+      case CommonConstant.OPL:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskOPL;
+        break;
+    }
+    if (!refMasterTypeCode) return;
+    var mrCustTypeCode;
+
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.ReturnHandlingHObj.AppId }).toPromise().then(
+      (response: AppCustObj) => {
+        mrCustTypeCode = response.MrCustTypeCode;
+      }
+    );
+
+    let refMasterObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: mrCustTypeCode };
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
+        if(this.BizTemplateCode == CommonConstant.CFNA){
+          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
+        }else{
+          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstant.ReturnHandlingAddSurvey);
+        }
+      }
+    );
+  }
+
+  SaveReturnForm(){
+    var reqReturnHandlingCommRsvFundObj = new ReqReturnHandlingCommRsvFundObj();
+    reqReturnHandlingCommRsvFundObj.AppId = this.ReturnHandlingHObj.AppId;
+    reqReturnHandlingCommRsvFundObj.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
+    reqReturnHandlingCommRsvFundObj.ReturnTo = this.FormReturnObj.value.ReturnTo;
+    reqReturnHandlingCommRsvFundObj.Reason = this.FormReturnObj.value.Reason;
+    reqReturnHandlingCommRsvFundObj.Notes = this.FormReturnObj.value.Notes;
+
+    this.http.post(URLConstant.SubmitReturnHandlingCommRsvFund, reqReturnHandlingCommRsvFundObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
+      });
   }
 }

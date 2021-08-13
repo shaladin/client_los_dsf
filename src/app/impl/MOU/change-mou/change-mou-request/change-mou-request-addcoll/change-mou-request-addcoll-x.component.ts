@@ -185,7 +185,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
   bindUcAddToTempData() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url + '/v1';
     this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
 
@@ -249,7 +249,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.isReady = true;
@@ -260,7 +260,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.losUrl;
+    this.inputLookupObj.urlEnviPaging = environment.losUrl + '/v1';
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
     this.inputLookupObj.isReady = true;
@@ -905,9 +905,17 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       });
     this.http.post<ChangeMouCustCollateralStatXObj>(URLConstantX.GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX, collObj).subscribe(
       (response)=>{
+        let collRcvDt = "";
+        let collRlsDt = "";
+        if(response.CollateralReceivedDt != null){
+          collRcvDt = formatDate(response.CollateralReceivedDt, 'yyyy-MM-dd', 'en-US')
+        }
+        if(response.CollateralReleasedDt != null){
+          collRlsDt = formatDate(response.CollateralReleasedDt, 'yyyy-MM-dd', 'en-US')
+        }
         this.AddCollForm.patchValue({
-          CollateralReceivedDt : response.CollateralReceivedDt,
-          CollateralReleasedDt : response.CollateralReleasedDt
+          CollateralReceivedDt : collRcvDt,
+          CollateralReleasedDt : collRlsDt
         });
       }
     );
@@ -946,7 +954,12 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       MrCollateralConditionCode: [""],
       ManufacturingYear: ["", [Validators.pattern("^[0-9]+$")]],
       CopyToOwnerLocation: [''],
-      SelfOwner: [false]
+      SelfOwner: [false],
+
+      CollateralStatus: [''],
+      IsRequiredStatus: [''],
+      CollateralReceivedDt: [''],
+      CollateralReleasedDt: ['']
     });
     this.AddCollForm.updateValueAndValidity();
 

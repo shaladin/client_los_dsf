@@ -245,14 +245,14 @@ export class MouCustPersonalMainComponent implements OnInit {
 
   initLookup() {
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
     this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
 
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.isRequired = false;

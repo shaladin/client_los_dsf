@@ -42,18 +42,16 @@ export class NapFromSimpleLeadComponent implements OnInit {
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/searchAppFromSimpleLead.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromSimpleLead.json";
 
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "RO.OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
       {
         name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
 

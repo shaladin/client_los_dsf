@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormArray, ValidatorFn } from '@angular/forms';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { SalesInfoObj } from 'app/shared/model/SalesInfoObj.Model';
 import { ActivatedRoute } from '@angular/router';
@@ -29,6 +29,8 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { NapModule } from 'app/NEW-NAP/nap.module';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { GenerateAppAttrContentObj } from 'app/shared/model/AppAttrContent/GenerateAppAttrContentObj.Model';
+import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -72,7 +74,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     MrSlikSecEcoCode: [''],
-    CustBankAcc: ['']
+    CustBankAcc: [''],
+    AppAttrContentObjs: this.fb.array([])
   })
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -111,6 +114,19 @@ export class ApplicationDataFactoringComponent implements OnInit {
   selectedBankAcc: any;
   GetBankInfo: any;
   appCustId: number;
+  isAppAttrContentReady: boolean = false;
+  GenerateAppAttrContentObjs: Array<GenerateAppAttrContentObj> = new Array<GenerateAppAttrContentObj>();
+  ListAttrAnswer = [];
+  ListInputLookUpObj = new Array();
+  tempLookup = {};
+  readonly AttrInputTypeText = CommonConstant.AttrInputTypeText;
+  readonly AttrInputTypeDate = CommonConstant.AttrInputTypeDate;
+  readonly AttrInputTypeNum = CommonConstant.AttrInputTypeNum;
+  readonly AttrInputTypeNumPerc = CommonConstant.AttrInputTypeNumPerc;
+  readonly AttrInputTypeList = CommonConstant.AttrInputTypeList;
+  readonly AttrInputTypeTextArea = CommonConstant.AttrInputTypeTextArea;
+  readonly AttrInputTypeRefMaster = CommonConstant.AttrInputTypeRefMaster;
+
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
@@ -490,7 +506,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultData;
@@ -498,7 +514,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
 
@@ -588,6 +604,125 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.setDropdown();
 
       });
+      this.GenerateAppAttrContent();
+  }
+
+  GenerateAppAttrContent() {
+    this.isAppAttrContentReady = false;
+    var GenObj =
+    {
+      AppId: this.AppId,
+      AttrGroup: CommonConstant.AttrGroupApplicationData + "_" + CommonConstant.FCTR,
+    };
+    this.http.post(URLConstant.GenerateAppAttrContent, GenObj).subscribe(
+      (response) => {
+        this.GenerateAppAttrContentObjs = response['GenerateAppAttrContentObjs'];
+
+        this.GenerateAppAttrContentForm();
+        this.isAppAttrContentReady = true;
+      });
+  }
+
+  GenerateAppAttrContentForm() {
+    if (this.GenerateAppAttrContentObjs != null) {
+      this.ListAttrAnswer = [];
+      for (let i = 0; i < this.GenerateAppAttrContentObjs.length; i++) {
+        this.ListAttrAnswer.push([]);
+        if (this.GenerateAppAttrContentObjs[i].AttrQuestionValue != null) {
+          this.ListAttrAnswer[i].push(this.GenerateAppAttrContentObjs[i].AttrQuestionValue);
+        }
+        else {
+          this.ListAttrAnswer[i].push("");
+        }
+      }
+      var listAppAssetAttrs = this.SalesAppInfoForm.controls["AppAttrContentObjs"] as FormArray;
+      while (listAppAssetAttrs.length !== 0) {
+        listAppAssetAttrs.removeAt(0);
+      }
+      for (let i = 0; i < this.GenerateAppAttrContentObjs.length; i++) {
+        listAppAssetAttrs.push(this.addGroupAppAttrContent(this.GenerateAppAttrContentObjs[i], i));
+      }
+      this.ListInputLookUpObj.push(this.tempLookup);
+    }
+  }
+
+  addGroupAppAttrContent(generateAppAttrContentObj: GenerateAppAttrContentObj, i: number) {
+    let ListValidator: Array<ValidatorFn> = this.setAppAttrContentValidators(generateAppAttrContentObj);
+
+    return this.setFbGroupAppAttrContent(generateAppAttrContentObj, i, ListValidator);
+  }
+
+  private setAppAttrContentValidators(generateAppAttrContentObj: GenerateAppAttrContentObj) {
+    let ListValidator: Array<ValidatorFn> = new Array<ValidatorFn>();
+
+    if(generateAppAttrContentObj.IsMandatory == true){
+      ListValidator.push(Validators.required);
+    }
+    if (generateAppAttrContentObj.AttrLength != null && generateAppAttrContentObj.AttrLength != 0) {
+      ListValidator.push(Validators.maxLength(generateAppAttrContentObj.AttrLength));
+    }
+    if(generateAppAttrContentObj.PatternValue != null && generateAppAttrContentObj.PatternValue != ""){
+      ListValidator.push(Validators.pattern(generateAppAttrContentObj.PatternValue));
+    }
+
+    return ListValidator;
+  }
+
+  private setFbGroupAppAttrContent(generateAppAttrContentObj: GenerateAppAttrContentObj, i: number, ListValidator: Array<ValidatorFn>) {
+
+    let tempFB = this.fb.group({
+      No: [i],
+      RefAttrCode: [generateAppAttrContentObj.RefAttrCode],
+      RefAttrName: [generateAppAttrContentObj.RefAttrName],
+      AttrInputType: [generateAppAttrContentObj.AttrInputType],
+      AttrValue: [generateAppAttrContentObj.AttrValue],
+      IsMandatory: [generateAppAttrContentObj.IsMandatory]
+    });
+    if (ListValidator.length > 0) {
+      tempFB.get("AttrValue").setValidators(ListValidator);
+    }
+
+    if (generateAppAttrContentObj.AttrInputType == this.AttrInputTypeRefMaster) {
+      this.tempLookup[generateAppAttrContentObj.RefAttrCode] = new InputLookupObj();
+      this.tempLookup[generateAppAttrContentObj.RefAttrCode].urlJson = "./assets/uclookup/lookupRefMaster.json";
+      this.tempLookup[generateAppAttrContentObj.RefAttrCode].urlEnviPaging = environment.FoundationR3Url + "/v1";
+      this.tempLookup[generateAppAttrContentObj.RefAttrCode].pagingJson = "./assets/uclookup/lookupRefMaster.json";
+      this.tempLookup[generateAppAttrContentObj.RefAttrCode].genericJson = "./assets/uclookup/lookupRefMaster.json";
+      this.tempLookup[generateAppAttrContentObj.RefAttrCode].title = generateAppAttrContentObj.RefAttrName;
+      if (generateAppAttrContentObj.IsMandatory == true) {
+        this.tempLookup[generateAppAttrContentObj.RefAttrCode].isRequired = true;
+      }
+      else {
+        this.tempLookup[generateAppAttrContentObj.RefAttrCode].isRequired = false;
+      }
+      if (generateAppAttrContentObj.AttrValue != null && generateAppAttrContentObj.AttrValue != "") {
+        let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+          RefMasterTypeCode: generateAppAttrContentObj.RefAttrValue,
+          MasterCode: generateAppAttrContentObj.AttrValue
+        };
+        this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+          (response: KeyValueObj) => {
+            this.tempLookup[generateAppAttrContentObj.RefAttrCode].jsonSelect = { Descr: response.Value }
+          });
+      }
+    
+      var arrAddCrit = new Array();
+      var critAssetObj = new CriteriaObj();
+      critAssetObj.DataType = 'text';
+      critAssetObj.restriction = AdInsConstant.RestrictionEq;
+      critAssetObj.propName = 'REF_MASTER_TYPE_CODE';
+      critAssetObj.value = generateAppAttrContentObj.RefAttrValue;
+      arrAddCrit.push(critAssetObj);
+      this.tempLookup[generateAppAttrContentObj.RefAttrCode].addCritInput = arrAddCrit;
+    }
+
+    return tempFB;
+  }
+
+  SetAttrValueRm(e, i){
+    this.SalesAppInfoForm.controls['AppAttrContentObjs']['controls'][i].patchValue({
+      AttrValue: e.MasterCode
+    });
   }
 
   Cancel() {
@@ -622,6 +757,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.salesAppInfoObj = this.SalesAppInfoForm.getRawValue();
     this.salesAppInfoObj.AppId = this.AppId;
     this.salesAppInfoObj.MouCustId = this.SalesAppInfoForm.controls.MouCustId.value;
+    this.salesAppInfoObj.AppAttrContentObjs = this.getAppAttrContentObj();
 
     if (this.salesAppInfoObj.MrInstTypeCode == "SINGLE") {
       this.salesAppInfoObj.MrInstSchemeCode = "EP";
@@ -657,6 +793,23 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }
 
   }
+
+  getAppAttrContentObj(){
+    var appAttrContentObjs = new Array<AppAttrContentObj>();
+    if (this.GenerateAppAttrContentObjs != null) {
+      for (let i = 0; i < this.SalesAppInfoForm.controls["AppAttrContentObjs"].value.length; i++) {
+        var appAttrContentObj = new AppAttrContentObj();
+        appAttrContentObj.AppId = this.AppId;
+        appAttrContentObj.RefAttrCode = this.SalesAppInfoForm.controls["AppAttrContentObjs"].value[i].RefAttrCode;
+        appAttrContentObj.AttrValue = this.SalesAppInfoForm.controls["AppAttrContentObjs"].value[i].AttrValue;
+
+        appAttrContentObjs.push(appAttrContentObj);      
+      }
+    }
+
+    return appAttrContentObjs;
+  }
+
   ChangeCharacteristicOfCredit() {
     if (this.SalesAppInfoForm.value.CharaCredit == CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.SalesAppInfoForm.controls.WayRestructure.setValidators(Validators.required);

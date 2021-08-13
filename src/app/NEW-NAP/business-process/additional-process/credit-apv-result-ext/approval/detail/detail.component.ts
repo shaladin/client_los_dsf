@@ -128,7 +128,6 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
 
   initInputApprovalObj(){
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
     

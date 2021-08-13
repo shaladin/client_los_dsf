@@ -7,9 +7,13 @@
         <tr class="table-header">
           <th class="text-left"><span class="thead-header" name='FeeCode' translate>MOU FEE</span>
           </th>
-          <th class="text-left"><span class="thead-header" name='PaymentType' translate>FEE TYPE</span>
+          <th class="text-left"><span class="thead-header" name='FeeType' translate>FEE TYPE</span>
           </th>
-          <th><span style="float: right;" class="thead-header" name='PaymentType' translate>AMOUNT</span>
+          <th class="text-left"><span class="thead-header" name='Amount' translate>AMOUNT</span>
+          </th>
+          <th class="text-left"><span class="thead-header" name='PaymentType' translate>PAYMENT TYPE</span>
+          </th>
+          <th class="text-center"><span class="thead-header" name='AgreementOption' translate>AGREEMENT OPTION</span>
           </th>
         </tr>
       </thead>
@@ -17,8 +21,10 @@
         <tr *ngFor="let item of listFeeData; let i = index">
           <td class="text-left">{{item.FeeName}}</td>
           <td class="text-left">{{item.FeeType}}</td>
-          <td align="right" *ngIf="item.FeeAmt != 0">{{item.FeeAmt | number}}</td>
-          <td align="right" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt}}%</td>
+          <td class="text-left" *ngIf="item.FeeAmt != 0">{{item.FeeAmt | number}}</td>
+          <td class="text-left" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt}}%</td>
+          <td class="text-left">{{item.MouCustFeePaymentTypeView}}</td>
+          <td class="text-center">{{item.MrAgreementAffectedView}}</td>
         </tr>
       </tbody>
     </table>

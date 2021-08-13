@@ -7,6 +7,8 @@ import { NapAddComponent } from './nap-add/nap-add.component';
 import { NapDetailFormComponent } from './nap-detail-form/nap-detail-form.component';
 import { NapCustMainDataComponent } from './nap-cust-main-data/nap-cust-main-data.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { NapDetailFormXComponent } from 'app/impl/NEW-NAP/CFNA/nap-detail-form/nap-detail-form-x.component';
 
 const routes: Routes = [
   {
@@ -47,6 +49,13 @@ const routes: Routes = [
             title: 'NAP Detail'
         }
     },
+    {
+      path: PathConstantX.NAP2_X,
+      component: NapDetailFormXComponent,
+      data: {
+          title: 'NAP Detail'
+      }
+  },
     ]
   }
 ];

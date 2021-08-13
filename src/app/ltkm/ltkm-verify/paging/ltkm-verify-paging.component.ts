@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 
@@ -27,9 +25,6 @@ export class LtkmVerifyPagingComponent implements OnInit {
     ngOnInit() {
         this.inputPagingObj._url = "./assets/ucpaging/searchLtkmVerify.json";
         this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLtkmVerify.json";
-
-        this.inputPagingObj.enviromentUrl = environment.losUrl;
-        this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     }
     getEvent(ev: any) {
         if (ev.Key == "ltkmno") {

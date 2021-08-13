@@ -35,7 +35,9 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Manufacturing Year</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="ManufacturingYear">
+                  <input type="text" class="form-control" formControlName="ManufacturingYear"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.ManufacturingYear.invalid}">
+                  <lib-uc-show-errors [control]="CollateralDataForm.controls.ManufacturingYear" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2  adins-required-label" translate>Collateral Condition</label>
                 <div class="col-md-4">
@@ -52,13 +54,15 @@
                   <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo1Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo1Label}}</label>
                   <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo1Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo1Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo1Label">
-                    <input type="text" class="form-control" formControlName="SerialNo1">
+                    <input type="text" class="form-control" formControlName="SerialNo1"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.SerialNo1.invalid}">
                     <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                   <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo2Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo2Label}}</label>
                   <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo2Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo2Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo2Label">
-                    <input type="text" class="form-control" formControlName="SerialNo2">
+                    <input type="text" class="form-control" formControlName="SerialNo2"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.SerialNo2.invalid}">
                     <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
@@ -66,13 +70,15 @@
                   <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo3Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo3Label}}</label>
                   <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo3Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo3Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo3Label">
-                    <input type="text" class="form-control" formControlName="SerialNo3">
+                    <input type="text" class="form-control" formControlName="SerialNo3"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.SerialNo3.invalid}">
                     <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                   <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo4Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo4Label}}</label>
                   <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo4Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo4Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo4Label">
-                    <input type="text" class="form-control" formControlName="SerialNo4">
+                    <input type="text" class="form-control" formControlName="SerialNo4"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.SerialNo4.invalid}">
                     <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo4" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
@@ -80,7 +86,8 @@
                   <label class="col-md-2 adins-required-label" translate *ngIf="this.AssetTypeObj?.SerialNo5Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value == 'USED'">{{this.AssetTypeObj.SerialNo5Label}}</label>
                   <label class="col-md-2" translate *ngIf="this.AssetTypeObj?.SerialNo5Label && this.CollateralDataForm.controls.MrCollateralConditionCode.value != 'USED'">{{this.AssetTypeObj.SerialNo5Label}}</label>
                   <div class="col-md-4" *ngIf="this.AssetTypeObj?.SerialNo5Label">
-                    <input type="text" class="form-control" formControlName="SerialNo5">
+                    <input type="text" class="form-control" formControlName="SerialNo5"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.SerialNo5.invalid}">
                     <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
@@ -129,13 +136,15 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Collateral User Name </label>
+                <label class="col-md-2  adInsLabel adins-required-label" translate>Collateral User Name </label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="UserName">
+                  <input type="text" class="form-control" formControlName="UserName"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.UserName.invalid }">
+                  <lib-uc-show-errors [control]="CollateralDataForm.controls.UserName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Collateral User Relationship </label>
+                <label class="col-md-2  adInsLabel adins-required-label" translate>Collateral User Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode">
                     <option *ngFor="let item of UserRelationObj" [value]="item.Key">
@@ -150,9 +159,18 @@
             </lib-ucSubsection>
             <div id="ownerData">
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Owner Name </label>
+                <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
+                <div class="col-md-8">
+                  <mat-checkbox formControlName="SelfOwner" (change)="SelfOwnerChange($event)">
+                  </mat-checkbox>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adInsLabel adins-required-label" translate>Owner Name </label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="OwnerName">
+                  <input type="text" class="form-control" formControlName="OwnerName"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.OwnerName.invalid }">
+                  <lib-uc-show-errors [control]="CollateralDataForm.controls.OwnerName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2  adInsLabel" translate>Id Type </label>
                 <div class="col-md-4">
@@ -165,7 +183,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Owner Relationship </label>
+                <label class="col-md-2 adInsLabel " translate>Owner Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrOwnerRelationshipCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrOwnerRelationshipCode.invalid }">
@@ -177,6 +195,19 @@
                 <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OwnerIdNo">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" translate>Owner Profession</label>
+                <div class="col-md-4">
+                  <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+                    [lookupInput]="InputLookupProfessionObj" [parentForm]="CollateralDataForm"
+                    [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+                  </lib-uclookupgeneric>
+                </div>
+                <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
                 </div>
               </div>
               <div class="form-group row">
@@ -203,12 +234,6 @@
               <div class="col-md-12">
                 <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm" [identifier]="'ownerData'" [UCAddrForm]="CollateralDataForm"></lib-ucaddress>
                 <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CollateralDataForm" [enjiForm]="enjiForm" [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj" [showAllPhn]="false"></lib-ucaddress> -->
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
-              <div class="col-md-4">
-                <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
               </div>
             </div>
 
@@ -244,7 +269,7 @@
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{AppId: AppId, ReturnHandlingHId: returnHandlingHId, WfTaskListId: wfTaskListId}" translate>
                 <i class="ft-x"></i> Cancel
-            </button> 
+              </button>
               <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="far fa-check-square"></i> Save
               </button>

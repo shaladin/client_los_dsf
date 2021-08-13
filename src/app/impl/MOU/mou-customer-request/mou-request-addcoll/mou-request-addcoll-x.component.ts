@@ -390,7 +390,7 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.isReady = true;
@@ -471,7 +471,6 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn2 = false;
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showFax = false;
-
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
     this.inputAddressObjForLocAddr.showPhn1 = false;
@@ -1119,9 +1118,17 @@ export class MouRequestAddcollXComponent implements OnInit {
 
     this.http.post<MouCustCollateralStatXObj>(URLConstantX.GetMouCustCollateralStatXByMouCustCollateralIdX, obj).subscribe(
       (response)=>{
+        let collRcvDt = "";
+        let collRlsDt = "";
+        if(response.CollateralReceivedDt != null){
+          collRcvDt = formatDate(response.CollateralReceivedDt, 'yyyy-MM-dd', 'en-US')
+        }
+        if(response.CollateralReleasedDt != null){
+          collRlsDt = formatDate(response.CollateralReleasedDt, 'yyyy-MM-dd', 'en-US')
+        }
         this.AddCollForm.patchValue({
-          CollateralReceivedDt : response.CollateralReceivedDt,
-          CollateralReleasedDt : response.CollateralReleasedDt
+          CollateralReceivedDt : collRcvDt,
+          CollateralReleasedDt : collRlsDt
         });
       }
     )
@@ -1166,7 +1173,12 @@ export class MouRequestAddcollXComponent implements OnInit {
       ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
       CollateralPortionAmt: [''],
       CollateralPortionType: [''],
-      ListDoc: this.fb.array([])
+      ListDoc: this.fb.array([]),
+
+      CollateralStatus: [''],
+      IsRequiredStatus: [''],
+      CollateralReceivedDt: [''],
+      CollateralReleasedDt: ['']
     })
     this.AddCollForm.updateValueAndValidity();
 
@@ -1255,7 +1267,8 @@ export class MouRequestAddcollXComponent implements OnInit {
       }
     }
 
-    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
+    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT
+        && this.mouCustObj.MrMouTypeCode == CommonConstant.MOU_TYPE_GENERAL) {
       if (sumCollateralValue < this.returnMouCust.PlafondAmt) {
         this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
         return;

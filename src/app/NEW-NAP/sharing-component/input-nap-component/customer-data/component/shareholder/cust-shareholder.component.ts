@@ -505,24 +505,21 @@ export class CustShareholderComponent implements OnInit {
   initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
 
     this.InputLookupCustomerCoyObj= new InputLookupObj();
     this.InputLookupCustomerCoyObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
-    this.InputLookupCustomerCoyObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerCoyObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerCoyObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustomerCoyObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustomerCoyObj.isReadonly = false;
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.isRequired = false;
