@@ -70,6 +70,9 @@ export class PathConstantDsf {
     public static CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.INQUIRY;
     //#endregion
 
-    
+    //#region simple lead
+    public static SIMPLE_LEAD = "SimpleLeadDsf";
+    public static SIMPLE_LEAD_DETAIL = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstantDsf.DETAIL;
+    //#endregion
 
 }

@@ -37,6 +37,7 @@ import { NewLeadInputPageComponent } from './new-lead-input/new-lead-input-page/
 import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-lead-monitoring.component';
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
+import { NewLeadInputPageDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input-page-dsf/new-lead-input-page-dsf.component';
 
 
 const routes: Routes = [
@@ -279,6 +280,13 @@ const routes: Routes = [
         component: NewLeadInputPageComponent,
         data: {
           title: 'Lead Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.SIMPLE_LEAD_DETAIL,
+        component: NewLeadInputPageDsfComponent,
+        data: {
+          title: 'Lead Detail Dsf'
         }
       },
       {
