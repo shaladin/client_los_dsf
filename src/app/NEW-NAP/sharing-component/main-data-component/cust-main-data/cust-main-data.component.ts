@@ -1303,6 +1303,7 @@ export class CustMainDataComponent implements OnInit {
     if (this.CekIsCustomer()) return;
     let max17Yodt = new Date(this.MaxDate);
     let d1 = new Date(this.CustMainDataForm.controls.BirthDt.value);
+    d1.setHours(0);
     let d2 = new Date(this.MaxDate);
     max17Yodt.setFullYear(d2.getFullYear() - 17);
 
