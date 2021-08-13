@@ -345,7 +345,7 @@ export class NavigationConstant {
   public static LEAD_INPUT_PAGE = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_INPUT_PAGE; //"/Lead/LeadInput/Page"
   public static LEAD_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.VERIF; //'/Lead/Verif'
   public static SIMPLE_LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLead/Paging'
-  public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLead/Detail'
+  public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLeadDsf/Detail'
   public static SIMPLE_LEAD_MAIN_INFO = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLead/MainInfo'
   public static SIMPLE_LEAD_FRAUD_VERIF_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING; //'/Lead/SimpleLeadFraudVerif/Paging'
   public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_DETAIL; //'/Lead/SimpleLeadFraudVerif/Detail'
@@ -358,7 +358,7 @@ export class NavigationConstant {
   public static LEAD_POTENTIAL_RO_TEL_OFFER_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_PAGING; //'/Lead/PotentialRo/RoTelemkOffer/Paging'
   public static LEAD_POTENTIAL_RO_TEL_OFFER_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_DETAIL; //'/Lead/PotentialRo/RoTelemkOffer/Detail'
   public static LEAD_POTENTIAL_RO_TEL_OFFER_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_VERIF; //'/Lead/PotentialRo/RoTelemkOffer/Verif'
-
+  public static SIMPLE_LEAD_DETAIL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLeadDsf/Detail'
 
   //#endregion
 

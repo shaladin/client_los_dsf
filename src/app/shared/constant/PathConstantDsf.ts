@@ -70,6 +70,7 @@ export class PathConstantDsf {
     public static CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.INQUIRY;
     //#endregion
 
+<<<<<<< HEAD
     //#region Doc-Signer
     public static NAP_DOC_SIGNER = "DocumentSignerDsf";
     public static NAP_DOC_SIGNER_PAGING = PathConstantDsf.NAP_DOC_SIGNER + "/" + PathConstant.PAGING;
@@ -77,5 +78,11 @@ export class PathConstantDsf {
     //#endregion
 
     
+=======
+    //#region simple lead
+    public static SIMPLE_LEAD = "SimpleLeadDsf";
+    public static SIMPLE_LEAD_DETAIL = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstantDsf.DETAIL;
+    //#endregion
+>>>>>>> 16ef81976e4be5c89a962eb18ae78d71fa8f3524
 
 }
