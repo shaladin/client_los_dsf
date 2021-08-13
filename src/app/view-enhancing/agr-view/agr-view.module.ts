@@ -38,6 +38,7 @@ import { ViewAssetCollateralComponent } from "./view-asset-collateral/view-asset
 import { ViewAssetCollateralDetailComponent } from "./view-asset-collateral/view-asset-collateral-detail/view-asset-collateral-detail.component";
 import { SharedModule } from "app/shared/shared.module";
 import { ViewInsuranceDetailComponent } from "./view-insurance-detail/view-insurance-detail.component";
+import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 
 @NgModule({
     imports: [
@@ -61,7 +62,8 @@ import { ViewInsuranceDetailComponent } from "./view-insurance-detail/view-insur
         UcShowErrorsModule,
         AppCustViewComponentsModule,
         AppViewComponentsModule,
-        SharedModule
+        SharedModule,
+        ViewSharingComponentModule
     ],
     declarations: [
         AgreementViewContainerComponent,
