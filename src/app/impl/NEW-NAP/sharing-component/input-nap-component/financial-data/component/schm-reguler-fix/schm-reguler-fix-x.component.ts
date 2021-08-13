@@ -168,7 +168,12 @@ export class SchmRegulerFixXComponent implements OnInit {
 
             SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
+            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt,
+
+            
+            CurrGrossYieldAmt: response.CurrGrossYieldAmt,
+            StdGrossYieldAmt: response.StdGrossYieldAmt,
+            DiffGrossYieldAmt: response.DiffGrossYieldAmt
           })
           this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
           this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
@@ -253,6 +258,9 @@ export class SchmRegulerFixXComponent implements OnInit {
     this.ParentForm.patchValue({
       SubsidyAmtFromDiffRate: 0,
       CommissionAmtFromDiffRate: 0
+    });
+    this.ParentForm.patchValue({
+      AppSupplEffectiveRatePrcnt: this.ParentForm.get("EffectiveRatePrcnt").value
     });
     this.SetSubsidyAmtFromDiffRateInput(0);
     this.SetCommissionAmtFromDiffRateInput(0);

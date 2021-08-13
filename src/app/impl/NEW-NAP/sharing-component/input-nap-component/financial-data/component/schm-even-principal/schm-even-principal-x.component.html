@@ -320,11 +320,11 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
-              <label translate>Gross Yield</label>
+            <div class="col-md-3 form-inline">
+              <label translate>Diff Rate Amount</label>
             </div>
-            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>
         </div>
@@ -338,11 +338,65 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
             </div>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
+              <label translate>Gross Yield</label>
+            </div>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Diff Rate Amount</label>
+              <label translate> </label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
+              <label> </label>
+            </div>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
+              <label translate>Gross Yield Nett Amount</label>
+            </div>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.CurrGrossYieldAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label translate> </label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label> </label>
+            </div>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
+              <label translate>Gross Yield Nett Standard Amount</label>
+            </div>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.StdGrossYieldAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label translate> </label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label> </label>
+            </div>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
+              <label translate>Gross Yield Different Amount</label>
+            </div>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.DiffGrossYieldAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>
         </div>

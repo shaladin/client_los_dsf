@@ -166,7 +166,11 @@ export class SchmIrregularXComponent implements OnInit {
             LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
             DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-            DownPaymentNettAmt: response.DownPaymentNettAmt
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
+            
+            CurrGrossYieldAmt: response.CurrGrossYieldAmt,
+            StdGrossYieldAmt: response.StdGrossYieldAmt,
+            DiffGrossYieldAmt: response.DiffGrossYieldAmt
 
           })
 
@@ -214,7 +218,10 @@ export class SchmIrregularXComponent implements OnInit {
 
   EffectiveRatePrcntInput_FocusOut() {
     var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
-    var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
+    this.ParentForm.patchValue({
+      AppSupplEffectiveRatePrcnt: this.ParentForm.get("EffectiveRatePrcnt").value
+    });
+    var SupplEffectiveRatePrcnt = this.ParentForm.get("AppSupplEffectiveRatePrcnt").value
     var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
     var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
 
@@ -222,6 +229,11 @@ export class SchmIrregularXComponent implements OnInit {
     if (diffRate < DiffRateAmtStd) {
       this.ParentForm.patchValue({
         DiffRateAmt: 0
+      });
+    }
+    else if (DiffRateAmtStd < 0) {
+      this.ParentForm.patchValue({
+        DiffRateAmt: 0,
       });
     }
     else {

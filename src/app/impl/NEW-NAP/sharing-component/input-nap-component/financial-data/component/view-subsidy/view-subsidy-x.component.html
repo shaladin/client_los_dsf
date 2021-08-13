@@ -1,5 +1,6 @@
-<lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_Subsidy'">
+<lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_ViewSubsidy'">
 </lib-ucSubsection>
+<div id="FinData_ViewSubsidy">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -18,12 +19,12 @@
       <tr>
         <td style="text-align: left;">ATPM</td>
         <td style="text-align: left;">SPAF</td>
-        <td style="text-align: left;">{{appFinDataObj.TotalSubsidySPAFAmt}}</td>
+        <td style="text-align: right;">{{appFinDataObj.TotalSubsidySPAFAmt | number : '1.2-2'}}</td>
       </tr>
       <tr>
         <td style="text-align: left;">ATPM</td>
         <td style="text-align: left;">Subvention</td>
-        <td style="text-align: left;">{{appFinDataObj.TotalSubsidySubventionAmt}}</td>
+        <td style="text-align: right;">{{appFinDataObj.TotalSubsidySubventionAmt | number : '1.2-2'}}</td>
       </tr>
     </tbody>
   </table>

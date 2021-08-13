@@ -224,7 +224,11 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
             ApvAmt: response.ApvAmt,
 
             TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-            LifeInsCptlzAmt: response.LifeInsCptlzAmt
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+            
+            CurrGrossYieldAmt: response.CurrGrossYieldAmt,
+            StdGrossYieldAmt: response.StdGrossYieldAmt,
+            DiffGrossYieldAmt: response.DiffGrossYieldAmt
 
           })
           this.SetInstallmentTable();
@@ -322,7 +326,10 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
 
   EffectiveRatePrcntInput_FocusOut() {
     var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
-    var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
+    this.ParentForm.patchValue({
+      AppSupplEffectiveRatePrcnt: this.ParentForm.get("EffectiveRatePrcnt").value
+    });
+    var SupplEffectiveRatePrcnt = this.ParentForm.get("AppSupplEffectiveRatePrcnt").value
     var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
     var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
 
@@ -330,6 +337,11 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
     if (diffRate < DiffRateAmtStd) {
       this.ParentForm.patchValue({
         DiffRateAmt: 0
+      });
+    }
+    else if (DiffRateAmtStd < 0) {
+      this.ParentForm.patchValue({
+        DiffRateAmt: 0,
       });
     }
     else {

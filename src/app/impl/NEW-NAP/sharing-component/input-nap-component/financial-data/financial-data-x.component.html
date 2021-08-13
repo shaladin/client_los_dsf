@@ -1,5 +1,5 @@
 <form class="form-horizontal" [formGroup]="FinDataForm" *ngIf="isReady" (ngSubmit)="FinDataForm.valid && SaveAndContinue()" #enjiForm="ngForm">
-  <div *ngIf="AppData.BizTemplateCode != 'CF4W' || AppData.BizTemplateCode !='FL4W'">
+  <div *ngIf="AppData.BizTemplateCode != 'CF4W' && AppData.BizTemplateCode !='FL4W'">
     <app-subsidy *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [BizTemplateCode]="AppData.BizTemplateCode" (emitData)="CheckSubsidyRate($event)"></app-subsidy>
   </div>
   <div *ngIf="AppData.BizTemplateCode == 'CF4W' || AppData.BizTemplateCode =='FL4W'">

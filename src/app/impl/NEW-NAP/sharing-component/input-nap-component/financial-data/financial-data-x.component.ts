@@ -142,7 +142,11 @@ export class FinancialDataXComponent implements OnInit {
         SubsidyATPMRiskAmt: 0,
         SubsidySPAFAmt: 0,
         TotalSubsidySubventionAmt: 0,
-        TotalSubsidySPAFAmt: 0
+        TotalSubsidySPAFAmt: 0,
+        CurrGrossYieldAmt: 0,
+        StdGrossYieldAmt: 0,
+        DiffGrossYieldAmt: 0,
+        SubsidySubventionAmt: 0
       }
     );
     this.isReady = true;
@@ -214,6 +218,7 @@ export class FinancialDataXComponent implements OnInit {
           SubsidySPAFAmt: this.appFinDataObj.SubsidySPAFAmt,
           TotalSubsidySubventionAmt: this.appFinDataObj.TotalSubsidySubventionAmt,
           TotalSubsidySPAFAmt: this.appFinDataObj.TotalSubsidySPAFAmt,
+          SubsidySubventionAmt: this.appFinDataObj.SubsidySubventionAmt
         });
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
@@ -232,7 +237,7 @@ export class FinancialDataXComponent implements OnInit {
     }
     if (isValidGracePeriod) {
       this.SetDiffRateAmt();
-      this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.getRawValue()).subscribe(
+      this.http.post(URLConstantX.SaveAppFinDataX, this.FinDataForm.getRawValue()).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();

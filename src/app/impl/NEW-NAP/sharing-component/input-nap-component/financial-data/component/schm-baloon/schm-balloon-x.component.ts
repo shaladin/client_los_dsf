@@ -171,7 +171,11 @@ export class SchmBalloonXComponent implements OnInit {
 
             SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
+            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt,
+
+            CurrGrossYieldAmt: response.CurrGrossYieldAmt,
+            StdGrossYieldAmt: response.StdGrossYieldAmt,
+            DiffGrossYieldAmt: response.DiffGrossYieldAmt
 
           })
           this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
@@ -258,7 +262,8 @@ export class SchmBalloonXComponent implements OnInit {
   EffectiveRatePrcntInput_FocusOut() {
     this.ParentForm.patchValue({
       SubsidyAmtFromDiffRate: 0,
-      CommissionAmtFromDiffRate: 0
+      CommissionAmtFromDiffRate: 0,
+      AppSupplEffectiveRatePrcnt: this.ParentForm.get("EffectiveRatePrcnt").value
     });
     this.SetSubsidyAmtFromDiffRateInput(0);
     this.SetCommissionAmtFromDiffRateInput(0);

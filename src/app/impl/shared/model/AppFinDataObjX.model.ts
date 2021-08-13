@@ -96,6 +96,7 @@ export class AppFinDataObjX {
     SubsidySPAFAmt: number;
     TotalSubsidySubventionAmt: number;
     TotalSubsidySPAFAmt: number;
+    SubsidySubventionAmt: number;
     constructor() {
     }
 }
