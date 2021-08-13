@@ -46,7 +46,7 @@
         "type": "textbox",
         "name": "Assignee",
         "id": "ClaimById",
-        "value": "",
+        "value": null,
         "label": "Claim By",
         "placeholder": "Placeholder"
       }
