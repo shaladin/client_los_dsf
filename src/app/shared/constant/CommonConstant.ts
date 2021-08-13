@@ -932,6 +932,11 @@ export class CommonConstant {
   public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
   public static PROD_OFF_APV = "PROD_OFF_APV";
   public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
+  public static WF_CRP_MD = "WF_CRP_MD_";
+  public static NAPD_MD = "NAPD_MD_";
+  public static COM_RSV_ = "COM_RSV_";
+
+
   
   // CUST ADDR TYPE
   public static CustAddrTypeLegal = "LEGAL";

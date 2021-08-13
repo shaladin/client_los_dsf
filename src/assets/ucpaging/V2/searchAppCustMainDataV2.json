@@ -1,0 +1,178 @@
+{
+    "title": "Application Paging Main Data",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "a.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ac.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "a.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "a.ORI_OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "Office",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn" : true,
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "ClaimById",
+            "value": "",
+            "label": "Claim By",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "Assignee"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office",
+            "name": "a.ORI_OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application No",
+            "name": "a.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "ac.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Product Offering Name",
+            "name": "a.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+  "querystring": {
+    "name": "searchAppCustMainDataV2"
+  },
+    "orderby": {
+        "key": "a.APP_NO", 
+        "value": "false"
+    },
+
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target" : "_blank", 
+            "path" : "VIEW_APP", 
+            "param" : [ 
+                {
+                    "type" : "AppId", 
+                    "property" : "AppId" 
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "ViewProdOffering",
+            "position": "left",
+            "property": "prodOfferingName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "key": "Edit",
+                                "icon": "ft-edit-2"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "key": "Edit",
+                                "icon": "ft-edit-2"
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
