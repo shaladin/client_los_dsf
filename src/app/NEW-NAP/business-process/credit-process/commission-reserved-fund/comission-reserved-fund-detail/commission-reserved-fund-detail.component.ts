@@ -82,7 +82,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   ngOnInit() {
     this.isShow = false;
     this.claimTask();
-    this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,

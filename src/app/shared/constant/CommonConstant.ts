@@ -935,6 +935,9 @@ export class CommonConstant {
   public static WF_CRP_MD = "WF_CRP_MD_";
   public static NAPD_MD = "NAPD_MD_";
   public static COM_RSV_ = "COM_RSV_";
+  public static WF_DUP_CHECK = "WF_DUP_CHECK_MD";
+  public static CDA = "CDA";
+
 
 
   
