@@ -60,6 +60,8 @@ export class CustDetailCompanyComponent implements OnInit {
     NoOfEmployee: ['', Validators.required],
     IsAffiliateWithMF: [false],
     IsSkt: [false],
+    IsVip: [false],
+    VipNotes: [''],
     EstablishmentDate: ['', Validators.required],
     IndustryTypeCode: ['', Validators.required],
     MrCustModelCode: ['', Validators.required],
@@ -71,8 +73,7 @@ export class CustDetailCompanyComponent implements OnInit {
     this.businessDt.setDate(this.businessDt.getDate() - 1);
 
     this.lookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.lookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.lookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.isRequired = false;
@@ -80,8 +81,7 @@ export class CustDetailCompanyComponent implements OnInit {
 
     this.lookupIndustryTypeObj = new InputLookupObj();
     this.lookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.lookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.lookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
+    this.lookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.lookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.isReady = true;
@@ -112,6 +112,8 @@ export class CustDetailCompanyComponent implements OnInit {
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.MrCustModelCode = this.CustDetailForm.controls.MrCustModelCode.value;
     this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMF.value;
+    this.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
+    this.AppCustObj.VipNotes = this.CustDetailForm.controls.VipNotes.value;
    
     this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailForm.controls.IndustryTypeCode.value;
     this.AppCustCompanyObj.NumOfEmp = this.CustDetailForm.controls.NoOfEmployee.value;
@@ -139,6 +141,22 @@ export class CustDetailCompanyComponent implements OnInit {
       });
   }
 
+  checkState() {
+    if (!this.CustDetailForm.controls.IsVip.value) {
+      this.CustDetailForm.patchValue({
+        VipNotes: null
+      });
+      this.CustDetailForm.controls.VipNotes.disable();
+      this.CustDetailForm.controls.VipNotes.clearAsyncValidators();
+
+    } else {
+      this.CustDetailForm.controls.VipNotes.enable();
+      this.CustDetailForm.controls.VipNotes.setValidators(Validators.required);
+
+    }
+    this.CustDetailForm.controls.VipNotes.updateValueAndValidity();
+  }
+
   GetData() {
     this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
@@ -153,12 +171,15 @@ export class CustDetailCompanyComponent implements OnInit {
         }
         this.CustDetailForm.patchValue({
           IsAffiliateWithMF : response.AppCustObj.IsAffiliateWithMf,
+          IsVip : response.AppCustObj.IsVip,
+          VipNotes : response.AppCustObj.VipNotes,
           NoOfEmployee : response.AppCustCompanyObj.NumOfEmp,
           EstablishmentDate : response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
           IndustryTypeCode : response.AppCustCompanyObj.IndustryTypeCode,
           MrCustModelCode : response.AppCustObj.MrCustModelCode,
           IsSkt : response.AppCustCompanyObj.IsTaxable
-        })
+        });
+        this.checkState();
 
         this.AppCustCompanyObj.IsTaxable = response.AppCustCompanyObj.IsTaxable;
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;

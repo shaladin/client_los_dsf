@@ -29,6 +29,7 @@ import { ChangeMouViewModule } from "./change-mou-view/change-mou-view.module";
 import { POViewModule } from "./purchase-order-view/purchase-order-view.module";
 import { SurveyViewModule } from "./survey-view-prototype/survey-view.module";
 import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
+import {MouMainInfoXComponent} from 'app/impl/view-enhancing/mou-main-info/mou-main-info-x.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-in
   declarations: [
     LeadMainInfoComponent,
     MouMainInfoComponent,
+    MouMainInfoXComponent,
   ],
   providers: [
     NGXToastrService
@@ -76,7 +78,8 @@ import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-in
     AppViewInsuranceDetailComponent
   ],
   exports: [
-    MouMainInfoComponent
+    MouMainInfoComponent,
+    MouMainInfoXComponent,
   ]
 
 })

@@ -65,6 +65,14 @@ const routes: Routes = [
             {
                 path: PathConstant.VIEW_PEFINDO,
                 loadChildren: './pefindo-view/pefindo-view.module#PefindoViewModule'
+            },
+            {
+                path: PathConstant.VIEW_CUST_APP_LISTING,
+                loadChildren: './cust-app-list-view/cust-app-list-view.module#CustAppListViewModule'
+            },
+            {
+                path: PathConstant.VIEW_CUST_AGRMNT_LISTING,
+                loadChildren: './cust-agrmnt-list-view/cust-agrmnt-list-view.module#CustAgrmntListViewModule'
             }
         ]
     }

@@ -140,7 +140,7 @@ export class AppComponent implements OnInit {
 
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.nameSelect = this.appForm.controls.SalesOfficerName.value;
@@ -149,7 +149,7 @@ export class AppComponent implements OnInit {
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
     await this.GetListAddr();

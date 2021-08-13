@@ -304,24 +304,27 @@
                     <i class="ft-plus-circle"></i> Add
                   </button>
                 </div>
-                <div formArrayName="AssetAccessoriesObjs">
-                  <table class="table table-responsive-md text-center table-hover">
+                <div formArrayName="AssetAccessoriesObjs" class="table-responsive" *ngIf="IsReady">
+                  <table class="table text-center table-hover">
                     <thead>
                       <tr class="table-header">
-                        <th><span translate class="thead-header">No</span></th>
-                        <th><span translate class="thead-header">Supplier Name</span></th>
-                        <th><span translate class="thead-header">Accessories Name</span></th>
-                        <th><span translate class="thead-header">Accessories Price</span></th>
-                        <th><span translate class="thead-header">Down Payment</span></th>
-                        <th><span translate class="thead-header">Notes</span></th>
-                        <th><span translate class="thead-header">Delete</span></th>
+                        <th class="nowrap"><span translate class="thead-header">No</span></th>
+                        <th class="nowrap"><span translate class="thead-header">Supplier Name</span></th>
+                        <th class="nowrap"><span translate class="thead-header">Accessories Name</span></th>
+                        <th class="nowrap"><span translate class="thead-header">Accessories Price</span></th>
+                        <th class="nowrap"><span translate class="thead-header">Security Deposit Type</span></th>
+                        <th class="nowrap" style="padding-right: 90px;"><span translate
+                            class="thead-header">Security Deposit(%/Amt)</span></th>
+                        <th class="nowrap" style="padding-right: 70px;"><span translate
+                            class="thead-header">Notes</span></th>
+                        <th class="nowrap"><span translate class="thead-header">Delete</span></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs']['controls'] == 0">
-                        <td align="center" colspan="7">No data available</td>
+                      <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs'].controls == 0">
+                        <td align="center" colspan="8">No data available</td>
                       </tr>
-                      <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs']['controls'];let i = index">
+                      <tr *ngFor="let item of AssetDataForm.controls['AssetAccessoriesObjs'].controls;let i = index">
                         <td [formGroupName]="i" class="text-center">
                           {{i + 1}}
                         </td>
@@ -341,26 +344,55 @@
                         </td>
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="accessoryPriceAmt{{i}}" class="form-control"
-                            formControlName="AccessoryPriceAmt" [options]="{ nullable: true }"
+                            formControlName="AccessoryPriceAmt" [options]="{ nullable: true }" (focusout)="CheckAccessoryDPValue(i, 'PRICE')"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
                           <lib-uc-show-errors
                             [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </td>
                         <td [formGroupName]="i">
-                          <input type="" currencyMask id="accessoryDownPaymentAmt{{i}}" class="form-control"
-                            formControlName="AccessoryDownPaymentAmt" [options]="{ nullable: true }"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
+                          <select class="form-control" formControlName="AccessoryDownPaymentType"
+                            (change)="ChangeAccessoryDPType(i, $event.target.value)"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.invalid }">
+                            <option value="">Select One</option>
+                            <option *ngFor="let item of DpObj" [value]="item.Key">
+                              {{item.Value}}
+                            </option>
+                          </select>
                           <lib-uc-show-errors
-                            [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt"
-                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
                         </td>
                         <td [formGroupName]="i">
-                          <input type="text" class="form-control" formControlName="AccessoryNotes"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes.invalid }">
+                          <div class="row">
+                            <div class="col-md-5" style="border-right: 1px solid grey">
+                              <input type="" currencyMask id="AccessoryDownPaymentPrcnt{{i}}" class="form-control"
+                                (focusout)="CheckAccessoryDPValue(i, 'PRCNT')" formControlName="AccessoryDownPaymentPrcnt"
+                                [options]="{min: 0, max:100, suffix:' %'}"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentPrcnt.invalid }">
+                              <lib-uc-show-errors
+                                [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentPrcnt"
+                                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            </div>
+                            <div class="col-md-6">
+                              <input type="" currencyMask id="AccessoryDownPaymentAmt{{i}}" class="form-control"
+                                (focusout)="CheckAccessoryDPValue(i, 'AMT')" formControlName="AccessoryDownPaymentAmt"
+                                [options]="{ min: 0 }"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
+                              <lib-uc-show-errors
+                                [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt"
+                                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            </div>
+                          </div>
+                        </td>
+                        <td [formGroupName]="i">
+                          <textarea type="text" class="form-control" formControlName="AccessoryNotes"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes.invalid}"></textarea>
                           <lib-uc-show-errors
                             [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes"
-                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
                         </td>
                         <td [formGroupName]="i">
                           <a class="danger p-0" (click)="deleteAccessory(i)">

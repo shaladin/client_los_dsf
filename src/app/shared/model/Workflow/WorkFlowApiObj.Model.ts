@@ -1,11 +1,13 @@
+import { environment } from "environments/environment"
+
 export class WorkflowApiObj {
-    TaskListId : number
+    TaskListId : any
     TransactionNo : string
     WFCode : string
     ListValue : {[id:string]:string;}
 
     constructor(){
-        this.TaskListId = 0;
+        this.TaskListId = environment.isCore ? "" : 0;
         this.TransactionNo = "";
         this.WFCode = "";
         this.ListValue = {};

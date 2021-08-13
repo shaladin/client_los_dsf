@@ -55,8 +55,7 @@ export class AdditionalTcDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.InputLookupTcObj.urlJson = "./assets/uclookup/tc/lookup-ref-tc.json";
-    this.InputLookupTcObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupTcObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupTcObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupTcObj.pagingJson = "./assets/uclookup/tc/lookup-ref-tc.json";
     this.InputLookupTcObj.genericJson = "./assets/uclookup/tc/lookup-ref-tc.json";
     this.InputLookupTcObj.isRequired = true;

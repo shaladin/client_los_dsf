@@ -72,8 +72,7 @@ export class TaskReassignmentDetailComponent implements OnInit {
     });
     this.InputLookupObj = new InputLookupObj();
     this.InputLookupObj.urlJson = "./assets/uclookup/lookupUserForReassignment.json";
-    this.InputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupObj.pagingJson = "./assets/uclookup/lookupUserForReassignment.json";
     this.InputLookupObj.genericJson = "./assets/uclookup/lookupUserForReassignment.json";
   }

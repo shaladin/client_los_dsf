@@ -10,6 +10,7 @@ import { CommonConstant } from '../constant/CommonConstant';
 import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
+import { AdInsConstant } from '../AdInstConstant';
 
 @Injectable()
 export class RolePickService {
@@ -17,13 +18,12 @@ export class RolePickService {
         private router: Router, private cookieService: CookieService) { }
     openDialog(data, type = ""): void {
         if (type == "modal") {
-            var loginByRole = environment.FoundationR3Url + URLConstant.LoginByToken;
             var roleObject2 = {
                 RequestDateTime: AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW),
                 RowVersion: ""
 
             };
-            this.http.post(loginByRole, roleObject2).subscribe(
+            this.http.post(AdInsConstant.LoginByToken, roleObject2).subscribe(
                 (response) => {
                     const object = {
                         response: response["ReturnObject"]
@@ -47,7 +47,6 @@ export class RolePickService {
         } else {
             if (data.response.length == 1 && type == "") {
                 var item = data.response[0];
-                var url = environment.FoundationR3Url + URLConstant.LoginByRole;
                 var roleObject = {
                     UserName: data.user,
                     Password: data.pwd,
@@ -59,7 +58,7 @@ export class RolePickService {
                     RowVersion: ""
 
                 };
-                this.http.post(url, roleObject, { withCredentials: true }).subscribe(
+                this.http.post(AdInsConstant.LoginByRole, roleObject, { withCredentials: true }).subscribe(
                     (response) => {
                         //Cookie sudah diambil dari BE (Di set manual dulu)
 

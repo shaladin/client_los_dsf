@@ -23,7 +23,7 @@
                   </div>
               </div>
 
-              <div class="row">
+              <div class="row" *ngIf="viewGenericObj.viewInput != ''">
                   <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)" #viewGeneric>
                   </lib-ucviewgeneric>
               </div>

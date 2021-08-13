@@ -29,8 +29,11 @@ import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { PreGoLiveObjX } from 'app/impl/shared/model/PreGoLiveObjX.Model';
 import {RefPayFreqObj} from 'app/shared/model/RefPayFreqObj.model';
-import {AppObj} from '../../../../../../shared/model/App/App.Model';
+import {AppObj} from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-x',
@@ -46,7 +49,7 @@ export class PreGoLiveXComponent implements OnInit {
   appTC: AppTCObj;
   TaskListId: number;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
-  PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
+  PreGoLiveObj: PreGoLiveObjX = new PreGoLiveObjX();
   AgrmntObj: AgrmntObj = new AgrmntObj();
   ReqByIdObj: GenericObj = new GenericObj();
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
@@ -62,6 +65,9 @@ export class PreGoLiveXComponent implements OnInit {
     AdditionalInterestPaidBy: ['',Validators.required],
     AddIntrstAmt:[0],
     GoLiveEstimated: [''],
+  })
+
+  GoLiveApvForm = this.fb.group({
   })
   listAppTCObj: ListAppTCObj;
   ListAppTCObj: ListAppTCObj;
@@ -90,7 +96,7 @@ export class PreGoLiveXComponent implements OnInit {
   PODt: Date = new Date();
   MaxEffDt: Date;
   AppObj: AppObj;
-
+  IsNeedApv: boolean = false;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
@@ -158,6 +164,11 @@ export class PreGoLiveXComponent implements OnInit {
     await this.getPODate();
     await this.getAddInterestPaidBy();
     await this.InitDms();
+    await this.LoadRefReason();
+    if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.DF){
+      this.IsNeedApv = true;
+      await this.initInputApprovalObj();
+    }
   }
 
   async getPODate(){
@@ -375,8 +386,20 @@ export class PreGoLiveXComponent implements OnInit {
     this.PreGoLiveObj.AdditionalInterestPaidBy = this.MainInfoForm.controls.AdditionalInterestPaidBy.value;
     this.PreGoLiveObj.TaskListId = this.TaskListId;
     this.PreGoLiveObj.FlagResume = flag;
+    if(this.IsNeedApv){
+      this.PreGoLiveObj.IsNeedApv = true;
+      this.PreGoLiveObj.FlagResume = flag;
+      let RFAInfoGoLive = {RFAInfo: this.GoLiveApvForm.controls.RFAInfo.value};
+      this.PreGoLiveObj.RequestRFAGoLiveObj = RFAInfoGoLive;
+      if(this.isNeedEndDateApv){
+        let RFAInfoEndDate = {RFAInfo: this.MainInfoForm.controls.RFAInfo.value};
+        this.PreGoLiveObj.RequestRFAEndDateObj = RFAInfoEndDate;
+        this.PreGoLiveObj.IsNeedEndDateApv = true;
+      }
+    }
 
-    this.http.post(URLConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
+    console.log(this.PreGoLiveObj);
+    this.http.post(URLConstantX.AddPreGoLiveX, this.PreGoLiveObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[this.CancelLink],{});
         this.toastr.successMessage(response['message']);
@@ -429,5 +452,118 @@ export class PreGoLiveXComponent implements OnInit {
         AddIntrstAmt: 0
       });
     }
+  }
+  //JD-LMS-001
+  InputEndDateProdObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
+  InputGoLiveObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
+  IsReady: boolean;
+  itemReasonEndDate: Array<KeyValueObj>;
+  itemReasonGoLive: Array<KeyValueObj>;
+  isOk: boolean = true;
+  isNeedEndDateApv: boolean = false;
+  async initInputApprovalObj() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let obj = {
+      ProdOfferingCode: this.result.ProdOfferingCode,
+      RefProdCompntCode: "",
+      ProdOfferingVersion: this.result.ProdOfferingVersion
+    };
+    if(this.BizTemplateCode != CommonConstant.DF){
+      obj.RefProdCompntCode = "END_DATE_GO_LIVE_APV";
+
+      await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+        (response) => {
+          if (response && response["StatusCode"] == "200") {
+            var LastDt = new Date(formatDate(response["CompntValue"], 'yyyy-MM-dd', 'en-US'));
+            var NowDt = new Date(formatDate(currentUserContext.BusinessDt, 'yyyy-MM-dd', 'en-US'));
+            if(NowDt<=LastDt){
+              this.isNeedEndDateApv = false;
+            }
+            else{
+              var AttributesEndDate = [{
+                AttributeName: "Last Go Live Approval Date",
+                AttributeValue: response["CompntValue"].toString()
+              }]
+              var AttributesEndDateEmpty = [{}]
+              var TypeEndDateCode = {
+                "TypeCode": "END_DATE_GO_LIVE_APV_TYPE",
+                "Attributes": AttributesEndDateEmpty,
+              };
+
+              this.InputEndDateProdObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+              this.InputEndDateProdObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+              this.InputEndDateProdObj.ApvTypecodes = [TypeEndDateCode];
+              this.InputEndDateProdObj.CategoryCode = "END_DATE_GO_LIVE_APV";
+              this.InputEndDateProdObj.SchemeCode = "END_DATE_GO_LIVE_APV_SCHM";
+              this.InputEndDateProdObj.TrxNo = this.AgrmntNo;
+              this.InputEndDateProdObj.Reason = this.itemReasonEndDate;
+
+              this.isNeedEndDateApv = true;
+
+            }
+          }
+          else {
+            this.toastr.warningMessage("No Setting for Prod Offering Component END_DATE_GO_LIVE_APV");
+            this.isOk = false;
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+
+
+    obj.RefProdCompntCode = "GO_LIVE_APV";
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      (response) => {
+        if (response && response["StatusCode"] == "200") {
+          var AttributesGoLive = [{}]
+          var TypeEnGoLiveDate = {
+            "TypeCode": "GO_LIVE_APV_TYPE",
+            "Attributes": AttributesGoLive,
+          };
+          this.InputGoLiveObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+          this.InputGoLiveObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+          this.InputGoLiveObj.ApvTypecodes = [TypeEnGoLiveDate];
+          this.InputGoLiveObj.CategoryCode = "GO_LIVE_APV";
+          this.InputGoLiveObj.SchemeCode = response["CompntValue"];
+          this.InputGoLiveObj.Reason = this.itemReasonGoLive;
+          this.InputGoLiveObj.TrxNo = this.AgrmntNo
+        }
+        else {
+          this.toastr.warningMessage("No Setting for Prod Offering Component GO_LIVE_APV");
+          this.isOk = false;
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.IsReady = true;
+  }
+
+  async LoadRefReason() {
+    var refReasonObj: ReqGetByTypeCodeObj = {
+      RefReasonTypeCode: "END_DATE_GO_LIVE_APV"
+    }
+    await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(
+      (response) => {
+        this.itemReasonEndDate = response[CommonConstant.ReturnObj];
+      }
+    );
+    refReasonObj.RefReasonTypeCode = "GO_LIVE_APV"
+
+    await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(
+      (response) => {
+        this.itemReasonGoLive = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
+  consoleLog(){
+    console.log(this.MainInfoForm);
   }
 }

@@ -1,0 +1,67 @@
+{
+    "sectionTitle": "Profession Lookup ",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "PROFESSION_CODE",
+            "id": "professionCodeId",
+            "value": "",
+            "label": "Profession Code",
+            "placeholder": "Profession Codes"
+        },
+        {
+            "type": "textbox",
+            "name": "PROFESSION_NAME",
+            "id": "professionNameId",
+            "value": "",
+            "label": "Profession Name",
+            "placeholder": "Profession Names"
+        }
+    ],
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Profession Code",
+            "name": "PROFESSION_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Profession Name",
+            "name": "PROFESSION_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "querystring": {
+        "name": "lookupCustomerProfession"
+    },
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProfessionCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ProfessionName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "RefProfessionId"
+                }
+            ]
+        }
+    ],
+    "propertyId": "ProfessionName",
+    "propertyName": "ProfessionName"
+}

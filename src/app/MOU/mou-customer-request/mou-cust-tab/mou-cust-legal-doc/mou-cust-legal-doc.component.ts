@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-
 import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
@@ -13,6 +12,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { String } from 'typescript-string-operations';
+
 
 @Component({
   selector: 'app-mou-cust-legal-doc',
@@ -202,9 +203,11 @@ export class MouCustLegalDocComponent implements OnInit {
 
   cekDuplicateDocType(currentEditedIndex) {
     if (this.listLegalDoc.length > 0) {
-      var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
+      var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode
+                                                        && x.DocNo == this.appCustCompanyLegalDocObj.DocNo);
       if (duplicateIndex != currentEditedIndex && duplicateIndex != -1) {
-        this.toastr.warningMessage("Legal Document Type " + this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");
+        let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
+        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, ErrorOutput.Value, this.appCustCompanyLegalDocObj.DocNo));
         return false;
       }
     }

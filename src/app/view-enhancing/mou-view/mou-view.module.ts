@@ -33,6 +33,9 @@ import { MouViewFreezeUnfreezeHistoryComponent } from "./mou-view-freeze-unfreez
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewModule } from "../view.module";
 import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-recommendation/mou-view-approval-recommendation.component";
+import { MouViewSrvyTaskComponent } from "./mou-view-srvy-task/mou-view-srvy-task.component";
+import {MouViewXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-x.component';
+import {MouViewAddcollXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -68,15 +71,21 @@ import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-reco
         MouViewListedCustFactoringComponent,
         MouViewSurveyComponent,
         MouViewTcComponent,
+        MouViewSrvyTaskComponent,
         MouViewChangeMouHistoryComponent,
         MouViewFreezeUnfreezeHistoryComponent,
-        MouViewApprovalRecommendationComponent
+        MouViewApprovalRecommendationComponent,
+        MouViewXComponent,
+        MouViewAddcollXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
+    ],
+    exports:[
+      MouViewAddcollXComponent
     ]
 
 })

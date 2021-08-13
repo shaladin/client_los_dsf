@@ -1,0 +1,167 @@
+<!--<div *ngIf="viewGenericObj.viewInput != ''">-->
+<!--  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"-->
+<!--                     #viewGeneric></lib-ucviewgeneric>-->
+<!--</div>-->
+
+
+<section *ngIf="MouMainInfo != null">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="px-3">
+            <lib-ucSubsection [id]="'MouMainInfoHeaderId'" [title]="'Main Info'" [panel]="'MouMainInfoHeader'"></lib-ucSubsection>
+            <div id="MouMainInfoHeader">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Mou No</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        <a (click)="ViewMou()" href="javascript:void(0);">{{MouMainInfo.MouCustNo}}</a>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 ">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Customer Name</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        <a (click)="ViewCust()" href="javascript:void(0);">{{MouMainInfo.CustName}}</a>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Start Date</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.StartDt | date: 'dd-MM-yyyy'}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Expired Date</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.EndDt| date: 'dd-MM-yyyy'}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Status</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.MouStat}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Ref No</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.RefNo}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Plafond Amount</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.PlafondAmt | number:'.2':'en-US'}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Mou Freeze</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.IsFreeze ? 'Yes' : 'No'}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6" *ngIf="MouMainInfo.MouType != 'GENERAL'">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Available (OS Plafond) Amount</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.OsPlafondAmt | number:'.2':'en-US'}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Plafond Type</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.PlafondType}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Mou Type</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.MouType}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6" *ngIf="MouMainInfo.MouType == 'FACTORING'">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Mou Factoring Type</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.MouFctrType}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

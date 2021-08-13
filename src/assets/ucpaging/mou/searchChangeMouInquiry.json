@@ -101,7 +101,7 @@
             "type": "link",
             "position": "center",
             "property": "ChangeMouTrxNo",
-            "path": "/View/ChangeMouView",
+            "path": "VIEW_CHANGE_MOU",
             "target": "_blank",
             "param": [
                 {

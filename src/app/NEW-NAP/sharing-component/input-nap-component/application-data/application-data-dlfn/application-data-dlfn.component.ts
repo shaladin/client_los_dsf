@@ -67,8 +67,9 @@ export class ApplicationDataDlfnComponent implements OnInit {
     CharaCredit: [''],
     PrevAgrNo: [''],
     WayRestructure: [''],
-    // MrSlikSecEcoCode: [''],
-    CustBankAcc: ['']
+    CustBankAcc: [''],
+    IntrstRatePrcnt: [0],
+    TopIntrstRatePrcnt: [0]
   })
 
   refMasterInterestType: RefMasterObj = new RefMasterObj();
@@ -108,8 +109,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
   selectedBankAcc: any;
   GetBankInfo: any;
   appCustId: number;
-  TopIntrstRatePrcnt: number;
-  IntrstRatePrcnt: number;
   IsMouSelect: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
@@ -422,7 +421,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.genericJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.jsonSelect = {SalesOfficerName: this.resultData.SalesOfficerName};
@@ -573,11 +572,10 @@ export class ApplicationDataDlfnComponent implements OnInit {
 
     if (this.salesAppInfoObj.MrInstTypeCode == CommonConstant.InstTypeSingle) {
       this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
-      this.salesAppInfoObj.NumOfInst = 1;
       this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
       this.isSingle = true;
     } else {
-      this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
       this.isSingle = false;
     }

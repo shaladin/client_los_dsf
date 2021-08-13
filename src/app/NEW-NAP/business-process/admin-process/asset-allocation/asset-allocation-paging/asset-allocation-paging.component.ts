@@ -33,8 +33,6 @@ export class AssetAllocationPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAssetAllocation.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAssetAllocation.json";
     this.inputPagingObj.isJoinExAPI = true;
 

@@ -22,7 +22,7 @@ export class InputLookupAddr{
     {
         this.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
         this.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-        this.urlEnviPaging = environment.FoundationR3Url;
+        this.urlEnviPaging = environment.FoundationR3Url + "/v1";
         this.jsonSelect = "";
         this.idSelect = "";
         this.nameSelect = "";

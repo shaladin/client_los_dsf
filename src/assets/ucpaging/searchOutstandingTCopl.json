@@ -1,0 +1,167 @@
+{
+    "title": "OUTSTANDING TERM AND CONDITION",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type" : "datepicker",
+            "datatype": "date",
+            "name" : "AG.GO_LIVE_DT",
+            "id" : "GoLiveId",
+            "value" : "",
+            "restriction": "gte",
+            "label" : "Go Live Date <=",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "AG.OFFICE_CODE", 
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "criteriaPropName" : "",
+            "criteriaPropValue" : "",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type" : "datepicker",
+            "datatype": "date",
+            "name" : "AG.GO_LIVE_DT",
+            "id" : "GoLiveGTId",
+            "value" : "",
+            "restriction": "lte",
+            "label" : "Go Live Date >=",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "searchOutstandingTC"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "A.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "AG.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Product Offering Name",
+            "name": "AG.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office Name",
+            "name": "AG.OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Go Live Date",
+            "name": "AG.GO_LIVE_DT"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target": "_blank",
+            "path" : "VIEW_APP", 
+            "param" : [ 
+                {
+                    "type" : "AppId", 
+                    "property" : "AppId" 
+                }
+            ]
+        },
+        {
+            "type" : "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "prodOff",
+            "position": "left",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "GoLiveDt"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "NAP_ADD_PRCS_OUTSTANDING_TC_DETAIL",
+                    "param": [
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        },
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

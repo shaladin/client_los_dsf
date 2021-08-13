@@ -1,0 +1,93 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <!-- Income Information -->
+    <div class="card-body">
+      <!-- <div class="px-3"> -->
+        <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Allocation Type</label>
+              <div class="col-md-8">
+                <select style="width:50%" class="form-control" formControlName="AllocType" (change)="inputTypeChange()">
+                  <option value="{{AllocTypeAmt}}">Amount</option>
+                  <option value="{{AllocTypePerc}}">Percentage</option>
+                </select>
+              </div>
+            </div>
+            <app-form-commission-generate-x #Form1 *ngIf="OnForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+              [parentForm]="CommissionForm" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier" [RemainingAllocatedAmount] = "ActRemainingAlloc"
+              [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
+            </app-form-commission-generate-x>
+            <app-form-commission-generate-x #Form2 *ngIf="OnForm2" [hidden]="HideForm2" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+              [parentForm]="CommissionForm" [identifier]="identifierSupplierEmp" [FormInputObj]="FormInputObjSupplierEmp" [RemainingAllocatedAmount] = "ActRemainingAlloc" 
+              [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
+            </app-form-commission-generate-x>
+            <app-form-commission-generate-x #Form3 *ngIf="OnForm3" [hidden]="HideForm3" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+              [parentForm]="CommissionForm" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor" [RemainingAllocatedAmount] = "ActRemainingAlloc"
+              [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
+            </app-form-commission-generate-x>
+          </div>
+
+          <!-- Summary -->
+          <lib-ucSubsection [id]="'viewSummaryId'" [title]="'Summary'" [panel]="'viewSummary'">
+          </lib-ucSubsection>
+          <div class="row" id="viewSummary">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Total Commision Amount</label>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                  <label class ="adInsLabel" *ngIf="Summary.TotalCommisionAmount <= maxAllocAmt">
+                    {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
+                  <label *ngIf="Summary.TotalCommisionAmount > maxAllocAmt"
+                    style="color: red;">
+                    {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Total TAX</label>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                  <label>{{Summary.TotalTaxAmmount | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Total VAT</label>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                  <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Gross Yield</label>
+                </div>
+                <div class="col-md-4" style="text-align:right;">
+                  <label *ngIf="Summary.GrossYield >= 0"> {{Summary.GrossYield | number:'.6':'en-US'}}%</label>
+                  <label *ngIf="Summary.GrossYield < 0" style="color: red;"> ( {{-Summary.GrossYield | number:'.6':'en-US'}} ) %</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
+              (click)="Cancel()" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" (click)="NewCalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>
+              <i class="far fa-check-square"></i> Calculate
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+        </form>
+      <!-- </div> -->
+    </div>
+
+  </div>
+</div>

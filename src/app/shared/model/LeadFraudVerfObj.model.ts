@@ -7,7 +7,7 @@ export class LeadFraudVerfObj {
     VerifyStat: string;
     Notes: string;
     RowVersion: string;
-    WfTaskListId: number;
+    WfTaskListId: any;
     LeadCustData: any;
     IsCustPicked: boolean;
     HasDuplicateCust: boolean;

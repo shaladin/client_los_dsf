@@ -1,0 +1,67 @@
+{
+    "title": "Job Position",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RM.MASTER_CODE",
+        "id": "JobCodeId",
+        "value": "",
+        "label": "Job Position Code",
+        "placeholder": "Job Position Code"
+      },
+      {
+        "type": "textbox",
+        "name": "RM.DESCR",
+        "id": "JobDescId",
+        "value": "",
+        "label": "Job Position Name",
+        "placeholder": "Job Position Name"
+      }
+    ],
+  "querystring": {
+    "name": "lookupJobPosition"
+  },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Job Position Code",
+          "name": "JobCode"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Job Position Name",
+          "name": "JobDesc"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Action"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "JobCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "JobDesc"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "Jabatan"
+          }
+        ]
+      }
+    ],
+    "propertyId": "JobDesc",
+    "propertyName": "JobDesc"
+  }

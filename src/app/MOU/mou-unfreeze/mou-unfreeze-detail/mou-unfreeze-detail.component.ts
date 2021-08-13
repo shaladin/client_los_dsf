@@ -74,7 +74,6 @@ export class MouUnfreezeDetailComponent implements OnInit {
     });
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     await this.getApv();
     this.title = "Detail Mou Freeze Unfreeze";
 
@@ -150,14 +149,6 @@ export class MouUnfreezeDetailComponent implements OnInit {
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_FREEZE_UNFREEZE;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_FRZ_UNFRZ;
     this.InputObj.Reason = this.listReason;

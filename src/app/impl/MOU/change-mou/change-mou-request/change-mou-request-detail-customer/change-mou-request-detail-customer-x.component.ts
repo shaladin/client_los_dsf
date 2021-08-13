@@ -82,8 +82,25 @@ export class ChangeMouRequestDetailCustomerXComponent
     this.currentStepIndex = 1;
   }
 
-  ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
+  async ngOnInit() {
+    this.httpClient
+      .post(URLConstant.GetMouCustById, { Id: this.mouCustId })
+      .subscribe((response: MouCustObj) => {
+        this.resultData = response;
+
+        if (this.resultData.MrMouTypeCode == CommonConstant.FACTORING) {
+          this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewChangeMouHeaderX.json";
+          this.pageTitle = "MOU Factoring";
+        } else{
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
+          if (this.resultData.MrMouTypeCode == CommonConstant.GENERAL) {
+            this.pageTitle = "MOU General";
+          } else if (this.resultData.MrMouTypeCode == CommonConstant.DEALERFINANCING ) {
+            this.pageTitle = "MOU Dealer Financing";
+          }
+        }
+      });
+
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -91,23 +108,7 @@ export class ChangeMouRequestDetailCustomerXComponent
         environment: environment.losR3Web,
       },
     ];
-
     this.viewGenericObj.whereValue = [this.ChangeMouCustId]
-
-    this.httpClient
-      .post(URLConstant.GetMouCustById, { Id: this.mouCustId })
-      .subscribe((response: MouCustObj) => {
-        this.resultData = response;
-        if (this.resultData.MrMouTypeCode == CommonConstant.GENERAL) {
-          this.pageTitle = "MOU General";
-        } else if (this.resultData.MrMouTypeCode == CommonConstant.FACTORING) {
-          this.pageTitle = "MOU Factoring";
-        } else if (
-          this.resultData.MrMouTypeCode == CommonConstant.DEALERFINANCING
-        ) {
-          this.pageTitle = "MOU Dealer Financing";
-        }
-      });
   }
 
 
