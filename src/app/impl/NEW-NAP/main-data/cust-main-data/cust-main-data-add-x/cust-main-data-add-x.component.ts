@@ -20,6 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-cust-main-data-add-x',
@@ -91,14 +92,14 @@ export class CustMainDataAddXComponent implements OnInit {
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.isRequired = false;
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -297,7 +298,7 @@ export class CustMainDataAddXComponent implements OnInit {
       reqAddNapObj.BizTemplateCode = this.bizTemplateCode;
 
       requestAddNapObj = reqAddNapObj;
-      AddNapUrl = URLConstant.AddNewApplication;
+      AddNapUrl = URLConstantX.AddNewApplication;
     }
     else {
 
@@ -311,7 +312,7 @@ export class CustMainDataAddXComponent implements OnInit {
         AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
       }
       else {
-        AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+        AddNapUrl = URLConstantX.AddNewApplicationFromCopy;
       }
     }
 

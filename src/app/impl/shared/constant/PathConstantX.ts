@@ -33,6 +33,8 @@ export class PathConstantX {
   public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X;
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
   public static CUST_CONFIRM_DETAIL_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
+
+  public static COPY_CANCEL_APP = "CopyCancelledApplicationX";
   //#endregion
 
   //#region Nap-Admin-Prcs
