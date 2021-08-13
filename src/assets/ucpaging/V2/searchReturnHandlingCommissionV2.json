@@ -41,14 +41,6 @@
         "items": [],
         "itemsUrl": [],
         "isQueryIn": true
-      },
-      {
-        "type": "textbox",
-        "name": "Assignee",
-        "id": "ClaimById",
-        "value": "",
-        "label": "Claim By",
-        "placeholder": "Placeholder"
       }
     ],
     "headerList": [
