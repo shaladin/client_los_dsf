@@ -960,6 +960,8 @@ export class CommonConstant {
   public static EDIT_APP = "EDIT_APP_";
   public static RTN_EDIT_COM_RSV_FND = "RTN_EDIT_COM_RSV_FND_";
   public static EDIT_COM_RSV_FND = "EDIT_COM_RSV_FND_";
+  public static RTN_EDIT_NAP4 = "RTN_EDIT_NAP4_";
+  public static EDIT_NAP4 = "EDIT_NAP4_";
 
 
   //WORFKLOW PRODUCT

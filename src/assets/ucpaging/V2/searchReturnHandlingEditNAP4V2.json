@@ -1,5 +1,6 @@
+
 {
-    "title": "Return Handling - Edit NAP2",
+    "title": "Return Handling - Edit NAP 4",
     "exportExcel": false,
     "component": [
       {
@@ -81,7 +82,7 @@
       }
     ],
   "querystring": {
-    "name": "searchReturnHandlingAppV2"
+    "name": "searchReturnHandlingNAP4V2"
   },
   "bodyList": [
     {
