@@ -8,6 +8,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 
 @Component({
   selector: 'app-view-collateral-data',
@@ -28,6 +29,7 @@ export class ViewCollateralDataComponent implements OnInit {
   IsReady: boolean = false;
   AppCollateralAttrObjs : Array<AppCollateralAttrObj> = new Array<AppCollateralAttrObj>();
   AppCollateralAccessoryObjs : Array<AppCollateralAccessoryObj> = new Array<AppCollateralAccessoryObj>();
+  inputGridObj: InputGridObj = new InputGridObj();
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -37,7 +39,8 @@ export class ViewCollateralDataComponent implements OnInit {
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
     this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
-
+    this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppCollateralAccessory.json";
+  
     if(this.AppCollateralId!=0){
       this.arrValue.push(this.AppCollateralId);
       this.viewGenericObj.whereValue = this.arrValue;
@@ -83,6 +86,12 @@ export class ViewCollateralDataComponent implements OnInit {
     this.http.post<Array<AppCollateralAccessoryObj>>(URLConstant.GetAppCollateralAccessoriesListByAppCollateralId, {Id: this.AppCollateralId }).subscribe(
       (response) => {
         this.AppCollateralAccessoryObjs = response[CommonConstant.ReturnObj];
+
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = this.AppCollateralAccessoryObjs;
       }
     );
   }

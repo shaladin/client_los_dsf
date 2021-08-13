@@ -9,12 +9,12 @@ export class InputReportObj {
     
     constructor() {
         this.JsonPath = "",
-        this.EnvironmentUrl = environment.FoundationR3Url,
+        this.EnvironmentUrl = environment.FoundationR3Url + "/v1",
         this.ApiReportPath = "/Report/GenerateReportR3",
         this.ddlEnvironments = new Array<EnviObj>();
         this.listEnvironments = new Array<EnvisObj>();
-        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
-        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url + "/v1" });
+        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl + "/v1" });
     }
 }
 

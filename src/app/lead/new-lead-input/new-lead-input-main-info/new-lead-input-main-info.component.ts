@@ -4,7 +4,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
@@ -77,7 +79,7 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     LobCode: [''],
     LeadSource: ['', [Validators.required]],
   });
-  WfTaskListId: number;
+  WfTaskListId: any;
   isCopyButtonDisabled: boolean = true;
 
   constructor(
@@ -86,7 +88,8 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private fb: FormBuilder,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
@@ -103,9 +106,15 @@ export class NewLeadInputMainInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
     }
+    else if (this.WfTaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
+    
     this.MakeLookUpObj();
     this.GetOfficeDDL();
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -331,16 +340,14 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     this.leadPersonalLookUpObj = new InputLookupObj();
     this.leadPersonalLookUpObj.isRequired = false;
     this.leadPersonalLookUpObj.urlJson = "./assets/uclookup/lookupLeadPersonal.json";
-    this.leadPersonalLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl;
+    this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl + "/v1";
     this.leadPersonalLookUpObj.pagingJson = "./assets/uclookup/lookupLeadPersonal.json";
     this.leadPersonalLookUpObj.genericJson = "./assets/uclookup/lookupLeadPersonal.json";
 
     this.agencyLookUpObj = new InputLookupObj();
     this.agencyLookUpObj.isRequired = false;
     this.agencyLookUpObj.urlJson = "./assets/uclookup/lookupAgency.json";
-    this.agencyLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
     this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
     this.agencyLookUpObj.isRequired = true;
@@ -348,24 +355,21 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
     this.cmoNameLookUpObj.urlJson = "./assets/uclookup/lookupCMO.json";
-    this.cmoNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
     this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
 
     this.surveyorNameLookUpObj = new InputLookupObj();
     this.surveyorNameLookUpObj.isRequired = false;
     this.surveyorNameLookUpObj.urlJson = "./assets/uclookup/lookupSurveyor.json";
-    this.surveyorNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
     this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
 
     this.salesNameLookUpObj = new InputLookupObj();
     this.salesNameLookUpObj.isRequired = false;
     this.salesNameLookUpObj.urlJson = "./assets/uclookup/lookupTeleSales.json";
-    this.salesNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
     this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
     this.salesNameLookUpObj.isRequired = true;
@@ -445,10 +449,10 @@ export class NewLeadInputMainInfoComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit") {
-              this.router.navigate(["/Lead/SimpleLead/Detail"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
             }
             else {
-              this.router.navigate(["/Lead/SimpleLead/Detail"], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
             }
           }
         );
@@ -459,7 +463,7 @@ export class NewLeadInputMainInfoComponent implements OnInit {
           (response) => {
             this.LeadId = response["Id"];
             this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/SimpleLead/Detail"], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
+            this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
           }
         );
       }
@@ -498,13 +502,4 @@ export class NewLeadInputMainInfoComponent implements OnInit {
       }
     }
   }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
-
 }

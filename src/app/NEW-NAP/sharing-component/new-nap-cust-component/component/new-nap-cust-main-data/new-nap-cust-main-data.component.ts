@@ -372,7 +372,7 @@ export class NewNapCustMainDataComponent implements OnInit {
       this.ParentForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.ParentForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.ParentForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      this.ParentForm.controls.Email1.setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
+      this.ParentForm.controls.Email1.setValidators([Validators.required, Validators.pattern(CommonConstant.regexEmail)]);
       this.ParentForm.controls.MrCompanyTypeCode.clearValidators();
       this.ParentForm.controls.MrCompanyTypeCode.updateValueAndValidity();
       this.ParentForm.controls.TaxIdNo.clearValidators();

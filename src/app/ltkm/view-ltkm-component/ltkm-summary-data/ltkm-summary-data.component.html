@@ -185,12 +185,52 @@
     <div class="form-body" id="scoringInfo">
   
       <div *ngFor="let item of SummaryLtkmObj?.responseScoringResultHObjs; let i = index;" class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label class="adInsLabel"> {{item['ScoringCategoryName']}} </label>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label class="adInsLabel"> {{item['ScoringAlias']}} </label>
         </div>
+      </div>
+    </div>
+
+    <div *ngIf="SummaryLtkmObj != null && SummaryLtkmObj.LtkmAnalysisObj != null">
+      <lib-ucSubsection [id]="'ltkmAnalysisId'" [title]="'LTKM Analysis'" [panel]="'ltkmAnalysisId'">
+      </lib-ucSubsection>
+      <div class="form-body" id="scoringInfo">
+        <div class="row">
+          <div class="col-md-3"><label class="adInsLabel">MF Suspicious Transaction due to</label></div>
+          <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrSuspiciousTrxDueToDescr']}}</label></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3"><label class="adInsLabel">MF Suspicious For</label></div>
+          <div class="col-md-3">
+            <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrSuspiciousForDescr']}}</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3"><label class="adInsLabel">MF Source Indication</label></div>
+          <div class="col-md-3">
+            <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrSourceIndicationDescr']}}</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3"><label class="adInsLabel">MF Level Indication</label></div>
+          <div class="col-md-3">
+            <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrLevelIndicationDescr']}}</label>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-3"><label class="adInsLabel">LTKM Analysis Notes</label></div>
+          <div class="col-md-3">
+            <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['Notes']}}</label>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>

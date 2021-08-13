@@ -145,14 +145,14 @@ export class AssetDataOplComponent implements OnInit {
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
-    FullAssetName: ['', [Validators.required, Validators.maxLength(1000)]],
+    FullAssetName: ['', [Validators.required, Validators.maxLength(1000)]], 
     MrAssetConditionCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
     SupplName: ['', Validators.maxLength(500)],
     AssetPriceAmt: ['', Validators.required],
     AssetNotes: ['', [Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
-    TaxCityIssuer: [''],
+    TaxCityIssuer: ['', Validators.required],
     TaxIssueDt: [''],
     Discount: [0],
     ExpectedDelivDt: [''],
@@ -417,7 +417,8 @@ export class AssetDataOplComponent implements OnInit {
       BranchManagerId: this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId,
       BranchManagerName: this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName,
       BranchManagerNo: this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo,
-      BranchManagerPositionCode: this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode
+      BranchManagerPositionCode: this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode,
+      TaxCityIssuer: this.allAssetDataObj.AppAssetObj.TaxCityIssuer
     });
 
     this.priceAfterDiscount = this.allAssetDataObj.AppAssetObj.AssetPriceAmt - this.allAssetDataObj.AppAssetObj.Discount;
@@ -926,11 +927,10 @@ export class AssetDataOplComponent implements OnInit {
 
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
-    this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
-    this.InputLookupCityIssuerObj.isRequired = false;
+    this.InputLookupCityIssuerObj.isRequired = true;
     var disCrit = new Array();
     var critDisObj = new CriteriaObj();
     critDisObj.DataType = 'text';
@@ -942,8 +942,7 @@ export class AssetDataOplComponent implements OnInit {
 
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
@@ -970,8 +969,7 @@ export class AssetDataOplComponent implements OnInit {
   initLookupSupp() {
     this.InputLookupSupplierObj = new InputLookupObj();
     this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
     var suppCrit = new Array();
@@ -1299,8 +1297,7 @@ export class AssetDataOplComponent implements OnInit {
 
     this.InputLookupAccObj = new InputLookupObj();
     this.InputLookupAccObj.urlJson = "./assets/uclookup/NAP/lookupAcc.json";
-    this.InputLookupAccObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAccObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAccObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAccObj.pagingJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.genericJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.addCritInput = arrAddCrit;
@@ -1311,8 +1308,7 @@ export class AssetDataOplComponent implements OnInit {
   initLookupSuppAcc() {
     this.InputLookupAccSupObj = new InputLookupObj();
     this.InputLookupAccSupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.InputLookupAccSupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAccSupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAccSupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAccSupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupAccSupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
     var suppCrit = new Array();

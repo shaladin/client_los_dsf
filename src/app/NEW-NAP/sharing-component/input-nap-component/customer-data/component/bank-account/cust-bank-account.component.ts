@@ -244,8 +244,7 @@ export class CustBankAccountComponent implements OnInit {
   initLookup() {
     this.InputLookupBankObj = new InputLookupObj();
     this.InputLookupBankObj.urlJson = "./assets/uclookup/lookupBank.json";
-    this.InputLookupBankObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupBankObj.pagingJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
   }

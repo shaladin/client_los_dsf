@@ -66,22 +66,19 @@ export class InvoiceDataComponent implements OnInit {
     this.InputLookupBankObj = new InputLookupObj();
     this.InputLookupBankObj.isReady = false;
     this.InputLookupBankObj.urlJson = "./assets/uclookup/lookupBank.json";
-    this.InputLookupBankObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupBankObj.pagingJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.isRequired = true;
 
     this.MouCustLookupObj.urlJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
-    this.MouCustLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.MouCustLookupObj.urlEnviPaging = environment.losUrl;
+    this.MouCustLookupObj.urlEnviPaging = environment.losUrl + "/v1";
     this.MouCustLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObj.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObj.isRequired = false;
 
     this.MouCustLookupObject.urlJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
-    this.MouCustLookupObject.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.MouCustLookupObject.urlEnviPaging = environment.losUrl;
+    this.MouCustLookupObject.urlEnviPaging = environment.losUrl + "/v1";
     this.MouCustLookupObject.pagingJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObject.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObject.isRequired = false;

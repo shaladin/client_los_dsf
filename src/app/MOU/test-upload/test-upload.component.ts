@@ -22,7 +22,7 @@ export class TestUploadComponent implements OnInit {
       FileErrorName: "ErrorDownload", // Nama Excel Download Error File
       // SheetName: 'TemplateGan',
 
-      environmentUrl: environment.FoundationR3Url,
+      environmentUrl: environment.FoundationR3Url + "/v1",
       apiQryPaging: URLConstant.GetPagingObjectBySQL,
       pagingJson: "./assets/search/searchTestUpload.json",
       url: URLConstant.UploadFile

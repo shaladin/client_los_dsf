@@ -124,8 +124,8 @@
                           <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                         </td>
                         <td [formGroupName]="i">
-                          <input type="text" class="form-control" formControlName="DocNotes"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNotes.invalid }">
+                          <textarea class="form-control adInsInput width-75-per" formControlName="DocNotes"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNotes.invalid }"></textarea>
                           <lib-uc-show-errors  [control]="CompanyForm.controls['LegalDocForm']['controls'][i]['controls'].DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                         </td>
                         <td [formGroupName]="i">

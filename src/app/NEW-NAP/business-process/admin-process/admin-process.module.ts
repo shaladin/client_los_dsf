@@ -74,6 +74,8 @@ import { GoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-proces
 import { EndDateForGoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-paging/end-date-go-live-approval-paging-x.component";
 import { EndDateForGoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-detail/end-date-go-live-approval-detail-x.component";
 import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
+import {InvoiceVerifDetailDFXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF-x.component';
+import {InvoiceVerifDetailListOfInvoiceXComponent} from '../../../impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -159,7 +161,9 @@ export const customCurrencyMaskConfig = {
     GoLiveApprovalDetailXComponent,
     EndDateForGoLiveApprovalPagingXComponent,
     EndDateForGoLiveApprovalDetailXComponent,
-    InvoiceVerifDetailXComponent
+    InvoiceVerifDetailXComponent,
+    InvoiceVerifDetailDFXComponent,
+    InvoiceVerifDetailListOfInvoiceXComponent
   ],
   providers: [
     NGXToastrService,

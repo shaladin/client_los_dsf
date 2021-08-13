@@ -31,6 +31,8 @@ export class URLConstantX {
   public static MouCustExecutionHumanActivityX = environment.losUrl +'/v1' + "/MouCustX/MouCustExecutionHumanActivity";
   public static GetMouMainInfoByIdX = environment.losUrl +'/v1' + "/MouCustX/GetMouMainInfoById";
 
+  public static CheckMouActiveR2 = environment.losUrl +'/v1' + "/MouCustX/CheckMouActiveR2";
+
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";
 
@@ -71,4 +73,6 @@ export class URLConstantX {
   public static CalculateIrregularX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateIrregular";
   public static CalculateInstallmentRegularFixX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentRegularFix";
   public static CalculateInstallmentStepUpStepDownX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentStepUpStepDown";
+  //APP INVOICE X
+  public static SubmitInvoiceVerifDlfn = environment.losUrl  + '/v1' + "/AppInvoiceX/SubmitInvoiceVerifDlfn";
 }

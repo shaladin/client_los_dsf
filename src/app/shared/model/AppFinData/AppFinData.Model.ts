@@ -9,6 +9,7 @@ export class AppFinDataObj {
     RateType: string;
     TotalAR: number;
     TotalAssetPriceAmt: number;
+    TotalAccessoryPriceAmt: number;
     TotalInterestAmt: number;
     GrossYieldPrcnt: number;
     TdpPaidCoyAmt: number;

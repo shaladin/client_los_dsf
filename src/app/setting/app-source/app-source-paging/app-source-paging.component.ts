@@ -18,13 +18,11 @@ export class AppSourcePagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAppSource.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppSource.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: 'RAS.MR_APP_SRC_TYPE_CODE',
-        environment: environment.FoundationR3Url,
+        environment: environment.FoundationR3Url + "/v1",
       }
     ]
   }

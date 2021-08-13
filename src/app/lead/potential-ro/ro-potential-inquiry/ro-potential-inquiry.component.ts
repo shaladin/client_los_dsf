@@ -17,18 +17,16 @@ export class RoPotentialInquiryComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchRoPotentialInquiry.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchRoPotentialInquiry.json";
 
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "ROP.RO_POTENTIAL_LAST_STEP",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
       {
         name: "ROP.RO_POTENTIAL_STAT",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
   }

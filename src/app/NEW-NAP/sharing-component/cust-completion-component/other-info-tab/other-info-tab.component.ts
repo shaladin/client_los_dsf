@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -7,7 +7,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustOtherInfoObj } from 'app/shared/model/AppCustOtherInfoObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { environment } from 'environments/environment';
+import { AttrContentComponentComponent } from '../attr-content-component/attr-content-component.component';
 
 @Component({
   selector: 'app-other-info-tab',
@@ -65,31 +68,32 @@ export class OtherInfoTabComponent implements OnInit {
         console.log(response);
         this.ResponseCustOtherInfo = response;
       });
-
+      
+    await this.GetExistingProfession();
     this.InputDebitorGroupLookupObj = new InputLookupObj();
     this.InputDebitorGroupLookupObj.urlJson = "./assets/uclookup/lookupDebitorGroup.json";
-    this.InputDebitorGroupLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputDebitorGroupLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputDebitorGroupLookupObj.pagingJson = "./assets/uclookup/lookupDebitorGroup.json";
     this.InputDebitorGroupLookupObj.genericJson = "./assets/uclookup/lookupDebitorGroup.json";
     this.InputDebitorGroupLookupObj.isReady = true;
 
     this.InputDebitorBusinessScaleLookupObj = new InputLookupObj();
     this.InputDebitorBusinessScaleLookupObj.urlJson = "./assets/uclookup/lookupDebitorBusinessScale.json";
-    this.InputDebitorBusinessScaleLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputDebitorBusinessScaleLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputDebitorBusinessScaleLookupObj.pagingJson = "./assets/uclookup/lookupDebitorBusinessScale.json";
     this.InputDebitorBusinessScaleLookupObj.genericJson = "./assets/uclookup/lookupDebitorBusinessScale.json";
     this.InputDebitorBusinessScaleLookupObj.isReady = true;
 
     this.InputCounterpartCategoryLookupObj = new InputLookupObj();
     this.InputCounterpartCategoryLookupObj.urlJson = "./assets/uclookup/lookupCounterpartCategory.json";
-    this.InputCounterpartCategoryLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputCounterpartCategoryLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputCounterpartCategoryLookupObj.pagingJson = "./assets/uclookup/lookupCounterpartCategory.json";
     this.InputCounterpartCategoryLookupObj.genericJson = "./assets/uclookup/lookupCounterpartCategory.json";
     this.InputCounterpartCategoryLookupObj.isReady = true;
 
     this.InputSustaianableFinancialBusinessLookupObj = new InputLookupObj();
     this.InputSustaianableFinancialBusinessLookupObj.urlJson = "./assets/uclookup/lookupSustainableFinancialBusiness.json";
-    this.InputSustaianableFinancialBusinessLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputSustaianableFinancialBusinessLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputSustaianableFinancialBusinessLookupObj.pagingJson = "./assets/uclookup/lookupSustainableFinancialBusiness.json";
     this.InputSustaianableFinancialBusinessLookupObj.genericJson = "./assets/uclookup/lookupSustainableFinancialBusiness.json";
     this.InputSustaianableFinancialBusinessLookupObj.isReady = true;
@@ -114,6 +118,20 @@ export class OtherInfoTabComponent implements OnInit {
     }
     this.IsLookupReady = true;
 
+  }
+  
+  @ViewChild('CustAttrForm') custAttrForm: AttrContentComponentComponent;
+  async GetExistingProfession(custId: number = this.AppCustId) {
+    if (this.CustTypeCode != CommonConstant.CustTypePersonal || custId == 0) return;
+    await this.httpClient.post(URLConstant.GetAppCustMainDataByAppCustId, { Id: custId }).toPromise().then(
+      async (response: ResponseAppCustMainDataObj) => {
+        if (!response.AppCustPersonalJobDataObj.MrProfessionCode) return;
+        await this.httpClient.post(URLConstant.GetRefProfessionByCode, { Code: response.AppCustPersonalJobDataObj.MrProfessionCode }).subscribe(
+          (response: RefProfessionObj) => {
+            this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, response.ProfessionCode);
+          });
+      }
+    )
   }
 
   SaveForm() {
@@ -147,8 +165,10 @@ export class OtherInfoTabComponent implements OnInit {
     }
 
   }
+
+  identifierAttr: string = "AttrList";
   setAttrContent() {
-    var formValue = this.OtherInformationForm['controls']['AttrList'].value;
+    var formValue = this.OtherInformationForm['controls'][this.identifierAttr].value;
     this.custAttrRequest = new Array<Object>();
 
     if (Object.keys(formValue).length > 0 && formValue.constructor === Object) {

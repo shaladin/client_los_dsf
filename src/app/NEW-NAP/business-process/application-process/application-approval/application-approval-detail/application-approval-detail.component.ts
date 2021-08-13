@@ -64,9 +64,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.CrdApvObj = new UcInputApprovalHistoryObj();
-    this.CrdApvObj.EnvUrl = environment.FoundationR3Url;
     this.CrdApvObj.PathUrl = "/Approval/GetTaskHistory";
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();
@@ -127,12 +125,10 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   IsReady: boolean = false;
   initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
     
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
