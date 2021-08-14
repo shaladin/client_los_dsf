@@ -144,7 +144,9 @@ export class FinancialDataComponent implements OnInit {
         MaxDownPaymentNettPrcnt: 0,
 
         CalcBase: '',
-        NeedReCalculate: true
+        NeedReCalculate: true,
+        IsReCalculate: true,
+        ExistingFinData: false
       }
     );
     this.isReady = true;
@@ -218,6 +220,7 @@ export class FinancialDataComponent implements OnInit {
           BalloonBhv: this.appFinDataObj.BalloonBhv,
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
+          ExistingFinData: this.appFinDataObj.ExistingFinData
         });
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
