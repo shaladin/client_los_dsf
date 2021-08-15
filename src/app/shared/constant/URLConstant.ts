@@ -840,6 +840,7 @@ export class URLConstant {
   //LEAD CANCEL
   public static GetListLeadForLeadCancelByListLeadId = environment.losUrl + "/v1" + "/Lead/GetListLeadForLeadCancelByListLeadId";
   public static EditListLeadForCancelByListLeadId = environment.losUrl + "/v1" + "/Lead/EditListLeadForCancelByListLeadId";
+  public static EditListLeadForCancelByListLeadIdV2 = environment.losUrl + "/v2" + "/Lead/EditListLeadForCancelByListLeadId";
 
   // LEAD APP
   public static GetLeadAppByLeadId = environment.losUrl + "/v1" + "/LeadApp/GetLeadAppByLeadId";
