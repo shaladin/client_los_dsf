@@ -70,4 +70,7 @@ export class URLConstantX {
 
   //APP INVOICE X
   public static SubmitInvoiceVerifDlfn = environment.losUrl  + '/v1' + "/AppInvoiceX/SubmitInvoiceVerifDlfn";
+
+  //APP INSURANCE X
+  public static GetListAppInsObjByAgrmntIdForViewX = environment.losUrl + '/v1' + '/AppInsX/GetListAppInsObjByAgrmntIdForView';
 }

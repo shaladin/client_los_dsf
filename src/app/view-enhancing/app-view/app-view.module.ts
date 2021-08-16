@@ -124,7 +124,7 @@ export function createTranslateLoader(http: HttpClient) {
         AppCustDataCompanyOplComponent,
         AppViewInsuranceDetailComponent,
         ViewSrvyTaskComponent,
-        TabApplicationXComponent
+        TabApplicationXComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -132,7 +132,7 @@ export function createTranslateLoader(http: HttpClient) {
         UcgridviewComponent,
         UcapprovalhistComponent,
         AppMainInfoComponent,
-        AppAssetDataDetailComponent,
+        AppAssetDataDetailComponent
     ]
 })
 export class AppViewModule { }
