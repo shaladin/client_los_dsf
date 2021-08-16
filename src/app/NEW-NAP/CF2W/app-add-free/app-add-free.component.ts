@@ -129,14 +129,14 @@ export class AppAddFreeComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.isRequired = false;
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -245,7 +245,7 @@ export class AppAddFreeComponent implements OnInit {
 
     this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
-        setTimeout(() => { this.spinner.show(); }, 10);
+        setTimeout(() => { this.spinner.hide(); }, 1500);
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response.Id, "LobCode": this.LobCode });
       });
@@ -276,13 +276,11 @@ export class AppAddFreeComponent implements OnInit {
   }
 
   getLookupAppResponseName(ev: any) {
-    var url = environment.FoundationR3Url + URLConstant.GetListProdOfferingDByProdOfferingCode;
-
     var tempLobCode;
     var tempCurrCode;
     var tempPayFreqCode;
     var tempRefProdTypeCode;
-    this.http.post(url, {Code : ev.ProdOfferingCode}).subscribe(
+    this.http.post(URLConstant.GetListProdOfferingDByProdOfferingCode, {Code : ev.ProdOfferingCode}).subscribe(
       (response) => {
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {

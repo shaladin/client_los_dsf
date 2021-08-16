@@ -56,7 +56,6 @@ export class AppAssetViewComponent implements OnInit {
 
   async SetMainInfo() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/view/app-asset-view/view-application-asset-main-information.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
   }
 
   getCallBack(event) {

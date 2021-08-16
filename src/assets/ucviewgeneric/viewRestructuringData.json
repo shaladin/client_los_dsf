@@ -1,0 +1,33 @@
+{
+  "title": "",
+  "subsection": [{
+      "subSectionId": "RestructuringDataId",
+      "subSectionTitle": "Restructuring Data",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [{
+          "type": "text",
+          "label": "Characteristic of Credit",
+          "property": "CharacteristicOfCredit"
+        },
+        {
+          "type": "text",
+          "label": "Previous Agreement No",
+          "property": "PrevAgrmntNo"
+        },
+        {
+          "type": "text",
+          "label": "Way of Restructure",
+          "property": "WayOfRestructure"
+        },
+        {
+          "type": "text",
+          "label": "Economic Sector (SLIK)",
+          "property": "EconomicSectorSlik"
+        }
+      ],
+      "querystring": {
+        "name": "viewRestructuringData"
+      }
+    }
+  ]
+}

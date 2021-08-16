@@ -58,27 +58,21 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
     await this.getCustData();
     this.arrValue.push(this.appCustObj.AppCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalMainData.json";
-    this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
 
     this.viewJobDataProfObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataProf.json";
-    this.viewJobDataProfObj.viewEnvironment = environment.losUrl;
     this.viewJobDataProfObj.whereValue = this.arrValue;
 
     this.viewJobDataEmpObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataEmp.json";
-    this.viewJobDataEmpObj.viewEnvironment = environment.losUrl;
     this.viewJobDataEmpObj.whereValue = this.arrValue;
 
     this.viewJobDataSmeObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataSme.json";
-    this.viewJobDataSmeObj.viewEnvironment = environment.losUrl;
     this.viewJobDataSmeObj.whereValue = this.arrValue;
 
     this.viewJobDataNonProfObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataNonProf.json";
-    this.viewJobDataNonProfObj.viewEnvironment = environment.losUrl;
     this.viewJobDataNonProfObj.whereValue = this.arrValue;
 
     this.viewEmergencyContactObj.viewInput = "./assets/ucviewgeneric/viewAppCustEmrgncCntct.json";
-    this.viewEmergencyContactObj.viewEnvironment = environment.losUrl;
     this.viewEmergencyContactObj.whereValue = this.arrValue;
 
     this.isDataAlreadyLoaded = true;

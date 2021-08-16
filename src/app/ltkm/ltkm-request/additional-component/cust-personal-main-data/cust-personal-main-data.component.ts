@@ -117,11 +117,11 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
         MrReligionCode: ['', Validators.maxLength(50)],
         MobilePhnNo3: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
         IsVip: [false],
-        Email1: ['', [Validators.maxLength(100), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        Email1: ['', [Validators.maxLength(100), Validators.pattern(CommonConstant.regexEmail)]],
         FamilyCardNo: ['', Validators.maxLength(50)],
-        Email2: ['', [Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        Email2: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
         NoOfResidence: ['', [Validators.maxLength(4)]],
-        Email3: ['', [Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        Email3: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
         NoOfDependents: ['0', [Validators.pattern("^[0-9]+$")]],
       }));
     }
@@ -264,8 +264,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   initLookup(){
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     
@@ -280,8 +279,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
 
     this.InputLookupCountryObj = new InputLookupObj();
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.isRequired = false;

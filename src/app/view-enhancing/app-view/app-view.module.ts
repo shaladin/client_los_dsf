@@ -53,6 +53,8 @@ import { AppViewInsuranceDetailComponent } from "./app-insurance/app-insurance-d
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { ViewSrvyTaskComponent } from "./view-srvy-task/view-srvy-task.component";
+import { TabApplicationXComponent } from "app/impl/view-enhancing/app-view/tab-application/tab-application-x.component";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -121,6 +123,8 @@ export function createTranslateLoader(http: HttpClient) {
         AppCustDataPersonalOplComponent,
         AppCustDataCompanyOplComponent,
         AppViewInsuranceDetailComponent,
+        ViewSrvyTaskComponent,
+        TabApplicationXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

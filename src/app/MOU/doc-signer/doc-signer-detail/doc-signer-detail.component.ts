@@ -144,8 +144,7 @@ export class DocSignerDetailComponent implements OnInit {
     }
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    this.custShareholderLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.custShareholderLookUpObj1.urlEnviPaging = environment.losUrl;
+    this.custShareholderLookUpObj1.urlEnviPaging = environment.losUrl + "/v1";
     this.custShareholderLookUpObj1.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj1.addCritInput = new Array();
@@ -153,16 +152,14 @@ export class DocSignerDetailComponent implements OnInit {
     this.custShareholderLookUpObj2 = new InputLookupObj();
     this.custShareholderLookUpObj2.isRequired = false;
     this.custShareholderLookUpObj2.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
-    this.custShareholderLookUpObj2.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.custShareholderLookUpObj2.urlEnviPaging = environment.losUrl;
+    this.custShareholderLookUpObj2.urlEnviPaging = environment.losUrl + "/v1";
     this.custShareholderLookUpObj2.pagingJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj2.genericJson = "./assets/uclookup/lookupCustCompanyShareholder.json";
     this.custShareholderLookUpObj2.addCritInput = new Array();
 
     this.employeeLookUpObj1 = new InputLookupObj();
     this.employeeLookUpObj1.urlJson = "./assets/uclookup/lookupEmployee.json";
-    this.employeeLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.employeeLookUpObj1.urlEnviPaging = environment.FoundationR3Url;
+    this.employeeLookUpObj1.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.employeeLookUpObj1.pagingJson = "./assets/uclookup/lookupEmployee.json";
     this.employeeLookUpObj1.genericJson = "./assets/uclookup/lookupEmployee.json";
     this.employeeLookUpObj1.addCritInput = new Array();
@@ -170,8 +167,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.employeeLookUpObj2 = new InputLookupObj();
     this.employeeLookUpObj2.isRequired = false;
     this.employeeLookUpObj2.urlJson = "./assets/uclookup/lookupEmployee.json";
-    this.employeeLookUpObj2.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.employeeLookUpObj2.urlEnviPaging = environment.FoundationR3Url;
+    this.employeeLookUpObj2.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.employeeLookUpObj2.pagingJson = "./assets/uclookup/lookupEmployee.json";
     this.employeeLookUpObj2.genericJson = "./assets/uclookup/lookupEmployee.json";
     this.employeeLookUpObj2.addCritInput = new Array();
@@ -179,8 +175,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.customerLookUpObj1 = new InputLookupObj();
     this.customerLookUpObj1.isRequired = false;
     this.customerLookUpObj1.urlJson = "./assets/uclookup/lookupCustPersonal.json";
-    this.customerLookUpObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.customerLookUpObj1.urlEnviPaging = environment.losUrl;
+    this.customerLookUpObj1.urlEnviPaging = environment.losUrl + "/v1";
     this.customerLookUpObj1.pagingJson = "./assets/uclookup/lookupCustPersonal.json";
     this.customerLookUpObj1.genericJson = "./assets/uclookup/lookupCustPersonal.json";
 

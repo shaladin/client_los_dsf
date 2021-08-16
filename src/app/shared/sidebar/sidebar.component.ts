@@ -11,6 +11,7 @@ import { CommonConstant } from '../constant/CommonConstant';
 import { AdInsHelper } from '../AdInsHelper';
 import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { AdInsConstant } from '../AdInstConstant';
 
 declare var $: any;
 
@@ -62,8 +63,7 @@ export class SidebarComponent implements OnInit {
                     ModuleCode: environment.Module,
                     RowVersion: ""
                 };
-                var updateRoleUrl = environment.FoundationR3Url + URLConstant.UpdateToken;
-                this.http.post(updateRoleUrl, roleObject).subscribe(
+                this.http.post(AdInsConstant.UpdateToken, roleObject).subscribe(
                     (response) => {
                         AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
                         AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
@@ -93,7 +93,7 @@ export class SidebarComponent implements OnInit {
     navigateSkipLocationChange(ev) {
         //sementara Sementara begini dulu, belum ketemu solusi lain
         //problem : ketika di 'click' halaman memasuki halaman /dashboard/dash-board terlebih dahulu
-        this.router.navigateByUrl(NavigationConstant.DASHBOARD, { skipLocationChange: true }).then(() => {
+        this.router.navigateByUrl(NavigationConstant.DASHEMPTY, { skipLocationChange: true }).then(() => {
             AdInsHelper.RedirectUrl(this.router,[ev.Path],this.genParam(ev.Params));
         });
     }

@@ -252,7 +252,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Mou/ChangeMou/ReviewDetailFctr",
+                "path": "CHANGE_MOU_RVW_DETAIL_FCTR",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -299,7 +299,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Mou/ChangeMou/ReviewDetailFctr",
+                "path": "CHANGE_MOU_RVW_DETAIL_FCTR",
                 "icon": "ft-edit-2",
                 "param": [
                   {

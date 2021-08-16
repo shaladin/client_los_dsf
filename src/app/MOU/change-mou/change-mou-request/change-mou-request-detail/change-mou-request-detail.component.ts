@@ -14,6 +14,8 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CookieService } from "ngx-cookie";
+import { ClaimTaskService } from "app/shared/claimTask.service";
+import { environment } from "environments/environment";
 
 @Component({
   selector: "app-change-mou-request-detail",
@@ -22,7 +24,7 @@ import { CookieService } from "ngx-cookie";
 })
 export class ChangeMouRequestDetailComponent implements OnInit {
   mouType: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLookupCust: InputLookupObj;
   pageType: string = "edit";
   mouCustId: number;
@@ -77,7 +79,8 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: NGXToastrService,
     private http: HttpClient,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["mode"] != null) {
@@ -303,11 +306,12 @@ export class ChangeMouRequestDetailComponent implements OnInit {
 
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe();
+    if(environment.isCore) {
+      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+    }
+    else {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
   
   GetRefmasterData(){
@@ -336,7 +340,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
         this.plafondName = response["Descr"];
       });
     }
-    
+
 
     this.http
     .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {

@@ -63,7 +63,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   dmsAppObj: DMSObj;
   mouCustNo: string;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
-
+  bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   UserAccess: CurrentUserContext;
   businessDt: Date = new Date();
   checkPOReady: boolean = false;
@@ -379,7 +379,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ BizTemplateCode: 'FL4W' });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ BizTemplateCode: this.bizTemplateCode });
   }
 
   SaveForm() {
@@ -396,7 +396,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       forkJoin([editTc, updateAgrmntDt]).subscribe(
         (response) => {
           this.toastr.successMessage(response[1]["Message"]);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ "BizTemplateCode": 'FL4W'});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
         }
       );
     }
@@ -406,6 +406,9 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   DOSubmitHandler() {
+    if(!this.DOAssetForm.valid){
+      return;
+    }
     if (!this.isFinal) {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
@@ -435,7 +438,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         forkJoin([editTc, submitDO, updateAgrmntDt]).subscribe(
           (response) => {
             this.toastr.successMessage(response[1]["Message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ "BizTemplateCode": 'FL4W'});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ "BizTemplateCode": this.bizTemplateCode});
           }
         );
       }

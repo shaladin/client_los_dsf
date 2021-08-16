@@ -49,7 +49,7 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
     modalMouFee.result.then(
       (response) => {
         this.spinner.show();
-        // this.spinner.hide();
+        this.spinner.hide();
       }
     ).catch((error) => {
     });

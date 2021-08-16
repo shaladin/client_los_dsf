@@ -504,6 +504,7 @@ export class PathConstant {
     public static DASHBOARD1 = "DashBoard1";
     public static DASHBOARD2 = "DashBoard2";
     public static DASHBOARD = "Dash-Board";
+    public static DASHEMPTY = "Dash-Empty";
     //#endregion
 
     //#region Content-Route
@@ -525,6 +526,8 @@ export class PathConstant {
     public static VIEW_APP_ASSET = "AppAsset";
     public static VIEW_APP_LIST = "AppList";
     public static VIEW_PEFINDO = "Pefindo";
+    public static VIEW_CUST_APP_LISTING = "CustAppListView";
+    public static VIEW_CUST_AGRMNT_LISTING = "CustAgrmntListView";
     //#endregion
 
     //#region FOU-View-Module

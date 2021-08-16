@@ -75,7 +75,12 @@
             "type": "text",
             "label": "City",
             "property": "City"
-          },{},
+          },
+          {
+            "type": "text",
+            "label": "Owner Profession",
+            "property": "OwnerProfessionName"
+          },
           {
             "type": "text",
             "label": "Zip Code",

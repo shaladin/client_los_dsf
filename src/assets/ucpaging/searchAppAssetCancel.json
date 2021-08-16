@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "AG.AGRMNT_NO",
+      "name": "AGR.AGRMNT_NO",
       "id": "AgrmntNoId",
       "value": "",
       "label": "Agreement No",
@@ -84,7 +84,7 @@
       "type": "sort",
       "position": "center",
       "label": "Agreement No",
-      "name": "AG.AGRMNT_NO"
+      "name": "AGR.AGRMNT_NO"
     },
     {
       "type": "sort",
@@ -181,51 +181,13 @@
       "position": "center",
       "action": [
         {
-          "type": "switch",
-          "case": [
+          "type": "edit",
+          "path": "../Detail",
+          "icon": "ft-edit-2",
+          "param": [
             {
-              "conditions": [
-                {
-                  "isUser": true,
-                  "property": "ClaimBy",
-                  "value": "",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "url",
-                "path": "../Detail",
-                "icon": "ft-edit-2",
-                "param": [
-                  {
-                    "type": "AppAssetId",
-                    "property": "AppAssetId"
-                  }
-                ]
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "isUser": false,
-                  "property": "ClaimBy",
-                  "value": "",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "url",
-                "path": "../Detail",
-                "icon": "ft-edit-2",
-                "param": [
-                  {
-                    "type": "AppAssetId",
-                    "property": "AppAssetId"
-                  }
-                ]
-              },
-              "isHide": false
+              "type": "AppAssetId",
+              "property": "AppAssetId"
             }
           ]
         }

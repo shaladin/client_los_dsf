@@ -50,7 +50,6 @@ import { MainDataComponentModule } from "../sharing-component/main-data-componen
 import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
 import { NapDetailFormXComponent } from "app/impl/NEW-NAP/FL4W/nap-detail-form-x/nap-detail-form-x.component";
-
  
 export const customCurrencyMaskConfig = {     
   align: "right",     

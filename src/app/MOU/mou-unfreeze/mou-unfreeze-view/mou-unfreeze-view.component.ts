@@ -44,7 +44,6 @@ export class MouUnfreezeViewComponent implements OnInit {
     arrValue.push(this.TrxId);
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
@@ -54,7 +53,6 @@ export class MouUnfreezeViewComponent implements OnInit {
 
      this.viewGenericTrxObj.viewInput =
     "./assets/ucviewgeneric/viewMouFreezeTrxMainInfo.json";
-     this.viewGenericTrxObj.viewEnvironment = environment.losUrl;
      this.viewGenericTrxObj.whereValue = arrValue;
 
   }

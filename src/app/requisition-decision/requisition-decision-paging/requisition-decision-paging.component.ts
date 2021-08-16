@@ -37,8 +37,6 @@ export class RequisitionDecisionPagingComponent implements OnInit {
 
   async ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/requisition-decision/search-requisition-decision-paging.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/requisition-decision/search-requisition-decision-paging.json";
     this.inputPagingObj.isJoinExAPI = true;
 
