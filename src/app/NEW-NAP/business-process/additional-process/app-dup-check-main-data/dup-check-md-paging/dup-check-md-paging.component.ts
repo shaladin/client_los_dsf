@@ -53,7 +53,7 @@ export class DupCheckMdPagingComponent implements OnInit {
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CDC_MANUAL;
       // this.RequestTaskModel.RoleCode = userAccess[CommonConstant.ROLE_CODE];
       // this.RequestTaskModel.OfficeCode = userAccess[CommonConstant.OFFICE_CODE];
-      // this.RequestTaskModel.OfficeRoleCodes = [userAccess[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [userAccess[CommonConstant.ROLE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;

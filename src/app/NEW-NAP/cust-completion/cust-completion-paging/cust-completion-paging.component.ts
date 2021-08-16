@@ -41,7 +41,7 @@ export class CustCompletionPagingComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCustCompletionV2.json";
       this.inputPagingObj.isJoinExAPI = true
 
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_DUP_CHECK_MD;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CDA;
       this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];

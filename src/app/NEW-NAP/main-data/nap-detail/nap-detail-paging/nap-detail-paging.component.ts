@@ -45,7 +45,7 @@ export class NapDetailPagingComponent implements OnInit {
       var critObj2 = new CriteriaObj();
       critObj2.restriction = AdInsConstant.RestrictionIn;
       critObj2.propName = 'a.APP_CURR_STEP';
-      critObj2.listValue = [CommonConstant.AppStepCust, CommonConstant.AppStepFamily, CommonConstant.AppStepGuar, CommonConstant.AppStepShr];
+      critObj2.listValue = this.initListValueCurrStep();
       this.arrCrit.push(critObj2);
     }else{
       var critObj = new CriteriaObj();
@@ -80,8 +80,8 @@ export class NapDetailPagingComponent implements OnInit {
       
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_NAPD_MD + this.bizTemplateCode;
-      this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
-      this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];
+      // this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
+      // this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;

@@ -27,7 +27,7 @@ export class URLConstant {
   public static AddNewApplication = environment.losUrl + "/v1" + "/Application/AddNewApplication";
   public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/Application/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationFromCopy";
-  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v1" + "/Application/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2" + "/Application/AddNewApplicationFromCopy";
   public static AddNewApplicationOplFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationOplFromCopy";
 
   // APP Application
