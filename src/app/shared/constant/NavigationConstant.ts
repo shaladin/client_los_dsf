@@ -197,7 +197,7 @@ export class NavigationConstant {
   public static NAP_FL4W_ADD = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.ADD; //"Nap/FinanceLeasing/Add"
   public static NAP_FL4W_ADD_DETAIL = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/FinanceLeasing/Add/Detail"
   public static NAP_FL4W_NAP1 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.NAP1; //"Nap/FinanceLeasing/NAP1"
-  public static NAP_FL4W_NAP2 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.NAP2; //"Nap/FinanceLeasing/NAP2"
+  public static NAP_FL4W_NAP2 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstantX.NAP2; //"Nap/FinanceLeasing/NAP2X"
   //#endregion
 
   //#region CFRFN4W

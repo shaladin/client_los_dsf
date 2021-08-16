@@ -112,6 +112,8 @@ import { SchmEvenPrincipalFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/
 import { SchmBalloonFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
 import { ApplicationDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-x.component";
 import { ApplicationDataFL4WXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-FL4W/application-data-FL4W-x.component";
+import { MultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/multi-asset-data-x.component";
+import { AssetDataAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-add-edit-x/asset-data-add-edit-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -170,8 +172,10 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalComponent,
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
+    AssetDataAddEditXComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
+    MultiAssetDataXComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent,
     SchmEvenPrincipalFctrComponent,
@@ -282,8 +286,10 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalComponent,
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
+    AssetDataAddEditXComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
+    MultiAssetDataXComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent,
     SchmEvenPrincipalFctrComponent,

@@ -16,7 +16,6 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
-import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { map, mergeMap, first } from 'rxjs/operators';
@@ -38,19 +37,26 @@ import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/share
 import { String } from 'typescript-string-operations';
 import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { LookupTaxCityIssuerComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+
 
 @Component({
-  selector: 'app-asset-data-add-edit',
-  templateUrl: './asset-data-add-edit.component.html'
+  selector: 'app-asset-data-add-edit-x',
+  templateUrl: './asset-data-add-edit-x.component.html',
+  styleUrls: ['./asset-data-add-edit-x.component.css']
 })
-export class AssetDataAddEditComponent implements OnInit {
+export class AssetDataAddEditXComponent implements OnInit {
+
   @Input() mode: string;
   @Input() AppAssetId: number;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() assetValue: EventEmitter<object> = new EventEmitter();
   currentChassisNo: string = "";
   @Input() AppId: number;
-  LobCode: string;
+  LobCode: string = "";
   pageType: string = "add";
   custType: string;
   listBranchObj: any;
@@ -113,6 +119,7 @@ export class AssetDataAddEditComponent implements OnInit {
   ListAttrAnswer = [];
   isAssetAttrReady: boolean = false;
   isUsed : boolean = false;
+  isSLB : boolean = false;
 
 
   InputLookupAccObj: any;
@@ -216,6 +223,10 @@ export class AssetDataAddEditComponent implements OnInit {
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   InputLookupCityIssuerObj : any;
 
+  //URS-LOS-166
+  generalSettingVendorSLBObj: GenericObj;
+  vendorSLBId : 0;
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.originalAssetAccs = new Array<AppAssetAccessoryObj>();
 
@@ -229,9 +240,9 @@ export class AssetDataAddEditComponent implements OnInit {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
       }
-      if (params["LobCode"] != null) {
-        this.LobCode = params["LobCode"];
-      }
+      // if (params["LobCode"] != null) {
+      //   this.LobCode = params["LobCode"];
+      // }
     });
   }
 
@@ -840,9 +851,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
-
-    this.InputLookupSupplierObj. 
-
+    
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -1039,7 +1048,57 @@ export class AssetDataAddEditComponent implements OnInit {
         });
       }
     );
-	await this.GetGS();
+
+	  await this.GetGS();
+
+    //URS-LOS-166
+    if(this.appData.LobCode == CommonConstantX.SLB)
+    {
+      this.LobCode = CommonConstantX.SLB;
+      this.isSLB = true;
+      let ReqGetVendorSLB : GenericObj = new GenericObj();
+      this.generalSettingVendorSLBObj = new GenericObj();
+
+
+      await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstantX.GSVendorSlbCode}).toPromise().then(
+        (response: GeneralSettingObj) => {
+          this.generalSettingVendorSLBObj.Code = response.GsValue;
+        }
+      );
+
+      ReqGetVendorSLB.Code = this.generalSettingVendorSLBObj.Code;
+      await this.http.post(URLConstantX.GetVendorForSLB, ReqGetVendorSLB).toPromise().then(
+        (response) => {
+          this.returnVendorObj = response;
+          this.InputLookupSupplierObj.nameSelect = this.returnVendorObj.VendorName;
+          this.InputLookupSupplierObj.jsonSelect = this.returnVendorObj;
+          this.vendorSLBId = this.returnVendorObj.VendorId;
+          this.AssetDataForm.patchValue({
+            SupplCode: this.returnVendorObj.VendorCode,
+            SupplName: this.returnVendorObj.VendorName,
+          });
+        }
+      );
+
+      this.InputLookupSupplierObj.isDisable = true;
+
+      let ReqGetListActiveVendorSalesSlb : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+      ReqGetListActiveVendorSalesSlb.VendorId = this.vendorSLBId;
+      ReqGetListActiveVendorSalesSlb.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
+      await this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSalesSlb).toPromise().then(
+        (response) => {
+          this.listSalesObj = response[CommonConstant.ReturnObj];
+          var temp: any;
+            temp = this.listSalesObj.filter(
+              emp => emp.VendorEmpNo == this.salesAppAssetSupplEmpObj.SupplEmpNo);
+          this.AssetDataForm.patchValue({
+            SalesPersonId: temp[0].VendorEmpId,
+            SalesPersonName: temp[0].VendorEmpName,
+            SalesPersonNo: temp[0].VendorEmpNo,
+            SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+        });
+      });
+    }
   }
 
   GenerataAppAssetAttr(isRefresh: boolean) {
@@ -1845,4 +1904,5 @@ export class AssetDataAddEditComponent implements OnInit {
     }
     this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
   }
+
 }

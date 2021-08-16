@@ -134,7 +134,7 @@ export class CustMainDataAddXComponent implements OnInit {
     addCritBizTempalte.value = this.bizTemplateCode;
     arrAddCrit.push(addCritBizTempalte);
 
-    if(this.bizTemplateCode == CommonConstant.CFNA)
+    if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
     {
       var addCritAddType = new CriteriaObj();
       addCritAddType.DataType = "text";
@@ -192,7 +192,7 @@ export class CustMainDataAddXComponent implements OnInit {
     addCritBizTempalte.value = this.bizTemplateCode;
     arrAddCrit.push(addCritBizTempalte);
 
-    if(this.bizTemplateCode == CommonConstant.CFNA)
+    if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
     {
       var addCritAddType = new CriteriaObj();
       addCritAddType.DataType = "text";

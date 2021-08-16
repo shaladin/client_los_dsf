@@ -8,4 +8,7 @@ export class URLConstantX {
   public static AddCustCnfrmX = environment.losUrl+ "/v1" + "/CustCnfrmX/AddCustCnfrm";
   public static EditAppAddAppCrossX = environment.losUrl+ "/v1" + "/AppX/EditAppAddAppCross";
   public static GetAppXByAppId = environment.losUrl+ "/v1" + "/AppX/GetAppXByAppId";
+
+  //Foundation
+  public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
 }

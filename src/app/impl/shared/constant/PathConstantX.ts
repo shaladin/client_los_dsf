@@ -5,6 +5,8 @@ export class PathConstantX {
     public static PAGING = "PagingX";
     public static ADD = "AddX";
 
+    public static NAP2 = "NAP2X";
+
     public static DETAIL_X = PathConstant.DETAIL + "X";
 
     //#region Nap-Main-Data
