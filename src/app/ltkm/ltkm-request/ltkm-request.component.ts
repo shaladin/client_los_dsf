@@ -58,6 +58,7 @@ import { CookieService } from 'ngx-cookie';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CustPersonalFamilyLtkmObj } from 'app/shared/model/LTKM/CustPersonalFamilyLtkmObj.Model';
+import { environment } from 'environments/environment';
 @Component({
     selector: 'app-ltkm-request',
     templateUrl: './ltkm-request.component.html',
@@ -326,7 +327,7 @@ export class LtkmRequestComponent implements OnInit {
                     LtkmCustId: this.LtkmCustId
                 };
             } else {
-                personalPath = URLConstant.SaveLtkmRequestPersonal;
+                personalPath = environment.isCore? URLConstant.SaveLtkmRequestPersonalV2 : URLConstant.SaveLtkmRequestPersonal;
                 sendPersonalObj = {
                     requestCustDataPersonalObj: custDataPersonalObj,
                     requestLtkmReqObj: personalAnalysisObj,
@@ -385,7 +386,7 @@ export class LtkmRequestComponent implements OnInit {
                     LtkmCustId: this.LtkmCustId
                 };
             } else {
-                coyPath = URLConstant.SaveLtkmRequestCompany;
+                coyPath = environment.isCore?  URLConstant.SaveLtkmRequestCompanyV2 : URLConstant.SaveLtkmRequestCompany;
                 sendCoyObj = {
                     requestCustDataCompanyLtkmObj: custDataCompanyObj,
                     requestLtkmReqObj: coyAnalysisObj,

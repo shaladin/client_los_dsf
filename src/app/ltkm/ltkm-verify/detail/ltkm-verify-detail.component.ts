@@ -15,6 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { RFAObj } from '@adins/ucapprovalcreate/lib/shared/model/RFAObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
     selector: 'app-ltkm-verify-detail',
@@ -26,7 +27,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
     LtkmReqId: number = 0;
     LtkmNo: string = "";
     LtkmCustId: number = 0;
-    wfTaskListId: number;
+    wfTaskListId: any;
     ManualDeviationData;
     isExistedManualDeviationData;
     apvBaseUrl = environment.ApprovalR3Url;
@@ -68,7 +69,8 @@ export class LtkmVerifyDetailComponent implements OnInit {
         private http: HttpClient,
         private fb: FormBuilder,
         private router: Router,
-        private cookieService: CookieService) {
+        private cookieService: CookieService,
+        private claimTaskService: ClaimTaskService) {
         this.route.queryParams.subscribe(params => {
             if (params["LtkmNo"] != null) {
                 this.LtkmNo = params["LtkmNo"];
@@ -230,9 +232,10 @@ export class LtkmVerifyDetailComponent implements OnInit {
             WfTaskListId: this.wfTaskListId,
             RequestRFAObj: this.RFAInfo
         }
-        this.http.post(URLConstant.SubmitLtkmVerify, apiObj).subscribe(
+        let submitLtkmUrl = environment.isCore? URLConstant.SubmitLtkmVerifyV2 : URLConstant.SubmitLtkmVerify;
+        this.http.post(submitLtkmUrl, apiObj).subscribe(
             (response) => {
-                AdInsHelper.RedirectUrl(this.router, ["Ltkm/Verify/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
             });
     }
 
@@ -259,24 +262,25 @@ export class LtkmVerifyDetailComponent implements OnInit {
 
 
     ClaimTask() {
-        var wfClaimObj = new ClaimWorkflowObj();
-        wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-        wfClaimObj.pUserID = this.UserAccess.UserName;
-
-        this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-            (response) => {
-            });
+        if(environment.isCore){	
+            if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){	
+                this.claimTaskService.ClaimTaskV2(this.wfTaskListId);	
+            }	
+        }	
+        else if (this.wfTaskListId> 0) {	
+            this.claimTaskService.ClaimTask(this.wfTaskListId);	
+        }
     }
 
     initInputApprovalObj() {
         this.InputObj = new UcInputRFAObj(this.cookieService);
-        var Attributes = []
-        var attribute1 = {
-            "AttributeName": "LTKM Analysis Notes",
-            "AttributeValue": this.ltkmAnalysisNotes
-        };
-        Attributes.push(attribute1);
 
+        // var attribute1 = {
+        //     "AttributeName": "LTKM Analysis Notes",
+        //     "AttributeValue": this.ltkmAnalysisNotes
+        // };
+        // Attributes.push(attribute1);
+        let Attributes = [{}]
         var TypeCode = {
             "TypeCode": "AML_APV_TYPE",
             "Attributes": Attributes,
@@ -285,10 +289,15 @@ export class LtkmVerifyDetailComponent implements OnInit {
         this.InputObj.CategoryCode = CommonConstant.CAT_CODE_AML_APV;
         this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_AML_APV;
         this.InputObj.Reason = this.DDLReason;
-        this.InputObj.TrxNo = this.LtkmNo
+        this.InputObj.TrxNo = this.LtkmNo;
         this.IsReady = true;
     }
+
     cancel() {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
+    }
+
+    check(){
+        console.log(this.FormObj);
     }
 }

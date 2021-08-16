@@ -1469,9 +1469,12 @@ export class URLConstant {
   //LTKM
   public static GetCustCompanyLtkmForCopyByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyLtkmForCopyByCustId";
   public static SaveLtkmRequestPersonal = environment.losUrl + "/v1" + "/ManualLtkm/SaveLtkmRequestPersonal";
+  public static SaveLtkmRequestPersonalV2 = environment.losUrl + "/v2" + "/ManualLtkm/SaveLtkmRequestPersonal";
   public static SaveLtkmRequestCompany = environment.losUrl + "/v1" + "/ManualLtkm/SaveLtkmRequestCompany";
+  public static SaveLtkmRequestCompanyV2 = environment.losUrl + "/v2" + "/ManualLtkm/SaveLtkmRequestCompany";
   public static GetLtkmReqByLtkmNo = environment.losUrl + "/v1" + "/Ltkm/GetLtkmReqByLtkmNo";
   public static SubmitLtkmVerify = environment.losUrl + "/v1" + "/Ltkm/SubmitLtkmVerify";
+  public static SubmitLtkmVerifyV2 = environment.losUrl + "/v2" + "/Ltkm/SubmitLtkmVerify";
   public static SubmitLtkmReturnAtApv = environment.losUrl + "/v1" + "/Ltkm/SubmitLtkmReturnAtApv";
   public static GetSummaryByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/GetSummaryByLtkmCustId";
   public static GetLtkmCustDataPersonalForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustDataPersonalForViewByLtkmCustId";

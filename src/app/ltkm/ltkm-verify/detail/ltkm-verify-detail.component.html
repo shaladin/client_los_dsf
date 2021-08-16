@@ -36,7 +36,7 @@
       <div class="card-body">
         <div class="px-3">
   
-          <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid &&SaveForm()"
+          <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
             #enjiForm="ngForm">
             <div class="form-body">
   
@@ -61,7 +61,7 @@
                 </div>
               </div>
               <br> -->
-              <lib-ucapprovalcreate [parentForm]= "FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent>
+              <lib-ucapprovalcreate [parentForm]= "FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" (result)="SaveForm($event)" #ApprovalComponent>
               </lib-ucapprovalcreate>
               <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return LTKM'"
                 [panel]="'formReturnCreditReview'">
@@ -106,6 +106,9 @@
               <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()"
                 translate>
                 <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" (click)="check()" translate>
+                <i class="far fa-check-square"></i> Check
               </button>
               <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="far fa-check-square"></i> Save

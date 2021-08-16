@@ -221,7 +221,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
 
