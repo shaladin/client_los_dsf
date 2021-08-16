@@ -11,6 +11,7 @@ export class URLConstantX {
   public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
   public static EndDateGoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/EndDateGoLiveApproval";
   public static GoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/GoLiveApproval";
+  public static GetAppXDataByAppId = environment.losUrl + '/v1' + "/AppX/GetAppXDataByAppId";
 
   //App Reserved Fund
   public static GetRsvFundSingleRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetRsvFundSingleRule";
@@ -22,9 +23,16 @@ export class URLConstantX {
   public static AddEditAppCommissionData = environment.losUrl + "/v1" + "/AppCommissionX/AddEditAppCommissionData";
   public static GetAppAssetByAppIdConditionNewBrandMitsubishi = environment.losUrl + "/v1" + "/AppAssetX/GetAppAssetByAppIdConditionNewBrandMitsubishi";
 
-  // Upload
-  public static UploadFile = environment.FoundationR3Url + '/v1' + '/UploadX/UploadFile';
-
+  // Cessie
+  public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
+  public static AssignProduct = environment.losUrl + "/v1" + "/Cessie/AssignProduct";
+  public static GetListAppForView = environment.losUrl + "/v1" + "/Cessie/GetListAppForView";
+  public static SubmitReview = environment.losUrl + "/v1" + "/Cessie/SubmitReview";
+  public static GetApvAmount = environment.losUrl + "/v1" + "/Cessie/GetApvAmount";
+  public static GetListApp = environment.losUrl + "/v1" + "/Cessie/GetListApp";
+  public static SubmitPreGoLiveCessie = environment.losUrl + "/v1" + "/Cessie/SubmitPreGoLive";
+  public static SubmitCancel = environment.losUrl + "/v1" + "/Cessie/SubmitCancel";
+  
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
   public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
@@ -55,6 +63,8 @@ export class URLConstantX {
   public static AddExistingChangeMouCustCollateralDataX = environment.losUrl + '/v1' + "/ChangeMouCustCollateralX/AddExistingChangeMouCustCollateralData";
   public static DeleteChangeMouCustCollateralX = environment.losUrl + '/v1' + "/ChangeMouCustCollateralX/DeleteChangeMouCustCollateral";
 
+  //Approval
+  public static NewApproval = environment.losUrl + "/v1" + "/ApprovalX/Approval";
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
 

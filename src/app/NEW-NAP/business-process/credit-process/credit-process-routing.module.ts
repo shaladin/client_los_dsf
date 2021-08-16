@@ -24,6 +24,7 @@ import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit
 import { ComissionReservedFundDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-detail-x/comission-reserved-fund-detail-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { ComissionReservedFundPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-paging-x/comission-reserved-fund-paging-x.component';
+import { CommissionReservedFundDetailComponent } from './commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,20 @@ const routes: Routes = [
       {
         path: PathConstantX.COMM_RSV_FUND_DETAIL,
         component: ComissionReservedFundDetailXComponent,
+        data: {
+          title: 'Commission Reserved Fund Detail'
+        }
+      },
+      {
+        path: PathConstant.COMM_RSV_FUND_PAGING,
+        component: CommissionReservedFundPagingComponent,
+        data: {
+          title: 'Commission Reserved Fund Paging'
+        }
+      },
+      {
+        path: PathConstant.COMM_RSV_FUND_DETAIL,
+        component: CommissionReservedFundDetailComponent,
         data: {
           title: 'Commission Reserved Fund Detail'
         }

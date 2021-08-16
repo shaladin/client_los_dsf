@@ -66,6 +66,7 @@ export class ApplicationDataXComponent implements OnInit {
   ListCrossAppObj: object = {};
   inputLookupObj: InputLookupObj;
   inputLookupEconomicSectorObj: InputLookupObj;
+  inputLookupCommodityObj: InputLookupObj;
   arrAddCrit: Array<CriteriaObj>;
   user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   isInputLookupObj: boolean = false;
@@ -89,6 +90,7 @@ export class ApplicationDataXComponent implements OnInit {
   ddlMrCustNotifyOptObj: UcDropdownListObj = new UcDropdownListObj();
   isDdlMrFirstInstTypeReady: boolean = false;
   isDdlPayFreqReady: boolean = false;
+  tempCommodityName:string ="";
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -154,7 +156,8 @@ export class ApplicationDataXComponent implements OnInit {
     CopyFromMailing: [''],
     CustBankAcc: [''],
     BpkbStatCode: ['', Validators.required],
-    OrdStatCode: ['']
+    OrdStatCode: [''],
+    CommodityCode: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -335,15 +338,16 @@ export class ApplicationDataXComponent implements OnInit {
   applicationDDLitems;
   resultResponse;
 
-  getAppModelInfo() {
+  async getAppModelInfo() {
     let obj = {
       Id: this.appId,
       RowVersion: ""
     };
+    await this.getAppXData();
 
     this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
       (response) => {
-        this.getAppXData();
+        
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -532,6 +536,12 @@ export class ApplicationDataXComponent implements OnInit {
     });
   }
 
+  setLookupCommodityData(ev){
+    this.NapAppModelForm.patchValue({
+      CommodityCode: ev.MasterCode
+    });
+  }
+
   async makeLookUpObj() {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
@@ -563,6 +573,24 @@ export class ApplicationDataXComponent implements OnInit {
           this.inputLookupEconomicSectorObj.nameSelect = response.Value;
           this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
         });
+    }
+
+    //Lookup Commodity
+    this.inputLookupCommodityObj = new InputLookupObj();
+    this.inputLookupCommodityObj.urlJson = "./assets/impl/uclookup/lookupCommodity.json";
+    this.inputLookupCommodityObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupCommodityObj.pagingJson = "./assets/impl/uclookup/lookupCommodity.json";
+    this.inputLookupCommodityObj.genericJson = "./assets/impl/uclookup/lookupCommodity.json";
+    if(this.BizTemplateCode != CommonConstant.CF4W && this.BizTemplateCode != CommonConstant.FL4W)
+    {
+      this.inputLookupCommodityObj.isRequired = false;
+    }
+    
+    if(this.NapAppModelForm.controls.CommodityCode.value != "" && this.NapAppModelForm.controls.CommodityCode.value != null)
+    {
+      //this.inputLookupCommodityObj.idSelect = this.NapAppModelForm.controls.CommodityCode.value;
+      this.inputLookupCommodityObj.nameSelect = this.tempCommodityName;
+      this.inputLookupCommodityObj.jsonSelect = { Descr: this.tempCommodityName };
     }
 
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
@@ -800,6 +828,7 @@ export class ApplicationDataXComponent implements OnInit {
         AppId: this.appId,
         MrStatusBpkbCode: this.NapAppModelForm.controls.BpkbStatCode.value,
         MrOrdStatusCode: this.NapAppModelForm.controls.OrdStatCode.value,
+        MrCommodityCode: this.NapAppModelForm.controls.CommodityCode.value,
       };
       let obj = {
         AppObj: tempAppObj,
@@ -1127,14 +1156,16 @@ export class ApplicationDataXComponent implements OnInit {
     this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName; 
   }
 
-  getAppXData(){
-    this.http.post(URLConstantX.GetAppXByAppId, {Id: this.appId}).subscribe(
+  async getAppXData(){
+    await this.http.post(URLConstantX.GetAppXDataByAppId, {Id: this.appId}).toPromise().then(
       (response) => {
         if(response["AppId"] != 0){
           this.NapAppModelForm.patchValue({
             BpkbStatCode: response["MrStatusBpkbCode"],
-            OrdStatCode: response["MrOrdStatusCode"]
+            OrdStatCode: response["MrOrdStatusCode"],
+            CommodityCode: response["MrCommodityCode"]
           });
+          this.tempCommodityName = response["CommodityName"];
         }
       }
     );
