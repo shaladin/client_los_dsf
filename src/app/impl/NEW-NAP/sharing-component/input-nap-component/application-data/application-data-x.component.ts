@@ -578,7 +578,7 @@ export class ApplicationDataXComponent implements OnInit {
     //Lookup Commodity
     this.inputLookupCommodityObj = new InputLookupObj();
     this.inputLookupCommodityObj.urlJson = "./assets/impl/uclookup/lookupCommodity.json";
-    this.inputLookupCommodityObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupCommodityObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupCommodityObj.pagingJson = "./assets/impl/uclookup/lookupCommodity.json";
     this.inputLookupCommodityObj.genericJson = "./assets/impl/uclookup/lookupCommodity.json";
     if(this.BizTemplateCode != CommonConstant.CF4W && this.BizTemplateCode != CommonConstant.FL4W)

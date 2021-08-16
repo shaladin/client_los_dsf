@@ -5,18 +5,16 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { ViewSurveyVerifComponent } from "./view-survey-verif/view-survey-verif.component";
 import { ViewHighlightCommentComponent } from "./view-highlight-comment/view-highlight-comment.component";
-import { AppAssetDataXComponent } from "app/impl/view-enhancing/app-view/app-asset-data/app-asset-data-x.component";
-import { AppAssetDataDetailXComponent } from "app/impl/view-enhancing/app-view/app-asset-data/app-asset-data-detail/app-asset-data-detail-x.component";
+import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-x.component";
+import { ViewAssetDataDetailXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-detail/view-asset-data-detail-x.component";
 import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
-import { AppInsuranceComponent } from "app/view-enhancing/app-view/app-insurance/app-insurance.component";
 
 @NgModule({
     exports: [
         AppCustViewComponentsModule,
         ViewHighlightCommentComponent,
-        AppInsuranceComponent,
-        AppAssetDataXComponent,
-        AppAssetDataDetailXComponent
+        ViewAssetDataXComponent,
+        ViewAssetDataDetailXComponent
     ],
     imports: [
         CommonModule,
@@ -26,12 +24,11 @@ import { AppInsuranceComponent } from "app/view-enhancing/app-view/app-insurance
     ],
     declarations: [
         ViewHighlightCommentComponent,
-        AppInsuranceComponent,
-        AppAssetDataXComponent,
-        AppAssetDataDetailXComponent
+        ViewAssetDataXComponent,
+        ViewAssetDataDetailXComponent
     ],
     entryComponents: [
-        AppAssetDataDetailXComponent
+        ViewAssetDataDetailXComponent
     ],
     providers: [
         NGXToastrService

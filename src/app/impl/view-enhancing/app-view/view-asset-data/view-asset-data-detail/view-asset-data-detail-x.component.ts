@@ -8,10 +8,10 @@ import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-app-asset-data-detail-x',
-  templateUrl: './app-asset-data-detail-x.component.html'
+  selector: 'view-asset-data-detail-x',
+  templateUrl: './view-asset-data-detail-x.component.html'
 })
-export class AppAssetDataDetailXComponent implements OnInit {
+export class ViewAssetDataDetailXComponent implements OnInit {
   @Input() AppAssetId: number;
   @Input() AppId: number;
   @Input() BizTemplateCode: string;

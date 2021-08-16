@@ -103,6 +103,7 @@ export function createTranslateLoader(http: HttpClient) {
         ViewCollateralDataComponent,
         ViewCollateralMultiAssetComponent,
         ViewInsuranceComponent,
+        AppInsuranceComponent,
         AppAssetDataComponent,
         AppAssetDataDetailComponent,
         LifeInsuranceComponent,
