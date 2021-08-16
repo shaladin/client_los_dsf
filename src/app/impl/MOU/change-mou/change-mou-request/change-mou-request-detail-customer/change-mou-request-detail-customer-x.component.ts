@@ -101,7 +101,6 @@ export class ChangeMouRequestDetailCustomerXComponent
         }
       });
 
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
