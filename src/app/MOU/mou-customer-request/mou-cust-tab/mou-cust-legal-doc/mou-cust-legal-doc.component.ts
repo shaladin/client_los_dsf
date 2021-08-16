@@ -24,7 +24,7 @@ import { String } from 'typescript-string-operations';
 export class MouCustLegalDocComponent implements OnInit {
 
   @Input() listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
-
+  @Input() isDoubleLegalDocAllowed: string;
   @Output() callbackSubmit: EventEmitter<Array<AppCustCompanyLegalDocObj>> = new EventEmitter();
 
   mode: string;
@@ -185,7 +185,11 @@ export class MouCustLegalDocComponent implements OnInit {
     if (this.mode == "Edit") {
       currentEditedIndex = this.currentEditedIndex;
     }
-    flag = this.cekDuplicateDocType(currentEditedIndex);
+
+    if(this.isDoubleLegalDocAllowed != "1"){
+      flag = this.cekDuplicateDocType(currentEditedIndex);
+    }
+    
     let d1 = new Date(this.MaxDate);
     let d2 = new Date(this.appCustCompanyLegalDocObj.DocDt);
     let d3 = new Date(this.appCustCompanyLegalDocObj.DocExpiredDt);

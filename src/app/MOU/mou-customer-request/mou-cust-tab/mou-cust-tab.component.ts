@@ -50,6 +50,7 @@ export class MouCustTabComponent implements OnInit {
 
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  isDoubleLegalDocAllowed: string = "";
   generalSettingObj: GenericListByCodeObj;
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
@@ -268,15 +269,18 @@ export class MouCustTabComponent implements OnInit {
           }
         }
       }
-      var groupedCustLegalDoc = this.groupBy(this.custDataCompanyObj.MouCustCompanyLegalDocObjs, function (item) {
-        return [item.MrLegalDocTypeCode, item.DocNo];
-      });
-  
-      var duplCustLegalDoc = groupedCustLegalDoc.find(x => x.length > 1);
-  
-      if(duplCustLegalDoc != undefined){
-        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
-        return;
+
+      if(this.isDoubleLegalDocAllowed != "1"){
+        var groupedCustLegalDoc = this.groupBy(this.custDataCompanyObj.MouCustCompanyLegalDocObjs, function (item) {
+          return [item.MrLegalDocTypeCode, item.DocNo];
+        });
+    
+        var duplCustLegalDoc = groupedCustLegalDoc.find(x => x.length > 1);
+    
+        if(duplCustLegalDoc != undefined){
+          this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
+          return;
+        }
       }
       
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
@@ -1553,6 +1557,7 @@ export class MouCustTabComponent implements OnInit {
     this.generalSettingObj = new GenericListByCodeObj();
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsDoubleLegalDocAllowed);
 
     this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
@@ -1560,6 +1565,7 @@ export class MouCustTabComponent implements OnInit {
 
         var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsDoubleLegalDocAllowed = this.returnGeneralSettingObj.find(x=> x.GsCode == CommonConstant.GSCodeIsDoubleLegalDocAllowed);
 
         if (gsNeedCheckBySystem != undefined) {
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
@@ -1571,6 +1577,12 @@ export class MouCustTabComponent implements OnInit {
           this.isUseDigitalization = gsUseDigitalization.GsValue;
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+
+        if (gsDoubleLegalDocAllowed != undefined) {
+          this.isDoubleLegalDocAllowed = gsDoubleLegalDocAllowed.GsValue;
+        } else {
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsDoubleLegalDocAllowed));
         }
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (response: MouCustObj) => {

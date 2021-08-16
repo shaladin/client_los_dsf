@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
@@ -24,6 +25,8 @@ export class LegalDocTabComponent implements OnInit {
   IsDetail: boolean = false;
   ListLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array();
   InputGridObj: InputGridObj = new InputGridObj();
+  IsDoubleLegalDocAllowed: string = "";
+  ReqByCodeObj: GenericObj = new GenericObj();
   
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -33,6 +36,16 @@ export class LegalDocTabComponent implements OnInit {
   ngOnInit() {
     this.InputGridObj.pagingJson =  "./assets/ucgridview/gridCustCompletionLegalDoc.json";
     this.LoadListLegalDocData();
+    this.checkGSLegalDoc();
+  }
+
+  async checkGSLegalDoc(){
+    this.ReqByCodeObj.Code = CommonConstant.GSCodeIsDoubleLegalDocAllowed;
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, this.ReqByCodeObj).toPromise().then(
+      (response) => {
+        this.IsDoubleLegalDocAllowed = response["GsValue"];
+      }
+    );
   }
 
   LoadListLegalDocData(){
@@ -77,17 +90,18 @@ export class LegalDocTabComponent implements OnInit {
       return;
     }
 
-    var groupedCustLegalDoc = this.groupBy(this.ListLegalDoc, function (item) {
-      return [item.MrLegalDocTypeCode, item.DocNo];
-    });
-
-    var duplCustLegalDoc = groupedCustLegalDoc.find(x => x.length > 1);
-
-    if(duplCustLegalDoc != undefined){
-      this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
-      return;
+    if(this.IsDoubleLegalDocAllowed != "1"){
+      var groupedCustLegalDoc = this.groupBy(this.ListLegalDoc, function (item) {
+        return [item.MrLegalDocTypeCode, item.DocNo];
+      });
+  
+      var duplCustLegalDoc = groupedCustLegalDoc.find(x => x.length > 1);
+  
+      if(duplCustLegalDoc != undefined){
+        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
+        return;
+      }
     }
-
 
     this.OutputTab.emit({IsComplete: true});
   }
