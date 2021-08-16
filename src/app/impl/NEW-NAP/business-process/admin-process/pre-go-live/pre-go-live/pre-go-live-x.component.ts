@@ -464,9 +464,9 @@ export class PreGoLiveXComponent implements OnInit {
   async initInputApprovalObj() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let obj = {
-      ProdOfferingCode: this.result.ProdOfferingCode,
+      ProdOfferingCode: this.AgrmntResult.ProdOfferingCode,
       RefProdCompntCode: "",
-      ProdOfferingVersion: this.result.ProdOfferingVersion
+      ProdOfferingVersion: this.AgrmntResult.ProdOfferingVersion
     };
     if(this.BizTemplateCode != CommonConstant.DF){
       obj.RefProdCompntCode = "END_DATE_GO_LIVE_APV";
