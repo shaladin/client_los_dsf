@@ -45,6 +45,7 @@ export class CessiePreGoLiveApprovalDetailComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCessieMainInfoPreGoLive.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl + '/v1';
     this.initInputApprovalObj();
   }
 
@@ -85,5 +86,21 @@ export class CessiePreGoLiveApprovalDetailComponent implements OnInit {
     this.InputApvObj.TrxNo = this.TrxNo;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
+  }
+
+  GetCallBack(ev) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
+    else if (ev.Key == "customer") {
+      var custObj = {
+        CustNo : ev.ViewObj.CustNo
+      };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        (response) => {
+          AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+        }
+      )
+    }
   }
 }

@@ -6,7 +6,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
@@ -25,7 +24,7 @@ export class FactoringReviewPagingComponent implements OnInit {
         this.inputPagingObj._url = "./assets/ucpaging/searchCessieFactoringReviewPaging.json";
         this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCessieFactoringReviewPaging.json";
 
-        this.inputPagingObj.enviromentUrl = environment.losUrl;
+        this.inputPagingObj.enviromentUrl = environment.losUrl + '/v1';
         this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     }
     GetCallBack(ev) {

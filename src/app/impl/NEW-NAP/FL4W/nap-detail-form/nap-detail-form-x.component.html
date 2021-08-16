@@ -227,7 +227,7 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
-                [BizTemplateCode]="this.BizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')"
+                [BizTemplateCode]="BizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')"
                 (outputCancel)="Cancel()">
               </app-application-data-x>
             </div>

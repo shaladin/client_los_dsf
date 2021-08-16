@@ -21,6 +21,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 })
 export class FactoringReviewDetailComponent implements OnInit {
 
+    readonly CancelLink: string = NavigationConstant.CESSIE_FACTORING_REVIEW_PAGING;
     CessieHXId: number;
     inputGridObj: InputGridObj;
     disburseTos: any;

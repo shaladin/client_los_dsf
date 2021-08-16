@@ -62,7 +62,7 @@ export class CessiePreGoLiveComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCessieMainInfoPreGoLive.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.viewEnvironment = environment.losUrl + '/v1';
     var Obj = { Id: this.CessieHXId };
     await this.http.post(URLConstantX.GetApvAmount, Obj).toPromise().then(
       (response) => {
