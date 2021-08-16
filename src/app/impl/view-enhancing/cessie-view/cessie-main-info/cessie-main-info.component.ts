@@ -19,7 +19,7 @@ export class CessieMainInfoComponent implements OnInit {
   ngOnInit() {
     this.arrValue.push(this.CessieHXId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCessieHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.viewEnvironment = environment.losUrl + '/v1';
     this.viewGenericObj.whereValue = this.arrValue;
   }
 }
