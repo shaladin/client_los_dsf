@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'cessie-summary-view',
@@ -19,7 +20,9 @@ export class CessieSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericSummaryInfoObj.viewInput = "./assets/ucviewgeneric/viewCessieSummaryInfo.json";
+    this.viewGenericSummaryInfoObj.viewEnvironment = environment.losUrl + '/v1';
     this.viewGenericSummaryDisbInfoObj.viewInput = "./assets/ucviewgeneric/viewCessieSummaryDisbInfo.json";
+    this.viewGenericSummaryDisbInfoObj.viewEnvironment = environment.losUrl + '/v1';
     this.IsReady = true;
   }
 }

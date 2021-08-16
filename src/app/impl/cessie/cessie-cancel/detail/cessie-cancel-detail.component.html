@@ -6,7 +6,7 @@
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm"
             (ngSubmit)="MainInfoForm.valid && SaveForm()">
-            <lib-ucSubsection [id]="'MainInfoFormId2'" [title]="'Application / Agreement Cancellation'"
+            <lib-ucSubsection [id]="'MainInfoFormId2'" [title]="'Cessie Cancellation'"
               [panel]="'MainInfoForm2'"></lib-ucSubsection>
             <div class="form-body" id="MainInfoForm2">
               <div class="form-group row adins-required">
@@ -31,7 +31,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: this.BizTemplateCode}"
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
                 translate>
                 <i class="ft-x"></i> Cancel
               </button>
