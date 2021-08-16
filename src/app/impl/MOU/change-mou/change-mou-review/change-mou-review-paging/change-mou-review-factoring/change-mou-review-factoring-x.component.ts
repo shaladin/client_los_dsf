@@ -73,7 +73,6 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewChangeMouHeaderX.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
@@ -225,7 +224,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
+    this.InputObj.EnvUrl = environment.FoundationR3Url + "/v1";
     this.InputObj.PathUrlGetSchemeBySchemeCode =
       URLConstant.GetSchemesBySchemeCode;
     this.InputObj.PathUrlGetCategoryByCategoryCode =
