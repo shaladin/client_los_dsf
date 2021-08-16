@@ -116,7 +116,7 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
+              [BizTemplateCode]="bizTemplateCode"  [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
@@ -217,7 +217,7 @@
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
+              [BizTemplateCode]="bizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">

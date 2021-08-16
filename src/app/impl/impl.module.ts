@@ -25,7 +25,7 @@ import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
 import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
-import { CustHistoryComponent } from "app/NEW-NAP/business-process/credit-process/shared-component/cust-history/cust-history.component";
+import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -53,7 +53,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalR3Module,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
-    AppCustViewComponentsModule
+    AppCustViewComponentsModule,
+    ProcessComponentModule
   ],
   declarations: [
     CessieMonitoringComponent,
@@ -69,8 +70,7 @@ export const customCurrencyMaskConfig = {
     SalesOrderComponent,
     CessieSummaryComponent,
     CessieCancellationPagingComponent,
-    CessieCancellationDetailComponent,
-    CustHistoryComponent
+    CessieCancellationDetailComponent
   ]
 })
 

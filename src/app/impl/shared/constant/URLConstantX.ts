@@ -11,6 +11,7 @@ export class URLConstantX {
   public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
   public static EndDateGoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/EndDateGoLiveApproval";
   public static GoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/GoLiveApproval";
+  public static GetAppXDataByAppId = environment.losUrl + '/v1' + "/AppX/GetAppXDataByAppId";
 
   //App Reserved Fund
   public static GetRsvFundSingleRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetRsvFundSingleRule";
