@@ -80,8 +80,6 @@ export class NapDetailPagingComponent implements OnInit {
       
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_NAPD_MD + this.bizTemplateCode;
-      // this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
-      // this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;

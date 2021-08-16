@@ -125,6 +125,7 @@ export class URLConstant {
   public static AddOrEditAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/AddOrEditAppCommissionData";
   public static SubmitAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/SubmitAppCommissionData";
   public static SubmitReturnHandlingCommRsvFund = environment.losUrl + "/v1" + "/AppCommission/SubmitReturnHandlingCommRsvFund";
+  public static SubmitReturnHandlingCommRsvFundV2 = environment.losUrl + "/v2" + "/AppCommission/SubmitReturnHandlingCommRsvFund";
   public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionDataForEditByAppId";
   public static DeleteAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionRule";
@@ -1182,6 +1183,7 @@ export class URLConstant {
 
   //App Reserved Fund
   public static AddEditAppReservedFund = environment.losUrl + "/v1" + "/AppReservedFund/AddEditAppReservedFund";
+  public static AddEditAppReservedFundV2 = environment.losUrl + "/v2" + "/AppReservedFund/AddEditAppReservedFund";
   public static GetListAppReservedFundByAppId = environment.losUrl + "/v1" + "/AppReservedFund/GetListAppReservedFundByAppId";
   public static CreateRsvFundRule = environment.losUrl + "/v1" + "/AppReservedFund/CreateRsvFundRule";
   public static CalculateGrossYieldRsvFund = environment.losUrl + "/v1" + "/AppReservedFund/CalculateGrossYieldRsvFund";
@@ -1386,6 +1388,7 @@ export class URLConstant {
   public static GetAppCrdRvwById = environment.losUrl + "/v1" + "/AppCrdRvw/GetAppCrdRvwById";
   public static AddOrEditAppCrdRvwDataAndListManualDeviationData = environment.losUrl + "/v1" + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationData";
   public static CrdRvwMakeNewApproval = environment.losUrl + "/v1" + "/AppCrdRvw/CrdRvwMakeNewApproval";
+  public static CrdRvwMakeNewApprovalV2 = environment.losUrl + "/v2" + "/AppCrdRvw/CrdRvwMakeNewApproval";
   public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/v1" + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
   public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/v1" + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
@@ -1401,6 +1404,7 @@ export class URLConstant {
   public static RequestReturnTaskV2 = environment.losUrl + "/v2" + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/v1" + "/ReturnHandlingD/DeleteReturnHandlingD";
   public static ResumeReturnHandling = environment.losUrl + "/v1" + "/ReturnHandlingH/ResumeReturnHandling";
+  public static ResumeReturnHandlingV2 = environment.losUrl + "/v2" + "/ReturnHandlingH/ResumeReturnHandling";
   public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/v1" + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
   public static AddReturnHandlingH = environment.losUrl + "/v1" + "/ReturnHandlingH/AddReturnHandlingH";
 
@@ -1440,6 +1444,7 @@ export class URLConstant {
   //Ref App Attr
   public static GetListRefAppAttrCollateral = environment.losUrl + "/v1" + "/RefAppAttr/GetListRefAppAttrCollateral";
   public static CompleteAppPhoneVerif = environment.losUrl + "/v1" + "/PhoneVerif/CompleteAppPhoneVerif";
+  public static CompleteAppPhoneVerifV2 = environment.losUrl + "/v2" + "/PhoneVerif/CompleteAppPhoneVerif";
 
   //Agrmnt Subsidy
   public static GetAgrmntSubsidyListByAgrmntId = environment.losUrl + "/v1" + "/AgrmntSubsidy/GetAgrmntSubsidyListByAgrmntId";
