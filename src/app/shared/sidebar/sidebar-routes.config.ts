@@ -521,6 +521,21 @@ export const ROUTES: RouteInfo[] = [
     ], Params: []
   },
   {
+    Path: '', Title: 'Cessie', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Submenu: [
+      { Path: NavigationConstant.CESSIE_MONITORING, Title: 'Cessie Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      {
+        Path: '', Title: 'Cessie Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+        Submenu: [
+          { Path: NavigationConstant.CESSIE_FACTORING_REVIEW_PAGING, Title: 'Factoring Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+          { Path: NavigationConstant.CESSIE_PGL_PAGING, Title: 'PreGoLive', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+          { Path: NavigationConstant.CESSIE_PGL_APPRVL_PAGING, Title: 'PreGoLive Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+        ], Params: []
+      },
+      { Path: NavigationConstant.CESSIE_CANCEL_PAGING, Title: 'Cessie Cancellation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+    ], Params: []
+  },
+  {
     Path: '', Title: 'AML', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: NavigationConstant.LTKM_REQ, Title: 'LTKM Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
@@ -561,12 +576,6 @@ export const ROUTES: RouteInfo[] = [
     Submenu: [
       { Path: NavigationConstant.SETTING_APP_SOURCE_PAGING, Title: "Application Source", Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: []
-  },
-  {
-    Path: '', Title: 'Cessie', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
-    Submenu: [
-      { Path: NavigationConstant.CESSIE_MONITORING, Title: 'Cessie Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-    ], Params: []
-  },
+  }
 ];
   

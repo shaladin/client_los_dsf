@@ -28,7 +28,7 @@ export class ChangeMouReviewPagingXComponent implements OnInit {
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/impl/ucpaging/mou/searchChangeMouReviewX.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
+    this.inputPagingObj.enviromentUrl = environment.losUrl + '/v1';
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/searchChangeMouReviewX.json";
     this.inputPagingObj.ddlEnvironments = [

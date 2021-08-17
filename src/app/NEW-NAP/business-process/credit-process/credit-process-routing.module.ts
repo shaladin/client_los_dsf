@@ -28,7 +28,7 @@ import { SurveyPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit
 import { SurveySubjectXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component';
 import { SurveySubjectVerifXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component';
 import { SurveySubjectViewXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component';
-
+import { CommissionReservedFundDetailComponent } from './commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component';
 
 const routes: Routes = [
   {
@@ -44,6 +44,20 @@ const routes: Routes = [
       {
         path: PathConstantX.COMM_RSV_FUND_DETAIL,
         component: ComissionReservedFundDetailXComponent,
+        data: {
+          title: 'Commission Reserved Fund Detail'
+        }
+      },
+      {
+        path: PathConstant.COMM_RSV_FUND_PAGING,
+        component: CommissionReservedFundPagingComponent,
+        data: {
+          title: 'Commission Reserved Fund Paging'
+        }
+      },
+      {
+        path: PathConstant.COMM_RSV_FUND_DETAIL,
+        component: CommissionReservedFundDetailComponent,
         data: {
           title: 'Commission Reserved Fund Detail'
         }
