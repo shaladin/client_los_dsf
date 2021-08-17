@@ -1,0 +1,53 @@
+<h4 class="form-section card-title" translate><i class="ft-file-text"></i> Survey Detail</h4>
+<app-app-main-info-component-x [arrValue]="arrValue"></app-app-main-info-component-x>
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <lib-ucSubsection [id]="'verificationModuleId'" [title]="'Survey Detail'" [panel]="'verificationModule'">
+      </lib-ucSubsection>
+      <div id="verificationModule" *ngIf="verifResultHObj">
+        <div>
+          <label class="col-md-3">Survey No</label>
+          <label class="col-md-3">{{verifResultHObj.MrVerfObjectCode}}</label>
+          <label class="col-md-3">Survey Notes</label>
+          <label class="col-md-3">{{verifResultHObj.Notes}}</label>
+        </div>
+        <div>
+          <label class="col-md-3">Survey Date</label>
+          <label class="col-md-3" *ngIf="verifResultHObj">{{verifResultHObj.VerfDt | date: 'dd-MM-yyyy'}}</label>
+          <label class="col-md-3">Survey Time</label>
+          <label class="col-md-3" *ngIf="verifResultHObj">{{verifResultHObj.VerfDt | date:'HH:mm'}}</label>
+        </div>
+        <div>
+          <label class="col-md-3">Survey Type</label>
+          <label class="col-md-3" *ngIf="verifResultHObj">{{verifResultHObj.PhnType}}</label>
+        </div>
+      </div>
+      <div *ngIf="listVerifResultDObj">
+        <div *ngFor="let item of listVerifResultDObj; let i = index">
+          <lib-ucSubsection [id]="'verfResult'+i+'id'" [title]="item.VerfQuestionGrpName" [panel]="'verfResult'+i">
+          </lib-ucSubsection>
+          <div id="verfResult{{i}}">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-left">Question</th>
+                  <th class="text-left">Answer</th>
+                  <th class="text-left">Notes</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="item.VerResultList">
+                <tr *ngFor="let value of item.VerResultList">
+                  <td class="text-left">{{value.VerfQuestionText}}</td>
+                  <td class="text-left">{{value.Answer}}</td>
+                  <td class="text-left">{{value.Notes}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

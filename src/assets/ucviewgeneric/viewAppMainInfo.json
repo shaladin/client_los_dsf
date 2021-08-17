@@ -3,7 +3,7 @@
   "subsection": [{
     "subSectionId": "AgrMainInformationId",
     "subSectionTitle": "Main Information",
-    "mainInfoPath": "/Generic/GetDataViewBySQL",
+    "mainInfoPath": "/v1/Generic/GetDataViewBySQL",
     "mainInfo": [{
         "type": "link",
         "label": "Application No",

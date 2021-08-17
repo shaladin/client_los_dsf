@@ -24,6 +24,10 @@ import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit
 import { ComissionReservedFundDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-detail-x/comission-reserved-fund-detail-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { ComissionReservedFundPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-paging-x/comission-reserved-fund-paging-x.component';
+import { SurveyPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-paging-x/survey-paging-x.component';
+import { SurveySubjectXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component';
+import { SurveySubjectVerifXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component';
+import { SurveySubjectViewXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component';
 
 
 const routes: Routes = [
@@ -175,6 +179,34 @@ const routes: Routes = [
         component: CreditApprovalCfnaDetailComponent,
         data: {
           title: 'Credit Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.SURVEY_VERIF_PAGING,
+        component: SurveyPagingXComponent,
+        data: {
+          title: 'Survey Paging'
+        }
+      },
+      {
+        path: PathConstantX.SURVEY_VERIF_SUBJECT,
+        component: SurveySubjectXComponent,
+        data: {
+          title: 'Survey Subject'
+        }
+      },
+      {
+        path: PathConstantX.SURVEY_VERIF_SUBJECT_VERIF,
+        component: SurveySubjectVerifXComponent,
+        data: {
+          title: 'Survey Subject Verif'
+        }
+      },
+      {
+        path: PathConstantX.SURVEY_VERIF_SUBJECT_VIEW,
+        component: SurveySubjectViewXComponent,
+        data: {
+          title: 'Survey Subject View'
         }
       }
     ]

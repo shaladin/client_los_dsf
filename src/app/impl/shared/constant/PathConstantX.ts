@@ -22,8 +22,16 @@ export class PathConstantX {
   //#endregion
 
   //#region Nap-Crd-Prcs
+  public static SUBJECT = 'SubjectX';
+  public static SURVEY_VERIF_X = "SurveyVerif";
+  public static VERIF = 'VerifX';
+  public static VIEW = 'ViewX';
   public static COMM_RSV_FUND_PAGING = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.PAGING;
   public static COMM_RSV_FUND_DETAIL = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.DETAIL_X;
+  public static SURVEY_VERIF_PAGING = PathConstantX.SURVEY_VERIF_X + "/" + PathConstantX.PAGING;
+  public static SURVEY_VERIF_SUBJECT = PathConstantX.SURVEY_VERIF_X + "/" + PathConstantX.SUBJECT;
+  public static SURVEY_VERIF_SUBJECT_VERIF = PathConstantX.SURVEY_VERIF_X + "/" + PathConstantX.SUBJECT + "/" + PathConstantX.VERIF;
+  public static SURVEY_VERIF_SUBJECT_VIEW = PathConstantX.SURVEY_VERIF_X + "/" + PathConstantX.SUBJECT + "/" + PathConstantX.VIEW;
   //#endregion
 
   //#region Nap-Main-Data
@@ -79,6 +87,10 @@ export class PathConstantX {
   public static GO_LIVE_APV_PAGING_X = PathConstantX.GO_LIVE_APV_X + '/' + PathConstantX.PAGING;
   public static GO_LIVE_APV_DETAIL_X = PathConstantX.GO_LIVE_APV_X + '/' + PathConstantX.DETAIL_X;
   //endregion
+
+  //#region Nap-Additional-Prcs
+  public static RETURN_HANDLING_SURVEY_VERIF_PAGING_X = PathConstant.RETURN_HANDLING + "/" + PathConstantX.SURVEY_VERIF_PAGING;
+  //#endregion
 
   public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + '/' + PathConstantX.DETAIL_X;
 }

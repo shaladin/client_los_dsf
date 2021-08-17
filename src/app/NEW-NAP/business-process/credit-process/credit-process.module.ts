@@ -56,6 +56,10 @@ import { CommissionV2XComponent } from "app/impl/NEW-NAP/business-process/credit
 import { ReservedFundXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/reserved-fund-x/reserved-fund-x.component";
 import { ComissionReservedFundPagingXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-paging-x/comission-reserved-fund-paging-x.component";
 import { FormCommissionGenerateXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/commission-v2-x/form-commission-generate-x/form-commission-generate-x.component";
+import { SurveyPagingXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-paging-x/survey-paging-x.component";
+import { SurveySubjectXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component";
+import { SurveySubjectVerifXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component";
+import { SurveySubjectViewXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -136,7 +140,11 @@ export const customCurrencyMaskConfig = {
     ComissionReservedFundDetailXComponent,
     CommissionV2XComponent,
     ReservedFundXComponent,
-    FormCommissionGenerateXComponent
+    FormCommissionGenerateXComponent,
+    SurveyPagingXComponent,
+    SurveySubjectXComponent,
+    SurveySubjectVerifXComponent,
+    SurveySubjectViewXComponent
   ],
   providers: [
     NGXToastrService

@@ -14,4 +14,10 @@ export class CommonConstantX {
 
     //Add Interest Paid By
     public static AdditionalInterestPaidByCustomer = 'CU';
+
+    //Return Handling
+    public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SRVY";
+
+    //Default SlikSecEcoCode
+    public static DefaultSlikSecEcoCode = "ECOSLIK_DEFAULT";
 }
