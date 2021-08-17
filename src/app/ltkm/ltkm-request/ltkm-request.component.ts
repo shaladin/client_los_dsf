@@ -2346,10 +2346,11 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     getLookupAppNo(event){        
-        console.log("getlookup")
-        // this.appNo = event.appNovalue; add commit
-        console.log("eventandri",event)
-        console.log(event.jsonSelect.AppNo)
+        // console.log("getlookup")
+        // this.appNo = event.appNovalue;
+        // console.log("eventandri",event)
+        // console.log(event.jsonSelect.AppNo)
+        this.appNo = event.jsonSelect.AppNo;
     }
 }
 

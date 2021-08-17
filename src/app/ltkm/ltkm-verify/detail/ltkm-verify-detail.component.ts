@@ -57,6 +57,9 @@ export class LtkmVerifyDetailComponent implements OnInit {
     ltkmReq: LtkmReqObj;
     ltkmAnalysisNotes: string = "";
 
+    isCustTypePersonal: boolean = true;
+    
+
     // ReturnForm = this.fb.group({
     //   ReturnReason: [''],
     //   ReturnReasonDesc: [''],
@@ -80,7 +83,10 @@ export class LtkmVerifyDetailComponent implements OnInit {
                 this.wfTaskListId = params["WfTaskListId"];
             }
             if (params["MrCustTypeCode"] != null) {
-                this.CustTypeCode = params["MrCustTypeCode"];
+                this.CustTypeCode = params["MrCustTypeCode"];   
+                this.CustTypeCode == 'PERSONAL' ? this.isCustTypePersonal = true : this.isCustTypePersonal = false;              
+
+                console.log("pertamacust",this.CustTypeCode);
             }
         });
     }

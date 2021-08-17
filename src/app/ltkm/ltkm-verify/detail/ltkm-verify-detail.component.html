@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
     <div class="card">
-      <app-ltkm-mi [arrValue]="arrValue"></app-ltkm-mi>
+      <app-ltkm-mi [arrValue]="arrValue"></app-ltkm-mi>      
   
       <mat-tab-group mat-align-tabs="center">
   
@@ -12,10 +12,10 @@
         </mat-tab>
   
         <mat-tab label="Customer Data">
-          <ng-template matTabContent>
-            <app-view-ltkm-cust-data-company *ngIf="CustTypeCode == 'COMPANY'" [LtkmCustId]="LtkmCustId">
+          <ng-template matTabContent>            
+            <app-view-ltkm-cust-data-company *ngIf="isCustTypePersonal == false" [LtkmCustId]="LtkmCustId">
             </app-view-ltkm-cust-data-company>
-            <app-view-ltkm-cust-data-personal *ngIf="CustTypeCode == 'PERSONAL'" [LtkmCustId]="LtkmCustId">
+            <app-view-ltkm-cust-data-personal *ngIf="isCustTypePersonal" [LtkmCustId]="LtkmCustId">
             </app-view-ltkm-cust-data-personal>
           </ng-template>
         </mat-tab>

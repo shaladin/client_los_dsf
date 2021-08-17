@@ -70,6 +70,36 @@
             "type": "text",
             "label": "Company Address",
             "property": "JobAddr"
+          },
+          {
+            "type": "text",
+            "label": " ",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "Authority AML",
+            "property": "AmlAuthorityVal"
+          },
+          {
+            "type": "text",
+            "label": "Bussiness Source AML",
+            "property": "AmlBusSourceVal"
+          },
+          {
+            "type": "text",
+            "label": "Department AML",
+            "property": "AmlDepartmentVal"
+          },
+          {
+            "type": "text",
+            "label": "Bussiness Period AML",
+            "property": "AmlBusPeriodVal"
+          },
+          {
+            "type": "currency",
+            "label": "Estimation Remuneration",
+            "property": "EstRemuneration"
           }
         ],
         "querystring": {

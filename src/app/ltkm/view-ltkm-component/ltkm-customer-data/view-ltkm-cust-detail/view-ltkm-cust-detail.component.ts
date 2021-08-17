@@ -19,7 +19,7 @@ export class ViewLtkmCustDetailComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void>{
-    
+    console.log(this.LtkmCustId);
   }
 
   onBackClick(){

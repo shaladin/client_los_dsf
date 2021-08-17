@@ -52,10 +52,13 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
   CustPersonalFinData : object;
   currentCustFinDataIndex: number;
 
+  exampleArr: Array<object> = [];
+
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log(this.LtkmCustId);
     await this.getCustData();
     this.arrValue.push(this.ltkmCustObj.LtkmCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalMainData.json";
@@ -82,6 +85,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
   async getCustData() {
       await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
       (response) => {
+        console.log("pertama1", response, this.LtkmCustId);
         this.ltkmCustObj = response["rLtkmCustObj"];
         this.custModelCode = response["MrCustModelCode"];
         this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
@@ -89,12 +93,14 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
         this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
         this.ltkmCustPersonalContactPersonObjs = response["rLtkmCustPersonalContactPersonObjs"] == null ? new Array<LtkmCustPersonalContactPersonObj>() : response["rLtkmCustPersonalContactPersonObjs"];
         this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];
-        this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"];
+        this.exampleArr = response["rLtkmCustFamilyObjs"];        
+        this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"];  
 
         // filter family yg punya relationship
         if(this.ltkmCustFamilyObjs && this.ltkmCustFamilyObjs.length > 0) {
           this.ltkmCustFamilyObjs = this.ltkmCustFamilyObjs.filter(item => item['MrCustRelationshipCode'])
         }
+        console.log("cekfamilyafterfilter", this.ltkmCustFamilyObjs);
 
         // filter cust group yg punya cust no & applicant no
         if(this.ltkmCustGrpObjs && this.ltkmCustGrpObjs.length > 0) {
@@ -105,7 +111,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
         else if(this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';
         else if(this.ltkmCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
         else this.customerTitle = 'Customer';
-      });
+      }).catch((error)=>{console.log("inierror",error)});
   }
 
   viewDetailFamilyHandler(LtkmCustId, MrCustTypeCode){
@@ -124,6 +130,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
       this.detailMrCustTypeCode = MrCustTypeCode;
       this.detailCustomerTitle = 'Family';
       this.isShowDetail = true;
+      console.log("popup",this.LtkmCustId,LtkmCustId)
     }
   }
 
