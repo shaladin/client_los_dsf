@@ -848,14 +848,12 @@ export class AssetDataAddEditXComponent implements OnInit {
     this.InputLookupSupplierObj = new InputLookupObj();
     this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
@@ -1087,15 +1085,13 @@ export class AssetDataAddEditXComponent implements OnInit {
       ReqGetListActiveVendorSalesSlb.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
       await this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSalesSlb).toPromise().then(
         (response) => {
+          console.log("AIYAYAYAYAy")
           this.listSalesObj = response[CommonConstant.ReturnObj];
-          var temp: any;
-            temp = this.listSalesObj.filter(
-              emp => emp.VendorEmpNo == this.salesAppAssetSupplEmpObj.SupplEmpNo);
           this.AssetDataForm.patchValue({
-            SalesPersonId: temp[0].VendorEmpId,
-            SalesPersonName: temp[0].VendorEmpName,
-            SalesPersonNo: temp[0].VendorEmpNo,
-            SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+            SalesPersonId: this.listSalesObj[0].VendorEmpId,
+            SalesPersonName: this.listSalesObj[0].VendorEmpName,
+            SalesPersonNo: this.listSalesObj[0].VendorEmpNo,
+            SalesPersonPositionCode: this.listSalesObj[0].MrVendorEmpPositionCode,
         });
       });
     }
@@ -1714,7 +1710,6 @@ export class AssetDataAddEditXComponent implements OnInit {
     this.InputLookupAccObj = new InputLookupObj();
     this.InputLookupAccObj.urlJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAccObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAccObj.pagingJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.genericJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.addCritInput = arrAddCrit;
@@ -1728,7 +1723,6 @@ export class AssetDataAddEditXComponent implements OnInit {
     this.InputLookupAccSupObj = new InputLookupObj();
     this.InputLookupAccSupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupAccSupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAccSupObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupAccSupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupAccSupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
     var suppCrit = new Array();
@@ -1879,7 +1873,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = false;
       this.inputAddressObjForLoc.isRequired = false;
       for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
-        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Engine_No) {
+        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.Engine_No) {
           this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.required, Validators.pattern(this.SerialNoRegex)]);
           this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
         }
@@ -1888,7 +1882,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
       this.inputAddressObjForLoc.isRequired = true;
       for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
-        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Engine_No) {
+        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.Engine_No) {
           this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.pattern(this.SerialNoRegex)]);
           this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
         }
