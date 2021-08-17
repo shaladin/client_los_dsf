@@ -94,6 +94,10 @@ export class PathConstantX {
   //endregion
 
   public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + '/' + PathConstantX.DETAIL_X;
+
+  //credit review
+  public static CRD_REVIEW_CR_PAGING_X = PathConstant.CRD_REVIEW_CR + "/" + PathConstantX.PAGING;
+  public static CRD_REVIEW_CR_DETAIL_X = PathConstant.CRD_REVIEW_CR + "/" + PathConstantX.DETAIL_X;
 }
 
 
