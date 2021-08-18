@@ -7,7 +7,6 @@ import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { PreGoLiveMainObj } from 'app/shared/model/PreGoLiveMainObj.Model';
-import { PreGoLiveObj } from 'app/shared/model/PreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
