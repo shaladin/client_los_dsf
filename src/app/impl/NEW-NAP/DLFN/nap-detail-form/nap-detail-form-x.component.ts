@@ -121,7 +121,6 @@ export class NapDetailFormXComponent implements OnInit {
 
     this.ClaimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",

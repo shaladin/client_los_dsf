@@ -90,9 +90,9 @@
     <div id="AddCollInfo">
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate> Receive Date</label>
-        <label class="col-md-4 adInsLabel" translate>{{CollateralStatObj.CollateralReceivedDt}}</label>
+        <label class="col-md-4 adInsLabel" translate>{{CollateralStatObj.CollateralReceivedDt | date:'yyyy-MM-dd'}}</label>
         <label class="col-md-2 adInsLabel" translate> Release Date</label>
-        <label class="col-md-4 adInsLabel" translate>{{CollateralStatObj.CollateralReleasedDt}} </label>
+        <label class="col-md-4 adInsLabel" translate>{{CollateralStatObj.CollateralReleasedDt | date:'yyyy-MM-dd'}} </label>
       </div>
     </div>
 

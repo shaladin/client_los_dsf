@@ -28,7 +28,7 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
-      "path": "/RefMaster/GetListKeyValueActiveByCode",
+      "path": "GetRefMasterListKeyValueActiveByCode",
       "label": "Mou Type",
       "items": [],
       "itemsUrl": [],

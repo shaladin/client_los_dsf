@@ -126,6 +126,9 @@ import { SchmStepUpStepDownCummulativeXComponent } from "app/impl/NEW-NAP/sharin
 import { SchmStepUpStepDownLeasingXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing-x.component";
 import { SchmStepUpStepDownNormalXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal-x.component";
 import { ViewSubsidyXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/view-subsidy/view-subsidy-x.component";
+import { MultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/multi-asset-data-x.component";
+import { AssetDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging-x.component";
+import { AssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/asset-data/asset-data-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -256,7 +259,10 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownCummulativeXComponent,
     SchmStepUpStepDownLeasingXComponent,
     SchmStepUpStepDownNormalXComponent,
-    ViewSubsidyXComponent
+    ViewSubsidyXComponent,
+    MultiAssetDataXComponent,
+    AssetDataPagingXComponent,
+    AssetDataXComponent
   ],
   imports: [
     CommonModule,
@@ -388,7 +394,10 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownCummulativeXComponent,
     SchmStepUpStepDownLeasingXComponent,
     SchmStepUpStepDownNormalXComponent,
-    ViewSubsidyXComponent
+    ViewSubsidyXComponent,
+    MultiAssetDataXComponent,
+    AssetDataPagingXComponent,
+    AssetDataXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

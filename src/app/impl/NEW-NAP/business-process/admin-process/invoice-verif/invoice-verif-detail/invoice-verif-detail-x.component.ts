@@ -75,7 +75,6 @@ export class InvoiceVerifDetailXComponent implements OnInit {
 
     if (this.LobCode == "DLRFNCNG") {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerifDlrFinancing.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
       this.viewGenericObj.ddlEnvironments = [
           {
               name: "ApplicationNo",
@@ -90,7 +89,6 @@ export class InvoiceVerifDetailXComponent implements OnInit {
     }
     else{
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
       this.viewGenericObj.ddlEnvironments = [
         {
           name: "ApplicationNo",
