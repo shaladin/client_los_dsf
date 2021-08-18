@@ -65,6 +65,7 @@ export class URLConstantX {
 
   //Approval
   public static NewApproval = environment.losUrl + "/v1" + "/ApprovalX/Approval";
+
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
   public static AddNewApplication = environment.losUrl + "/v1" + "/AppX/AddNewApplication";
@@ -74,9 +75,9 @@ export class URLConstantX {
   //AGRMNT ACTIVATION
   public static SubmitAgrmntActivationByHuman = environment.losUrl + '/v1' + "/AgrmntActivationX/SubmitAgrmntActivationByHuman";
 
-  //APP INVOICE X
-  public static SubmitInvoiceVerifDlfn = environment.losUrl  + '/v1' + "/AppInvoiceX/SubmitInvoiceVerifDlfn";
-
   //APP INSURANCE X
   public static GetListAppInsObjByAgrmntIdForViewX = environment.losUrl + '/v1' + '/AppInsX/GetListAppInsObjByAgrmntIdForView';
+
+  //APP TC
+  public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
 }

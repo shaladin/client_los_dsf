@@ -38,7 +38,10 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
     IsReady: boolean = false;
 
     appTC: AppTCObj;
-    RlistAppTCObj: { ListAppTcObj: Array<AppTCObj> };
+    RlistAppTCObj: {
+      ListAppTcObj: Array<AppTCObj>,
+      AppId: number
+    };
 
     InvoiceForm = this.fb.group({
         Invoices: this.fb.array([])
@@ -62,7 +65,8 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
         var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
 
         this.RlistAppTCObj = {
-            ListAppTcObj: []
+            ListAppTcObj: [],
+            AppId : this.AppId
         }
         this.RlistAppTCObj.ListAppTcObj = new Array();
 
@@ -94,9 +98,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
             this.RlistAppTCObj.ListAppTcObj.push(this.appTC);
         }
 
-        var request = {ListAppTcObj: this.RlistAppTCObj.ListAppTcObj, AppId: this.AppId};
-
-        this.httpClient.post(URLConstantX.SubmitInvoiceVerifDlfn, request).subscribe(
+        this.httpClient.post(URLConstantX.EditAppTcX, this.RlistAppTCObj).subscribe(
             (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.ResumeWf();
