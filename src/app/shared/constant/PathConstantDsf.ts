@@ -57,4 +57,7 @@ export class PathConstantDsf {
     public static PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
     //#endregion report factoring
 
+    public static REPORT_APP_STATUS = "ReportAppStatus";
+    public static PRINT_REPORT_APP_STATUS = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_APP_STATUS;
+
 }

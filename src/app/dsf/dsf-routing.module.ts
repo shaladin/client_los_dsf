@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
+import { AppStatusDsfComponent } from './report/factoring/app-status-dsf/app-status-dsf.component';
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
 import { InvoicekwitansitandaterimaDetailComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-detail/invoicekwitansitandaterima-detail.component';
 import { InvoicekwitansitandaterimaPagingComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-paging/invoicekwitansitandaterima-paging.component';
@@ -103,6 +104,18 @@ const routes: Routes = [
         component: InvoicekwitansitandaterimaDetailComponent,
         data: {
           title: "Report Fact Invoice Kwitansi Tanda Terima Detail"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_APP_STATUS,
+        component: AppStatusDsfComponent,
+        data: {
+          title: "Report Application Status"
         }
       }
     ]

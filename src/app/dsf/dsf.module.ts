@@ -15,9 +15,10 @@ import { UcpagingModule } from '@adins/ucpaging';
 import { InvoicekwitansitandaterimaDetailComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-detail/invoicekwitansitandaterima-detail.component';
 import { FormsModule } from '@angular/forms';
 import { CollateraldataComponent } from './report/factoring/collateraldata/collateraldata.component';
+import { AppStatusDsfComponent } from './report/factoring/app-status-dsf/app-status-dsf.component';
 
 @NgModule({
-  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent],
+  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent, AppStatusDsfComponent],
   imports: [
     CommonModule,
     FormsModule,
