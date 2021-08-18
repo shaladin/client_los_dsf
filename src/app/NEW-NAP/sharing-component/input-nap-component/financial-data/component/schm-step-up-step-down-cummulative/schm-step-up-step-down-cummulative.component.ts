@@ -12,6 +12,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/AppFinData/CalcStepUpStepDownObjForTrialCalc.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-cummulative',
@@ -34,6 +35,9 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
+  IsFirstCalc: boolean = true;
+  EffRateAfterCalc: number = 0;
+  FlatRateAfterCalc: number = 0;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -62,8 +66,10 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
         InstAmt: this.InstAmt
       });
     }
-
-
+    if (this.ParentForm.getRawValue().ExistingFinData) {
+      this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
+      this.FlatRateAfterCalc = this.ParentForm.getRawValue().FlatRatePrcnt;
+    }
   }
 
   LoadDDLRateType() {
@@ -94,6 +100,11 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
           this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+          if (this.ParentForm.getRawValue().ExistingFinData) {
+            this.ParentForm.patchValue({
+              IsReCalculate: true
+            });
+          }
         }
       }
     );
@@ -147,6 +158,26 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   }
 
   SetNeedReCalculate(value) {
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate) {
+      if ((this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective && this.EffRateAfterCalc == this.ParentForm.getRawValue().EffectiveRatePrcnt)
+        || (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeFlat && this.FlatRateAfterCalc == this.ParentForm.getRawValue().FlatRatePrcnt)) {
+        this.ParentForm.patchValue({
+          IsReCalculate: true
+        });
+      } else {
+        this.ParentForm.patchValue({
+          IsReCalculate: false
+        });
+      }
+    } else if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst) {
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
+    } else {
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
+    }
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
@@ -176,33 +207,39 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
       this.calcStepUpStepDownObj = this.ParentForm.getRawValue();
       this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
 
-      this.http.post(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
         (response) => {
-          this.listInstallment = response["InstallmentTable"];
-          this.listAppInstStepSchm = response["AppInstStepSchmObjs"];
+          this.listInstallment = response.InstallmentTable;
+          this.EffRateAfterCalc = response.EffectiveRatePrcnt;
+          this.FlatRateAfterCalc = response.FlatRatePrcnt;
+          this.listAppInstStepSchm = response.AppInstStepSchmObjs;
           this.ParentForm.patchValue({
-            TotalDownPaymentNettAmt: response["TotalDownPaymentNettAmt"], //muncul di layar
-            TotalDownPaymentGrossAmt: response["TotalDownPaymentGrossAmt"], //inmemory
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
 
-            EffectiveRatePrcnt: response["EffectiveRatePrcnt"],
-            FlatRatePrcnt: response["FlatRatePrcnt"],
-            InstAmt: response["InstAmt"],
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
 
-            GrossYieldPrcnt: response["GrossYieldPrcnt"],
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
 
-            TotalInterestAmt: response["TotalInterestAmt"],
-            TotalAR: response["TotalARAmt"],
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
 
-            NtfAmt: response["NtfAmt"],
-            ApvAmt: response["ApvAmt"],
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
 
-            TotalLifeInsCustAmt: response["TotalLifeInsCustAmt"],
-            LifeInsCptlzAmt: response["LifeInsCptlzAmt"],
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
-            DownPaymentGrossAmt: response["DownPaymentGrossAmt"],
-            DownPaymentNettAmt: response["DownPaymentNettAmt"]
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt
 
           })
+
+          this.ParentForm.patchValue({
+            IsReCalculate: true
+          });
           this.SetInstallmentTable();
           this.SetInstStepSchm();
           this.SetNeedReCalculate(false);
@@ -337,9 +374,15 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     if (calcBase == CommonConstant.FinDataCalcBaseOnRate) {
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
     } else if (calcBase == CommonConstant.FinDataCalcBaseOnInst) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
     } else if (calcBase == CommonConstant.FinDataCalcBaseOnCommission) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
