@@ -92,7 +92,7 @@
             "property": "AmlDepartment"
           },
           {
-            "type": "date",
+            "type": "text",
             "label": "Bussiness Period AML",
             "property": "AmlBusPeriod"
           },
