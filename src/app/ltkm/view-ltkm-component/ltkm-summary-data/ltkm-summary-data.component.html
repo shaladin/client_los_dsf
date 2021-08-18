@@ -198,8 +198,7 @@
         </div>
         <div class="col-md-3">
           <label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['AddSrcNotes'] == undefined || SummaryLtkmReqObj['ReturnObject']['AddSrcNotes'] == null ? "-": SummaryLtkmReqObj['ReturnObject']['AddSrcNotes']}}</label>
-        </div>
-        <!-- <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['AddSrcNotes']}}</label></div> -->
+        </div>        
       </div>
     </div>
 
@@ -252,7 +251,7 @@
               <a [href]="UrlAppView + '?AppId=' + AppId" target="_blank" noreferrer noopener  *ngIf="SummaryLtkmReqObj['ReturnObject']['AppNo']">
                 {{SummaryLtkmReqObj['ReturnObject']['AppNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AppNo']}}
               </a>
-              <div *ngIf="!SummaryLtkmReqObj['ReturnObject']['AppNo']">
+              <div *ngIf="!AppId">
                 {{SummaryLtkmReqObj['ReturnObject']['AppNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AppNo']}}
               </div>
             </label></div>            
@@ -263,7 +262,7 @@
               <a [href]="UrlAgrmntView + '?AgrmntId='+AgrmntId" target="_blank" noreferrer noopener *ngIf="SummaryLtkmReqObj['ReturnObject']['AgrmntNo']">
                 {{SummaryLtkmReqObj['ReturnObject']['AgrmntNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AgrmntNo']}}
               </a>
-              <div *ngIf="!SummaryLtkmReqObj['ReturnObject']['AgrmntNo']">
+              <div *ngIf="!AgrmntId">
                 {{SummaryLtkmReqObj['ReturnObject']['AgrmntNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AgrmntNo']}}
               </div>
             </div>

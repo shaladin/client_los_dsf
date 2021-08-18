@@ -79,22 +79,22 @@
           {
             "type": "text",
             "label": "Authority AML",
-            "property": "AmlAuthorityVal"
+            "property": "AmlAuthority"
           },
           {
             "type": "text",
             "label": "Bussiness Source AML",
-            "property": "AmlBusSourceVal"
+            "property": "AmlBussource"
           },
           {
             "type": "text",
             "label": "Department AML",
-            "property": "AmlDepartmentVal"
+            "property": "AmlDepartment"
           },
           {
             "type": "text",
             "label": "Bussiness Period AML",
-            "property": "AmlBusPeriodVal"
+            "property": "AmlBusPeriod"
           },
           {
             "type": "currency",

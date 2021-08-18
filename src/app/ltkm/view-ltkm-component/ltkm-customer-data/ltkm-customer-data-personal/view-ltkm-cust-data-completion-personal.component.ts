@@ -84,8 +84,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
 
   async getCustData() {
       await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
-      (response) => {
-        console.log("pertama1", response, this.LtkmCustId);
+      (response) => {        
         this.ltkmCustObj = response["rLtkmCustObj"];
         this.custModelCode = response["MrCustModelCode"];
         this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
