@@ -166,7 +166,7 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     }
     const request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId, IsDF: true };
 
-    this.httpClient.post(URLConstantX.UpdateAppInvoiceDlfnX, request).subscribe(() => {
+    this.httpClient.post(URLConstantX.EditAppTcX, request).subscribe(() => {
       this.outputTab.emit();
     });
   }

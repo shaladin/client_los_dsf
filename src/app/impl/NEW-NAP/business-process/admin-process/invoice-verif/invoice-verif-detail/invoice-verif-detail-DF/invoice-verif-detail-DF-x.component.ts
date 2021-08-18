@@ -98,9 +98,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
             this.RlistAppTCObj.ListAppTcObj.push(this.appTC);
         }
 
-        const request = {ListAppTcObj: this.RlistAppTCObj.ListAppTcObj, AppId: this.AppId};
-        //this.httpClient.post(URLConstantX.EditAppTcX, this.RlistAppTCObj).subscribe(
-        this.httpClient.post(URLConstantX.SubmitInvoiceVerifDlfn, request).subscribe(
+        this.httpClient.post(URLConstantX.EditAppTcX, this.RlistAppTCObj).subscribe(
             (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.ResumeWf();
