@@ -81,5 +81,7 @@ export class PathConstantDsf {
     public static SIMPLE_LEAD = "SimpleLeadDsf";
     public static SIMPLE_LEAD_DETAIL = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstantDsf.DETAIL;
     //#endregion
+    public static REPORT_APP_STATUS = "ReportAppStatus";
+    public static PRINT_REPORT_APP_STATUS = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_APP_STATUS;
 
 }

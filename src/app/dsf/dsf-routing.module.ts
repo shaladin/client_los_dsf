@@ -7,6 +7,7 @@ import { CustomerGroupPlafondApvPagingDsfComponent } from './customer/customer-g
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
+import { AppStatusDsfComponent } from './report/factoring/app-status-dsf/app-status-dsf.component';
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
 import { InvoicekwitansitandaterimaDetailComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-detail/invoicekwitansitandaterima-detail.component';
 import { InvoicekwitansitandaterimaPagingComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-paging/invoicekwitansitandaterima-paging.component';
@@ -168,6 +169,18 @@ const routes: Routes = [
         component:  CustomerGroupPlafondApvInquiryDsfComponent,
         data: {
           title: "Customer Group Plafond Approval Inquiry"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_APP_STATUS,
+        component: AppStatusDsfComponent,
+        data: {
+          title: "Report Application Status"
         }
       }
     ]

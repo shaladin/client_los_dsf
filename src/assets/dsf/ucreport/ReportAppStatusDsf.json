@@ -1,0 +1,99 @@
+{ 
+    "title" : "REPORT APPLICATION STATUS",
+    "reportName": "Report Application Status",
+    "reportTemplateCode": "APP_STATUS_REPORT",
+    "component": [ 
+        {
+            "type": "dropdown",
+            "label": "Branch Name",
+            "name": "BranchCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "environment": "FOU",
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOffice",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "paramAssignment": 1
+        },
+        {
+            "type": "textbox",
+            "name": "PackageName",
+            "id": "PackageNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "Customer",
+            "id": "CustomerId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "AppStatus",
+            "id": "AppStatusId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Application Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "APP_STAT"
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Application Date >=",
+            "name" : "LeadDtGte",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Application Date =<",
+            "name" : "LeadDtLte",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Approval Date >=",
+            "name" : "LeadDtGteApv",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Approval Date =<",
+            "name" : "LeadDtLteApv",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }      
+    ],
+    "exportTypeList": [
+        {
+            "key": 2,
+            "value": "Excel 2007"
+        }
+    ]
+}
