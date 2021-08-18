@@ -310,11 +310,9 @@ export class LtkmRequestComponent implements OnInit {
                 this.appData = response;
             }
         ).catch(
-            (error) => {
-                console.log(error);
+            (error) => {                
             }
-        );
-        console.log("andri")
+        );        
     }
 
     async claimTask() {
@@ -1821,9 +1819,7 @@ export class LtkmRequestComponent implements OnInit {
         }
     }
 
-    CopyCustomer(event) {
-        console.log("copy customer");
-        console.log(this.CustDataForm);
+    CopyCustomer(event) {      
         this.copyAddrFromLookup(event);   
         // this.selectCustNo = event.             
 
@@ -1905,8 +1901,7 @@ export class LtkmRequestComponent implements OnInit {
             this.LtkmFamilyMainDataPagingComponent.listFamily = event["custPersonalFamilyForLtkmObjs"];
             this.LtkmFamilyMainDataPagingComponent.loadFamilyListData();
         }
-        if (event["CustObj"] != undefined) {
-            console.log("ce", event["custObjs"].CustNo);
+        if (event["CustObj"] != undefined) {            
             this.selectedCustNo = event["custObjs"].CustNo; 
                         
             var arrApplicationCrit = new Array();
@@ -1921,8 +1916,7 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     CopyCustomerCompany(event) {
-        this.copyAddrCompanyFromLookup(event);
-        console.log('copycustomercompany');
+        this.copyAddrCompanyFromLookup(event);        
         if (event["CustCompanyContactPersonObjs"] != undefined) {
             // this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
             this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj = event["CustCompanyContactPersonObjs"][0];
@@ -1979,8 +1973,7 @@ export class LtkmRequestComponent implements OnInit {
             this.custOtherInfoComponent.copyOtherInfo();
         }
         //end tambahan
-        if (event["CustObj"] != undefined) {
-            console.log("ce", event["custObjs"].CustNo);
+        if (event["CustObj"] != undefined) {            
             this.selectedCustNo = event["custObjs"].CustNo; 
                         
             var arrApplicationCrit = new Array();
@@ -2346,10 +2339,6 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     getLookupAppNo(event){        
-        // console.log("getlookup")
-        // this.appNo = event.appNovalue;
-        // console.log("eventandri",event)
-        // console.log(event.jsonSelect.AppNo)
         this.appNo = event.jsonSelect.AppNo;
     }
 }
