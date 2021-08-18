@@ -64,7 +64,7 @@
       },
       {
         "type": "sort",
-        "position": "center",
+        "position": "left",
         "label": "LTKM NO",
         "name": "LR.LTKM_NO"
       },
@@ -101,7 +101,7 @@
       },
       {
         "type": "action",
-        "position": "center",
+        "position": "left",
         "action": [
           {
             "type": "switch",

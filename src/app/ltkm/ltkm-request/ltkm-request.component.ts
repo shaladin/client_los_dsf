@@ -838,30 +838,36 @@ export class LtkmRequestComponent implements OnInit {
         return appCustAddrMailingObj;
     }
 
-    setAppCustAddrJob() {
-        var appCustAddrJobObj = new LtkmCustAddrObj();
-        appCustAddrJobObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
-        appCustAddrJobObj.Addr = this.CustDataForm.controls["jobDataAddr"]["controls"].Addr.value;
-        appCustAddrJobObj.AreaCode3 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode3.value;
-        appCustAddrJobObj.AreaCode4 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode4.value;
-        appCustAddrJobObj.Zipcode = this.CustDataForm.controls["jobDataAddrZipcode"]["controls"].value.value;
-        appCustAddrJobObj.AreaCode1 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode1.value;
-        appCustAddrJobObj.AreaCode2 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode2.value;
-        appCustAddrJobObj.City = this.CustDataForm.controls["jobDataAddr"]["controls"].City.value;
-        appCustAddrJobObj.PhnArea1 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnArea1.value;
-        appCustAddrJobObj.Phn1 = this.CustDataForm.controls["jobDataAddr"]["controls"].Phn1.value;
-        appCustAddrJobObj.PhnExt1 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnExt1.value;
-        appCustAddrJobObj.PhnArea2 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnArea2.value;
-        appCustAddrJobObj.Phn2 = this.CustDataForm.controls["jobDataAddr"]["controls"].Phn2.value;
-        appCustAddrJobObj.PhnExt2 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnExt2.value;
-        appCustAddrJobObj.FaxArea = this.CustDataForm.controls["jobDataAddr"]["controls"].FaxArea.value;
-        appCustAddrJobObj.Fax = this.CustDataForm.controls["jobDataAddr"]["controls"].Fax.value;
-        appCustAddrJobObj.MrHouseOwnershipCode = this.CustDataForm.controls["jobDataAddr"]["controls"].MrHouseOwnershipCode.value;
-        appCustAddrJobObj.Zipcode = this.CustDataForm.controls["jobDataAddrZipcode"]["controls"].value.value;
-        appCustAddrJobObj.SubZipcode = this.CustDataForm.controls["jobDataAddr"]["controls"].SubZipcode.value;
-        // if(this.isExisting){
-        //   appCustAddrJobObj.RowVersion = this.custDataPersonalObj.LtkmCustPersonalJobDataObj.LtkmCustAddrJobObj.RowVersion;
-        // }
+    setAppCustAddrJob(custModelCode : string) {
+        if (custModelCode != CommonConstant.CustModelNonProfessional) {
+            var appCustAddrJobObj = new LtkmCustAddrObj();
+            appCustAddrJobObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
+            appCustAddrJobObj.Addr = this.CustDataForm.controls["jobDataAddr"]["controls"].Addr.value;
+            appCustAddrJobObj.AreaCode3 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode3.value;
+            appCustAddrJobObj.AreaCode4 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode4.value;
+            appCustAddrJobObj.Zipcode = this.CustDataForm.controls["jobDataAddrZipcode"]["controls"].value.value;
+            appCustAddrJobObj.AreaCode1 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode1.value;
+            appCustAddrJobObj.AreaCode2 = this.CustDataForm.controls["jobDataAddr"]["controls"].AreaCode2.value;
+            appCustAddrJobObj.City = this.CustDataForm.controls["jobDataAddr"]["controls"].City.value;
+            appCustAddrJobObj.PhnArea1 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnArea1.value;
+            appCustAddrJobObj.Phn1 = this.CustDataForm.controls["jobDataAddr"]["controls"].Phn1.value;
+            appCustAddrJobObj.PhnExt1 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnExt1.value;
+            appCustAddrJobObj.PhnArea2 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnArea2.value;
+            appCustAddrJobObj.Phn2 = this.CustDataForm.controls["jobDataAddr"]["controls"].Phn2.value;
+            appCustAddrJobObj.PhnExt2 = this.CustDataForm.controls["jobDataAddr"]["controls"].PhnExt2.value;
+            appCustAddrJobObj.FaxArea = this.CustDataForm.controls["jobDataAddr"]["controls"].FaxArea.value;
+            appCustAddrJobObj.Fax = this.CustDataForm.controls["jobDataAddr"]["controls"].Fax.value;
+            appCustAddrJobObj.MrHouseOwnershipCode = this.CustDataForm.controls["jobDataAddr"]["controls"].MrHouseOwnershipCode.value;
+            appCustAddrJobObj.Zipcode = this.CustDataForm.controls["jobDataAddrZipcode"]["controls"].value.value;
+            appCustAddrJobObj.SubZipcode = this.CustDataForm.controls["jobDataAddr"]["controls"].SubZipcode.value;
+            // if(this.isExisting){
+            //   appCustAddrJobObj.RowVersion = this.custDataPersonalObj.LtkmCustPersonalJobDataObj.LtkmCustAddrJobObj.RowVersion;
+            // }
+        }
+        else{
+
+        }
+        
 
         return appCustAddrJobObj;
     }
@@ -1069,7 +1075,7 @@ export class LtkmRequestComponent implements OnInit {
             appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
             appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-            appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob();
+            appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob(custModelCode);
         }
 
         if (custModelCode == CommonConstant.CustModelEmployee) {
@@ -1084,7 +1090,7 @@ export class LtkmRequestComponent implements OnInit {
             appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
             appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
             appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
-            appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob();
+            appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob(custModelCode);
         }
 
         if (custModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
@@ -1099,11 +1105,22 @@ export class LtkmRequestComponent implements OnInit {
             appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
             appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
             appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
-            appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob();
+            appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob(custModelCode);
         }
 
         if (custModelCode == CommonConstant.CustModelNonProfessional) {
-            appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+            appCustPersonalJobDataObj.MrProfessionCode = this.CustDataForm.controls["jobData"]["controls"].MrProfessionCode.value;
+            appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
+            appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
+            appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
+            appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
+            appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
+            appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
+            appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
+            appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
+            appCustPersonalJobDataObj.LtkmCustAddrJobObj = null; 
         } else {
             this.CekDt(appCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
         }

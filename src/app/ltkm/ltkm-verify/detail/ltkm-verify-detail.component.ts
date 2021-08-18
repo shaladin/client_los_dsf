@@ -93,6 +93,11 @@ export class LtkmVerifyDetailComponent implements OnInit {
         Notes: ['']
     });
 
+    FormReturnObj  =this.fb.group({
+        Reason: [''],
+        Notes: ['']
+    });
+
     InitData() {
         this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
         this.DDLReason = new Array();
@@ -220,8 +225,6 @@ export class LtkmVerifyDetailComponent implements OnInit {
     SaveForm() {
         this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
         var temp = this.FormObj.value;
-        var tempLtkmReqSubmitVerify = this.ltkmReq;
-        tempLtkmReqSubmitVerify.LtkmStep = CommonConstant.LtkmStepApproval;
 
         if (!this.isReturnOn) {
             this.ApprovalCreateOutput = this.createComponent.output();
@@ -236,12 +239,28 @@ export class LtkmVerifyDetailComponent implements OnInit {
         this.http.post(submitLtkmUrl, apiObj).subscribe(
             (response) => {
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
-            });
+        });
+    }
+
+    SaveReturnForm(){
+        var temp = this.FormReturnObj.value;
+        console.log(this.FormReturnObj);
+        var apiObj = {
+            LtkmCustId: this.LtkmCustId,
+            Notes: temp.Notes,
+            WfTaskListId: this.wfTaskListId,
+            RequestRFAObj: this.RFAInfo
+        }
+        let submitLtkmUrl = environment.isCore? URLConstant.SubmitLtkmVerifyV2 : URLConstant.SubmitLtkmVerify;
+        this.http.post(submitLtkmUrl, apiObj).subscribe(
+            (response) => {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
+        });
     }
 
     isReturnOn: boolean = false;
     switchForm() {
-        this.FormObj.patchValue({
+        this.FormReturnObj.patchValue({
             Reason: "",
             ReasonDesc: "",
             Notes: ""
@@ -249,15 +268,15 @@ export class LtkmVerifyDetailComponent implements OnInit {
 
         if (!this.isReturnOn) {
             this.isReturnOn = true;;
-            this.FormObj.controls.Reason.setValidators([Validators.required]);
-            this.FormObj.controls.Notes.setValidators([Validators.required]);
+            this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+            this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
         } else {
             this.isReturnOn = false;
-            this.FormObj.controls.Reason.clearValidators()
-            this.FormObj.controls.Notes.clearValidators()
+            this.FormReturnObj.controls.Reason.clearValidators()
+            this.FormReturnObj.controls.Notes.clearValidators()
         }
-        this.FormObj.controls.Reason.updateValueAndValidity();
-        this.FormObj.controls.Notes.updateValueAndValidity();
+        this.FormReturnObj.controls.Reason.updateValueAndValidity();
+        this.FormReturnObj.controls.Notes.updateValueAndValidity();
     }
 
 
@@ -297,7 +316,4 @@ export class LtkmVerifyDetailComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
     }
 
-    check(){
-        console.log(this.FormObj);
-    }
 }
