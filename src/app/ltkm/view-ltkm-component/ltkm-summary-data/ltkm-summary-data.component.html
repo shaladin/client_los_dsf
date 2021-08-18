@@ -277,7 +277,7 @@
           </div>
           <div class="row">
             <div class="col-md-6"><label class="adInsLabel">Installment Amount</label></div>
-            <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['InstAmt'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['InstAmt']}}</label></div>
+            <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['InstAmt'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['InstAmt'] | number:'.2'}}</label></div>
           </div>     
         </div>     
         <div class="col-md-6">
