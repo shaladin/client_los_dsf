@@ -96,6 +96,11 @@ export class PathConstantX {
   //endregion
 
   public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + '/' + PathConstantX.DETAIL_X;
+
+  public static PO_EXT_X = "POX";
+  public static PO_PAGING_X = PathConstant.PO + "/" + PathConstantX.PAGING;
+  public static PO_PO_EXT_X = PathConstant.PO + "/" + PathConstantX.PO_EXT_X;
+  public static PO_PO_EXT_DETAIL_X = PathConstantX.PO_PO_EXT_X + "/" + PathConstantX.DETAIL_X;
 }
 
 

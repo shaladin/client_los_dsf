@@ -1085,7 +1085,6 @@ export class AssetDataAddEditXComponent implements OnInit {
       ReqGetListActiveVendorSalesSlb.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
       await this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSalesSlb).toPromise().then(
         (response) => {
-          console.log("AIYAYAYAYAy")
           this.listSalesObj = response[CommonConstant.ReturnObj];
           this.AssetDataForm.patchValue({
             SalesPersonId: this.listSalesObj[0].VendorEmpId,
