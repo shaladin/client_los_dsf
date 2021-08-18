@@ -1,3 +1,5 @@
+import { MouCustCollateralAttrObj } from "./MouCustCollateralAttrObj.Model";
+
 export class MouCustCollateralObj{
     MouCustCollateralId: number;
     MouCustId: number;
@@ -30,4 +32,5 @@ export class MouCustCollateralObj{
     RowVersion: string;
     CustNo: string;
     CustName: string;
+    ListMouCustCollaterals: Array<MouCustCollateralAttrObj>;
 }

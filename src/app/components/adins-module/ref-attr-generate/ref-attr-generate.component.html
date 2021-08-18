@@ -1,0 +1,65 @@
+<lib-ucSubsection [id]="'RefAttrContentId'" [title]="Title" [panel]="'RefAttrContent'">
+</lib-ucSubsection>
+<div [id]="RefAttrContent">
+    <div class="form-actions right" *ngIf="IsShowBtnRefresh">
+        <button type="button" name="refreshAttr" id="add" (click)="RefreshAttr()"
+            class="btn btn-raised btn-primary" translate>
+            Refresh Attribute
+        </button>
+    </div>
+    <div class="form-group" formGroupName="{{identifier}}" [ngClass]="{'row': !IsVertical}">
+      <div [ngClass]="{'col-md-6': !IsVertical}">
+        <div *ngFor="let item of parentForm.controls[identifier]['controls']; let idx = index" [ngClass]="{'row': IsVertical}">
+          <div [formGroupName]="idx" class="form-group" [ngClass]="{'row': !IsVertical}">
+            <label [ngClass]="{'adins-required-label': item.controls.IsMandatory.value, 'col-md-3': IsVertical, 'col-md-4': !IsVertical}" translate>
+              {{item.controls.AttrName.value}} </label>
+            <div [ngSwitch]="item.controls.AttrInputType.value"  [ngClass]="{ 'col-md-9': IsVertical, 'col-md-8': !IsVertical}">
+              <input type="text" *ngSwitchCase="AttrInputTypeText" class="form-control adInsInput"
+                formControlName="AttrValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.AttrValue.invalid}">
+  
+              <input type="" *ngSwitchCase="AttrInputTypeNum" currencyMask class="form-control adInsInput"
+                formControlName="AttrValue" (focusout)="CalculateAmt(idx)"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.AttrValue.invalid}">
+  
+              <input type="" *ngSwitchCase="AttrInputTypeNumPerc" currencyMask class="form-control adInsInput"
+                formControlName="AttrValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.AttrValue.invalid}"
+                [options]="{  suffix: '%',thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false}">
+  
+              <textarea *ngSwitchCase="AttrInputTypeTextArea" class="form-control adInsInput width-75-per"
+                formControlName="AttrValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.AttrValue.invalid }"></textarea>
+  
+              <input type="date" *ngSwitchCase="AttrInputTypeDate" class="form-control adInsInput"
+                formControlName="AttrValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.AttrValue.invalid}">
+  
+              <lib-uclookupgeneric *ngSwitchCase="AttrInputTypeRefMaster"
+                [lookupInput]="DictAttrLookup[item.controls.AttrCode.value]" [parentForm]="parentForm"
+                [enjiForm]="enjiForm" [identifier]="'lookup'+ item.controls.AttrCode.value"
+                (lookup)="getLookUp($event, idx)">
+              </lib-uclookupgeneric>
+  
+              <select class="form-control" *ngSwitchCase="AttrInputTypeList" formControlName="AttrValue">
+                <option value=""> --Select One-- </option>
+                <option *ngFor="let item of DictAttrList[item.controls.AttrCode.value]" value="{{item.Key}}">
+                  {{item.Value}}
+                </option>
+              </select>
+  
+              <ng-multiselect-dropdown *ngSwitchCase="AttrInputTypeSearchList" [placeholder]="'Search'"
+                [data]="dictMultiOptions[item.controls.AttrCode.value]"
+                [(ngModel)]="selectedMultiDDLItems[item.controls.AttrCode.value]" [ngModelOptions]="{standalone: true}"
+                [settings]="dropdownSettings"
+                (onDropDownClose)="onMultiDDLChangeEvent(item.controls.AttrCode.value)">
+              </ng-multiselect-dropdown>
+  
+              <lib-uc-show-errors [control]="item.controls.AttrValue" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>     
+</div>
