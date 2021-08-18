@@ -149,12 +149,13 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_CRD_APPRV_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_APPRV_DETAIL; //"/Nap/CreditProcess/CreditApproval/Detail"
   public static NAP_CRD_PRCS_CRD_APPRV_CFNA_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_APPRV_CFNA_DETAIL; //"/Nap/CreditProcess/CreditApprovalCfna/Detail"
   public static NAP_CRD_PRCS_CRD_APPRV_CR_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_APPRV_CR_PAGING; //"/Nap/CreditProcess/CreditApprovalCr/Paging"
-  public static NAP_CRD_PRCS_CRD_APPRV_CR_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_APPRV_CR_DETAIL; //"/Nap/CreditProcess/CreditApprovalCr/Detail"
+  public static NAP_CRD_PRCS_CRD_APPRV_CR_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.CRD_APPRV_CR_DETAIL; //"/Nap/CreditProcess/CreditApprovalCr/DetailX"
   public static NAP_CRD_PRCS_CRD_APPRV_CFNA_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_APPRV_CFNA_PAGING; //'/Nap/CreditProcess/CreditApprovalCfna/Paging'
   public static NAP_CRD_PRCS_CRD_INVESTIGATION_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_INVESTIGATION_PAGING; //"/Nap/CreditProcess/CreditInvestigation/Paging"
   public static NAP_CRD_PRCS_NEW_CRD_INVESTIGATION_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.NEW_CRD_INVESTIGATION_PAGING; //'/Nap/CreditProcess/NewCreditInvestigation/Paging'
   public static NAP_CRD_PRCS_CRD_REVIEW_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_PAGING; //"Nap/CreditProcess/CreditReview/Paging"
-  public static NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_CR_PAGING; //"Nap/CreditProcess/CreditReviewCr/Paging"
+  public static NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.CRD_REVIEW_CR_PAGING; //"Nap/CreditProcess/CreditReviewCr/PagingX"
+  public static NAP_CRD_PRCS_CRD_REVIEW_CR_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.CRD_REVIEW_CR_DETAIL; //"Nap/CreditProcess/CreditReviewCr/DetailX"
   public static NAP_CRD_PRCS_CRD_REVIEW_CFNA_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_CFNA_PAGING; //'/Nap/CreditProcess/CreditReviewCfna/Paging'
   public static NAP_CRD_PRCS_CRD_REVIEW_PROTOTYPE_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_PROTOTYPE_PAGING; //'/Nap/CreditProcess/CreditReviewPrototype/Paging'
   public static NAP_CRD_PRCS_CRD_REVIEW_PROTOTYPE_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_PROTOTYPE_DETAIL; //'/Nap/CreditProcess/CreditReviewPrototype/Detail'
