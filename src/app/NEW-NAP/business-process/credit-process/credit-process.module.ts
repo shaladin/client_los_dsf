@@ -49,7 +49,6 @@ import { CreditApprovalPagingComponent } from './credit-approval/credit-approval
 import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
 import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
 import { TabApplicationDataComponent } from "./shared-component/tab-application-data/tab-application-data.component";
-import { CustHistoryComponent } from "./shared-component/cust-history/cust-history.component";
 import { ViewApplicationDataMultiComponent } from "./shared-component/view-application-data-multi/view-application-data-multi.component";
 
 
@@ -125,7 +124,6 @@ export const customCurrencyMaskConfig = {
     CreditApprovalCfnaPagingComponent,
     CreditApprovalCfnaDetailComponent,
     TabApplicationDataComponent,
-    CustHistoryComponent,
     ViewApplicationDataMultiComponent,
   ],
   providers: [

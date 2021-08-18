@@ -34,6 +34,9 @@ export class SchmRegulerFixComponent implements OnInit {
   listInstallment: Array<InstallmentObj>;
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
+  IsFirstCalc: boolean = true;
+  EffRateAfterCalc: number = 0;
+  FlatRateAfterCalc: number = 0;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -63,6 +66,10 @@ export class SchmRegulerFixComponent implements OnInit {
         InstAmt: this.InstAmt
       });
     }
+    if (this.ParentForm.getRawValue().ExistingFinData) {
+      this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
+      this.FlatRateAfterCalc = this.ParentForm.getRawValue().FlatRatePrcnt;
+    }
   }
 
   LoadDDLRateType() {
@@ -85,6 +92,11 @@ export class SchmRegulerFixComponent implements OnInit {
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
           this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+          if (this.ParentForm.getRawValue().ExistingFinData) {
+            this.ParentForm.patchValue({
+              IsReCalculate: true
+            });
+          }
         }
       }
     );
@@ -115,12 +127,11 @@ export class SchmRegulerFixComponent implements OnInit {
     //   return;  
     // }
 
-    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-    && this.ParentForm.controls.IsSubsidyRateExist.value == false 
-    && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt)
-    {
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+      && this.ParentForm.controls.IsSubsidyRateExist.value == false
+      && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
       this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE, this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt));
-      return;  
+      return;
     }
 
     if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
@@ -143,6 +154,8 @@ export class SchmRegulerFixComponent implements OnInit {
       this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
+          this.EffRateAfterCalc = response.EffectiveRatePrcnt;
+          this.FlatRateAfterCalc = response.FlatRatePrcnt;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
             TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
@@ -169,6 +182,10 @@ export class SchmRegulerFixComponent implements OnInit {
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
             AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
           })
+
+          this.ParentForm.patchValue({
+            IsReCalculate: true
+          });
           this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
           this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
           this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
@@ -350,10 +367,16 @@ export class SchmRegulerFixComponent implements OnInit {
       this.ParentForm.get("RateType").enable();
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
     } else if (calcBase == CommonConstant.FinDataCalcBaseOnInst) {
       this.ParentForm.get("RateType").disable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
     } else if (calcBase == CommonConstant.FinDataCalcBaseOnCommission) {
       this.ParentForm.get("RateType").disable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
@@ -366,6 +389,26 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   SetNeedReCalculate(value: boolean) {
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate) {
+      if ((this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective && this.EffRateAfterCalc == this.ParentForm.getRawValue().EffectiveRatePrcnt)
+        || (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeFlat && this.FlatRateAfterCalc == this.ParentForm.getRawValue().FlatRatePrcnt)) {
+        this.ParentForm.patchValue({
+          IsReCalculate: true
+        });
+      } else {
+        this.ParentForm.patchValue({
+          IsReCalculate: false
+        });
+      }
+    } else if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst) {
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
+    } else {
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
+    }
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });

@@ -581,6 +581,7 @@ export class URLConstant {
   public static GetListMouCustCollateralDocsByMouCustCollateralId = environment.losUrl + "/v1" + "/MouCustCollateral/GetListMouCustCollateralDocsByMouCustCollateralId";
   public static GetMouCustCollateralForUpdateByMouCustCollateralId = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralForUpdateByMouCustCollateralId";
   public static GetMouCustCollateralRegistrationByMouCustCollateralId = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralRegistrationByMouCustCollateralId";
+  public static GenerateMouCollateralAttr = environment.losUrl + "/v1" + "/MouCustCollateral/GenerateMouCollateralAttr";
 
   // MOU CUST SCORING
   public static GetMouCustScoreByMouCustId = environment.losUrl + "/v1" + "/MouCustScoring/GetMouCustScoreByMouCustId";
@@ -631,6 +632,7 @@ export class URLConstant {
   public static GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId";
   public static DeleteChangeMouCustCollateral = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/DeleteChangeMouCustCollateral";
   public static AddExistingChangeMouCustCollateralData = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/AddExistingChangeMouCustCollateralData";
+  public static GenerateChangeMouCollateralAttr = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GenerateChangeMouCollateralAttr";
 
   // MOU CUST
   public static GetMouCustById = environment.losUrl + "/v1" + "/MouCust/GetMouCustById";
@@ -840,6 +842,7 @@ export class URLConstant {
   //LEAD CANCEL
   public static GetListLeadForLeadCancelByListLeadId = environment.losUrl + "/v1" + "/Lead/GetListLeadForLeadCancelByListLeadId";
   public static EditListLeadForCancelByListLeadId = environment.losUrl + "/v1" + "/Lead/EditListLeadForCancelByListLeadId";
+  public static EditListLeadForCancelByListLeadIdV2 = environment.losUrl + "/v2" + "/Lead/EditListLeadForCancelByListLeadId";
 
   // LEAD APP
   public static GetLeadAppByLeadId = environment.losUrl + "/v1" + "/LeadApp/GetLeadAppByLeadId";
