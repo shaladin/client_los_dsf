@@ -102,9 +102,7 @@ export class MouRequestAddcollComponent implements OnInit {
   listMouCustCollateralDocObj: ListMouCustCollateralDocObj = new ListMouCustCollateralDocObj();
   mouCustCollateralDoc: MouCustCollateralDocObj = new MouCustCollateralDocObj();
 
-  CustObj: any;
   CustPersonalObj: any;
-  CustAddrObj: any;
   CustPersonalJobDataObj: any;
 
   copyToLocationObj: Array<KeyValueObj> = [
@@ -188,41 +186,13 @@ export class MouRequestAddcollComponent implements OnInit {
     this.tempPagingObj.isReady = true;
     this.GetGS();
     this.validateIfAddExisting();
-    // if(this.type == 'AddEdit') {
+
     this.InputLookupProfessionObj = new InputLookupObj();
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.isRequired = false;
     this.InputLookupProfessionObj.isReady = true;
-
-    await this.GetMouCustData();
-    await this.GetProfessionName(this.CustPersonalJobDataObj.MrProfessionCode);
-    // }
-  }
-
-  async GetMouCustData() {
-    await this.http.post(URLConstant.GetMouCustByMouCustId, { Id: this.MouCustId }).toPromise().then(
-      (response) => {
-        this.CustObj = response["MouCustObj"];
-        this.CustPersonalObj = response["MouCustPersonalObj"];
-        this.CustAddrObj = response["MouCustAddrLegalObj"];
-        this.CustPersonalJobDataObj = response["MouCustPersonalJobDataObj"];
-
-        // this.AddCollForm.patchValue({
-        //   OwnerName: CustObj.CustName,
-        //   OwnerRelationship: "SELF",
-        //   MrIdType: CustObj.MrIdTypeCode,
-        //   OwnerIdNo: CustObj.IdNo,
-        //   // OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
-        // })
-        // // let OwnerAddrObj = CustAddrObj;
-        // this.inputFieldLegalObj.inputLookupObj.nameSelect = CustAddrObj.Zipcode;
-        // this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: CustAddrObj.Zipcode };
-        // this.inputAddressObjForLegalAddr.default = CustAddrObj;
-        // this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
-      }
-    )
   }
 
   bindUcAddToTempData() {
@@ -350,22 +320,37 @@ export class MouRequestAddcollComponent implements OnInit {
 
   async CopyUserForSelfOwner() {
     if (this.AddCollForm.controls.SelfOwner.value) {
-      this.AddCollForm.patchValue({
-        OwnerName: this.CustObj.CustName,
-        OwnerRelationship: "SELF",
-        MrIdType: this.CustObj.MrIdTypeCode,
-        OwnerIdNo: this.CustObj.IdNo,
-        OwnerProfessionCode: this.CustPersonalJobDataObj.MrProfessionCode,
-        OwnerMobilePhnNo: this.CustPersonalObj.MobilePhnNo1
-        // OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
-      })
-      // let OwnerAddrObj = CustAddrObj;
-      this.inputFieldLegalObj.inputLookupObj.nameSelect = this.CustAddrObj.Zipcode;
-      this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.CustAddrObj.Zipcode };
-      this.inputAddressObjForLegalAddr.default = this.CustAddrObj;
-      this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
-      this.InputLookupProfessionObj.nameSelect = this.CustPersonalJobDataObj.MrProfessionName;
-      this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.CustPersonalJobDataObj.MrProfessionName };
+      await this.http.post(URLConstant.GetMouCustByMouCustId, { Id: this.MouCustId }).toPromise().then(
+        async (response) => {
+          let CustObj = response["MouCustObj"];
+          let CustAddrObj = response["MouCustAddrLegalObj"];
+          this.CustPersonalObj = response["MouCustPersonalObj"];
+          this.CustPersonalJobDataObj = response["MouCustPersonalJobDataObj"];
+
+          this.AddCollForm.patchValue({
+            OwnerName: CustObj.CustName,
+            OwnerRelationship: CommonConstant.SelfCustomer,
+            MrIdType: CustObj.MrIdTypeCode,
+            OwnerIdNo: CustObj.IdNo,
+            OwnerProfessionCode: typeof(response['MouCustPersonalJobDataObj']) != 'undefined' ? this.CustPersonalJobDataObj.MrProfessionCode : '',
+            OwnerMobilePhnNo: this.CustPersonalObj.MobilePhnNo1
+          })
+
+          this.inputFieldLegalObj.inputLookupObj.nameSelect = CustAddrObj.Zipcode;
+          this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: CustAddrObj.Zipcode };
+          this.inputAddressObjForLegalAddr.default = CustAddrObj;
+          this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
+
+          this.InputLookupProfessionObj.nameSelect = "";
+          this.InputLookupProfessionObj.jsonSelect = "";
+
+          if(typeof(response['MouCustPersonalJobDataObj']) != 'undefined'){
+            await this.GetProfessionName(this.CustPersonalJobDataObj.MrProfessionCode);
+            this.InputLookupProfessionObj.nameSelect = this.CustPersonalJobDataObj.MrProfessionName;
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.CustPersonalJobDataObj.MrProfessionName };
+          }
+        }
+      )
     }
     this.checkSelfOwnerColl();
   }
@@ -1172,7 +1157,7 @@ export class MouRequestAddcollComponent implements OnInit {
           OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
           MrIdType: this.collateralRegistrationObj.MrIdTypeCode,
           OwnerRelationship: this.collateralRegistrationObj.MrOwnerRelationshipCode,
-          SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF" ? true : false,
+          SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer ? true : false,
           Notes: this.collateralRegistrationObj.Notes,
           OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode,
           OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
