@@ -79,6 +79,7 @@ import {InvoiceVerifDetailListOfInvoiceXComponent} from '../../../impl/NEW-NAP/b
 import { PurchaseOrderPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging/purchase-order-paging-x.component";
 import { PurchaseOrderDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail/purchase-order-detail-x.component";
 import { PurchaseOrderXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order/purchase-order-x.component";
+import { AgrmntActivationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -169,7 +170,8 @@ export const customCurrencyMaskConfig = {
     InvoiceVerifDetailListOfInvoiceXComponent,
     PurchaseOrderPagingXComponent,
     PurchaseOrderXComponent,
-    PurchaseOrderDetailXComponent
+    PurchaseOrderDetailXComponent,
+    AgrmntActivationDetailXComponent
   ],
   providers: [
     NGXToastrService,

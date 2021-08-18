@@ -58,6 +58,7 @@ import {InvoiceVerifDetailDFXComponent} from 'app/impl/NEW-NAP/business-process/
 import { PurchaseOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail/purchase-order-detail-x.component';
 import { PurchaseOrderXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order/purchase-order-x.component';
 import { PurchaseOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging/purchase-order-paging-x.component';
+import { AgrmntActivationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component';
 
 const routes: Routes = [
   {
@@ -213,6 +214,13 @@ const routes: Routes = [
       {
         path: PathConstant.AGRMNT_ACT_DETAIL,
         component: AgrmntActivationDetailComponent,
+        data: {
+          title: 'Agreement Activation Detail'
+        }
+      },
+      {
+        path: PathConstantX.AGRMNT_ACT_DETAIL,
+        component: AgrmntActivationDetailXComponent,
         data: {
           title: 'Agreement Activation Detail'
         }

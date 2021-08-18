@@ -8,8 +8,8 @@
           <mat-tab-group>
             <mat-tab label="MoU Detail">
               <ng-template matTabContent>
-                <app-mou-view-detail *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId"
-                  [MouType]="MrMouTypeCode"></app-mou-view-detail>
+                <app-mou-view-detail-x *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId"
+                  [MouType]="MrMouTypeCode"></app-mou-view-detail-x>
               </ng-template>
             </mat-tab>
             <mat-tab label="Fee">
