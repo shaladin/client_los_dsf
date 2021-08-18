@@ -77,6 +77,8 @@ import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/ad
 import {InvoiceVerifDetailDFXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF-x.component';
 import {InvoiceVerifDetailListOfInvoiceXComponent} from '../../../impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
 import { AgrmntActivationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component";
+import { InsuranceOrderPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-paging/insurance-order-paging-x/insurance-order-paging-x.component";
+import { InsuranceOrderDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -165,7 +167,9 @@ export const customCurrencyMaskConfig = {
     InvoiceVerifDetailXComponent,
     InvoiceVerifDetailDFXComponent,
     InvoiceVerifDetailListOfInvoiceXComponent,
-    AgrmntActivationDetailXComponent
+    AgrmntActivationDetailXComponent,
+    InsuranceOrderPagingXComponent,
+    InsuranceOrderDetailXComponent
   ],
   providers: [
     NGXToastrService,

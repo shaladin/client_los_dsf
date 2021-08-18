@@ -11,6 +11,7 @@ export class PathConstantX {
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
   public static NAP2_X = 'NAP2X';
+  public static INSURANCE_ORDER_X = "InsuranceOrder"
   //#endregion
 
   //#region layout-routes
@@ -44,6 +45,8 @@ export class PathConstantX {
 
   //#region Nap-Admin-Prcs
   public static INVOICE_VERIF_INV_DSF_X = PathConstant.INVOICE_VERIF + "/InvoiceDetailDFX";
+  public static INSURANCE_ORDER_PAGING_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.PAGING;
+  public static INSURANCE_ORDER_DETAIL_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Cessie

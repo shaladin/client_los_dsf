@@ -12,6 +12,9 @@ export class URLConstantX {
   public static EndDateGoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/EndDateGoLiveApproval";
   public static GoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/GoLiveApproval";
   public static GetAppXDataByAppId = environment.losUrl + '/v1' + "/AppX/GetAppXDataByAppId";
+  public static GetMinDeliveryDtDeliveryOrderHByAgrmntId = environment.losUrl + "/v1" + '/DeliveryOrderX/GetMinDeliveryDtDeliveryOrderHByAgrmntId';
+  public static SubmitInsuranceOrder = environment.losUrl + "/v1" + '/InsuranceOrderX/SubmitInsuranceOrder';
+  public static GetSppaNoByAppAssetId = environment.losUrl + "/v1" + '/InsuranceOrderX/GetSppaNoByAppAssetId';
 
   //App Reserved Fund
   public static GetRsvFundSingleRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetRsvFundSingleRule";
