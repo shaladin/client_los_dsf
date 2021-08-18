@@ -26,7 +26,6 @@ export class MouTabViewAddcollComponent implements OnInit {
   isView: boolean = false;
   async ViewColl(MouCustCollateralId: number) {
     this.isView = false;
-    console.log(MouCustCollateralId);
     setTimeout(() => {      
       this.MouCustCollateralId = MouCustCollateralId;
       this.isView = true;

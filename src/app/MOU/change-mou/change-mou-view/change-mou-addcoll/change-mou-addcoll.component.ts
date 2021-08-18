@@ -23,11 +23,19 @@ export class ChangeMouAddcollComponent implements OnInit {
         console.log(response);
         this.listCollateralData = response['ReturnObject'];
       })
-    }
-    
-  ChangeMouCustCollateralId: number = 0;
-  ViewColl(ChangeMouCustCollateralId: number){
-    console.log(ChangeMouCustCollateralId);
+  }
 
+  ChangeMouCustCollateralId: number = 0;
+  isView: boolean = false;
+  ViewColl(ChangeMouCustCollateralId: number) {
+    this.isView = false;
+    setTimeout(() => {
+      this.ChangeMouCustCollateralId = ChangeMouCustCollateralId;
+      this.isView = true;
+    }, 500);
+  }
+
+  Back() {
+    this.isView = false;
   }
 }
