@@ -99,7 +99,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.AGRMNT_CANCEL_PAGING; //'/Nap/AdminProcess/AgreementCancellation/Paging'
   public static NAP_ADM_PRCS_AGRMNT_CANCEL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.AGRMNT_CANCEL_DETAIL; //'/Nap/AdminProcess/AgreementCancellation/Detail'
   public static NAP_ADM_PRCS_AGRMNT_ACT_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.AGRMNT_ACT_PAGING; //'/Nap/AdminProcess/AgrmntActivation/Paging'
-  public static NAP_ADM_PRCS_AGRMNT_ACT_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.AGRMNT_ACT_DETAIL; //'/Nap/AdminProcess/AgrmntActivation/Detail'
+  public static NAP_ADM_PRCS_AGRMNT_ACT_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.AGRMNT_ACT_DETAIL; //'/Nap/AdminProcess/AgrmntActivation/DetailX'
   public static NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.CUST_CONFIRM_SUBJ_VIEW; //'/Nap/AdminProcess/CustConfirmation/Subj/View'
   public static NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.CUST_CONFIRM_SUBJ_DETAIL; //'/Nap/AdminProcess/CustConfirmation/Subj/Detail'
   public static NAP_ADM_PRCS_CUST_CONFIRM_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.CUST_CONFIRM_PAGING; //'/Nap/AdminProcess/CustConfirmation/Paging'

@@ -1,0 +1,113 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+        <div class="px-3">
+          <div class="form-body">
+            <div class="row" [formGroup]="AgrmntActForm">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6" translate>Overwrite Agreement No</label>
+                  <div class="col-md-6"><input type="checkbox" formControlName="isOverwrite" [(ngModel)]="isOverwrite"
+                      (change)="onChange()"></div>
+                </div>
+                <div class="row">
+                  <label [ngClass]=" isOverwrite ? 'col-md-6 adins-required-label' : 'col-md-6'" translate>Agreement
+                    No</label>
+                  <div class="col-md-6" translate>
+                    <input type="text" formControlName="AgrmntNo" [(ngModel)]="AgrmntNo">
+                    <span class="text-danger"
+                      *ngIf="AgrmntActForm.controls['AgrmntNo'].hasError('required') && (AgrmntActForm.controls['AgrmntNo'].dirty || AgrmntActForm.controls['AgrmntNo'].touched)">This
+                      field is required</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6"></div>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adins-required-label" translate>Agreement Date</label>
+                  <div class="col-md-6">
+                    <input type="date" formControlName="CreateDt" [(ngModel)]="CreateDt" required>
+                    <span class="text-danger"
+                      *ngIf="AgrmntActForm.controls['CreateDt'].hasError('required') && (AgrmntActForm.controls['CreateDt'].dirty || AgrmntActForm.controls['CreateDt'].touched)">This
+                      field is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetList'">
+          </lib-ucSubsection>
+          <div class="form-body" id="AssetList">
+            <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+            </lib-ucaddtotemp>
+          </div>
+          <lib-ucSubsection [id]="'AppFinId'" [title]="'Financial Information'" [panel]="'AppFin'">
+          </lib-ucSubsection>
+          <div class="form-body" id="AppFin">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6" translate>Total Asset Price</label>
+                  <label class="col-md-6">{{AppFinData?.TotalAssetPriceAmt | number}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" *ngIf="BizTemplateCode != bizCodeFl4w" translate>Down Payment</label>
+                  <label class="col-md-6" *ngIf="BizTemplateCode == bizCodeFl4w" translate>Security Deposit</label>
+                  <label class="col-md-6">{{AppFinData?.TotalDownPaymentNettAmt | number}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>NTF</label>
+                  <label class="col-md-6">{{AppFinData?.NtfAmt | number}}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-md-6" translate>Total Insurance To Customer</label>
+                  <label class="col-md-6">{{AppFinData?.TotalInsCustAmt | number}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>Insurance Capitalized Amount</label>
+                  <label class="col-md-6">{{AppFinData?.InsCptlzAmt | number}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>Installment Amount</label>
+                  <label class="col-md-6">{{AppFinData?.InstAmt | number}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <lib-ucSubsection [id]="'AppFeeId'" [title]="'Fees'" [panel]="'AppFee'"> </lib-ucSubsection>
+          <div class="form-body" id="AppFee">
+            <div class="row">
+              <div class="col-md-6" *ngFor="let item of AppFees">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label translate>{{item.FeeName}}</label>
+                  </div>
+                  <div class="col-md-6">
+                    <label>{{item.AppFeeAmt | number}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <form>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
+              [queryParams]="{BizTemplateCode: this.BizTemplateCode}" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()" translate>
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
