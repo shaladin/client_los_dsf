@@ -390,7 +390,7 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.isReady = true;
