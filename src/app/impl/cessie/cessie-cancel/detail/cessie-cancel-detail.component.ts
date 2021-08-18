@@ -30,7 +30,7 @@ export class CessieCancellationDetailComponent implements OnInit {
   });
   itemReasonCode: Array<KeyValueObj>;
   arrValue = [];
-  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
+  readonly CancelLink: string = NavigationConstant.CESSIE_CANCEL_PAGING;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
