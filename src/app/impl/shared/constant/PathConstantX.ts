@@ -25,6 +25,10 @@ export class PathConstantX {
   //#region Nap-Crd-Prcs
   public static COMM_RSV_FUND_PAGING = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.PAGING;
   public static COMM_RSV_FUND_DETAIL = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.DETAIL_X;
+
+  public static CRD_REVIEW_CR_PAGING = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.PAGING;
+  public static CRD_REVIEW_CR_DETAIL = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.DETAIL_X;
+  public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Nap-Main-Data
