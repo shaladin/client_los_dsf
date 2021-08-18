@@ -24,7 +24,7 @@ import { String } from 'typescript-string-operations';
 export class MouCustLegalDocComponent implements OnInit {
 
   @Input() listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
-  @Input() isDoubleLegalDocAllowed: string;
+  @Input() ListLegalDocCantDuplicate: Array<string>;
   @Output() callbackSubmit: EventEmitter<Array<AppCustCompanyLegalDocObj>> = new EventEmitter();
 
   mode: string;
@@ -186,9 +186,7 @@ export class MouCustLegalDocComponent implements OnInit {
       currentEditedIndex = this.currentEditedIndex;
     }
 
-    if(this.isDoubleLegalDocAllowed != "1"){
       flag = this.cekDuplicateDocType(currentEditedIndex);
-    }
     
     let d1 = new Date(this.MaxDate);
     let d2 = new Date(this.appCustCompanyLegalDocObj.DocDt);
@@ -210,9 +208,12 @@ export class MouCustLegalDocComponent implements OnInit {
       var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode
                                                         && x.DocNo == this.appCustCompanyLegalDocObj.DocNo);
       if (duplicateIndex != currentEditedIndex && duplicateIndex != -1) {
-        let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
-        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, ErrorOutput.Value, this.appCustCompanyLegalDocObj.DocNo));
-        return false;
+        var checkGSValue = this.ListLegalDocCantDuplicate.find(x => x == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
+        if(checkGSValue != null){
+          let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
+          this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, ErrorOutput.Value, this.appCustCompanyLegalDocObj.DocNo));
+          return false;
+        }
       }
     }
     return true;

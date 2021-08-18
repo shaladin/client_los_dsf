@@ -24,7 +24,7 @@ export class LegalDocDetailComponent implements OnInit {
   @Input() AppCustCompanyId: number;
   @Input() ListAppCustCompanyLegalDoc: Array<AppCustCompanyLegalDocObj>;
   @Input() AppCustCompanyLegalDoc: AppCustCompanyLegalDocObj;
-  @Input() IsDoubleLegalDocAllowed: string;
+  @Input() ListLegalDocCantDuplicate: Array<string>;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
 
   IsExpDateMandatory: boolean;
@@ -173,10 +173,13 @@ export class LegalDocDetailComponent implements OnInit {
                                         && x.DocNo == this.LegalDocForm.controls.DocNo.value
                                         && x.AppCustCompanyLegalDocId != this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId);
 
-    if (existAppCustCompanyLegalDoc != null && this.IsDoubleLegalDocAllowed != "1") { 
-      let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.LegalDocForm.controls.MrLegalDocTypeCode.value);
-      this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, ErrorOutput.Value, this.LegalDocForm.value.DocNo));
-      return;
+    if (existAppCustCompanyLegalDoc != null) { 
+      var checkGSValue = this.ListLegalDocCantDuplicate.find(x => x == existAppCustCompanyLegalDoc.MrLegalDocTypeCode);
+      if(checkGSValue != null){
+        let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.LegalDocForm.controls.MrLegalDocTypeCode.value);
+        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, ErrorOutput.Value, this.LegalDocForm.value.DocNo));
+        return;
+      }
     }
 
     if (this.CekDtValidity()) return;
