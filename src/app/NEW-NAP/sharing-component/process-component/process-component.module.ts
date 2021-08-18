@@ -15,7 +15,7 @@ import { CustHistoryComponent } from "./cust-history/cust-history.component";
         AdInsModule
     ],
     declarations: [
-        VerfQuestionComponent,,
+        VerfQuestionComponent,
         CustHistoryComponent
     ],
     providers: [
