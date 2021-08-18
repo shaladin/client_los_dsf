@@ -8,7 +8,9 @@
             <mat-tab-group>
               <mat-tab label="Term Condition">
                 <ng-template matTabContent>
-                  <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc>
+                  <div class="px-3">
+                    <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc>
+                  </div>
                 </ng-template>
               </mat-tab>
               <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">

@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -14,20 +12,22 @@ export class ChangeMouAddcollComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() ChangeMouTrxId: number;
 
-  listCollateralData: Array<ResMouCollForMouViewObj>;
+  listCollateralData: Array<ResMouCollForMouViewObj> = new Array();
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
+  constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
 
   ngOnInit() {
-    var mouCustObj = { Id: this.ChangeMouTrxId }
-
-    this.http.post(URLConstant.GetChangeMouCustCollateralForChangeMouViewByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetChangeMouCustCollateralForChangeMouViewByMouCustId, { Id: this.ChangeMouTrxId }).subscribe(
       (response) => {
+        console.log(response);
         this.listCollateralData = response['ReturnObject'];
       })
-  }
+    }
+    
+  ChangeMouCustCollateralId: number = 0;
+  ViewColl(ChangeMouCustCollateralId: number){
+    console.log(ChangeMouCustCollateralId);
 
-  AddCollDataForm = this.fb.group({
-  })
+  }
 }
