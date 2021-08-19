@@ -74,6 +74,7 @@ import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { environment } from 'environments/environment';
 @Component({
     selector: 'app-ltkm-return-handling',
     templateUrl: './ltkm-return-handling.component.html',
@@ -209,7 +210,7 @@ export class LtkmReturnHandlingComponent implements OnInit {
     AttrGroupFinData: string = CommonConstant.AttrGroupCustPersonalFinData;
     isLockMode: boolean = true;
     private mode: string = this.modeReqConst;
-    private WfTaskListId: number;
+    WfTaskListId: any;
     ReturnHandlingId: number;
     FinFormIsDetail: boolean = false;
     BankFormIsDetail: boolean = false;
@@ -335,14 +336,14 @@ export class LtkmReturnHandlingComponent implements OnInit {
             var personalPath: string = "";
 
             if (this.mode == this.modeRtnConst) {
-                personalPath = URLConstant.SaveLtkmReturnHandlingPersonal;
+                personalPath = environment.isCore? URLConstant.SaveLtkmReturnHandlingPersonalV2 : URLConstant.SaveLtkmReturnHandlingPersonal;
                 sendPersonalObj = {
                     requestCustDataPersonalObj: custDataPersonalObj,
                     WfTaskListId: this.WfTaskListId,
                     LtkmCustId: this.LtkmCustId
                 };
             } else {
-                personalPath = URLConstant.SaveLtkmRequestPersonal;
+                personalPath = environment.isCore? URLConstant.SaveLtkmRequestPersonalV2 : URLConstant.SaveLtkmRequestPersonal;
                 sendPersonalObj = {
                     requestCustDataPersonalObj: custDataPersonalObj,
                     requestLtkmReqObj: personalAnalysisObj,
@@ -395,14 +396,14 @@ export class LtkmReturnHandlingComponent implements OnInit {
             var coyPath: string = "";
 
             if (this.mode == this.modeRtnConst) {
-                coyPath = URLConstant.SaveLtkmReturnHandlingCompany;
+                coyPath = environment.isCore? URLConstant.SaveLtkmReturnHandlingCompanyV2 : URLConstant.SaveLtkmReturnHandlingCompany;
                 sendCoyObj = {
                     requestCustDataCompanyLtkmObj: custDataCompanyObj,
                     WfTaskListId: this.WfTaskListId,
                     LtkmCustId: this.LtkmCustId
                 };
             } else {
-                coyPath = URLConstant.SaveLtkmRequestCompany;
+                coyPath = environment.isCore? URLConstant.SaveLtkmRequestCompanyV2 : URLConstant.SaveLtkmRequestCompany;
                 sendCoyObj = {
                     requestCustDataCompanyLtkmObj: custDataCompanyObj,
                     requestLtkmReqObj: coyAnalysisObj,
@@ -1068,7 +1069,18 @@ export class LtkmReturnHandlingComponent implements OnInit {
         }
 
         if (custModelCode == CommonConstant.CustModelNonProfessional) {
-            appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+            appCustPersonalJobDataObj.MrProfessionCode = this.CustDataForm.controls["jobData"]["controls"].MrProfessionCode.value;
+            appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
+            appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
+            appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
+            appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
+            appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
+            appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
+            appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
+            appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
+            appCustPersonalJobDataObj.LtkmCustAddrJobObj = null; 
         } else {
             this.CekDt(appCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
         }
@@ -1447,7 +1459,7 @@ export class LtkmReturnHandlingComponent implements OnInit {
             return;
         }
 
-        await this.http.post(URLConstant.GetCustDataByLtkmCustId, this.custDataObj).toPromise().then(
+        await this.http.post(URLConstant.GetCustDataByLtkmCustId, custDataObj).toPromise().then(
             async (response) => {
                 if (response["AppCustObj"]["LtkmCustId"] > 0) {
                     if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {

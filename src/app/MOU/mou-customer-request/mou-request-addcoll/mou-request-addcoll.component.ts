@@ -37,7 +37,7 @@ import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from 'app/shared/model/MouCustCollateralAttrObj.Model';
 import { RefAttrGenerateObj } from 'app/shared/model/RefAttrGenerate.Model';
-import { RefAttrGenerate } from 'app/components/adins-module/ref-attr-generate/RefAttrGenerate.service';
+import { RefAttrGenerate } from 'app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service';
 
 @Component({
   selector: 'app-mou-request-addcoll',
