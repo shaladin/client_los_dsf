@@ -14,6 +14,9 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-mou-execution-detail',
@@ -23,12 +26,14 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 export class MouExecutionDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   businessDt: Date;
-  MouCustId: number;
+  MouCustId: number = 0;
   WfTaskListId: any;
   businessDtYesterday: Date; 
   StartDt: Date;
   EndDt: Date;
   MouCustDt: Date;
+  dmsObj: DMSObj = new DMSObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   MouExecutionForm = this.fb.group({
     MouCustId: [''],
@@ -38,7 +43,7 @@ export class MouExecutionDetailComponent implements OnInit {
     EndDt: ['', [Validators.required]]
   });
   datePipe = new DatePipe("en-US");
-  resultData: MouCustObj;
+  resultData: MouCustObj = new MouCustObj();
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -58,11 +63,17 @@ export class MouExecutionDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  readonly MouTypeGeneral: string = CommonConstant.GENERAL;
+  isReady: boolean = false;
+  async ngOnInit() {
+    await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.claimTask();
 
-    var datePipe = new DatePipe("en-US");
+    let datePipe = new DatePipe("en-US");
     if (currentUserContext != null && currentUserContext != undefined) {
       this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
       this.businessDtYesterday = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
@@ -82,9 +93,25 @@ export class MouExecutionDetailComponent implements OnInit {
           EndDt: response["EndDt"],
           MouCustDt: response["MouCustDt"]
         });
+        if(this.SysConfigResultObj.ConfigValue == '1'){
+          this.dmsObj = new DMSObj();
+          this.dmsObj.User = currentUserContext.UserName;
+          this.dmsObj.Role = currentUserContext.RoleCode;
+          this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+          if (this.resultData['CustNo'] != null && this.resultData['CustNo'] != "") {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+          }
+          else {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
+          }
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        }
       });
 
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    this.isReady = true;
   }
 
   Back() {
@@ -104,7 +131,7 @@ export class MouExecutionDetailComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, 'MMMM d, y'));
       return;
     }
-    var request = this.MouExecutionForm.value;
+    let request = this.MouExecutionForm.value;
 
     if (this.ValidateDate()) {
 
@@ -159,7 +186,7 @@ export class MouExecutionDetailComponent implements OnInit {
 
   GetCallBack(event) {
     if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData["CustNo"] };
+      let custObj = { CustNo: this.resultData["CustNo"] };
       this.httpClient.post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);

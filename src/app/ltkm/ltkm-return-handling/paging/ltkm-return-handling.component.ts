@@ -7,6 +7,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'app-ltkm-return-handling-paging',
   templateUrl: './ltkm-return-handling.component.html',
@@ -15,6 +19,8 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 export class LtkmReturnHandlingPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   constructor(
     private route: ActivatedRoute,
@@ -31,15 +37,33 @@ export class LtkmReturnHandlingPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchLtkmReturnHandling.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLtkmReturnHandling.json";
     
-    var arrCrit = new Array();
-    var critObj = new CriteriaObj();
-
-    critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'WTL.USERNAME';
-    critObj.value = this.userContext.UserName;
-    arrCrit.push(critObj);
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchLtkmReturnHandlingV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLtkmReturnHandlingV2.json";
+      this.inputPagingObj.isJoinExAPI = true
+      
+      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_LTKM_REQ_MANUAL, CommonConstant. WF_LTKM_REQ_AUTO];
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.LTKM_RTN;
+      this.RequestTaskModel.OfficeRoleCodes = [this.userContext[CommonConstant.OFFICE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "LtkmNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
+    else{
+      var arrCrit = new Array();
+      var critObj = new CriteriaObj();
+  
+      critObj = new CriteriaObj();
+      critObj.DataType = 'text';
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'WTL.USERNAME';
+      critObj.value = this.userContext.UserName;
+      arrCrit.push(critObj);
+    }
+    
   }
   getEvent(ev: any) {
     if (ev.Key == "ltkmno") { 

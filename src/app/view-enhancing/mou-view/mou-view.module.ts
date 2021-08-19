@@ -34,6 +34,7 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewModule } from "../view.module";
 import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-recommendation/mou-view-approval-recommendation.component";
 import { MouViewSrvyTaskComponent } from "./mou-view-srvy-task/mou-view-srvy-task.component";
+import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -56,6 +57,7 @@ import { MouViewSrvyTaskComponent } from "./mou-view-srvy-task/mou-view-srvy-tas
         UcShowErrorsModule,
         SharedModule,
         UcapprovalHistoryModule,
+        ShrCompMouModule,
         ViewModule
     ],
     declarations: [
