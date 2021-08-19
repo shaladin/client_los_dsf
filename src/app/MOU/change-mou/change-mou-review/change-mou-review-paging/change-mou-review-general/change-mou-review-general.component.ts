@@ -203,7 +203,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
     this.InputObj = new UcInputRFAObj(this.cookieService);
     let Attributes = [
       {
-        "AttributeName": "PlafondAmt",
+        "AttributeName": "Plafond Amount",
         "AttributeValue": this.PlafondAmt
       },
       {
