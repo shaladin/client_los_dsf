@@ -5,13 +5,13 @@
       "type": "sort",
       "position": "left",
       "label": "Shareholder Name",
-      "name": "CustName"
+      "name": "MgmntShrholderName"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Shareholder Type",
-      "name": "MrCustTypeDescr"
+      "name": "MrCustTypeCode"
     },
     {
       "type": "sort",
@@ -54,12 +54,12 @@
     {
       "type": "text",
       "position": "left",
-      "property": "CustName"
+      "property": "MgmntShrholderName"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "MrCustTypeDescr"
+      "property": "MrCustTypeCode"
     },
     {
       "type": "text",
