@@ -18,6 +18,9 @@ import { CustDataCompanyLtkmObj } from 'app/shared/model/LTKM/CustDataCompanyLtk
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { CustSetData } from 'app/NEW-NAP/sharing-component/main-data-component/components/CustSetData.Service';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-ltkm-cust-company-main-data',
@@ -68,7 +71,6 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
 
   ngOnInit() {
     this.MaxDate = this.UserAccess.BusinessDt;
-
     if(this.isLockMode){
       this.parentForm.addControl(this.identifier, this.fb.group({
         CustNo: [''],
@@ -279,9 +281,13 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
   }
 
   bindCustModelObj() {
-    let tempReqObj: GenericObj = new GenericObj();
-    tempReqObj.Code = CommonConstant.CustTypeCompany;
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, tempReqObj).toPromise().then(
+    // let tempReqObj: GenericObj = new GenericObj();
+    // tempReqObj.Code = CommonConstant.CustTypeCompany;
+    let tempReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel,
+      MappingCode: CommonConstant.CustTypeCompany
+    };
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
