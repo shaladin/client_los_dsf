@@ -25,6 +25,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 
 @Component({
@@ -229,12 +230,12 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    await this.http.post(URLConstant.GetAppFinDataByAppId, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstantX.GetApprovalAmountForCreditReviewByAppIdX, { Id: this.appId }).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
-          AppvAmt: response["ApvAmt"]
+          AppvAmt: response["Result"]
         });
-        this.PlafondAmt = response["ApvAmt"];
+        this.PlafondAmt = response["Result"];
       });
   }
 
