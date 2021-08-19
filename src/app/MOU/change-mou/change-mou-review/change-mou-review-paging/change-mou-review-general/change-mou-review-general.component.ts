@@ -139,7 +139,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
       this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
       this.mouCustObj.MouCustId = this.MouCustId;
       
-      var submitMouReviewObj = {
+      let submitMouReviewObj = {
         WfTaskListId: this.WfTaskListId,
         MouCust: this.mouCustObj,
         RequestRFAObj: this.ApprovalCreateOutput,
@@ -158,7 +158,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
 
   Return() {
     let urlPost = environment.isCore ? URLConstant.ReturnChangeMouReviewV2 : URLConstant.ReturnChangeMouReview;
-    var mouObj = { 
+    let mouObj = { 
       WfTaskListId: this.WfTaskListId,
       ChangeMouTrxId : this.ChangeMouTrxId
     };
@@ -176,7 +176,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
 
   GetCallBack(event) {
     if (event.Key == "customer") {
-      var custObj = { CustNo: event.ViewObj["CustNo"] };
+      let custObj = { CustNo: event.ViewObj["CustNo"] };
       this.http
         .post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
@@ -201,9 +201,9 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
 
   initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
-    var Attributes = [
+    let Attributes = [
       {
-        "AttributeName": "Plafond Amount",
+        "AttributeName": "PlafondAmt",
         "AttributeValue": this.PlafondAmt
       },
       {
@@ -212,11 +212,11 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
       }
     ];
 
-    var TypeCode = {
+    let TypeCode = {
       TypeCode: CommonConstant.APV_TYPE_CHG_MOU_APV_TYPE,
       Attributes: Attributes,
     };
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
