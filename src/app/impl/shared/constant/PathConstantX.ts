@@ -25,6 +25,10 @@ export class PathConstantX {
   //#region Nap-Crd-Prcs
   public static COMM_RSV_FUND_PAGING = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.PAGING;
   public static COMM_RSV_FUND_DETAIL = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.DETAIL_X;
+
+  public static CRD_REVIEW_CR_PAGING_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.PAGING;
+  public static CRD_REVIEW_CR_DETAIL_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.DETAIL_X;
+  public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Nap-Main-Data
@@ -34,6 +38,8 @@ export class PathConstantX {
   public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X;
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
   public static CUST_CONFIRM_DETAIL_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
+
+  public static COPY_CANCEL_APP = "CopyCancelledApplicationX";
   //#endregion
 
   //#region Nap-Admin-Prcs
@@ -95,9 +101,9 @@ export class PathConstantX {
 
   public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + '/' + PathConstantX.DETAIL_X;
 
-  //credit review
-  public static CRD_REVIEW_CR_PAGING_X = PathConstant.CRD_REVIEW_CR + "/" + PathConstantX.PAGING;
-  public static CRD_REVIEW_CR_DETAIL_X = PathConstant.CRD_REVIEW_CR + "/" + PathConstantX.DETAIL_X;
+  //#region Nap-Admin-Prcs
+  public static AGRMNT_ACT_DETAIL = PathConstant.AGRMNT_ACT + "/" + PathConstantX.DETAIL_X;
+  //endregion
 }
 
 

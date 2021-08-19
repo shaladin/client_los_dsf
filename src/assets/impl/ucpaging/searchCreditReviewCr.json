@@ -128,19 +128,9 @@
                                 }
                             ],
                             "result": {
-                                "type": "url",
-                                "path": "BACK_TO_DETAIL_X",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    },
-                                    {
-                                        "type": "WfTaskListId",
-                                        "property": "WfTaskListId"
-                                    }
-                                ]
+                                "type": "callback",
+                                "key": "Edit",
+                                "icon": "ft-edit-2"
                             },
                             "isHide": false
                         },
@@ -154,19 +144,9 @@
                                 }
                             ],
                             "result": {
-                                "type": "url",
-                                "path": "BACK_TO_DETAIL_X",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "AppId",
-                                        "property": "AppId"
-                                    },
-                                    {
-                                        "type": "WfTaskListId",
-                                        "property": "WfTaskListId"
-                                    }
-                                ]
+                                "type": "callback",
+                                "key": "Edit",
+                                "icon": "ft-edit-2"
                             },
                             "isHide": false
                         }

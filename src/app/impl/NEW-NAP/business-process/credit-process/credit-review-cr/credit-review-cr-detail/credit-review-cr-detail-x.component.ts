@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -21,10 +22,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
+
 
 @Component({
   selector: 'app-credit-review-cr-detail-x',
@@ -58,7 +59,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   readonly CaptureStatScs: string = CommonConstant.CaptureStatScs;
   readonly CaptureStatFail: string = CommonConstant.CaptureStatFail;
 
-  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING + 'X';
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
@@ -261,6 +262,12 @@ export class CreditReviewCrDetailXComponent implements OnInit {
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
+
+        // penjagaan CF4W Fleet - impl X
+        if(this.crdRvwCustInfoObj.BizTemplateCode == CommonConstant.CF4W){
+          this.crdRvwCustInfoObj.BizTemplateCode = CommonConstant.FL4W;
+        }
+
       }
     );
 

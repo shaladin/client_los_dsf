@@ -113,6 +113,9 @@ import { SchmBalloonFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financ
 import { ApplicationDataOplComponent } from "./application-data/application-data-opl/application-data-opl.component";
 import { ApplicationDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-x.component";
 import { ApplicationDataFL4WXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-FL4W/application-data-FL4W-x.component";
+import { MultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/multi-asset-data-x.component";
+import { AssetDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging-x.component";
+import { AssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/asset-data/asset-data-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -230,7 +233,10 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalFL4WComponent,
     SchmBalloonFL4WComponent,
     ApplicationDataXComponent,
-    ApplicationDataFL4WXComponent
+    ApplicationDataFL4WXComponent,
+    MultiAssetDataXComponent,
+    AssetDataPagingXComponent,
+    AssetDataXComponent
   ],
   imports: [
     CommonModule,
@@ -349,7 +355,10 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalFL4WComponent,
     SchmBalloonFL4WComponent,
     ApplicationDataXComponent,
-    ApplicationDataFL4WXComponent
+    ApplicationDataFL4WXComponent,
+    MultiAssetDataXComponent,
+    AssetDataPagingXComponent,
+    AssetDataXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

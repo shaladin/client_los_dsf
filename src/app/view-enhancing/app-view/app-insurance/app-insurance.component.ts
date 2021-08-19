@@ -32,7 +32,7 @@ export class AppInsuranceComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.BizTemplateCode == CommonConstant.FCTR){
+    if(this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CF4W /* penjagaan CF4W Fleet - Perubahan Impl X*/){
       this.isFCTR = true;
     }
     this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { Id: this.AppId }).subscribe(
