@@ -705,6 +705,7 @@ export class CommonConstant {
   public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
   public static GSCodeLobKta = "LOB_KTA";
   public static GSSerialNoRegex = "SERIAL_NO_REGEX";
+  public static GSCodeListLegalDocCantDuplicate = "LIST_LEGAL_DOC_CANNOT_DUPLICATE";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
