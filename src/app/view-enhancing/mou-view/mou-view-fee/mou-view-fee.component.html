@@ -22,7 +22,7 @@
           <td class="text-left">{{item.FeeName}}</td>
           <td class="text-left">{{item.FeeType}}</td>
           <td class="text-left" *ngIf="item.FeeAmt != 0">{{item.FeeAmt | number}}</td>
-          <td class="text-left" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt}}%</td>
+          <td class="text-left" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt | number:'.6':'en-US'}} %</td>
           <td class="text-left">{{item.MouCustFeePaymentTypeView}}</td>
           <td class="text-center">{{item.MrAgreementAffectedView}}</td>
         </tr>

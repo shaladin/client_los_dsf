@@ -68,6 +68,7 @@ export class FinancialDataOplEditComponent implements OnInit {
   isCalculate: boolean = false;
   isCalculateCof: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit(): Promise<void> {

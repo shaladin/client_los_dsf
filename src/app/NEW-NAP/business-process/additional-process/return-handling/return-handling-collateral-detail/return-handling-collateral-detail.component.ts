@@ -153,6 +153,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   //  list: []
   //}] = [{ list: [] }];
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT;
   constructor(
     private fb: FormBuilder,

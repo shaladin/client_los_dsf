@@ -59,6 +59,7 @@ export class ChangeMouDetailGeneralComponent implements OnInit {
     VirAccNo: ['']
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private route: ActivatedRoute,

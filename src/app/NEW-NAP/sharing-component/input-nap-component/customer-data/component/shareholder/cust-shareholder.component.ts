@@ -93,6 +93,7 @@ export class CustShareholderComponent implements OnInit {
     IsGuarantor: [false]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

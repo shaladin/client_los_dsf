@@ -36,10 +36,8 @@ import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSe
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from 'app/shared/model/MouCustCollateralAttrObj.Model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { RefAttrGenerateObj } from 'app/shared/model/RefAttrGenerate.Model';
 import { RefAttrGenerate } from 'app/components/adins-module/ref-attr-generate/RefAttrGenerate.service';
-import { RefAttrGenerateComponent } from 'app/components/adins-module/ref-attr-generate/ref-attr-generate.component';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -164,6 +162,7 @@ export class MouRequestAddcollComponent implements OnInit {
   inputAddressObjForLocAddr: InputAddressObj;
   InputLookupProfessionObj: InputLookupObj;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private regexService: RegexService) { this.type = 'Paging'; }
 
   async ngOnInit() {

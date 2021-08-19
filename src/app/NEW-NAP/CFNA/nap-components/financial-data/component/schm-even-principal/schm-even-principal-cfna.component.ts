@@ -28,6 +28,7 @@ export class SchmEvenPrincipalCFNAComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }

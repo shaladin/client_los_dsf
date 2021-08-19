@@ -113,7 +113,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Portion Percentage</label>
                 <div class="col-md-4">
-                  <input type="" currencyMask id="assetPrcnt" class="form-control" formControlName="CollateralPrcnt" [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                  <input type="" currencyMask id="assetPrcnt" class="form-control" formControlName="CollateralPrcnt" [options]="CurrencyMaskPrct"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralPrcnt.invalid}">
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>

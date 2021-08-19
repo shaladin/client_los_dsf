@@ -70,6 +70,7 @@ export class FinancialCompanyComponent implements OnInit {
     RowVersion: ['']
   })
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,

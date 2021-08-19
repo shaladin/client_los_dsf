@@ -369,7 +369,7 @@
                             <div class="col-md-5" style="border-right: 1px solid grey">
                               <input type="" currencyMask id="AccessoryDownPaymentPrcnt{{i}}" class="form-control"
                                 (focusout)="CheckAccessoryDPValue(i, 'PRCNT')" formControlName="AccessoryDownPaymentPrcnt"
-                                [options]="{min: 0, max:100, suffix:' %'}"
+                                [options]="CurrencyMaskPrct"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentPrcnt.invalid }">
                               <lib-uc-show-errors
                                 [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentPrcnt"

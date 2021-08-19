@@ -28,7 +28,7 @@ export class SingleInstDlfnComponent implements OnInit {
   IsAppFeePrcntValid: boolean = true;
   TempTotalDisbAmt = 0;
 
-
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

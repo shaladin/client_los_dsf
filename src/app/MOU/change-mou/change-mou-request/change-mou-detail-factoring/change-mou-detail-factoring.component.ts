@@ -80,6 +80,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
     VirAccNo: ['']
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,

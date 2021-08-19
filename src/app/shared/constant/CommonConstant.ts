@@ -983,4 +983,7 @@ export class CommonConstant {
 
   // Financial Data
   public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
+
+  public static CurrencyMaskPrct = { min: 0, max: 100, suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false };
+  public static CurrencyMaskPrct2 = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false };
 }

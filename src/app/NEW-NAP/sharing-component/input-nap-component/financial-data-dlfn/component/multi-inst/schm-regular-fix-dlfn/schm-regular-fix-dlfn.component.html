@@ -75,7 +75,7 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{(ParentForm.controls.TotalRetentionAmt.value | number : '1.2-2') + ' / ' +
-                (ParentForm.controls.RetentionPrcnt.value | number : '1.2-2')}}</label>
+                (ParentForm.controls.RetentionPrcnt.value | number:'.6':'en-US')}} %</label>
             </div> -->
           </div>
         </div>
@@ -171,7 +171,7 @@
             <div class="col-md-3 form-inline form-inline-right">
               <div class="row">
                 <div class="col-md-6">
-                  <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
+                  <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt" [options]="CurrencyMaskPrct"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)" currencyMask>
@@ -179,7 +179,7 @@
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-6">
-                  <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
+                  <input type="" class="form-control full-width" formControlName="FlatRatePrcnt" [options]="CurrencyMaskPrct"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
                     currencyMask>
@@ -205,7 +205,7 @@
               <label>Gross Yield</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number:'.6':'en-US'}} %</label>
             </div>
           </div>
         </div>
@@ -270,27 +270,27 @@
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="No" translate>
                 No
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="InstAmt" translate>
                 Installment Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="PrincipalAmt" translate>
                 Principal Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="InterestAmt" translate>
                 Interest Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
+            <th style="text-align: center;"><span class="thead-header" name="OsPrincipalAmt" translate>
                 Os Principal Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
+            <th style="text-align: center;"><span class="thead-header" name="OsInterestAmt" translate>
                 Os Interest Amount
               </span>
             </th>

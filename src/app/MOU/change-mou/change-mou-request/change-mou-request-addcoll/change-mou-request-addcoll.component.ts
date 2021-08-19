@@ -136,6 +136,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   inputAddressObjForLegalAddr: InputAddressObj;
   inputAddressObjForLocAddr: InputAddressObj;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private router: Router,
