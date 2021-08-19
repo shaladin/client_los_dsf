@@ -24,14 +24,13 @@ import { MouCustCollateralDocObj } from "app/shared/model/MouCustCollateralDocOb
 import { ChangeMouCustCollateralObj } from "app/shared/model/ChangeMouCustCollateralObj.Model";
 import { ChangeMouCustCollateralRegistrationObj } from "app/shared/model/ChangeMouCustCollateralRegistrationObj.Model";
 import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
-import { MouCustCollateralObj } from "app/shared/model/MouCustCollateralObj.Model";
 import { AssetTypeSerialNoLabelObj } from "app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model";
 import { GenericListObj } from "app/shared/model/Generic/GenericListObj.Model";
 import { MouCustAddrObj } from "app/shared/model/MouCustAddrObj.Model";
 import { RegexService } from 'app/shared/services/regex.services';
 import { CustomPatternObj } from "app/shared/model/CustomPatternObj.model";
 import { RefAttrGenerateObj } from "app/shared/model/RefAttrGenerate.Model";
-import { RefAttrGenerate } from "app/components/adins-module/ref-attr-generate/RefAttrGenerate.service";
+import { RefAttrGenerate } from "app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service";
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from "app/shared/model/MouCustCollateralAttrObj.Model";
 
 @Component({
