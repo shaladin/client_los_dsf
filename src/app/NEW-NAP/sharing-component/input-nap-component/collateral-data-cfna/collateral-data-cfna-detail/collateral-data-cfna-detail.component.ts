@@ -470,7 +470,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
               DocNo: AppCollateralDocs[i].DocNo,
               DocNotes: AppCollateralDocs[i].DocNotes,
-              ACDExpiredDt: formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
               IsReceived: AppCollateralDocs[i].IsReceived,
               RowVersion: AppCollateralDocs[i].RowVersion,
             })
