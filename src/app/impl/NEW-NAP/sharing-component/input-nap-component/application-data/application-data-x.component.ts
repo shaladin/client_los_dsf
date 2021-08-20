@@ -37,6 +37,9 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { ResCalculatePlafondAgrmntXObj } from 'app/impl/shared/model/ResCalculatePlafondAgrmntXObj.Model';
+import { ReqCalculatePlafondAgrmntXObj } from 'app/impl/shared/model/ReqCalculatePlafondAgrmntXObj.Model';
+import { ReqAgrmntMasterDataObjX } from 'app/impl/shared/model/ReqAgrmntMasterDataObjX.model';
 
 @Component({
   selector: 'app-application-data-x',
@@ -67,6 +70,7 @@ export class ApplicationDataXComponent implements OnInit {
   inputLookupObj: InputLookupObj;
   inputLookupEconomicSectorObj: InputLookupObj;
   inputLookupCommodityObj: InputLookupObj;
+  InputLookupAgrmntParentObj: InputLookupObj = new InputLookupObj();
   arrAddCrit: Array<CriteriaObj>;
   user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   isInputLookupObj: boolean = false;
@@ -91,6 +95,9 @@ export class ApplicationDataXComponent implements OnInit {
   isDdlMrFirstInstTypeReady: boolean = false;
   isDdlPayFreqReady: boolean = false;
   tempCommodityName:string ="";
+  agrmntParentNo: string;
+  resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
+  reqAgrmntMasterDataObjX: ReqAgrmntMasterDataObjX;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -416,6 +423,8 @@ export class ApplicationDataXComponent implements OnInit {
           this.isFromMouCust = true;
           this.setTenor(this.resultResponse.MouCustId);
         }
+
+        this.getAgrmntParent();
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
         this.initMailingAddress();
@@ -439,6 +448,16 @@ export class ApplicationDataXComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+
+  getAgrmntParent() {
+    if (this.resultResponse.AgrmntParentNo != null) {
+      this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
+      this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = this.resultResponse.PlafondAgrmntAmt;
+      this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = this.resultResponse.MaxPlafondAgrmntAmt;
+      this.totalAgrmntMpfDt = this.resultResponse.TotalAgrmntMpfDt;
+      this.maxTenor = this.resultResponse.MaxTenor;
+    }
   }
 
   getAppSrcData() {
@@ -546,7 +565,7 @@ export class ApplicationDataXComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultResponse;
@@ -555,9 +574,23 @@ export class ApplicationDataXComponent implements OnInit {
 
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+
+    this.InputLookupAgrmntParentObj.urlJson = "./assets/impl/uclookup/lookupAgrmntParent.json";
+    this.InputLookupAgrmntParentObj.urlQryPaging = URLConstantX.GetPagingObjectR2BySQL;
+    this.InputLookupAgrmntParentObj.urlEnviPaging = environment.losUrl + "/v1";
+    this.InputLookupAgrmntParentObj.pagingJson = "./assets/impl/uclookup/lookupAgrmntParent.json";
+    this.InputLookupAgrmntParentObj.genericJson = "./assets/impl/uclookup/lookupAgrmntParent.json";
+    this.InputLookupAgrmntParentObj.isReadonly = true;
+    this.InputLookupAgrmntParentObj.isRequired = (this.BizTemplateCode == CommonConstant.CFNA);
+
+    if (this.BizTemplateCode == CommonConstant.CFNA) {
+      this.InputLookupAgrmntParentObj.nameSelect = this.resultResponse.AgrmntParentNo;
+      this.InputLookupAgrmntParentObj.jsonSelect = { AgrmntNo: this.resultResponse.AgrmntParentNo };
+      this.agrmntParentNo = this.resultResponse.AgrmntParentNo;
+    }
 
     if (this.resultResponse["MrSlikSecEcoDescr"] != null && this.resultResponse["MrSlikSecEcoDescr"] != "") {
       this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
@@ -650,6 +683,50 @@ export class ApplicationDataXComponent implements OnInit {
     await this.GetGSValueSalesOfficer();
 
     await this.makeLookUpObj();
+  }
+  
+  async copyAgrmntParentEvent(event) {
+    this.totalAgrmntMpfDt = event.TotalAgrmntMpfDt;
+    this.maxTenor = event.MaxTenor;
+    var reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
+    reqCalculatePlafondAgrmntXObj.AppId = this.appId;
+    reqCalculatePlafondAgrmntXObj.AgrmntParentNo = event.AgrmntNo;
+    reqCalculatePlafondAgrmntXObj.TotalAssetPrice = event.TotalAssetPrice;
+    reqCalculatePlafondAgrmntXObj.OsArAgrmntMasterAmt = event.OsArAgrmntMasterAmt;
+    reqCalculatePlafondAgrmntXObj.OsArMpfDtAmt = event.OsArMpfDtAmt;
+    reqCalculatePlafondAgrmntXObj.LobCode = this.resultResponse.LobCode;
+    reqCalculatePlafondAgrmntXObj.AssetTypeCode = event.AssetTypeCode;
+    reqCalculatePlafondAgrmntXObj.EffectiveDt = event.EffectiveDt;
+
+    this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstant.CalculatePlafondAgrmnt, reqCalculatePlafondAgrmntXObj).subscribe(
+      (response) => {
+        this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
+        this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
+        this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = response.MaxPlafondAgrmntAmt;
+        this.resCalculatePlafondAgrmntXObj.IsAppInProgress = response.IsAppInProgress;
+
+        if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+          this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+        }
+      });
+
+    var tempCrossApp = new NapAppCrossObj();
+    tempCrossApp.CrossAgrmntNo = event.AgrmntNo;
+    tempCrossApp.CrossAppNo = event.AppNo;
+    tempCrossApp.CustName = event.CustName;
+    tempCrossApp.ContractStat = event.ContractStat;
+    tempCrossApp.MaturityDt = event.MaturityDt;
+    let appCross = this.resultCrossApp.find(x => x.CrossAgrmntNo == this.agrmntParentNo);
+    if (appCross != undefined) {
+
+      let index = this.resultCrossApp.indexOf(appCross);
+      this.resultCrossApp[index] = tempCrossApp;
+      this.agrmntParentNo = event.AgrmntNo;
+
+    } else {
+      this.resultCrossApp.push(tempCrossApp);
+      this.agrmntParentNo = event.AgrmntNo;
+    }
   }
 
   async GetGSValueSalesOfficer() {
@@ -791,24 +868,42 @@ export class ApplicationDataXComponent implements OnInit {
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
           if (response["listResponseAppLoanPurpose"] && response["listResponseAppLoanPurpose"].length > 0) {
+            if (!this.checkPlafondAndTenorAgrmnt(response["listResponseAppLoanPurpose"])) {
+              return;
+            }
+            this.reqAgrmntMasterDataObjX = new ReqAgrmntMasterDataObjX();
             let tempAppObj = this.GetAppObjValue();
             let tempListAppCrossObj = this.GetListAppCrossValue();
             let tempAppFindDataObj = this.GetAppFinDataValue();
             let tempAppCustMailingAddr = this.getMailingAddrForSave();
+            let appXobj = {
+              AppId: this.appId,
+              MrStatusBpkbCode: this.NapAppModelForm.controls.BpkbStatCode.value,
+              MrOrdStatusCode: this.NapAppModelForm.controls.OrdStatCode.value,
+              MrCommodityCode: this.NapAppModelForm.controls.CommodityCode.value,
+            };
+            this.reqAgrmntMasterDataObjX =
+            {
+              AppId: this.appId,
+              AppNo: this.NapAppModelForm.value.AppNo.value,
+              AgrmntParentNo: this.NapAppModelForm.value.lookupAgreementParent.value,
+              TotalAgrmntMpfDt: this.totalAgrmntMpfDt,
+              PlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt,
+              MaxPlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt,
+              MaxTenor: this.maxTenor,
+              RowVersion: this.resultResponse.RowVersionAgrmntMasterX
+            }
             let obj = {
-              AppModelObj: {
                 AppObj: tempAppObj,
                 ListAppCrossObj: tempListAppCrossObj,
                 AppFinData: tempAppFindDataObj,
                 AppCustMailingAddr: tempAppCustMailingAddr,
                 AppOtherInfoObj: this.GetBankInfo,
                 RowVersion: "",
-              },
-              TotalAgrmntMpfDt: this.totalAgrmntMpfDt,
-              MaxTenor: this.maxTenor,
-              RowVersionAgrmntMasterX: this.resultResponse.RowVersionAgrmntMasterX
+                AppXObj: appXobj,
+                ReqAgrnntMasterX: this.reqAgrmntMasterDataObjX
             };
-            this.http.post(URLConstant.EditAppAddAppCross, obj.AppModelObj).subscribe(
+            this.http.post(URLConstantX.EditAppAddAppCrossX, obj).subscribe(
               (response) => {
                 this.toastr.successMessage('Save Application Data');
                 this.outputTab.emit();
@@ -857,6 +952,43 @@ export class ApplicationDataXComponent implements OnInit {
         this.toastr.errorMessage('Tenor must be between ' + this.TenorFrom + ' and ' + this.TenorTo)
       }
     }
+
+  }
+
+  checkPlafondAndTenorAgrmnt(listAppLoanPurpose) {
+    if (this.resCalculatePlafondAgrmntXObj == undefined) {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_AGREEMENT_PARENT);
+      return false;
+    }
+
+    if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+      this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+      return false;
+    }
+    var plafondUsed = 0;
+
+    if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt > this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt) {
+      plafondUsed = this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt;
+    } else {
+      plafondUsed = this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt;
+    }
+    var financingAmt = 0;
+    if (listAppLoanPurpose) {
+      for (let i = 0; i < listAppLoanPurpose.length; i++) {
+        financingAmt += listAppLoanPurpose[i].FinancingAmt;
+      }
+    }
+
+    if (plafondUsed < financingAmt) {
+      this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+      return false;
+    }
+
+    if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
+      this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
+      return false;
+    }
+    return true;
   }
 
   Cancel() {

@@ -80,4 +80,7 @@ export class URLConstantX {
 
   //APP TC
   public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
+  
+  //GENERIC
+  public static GetPagingObjectR2BySQL = "/GenericX/GetPagingObjectR2BySQL";
 }
