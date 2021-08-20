@@ -314,6 +314,7 @@ export class AssetDataComponent implements OnInit {
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   LastRequestedDate: any = "";
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

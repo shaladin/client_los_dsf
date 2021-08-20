@@ -162,6 +162,7 @@ export class MouRequestAddcollComponent implements OnInit {
   inputAddressObjForLocAddr: InputAddressObj;
   InputLookupProfessionObj: InputLookupObj;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private regexService: RegexService) { this.type = 'Paging'; }
 
   async ngOnInit() {

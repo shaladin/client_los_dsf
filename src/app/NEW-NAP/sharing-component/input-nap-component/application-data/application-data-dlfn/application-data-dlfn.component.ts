@@ -111,6 +111,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   appCustId: number;
   IsMouSelect: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {

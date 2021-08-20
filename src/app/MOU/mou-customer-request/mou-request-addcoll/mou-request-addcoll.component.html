@@ -45,7 +45,7 @@
           <td align="left">{{item.FullAssetCode}}</td>
           <td align="left">{{item.CustName}}</td>
           <td align="right">{{item.CollateralValueAmt | number:'.2':'en-US'}}</td>
-          <td align="right">{{item.CollateralPrcnt | number:'.6':'en-US'}}</td>
+          <td align="right">{{item.CollateralPrcnt | number:'.6':'en-US'}} %</td>
           <td align="right">{{item.CollateralPortionAmt == null ? 0 : item.CollateralPortionAmt | number:'.2':'en-US'}}</td>
           <td>{{item.CollateralStat}}</td>
           <td>
@@ -147,7 +147,8 @@
             <div class="col-md-4" style="border-right: 1px solid grey">
               <input type="" currencyMask id="CollateralPrcnt" class="form-control text-right"
                 formControlName="CollateralPrcnt" (focusout)="UpdateValueCollateralPortionAmt()"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}">
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid}"
+                [options]="CurrencyMaskPrct">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt"
                 [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
@@ -432,7 +433,8 @@
             <div class="col-md-4">
               <input type="" currencyMask id="CollateralPortionAmt" class="form-control text-right" formControlName="CollateralPortionAmt"
                 (focusout)="UpdateValueCollateralPrcnt()"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPortionAmt.invalid}">
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPortionAmt.invalid}"
+                [options]="CurrencyMaskPrct">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPortionAmt"
                 [submit]="enjiForm.submitted">
               </lib-uc-show-errors>

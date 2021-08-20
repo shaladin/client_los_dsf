@@ -138,6 +138,7 @@ export class CustMainDataComponent implements OnInit {
   rowVersionAppCustAddr: string[];
   rowVersionMgmntShrholder: string[];
   custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly MasterGender = CommonConstant.RefMasterTypeCodeGender;
   MasterCustType: string = "";
   readonly MasterMaritalStat = CommonConstant.RefMasterTypeCodeMaritalStat;

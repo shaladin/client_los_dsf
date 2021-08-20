@@ -23,7 +23,7 @@
           <td class="text-left">{{item.FeeName}}</td>
           <td class="text-left">{{item.FeeType}}</td>
           <td align="right" *ngIf="item.FeeAmt != 0">{{item.FeeAmt | number}}</td>
-          <td align="right" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt}}%</td>
+          <td align="right" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt | number:'.6':'en-US'}} %</td>
         </tr>
       </tbody>
     </table>

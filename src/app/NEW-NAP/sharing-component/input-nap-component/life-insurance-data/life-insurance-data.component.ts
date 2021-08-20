@@ -40,6 +40,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   appLifeInsRuleObj: AppLifeInsRuleObj = new AppLifeInsRuleObj();
   CustAdminFeeAmtPatched: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct2;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.mode = params["mode"];

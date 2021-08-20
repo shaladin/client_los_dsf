@@ -92,6 +92,7 @@ export class NewNapCustMainDataComponent implements OnInit {
   readonly MasterCompanyType = CommonConstant.RefMasterTypeCodeCompanyType;
   readonly MasterJobPosition = CommonConstant.RefMasterTypeCodeJobPosition;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

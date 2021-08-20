@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   inputAddressObjForOwner: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"] ? params["AppId"] : this.AppId;

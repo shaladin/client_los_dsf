@@ -33,6 +33,7 @@ export class MouCustFeeDetailComponent implements OnInit {
     RowVersion: ['']
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,

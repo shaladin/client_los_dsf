@@ -32,9 +32,11 @@
           "property": "topDays"
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Term Of Payment Interest Rate Percent (%)",
-          "property": "topInterestRatePrcnt"
+          "property": "topInterestRatePrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
           "type": "text",
@@ -42,14 +44,18 @@
           "property": "payFreq"
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Interest Rate (%)",
-          "property": "interestRatePrcnt"
+          "property": "interestRatePrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Extend Rate Percent (%)",
-          "property": "extendRatePrcnt"
+          "property": "extendRatePrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
           "type": "text",
@@ -62,9 +68,11 @@
           "property": "maximumExtendTimes"
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Principal Paid For Extend (%)",
-          "property": "principalPaidInExtendPrcntgChange"
+          "property": "principalPaidInExtendPrcntgChange",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
           "type": "text",
