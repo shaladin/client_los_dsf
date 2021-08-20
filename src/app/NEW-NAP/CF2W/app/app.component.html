@@ -633,7 +633,8 @@
                   <label class="col-md-2  adInsLabel" translate>Effective rate to Customer</label>
                   <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="EffectiveRatePrcnt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.EffectiveRatePrcnt.invalid}">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.EffectiveRatePrcnt.invalid}"
+                      [options]="CurrencyMaskPrct">
                     <lib-uc-show-errors [control]="appForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -643,7 +644,8 @@
                   <label class="col-md-2  adInsLabel" translate>Flat rate to Customer</label>
                   <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="FlatRatePrcnt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.FlatRatePrcnt.invalid}">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.FlatRatePrcnt.invalid}"
+                      [options]="CurrencyMaskPrct">
                     <lib-uc-show-errors [control]="appForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>

@@ -82,7 +82,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     IsGuarantor: [false]
   });
 
-
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

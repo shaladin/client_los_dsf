@@ -75,6 +75,7 @@ export class MouDetailFactoringComponent implements OnInit {
     VirtualAccNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
   });
   
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,

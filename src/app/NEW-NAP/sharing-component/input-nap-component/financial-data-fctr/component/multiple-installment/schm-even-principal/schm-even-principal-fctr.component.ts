@@ -28,6 +28,7 @@ export class SchmEvenPrincipalFctrComponent implements OnInit {
   listInstallment: Array<InstallmentObj>;
   IsAppFeePrcntValid: boolean = true;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

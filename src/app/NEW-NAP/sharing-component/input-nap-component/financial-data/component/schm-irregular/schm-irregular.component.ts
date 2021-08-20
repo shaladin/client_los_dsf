@@ -32,6 +32,7 @@ export class SchmIrregularComponent implements OnInit {
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }

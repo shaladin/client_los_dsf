@@ -39,6 +39,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   EffRateAfterCalc: number = 0;
   FlatRateAfterCalc: number = 0;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }

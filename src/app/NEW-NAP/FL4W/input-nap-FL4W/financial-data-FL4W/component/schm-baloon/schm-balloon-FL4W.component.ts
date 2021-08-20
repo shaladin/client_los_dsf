@@ -32,6 +32,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
   listInstallment: any;
   IsTrialCalc: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

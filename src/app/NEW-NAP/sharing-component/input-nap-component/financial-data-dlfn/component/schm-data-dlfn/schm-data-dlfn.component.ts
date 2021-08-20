@@ -32,6 +32,7 @@ export class SchmDataDlfnComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

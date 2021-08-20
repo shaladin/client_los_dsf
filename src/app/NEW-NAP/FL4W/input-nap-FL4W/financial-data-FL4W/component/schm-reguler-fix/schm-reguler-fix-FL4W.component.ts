@@ -33,6 +33,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
   private fb: FormBuilder,
     private http: HttpClient,

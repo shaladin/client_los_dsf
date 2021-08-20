@@ -104,6 +104,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   textButton: string;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
     this.route.queryParams.subscribe(params => {
