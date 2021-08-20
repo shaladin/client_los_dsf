@@ -1,25 +1,21 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
-  selector: 'app-financial-data-dlfn-x',
-  templateUrl: './financial-data-dlfn-x.component.html'
+  selector: 'app-financial-data-fctr-x',
+  templateUrl: './financial-data-fctr-x.component.html',
 })
-export class FinancialDataDlfnXComponent implements OnInit {
-
+export class FinancialDataFctrXComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   FinDataForm: FormGroup;
@@ -28,6 +24,9 @@ export class FinancialDataDlfnXComponent implements OnInit {
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
   NumOfInst: number;
+  MouCustId: number;
+  MouCustFctrId: number;
+  EffectiveRatePrcnt: number;
   IsParentLoaded: boolean = false;
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -44,7 +43,7 @@ export class FinancialDataDlfnXComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.FinDataForm = this.fb.group(
       {
         AppId: this.AppId,
@@ -102,7 +101,7 @@ export class FinancialDataDlfnXComponent implements OnInit {
 
         MrInstTypeCode: "",
         InstTypeName: "",
-        MrSingleInstCalcMthdCode: "SIMPLE",
+        MrSingleInstCalcMthdCode: "",
         SingleInstCalcMthdName: "",
         TopBased: "",
         TopBasedName: "",
@@ -111,7 +110,6 @@ export class FinancialDataDlfnXComponent implements OnInit {
         EstEffDt: "",
         TotalInvcAmt: 0,
         TopDays: 0,
-        TopInterestRatePrcnt: 0,
         RetentionPrcnt: 0,
         TotalRetentionAmt: 0,
         TotalDisbAmt: 0,
@@ -129,19 +127,36 @@ export class FinancialDataDlfnXComponent implements OnInit {
         BalloonBhv: '',
         MinDownPaymentNettPrcnt: 0,
         MaxDownPaymentNettPrcnt: 0,
-        TotalTopAmount: 0
       }
     );
-    this.LoadAppFinData();
-    console.log(this.FinDataForm.controls.MrInstTypeCode.value);
+    await this.LoadMouCust();
+    await this.LoadMouCustFctr();
+    await this.LoadAppFinData();
   }
 
   Cancel() {
     this.outputCancel.emit();
   }
 
-  LoadAppFinData() {
-    this.http.post<AppFinDataObj>(URLConstantX.GetInitAppFinDataDFByAppIdX, { Id: this.AppId }).subscribe(
+  async LoadMouCust() {
+     await this.http.post(URLConstant.GetMouCustByAppId, { Id: this.AppId }).toPromise().then(
+      (response: any) => {
+        this.MouCustId = response.MouCustId;
+      }
+    );
+  }
+
+  async LoadMouCustFctr() {
+    await this.http.post(URLConstant.GetMouCustFctrByMouCustId, { Id: this.MouCustId }).toPromise().then(
+      (response: any) => {
+        this.MouCustFctrId = response.MouCustId;
+        this.EffectiveRatePrcnt = response.InterestRatePrcnt;
+      }
+    );
+  }
+
+  async LoadAppFinData() {
+    this.http.post<AppFinDataObj>(URLConstantX.GetInitAppFinDataFctrByAppIdX, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 
@@ -161,7 +176,7 @@ export class FinancialDataDlfnXComponent implements OnInit {
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
 
-          EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
+          EffectiveRatePrcnt: this.EffectiveRatePrcnt,
           EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
 
@@ -181,7 +196,7 @@ export class FinancialDataDlfnXComponent implements OnInit {
 
           MrInstTypeCode: this.appFinDataObj.MrInstTypeCode,
           InstTypeName: this.appFinDataObj.InstTypeName,
-          MrSingleInstCalcMthdCode: "SIMPLE",//this.appFinDataObj.MrSingleInstCalcMthdCode,
+          MrSingleInstCalcMthdCode: this.appFinDataObj.MrSingleInstCalcMthdCode,
           SingleInstCalcMthdName: this.appFinDataObj.SingleInstCalcMthdName,
           TopBased: this.appFinDataObj.TopBased,
           TopBasedName: this.appFinDataObj.TopBasedName,
@@ -190,7 +205,6 @@ export class FinancialDataDlfnXComponent implements OnInit {
           EstEffDt: this.appFinDataObj.EstEffDt != undefined ? formatDate(this.appFinDataObj.EstEffDt, 'yyyy-MM-dd', 'en-US') : '',
           TotalInvcAmt: this.appFinDataObj.TotalInvcAmt,
           TopDays: this.appFinDataObj.TopDays,
-          TopInterestRatePrcnt: this.appFinDataObj.TopInterestRatePrcnt,
           RetentionPrcnt: this.appFinDataObj.RetentionPrcnt,
           TotalRetentionAmt: this.appFinDataObj.TotalRetentionAmt,
           TotalDisbAmt: this.appFinDataObj.TotalDisbAmt,
@@ -207,12 +221,7 @@ export class FinancialDataDlfnXComponent implements OnInit {
           BalloonBhv: this.appFinDataObj.BalloonBhv,
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
-
-          GracePeriod: this.appFinDataObj.NumOfInst - 1,
-          MrGracePeriodTypeCode: this.appFinDataObj.MrInstTypeCode == CommonConstant.InstTypeSingle ? "" : "INTEREST_ONLY",
-
-          InstAmt: this.appFinDataObj.InstAmt,
-          TotalTopAmount: this.appFinDataObj.TotalTopAmount != undefined ? this.appFinDataObj.TotalTopAmount : 0,
+          InstAmt: this.appFinDataObj.InstAmt
         });
 
         this.IsParentLoaded = true;
@@ -229,14 +238,9 @@ export class FinancialDataDlfnXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
       return;
     }
-    if (this.FinDataForm.get("TotalFeeAmt").value >= this.FinDataForm.get("NtfAmt").value) {
-      this.toastr.warningMessage(ExceptionConstant.NTF_MUST_BE_GREAD_THAN_TOTFEE);
-      return;
-    }
-
     if (isValidGracePeriod) {
 
-      this.http.post(URLConstant.SaveAppFinDataDF, this.FinDataForm.value).subscribe(
+      this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.getRawValue()).subscribe(
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["Message"]);
@@ -285,5 +289,4 @@ export class FinancialDataDlfnXComponent implements OnInit {
     }
     return valid;
   }
-
 }
