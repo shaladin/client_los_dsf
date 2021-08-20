@@ -58,4 +58,13 @@ export class ClaimTaskService{
       () => {
       });
   }
+
+  ClaimTaskSelfVerif(WfTaskListId: number){
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = WfTaskListId.toString();
+    wfClaimObj.pUserID = AdInsConstant.UserCustomer;
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      () => {
+      });
+  }
 }
