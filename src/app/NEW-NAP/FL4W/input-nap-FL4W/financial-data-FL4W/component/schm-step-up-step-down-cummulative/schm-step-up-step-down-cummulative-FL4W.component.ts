@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -45,6 +45,10 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
+    this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
     if (this.AppId != null) {
     this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {

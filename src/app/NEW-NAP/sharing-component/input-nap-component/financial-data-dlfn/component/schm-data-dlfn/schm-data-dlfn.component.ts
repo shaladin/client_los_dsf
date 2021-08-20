@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
@@ -43,6 +43,8 @@ export class SchmDataDlfnComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
+    this.ParentForm.get("AppSupplEffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("AppSupplEffectiveRatePrcnt").updateValueAndValidity();
     this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
