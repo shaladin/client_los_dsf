@@ -84,7 +84,7 @@ export class CommissionReservedFundPagingComponent implements OnInit {
         this.toastr.warningMessage("Please complete MaxRefund Rule for " + this.BizTemplateCode + " ");
         return;
       }
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.Id });      
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });      
     }
   }
 
