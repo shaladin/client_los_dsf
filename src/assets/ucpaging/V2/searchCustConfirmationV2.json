@@ -1,0 +1,187 @@
+{
+    "title": "Customer Confirmation Paging",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "A.APP_NO",
+        "id": "AppNoId",
+        "value": "",
+        "label": "Application No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "AGR.AGRMNT_NO",
+        "id": "AgreementNoId",
+        "value": "",
+        "label": "Agreement No",
+        "placeholder": "Placeholder"
+      }, 
+      {
+        "type": "textbox",
+        "name": "AGR.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      }, 
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_NAME",
+        "id": "ProdOfferingNameId",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "A.ORI_OFFICE_CODE",
+        "id": "OfficeNameId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "isQueryIn" : true,
+        "url": "",
+        "environment": "FOU",
+        "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "label": "Office Name",
+        "items": [],
+        "itemsUrl": []
+      }
+    ],
+    "querystring": {
+      "name": "searchCustConfirmationV2"
+    },
+    "orderby": {
+      "key": "A.APP_NO",
+      "value": "false"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Claim By",
+        "name": "Assignee"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "OFFICE",
+        "name": "A.ORI_OFFICE_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Application No",
+        "name": "A.APP_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Agreement No",
+        "name": "AGR.AGRMNT_NO"
+      }, 
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Customer Name",
+        "name": "AGR.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "PRODUCT OFFERING NAME",
+        "name": "A.PROD_OFFERING_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+  
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "Assignee"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "OfficeName"
+      },
+      {
+        "type": "link",
+        "position": "center",
+        "property": "AppNo",
+        "target": "_blank",
+        "path": "VIEW_APP",
+        "param": [
+          {
+            "type": "AppId",
+            "property": "AppId"
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "position": "center",
+        "property": "AgrmntNo",
+        "target": "_blank",
+        "path": "VIEW_AGRMNT",
+        "param": [
+          {
+            "type": "AgrmntId",
+            "property": "AgrmntId"
+          }
+        ]
+      }, 
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "callback",
+        "key": "ViewProdOffering",
+        "position": "left",
+        "property": "ProdOfferingName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "NAP_ADM_PRCS_CUST_CONFIRM_DETAIL",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              },
+              {
+                "type": "AgrmntNo",
+                "property": "AgrmntNo"
+              },
+              {
+                "type": "TaskListId",
+                "property": "Id"
+              },
+              {
+                "type": "AppId",
+                "property": "AppId"
+              },
+              {
+                "type": "BizTemplateCode",
+                "property": "BizTemplateCode"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+}  

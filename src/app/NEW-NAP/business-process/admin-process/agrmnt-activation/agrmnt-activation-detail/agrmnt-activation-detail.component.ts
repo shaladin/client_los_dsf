@@ -17,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -32,7 +33,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   isOverwrite: boolean;
   AgrmntNo: string;
   CreateDt: Date;
-  WfTaskListId: number;
+  WfTaskListId: any;
   TrxNo: string;
   AgrmntActForm: FormGroup;
   BizTemplateCode: string;
@@ -83,7 +84,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
     await this.CheckApvResultExp();
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.claimTaskService.ClaimTask(this.WfTaskListId);
+    this.claimTask();
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
@@ -189,5 +190,16 @@ export class AgrmntActivationDetailComponent implements OnInit {
       if (control instanceof FormGroup || control instanceof FormArray) { control.markAsTouched(); this.markFormTouched(control); }
       else { control.markAsTouched(); };
     });
+  }
+
+  claimTask(){
+  if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId!= undefined){
+          this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+        }
+    }
+    else if (this.WfTaskListId > 0) {
+       this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 }
