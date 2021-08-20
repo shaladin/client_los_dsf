@@ -26,6 +26,7 @@ import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.c
 import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/crd-rvw-table-cust.component';
 import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
 import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.component';
+import { CrdRvwAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-info/crd-rvw-app-info-x.component";
 
 @NgModule({
     exports: [
@@ -44,7 +45,8 @@ import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.c
         CrdRvwDukcapilHistComponent,
         CrdRvwLegalDocComponent,
         AppRvwSummaryAssetComponent,
-        CrdRvwAssetAccComponent
+        CrdRvwAssetAccComponent,
+        CrdRvwAppInfoXComponent
     ],
     imports: [
         CommonModule,
@@ -74,7 +76,8 @@ import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.c
         CrdRvwLegalDocComponent,
         CrdRvwTableCustComponent,
         AppRvwSummaryAssetComponent,
-        CrdRvwAssetAccComponent
+        CrdRvwAssetAccComponent,
+        CrdRvwAppInfoXComponent
     ],
     providers: [
         NGXToastrService

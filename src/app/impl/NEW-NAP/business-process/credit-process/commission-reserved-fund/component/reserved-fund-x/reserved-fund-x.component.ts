@@ -159,8 +159,7 @@ export class ReservedFundXComponent implements OnInit {
       AppId: this.AppId,
       TotalReserveFundAmt: this.totalRsvFundAmt
     };
-
-    await this.http.post(URLConstant.CalculateGrossYieldRsvFund, grossyieldObj).toPromise().then(
+    await this.http.post(URLConstantX.CalculateGrossYieldRsvFundX, grossyieldObj).toPromise().then(
       (response) => {
         this.calcGrossYieldObj = response;
         this.grossYield = this.calcGrossYieldObj.GrossYieldPrcnt;

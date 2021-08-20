@@ -4,6 +4,7 @@ import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -11,26 +12,28 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
-import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
-import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
-import { CookieService } from 'ngx-cookie';
 import { ToastrService } from 'ngx-toastr';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
+import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+
 
 @Component({
   selector: 'app-credit-review-cr-detail-x',
   templateUrl: './credit-review-cr-detail-x.component.html'
 })
 export class CreditReviewCrDetailXComponent implements OnInit {
+
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -227,12 +230,12 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    await this.http.post(URLConstant.GetAppFinDataByAppId, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstantX.GetApprovalAmountForCreditReviewByAppIdX, { Id: this.appId }).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
-          AppvAmt: response["ApvAmt"]
+          AppvAmt: response["Result"]
         });
-        this.PlafondAmt = response["ApvAmt"];
+        this.PlafondAmt = response["Result"];
       });
   }
 
