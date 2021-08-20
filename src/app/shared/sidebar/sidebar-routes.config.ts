@@ -540,12 +540,15 @@ export const ROUTES: RouteInfo[] = [
   //  Submenu: [
   //  ], Params: []
   //},
-  { Path: NavigationConstant.FORMS_REPORT, Title: 'Report', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+  { Path: NavigationConstant.FORMS_REPORT, Title: 'Report', Icon: 'fa fa-print', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false, 
+  Submenu: [
+    { Path: NavigationConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN, Title: 'Surat Konfirmasi Persetujuan', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []}
+  ], Params: [] },
   {
     Path: '', Title: 'Integration', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: NavigationConstant.INTEGRATION_LOS_ERR_DATA_MONITORING, Title: 'Los Error Data Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-    ], Params: []
+    ], Params: [],
   },
   {
     Path: '', Title: 'Task Reassignment', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,

@@ -75,4 +75,9 @@ export class PathConstantDsf {
     public static SIMPLE_LEAD_DETAIL = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstantDsf.DETAIL;
     //#endregion
 
+    //#region 
+    public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "ReportSuraKonfirmasiPersetujuan"
+    public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN;
+    //#endregion
+
 }

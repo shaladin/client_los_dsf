@@ -14,6 +14,7 @@ import { MorningmonitoringComponent } from './report/factoring/morningmonitoring
 import { NewallocationceilingComponent } from './report/factoring/newallocationceiling/newallocationceiling.component';
 import { Reminder1Component } from './report/factoring/reminder1/reminder1.component';
 import { Reminder5Component } from './report/factoring/reminder5/reminder5.component';
+import { SuratkonfirmasipersetujuanComponent } from './report/suratkonfirmasipersetujuan/suratkonfirmasipersetujuan.component';
 
 const routes: Routes = [
   {
@@ -171,7 +172,19 @@ const routes: Routes = [
         }
       }
     ]
-  }
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN,
+        component: SuratkonfirmasipersetujuanComponent,
+        data: {
+          title: "Report Surat Konfirmasi Persetujuan"
+        }
+      }
+    ]
+  },
 ];
 
 @NgModule({

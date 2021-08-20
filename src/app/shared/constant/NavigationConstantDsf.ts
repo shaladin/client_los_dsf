@@ -46,5 +46,9 @@ export class NavigationConstantDsf {
      public static CUSTOMER_GROUP_PLAFOND_APPROVAL_PAGING = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_PAGING;
      public static CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY;
      //#endregion
+
+    //#region 
+    public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN;
+    //#endregion
 }
  
