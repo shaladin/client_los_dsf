@@ -112,20 +112,6 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.CRD_REVIEW_CR_PAGING_X,
-        component: CreditReviewCrPagingXComponent,
-        data: {
-          title: 'Credit Review Paging'
-        }
-      },
-      {
-        path: PathConstantX.CRD_REVIEW_CR_DETAIL_X,
-        component: CreditReviewCrDetailXComponent,
-        data: {
-          title: 'Credit Review Detail'
-        }
-      },
-      {
         path: PathConstant.CRD_REVIEW_CR_PAGING,
         component: CreditReviewCrPagingComponent,
         data: {
