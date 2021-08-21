@@ -7,6 +7,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-outstanding-tc-paging',
@@ -15,6 +16,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 export class OutstandingTcPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
+  isReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -25,9 +27,14 @@ export class OutstandingTcPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/searchOutstandingTC.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOutstandingTC.json";
-
+    if(this.BizTemplateCode === CommonConstant.OPL) {
+      this.inputPagingObj._url = "./assets/ucpaging/searchOutstandingTCopl.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOutstandingTCopl.json"; 
+    }
+    else{
+      this.inputPagingObj._url = "./assets/ucpaging/searchOutstandingTC.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOutstandingTC.json"; 
+    }
     this.inputPagingObj.addCritInput = new Array();
 
     var critObj = new CriteriaObj();
@@ -36,6 +43,8 @@ export class OutstandingTcPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
+
+    this.isReady = true;
   }
 
   getEvent(ev) {

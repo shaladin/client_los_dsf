@@ -326,7 +326,7 @@
                     </button>
                   </div>
                   <div formArrayName="AppInsMainCvgs">
-                    <table class="table table-responsive-md text-center table-hover">
+                    <table class="table table-responsive text-center table-hover">
                       <thead>
                         <tr>
                           <th class="text-center width-5-per" *ngIf="isYearlyCapitalized"><span translate
@@ -380,7 +380,7 @@
                             <div class="form-group-row">
                               <input type="" currencyMask class="form-control text-right"
                                 formControlName="SumInsuredPrcnt" (ngModelChange)="IsMainCvgChaged($event, i)"
-                                [options]="{ allowNegative: false }"
+                                [options]="CurrencyMaskPrct"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt.invalid }">
                             </div>
                             <lib-uc-show-errors
@@ -603,24 +603,63 @@
           </form>
           <br>
         </form>
-        <form [hidden]="PageState != 'Paging'" class="form form-horizontal" [formGroup]="AppInsForm"
-          (ngSubmit)="AppInsForm.valid && SubmitForm()">
-          <div class="form-body">
-            <div class="row">
-              <label class="col-md-2 adins-label" translate>Total Premium to Customer</label>
-              <label class="col-md-2 adins-label" translate>{{TotalPremiumToCust | number}}</label>
-              <div class="col-md-2"></div>
-              <label class="col-md-2 adins-label" translate>Paid Amount By Customer</label>
-              <label class="col-md-2 adins-label" translate>{{PaidAmtByCust | number}}</label>
+        <lib-ucSubsection [hidden]="PageState != 'Paging'" [id]="'CopyInsuranceId'" [title]="'Copy Insurance Data'" [panel]="'copyInsurance'">
+        </lib-ucSubsection>
+        <div id="copyInsurance" [hidden]="PageState != 'Paging'">
+          <div class="row">
+            <label class="col-md-3 adInsLabel px-3" style="padding: 0.75em" translate>Choose Collateral Data</label>
+            <div class="col-md-9">
+              <select class="form-control" style="width: inherit" [(ngModel)]="selectedCollateral" name="selectCollateral" (change)="GetInsuranceDDLForCopy()">
+                <option value = "">Select One</option>
+                <option *ngFor="let item of listDataCollateral" [value]="item.Code">
+                  {{item.Descr}}
+                </option>
+              </select>
             </div>
           </div>
-          <div class="form-body">
-            <div class="row">
-              <label class="col-md-2 adins-label" translate>Total Capitalized Amount</label>
-              <label class="col-md-2 adins-label" translate>{{InsCpltzAmt | number}}</label>
-              <div class="col-md-2"></div>
-              <label class="col-md-2 adins-label" translate>Total Discount Amount</label>
-              <label class="col-md-2 adins-label" translate>{{InsDiscAmt | number}}</label>
+          <div class="row">
+            <label class="col-md-3 adInsLabel px-3" style="padding: 0.75em" translate>Choose Insurance Data</label>
+            <div class="col-md-9">
+              <select class="form-control" style="width: inherit" [(ngModel)]="selectedInsuranceForCopy" name="selectInsurance">
+                <option value = "">Select One</option>
+                <option *ngFor="let item of listDataInsuranceForCopy" [value]="item.Code">
+                  {{item.Descr}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9"></div>
+            <div class="col-md-3 text-right">
+              <button type="button" class="btn btn-raised btn-primary" (click)="CopyInsuranceHandler()"
+                translate>
+                  Copy Insurance Data
+              </button>
+            </div>
+          </div>
+        </div>
+        <form [hidden]="PageState != 'Paging'" class="form form-horizontal" [formGroup]="AppInsForm"
+          (ngSubmit)="AppInsForm.valid && SubmitForm()">
+          <lib-ucSubsection [id]="'SummaryInsuranceId'" [title]="'Summary Insurance Data'" [panel]="'summaryInsurance'">
+          </lib-ucSubsection>
+          <div id="summaryInsurance">
+            <div class="form-body">
+              <div class="row">
+                <label class="col-md-2 adins-label" translate>Total Premium to Customer</label>
+                <label class="col-md-2 adins-label" translate>{{TotalPremiumToCust | number}}</label>
+                <div class="col-md-2"></div>
+                <label class="col-md-2 adins-label" translate>Paid Amount By Customer</label>
+                <label class="col-md-2 adins-label" translate>{{PaidAmtByCust | number}}</label>
+              </div>
+            </div>
+            <div class="form-body">
+              <div class="row">
+                <label class="col-md-2 adins-label" translate>Total Capitalized Amount</label>
+                <label class="col-md-2 adins-label" translate>{{InsCpltzAmt | number}}</label>
+                <div class="col-md-2"></div>
+                <label class="col-md-2 adins-label" translate>Total Discount Amount</label>
+                <label class="col-md-2 adins-label" translate>{{InsDiscAmt | number}}</label>
+              </div>
             </div>
           </div>
           <div class="form-actions right">

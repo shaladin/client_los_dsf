@@ -104,8 +104,6 @@
         </tr>
       </tbody>
     </table>
-    <label class="col-md-2  adInsLabel" translate>Total Reserved Fund Amount</label>
-    <label class="col-md-4  adinslabel" translate>{{this.totalRsvFund | number:'.2':'en-US'}}</label>
   </div>
   <lib-ucSubsection [id]="'agreementId'" [title]="'Agreement'" [panel]="'agreement'">
   </lib-ucSubsection>
@@ -433,18 +431,18 @@
     <div>
       <label class="col-md-4  adInsLabel" translate>Effective Rate to Customer</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.EffectiveRatePrcnt}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.EffectiveRatePrcnt | number:'.6':'en-US'}} %</label>
       <label class="col-md-4  adInsLabel" translate>Effective Rate to Supplier</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplEffectiveRatePrcnt}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplEffectiveRatePrcnt | number:'.6':'en-US'}} %</label>
     </div>
     <div>
       <label class="col-md-4  adInsLabel" translate>Flat Rate to Customer</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.FlatRatePrcnt}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.FlatRatePrcnt | number:'.6':'en-US'}} %</label>
       <label class="col-md-4  adInsLabel" translate>Flat Rate to Supplier</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplFlatRatePrcnt}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplFlatRatePrcnt | number:'.6':'en-US'}} %</label>
     </div>
     <div>
       <label class="col-md-4  adInsLabel" translate>Grace Period</label>
@@ -476,7 +474,7 @@
         *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalAr | number:'.2':'en-US'}}</label>
       <label class="col-md-4  adInsLabel" translate>Gross Yield</label>
       <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GrossYieldPrcnt}}%</label>
+        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GrossYieldPrcnt | number:'.6':'en-US'}} %</label>
     </div>
     <table class="table table-responsive-md text-center table-hover">
       <thead>

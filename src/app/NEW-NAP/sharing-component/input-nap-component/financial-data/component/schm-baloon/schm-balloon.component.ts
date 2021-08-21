@@ -32,9 +32,13 @@ export class SchmBalloonComponent implements OnInit {
   calcBalloonObj: CalcBalloonObj = new CalcBalloonObj();
   calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
-  PriceLabel: string = "Asset Price";
+  PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
+  IsFirstCalc: boolean = true;
+  EffRateAfterCalc: number = 0;
+  FlatRateAfterCalc: number = 0;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
@@ -62,6 +66,10 @@ export class SchmBalloonComponent implements OnInit {
         InstAmt: this.InstAmt
       });
     }
+    if (this.ParentForm.getRawValue().ExistingFinData) {
+      this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
+      this.FlatRateAfterCalc = this.ParentForm.getRawValue().FlatRatePrcnt;
+    }
   }
 
   LoadDDLRateType() {
@@ -79,11 +87,16 @@ export class SchmBalloonComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmBalloon) !== -1);
 
-        if (this.CalcBaseOptions.length == 1) {
+        if (this.CalcBaseOptions.length > 0) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
           this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+          if (this.ParentForm.getRawValue().ExistingFinData) {
+            this.ParentForm.patchValue({
+              IsReCalculate: true
+            });
+          }
         }
       }
     );
@@ -145,6 +158,8 @@ export class SchmBalloonComponent implements OnInit {
       this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
         (response: ResponseCalculateObj) => {
           this.listInstallment = response.InstallmentTable;
+          this.EffRateAfterCalc = response.EffectiveRatePrcnt;
+          this.FlatRateAfterCalc = response.FlatRatePrcnt;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
             TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
@@ -173,6 +188,10 @@ export class SchmBalloonComponent implements OnInit {
             AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
 
           })
+
+          this.ParentForm.patchValue({
+            IsReCalculate: true
+          });
           this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
           this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
           this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
@@ -354,9 +373,15 @@ export class SchmBalloonComponent implements OnInit {
     if (calcBase == CommonConstant.FinDataCalcBaseOnRate) {
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
     } else if (calcBase == CommonConstant.FinDataCalcBaseOnInst) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
     } else if (calcBase == CommonConstant.FinDataCalcBaseOnCommission) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
@@ -367,6 +392,26 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   SetNeedReCalculate(value) {
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate) {
+      if ((this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective && this.EffRateAfterCalc == this.ParentForm.getRawValue().EffectiveRatePrcnt)
+        || (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeFlat && this.FlatRateAfterCalc == this.ParentForm.getRawValue().FlatRatePrcnt)) {
+        this.ParentForm.patchValue({
+          IsReCalculate: true
+        });
+      } else {
+        this.ParentForm.patchValue({
+          IsReCalculate: false
+        });
+      }
+    } else if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst) {
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
+    } else {
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
+    }
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });

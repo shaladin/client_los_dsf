@@ -219,6 +219,7 @@ export class AssetDataAddEditComponent implements OnInit {
   DpObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IsReady: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.originalAssetAccs = new Array<AppAssetAccessoryObj>();
 
@@ -1628,10 +1629,10 @@ export class AssetDataAddEditComponent implements OnInit {
         AssetAccessoryName: ['', [Validators.maxLength(100)]],
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: ['', Validators.required],
+        AccessoryPriceAmt: ['', [Validators.required,Validators.min(0.00)]],
         AccessoryDownPaymentType: [''],
         AccessoryDownPaymentPrcnt: [0, Validators.required],
-        AccessoryDownPaymentAmt: [0, Validators.required],
+        AccessoryDownPaymentAmt: [0, [Validators.required,Validators.min(0.00)]],
         AccessoryNotes: ['']
       })
     } else {
@@ -1641,10 +1642,10 @@ export class AssetDataAddEditComponent implements OnInit {
         AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(100)]],
         SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, Validators.required],
+        AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required,Validators.min(0.00)]],
         AccessoryDownPaymentType: [this.DpObj[0].Key],
         AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, Validators.required],
-        AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, Validators.required],
+        AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, [Validators.required,Validators.min(0.00)]],
         AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]
       })
     }

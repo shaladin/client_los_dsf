@@ -57,6 +57,7 @@ import { LtkmInquiryComponent } from "./ltkm-inquiry/ltkm-inquiry.component";
 import { LtkmViewComponent } from "./view-ltkm-component/ltkm-view-component";
 import { LtkmFamilyMainDataPagingComponent } from "./ltkm-request/additional-component/family-main-data/family-main-data-paging.component";
 import { ViewLtkmAppSummaryDataComponent } from "./view-ltkm-component/ltkm-app-summary-data/ltkm-app-summary-data.component";
+import { UcdropdownlistModule } from "@adins/ucdropdownlist";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -67,7 +68,7 @@ export const customCurrencyMaskConfig = {
   suffix: "",
   thousands: ",",
   nullable: false,
-  inputMode: CurrencyMaskInputMode.FINANCIAL
+  inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({
@@ -101,7 +102,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalR3Module,
     UcapprovalgeneralinfoModule,
-    UcgridviewModule
+    UcgridviewModule, 
+    UcdropdownlistModule
   ],
   declarations: [
     LtkmRequestAnalysisComponent,

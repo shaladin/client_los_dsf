@@ -16,6 +16,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppCustCompletionObj } from 'app/shared/model/CustCompletion/AppCustCompletionObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-completion-detail',
@@ -27,7 +28,7 @@ export class CustCompletionDetailComponent implements OnInit {
   inputGridObj: InputGridObj = new InputGridObj();
   listCustCompletion: Array<AppCustCompletionObj> = new Array();
   AppId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   BizTemplateCode: string;
   addObj: object = {};
   FormReturnObj = this.fb.group({
@@ -80,7 +81,7 @@ export class CustCompletionDetailComponent implements OnInit {
     this.addObj["BizTemplateCode"] = this.BizTemplateCode;
 
     this.loadCustCompletionListData();
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     this.IsDataReady = true;
   }
 
@@ -149,12 +150,24 @@ export class CustCompletionDetailComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: this.BizTemplateCode });
         }
       )
+    }
+  }
+
+  claimTask(){
+    if(environment.isCore){
+      if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+        }
+    }
+    else if (this.wfTaskListId> 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
   }
 }

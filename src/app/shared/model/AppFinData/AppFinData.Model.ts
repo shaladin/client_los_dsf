@@ -4,12 +4,16 @@ export class AppFinDataObj {
     AppFinDataId: number;
     AppId: number;
     MrInstSchemeCode: string;
+    MrInstSchemeName: string;
     InstSchemeName: string;
+    MrFirstInstTypeCode: string;
+    MrFirstInstTypeName: string;
     NumOfInst: number;
     RateType: string;
     TotalAR: number;
     TotalAssetPriceAmt: number;
     TotalAccessoryPriceAmt: number;
+    TotalAssetPriceAmtOnly: number;
     TotalInterestAmt: number;
     GrossYieldPrcnt: number;
     TdpPaidCoyAmt: number;
@@ -89,7 +93,10 @@ export class AppFinDataObj {
     MinDownPaymentNettPrcnt: number;
     MaxDownPaymentNettPrcnt: number;
     AppSupplEffectiveRatePrcnt: number;
-    TotalTopAmount: number
+    TotalTopAmount: number;
+    CommissionAmtFromDiffRate: number;
+    SubsidyAmtFromDiffRate: number;
+    ExistingFinData: boolean;
     constructor() {
     }
 }

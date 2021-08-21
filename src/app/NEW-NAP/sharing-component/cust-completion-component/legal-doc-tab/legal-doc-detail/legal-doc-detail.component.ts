@@ -12,6 +12,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-legal-doc-detail',
@@ -23,7 +24,9 @@ export class LegalDocDetailComponent implements OnInit {
   @Input() AppCustCompanyId: number;
   @Input() ListAppCustCompanyLegalDoc: Array<AppCustCompanyLegalDocObj>;
   @Input() AppCustCompanyLegalDoc: AppCustCompanyLegalDocObj;
+  @Input() ListLegalDocCantDuplicate: Array<string>;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
+
   IsExpDateMandatory: boolean;
   MinBusinessDt: Date;
   MaxBusinessDt: Date;
@@ -166,30 +169,39 @@ export class LegalDocDetailComponent implements OnInit {
       return;
     }
 
-    if (this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId == 0 && this.ListAppCustCompanyLegalDoc.find(x => x.MrLegalDocTypeCode == this.LegalDocForm.controls.MrLegalDocTypeCode.value)) {
-      let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.LegalDocForm.controls.MrLegalDocTypeCode.value);
-      this.toastr.warningMessage("There's Already " + ErrorOutput.Value + " Document")
-    } else {
-      if (this.CekDtValidity()) return;
-      this.AppCustCompanyLegalDocObj = this.LegalDocForm.value;
-      this.AppCustCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
-      this.AppCustCompanyLegalDocObj.AppCustCompanyId = this.AppCustCompanyId;
+    let existAppCustCompanyLegalDoc = this.ListAppCustCompanyLegalDoc.find(x => x.MrLegalDocTypeCode == this.LegalDocForm.controls.MrLegalDocTypeCode.value
+                                        && x.DocNo == this.LegalDocForm.controls.DocNo.value
+                                        && x.AppCustCompanyLegalDocId != this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId);
 
-      if (!this.isDataExist) {
-        this.http.post(URLConstant.AddAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.OutputTab.emit();
-          }
-        );
-      } else {
-        this.http.post(URLConstant.EditAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.OutputTab.emit();
-          }
-        );
+    if (existAppCustCompanyLegalDoc != null) { 
+      var checkGSValue = this.ListLegalDocCantDuplicate.find(x => x == existAppCustCompanyLegalDoc.MrLegalDocTypeCode);
+      if(checkGSValue != null){
+        let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.LegalDocForm.controls.MrLegalDocTypeCode.value);
+        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, ErrorOutput.Value, this.LegalDocForm.value.DocNo));
+        return;
       }
     }
+
+    if (this.CekDtValidity()) return;
+    this.AppCustCompanyLegalDocObj = this.LegalDocForm.value;
+    this.AppCustCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
+    this.AppCustCompanyLegalDocObj.AppCustCompanyId = this.AppCustCompanyId;
+
+    if (!this.isDataExist) {
+      this.http.post(URLConstant.AddAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit();
+        }
+      );
+    } else {
+      this.http.post(URLConstant.EditAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit();
+        }
+      );
+    }
+    
   }
 }

@@ -31,9 +31,10 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  PriceLabel: string = "Asset Price";
+  PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }

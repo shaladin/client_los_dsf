@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-
 import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
@@ -13,6 +12,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { String } from 'typescript-string-operations';
+
 
 @Component({
   selector: 'app-mou-cust-legal-doc',
@@ -23,7 +24,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 export class MouCustLegalDocComponent implements OnInit {
 
   @Input() listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
-
+  @Input() ListLegalDocCantDuplicate: Array<string>;
   @Output() callbackSubmit: EventEmitter<Array<AppCustCompanyLegalDocObj>> = new EventEmitter();
 
   mode: string;
@@ -184,7 +185,9 @@ export class MouCustLegalDocComponent implements OnInit {
     if (this.mode == "Edit") {
       currentEditedIndex = this.currentEditedIndex;
     }
-    flag = this.cekDuplicateDocType(currentEditedIndex);
+
+      flag = this.cekDuplicateDocType(currentEditedIndex);
+    
     let d1 = new Date(this.MaxDate);
     let d2 = new Date(this.appCustCompanyLegalDocObj.DocDt);
     let d3 = new Date(this.appCustCompanyLegalDocObj.DocExpiredDt);
@@ -202,10 +205,15 @@ export class MouCustLegalDocComponent implements OnInit {
 
   cekDuplicateDocType(currentEditedIndex) {
     if (this.listLegalDoc.length > 0) {
-      var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
+      var duplicateIndex = this.listLegalDoc.findIndex(x => x.MrLegalDocTypeCode == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode
+                                                        && x.DocNo == this.appCustCompanyLegalDocObj.DocNo);
       if (duplicateIndex != currentEditedIndex && duplicateIndex != -1) {
-        this.toastr.warningMessage("Legal Document Type " + this.appCustCompanyLegalDocObj.MrLegalDocTypeCode + " is duplicated ");
-        return false;
+        var checkGSValue = this.ListLegalDocCantDuplicate.find(x => x == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
+        if(checkGSValue != null){
+          let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.appCustCompanyLegalDocObj.MrLegalDocTypeCode);
+          this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, ErrorOutput.Value, this.appCustCompanyLegalDocObj.DocNo));
+          return false;
+        }
       }
     }
     return true;

@@ -71,7 +71,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
-    Email: ['', Validators.maxLength(50)],
+    Email: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
     SharePrcnt: [0, [Validators.min(0), Validators.max(100), Validators.pattern("^[0-9]+$")]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
@@ -82,7 +82,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     IsGuarantor: [false]
   });
 
-
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -280,7 +280,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
       IdExpiredDt: [''],
       MobilePhnNo: ['', Validators.maxLength(50)],
-      Email: ['', [Validators.maxLength(50), Validators.email]],
+      Email: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
       SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
       IsSigner: [false],

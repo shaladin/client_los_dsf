@@ -176,6 +176,10 @@
                   <lib-uc-show-errors [control]="JobDataForm.controls.ProfessionalNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+              </div>
+            </div>
+            <div *ngIf="CustModelCode == 'PROF'">
+              <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Establishment Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
@@ -188,7 +192,7 @@
               </div>
             </div>
 
-            <div class="form-group row" *ngIf="CustModelCode != 'NONPROF'">
+            <div class="form-group row">
               <label class="col-md-2" translate>Job Title Name</label>
               <div class="col-md-4">
                 <input type="text" class="form-control" formControlName="JobTitleName"
@@ -196,8 +200,10 @@
                 <lib-uc-show-errors [control]="JobDataForm.controls.JobTitleName" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
-              <label class="col-md-2" *ngIf="CustModelCode != 'PROF'" translate>Number of Employee</label>
-              <div class="col-md-2" *ngIf="CustModelCode != 'PROF'">
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2" *ngIf="CustModelCode != 'PROF' && CustModelCode != 'NONPROF'" translate>Number of Employee</label>
+              <div class="col-md-2" *ngIf="CustModelCode != 'PROF' && CustModelCode != 'NONPROF'">
                 <input type="number" min="0" class="form-control" formControlName="NumOfEmployee"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.NumOfEmployee.invalid }">
                 <lib-uc-show-errors [control]="JobDataForm.controls.NumOfEmployee" [submit]="enjiForm.submitted">

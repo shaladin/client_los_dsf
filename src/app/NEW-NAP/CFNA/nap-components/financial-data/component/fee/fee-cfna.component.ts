@@ -25,6 +25,7 @@ export class FeeCFNAComponent implements OnInit {
   listAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
   isSubmitted: boolean;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

@@ -19,6 +19,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -27,7 +28,7 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMast
 })
 export class MouCustomerRequestDetailComponent implements OnInit {
   mouType: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLookupCust: InputLookupObj;
   pageType: string = "add";
   mouCustId: number;
@@ -63,7 +64,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     private httpClient: HttpClient,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private http: HttpClient, 
+    private http: HttpClient,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService
   ) {
@@ -93,9 +94,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         }
       });
 
-    if (this.WfTaskListId > 0){
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    this.claimTask();
 
     this.GetMouTypeDesc();
     var datePipe = new DatePipe("en-US");
@@ -138,6 +137,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           if (response["PlafondType"] != null) {
             this.MOUMainInfoForm.controls.PlafondType.setValue(response["PlafondType"]);
           }
+          this.onChangePlafondType();
         });
     }
     else {
@@ -163,7 +163,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     if(this.MOUMainInfoForm.value.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR){
       this.MOUMainInfoForm.controls.PlafondAmt.clearValidators();
     }
-    
+
     if(this.MOUMainInfoForm.value.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
       this.MOUMainInfoForm.controls.PlafondAmt.setValidators([Validators.required, Validators.min(1.00)]);
     }
@@ -179,7 +179,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     if( this.MOUMainInfoForm.controls.StartDt.value > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
       this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y') );
      return
-   } 
+   }
    if(this.MOUMainInfoForm.controls.EndDt.value< this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y')  );
     return;
@@ -202,10 +202,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType, mode : "return" });    
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType, mode : "return" });
           }
           else{
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType });    
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType });
           }
         });
     }
@@ -234,15 +234,26 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     );
   }
 
-  checkStartDate(ev){ 
+  checkStartDate(ev){
     if( this.datePipe.transform(ev.target.value, "yyyy-MM-dd") > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
        this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
-    } 
+    }
   }
 
   checkEndDate(ev){
     if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
        this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
     }
+  }
+
+  claimTask() {
+    if(environment.isCore){	
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId > 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }	
   }
 }

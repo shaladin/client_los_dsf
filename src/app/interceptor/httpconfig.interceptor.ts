@@ -162,9 +162,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     } else {
                         this.toastr.error(error.error.Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
                     }
-                }
-                else {
-                    this.toastr.error(error.message, 'Status: ' + error.status, { "tapToDismiss": true });
+                } else if (error.error.Message != null) {
+                    this.toastr.error(error.error.Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
+                }else {
+                    this.toastr.error(error.url, 'Status: ' + error.status, { "tapToDismiss": true });
                 }
 
                 console.log(JSON.stringify(request.body));

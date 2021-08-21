@@ -86,7 +86,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   lobKta = new Array();
   leadObj: LeadObj;
   returnLobCode: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   editLeadObj: LeadObj;
   InstAmt: number;
   TotalDownPayment: number;
@@ -104,6 +104,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   textButton: string;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
     this.route.queryParams.subscribe(params => {
@@ -114,7 +115,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
         this.typePage = params["mode"];
       }
       if (params["WfTaskListId"] == null) {
-        this.WfTaskListId = 0;
+        this.WfTaskListId = environment.isCore ? "" : 0;
       }
       else {
         this.WfTaskListId = params["WfTaskListId"];
@@ -847,6 +848,8 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
+    let urlPost = environment.isCore ? URLConstant.SubmitWorkflowSimpleLeadInputV2 : URLConstant.SubmitWorkflowSimpleLeadInput;
+
     if (this.resLeadAppObj.LeadAppId != 0 && this.resLeadAssetObj.LeadAssetId != 0) {
       this.typePage = "edit";
     }
@@ -869,7 +872,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
         this.setLeadAsset();
         if (this.originPage == "teleVerif") {
           if (this.confirmFraudCheck()) {
-            this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(urlPost, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
@@ -882,8 +885,8 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           this.outputTab.emit({
             stepMode: "next",
             LeadInputLeadDataObj: this.leadInputLeadDataObj,
-            urlPost: URLConstant.SubmitWorkflowSimpleLeadInput,
-            paging: "/Lead/SimpleLeadUpdate/Paging",
+            urlPost: urlPost,
+            paging: NavigationConstant.SIMPLE_LEAD_PAGING,
             typePage: this.typePage,
             originPage: this.originPage,
             resLeadAssetObj: this.resLeadAssetObj,
@@ -897,8 +900,8 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           this.outputTab.emit({
             stepMode: "next",
             LeadInputLeadDataObj: this.leadInputLeadDataObj,
-            urlPost: URLConstant.SubmitWorkflowSimpleLeadInput,
-            paging: "/Lead/SimpleLead/Paging",
+            urlPost: urlPost,
+            paging: NavigationConstant.SIMPLE_LEAD_PAGING,
             typePage: this.typePage,
             originPage: this.originPage,
             resLeadAssetObj: this.resLeadAssetObj,
@@ -913,7 +916,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           this.leadInputLeadDataObj.IsKta = true;
           //this.setLeadAsset();
           if (this.originPage == "teleVerif") {
-            this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(urlPost, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
@@ -921,7 +924,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             );
           }
           else {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowSimpleLeadInput});
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: urlPost});
           }
         }
         else{
@@ -933,7 +936,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           this.setLeadAsset();
           if (this.originPage == "teleVerif") {
             if (this.confirmFraudCheck()) {
-              this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+              this.http.post(urlPost, this.leadInputLeadDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
                   AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
@@ -942,7 +945,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             }
           }
           else {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowSimpleLeadInput});
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: urlPost});
           }
         }
       }
@@ -952,7 +955,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
         this.leadInputLeadDataObj.IsKta = true;
         //this.setLeadAsset();
         if (this.originPage == "teleVerif") {
-          this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+          this.http.post(urlPost, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
@@ -960,7 +963,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           );
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowSimpleLeadInput});
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: urlPost});
         }
       }
       else {
@@ -968,7 +971,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
         if (this.originPage == "teleVerif") {
 
           if (this.confirmFraudCheck()) {
-            this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(urlPost, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
@@ -977,7 +980,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           }
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowSimpleLeadInput});
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: urlPost});
         }
       }
     }

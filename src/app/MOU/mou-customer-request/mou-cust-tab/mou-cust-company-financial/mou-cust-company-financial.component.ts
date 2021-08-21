@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { MouCustCompanyFinDataObj } from 'app/shared/model/MouCustCompanyFinDataObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-cust-company-financial',
@@ -16,6 +17,7 @@ export class MouCustCompanyFinancialComponent implements OnInit {
   @Input() identifier: string;
   @Input() MouCustCompanyFinDataObj: MouCustCompanyFinDataObj = new MouCustCompanyFinDataObj();
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder) {
 

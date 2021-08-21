@@ -29,9 +29,10 @@ export class SchmIrregularComponent implements OnInit {
   calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
   calcIrregularObjForTrialCalc: CalcIrregularObjForTrialCalc = new CalcIrregularObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
-  PriceLabel: string = "Asset Price";
+  PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }

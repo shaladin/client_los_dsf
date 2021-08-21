@@ -23,6 +23,7 @@ export class FeeFctrComponent implements OnInit {
   listAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
   isSubmitted: boolean;
   TempProvisionSource: Array<KeyValueObj>;
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

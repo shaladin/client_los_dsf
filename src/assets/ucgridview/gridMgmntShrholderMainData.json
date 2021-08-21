@@ -5,25 +5,31 @@
         "type": "sort",
         "position": "left",
         "label": "Shareholder Name",
-        "name": "CustName"
+        "name": "ShareholderName"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Shareholder Type",
-        "name": "MrCustTypeCode"
+        "name": "ShareholderTypeDesc"
       },
       {
-        "type": "sort",
-        "position": "left",
-        "label": "Relationship",
-        "name": "MrCustRelationshipCode"
+          "type": "sort",
+          "position": "center",
+          "label": "Is Signer",
+          "name": "IsSigner"
       },
       {
-        "type": "sort",
-        "position": "center",
-        "label": "Owner",
-        "name": "IsOwner"
+          "type": "sort",
+          "position": "center",
+          "label": "Is Owner",
+          "name": "IsOwner"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Is Active",
+          "name": "IsActive"
       },
       {
         "type": "sort",
@@ -41,27 +47,34 @@
       {
         "type": "text",
         "position": "left",
-        "property": "CustName"
+        "property": "ShareholderName"
       },
       {
         "type": "text",
         "position": "left",
-        "property": "MrCustTypeCode"
+        "property": "ShareholderTypeDesc"
       },
       {
-        "type": "text",
-        "position": "left",
-        "property": "MrCustRelationshipCode"
+          "type": "boolean",
+          "position": "center",
+          "property": "IsSigner"
       },
       {
-        "type": "boolean",
-        "position": "center",
-        "property": "IsOwner"
+          "type": "boolean",
+          "position": "center",
+          "property": "IsOwner"
       },
       {
-        "type": "decimal",
-        "position": "right",
-        "property": "SharePrcnt"
+          "type": "boolean",
+          "position": "center",
+          "property": "IsActive"
+      },
+      {
+          "type": "decimal",
+          "position": "right",
+          "property": "SharePrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
       },
       {
         "type": "action",
@@ -76,8 +89,12 @@
                 "property": "AppCustId"
               },
               {
-                "type": "MrCustTypeCode",
-                "property": "MrCustTypeCode"
+                "type": "ShareholderType",
+                "property": "ShareholderType"
+              },
+              {
+                "type": "AppCustCompanyMgmntShrholderId",
+                "property": "AppCustCompanyMgmntShrholderId"
               },
               {
                 "type": "mode",
@@ -92,6 +109,10 @@
               {
                 "type": "AppCustId",
                 "property": "AppCustId"
+              },
+              {
+                "type": "AppCustCompanyMgmntShrholderId",
+                "property": "AppCustCompanyMgmntShrholderId"
               }
             ],
             "icon" : "ft-trash-2",

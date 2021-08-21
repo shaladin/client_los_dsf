@@ -15,6 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { RFAObj } from '@adins/ucapprovalcreate/lib/shared/model/RFAObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
     selector: 'app-ltkm-verify-detail',
@@ -26,7 +27,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
     LtkmReqId: number = 0;
     LtkmNo: string = "";
     LtkmCustId: number = 0;
-    wfTaskListId: number;
+    wfTaskListId: any;
     ManualDeviationData;
     isExistedManualDeviationData;
     apvBaseUrl = environment.ApprovalR3Url;
@@ -71,7 +72,8 @@ export class LtkmVerifyDetailComponent implements OnInit {
         private http: HttpClient,
         private fb: FormBuilder,
         private router: Router,
-        private cookieService: CookieService) {
+        private cookieService: CookieService,
+        private claimTaskService: ClaimTaskService) {
         this.route.queryParams.subscribe(params => {
             if (params["LtkmNo"] != null) {
                 this.LtkmNo = params["LtkmNo"];
@@ -93,6 +95,11 @@ export class LtkmVerifyDetailComponent implements OnInit {
 
     FormObj = this.fb.group({
         arr: this.fb.array([]),
+        Reason: [''],
+        Notes: ['']
+    });
+
+    FormReturnObj  =this.fb.group({
         Reason: [''],
         Notes: ['']
     });
@@ -224,8 +231,6 @@ export class LtkmVerifyDetailComponent implements OnInit {
     SaveForm() {
         this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
         var temp = this.FormObj.value;
-        var tempLtkmReqSubmitVerify = this.ltkmReq;
-        tempLtkmReqSubmitVerify.LtkmStep = CommonConstant.LtkmStepApproval;
 
         if (!this.isReturnOn) {
             this.ApprovalCreateOutput = this.createComponent.output();
@@ -236,15 +241,32 @@ export class LtkmVerifyDetailComponent implements OnInit {
             WfTaskListId: this.wfTaskListId,
             RequestRFAObj: this.RFAInfo
         }
-        this.http.post(URLConstant.SubmitLtkmVerify, apiObj).subscribe(
+        let submitLtkmUrl = environment.isCore? URLConstant.SubmitLtkmVerifyV2 : URLConstant.SubmitLtkmVerify;
+        this.http.post(submitLtkmUrl, apiObj).subscribe(
             (response) => {
-                AdInsHelper.RedirectUrl(this.router, ["Ltkm/Verify/Paging"], {});
-            });
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
+        });
+    }
+
+    SaveReturnForm(){
+        var temp = this.FormReturnObj.value;
+        console.log(this.FormReturnObj);
+        var apiObj = {
+            LtkmCustId: this.LtkmCustId,
+            Notes: temp.Notes,
+            WfTaskListId: this.wfTaskListId,
+            RequestRFAObj: this.RFAInfo
+        }
+        let submitLtkmUrl = environment.isCore? URLConstant.SubmitLtkmVerifyV2 : URLConstant.SubmitLtkmVerify;
+        this.http.post(submitLtkmUrl, apiObj).subscribe(
+            (response) => {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
+        });
     }
 
     isReturnOn: boolean = false;
     switchForm() {
-        this.FormObj.patchValue({
+        this.FormReturnObj.patchValue({
             Reason: "",
             ReasonDesc: "",
             Notes: ""
@@ -252,37 +274,38 @@ export class LtkmVerifyDetailComponent implements OnInit {
 
         if (!this.isReturnOn) {
             this.isReturnOn = true;;
-            this.FormObj.controls.Reason.setValidators([Validators.required]);
-            this.FormObj.controls.Notes.setValidators([Validators.required]);
+            this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+            this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
         } else {
             this.isReturnOn = false;
-            this.FormObj.controls.Reason.clearValidators()
-            this.FormObj.controls.Notes.clearValidators()
+            this.FormReturnObj.controls.Reason.clearValidators()
+            this.FormReturnObj.controls.Notes.clearValidators()
         }
-        this.FormObj.controls.Reason.updateValueAndValidity();
-        this.FormObj.controls.Notes.updateValueAndValidity();
+        this.FormReturnObj.controls.Reason.updateValueAndValidity();
+        this.FormReturnObj.controls.Notes.updateValueAndValidity();
     }
 
 
     ClaimTask() {
-        var wfClaimObj = new ClaimWorkflowObj();
-        wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-        wfClaimObj.pUserID = this.UserAccess.UserName;
-
-        this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-            (response) => {
-            });
+        if(environment.isCore){	
+            if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){	
+                this.claimTaskService.ClaimTaskV2(this.wfTaskListId);	
+            }	
+        }	
+        else if (this.wfTaskListId> 0) {	
+            this.claimTaskService.ClaimTask(this.wfTaskListId);	
+        }
     }
 
     initInputApprovalObj() {
         this.InputObj = new UcInputRFAObj(this.cookieService);
-        var Attributes = []
-        var attribute1 = {
-            "AttributeName": "LTKM Analysis Notes",
-            "AttributeValue": this.ltkmAnalysisNotes
-        };
-        Attributes.push(attribute1);
 
+        // var attribute1 = {
+        //     "AttributeName": "LTKM Analysis Notes",
+        //     "AttributeValue": this.ltkmAnalysisNotes
+        // };
+        // Attributes.push(attribute1);
+        let Attributes = [{}]
         var TypeCode = {
             "TypeCode": "AML_APV_TYPE",
             "Attributes": Attributes,
@@ -291,10 +314,12 @@ export class LtkmVerifyDetailComponent implements OnInit {
         this.InputObj.CategoryCode = CommonConstant.CAT_CODE_AML_APV;
         this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_AML_APV;
         this.InputObj.Reason = this.DDLReason;
-        this.InputObj.TrxNo = this.LtkmNo
+        this.InputObj.TrxNo = this.LtkmNo;
         this.IsReady = true;
     }
+
     cancel() {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
     }
+
 }

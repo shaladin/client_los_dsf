@@ -117,11 +117,11 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
         MrReligionCode: ['', Validators.maxLength(50)],
         MobilePhnNo3: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
         IsVip: [false],
-        Email1: ['', [Validators.maxLength(100), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        Email1: ['', [Validators.maxLength(100), Validators.pattern(CommonConstant.regexEmail)]],
         FamilyCardNo: ['', Validators.maxLength(50)],
-        Email2: ['', [Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        Email2: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
         NoOfResidence: ['', [Validators.maxLength(4)]],
-        Email3: ['', [Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        Email3: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
         NoOfDependents: ['0', [Validators.pattern("^[0-9]+$")]],
       }));
     }

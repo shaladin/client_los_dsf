@@ -31,6 +31,7 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
   IsAppFeePrcntValid: boolean = true;
   topDays: number = 0;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

@@ -21,6 +21,7 @@ import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -33,7 +34,7 @@ export class NapDetailFormComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   mode: string;
   NapObj: AppObj;
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
@@ -68,6 +69,7 @@ export class NapDetailFormComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
+  readonly CFRFN4W: string = CommonConstant.CFRFN4W;
   constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, public toastr: NGXToastrService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -92,7 +94,7 @@ export class NapDetailFormComponent implements OnInit {
         this.SysConfigResultObj = response;
     });
 
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
@@ -285,8 +287,8 @@ export class NapDetailFormComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.CFRFN4W });
@@ -296,5 +298,16 @@ export class NapDetailFormComponent implements OnInit {
 
   Cancel() {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.CFRFN4W });
+  }
+
+  claimTask(){
+    if(environment.isCore){
+      if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId> 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }

@@ -62,14 +62,18 @@
           "property": "payFreq"
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Interest Rate (%)",
-          "property": "interestRatePrcnt"
+          "property": "interestRatePrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Retention (%)",
-          "property": "retentionPrcnt"
+          "property": "retentionPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
           "type": "text",

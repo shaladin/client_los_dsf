@@ -22,6 +22,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -32,7 +33,7 @@ export class NapDetailFormComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj;
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
@@ -88,7 +89,7 @@ export class NapDetailFormComponent implements OnInit {
         this.SysConfigResultObj = response;
       });
 
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
@@ -298,7 +299,8 @@ export class NapDetailFormComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.value.ReturnExecNotes;
       ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.FCTR });
@@ -306,4 +308,14 @@ export class NapDetailFormComponent implements OnInit {
     }
   }
 
+  claimTask(){
+    if(environment.isCore){
+      if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId> 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
+  }
 }

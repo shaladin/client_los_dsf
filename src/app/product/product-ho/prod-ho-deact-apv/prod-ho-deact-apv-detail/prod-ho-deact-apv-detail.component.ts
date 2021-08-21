@@ -74,11 +74,12 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
 
   onApprovalSubmited(event)
   {
-    let reqApvCustomObj = {
-      AppId: 0,
+    let reqProdHoApvCustomObj = {
+      Id: this.ProdHId,
       Tasks: event.Tasks
     }
-    this.http.post(URLConstant.Approval, reqApvCustomObj).subscribe(
+
+    this.http.post(URLConstant.ProdHOApproval, reqProdHoApvCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV],{ });
       }
