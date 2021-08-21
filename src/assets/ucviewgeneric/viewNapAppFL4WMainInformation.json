@@ -4,7 +4,7 @@
     {
       "subSectionId": "NewApplication",
       "subSectionTitle": "Main Information",
-      "mainInfoPath": "/v1/Generic/GetDataViewBySQL",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
           "type": "link",

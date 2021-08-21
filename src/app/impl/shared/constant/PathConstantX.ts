@@ -3,6 +3,7 @@ import {PathConstant} from 'app/shared/constant/PathConstant';
 export class PathConstantX {
 
   //#region Common-Path
+  public static X = "X";
   public static PROCESS = "Process";
   public static PAGING = 'PagingX';
   public static CESSIE = 'Cessie';
@@ -118,6 +119,10 @@ export class PathConstantX {
   //#region Nap-Admin-Prcs
   public static AGRMNT_ACT_DETAIL = PathConstant.AGRMNT_ACT + "/" + PathConstantX.DETAIL_X;
   //endregion
+
+  //#region View-Enhancing-Module
+  public static VIEW_APP = "AppViewX";
+  //#endregion
 }
 
 

@@ -23,6 +23,7 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
   @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForCustHistDataX: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
 
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
@@ -124,18 +125,6 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
     }
   }
 
-  async ClickLinkSurvey() {
-    console.log("click Survey");
-    await this.http.post<{ SrvyOrderId: number }>(URLConstant.GetSrvyOrderByTrxRefNo, { TrxNo: this.crdRvwCustInfoObj.AppNo}).toPromise().then(
-      (response) => {        
-        if (response != null || response != undefined) {
-          AdInsHelper.OpenSrvyOrderViewBySrvyOrderId(response.SrvyOrderId);
-        } else {
-          this.toastr.warning(ExceptionConstant.NO_SURVEY);
-        }
-      }
-    )
-  }
   async ClickLinkPhoneVerif() {
     console.log("click phn verif");
     let tempReqObj: ReqGetVerfResult2Obj = { TrxRefNo: this.crdRvwCustInfoObj.AppNo, MrVerfTrxTypeCode: "PHN_VERIF", MrVerfObjCode: "CUSTOMER" };
@@ -165,6 +154,10 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
 
   ClickLinkNegativeCheckingList() {
     this.ngModelForNegCheckList.emit();
+  }
+
+  ClickLinkSurvey() {
+    this.ngModelForSurveyDataX.emit();
   }
 
   ClickLinkCustomerHistoryData() {

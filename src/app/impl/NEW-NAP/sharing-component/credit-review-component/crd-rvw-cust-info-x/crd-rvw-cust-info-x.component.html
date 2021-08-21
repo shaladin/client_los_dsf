@@ -30,6 +30,7 @@
           (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" 
           (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" 
           (ngModelForCustHistDataX)="ClickLinkCustHistData(CustHistDataContent)"
+          (ngModelForSurveyDataX)="ClinkLinkSurveyData(SurveyDataContent)"
           [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info-x>
         <app-crd-rvw-cust-company-info-x *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" 
           (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" 
@@ -154,4 +155,13 @@
     </button>
   </div>
   <app-crd-rvw-cust-hist-data-x [AppId]="appId"></app-crd-rvw-cust-hist-data-x>
+</ng-template>
+<ng-template #SurveyDataContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-survey-data-x [AppId]="appId"></app-crd-rvw-survey-data-x>
 </ng-template>

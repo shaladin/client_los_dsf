@@ -35,26 +35,7 @@ export class AppMainInfoComponentXComponent implements OnInit {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
           console.log(this.AppObj.BizTemplateCode);
         }
-        this.viewGenericObj.viewEnvironment = environment.losUrl;
         this.viewGenericObj.whereValue = this.arrValue;
-        this.viewGenericObj.ddlEnvironments = [
-          {
-            name: "AppNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "LeadNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
-        ];
       }
     );
   }

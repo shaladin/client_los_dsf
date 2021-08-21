@@ -132,6 +132,20 @@ export class CrdRvwCustInfoXComponent implements OnInit {
   }
   //#endregion
 
+  //#region SurveyData
+  modalSurveyData: any;
+  ClinkLinkSurveyData(SurveyDataContent) {
+    this.modalSurveyData = this.modalService.open(SurveyDataContent);
+    this.modalSurveyData.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.modalSurveyData.close();
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modalSurveyData.close();
+    });
+  }
+  //#endregion
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
