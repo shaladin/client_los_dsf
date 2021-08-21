@@ -251,7 +251,7 @@
               <a [href]="UrlAppView + '?AppId=' + AppId" target="_blank" noreferrer noopener  *ngIf="SummaryLtkmReqObj['ReturnObject']['AppNo']">
                 {{SummaryLtkmReqObj['ReturnObject']['AppNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AppNo']}}
               </a>
-              <div *ngIf="!AppId">
+              <div *ngIf="!SummaryLtkmReqObj['ReturnObject']['AppNo']">
                 {{SummaryLtkmReqObj['ReturnObject']['AppNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AppNo']}}
               </div>
             </label></div>            

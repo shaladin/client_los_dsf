@@ -61,6 +61,7 @@ import { CustPersonalFamilyLtkmObj } from 'app/shared/model/LTKM/CustPersonalFam
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 @Component({
     selector: 'app-ltkm-request',
     templateUrl: './ltkm-request.component.html',
@@ -134,6 +135,9 @@ export class LtkmRequestComponent implements OnInit {
     inputLookupApplicationObj: InputLookupObj = new InputLookupObj();
     appNo: string;
     selectedCustNo: any;
+    isCustomerSelected: boolean = false;
+    @ViewChild('applicationData') ucLookupApplicationData: UclookupgenericComponent;
+    @ViewChild('applicationCompanyData') ucLookupApplicationCompanyData: UclookupgenericComponent;
 
     CustTypeObj: Array<KeyValueObj>;
     copyToResidenceTypeObj: Array<KeyValueObj> = [
@@ -238,17 +242,6 @@ export class LtkmRequestComponent implements OnInit {
         })
     }
 
-    LtkmForm = this.fb.group({
-        AppNo: [''],
-        AssetPriceAmt: [0],
-        DownPaymentAmt: [0],
-        DownPaymentPrctg: [0],
-        InstAmt: [0],
-        BpkbProfessionCode: [0],
-        MrInstSrcPayment: [0],
-        MrDpSrcPayment: [0],
-      });
-
     async ngOnInit(): Promise<void> {
         this.listAttrContentFinData = new Array<LtkmAttrContent>();
         this.listAttrContentCustData = new Array<LtkmAttrContent>();
@@ -281,14 +274,16 @@ export class LtkmRequestComponent implements OnInit {
         this.inputAddressObjForMailingCoy.showSubsection = false;
         this.inputAddressObjForMailingCoy.showPhn3 = false;
         this.inputAddressObjForMailingCoy.showOwnership = true;
-        
+
+        // this.selectedCustNo = event["CustObj"]["CustNo"]; 
         this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
         this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         // this.inputLookupApplication.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
-        this.inputLookupApplicationObj.isRequired = true;
-    
+        this.inputLookupApplicationObj.isRequired = true;   
+        this.inputLookupApplicationObj.addCritInput = new Array();
+            
 
         await this.bindCustTypeObj();
         this.initAddrObj();
@@ -339,6 +334,8 @@ export class LtkmRequestComponent implements OnInit {
                     OfficeName: this.CustDataForm.controls["ltkmAnalysis"]["controls"].OfficeName.value,
                     EmpNo: this.CustDataForm.controls["ltkmAnalysis"]["controls"].EmpNo.value,
                     EmpName: this.CustDataForm.controls["ltkmAnalysis"]["controls"].EmpName.value,
+                    AppNo: this.appNo,
+                    AppId: this.appId,
                     requestLtkmReqDetailObjs: [{
                         SuspTrxDueTo: this.CustDataForm.controls["ltkmAnalysis"]["controls"].MrSuspiciousTrxDueToCode.value,
                         SuspFor: this.CustDataForm.controls["ltkmAnalysis"]["controls"].MrSuspiciousForCode.value,
@@ -398,6 +395,8 @@ export class LtkmRequestComponent implements OnInit {
                     OfficeName: this.CustDataCompanyForm.controls["ltkmAnalysis"]["controls"].OfficeName.value,
                     EmpNo: this.CustDataCompanyForm.controls["ltkmAnalysis"]["controls"].EmpNo.value,
                     EmpName: this.CustDataCompanyForm.controls["ltkmAnalysis"]["controls"].EmpName.value,
+                    AppNo: this.appNo,
+                    AppId: this.appId,
                     requestLtkmReqDetailObjs: [{
                         SuspTrxDueTo: this.CustDataCompanyForm.controls["ltkmAnalysis"]["controls"].MrSuspiciousTrxDueToCode.value,
                         SuspFor: this.CustDataCompanyForm.controls["ltkmAnalysis"]["controls"].MrSuspiciousForCode.value,
@@ -732,7 +731,6 @@ export class LtkmRequestComponent implements OnInit {
         // if(this.isExisting){
         //   appCustPersonalObj.RowVersion = this.custDataPersonalObj.LtkmCustPersonalObj.RowVersion;
         // }
-
         return appCustPersonalObj;
     }
 
@@ -1902,20 +1900,22 @@ export class LtkmRequestComponent implements OnInit {
             this.LtkmFamilyMainDataPagingComponent.loadFamilyListData();
         }
         if (event["CustObj"] != undefined) {            
-            this.selectedCustNo = event["custObjs"].CustNo; 
-                        
-            var arrApplicationCrit = new Array();
+            this.selectedCustNo = event["CustObj"]["CustNo"];                 
+            this.isCustomerSelected = true;                            
             var critLookupApplicationObj = new CriteriaObj();
+            critLookupApplicationObj.DataType = "text";
             critLookupApplicationObj.restriction = AdInsConstant.RestrictionEq;
             critLookupApplicationObj.propName = 'AC.CUST_NO';
             critLookupApplicationObj.value = this.selectedCustNo;
-            arrApplicationCrit.push(critLookupApplicationObj)
-
-            this.inputLookupApplicationObj.addCritInput = arrApplicationCrit;
+            this.inputLookupApplicationObj.addCritInput = [];
+            this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
+            this.ucLookupApplicationData.setAddCritInput();   
+            this.isCustomerSelected = true;                        
         }        
     }
 
     CopyCustomerCompany(event) {
+        console.log("cariappid",event)
         this.copyAddrCompanyFromLookup(event);        
         if (event["CustCompanyContactPersonObjs"] != undefined) {
             // this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
@@ -1973,17 +1973,19 @@ export class LtkmRequestComponent implements OnInit {
             this.custOtherInfoComponent.copyOtherInfo();
         }
         //end tambahan
+        console.log("comocomo", event);
         if (event["CustObj"] != undefined) {            
-            this.selectedCustNo = event["custObjs"].CustNo; 
-                        
-            var arrApplicationCrit = new Array();
+            console.log("company");
+            this.selectedCustNo = event["CustObj"]["CustNo"];                                       
             var critLookupApplicationObj = new CriteriaObj();
+            critLookupApplicationObj.DataType = "text";
             critLookupApplicationObj.restriction = AdInsConstant.RestrictionEq;
             critLookupApplicationObj.propName = 'AC.CUST_NO';
             critLookupApplicationObj.value = this.selectedCustNo;
-            arrApplicationCrit.push(critLookupApplicationObj)
-            
-            this.inputLookupApplicationObj.addCritInput = arrApplicationCrit;
+            this.inputLookupApplicationObj.addCritInput = [];
+            this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
+            this.ucLookupApplicationCompanyData.setAddCritInput();            
+            this.isCustomerSelected = true;                              
         }    
     }
 
@@ -2338,8 +2340,22 @@ export class LtkmRequestComponent implements OnInit {
         return temp;
     }
 
-    getLookupAppNo(event){        
-        this.appNo = event.jsonSelect.AppNo;
+    getLookupAppNo(event){      
+        // var addCrit: CriteriaObj = new CriteriaObj();
+        // addCrit.DataType = "text";
+        // addCrit.propName = "RE.REF_EMP_ID";
+        // addCrit.restriction = AdInsConstant.RestrictionNotIn;
+        // addCrit.listValue = [event.EmpId];
+        // this.employeeLookUpObj2.addCritInput = [];
+        // this.employeeLookUpObj2.addCritInput.push(addCrit);
+        // this.ucLookupEmp2.setAddCritInput();        
+        // this.tempEmployee1 = event.EmpName;
+        // this.tempEmployeePosition1 = event.RoleName;
+        // this.MouCustSignerForm.patchValue({
+        //     MfSignerPosition1: this.tempEmployeePosition1
+        // });          
+        console.log("isievent",event)  
+        this.appNo = event["AppNo"];
     }
 }
 

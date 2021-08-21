@@ -219,9 +219,8 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
 
   initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
-    this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";        
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
 
@@ -232,13 +231,14 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
       this.InputLookupCustomerObj.isReadonly = false;
       this.InputLookupCustomerObj.isDisable = false
     }
+    this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
-    this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
+    this.InputLookupIndustryTypeObj.isRequired = false;
 
     if(this.isLockMode)
     {
@@ -281,7 +281,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
   bindCustModelObj() {
     let tempReqObj: GenericObj = new GenericObj();
     tempReqObj.Code = CommonConstant.CustTypeCompany;
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, tempReqObj).toPromise().then(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, tempReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
