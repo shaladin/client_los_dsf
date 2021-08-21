@@ -29,6 +29,9 @@ import { SurveySubjectXComponent } from 'app/impl/NEW-NAP/business-process/credi
 import { SurveySubjectVerifXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component';
 import { SurveySubjectViewXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component';
 import { CommissionReservedFundDetailComponent } from './commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component';
+import { CreditReviewCrDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-detail/credit-review-cr-detail-x.component';
+import { CreditReviewCrPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-paging/credit-review-cr-paging-x.component';
+import { CreditApprovalCrDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail-x.component';
 
 const routes: Routes = [
   {
@@ -133,6 +136,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CRD_APPRV_CR_DETAIL,
+        component: CreditApprovalCrDetailXComponent,
+        data: {
+          title: 'Credit Approval Detail'
+        }
+      },
+      {
         path: PathConstant.CRD_APPRV_CR_DETAIL,
         component: CreditApprovalCrDetailComponent,
         data: {
@@ -193,6 +203,20 @@ const routes: Routes = [
         component: CreditApprovalCfnaDetailComponent,
         data: {
           title: 'Credit Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.CRD_REVIEW_CR_PAGING_X,
+        component: CreditReviewCrPagingXComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
+      },
+      {
+        path: PathConstantX.CRD_REVIEW_CR_DETAIL_X,
+        component: CreditReviewCrDetailXComponent,
+        data: {
+          title: 'Credit Review Detail'
         }
       },
       {

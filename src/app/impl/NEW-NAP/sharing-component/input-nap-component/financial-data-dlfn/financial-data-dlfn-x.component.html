@@ -1,5 +1,5 @@
 <form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid" #enjiForm="ngForm">
-  <app-fee-dlfn *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-dlfn>
+  <app-fee-dlfn-x *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-dlfn-x>
   <app-single-inst-dlfn-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstTypeCode.value == 'SINGLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-single-inst-dlfn-x>
   <app-schm-regular-fix-dlfn-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF' && FinDataForm.controls.MrInstTypeCode.value == 'MULTIPLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-regular-fix-dlfn-x>
   <app-schm-even-principal-dlfn-x *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP' && FinDataForm.controls.MrInstTypeCode.value == 'MULTIPLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal-dlfn-x>

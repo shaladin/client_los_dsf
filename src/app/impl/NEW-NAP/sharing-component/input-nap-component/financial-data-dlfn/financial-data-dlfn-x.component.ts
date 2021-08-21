@@ -12,6 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-financial-data-dlfn-x',
@@ -140,7 +141,7 @@ export class FinancialDataDlfnXComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataDFByAppId, { Id: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(URLConstantX.GetInitAppFinDataDFByAppIdX, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 
