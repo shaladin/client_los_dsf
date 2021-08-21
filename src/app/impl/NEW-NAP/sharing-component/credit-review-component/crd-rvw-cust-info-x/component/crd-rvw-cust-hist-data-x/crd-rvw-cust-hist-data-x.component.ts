@@ -1,13 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-crd-rvw-cust-hist-data-x',
-  templateUrl: './crd-rvw-cust-hist-data-x.component.html'
+  templateUrl: './crd-rvw-cust-hist-data-x.component.html',
+  providers: [NGXToastrService]
 })
 export class CrdRvwCustHistDataXComponent implements OnInit {
   @Input() AppId: number = 0;
@@ -23,7 +26,9 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   TotalNTF: number = 0;
   TotalUnit: number = 0;
 
-  constructor(private http: HttpClient) { }
+  ReturnAgrmnt: any;
+
+  constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
@@ -80,6 +85,23 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
         this.TotalUnit = this.TotalUnit + element.NumOfAsset;
       });
     }
+  }
+
+  ClickLinkAppNo(AppId) {
+    AdInsHelper.OpenAppViewByAppId(AppId);
+  }
+
+  ClickLinkAgrmntNo(AgrmntNo) {
+    this.http.post(URLConstant.GetAgrmntByAgrmntNo, { TrxNo: AgrmntNo }).subscribe(
+      (response) => {
+        this.ReturnAgrmnt = response;
+        if(this.ReturnAgrmnt.AgrmntId != 0 && this.ReturnAgrmnt.AgrmntId != null && this.ReturnAgrmnt.AgrmntId != undefined) {
+          AdInsHelper.OpenAgrmntViewByAgrmntId(this.ReturnAgrmnt.AgrmntId);
+        } else {
+          this.toastr.errorMessage("Data not found");
+        }
+      }
+    );
   }
 }
 
