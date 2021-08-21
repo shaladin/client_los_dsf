@@ -1,0 +1,184 @@
+<div class="modal-body">
+  <div class="pl-3 mb-2 mt-2">
+    <h4 class="card-title ucSearch-title" translate> Customer History Data View </h4>
+  </div>
+  <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+  <lib-ucSubsection [id]="'existAgrId'" [title]="'Existing Agreement'" [panel]="'existAgr'">
+  </lib-ucSubsection>
+  <div id="existAgr">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th>
+            <span translate class="thead-header">No</span>
+          </th>
+          <th>
+            <span style="float: left;" translate class="thead-header" name='AgrmntNo'>Agreement No</span>
+          </th>
+          <th>
+            <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product Offering</span>
+          </th>
+          <th>
+            <span style="float: left;" translate class="thead-header" name='NtfAmount'>NTF Amount</span>
+          </th>
+          <th>
+            <span style="float: right;" translate class="thead-header" name='Installment'>Installment</span>
+          </th>
+          <th>
+            <span style="float: center;" translate  class="thead-header" name='NumOfAsset'>#Asset</span>
+          </th>
+          <th>
+            <span style="float: left;"  translate class="thead-header" name='AssetType'>Asset Type</span>
+          </th>
+          <th>
+            <span style="float: center;"  translate class="thead-header" name='Periode'>Periode</span>
+          </th>
+          <th>
+            <span style="float: center;"  translate class="thead-header" name='MaxOverdue'>Max Overdue</span>
+          </th>
+          <th>
+            <span style="float: center;"  translate class="thead-header" name='DocPending'>Doc Pending</span>
+          </th>
+          <th>
+            <span style="float: center;" translate  class="thead-header" name='Status'>Status</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="ExstAgrmnt == undefined || ExstAgrmnt?.length == 0">
+          <td align="center" colspan="11">No data found</td>
+        </tr>
+        <tr *ngFor="let item of ExstAgrmnt; let i = index">
+          <td>{{i+1}}</td>
+          <td style="text-align: left;" *ngIf="item.AgreementNo!=null">{{item.AgreementNo}}</td>
+          <td *ngIf="item.AgreementNo==null"> - </td>
+          <td style="text-align: left;" *ngIf="item.ProductOfferingName!=null">{{item.ProductOfferingName}}</td>
+          <td style="text-align: left;" *ngIf="item.ProductOfferingName==null"> - </td>
+          <td *ngIf="item.NTFAmount!=null">{{item.NTFAmount | number:'.2':'en-US'}}</td>
+          <td *ngIf="item.NTFAmount==null"> - </td>
+          <td *ngIf="item.InstAmount!=null">{{item.InstAmount | number:'.2':'en-US'}}</td>
+          <td *ngIf="item.InstAmount==null"> - </td>
+          <td *ngIf="item.NumOfAsset!=null">{{item.NumOfAsset}}</td>
+          <td *ngIf="item.NumOfAsset==null"> - </td>
+          <td style="text-align: left;" *ngIf="item.AssetType!=null">{{item.AssetType}}</td>
+          <td style="text-align: left;" *ngIf="item.AssetType==null"> - </td>
+          <td *ngIf="item.Periode!=null">{{item.Periode}}</td>
+          <td *ngIf="item.Periode==null"> - </td>
+          <td *ngIf="item.MaxOverdue!=null">{{item.MaxOverdue}}</td>
+          <td *ngIf="item.MaxOverdue==null"> - </td>
+          <td *ngIf="item.DocPending!=null">{{item.DocPending}}</td>
+          <td *ngIf="item.DocPending==null"> - </td>
+          <td *ngIf="item.ContractStatus!=null">{{item.ContractStatus}}</td>
+          <td *ngIf="item.ContractStatus==null"> - </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-md-2">
+        <label class="label-control" translate> Total NTF  </label>
+      </div>
+      <div class="col-md-6 ">
+        <label class="label-control"> {{ TotalNTF | number:'.2':'en-US' }} </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <label class="label-control" translate> Total Unit  </label>
+      </div>
+      <div class="col-md-6 ">
+        <label class="label-control"> {{ TotalUnit }} </label>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'appRjcId'" [title]="'Application Reject'" [panel]="'appRjc'">
+  </lib-ucSubsection>
+  <div id="appRjc">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th>
+            <span translate class="thead-header">No</span>
+          </th>
+          <th>
+            <span translate class="thead-header" name='AgrmntNo'>Application No</span>
+          </th>
+          <th>
+            <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product Offering</span>
+          </th>
+          <th>
+            <span style="float: left;"  translate class="thead-header" name='GoLiveDt'>Sales</span>
+          </th>
+          <th>
+            <span style="float: right;" translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
+          </th>
+          <th>
+            <span translate class="thead-header" name='OSAR'>View Approval</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="AppRjct == undefined || AppRjct?.length == 0">
+          <td align="center" colspan="6">No data found</td>
+        </tr>
+        <tr *ngFor="let item of AppRjct; let i = index">
+          <td>{{i+1}}</td>
+          <td *ngIf="item.AppNo!=null">{{item.AppNo}}</td>
+          <td *ngIf="item.AppNo==null"> - </td>
+          <td style="text-align: left;" *ngIf="item.ProdOfferingName!=null">{{item.ProdOfferingName}}</td>
+          <td *ngIf="item.ProdOfferingName==null"> - </td>
+          <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
+          <td *ngIf="item.SalesName==null"> - </td>
+          <td style="text-align: right;"*ngIf="item.TotalNTF!=null">{{item.TotalNTF}}</td>
+          <td style="text-align: right;" *ngIf="item.TotalNTF==null"> - </td>
+          <td>View</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <lib-ucSubsection [id]="'appPrcId'" [title]="'Application In Process'" [panel]="'appPrc'">
+  </lib-ucSubsection>
+  <div id="appPrc">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th>
+            <span translate class="thead-header">No</span>
+          </th>
+          <th>
+            <span translate class="thead-header" name='AgrmntNo'>Application No</span>
+          </th>
+          <th>
+            <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product Offering</span>
+          </th>
+          <th>
+            <span style="float: left;" translate class="thead-header" name='GoLiveDt'>Sales</span>
+          </th>
+          <th>
+            <span style="float: right;" translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
+          </th>
+          <th>
+            <span translate class="thead-header" name='OSAR'>Application Step</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="AppPrcs == undefined || AppPrcs?.length == 0">
+          <td align="center" colspan="6">No data found</td>
+        </tr>
+        <tr *ngFor="let item of AppPrcs; let i = index">
+          <td>{{i+1}}</td>
+          <td *ngIf="item.AppNo!=null">{{item.AppNo}}</td>
+          <td *ngIf="item.AppNo==null"> - </td>
+          <td style="text-align: left;" *ngIf="item.ProdOfferingName!=null">{{item.ProdOfferingName}}</td>
+          <td *ngIf="item.ProdOfferingName==null"> - </td>
+          <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
+          <td *ngIf="item.SalesName==null"> - </td>
+          <td style="text-align: right;" *ngIf="item.TotalNTF!=null">{{item.TotalNTF | number:'.2':'en-US'}}</td>
+          <td style="text-align: right;" *ngIf="item.TotalNTF==null"> - </td>
+          <td *ngIf="item.AppCurrStep!=null">{{item.AppCurrStep}}</td>
+          <td *ngIf="item.AppCurrStep==null"> - </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>  
+</div>

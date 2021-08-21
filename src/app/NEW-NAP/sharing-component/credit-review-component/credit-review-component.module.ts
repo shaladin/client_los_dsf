@@ -26,6 +26,11 @@ import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.c
 import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/crd-rvw-table-cust.component';
 import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
 import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.component';
+import { CrdRvwCustPersonalInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-personal-info-x/crd-rvw-cust-personal-info-x.component";
+import { CrdRvwCustCompanyInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-company-info-x/crd-rvw-cust-company-info-x.component";
+import { CrdRvwCustInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-info-x.component";
+import { CrdRvwCustHistDataXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-cust-hist-data-x/crd-rvw-cust-hist-data-x.component";
+import { ViewMainInfoComponentModule } from "../view-main-info-component/view-main-info-component.module";
 
 @NgModule({
     exports: [
@@ -44,12 +49,15 @@ import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.c
         CrdRvwDukcapilHistComponent,
         CrdRvwLegalDocComponent,
         AppRvwSummaryAssetComponent,
-        CrdRvwAssetAccComponent
+        CrdRvwAssetAccComponent,
+        CrdRvwCustInfoXComponent,
+        CrdRvwCustHistDataXComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
-        MatRadioModule
+        MatRadioModule,
+        ViewMainInfoComponentModule
     ],
     declarations: [
         CrdRvwCustInfoComponent, 
@@ -74,10 +82,16 @@ import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.c
         CrdRvwLegalDocComponent,
         CrdRvwTableCustComponent,
         AppRvwSummaryAssetComponent,
-        CrdRvwAssetAccComponent
+        CrdRvwAssetAccComponent,
+        CrdRvwCustPersonalInfoXComponent,
+        CrdRvwCustCompanyInfoXComponent,
+        CrdRvwCustInfoXComponent,
+        CrdRvwCustHistDataXComponent
     ],
     providers: [
         NGXToastrService
+    ],
+    entryComponents: [
     ]
 })
 export class CreditReviewComponentModule { }

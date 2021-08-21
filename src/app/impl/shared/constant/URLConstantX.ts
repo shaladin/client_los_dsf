@@ -70,6 +70,8 @@ export class URLConstantX {
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
   public static AddNewApplication = environment.losUrl + "/v1" + "/AppX/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/AppX/AddNewApplicationFromCopy";
+  public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/v1" +"/AppX/GetAppByCustNoAndIsAppInitDone";
+  public static GetAppByCustNoAndAppStat = environment.losUrl + "/v1" + "/AppX/GetAppByCustNoAndAppStat";
 
 
   //AGRMNT ACTIVATION
@@ -80,4 +82,7 @@ export class URLConstantX {
 
   //APP TC
   public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
+
+  //AGRMNT
+  public static GetAgrmntHistByListCustNo = environment.losUrl + "/v1" +"/AgrmntX/GetAgrmntHistByListCustNo";
 }
