@@ -26,6 +26,7 @@ import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.c
 import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/crd-rvw-table-cust.component';
 import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
 import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.component';
+import { CrdRvwAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-info/crd-rvw-app-info-x.component";
 import { CrdRvwCustPersonalInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-personal-info-x/crd-rvw-cust-personal-info-x.component";
 import { CrdRvwCustCompanyInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-company-info-x/crd-rvw-cust-company-info-x.component";
 import { CrdRvwCustInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-info-x.component";
@@ -50,6 +51,7 @@ import { ViewMainInfoComponentModule } from "../view-main-info-component/view-ma
         CrdRvwLegalDocComponent,
         AppRvwSummaryAssetComponent,
         CrdRvwAssetAccComponent,
+        CrdRvwAppInfoXComponent,
         CrdRvwCustInfoXComponent,
         CrdRvwCustHistDataXComponent
     ],
@@ -83,6 +85,7 @@ import { ViewMainInfoComponentModule } from "../view-main-info-component/view-ma
         CrdRvwTableCustComponent,
         AppRvwSummaryAssetComponent,
         CrdRvwAssetAccComponent,
+        CrdRvwAppInfoXComponent,
         CrdRvwCustPersonalInfoXComponent,
         CrdRvwCustCompanyInfoXComponent,
         CrdRvwCustInfoXComponent,
