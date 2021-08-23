@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -46,6 +46,24 @@ export class NewNapCustCompanyFinDataComponent implements OnInit {
     if(this.AppCustId && this.AppCustId > 0){
       this.GetFinData();
     }
+    this.ParentForm.get("ReturnOfInvestmentPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("ReturnOfInvestmentPrcnt").updateValueAndValidity();
+    this.ParentForm.get("ReturnOfAssetPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("ReturnOfAssetPrcnt").updateValueAndValidity();
+    this.ParentForm.get("CurrentRatioPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("CurrentRatioPrcnt").updateValueAndValidity();
+    this.ParentForm.get("InvTurnOverPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("InvTurnOverPrcnt").updateValueAndValidity();
+    this.ParentForm.get("GrowthPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("GrowthPrcnt").updateValueAndValidity();
+    this.ParentForm.get("ReturnOfEquityPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("ReturnOfEquityPrcnt").updateValueAndValidity();
+    this.ParentForm.get("ProfitMarginPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("ProfitMarginPrcnt").updateValueAndValidity();
+    this.ParentForm.get("DebtEquityRatioPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("DebtEquityRatioPrcnt").updateValueAndValidity();
+    this.ParentForm.get("ArTurnOverPrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("ArTurnOverPrcnt").updateValueAndValidity();
   }
 
   GetFinData(){

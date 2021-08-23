@@ -72,7 +72,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
-    SharePrcnt: [0, [Validators.min(0), Validators.max(100), Validators.pattern("^[0-9]+$")]],
+    SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     IsOwner: [false],

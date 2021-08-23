@@ -284,7 +284,7 @@ export class FeeCFNAComponent implements OnInit {
       AppFeeAmt: obj.AppFeeAmt,
       StdFeePrcnt: obj.StdFeePrcnt,
       SellFeePrcnt: obj.SellFeePrcnt,
-      AppFeePrcnt: obj.AppFeePrcnt,
+      AppFeePrcnt: [obj.AppFeePrcnt, [Validators.min(0.00), Validators.max(100.00)]],
       IsCptlz: obj.IsCptlz,
       // CptlzAmt : obj.CptlzAmt,
       FeeCapitalizeType: obj.FeeCapitalizeType,
