@@ -23,6 +23,7 @@ import { ChangeMouViewDetailComponent } from "./change-mou-view-detail/change-mo
 import { ChangeMouViewComponent } from "./change-mou-view.component";
 import { ChangeMouViewRoutingModule } from "./change-mou-view-routing.module";
 import { ChangeMouMainInfoComponent } from "../change-mou-main-info/change-mou-main-info.component";
+import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 
 @NgModule({
     imports: [
@@ -45,6 +46,7 @@ import { ChangeMouMainInfoComponent } from "../change-mou-main-info/change-mou-m
         UcapprovalhistModule,
         UcShowErrorsModule,
         SharedModule,
+        ShrCompMouModule,
         UcapprovalHistoryModule,
     ],
     declarations: [

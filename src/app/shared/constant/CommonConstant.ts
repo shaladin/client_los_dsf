@@ -1,3 +1,5 @@
+import { CurrencyMaskInputMode } from "ngx-currency";
+
 export class CommonConstant {
   
   // REGEX
@@ -705,6 +707,7 @@ export class CommonConstant {
   public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
   public static GSCodeLobKta = "LOB_KTA";
   public static GSSerialNoRegex = "SERIAL_NO_REGEX";
+  public static GSCodeListLegalDocCantDuplicate = "LIST_LEGAL_DOC_CANNOT_DUPLICATE";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -962,6 +965,12 @@ export class CommonConstant {
   public static EDIT_COM_RSV_FND = "EDIT_COM_RSV_FND_";
   public static RTN_EDIT_NAP4 = "RTN_EDIT_NAP4_";
   public static EDIT_NAP4 = "EDIT_NAP4_";
+  public static WF_LTKM_REQ_MANUAL = "WF_LTKM_REQ_MANUAL";
+  public static WF_LTKM_REQ_AUTO = "WF_LTKM_REQ_AUTO";
+  public static LTKM_VERIFY = "LTKM_VERIFY";
+  public static LTKM_RTN = "LTKM_VERIFY";
+
+
 
 
   //WORFKLOW PRODUCT
@@ -1000,4 +1009,6 @@ export class CommonConstant {
   public static CNFR = "CNFR_";
   public static PGLV = "PGLV_";
 
+  
+  public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }

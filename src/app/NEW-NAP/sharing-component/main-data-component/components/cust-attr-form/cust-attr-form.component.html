@@ -23,7 +23,7 @@
 
             <textarea *ngSwitchCase="AttrInputTypeTextArea" class="form-control adInsInput width-75-per"
               formControlName="AttrValue"
-              [ngClass]="{ 'is-invalid': enjiForm.submitted && parenitemtForm.controls.AttrValue.invalid }"></textarea>
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && item.controls.AttrValue.invalid }"></textarea>
 
             <input type="date" *ngSwitchCase="AttrInputTypeDate" class="form-control adInsInput"
               formControlName="AttrValue"

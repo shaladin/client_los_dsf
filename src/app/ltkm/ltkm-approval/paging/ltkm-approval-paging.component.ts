@@ -36,9 +36,14 @@ export class LtkmApprovalPagingComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.inputPagingObj._url = "./assets/ucpaging/searchLtkmApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLtkmApproval.json";
     
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchLtkmApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLtkmApprovalV2.json";
+    }
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
 

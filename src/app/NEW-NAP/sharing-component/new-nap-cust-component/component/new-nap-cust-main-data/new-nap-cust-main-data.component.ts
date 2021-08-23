@@ -92,6 +92,7 @@ export class NewNapCustMainDataComponent implements OnInit {
   readonly MasterCompanyType = CommonConstant.RefMasterTypeCodeCompanyType;
   readonly MasterJobPosition = CommonConstant.RefMasterTypeCodeJobPosition;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -175,6 +176,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.ParentForm.controls.EstablishmentDt.setValidators([Validators.required]);
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrJobPositionCode.setValidators(Validators.required);
+        this.ParentForm.controls.SharePrcnt.setValidators([Validators.min(0.00), Validators.max(100.00)]);
         await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;

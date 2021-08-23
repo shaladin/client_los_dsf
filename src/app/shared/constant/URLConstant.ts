@@ -586,6 +586,7 @@ export class URLConstant {
   public static GetListMouCustCollateralDocsByMouCustCollateralId = environment.losUrl + "/v1" + "/MouCustCollateral/GetListMouCustCollateralDocsByMouCustCollateralId";
   public static GetMouCustCollateralForUpdateByMouCustCollateralId = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralForUpdateByMouCustCollateralId";
   public static GetMouCustCollateralRegistrationByMouCustCollateralId = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralRegistrationByMouCustCollateralId";
+  public static GenerateMouCollateralAttr = environment.losUrl + "/v1" + "/MouCustCollateral/GenerateMouCollateralAttr";
 
   // MOU CUST SCORING
   public static GetMouCustScoreByMouCustId = environment.losUrl + "/v1" + "/MouCustScoring/GetMouCustScoreByMouCustId";
@@ -636,6 +637,7 @@ export class URLConstant {
   public static GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId";
   public static DeleteChangeMouCustCollateral = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/DeleteChangeMouCustCollateral";
   public static AddExistingChangeMouCustCollateralData = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/AddExistingChangeMouCustCollateralData";
+  public static GenerateChangeMouCollateralAttr = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GenerateChangeMouCollateralAttr";
 
   // MOU CUST
   public static GetMouCustById = environment.losUrl + "/v1" + "/MouCust/GetMouCustById";
@@ -1488,10 +1490,14 @@ export class URLConstant {
   //LTKM
   public static GetCustCompanyLtkmForCopyByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyLtkmForCopyByCustId";
   public static SaveLtkmRequestPersonal = environment.losUrl + "/v1" + "/ManualLtkm/SaveLtkmRequestPersonal";
+  public static SaveLtkmRequestPersonalV2 = environment.losUrl + "/v2" + "/ManualLtkm/SaveLtkmRequestPersonal";
   public static SaveLtkmRequestCompany = environment.losUrl + "/v1" + "/ManualLtkm/SaveLtkmRequestCompany";
+  public static SaveLtkmRequestCompanyV2 = environment.losUrl + "/v2" + "/ManualLtkm/SaveLtkmRequestCompany";
   public static GetLtkmReqByLtkmNo = environment.losUrl + "/v1" + "/Ltkm/GetLtkmReqByLtkmNo";
   public static SubmitLtkmVerify = environment.losUrl + "/v1" + "/Ltkm/SubmitLtkmVerify";
+  public static SubmitLtkmVerifyV2 = environment.losUrl + "/v2" + "/Ltkm/SubmitLtkmVerify";
   public static SubmitLtkmReturnAtApv = environment.losUrl + "/v1" + "/Ltkm/SubmitLtkmReturnAtApv";
+  public static SubmitLtkmReturnAtApvV2 = environment.losUrl + "/v2" + "/Ltkm/SubmitLtkmReturnAtApv";
   public static GetSummaryByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/GetSummaryByLtkmCustId";
   public static GetLtkmCustDataPersonalForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustDataPersonalForViewByLtkmCustId";
   public static GetLtkmCustDataCompanyForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustDataCompanyForViewByLtkmCustId";
@@ -1499,7 +1505,7 @@ export class URLConstant {
   public static GetLtkmCustById = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustById";
   public static getLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/getLtkmReqByLtkmCustId";
 
-  public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetCustDataByLtkmCustId";
+  public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetCustDataByLtkmCustId";
   public static GetLtkmCustEmrgncCntctByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustEmrgncCntctByLtkmCustId";
   public static GetLtkmCustAddrByLtkmCustAddrId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustAddrByLtkmCustAddrId";
   public static GetListLtkmCustAddrByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmCustAddrByLtkmCustId";
@@ -1510,7 +1516,7 @@ export class URLConstant {
   public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmAppRjcByCustNoAndAppStat";
   public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
   //ltkm cust attr content
-  public static GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup";
+  public static GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup";
 
   //ltkm cust personal fin data
   public static GetListLtkmCustPersonalFinDataByLtkmCustlId = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmCustPersonalFinDataByLtkmCustlId";
@@ -1528,7 +1534,9 @@ export class URLConstant {
 
   //ltkm return handling
   public static SaveLtkmReturnHandlingPersonal = environment.losUrl + "/v1" + "/Ltkm/SaveLtkmReturnHandlingPersonal";
+  public static SaveLtkmReturnHandlingPersonalV2 = environment.losUrl + "/v2" + "/Ltkm/SaveLtkmReturnHandlingPersonal";
   public static SaveLtkmReturnHandlingCompany = environment.losUrl + "/v1" + "/Ltkm/SaveLtkmReturnHandlingCompany";
+  public static SaveLtkmReturnHandlingCompanyV2 = environment.losUrl + "/v2" + "/Ltkm/SaveLtkmReturnHandlingCompany";
 
   //ltkm cust personal main data
   public static GetCustPersonalForLtkmCopyByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustPersonalForLtkmCopyByCustId";

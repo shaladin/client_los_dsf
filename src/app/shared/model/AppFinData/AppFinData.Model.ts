@@ -93,7 +93,10 @@ export class AppFinDataObj {
     MinDownPaymentNettPrcnt: number;
     MaxDownPaymentNettPrcnt: number;
     AppSupplEffectiveRatePrcnt: number;
-    TotalTopAmount: number
+    TotalTopAmount: number;
+    CommissionAmtFromDiffRate: number;
+    SubsidyAmtFromDiffRate: number;
+    ExistingFinData: boolean;
     constructor() {
     }
 }

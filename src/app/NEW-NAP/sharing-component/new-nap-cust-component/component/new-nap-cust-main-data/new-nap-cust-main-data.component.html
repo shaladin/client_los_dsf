@@ -288,7 +288,7 @@
             <div class="col-md-8">
               <input type="text" currencyMask class="form-control" formControlName="SharePrcnt"
                 [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.SharePrcnt.invalid}"
-                [options]="{suffix:'%', max:100, allowNegative: false}">
+                [options]="CurrencyMaskPrct">
               <lib-uc-show-errors [control]="ParentForm.controls.SharePrcnt" [submit]="IsCustMainDataSubmitted">
               </lib-uc-show-errors>
             </div>

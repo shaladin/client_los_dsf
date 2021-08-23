@@ -83,7 +83,6 @@ export class ReservedFundComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.allAppReservedFundObj = new AllAppReservedFundObj();
     var appObj = {
       Id: this.ReturnHandlingHObj.AppId
     };
