@@ -74,7 +74,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     ManufacturingYear: [''],
     AssetPrice: [''],
     DownPaymentAmount: [''],
-    DownPaymentPercent: [''],
+    DownPaymentPercent: ['', [Validators.min(0.00), Validators.max(100.00)]],
     Tenor: [''],
     MrFirstInstTypeCode: [''],
     NTFAmt: [''],

@@ -1,3 +1,5 @@
+import { CurrencyMaskInputMode } from "ngx-currency";
+
 export class CommonConstant {
   
   // REGEX
@@ -1002,6 +1004,5 @@ export class CommonConstant {
   public static ACT_CODE_CDA = "CDA";
   public static ACT_CODE_CDC = "CDC";
   
-  public static CurrencyMaskPrct = { min: 0, max: 100, suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false };
-  public static CurrencyMaskPrct2 = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false };
+  public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }

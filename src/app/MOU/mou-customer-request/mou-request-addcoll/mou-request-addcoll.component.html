@@ -299,7 +299,7 @@
             [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
           </lib-uclookupgeneric>
         </div>
-        <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Mobile Phone No</label>
+        <label class="col-md-2 adInsLabel" translate>Owner Mobile Phone No</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
@@ -433,8 +433,7 @@
             <div class="col-md-4">
               <input type="" currencyMask id="CollateralPortionAmt" class="form-control text-right" formControlName="CollateralPortionAmt"
                 (focusout)="UpdateValueCollateralPrcnt()"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPortionAmt.invalid}"
-                [options]="CurrencyMaskPrct">
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPortionAmt.invalid}">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPortionAmt"
                 [submit]="enjiForm.submitted">
               </lib-uc-show-errors>

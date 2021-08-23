@@ -68,8 +68,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     CustBankAcc: [''],
-    IntrstRatePrcnt: [0],
-    TopIntrstRatePrcnt: [0]
+    IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]]
   })
 
   refMasterInterestType: RefMasterObj = new RefMasterObj();
