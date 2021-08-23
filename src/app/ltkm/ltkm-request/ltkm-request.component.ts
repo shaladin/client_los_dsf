@@ -1931,8 +1931,7 @@ export class LtkmRequestComponent implements OnInit {
         }        
     }
 
-    CopyCustomerCompany(event) {
-        console.log("cariappid",event)
+    CopyCustomerCompany(event) {        
         this.copyAddrCompanyFromLookup(event);        
         if (event["CustCompanyContactPersonObjs"] != undefined) {
             // this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
@@ -1989,10 +1988,8 @@ export class LtkmRequestComponent implements OnInit {
             this.custOtherInfoComponent.CustOtherInfo = event["CustOtherInfoObj"];
             this.custOtherInfoComponent.copyOtherInfo();
         }
-        //end tambahan
-        console.log("comocomo", event);
-        if (event["CustObj"] != undefined) {            
-            console.log("company");
+        //end tambahan        
+        if (event["CustObj"] != undefined) {                        
             this.selectedCustNo = event["CustObj"]["CustNo"];                                       
             var critLookupApplicationObj = new CriteriaObj();
             critLookupApplicationObj.DataType = "text";
@@ -2357,21 +2354,7 @@ export class LtkmRequestComponent implements OnInit {
         return temp;
     }
 
-    getLookupAppNo(event){      
-        // var addCrit: CriteriaObj = new CriteriaObj();
-        // addCrit.DataType = "text";
-        // addCrit.propName = "RE.REF_EMP_ID";
-        // addCrit.restriction = AdInsConstant.RestrictionNotIn;
-        // addCrit.listValue = [event.EmpId];
-        // this.employeeLookUpObj2.addCritInput = [];
-        // this.employeeLookUpObj2.addCritInput.push(addCrit);
-        // this.ucLookupEmp2.setAddCritInput();        
-        // this.tempEmployee1 = event.EmpName;
-        // this.tempEmployeePosition1 = event.RoleName;
-        // this.MouCustSignerForm.patchValue({
-        //     MfSignerPosition1: this.tempEmployeePosition1
-        // });          
-        console.log("isievent",event)  
+    getLookupAppNo(event){                     
         this.appNo = event["AppNo"];
     }
 }

@@ -57,8 +57,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
 
-  async ngOnInit(): Promise<void> {
-    console.log(this.LtkmCustId);
+  async ngOnInit(): Promise<void> {    
     await this.getCustData();
     this.arrValue.push(this.ltkmCustObj.LtkmCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalMainData.json";
@@ -98,8 +97,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
         // filter family yg punya relationship
         if(this.ltkmCustFamilyObjs && this.ltkmCustFamilyObjs.length > 0) {
           this.ltkmCustFamilyObjs = this.ltkmCustFamilyObjs.filter(item => item['MrCustRelationshipCode'])
-        }
-        console.log("cekfamilyafterfilter", this.ltkmCustFamilyObjs);
+        }        
 
         // filter cust group yg punya cust no & applicant no
         if(this.ltkmCustGrpObjs && this.ltkmCustGrpObjs.length > 0) {
@@ -110,7 +108,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
         else if(this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';
         else if(this.ltkmCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
         else this.customerTitle = 'Customer';
-      }).catch((error)=>{console.log("inierror",error)});
+      }).catch((error)=>{});
   }
 
   viewDetailFamilyHandler(LtkmCustId, MrCustTypeCode){
@@ -128,8 +126,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
       this.detailLtkmCustId = LtkmCustId;
       this.detailMrCustTypeCode = MrCustTypeCode;
       this.detailCustomerTitle = 'Family';
-      this.isShowDetail = true;
-      console.log("popup",this.LtkmCustId,LtkmCustId)
+      this.isShowDetail = true;      
     }
   }
 
