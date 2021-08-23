@@ -43,6 +43,8 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ResAssetValidationRuleObj } from 'app/shared/model/Rule/ResAssetValidationRuleObj.model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
+import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
+import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 
 @Component({
   selector: 'app-asset-data',
@@ -84,6 +86,8 @@ export class AssetDataComponent implements OnInit {
   isAddressObjDelvReady: boolean = false;
   isAddressObjLocReady: boolean = false;
   IsReady: boolean = false;
+  listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
+  appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -172,6 +176,7 @@ export class AssetDataComponent implements OnInit {
     AssetAccessoriesObjs: this.fb.array([]),
     items: this.fb.array([]),
     AppAssetAttrObjs: this.fb.array([]),
+    ListDoc: this.fb.array([])
   });
 
   CustType: string = "";
@@ -1064,7 +1069,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AssetDataForm.controls.OwnerProfessionCode.value;
 
     if (this.BizTemplateCode !== "OPL") {
-      for (var i = 0; i < this.items.length; i++) {
+      for (let i = 0; i < this.items.length; i++) {
         if (this.items.controls[i] != null) {
           this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
         }
@@ -1155,6 +1160,24 @@ export class AssetDataComponent implements OnInit {
         this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
       }
     }
+
+    this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
+    for (let i = 0; i < this.AssetDataForm.value.ListDoc["length"]; i++) {
+      this.appCollateralDoc = new AppCollateralDocObj();
+      if (this.AssetDataForm.value.ListDoc[i].IsReceived == null) {
+        this.appCollateralDoc.IsReceived = false;
+      }
+      else {
+        this.appCollateralDoc.IsReceived = this.AssetDataForm.value.ListDoc[i].IsReceived;
+      }
+      this.appCollateralDoc.DocCode = this.AssetDataForm.value.ListDoc[i].DocCode;
+      this.appCollateralDoc.DocNo = this.AssetDataForm.value.ListDoc[i].DocNo;
+      this.appCollateralDoc.ExpiredDt = this.AssetDataForm.value.ListDoc[i].ACDExpiredDt;
+      this.appCollateralDoc.DocNotes = this.AssetDataForm.value.ListDoc[i].DocNotes;
+      this.appCollateralDoc.RowVersion = this.AssetDataForm.value.ListDoc[i].RowVersion;
+      this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
+    }
+    this.allAssetDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
   }
 
   async SetSupplier(event) {
@@ -1174,9 +1197,10 @@ export class AssetDataComponent implements OnInit {
     });
   }
 
-  SetAsset(event) {
+  async SetAsset(event) {
     this.assetMasterObj.FullAssetCode = event.FullAssetCode;
-    this.GetAssetMaster(this.assetMasterObj);
+    await this.GetAssetMaster(this.assetMasterObj);
+    this.GetRefAssetDocList(false);
     this.AssetDataForm.patchValue({
       FullAssetCode: event.FullAssetCode,
       FullAssetName: event.FullAssetName,
@@ -1405,7 +1429,7 @@ export class AssetDataComponent implements OnInit {
     this.appData.AppId = this.AppId;
     var appData = { Id: this.AppId };
     await this.http.post(URLConstant.GetAllAssetDataByAppId, appData).toPromise().then(
-      (response) => {
+      async (response) => {
         this.appAssetObj = response;
 
 
@@ -1532,7 +1556,8 @@ export class AssetDataComponent implements OnInit {
 
           this.DpTypeBefore = "AMT";
           this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-          this.GetAssetMaster(this.assetMasterObj);
+          await this.GetAssetMaster(this.assetMasterObj);
+          this.GetRefAssetDocList(true);
           this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
           this.GetVendorForView();
           this.districtObj.ProvDistrictCode = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
@@ -2080,8 +2105,8 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetAssetMaster(assetMasterObj) {
-    this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: assetMasterObj.FullAssetCode }).subscribe(
+  async GetAssetMaster(assetMasterObj) {
+    await this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: assetMasterObj.FullAssetCode }).toPromise().then(
       (response: any) => {
         this.AssetMasterObj = response;
         this.AssetDataForm.patchValue({
@@ -2521,6 +2546,56 @@ export class AssetDataComponent implements OnInit {
         this.RefProdCmptAssetSchm = response;
       }
     );
+  }
+
+  GetRefAssetDocList(isInit: boolean) {
+    this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
+      (response) => {
+        if (response[CommonConstant.ReturnObj].length > 0) {
+          let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
+          ListDoc.reset();
+          while(ListDoc.length !== 0) {
+            ListDoc.removeAt(0);
+          }
+          for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+            let assetDocumentDetail = this.fb.group({
+              DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+              AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+              IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+              IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+              IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+              IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+              DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+              ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+              RowVersion: "",
+            }) as FormGroup;
+            ListDoc.push(assetDocumentDetail);
+          }
+        }
+        if(isInit){
+          this.setAppCollateralDoc(this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId']);
+        }
+      });
+  }
+
+  setAppCollateralDoc(AppCollateralId: number = 0) {
+    this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
+      (response) => {
+        let AppCollateralDocs = new Array();
+        AppCollateralDocs = response["AppCollateralDocs"];
+        if (AppCollateralDocs["length"] > 0) {
+          for (let i = 0; i < AppCollateralDocs.length; i++) {
+            this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
+              DocNo: AppCollateralDocs[i].DocNo,
+              DocNotes: AppCollateralDocs[i].DocNotes,
+              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              IsReceived: AppCollateralDocs[i].IsReceived,
+              RowVersion: AppCollateralDocs[i].RowVersion,
+            })
+          }
+        }
+      });
   }
 
   async GetAppCustCoy() {

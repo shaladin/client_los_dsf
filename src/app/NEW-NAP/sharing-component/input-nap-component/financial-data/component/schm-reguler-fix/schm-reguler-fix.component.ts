@@ -37,6 +37,7 @@ export class SchmRegulerFixComponent implements OnInit {
   IsFirstCalc: boolean = true;
   EffRateAfterCalc: number = 0;
   FlatRateAfterCalc: number = 0;
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
