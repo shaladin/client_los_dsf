@@ -40,7 +40,6 @@ export class SchmIrregularComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
-    this.SetEntryInstallment();
     this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
     this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
     this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
@@ -53,6 +52,7 @@ export class SchmIrregularComponent implements OnInit {
       this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
         (response) => {
           this.listInstallment = response['InstallmentTable'];
+          this.SetEntryInstallment();
         });
       this.IsTrialCalc = false;
     }
@@ -93,13 +93,25 @@ export class SchmIrregularComponent implements OnInit {
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    for (let i = 0; i < numOfStep; i++) {
-      const group = this.fb.group({
-        InstSeqNo: i + 1,
-        NumOfInst: [0],
-        InstAmt: [0]
-      });
-      (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
+    
+    if (this.listInstallment.length != 0) {
+      for (let i = 0; i < numOfStep; i++) {
+        const group = this.fb.group({
+          InstSeqNo: i + 1,
+          NumOfInst: [0],
+          InstAmt: [this.listInstallment[i].InstAmt]
+        });
+        (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
+      }
+    } else {
+      for (let i = 0; i < numOfStep; i++) {
+        const group = this.fb.group({
+          InstSeqNo: i + 1,
+          NumOfInst: [0],
+          InstAmt: [0]
+        });
+        (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
+      }
     }
 
   }
