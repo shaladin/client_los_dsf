@@ -71,8 +71,7 @@ export class ViewLtkmCustDataPersonalDataComponent implements OnInit {
     await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId }).toPromise().then(
       (response) => {
         this.ltkmCustObj = response["rLtkmCustObj"];
-        this.custModelCode = response["MrCustModelCode"];
-        console.log("cekjenis",this.custModelCode)
+        this.custModelCode = response["MrCustModelCode"];        
         this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
         this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
         this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];

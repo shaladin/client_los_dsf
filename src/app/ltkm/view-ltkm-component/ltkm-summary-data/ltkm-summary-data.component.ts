@@ -15,7 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
     selector: "view-ltkm-summary-app",
     templateUrl: "./ltkm-summary-data.component.html",
-    providers: [NGXToastrService],    
+    providers: [NGXToastrService]    
 })
 
 export class ViewLtkmSummaryDataComponent implements OnInit {
@@ -48,8 +48,7 @@ export class ViewLtkmSummaryDataComponent implements OnInit {
             
             this.http.post(URLConstant.getLtkmReqByLtkmCustId, { Id: this.LtkmCustId }).pipe()
             .subscribe( response => {
-                this.SummaryLtkmReqObj = response;   
-                console.log("pertama",response["ReturnObject"]["AddSrcNotes"] == null || response["ReturnObject"]["AddSrcNotes"] == undefined  )                                 
+                this.SummaryLtkmReqObj = response;                   
                 this.ProfessionCode = response["ReturnObject"]["OwnerProfessionCode"]                    
                 this.MrInstSrcPaymentForMasterCode = response["ReturnObject"]["MrInstSrcPayment"]                              
                 this.MrDpSrcPaymentForMasterCode = response["ReturnObject"]["MrDpSrcPayment"]

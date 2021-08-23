@@ -87,8 +87,6 @@ export class LtkmVerifyDetailComponent implements OnInit {
             if (params["MrCustTypeCode"] != null) {
                 this.CustTypeCode = params["MrCustTypeCode"];   
                 this.CustTypeCode == 'PERSONAL' ? this.isCustTypePersonal = true : this.isCustTypePersonal = false;              
-
-                console.log("pertamacust",this.CustTypeCode);
             }
         });
     }

@@ -136,6 +136,7 @@ export class LtkmRequestComponent implements OnInit {
     appNo: string;
     selectedCustNo: any;
     isCustomerSelected: boolean = false;
+    isCustomerCompanySelected: boolean = false;
     @ViewChild('applicationData') ucLookupApplicationData: UclookupgenericComponent;
     @ViewChild('applicationCompanyData') ucLookupApplicationCompanyData: UclookupgenericComponent;
 
@@ -274,13 +275,11 @@ export class LtkmRequestComponent implements OnInit {
         this.inputAddressObjForMailingCoy.showSubsection = false;
         this.inputAddressObjForMailingCoy.showPhn3 = false;
         this.inputAddressObjForMailingCoy.showOwnership = true;
-
-        // this.selectedCustNo = event["CustObj"]["CustNo"]; 
+        
         this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
         this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
-        // this.inputLookupApplication.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
         this.inputLookupApplicationObj.isRequired = true;   
         this.inputLookupApplicationObj.addCritInput = new Array();
             
@@ -1927,6 +1926,7 @@ export class LtkmRequestComponent implements OnInit {
             this.inputLookupApplicationObj.addCritInput = [];
             this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
             this.ucLookupApplicationData.setAddCritInput();   
+            // this.inputLookupApplicationObj.isDisable = true;            
             this.isCustomerSelected = true;                        
         }        
     }
@@ -1999,7 +1999,8 @@ export class LtkmRequestComponent implements OnInit {
             this.inputLookupApplicationObj.addCritInput = [];
             this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
             this.ucLookupApplicationCompanyData.setAddCritInput();            
-            this.isCustomerSelected = true;                              
+            this.isCustomerCompanySelected = true;                         
+            // this.inputLookupApplicationObj.isDisable = false;     
         }    
     }
 

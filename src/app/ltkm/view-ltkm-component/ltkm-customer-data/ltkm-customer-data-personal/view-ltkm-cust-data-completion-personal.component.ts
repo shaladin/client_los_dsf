@@ -50,9 +50,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
   IsShowCustFinDataDetail:boolean = false;
   ListCustPersonalFinData : Array<object> = [];
   CustPersonalFinData : object;
-  currentCustFinDataIndex: number;
-
-  exampleArr: Array<object> = [];
+  currentCustFinDataIndex: number;  
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
@@ -90,8 +88,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
         this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
         this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
         this.ltkmCustPersonalContactPersonObjs = response["rLtkmCustPersonalContactPersonObjs"] == null ? new Array<LtkmCustPersonalContactPersonObj>() : response["rLtkmCustPersonalContactPersonObjs"];
-        this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];
-        this.exampleArr = response["rLtkmCustFamilyObjs"];        
+        this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];             
         this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"];  
 
         // filter family yg punya relationship
@@ -108,7 +105,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
         else if(this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';
         else if(this.ltkmCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
         else this.customerTitle = 'Customer';
-      }).catch((error)=>{});
+      });
   }
 
   viewDetailFamilyHandler(LtkmCustId, MrCustTypeCode){

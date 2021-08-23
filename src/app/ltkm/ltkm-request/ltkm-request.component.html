@@ -166,6 +166,10 @@
                             [enjiForm]='enjiForm' [identifier]="'appNo'" #applicationData (lookup)="getLookupAppNo($event)" 
                             >
                           </lib-uclookupgeneric>
+                          <!-- <lib-uclookupgeneric *ngIf="isCustomerSelected" class="col-md-4" [lookupInput]="inputLookupApplicationObj" [parentForm]='CustDataForm'
+                          [enjiForm]='enjiForm' [identifier]="'appNo'" #applicationData (lookup)="getLookupAppNo($event)"  isDisabled="true"
+                          >
+                        </lib-uclookupgeneric> -->
                           <input *ngIf="!isCustomerSelected" type="text" class="col-md-9" disabled style="height: 29px;">
                         </div>                                                                    
                       </div>                           
@@ -326,11 +330,11 @@
                     <div id="ApplicationDataCompany" class="row col-md-12">
                       <label class="col-md-3 adins-required-label" translate>Application No </label>
                       <div  class="col-md-4">
-                        <lib-uclookupgeneric *ngIf="isCustomerSelected" class="col-md-4" [lookupInput]="inputLookupApplicationObj" [parentForm]='CustDataCompanyForm'
+                        <lib-uclookupgeneric *ngIf="isCustomerCompanySelected" class="col-md-4" [lookupInput]="inputLookupApplicationObj" [parentForm]='CustDataCompanyForm'
                           [enjiForm]='enjiForm' [identifier]="'appNo'" #applicationCompanyData (lookup)="getLookupAppNo($event)" 
                           >
                         </lib-uclookupgeneric>
-                        <input *ngIf="!isCustomerSelected" type="text" class="col-md-9" disabled style="height: 29px;">
+                        <input *ngIf="!isCustomerCompanySelected" type="text" class="col-md-9" disabled style="height: 29px;">
                       </div>                                                                    
                     </div>                           
                     <app-ltkm-request-analysis 
