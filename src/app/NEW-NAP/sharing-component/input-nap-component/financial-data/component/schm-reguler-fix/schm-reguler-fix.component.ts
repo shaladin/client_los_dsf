@@ -39,7 +39,6 @@ export class SchmRegulerFixComponent implements OnInit {
   FlatRateAfterCalc: number = 0;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
 
-  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
