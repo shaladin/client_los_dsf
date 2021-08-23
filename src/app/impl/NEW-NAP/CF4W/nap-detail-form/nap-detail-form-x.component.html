@@ -221,12 +221,12 @@
               </app-application-data-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-multi-asset-data-x *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady"
+              <app-multi-asset-data-x *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady"
               [AppId]="appId" [showCancel]="showCancel" [BizTemplateCode]="bizTemplateCode" (OutputMultiAsset)="NextStep('INS')"
               (outputCancel)="Cancel()"></app-multi-asset-data-x>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady"
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY' && IsDataReady"
                 [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
               </app-insurance-multi-asset-data>
             </div>
