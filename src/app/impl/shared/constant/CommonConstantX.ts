@@ -35,4 +35,10 @@ export class CommonConstantX {
 
     //Cessie
     public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "NYS";
+
+    //Return Handling
+    public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SRVY";
+
+    //Default SlikSecEcoCode
+    public static DefaultSlikSecEcoCode = "ECOSLIK_DEFAULT";
 }

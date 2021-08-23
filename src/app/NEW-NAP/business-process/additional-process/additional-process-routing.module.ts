@@ -47,6 +47,8 @@ import { EditAppAfterApprovalInquiryComponent } from './edit-app-after-approval-
 import { EditAppAfterApprovalPagingComponent } from './edit-app-after-approval/edit-app-after-approval-paging/edit-app-after-approval-paging.component';
 import { CreditApprovalResultExtensionApprovalDetailComponent } from './credit-apv-result-ext/approval/detail/detail.component';
 import { CreditApprovalResultExtensionApprovalPagingComponent } from './credit-apv-result-ext/approval/paging/paging.component';
+import { ReturnHandlingSurveyVerifXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-survey-verif-x/return-handling-survey-verif-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 
 
 const routes: Routes = [
@@ -361,6 +363,13 @@ const routes: Routes = [
         component: CopyCanAppMultiBlDetailComponent,
         data: {
           title: 'Copy From Cancelled Application Detail'
+        }
+      },
+      {
+        path: PathConstantX.RETURN_HANDLING_SURVEY_VERIF_PAGING_X,
+        component: ReturnHandlingSurveyVerifXComponent,
+        data: {
+          title: 'Return Handling Survey Verification'
         }
       },
     ]

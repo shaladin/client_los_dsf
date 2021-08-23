@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-  // losUrl: 'https://localhost:5001',
+  //losUrl: 'http://localhost:5000',
   // FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL',
   FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_DSF_IMPL',
@@ -16,7 +16,7 @@ export const environment = {
   ApprovalR3Url: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_R3_BE_DSF_IMPL',
   ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
   FoundationR3Web: 'http://r3impl-websvr.ad-ins.com/FOU_DSF_IMPL',
-  losR3Web: 'http://r3impl-websvr.ad-ins.com/LOS_DSF_IMPL',
+  losR3Web: 'http://localhost:4200',
   lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
   WorkflowR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_DSF_IMPL',
   WebSocketURL: 'http://r3impl-appsvr.ad-ins.com/FOU_DSF_IMPL',

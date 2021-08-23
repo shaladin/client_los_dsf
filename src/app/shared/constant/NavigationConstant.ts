@@ -12,6 +12,7 @@ export class NavigationConstant {
   public static BACK_TO_PAGING_LOWERCASE = '..' + "/" + PathConstant.PAGING_LOWERCASE; //'../paging'
   public static BACK_TO_PAGING2 = '../' + '../' + PathConstant.PAGING; //'../../Paging'
   public static BACK_TO_DETAIL = '..' + "/" + PathConstant.DETAIL; //'../Detail'
+  public static BACK_TO_DETAIL_X = '..' + "/" + PathConstantX.DETAIL_X; //'../DetailX'
   public static BACK_TO_DETAIL_LOWERCASE = '..' + "/" + PathConstant.DETAIL_LOWERCASE; //'../detail'
   public static BACK_TO_DETAIL_COY = '..' + "/" + PathConstant.DETAIL + "/" + PathConstant.COY; //'../Detail/Company'
   public static BACK_TO_DETAIL_PERSONAL = '..' + "/" + PathConstant.DETAIL + "/" + PathConstant.PERSONAL; //'../Detail/Personal'
@@ -91,6 +92,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4;//"/Nap/AddProcess/ReturnHandling/NAP4"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2_PAGING; //"NAP/AddProcess/ReturnHandling/NAP2"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4_PAGING; //"/Nap/AddProcess/ReturnHandling/NAP4"
+  public static NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.RETURN_HANDLING_SURVEY_VERIF_PAGING_X; //"/Nap/AddProcess/ReturnHandling/SurveyVerif/PagingX"
 
   //#endregion
 
@@ -154,8 +156,8 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_CRD_INVESTIGATION_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_INVESTIGATION_PAGING; //"/Nap/CreditProcess/CreditInvestigation/Paging"
   public static NAP_CRD_PRCS_NEW_CRD_INVESTIGATION_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.NEW_CRD_INVESTIGATION_PAGING; //'/Nap/CreditProcess/NewCreditInvestigation/Paging'
   public static NAP_CRD_PRCS_CRD_REVIEW_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_PAGING; //"Nap/CreditProcess/CreditReview/Paging"
-  public static NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.CRD_REVIEW_CR_PAGING; //"Nap/CreditProcess/CreditReviewCr/PagingX"
-  public static NAP_CRD_PRCS_CRD_REVIEW_CR_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.CRD_REVIEW_CR_DETAIL; //"Nap/CreditProcess/CreditReviewCr/DetailX"
+  public static NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.CRD_REVIEW_CR_PAGING_X; //"Nap/CreditProcess/CreditReviewCr/PagingX"
+  public static NAP_CRD_PRCS_CRD_REVIEW_CR_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.CRD_REVIEW_CR_DETAIL_X; //"Nap/CreditProcess/CreditReviewCr/DetailX"
   public static NAP_CRD_PRCS_CRD_REVIEW_CFNA_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_CFNA_PAGING; //'/Nap/CreditProcess/CreditReviewCfna/Paging'
   public static NAP_CRD_PRCS_CRD_REVIEW_PROTOTYPE_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_PROTOTYPE_PAGING; //'/Nap/CreditProcess/CreditReviewPrototype/Paging'
   public static NAP_CRD_PRCS_CRD_REVIEW_PROTOTYPE_DETAIL = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.CRD_REVIEW_PROTOTYPE_DETAIL; //'/Nap/CreditProcess/CreditReviewPrototype/Detail'
@@ -166,6 +168,10 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT; //"/Nap/CreditProcess/PhoneVerification/Subject"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VERIF; //"/Nap/CreditProcess/PhoneVerification/Subject/Verif"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VIEW; //"/Nap/CreditProcess/PhoneVerification/Subject/View"
+  public static NAP_CRD_PRCS_SURVEY_VERIF_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_PAGING; //"/Nap/CreditProcess/SurveyVerif/PagingX"
+  public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT; //"/Nap/CreditProcess/SurveyVerif/SubjectX"
+  public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT_VERIF; //"/Nap/CreditProcess/SurveyVerif/SubjectX/VerifX"
+  public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT_VIEW; //"/Nap/CreditProcess/SurveyVerif/SubjectX/ViewX"
   //#endregion
 
   //#region CF2W
@@ -253,8 +259,8 @@ export class NavigationConstant {
   //#endregion
 
   //#region NAP-VIEW
-  public static VIEW_APP = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP; //'/View/AppView'
-  public static BACK_VIEW_APP = '../../' + NavigationConstant.VIEW_APP; //'../../View/AppView'
+  public static VIEW_APP = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP + "/" + PathConstantX.X; //'/View/AppView/X'
+  public static BACK_VIEW_APP = '../../' + NavigationConstant.VIEW_APP; //'../../View/AppView/X'
   public static VIEW_APP_ASSET = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP_ASSET; //'/View/AppAsset'
   public static VIEW_AGRMNT = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_AGRMNT; //"/View/AgrmntView"
   public static VIEW_CUST_EXPSR = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CUST_EXPSR; //"/View/CustExposureView"
@@ -436,7 +442,7 @@ export class NavigationConstant {
   public static PROD_OFFERING_RTN_PAGING = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_RTN_PAGING; //'/Product/ProdOffering/ReturnPaging'
 
   //#region TRIAL
-  public static TRIAL_CALC = "/" + PathConstant.LR_TRIAL_CALC + "/" + PathConstant.TRIAL_CALC; //'/TrialCalculation/Trial-Calculation'
+  public static TRIAL_CALC = "/" + PathConstant.LR_TRIAL_CALC + "/" + PathConstantX.TRIAL_CALC_X; //'/TrialCalculation/Trial-Calculation'
 
   //#region Pefindo View
   public static PEFINDO_VIEW = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PEFINDO + "/" + PathConstant.PEFINDO_VIEW;

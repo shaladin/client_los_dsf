@@ -488,7 +488,7 @@ export class CommissionV2XComponent implements OnInit {
       console.log(obj)
       console.log(this.ListAppCommHObj)
 
-      await this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYield, obj).toPromise().then(
+      await this.http.post<ResponseTaxDetailObj>(URLConstantX.GetAppCommissionTaxAndCalcGrossYieldX, obj).toPromise().then(
         (response) => {
           let idxStart = 0;
           let totalSupplData = this.totalSupplier;

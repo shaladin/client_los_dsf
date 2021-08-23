@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "textbox",
-      "name": "A.APP_NO",
+      "name": "a.APP_NO",
       "id": "AppNoId",
       "value": "",
       "label": "Application No",
@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "AC.CUST_NAME",
+      "name": "ac.CUST_NAME",
       "id": "CustNameId",
       "value": "",
       "label": "Customer Name",
@@ -20,7 +20,7 @@
     },
     {
       "type": "textbox",
-      "name": "A.PROD_OFFERING_NAME",
+      "name": "a.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
       "label": "Product Offering Name",
@@ -35,7 +35,7 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
-      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "/v1/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
       "itemsUrl": [],
@@ -76,13 +76,13 @@
       "type": "sort",
       "position": "center",
       "label": "SLA",
-      "name": "SlaColor"
+      "name": "WTL.SLA_COLOR"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Claim By",
-      "name": "ClaimBy"
+      "name": "WTL.USERNAME"
     },
     {
       "type": "sort",
@@ -175,7 +175,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Nap/CreditProcess/SurveyVerif/Subject",
+                "path": "/Nap/CreditProcess/SurveyVerif/SubjectX",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -205,7 +205,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Nap/CreditProcess/SurveyVerif/Subject",
+                "path": "/Nap/CreditProcess/SurveyVerif/SubjectX",
                 "icon": "ft-edit-2",
                 "param": [
                   {
