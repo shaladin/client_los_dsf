@@ -182,6 +182,14 @@
                         {
                             "type": "WfTaskListId",
                             "property": "WfTaskListId"
+                        },
+                        {
+                            "type": "TrxType",
+                            "property": "TrxType"
+                        },
+                        {
+                            "type": "ChangeMouTrxId",
+                            "property": "ChangeMouTrxId"
                         }
                     ]
                 }
