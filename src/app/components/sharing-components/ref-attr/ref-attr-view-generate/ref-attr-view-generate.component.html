@@ -1,6 +1,6 @@
 <lib-ucSubsection [id]="'RefAttrViewContentId'" [title]="Title" [panel]="'RefAttrViewContent'">
 </lib-ucSubsection>
-<div [id]="RefAttrViewContent">    
+<div id="RefAttrViewContent">    
     <div class="form-group row" *ngFor="let item of ListAttrObjs">
         <label class="col-md-2 adInsLabel" translate>{{item.AttrName}}</label>
         <label *ngIf="!item.AttrValue" class="col-md-4 adInsLabel" translate>-</label>
