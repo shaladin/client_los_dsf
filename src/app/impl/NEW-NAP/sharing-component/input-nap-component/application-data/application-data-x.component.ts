@@ -40,6 +40,7 @@ import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
 import {ResCalculatePlafondAgrmntXObj} from 'app/impl/shared/model/ResCalculatePlafondAgrmntXObj.Model';
 import {ReqCalculatePlafondAgrmntXObj} from 'app/impl/shared/model/ReqCalculatePlafondAgrmntXObj.Model';
 import {ReqAgrmntMasterDataObjX} from 'app/impl/shared/model/ReqAgrmntMasterDataObjX.model';
+import {AgrParentObjX} from 'app/impl/shared/model/Response/AgrParentObjX.model';
 
 @Component({
   selector: 'app-application-data-x',
@@ -70,7 +71,6 @@ export class ApplicationDataXComponent implements OnInit {
   inputLookupObj: InputLookupObj;
   inputLookupEconomicSectorObj: InputLookupObj;
   inputLookupCommodityObj: InputLookupObj;
-  InputLookupAgrmntParentObj: InputLookupObj = new InputLookupObj();
   arrAddCrit: Array<CriteriaObj>;
   user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   isInputLookupObj: boolean = false;
@@ -80,12 +80,14 @@ export class ApplicationDataXComponent implements OnInit {
   FirstInstType: string;
   resMouCustObj;
   CustNo: string;
+  CustName: string;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = '';
   listCustBankAcc: Array<AppCustBankAccObj>;
   GetBankInfo: AppOtherInfoObj = new AppOtherInfoObj();
   totalAgrmntMpfDt: number = 0;
   maxTenor: number = 0;
+  goLiveDt: Date;
   isDdlMrAppSourceReady: boolean = false;
   ddlMrAppSourceObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMrFirstInstTypeObj: UcDropdownListObj = new UcDropdownListObj();
@@ -98,6 +100,9 @@ export class ApplicationDataXComponent implements OnInit {
   agrmntParentNo: string;
   resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
   reqAgrmntMasterDataObjX: ReqAgrmntMasterDataObjX;
+  agrParent: AgrParentObjX;
+  agrParentList: Array<AgrParentObjX>;
+  plafondDict:{[id:string]: ResCalculatePlafondAgrmntXObj} = {};
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -211,13 +216,11 @@ export class ApplicationDataXComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstantX.RefMasterTypeCodeOrdStatus);
     this.getRefMasterTypeCode(CommonConstantX.RefMasterTypeCodeStatusBpkb);
     this.getAppSrcData();
-    setTimeout(() => {
-      this.getAppModelInfo()
-    }, 2000);
 
-    this.http.post(URLConstant.GetAppCustByAppId, {Id: this.appId}).subscribe(
+    await this.http.post(URLConstant.GetAppCustByAppId, {Id: this.appId}).toPromise().then(
       (response: AppCustObj) => {
         this.CustNo = response.CustNo;
+        this.CustName = response.CustName;
         this.GetListAppCustBankAcc(response.AppCustId);
 
         this.http.post(URLConstant.GetListMouCustByCustNo, {
@@ -260,6 +263,8 @@ export class ApplicationDataXComponent implements OnInit {
         }
       }
     );
+
+    this.getAppModelInfo()
   }
 
   initDdlMrFirstInstType() {
@@ -581,18 +586,16 @@ export class ApplicationDataXComponent implements OnInit {
     this.inputLookupEconomicSectorObj.pagingJson = './assets/uclookup/NAP/lookupEconomicSectorSlik.json';
     this.inputLookupEconomicSectorObj.genericJson = './assets/uclookup/NAP/lookupEconomicSectorSlik.json';
 
-    //lookup Agreement Parent
-    this.InputLookupAgrmntParentObj.urlJson = './assets/impl/uclookup/lookupAgrmntParent.json';
-    this.InputLookupAgrmntParentObj.urlQryPaging = URLConstantX.GetPagingObjectR2BySQL;
-    this.InputLookupAgrmntParentObj.urlEnviPaging = environment.losUrl + '/v1';
-    this.InputLookupAgrmntParentObj.pagingJson = './assets/impl/uclookup/lookupAgrmntParent.json';
-    this.InputLookupAgrmntParentObj.genericJson = './assets/impl/uclookup/lookupAgrmntParent.json';
-    this.InputLookupAgrmntParentObj.isReadonly = true;
-    this.InputLookupAgrmntParentObj.isRequired = (this.BizTemplateCode == CommonConstant.CFNA);
+
 
     if (this.BizTemplateCode == CommonConstant.CFNA) {
-      this.InputLookupAgrmntParentObj.nameSelect = this.resultResponse.AgrmntParentNo;
-      this.InputLookupAgrmntParentObj.jsonSelect = {AgrmntNo: this.resultResponse.AgrmntParentNo};
+      //lookup Agreement Parent
+      this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, {CustNo: this.CustNo}).subscribe(
+        (response) => {
+          this.agrParentList = response;
+          console.log(this.agrParentList);
+        }
+      );
       this.agrmntParentNo = this.resultResponse.AgrmntParentNo;
     }
 
@@ -686,47 +689,60 @@ export class ApplicationDataXComponent implements OnInit {
     await this.makeLookUpObj();
   }
 
-  async copyAgrmntParentEvent(event) {
-    this.totalAgrmntMpfDt = event.TotalAgrmntMpfDt;
-    this.maxTenor = event.MaxTenor;
-    var reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
+  async copyAgrmntParentEvent(idx) {
+    if(idx==null) return;
+
+    this.agrParent = this.agrParentList[idx];
+    console.log(this.agrParent);
+
+    this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
+    this.maxTenor = this.agrParent.MaxTenor;
+    this.goLiveDt = this.agrParent.GoLiveDt;
+    const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
-    reqCalculatePlafondAgrmntXObj.AgrmntParentNo = event.AgrmntNo;
-    reqCalculatePlafondAgrmntXObj.TotalAssetPrice = event.TotalAssetPrice;
-    reqCalculatePlafondAgrmntXObj.OsArAgrmntMasterAmt = event.OsArAgrmntMasterAmt;
-    reqCalculatePlafondAgrmntXObj.OsArMpfDtAmt = event.OsArMpfDtAmt;
+    reqCalculatePlafondAgrmntXObj.AgrmntParentNo = this.agrParent.AgrmntNo;
+    reqCalculatePlafondAgrmntXObj.TotalAssetPrice = this.agrParent.TotalAssetPrice;
+    reqCalculatePlafondAgrmntXObj.OsArAgrmntMasterAmt = this.agrParent.OsArAgrmntMasterAmt;
+    reqCalculatePlafondAgrmntXObj.OsArMpfDtAmt = this.agrParent.OsArMpfDtAmt;
     reqCalculatePlafondAgrmntXObj.LobCode = this.resultResponse.LobCode;
-    reqCalculatePlafondAgrmntXObj.AssetTypeCode = event.AssetTypeCode;
-    reqCalculatePlafondAgrmntXObj.EffectiveDt = event.EffectiveDt;
+    reqCalculatePlafondAgrmntXObj.AssetTypeCode = this.agrParent.AssetTypeCode;
+    reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
 
-    this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
-      (response) => {
-        this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
-        this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
-        this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = response.MaxPlafondAgrmntAmt;
-        this.resCalculatePlafondAgrmntXObj.IsAppInProgress = response.IsAppInProgress;
+    if(this.plafondDict[this.agrParent.AgrmntId]==undefined){
+      this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
+        (response) => {
+          this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
+          this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
+          this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = response.MaxPlafondAgrmntAmt;
+          this.resCalculatePlafondAgrmntXObj.IsAppInProgress = response.IsAppInProgress;
 
-        if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
-          this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
-        }
-      });
+          if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+            this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+          }
+          this.plafondDict[this.agrParent.AgrmntId] = this.resCalculatePlafondAgrmntXObj;
+        });
+    }else{
+      this.resCalculatePlafondAgrmntXObj= this.plafondDict[this.agrParent.AgrmntId]
+    }
+
+
 
     var tempCrossApp = new NapAppCrossObj();
-    tempCrossApp.CrossAgrmntNo = event.AgrmntNo;
-    tempCrossApp.CrossAppNo = event.AppNo;
-    tempCrossApp.CustName = event.CustName;
-    tempCrossApp.ContractStat = event.ContractStat;
-    tempCrossApp.MaturityDt = event.MaturityDt;
+    tempCrossApp.CrossAgrmntNo = this.agrParent.AgrmntNo;
+    tempCrossApp.CrossAppNo = this.agrParent.AppNo;
+    tempCrossApp.CustName = this.CustName;
+    tempCrossApp.ContractStat = this.agrParent.ContractStat;
+    tempCrossApp.MaturityDt = this.agrParent.MaturityDt;
     let appCross = this.resultCrossApp.find(x => x.CrossAgrmntNo == this.agrmntParentNo);
     if (appCross != undefined) {
 
       let index = this.resultCrossApp.indexOf(appCross);
       this.resultCrossApp[index] = tempCrossApp;
-      this.agrmntParentNo = event.AgrmntNo;
+      this.agrmntParentNo = this.agrParent.AgrmntNo;
 
     } else {
       this.resultCrossApp.push(tempCrossApp);
-      this.agrmntParentNo = event.AgrmntNo;
+      this.agrmntParentNo = this.agrParent.AgrmntNo;
     }
   }
 
@@ -884,7 +900,7 @@ export class ApplicationDataXComponent implements OnInit {
               {
                 AppId: this.appId,
                 AppNo: this.NapAppModelForm.value.AppNo.value,
-                AgrmntParentNo: this.NapAppModelForm.value.lookupAgreementParent.value,
+                AgrmntParentNo: this.agrParent.AgrmntNo,
                 TotalAgrmntMpfDt: this.totalAgrmntMpfDt,
                 PlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt,
                 MaxPlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt,

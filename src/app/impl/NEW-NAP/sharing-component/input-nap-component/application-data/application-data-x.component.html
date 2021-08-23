@@ -48,15 +48,19 @@
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Agreement Parent</label>
                   <div class="col-md-8" >
-                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupAgrmntParentObj"
-                      *ngIf="isInputLookupObj" [parentForm]="NapAppModelForm"
-                      [identifier]="'lookupAgreementParent'" (lookup)="copyAgrmntParentEvent($event)" #LookupAgreementParent>
-                    </lib-uclookupgeneric>
+                    <select class="form-control adInsInput"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && resCalculatePlafondAgrmntXObj == null }"
+                            (change)="copyAgrmntParentEvent($event.target.value)">
+                      <option [value]="">Select One</option>
+                      <option *ngFor="let item of agrParentList; let i = index" [value]="i">{{item.AgrmntNo}}</option>
+                    </select>
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Go Live Dt</label>
+                  <label class="col-md-8 adInsLabel" translate>{{goLiveDt}}</label>
                 </div>
               </div>
               <div class="col-md-6">
