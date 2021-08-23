@@ -222,13 +222,14 @@ export class CollateralAddEditComponent implements OnInit {
   getRefAssetDocList(isInit: boolean) {
     this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AddCollForm.get("AssetTypeCode").value }).subscribe(
       (response) => {
+        let ListDoc = this.AddCollForm.get('ListDoc') as FormArray;
+        ListDoc.reset();
+        while(ListDoc.length){
+          ListDoc.removeAt(0);
+        } 
         if (response[CommonConstant.ReturnObj].length > 0) {
-          var ListDoc = this.AddCollForm.get('ListDoc') as FormArray;
-          for(var i =0 ;i<ListDoc.length;i++){
-            ListDoc.removeAt(i);
-          } 
-          for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
-            var assetDocumentDetail = this.fb.group({
+          for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+            let assetDocumentDetail = this.fb.group({
               DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
               AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
               IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
@@ -252,10 +253,10 @@ export class CollateralAddEditComponent implements OnInit {
   setAppCollateralDoc(AppCollateralId: number = 0) {
     this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
       (response) => {
-        var AppCollateralDocs = new Array();
+        let AppCollateralDocs = new Array();
         AppCollateralDocs = response["AppCollateralDocs"];
         if (AppCollateralDocs["length"] > 0) {
-          for (var i = 0; i < AppCollateralDocs.length; i++) {
+          for (let i = 0; i < AppCollateralDocs.length; i++) {
             this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
               DocNo: AppCollateralDocs[i].DocNo,
               DocNotes: AppCollateralDocs[i].DocNotes,

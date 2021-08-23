@@ -332,7 +332,7 @@ export class MouRequestAddcollComponent implements OnInit {
             MrIdType: CustObj.MrIdTypeCode,
             OwnerIdNo: CustObj.IdNo,
             OwnerProfessionCode: typeof(response['MouCustPersonalJobDataObj']) != 'undefined' ? this.CustPersonalJobDataObj.MrProfessionCode : '',
-            OwnerMobilePhnNo: this.CustPersonalObj.MobilePhnNo1
+            OwnerMobilePhnNo: typeof (response['MouCustPersonalObj']) != 'undefined' ? this.CustPersonalObj.MobilePhnNo1 : '',
           })
 
           this.inputFieldLegalObj.inputLookupObj.nameSelect = CustAddrObj.Zipcode;

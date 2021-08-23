@@ -2551,12 +2551,12 @@ export class AssetDataComponent implements OnInit {
   GetRefAssetDocList(isInit: boolean) {
     this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
       (response) => {
+        let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
+        ListDoc.reset();
+        while(ListDoc.length) {
+          ListDoc.removeAt(0);
+        }
         if (response[CommonConstant.ReturnObj].length > 0) {
-          let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
-          ListDoc.reset();
-          while(ListDoc.length !== 0) {
-            ListDoc.removeAt(0);
-          }
           for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
             let assetDocumentDetail = this.fb.group({
               DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
