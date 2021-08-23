@@ -1,5 +1,5 @@
 {
-  "title": "Return Handling - Additional Phone Verification",
+  "title": "Application Commission/Reserved-Fund Paging",
   "exportExcel": false,
   "component": [
     {
@@ -34,13 +34,20 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",
+      "isQueryIn":true,
       "url": "",
       "environment": "FOU",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
-      "itemsUrl": [],
-      "isQueryIn":true
+      "itemsUrl": []
+    },
+    {
+      "type" : "claim",
+      "label": "Task Claim Status",
+      "id": "ClaimStatId",
+      "ddlType" : "all",
+      "isCriteriaDataTable" : true
     },
     {
       "type": "textbox",
@@ -48,7 +55,8 @@
       "id": "claimById",
       "value": "",
       "label": "Claim By",
-      "placeholder": "Placeholder"
+      "placeholder": "Placeholder",
+      "isCriteriaDataTable" : true
     }
   ],
   "headerList": [
@@ -89,7 +97,11 @@
     }
   ],
   "querystring": {
-    "name": "searchReturnHandlingPhnVerifV2"
+    "name": "searchCommissionV2"
+  },
+  "orderby": {
+      "key": "a.APP_NO", 
+      "value": "false"
   },
   "bodyList": [
     {
@@ -143,23 +155,9 @@
                 }
               ],
               "result": {
-                "type": "url",
-                "path": "NAP_CRD_PRCS_PHN_VRF_SUBJECT",
-                "icon": "ft-edit-2",
-                "param": [
-                  {
-                    "type": "AppId",
-                    "property": "AppId"
-                  },
-                  {
-                    "type": "WfTaskListId",
-                    "property": "Id"
-                  },
-                  {
-                      "type":"ReturnHandlingHId",
-                      "property":"ReturnHandlingHId"
-                  }
-                ]
+                  "type": "callback",
+                  "key": "Edit",
+                  "icon": "ft-edit-2"
               },
               "isHide": false
             },
@@ -173,23 +171,9 @@
                 }
               ],
               "result": {
-                "type": "url",
-                "path": "NAP_CRD_PRCS_PHN_VRF_SUBJECT",
-                "icon": "ft-edit-2",
-                "param": [
-                  {
-                    "type": "AppId",
-                    "property": "AppId"
-                  },
-                  {
-                    "type": "WfTaskListId",
-                    "property": "Id"
-                  },
-                  {
-                      "type":"ReturnHandlingHId",
-                      "property":"ReturnHandlingHId"
-                  }
-                ]
+                  "type": "callback",
+                  "key": "Edit",
+                  "icon": "ft-edit-2"
               },
               "isHide": false
             }

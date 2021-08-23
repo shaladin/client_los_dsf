@@ -1,10 +1,10 @@
 {
-  "title": "Return Handling - Additional Phone Verification",
+  "title": "Phone Verification Paging",
   "exportExcel": false,
   "component": [
     {
       "type": "textbox",
-      "name": "A.APP_NO",
+      "name": "a.APP_NO",
       "id": "AppNoId",
       "value": "",
       "label": "Application No",
@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "AC.CUST_NAME",
+      "name": "ac.CUST_NAME",
       "id": "CustNameId",
       "value": "",
       "label": "Customer Name",
@@ -20,7 +20,7 @@
     },
     {
       "type": "textbox",
-      "name": "A.PROD_OFFERING_NAME",
+      "name": "a.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
       "label": "Product Offering Name",
@@ -34,13 +34,20 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",
+      "isQueryIn":true,
       "url": "",
       "environment": "FOU",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
-      "itemsUrl": [],
-      "isQueryIn":true
+      "itemsUrl": []
+    },
+    {
+      "type" : "claim",
+      "label": "Task Claim Status",
+      "id": "ClaimStatId",
+      "ddlType" : "all",
+      "isCriteriaDataTable" : true
     },
     {
       "type": "textbox",
@@ -48,7 +55,8 @@
       "id": "claimById",
       "value": "",
       "label": "Claim By",
-      "placeholder": "Placeholder"
+      "placeholder": "Placeholder",
+      "isCriteriaDataTable" : true
     }
   ],
   "headerList": [
@@ -89,7 +97,11 @@
     }
   ],
   "querystring": {
-    "name": "searchReturnHandlingPhnVerifV2"
+    "name": "searchAppPhoneVerifV2"
+  },
+  "orderby": {
+      "key": "a.APP_NO", 
+      "value": "false"
   },
   "bodyList": [
     {
@@ -120,12 +132,13 @@
       "position": "left",
       "property": "CustName"
     },
-    {
+    { 
       "type": "callback",
       "key": "ViewProdOffering",
       "position": "left",
       "property": "ProdOfferingName"
     },
+    
     {
       "type": "action",
       "position": "center",
@@ -144,7 +157,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "NAP_CRD_PRCS_PHN_VRF_SUBJECT",
+                "path": "BACK_TO_SUBJECT",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -154,10 +167,6 @@
                   {
                     "type": "WfTaskListId",
                     "property": "Id"
-                  },
-                  {
-                      "type":"ReturnHandlingHId",
-                      "property":"ReturnHandlingHId"
                   }
                 ]
               },
@@ -174,7 +183,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "NAP_CRD_PRCS_PHN_VRF_SUBJECT",
+                "path": "BACK_TO_SUBJECT",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -184,10 +193,6 @@
                   {
                     "type": "WfTaskListId",
                     "property": "Id"
-                  },
-                  {
-                      "type":"ReturnHandlingHId",
-                      "property":"ReturnHandlingHId"
                   }
                 ]
               },

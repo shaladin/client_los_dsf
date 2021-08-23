@@ -1,5 +1,5 @@
 {
-  "title": "Return Handling - Additional Phone Verification",
+  "title": "Return Handling",
   "exportExcel": false,
   "component": [
     {
@@ -28,19 +28,19 @@
     },
     {
       "type": "dropdown",
-      "name": "a.ORI_OFFICE_CODE",
+      "name": "A.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
-      "value": "Office",
+      "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",
+      "isQueryIn": true,
       "url": "",
       "environment": "FOU",
-      "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
-      "itemsUrl": [],
-      "isQueryIn":true
+      "itemsUrl": []
     },
     {
       "type": "textbox",
@@ -51,6 +51,9 @@
       "placeholder": "Placeholder"
     }
   ],
+  "querystring": {
+    "name": "searchReturnHandlingV2"
+  },
   "headerList": [
     {
       "type": "sort",
@@ -62,25 +65,31 @@
       "type": "sort",
       "position": "left",
       "label": "Office",
-      "name": "a.ORI_OFFICE_NAME"
+      "name": "A.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "a.APP_NO"
+      "name": "A.APP_NO"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "ac.CUST_NAME"
+      "name": "AC.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Product Offering Name",
-      "name": "a.PROD_OFFERING_NAME"
+      "name": "A.PROD_OFFERING_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Status",
+      "name": "VRS.DESCR"
     },
     {
       "type": "label",
@@ -88,9 +97,6 @@
       "label": "Action"
     }
   ],
-  "querystring": {
-    "name": "searchReturnHandlingPhnVerifV2"
-  },
   "bodyList": [
     {
       "type": "text",
@@ -100,7 +106,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "OfficeName"
+      "property": "OriOfficeName"
     },
     {
       "type": "link",
@@ -127,6 +133,11 @@
       "property": "ProdOfferingName"
     },
     {
+      "type": "text",
+      "position": "center",
+      "property": "ReturnHStatusName"
+    },
+    {
       "type": "action",
       "position": "center",
       "action": [
@@ -144,7 +155,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "NAP_CRD_PRCS_PHN_VRF_SUBJECT",
+                "path": "BACK_TO_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -152,12 +163,16 @@
                     "property": "AppId"
                   },
                   {
+                    "type": "ReturnHandlingHId",
+                    "property": "ReturnHandlingHId"
+                  },
+                  {
                     "type": "WfTaskListId",
                     "property": "Id"
                   },
                   {
-                      "type":"ReturnHandlingHId",
-                      "property":"ReturnHandlingHId"
+                    "type": "MrCustTypeCode",
+                    "property": "MrCustTypeCode"
                   }
                 ]
               },
@@ -174,7 +189,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "NAP_CRD_PRCS_PHN_VRF_SUBJECT",
+                "path": "BACK_TO_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -182,12 +197,16 @@
                     "property": "AppId"
                   },
                   {
+                    "type": "ReturnHandlingHId",
+                    "property": "ReturnHandlingHId"
+                  },
+                  {
                     "type": "WfTaskListId",
                     "property": "Id"
                   },
                   {
-                      "type":"ReturnHandlingHId",
-                      "property":"ReturnHandlingHId"
+                    "type": "MrCustTypeCode",
+                    "property": "MrCustTypeCode"
                   }
                 ]
               },
