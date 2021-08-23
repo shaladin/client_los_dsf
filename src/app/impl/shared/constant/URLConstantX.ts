@@ -106,4 +106,7 @@ export class URLConstantX {
   public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
 
   public static GetApprovalAmountForCreditReviewByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetApprovalAmountForCreditReviewByAppId";
+
+  // CUST MAIN DATA
+  public static CheckIfCustHasOngoingAppX = environment.losUrl + "/v1" + "/AppCustX/CheckIfCustHasOngoingApp";
 }

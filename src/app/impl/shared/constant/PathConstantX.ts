@@ -11,6 +11,7 @@ export class PathConstantX {
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
   public static NAP2_X = 'NAP2X';
+  public static NAP1_X = 'NAP1X';
   //#endregion
 
   //#region layout-routes

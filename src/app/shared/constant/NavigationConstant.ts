@@ -219,8 +219,8 @@ export class NavigationConstant {
   public static NAP_CFNA_PAGING = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstant.PAGING; //"/Nap/CFNA/Paging"
   public static NAP_CFNA_ADD = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstant.ADD; //"Nap/CFNA/Add"
   public static NAP_CFNA_ADD_DETAIL = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/CFNA/Add/Detail"
-  public static NAP_CFNA_NAP1 = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstant.NAP1; //"Nap/CFNA/NAP1"
-  public static NAP_CFNA_NAP2 = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstantX.NAP2_X; //"Nap/CFNA/NAP2"
+  public static NAP_CFNA_NAP1 = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstantX.NAP1_X; //"Nap/CFNA/NAP1X"
+  public static NAP_CFNA_NAP2 = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstantX.NAP2_X; //"Nap/CFNA/NAP2X"
   //#endregion
 
   //#region FCTR
