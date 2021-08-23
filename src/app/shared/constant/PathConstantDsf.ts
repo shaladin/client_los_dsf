@@ -83,5 +83,9 @@ export class PathConstantDsf {
     //#endregion
     public static REPORT_APP_STATUS = "ReportAppStatus";
     public static PRINT_REPORT_APP_STATUS = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_APP_STATUS;
+    public static REPORT_INS_COMP_SUMMARY = "ReportInsCompanySummary";
+    public static PRINT_REPORT_INS_COMP_SUMMARY = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_INS_COMP_SUMMARY;
+    public static REPORT_INS_COMP_DETAIL = "ReportInsCompanyDetail";
+    public static PRINT_REPORT_INS_COMP_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_INS_COMP_DETAIL;
 
 }

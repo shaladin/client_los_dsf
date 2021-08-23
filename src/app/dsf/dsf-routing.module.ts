@@ -7,7 +7,7 @@ import { CustomerGroupPlafondApvPagingDsfComponent } from './customer/customer-g
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
-import { AppStatusDsfComponent } from './report/factoring/app-status-dsf/app-status-dsf.component';
+import { AppStatusDsfComponent } from './report/app-status-dsf/app-status-dsf.component';
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
 import { InvoicekwitansitandaterimaDetailComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-detail/invoicekwitansitandaterima-detail.component';
 import { InvoicekwitansitandaterimaPagingComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-paging/invoicekwitansitandaterima-paging.component';
@@ -15,6 +15,8 @@ import { MorningmonitoringComponent } from './report/factoring/morningmonitoring
 import { NewallocationceilingComponent } from './report/factoring/newallocationceiling/newallocationceiling.component';
 import { Reminder1Component } from './report/factoring/reminder1/reminder1.component';
 import { Reminder5Component } from './report/factoring/reminder5/reminder5.component';
+import { InsCompSummaryDsfComponent } from './report/insurance-company/ins-comp-summary-dsf/ins-comp-summary-dsf.component';
+import { InsCompDetailDsfComponent } from './report/insurance-company/ins-comp-detail-dsf/ins-comp-detail-dsf.component';
 
 const routes: Routes = [
   {
@@ -181,6 +183,30 @@ const routes: Routes = [
         component: AppStatusDsfComponent,
         data: {
           title: "Report Application Status"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_INS_COMP_SUMMARY,
+        component: InsCompSummaryDsfComponent,
+        data: {
+          title: "Report Insurance Company Summary"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_INS_COMP_DETAIL,
+        component: InsCompDetailDsfComponent,
+        data: {
+          title: "Report Insurance Company Detail"
         }
       }
     ]

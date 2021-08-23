@@ -40,6 +40,8 @@ export class NavigationConstantDsf {
     public static REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING;
     public static REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
     public static REPORT_APP_STATUS = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_APP_STATUS;
+    public static REPORT_INS_COMPANY_SUMMARY = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_INS_COMP_SUMMARY;
+    public static REPORT_INS_COMPANY_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_INS_COMP_DETAIL;
    //#endregion
 
      //#region CUSTOMER GROUP PLAFOND

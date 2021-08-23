@@ -542,6 +542,8 @@ export const ROUTES: RouteInfo[] = [
   //},
   { Path: '', Title: 'Report', Icon: 'fa fa-print', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [
     { Path: NavigationConstantDsf.REPORT_APP_STATUS, Title: 'Credit Application per Status', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+    { Path: NavigationConstantDsf.REPORT_INS_COMPANY_SUMMARY, Title: 'Insurance Company Summary', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+    { Path: NavigationConstantDsf.REPORT_INS_COMPANY_DETAIL, Title: 'Insurance Company Detail', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
   ], Params: [] },
   {
     Path: '', Title: 'Integration', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
