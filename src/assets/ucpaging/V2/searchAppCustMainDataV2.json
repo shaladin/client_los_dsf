@@ -41,14 +41,6 @@
             "label": "Office",
             "items": [],
             "itemsUrl": []
-        },
-        {
-            "type": "textbox",
-            "name": "Assignee",
-            "id": "claimById",
-            "value": "",
-            "label": "Claim By",
-            "placeholder": "Placeholder"
         }
     ],
     "headerList": [
