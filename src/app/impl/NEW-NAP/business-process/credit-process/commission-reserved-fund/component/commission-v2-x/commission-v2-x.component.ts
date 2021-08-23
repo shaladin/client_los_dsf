@@ -46,6 +46,8 @@ export class CommissionV2XComponent implements OnInit {
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: object = {};
   @Input() BizTemplateCode: string;
+  @Input() LobCode: string = "";
+  
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
@@ -242,7 +244,7 @@ export class CommissionV2XComponent implements OnInit {
         var ResponseObj = response[CommonConstant.ReturnObj];
         console.log(ResponseObj)
         // override hide suppl & suppl emp jika CFRFN4W ignore rule
-        if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA)
+        if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.LobCode == CommonConstantX.SLB)
         {
           ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
           ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp = null;

@@ -127,6 +127,7 @@ import { SchmStepUpStepDownLeasingXComponent } from "app/impl/NEW-NAP/sharing-co
 import { SchmStepUpStepDownNormalXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal-x.component";
 import { ViewSubsidyXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/view-subsidy/view-subsidy-x.component";
 import { MultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/multi-asset-data-x.component";
+import { AssetDataAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-add-edit-x/asset-data-add-edit-x.component";
 import { AssetDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging-x.component";
 import { AssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/asset-data/asset-data-x.component";
 
@@ -188,8 +189,10 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalComponent,
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
+    AssetDataAddEditXComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
+    MultiAssetDataXComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent,
     SchmEvenPrincipalFctrComponent,
@@ -317,8 +320,10 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalComponent,
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
+    AssetDataAddEditXComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
+    MultiAssetDataXComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent,
     SchmEvenPrincipalFctrComponent,

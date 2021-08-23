@@ -1,0 +1,50 @@
+<div class="modal-body">
+  <div class="pl-3 mb-2 mt-2">
+    <h4 class="card-title ucSearch-title" translate> Survey Data </h4>
+  </div>
+  <lib-ucSubsection [id]="'surveyListId'" [title]="'Survey List'" [panel]="'surveyList'">
+  </lib-ucSubsection>
+  <div id="surveyList">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th>
+            <span class="text-center" translate class="thead-header">No</span>
+          </th>
+          <th>
+            <span class="text-center" translate class="thead-header" name='Survey'>Survey</span>
+          </th>
+          <th>
+            <span class="text-center" translate class="thead-header" name='Survey'>Date</span>
+          </th>
+          <th>
+            <span class="text-center" translate class="thead-header" name='Survey'>Time</span>
+          </th>
+          <th>
+            <span class="text-center" translate class="thead-header" name='Survey'>Type</span>
+          </th>
+          <th>
+            <span class="text-center" translate class="thead-header" name='Survey'>Notes</span>
+          </th>
+          <th>
+            <span class="text-center" translate class="thead-header" name='Survey'>View</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="SurveyList == undefined || SurveyList?.length == 0">
+          <td align="center" colspan="11">No data found</td>
+        </tr>
+        <tr *ngFor="let item of SurveyList; let i = index">
+          <td class="text-center">{{i + 1}}</td>
+          <td class="text-left">{{item.MrVerfObjectCode}}</td>
+          <td class="text-center">{{item.VerfDt | date: 'dd-MM-yyyy'}}</td>
+          <td class="text-center">{{item.VerfDt | date:'HH:mm'}}</td>
+          <td class="text-left">{{item.PhnType}}</td>
+          <td class="text-left">{{item.Notes}}</td>
+          <td><a href="javascript:void(0);" (click)="View(item.VerfResultHId, item.MrVerfObjectCode)">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
