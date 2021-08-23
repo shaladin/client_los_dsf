@@ -1,20 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-multi-asset-data-x',
-  templateUrl: './multi-asset-data-x.component.html'
+  templateUrl: './multi-asset-data-x.component.html',
+  providers: [NGXToastrService]
 })
 export class MultiAssetDataXComponent implements OnInit {
+
   @Input() AppId: number;
   @Input() showCancel: boolean = true;
-  @Input() BizTemplateCode: string;
+  @Input() BizTemplateCode: string = "";
   @Output() OutputMultiAsset: EventEmitter<any> = new EventEmitter<any>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   mode: string = "paging";
   AppAssetId: number;
+  AppCollateralId: number;
+  // type: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.mode = "paging";
@@ -25,6 +30,7 @@ export class MultiAssetDataXComponent implements OnInit {
     //this.AppId =  ev.AppId;
     //this.type = "addAsset";
     this.AppAssetId = ev.AppAssetId;
+    this.AppCollateralId = ev.AppCollateralId;
     if(this.mode == 'submit') {
       this.OutputMultiAsset.emit();
     }
@@ -36,6 +42,12 @@ export class MultiAssetDataXComponent implements OnInit {
 
   getOutputTab() {
     this.outputTab.emit();
+  }
+
+  terimaCollateral(ev : any) {
+    this.mode = ev.mode;
+    //this.AppId =  ev.AppId;
+    this.AppCollateralId = ev.AppCollateralId;
   }
 
 }

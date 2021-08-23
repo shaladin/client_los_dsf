@@ -40,6 +40,56 @@
             </div>
           </div>
 
+          <lib-ucSubsection *ngIf="BizTemplateCode == 'CFNA'" [id]="'agreementParentId'" [title]="'Agreement Parent'" [panel]="'agreementParent'">
+          </lib-ucSubsection>
+          <div class="form-body" id="agreementParent" *ngIf="BizTemplateCode == 'CFNA'">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Agreement Parent</label>
+                  <div class="col-md-8" >
+                    <select class="form-control adInsInput"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && resCalculatePlafondAgrmntXObj == null }"
+                            (change)="copyAgrmntParentEvent($event.target.value)">
+                      <option [value]="">Select One</option>
+                      <option *ngFor="let item of agrParentList; let i = index" [value]="i">{{item.AgrmntNo}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Go Live Dt</label>
+                  <label class="col-md-8 adInsLabel" translate>{{goLiveDt}}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Total Agreement MPF / DT</label>
+                  <label class="col-md-8 adInsLabel" translate>{{totalAgrmntMpfDt}}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Max Tenor</label>
+                  <label class="col-md-8 adInsLabel" translate>{{maxTenor}}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Plafond Amount</label>
+                  <label class="col-md-8 adInsLabel" translate>{{resCalculatePlafondAgrmntXObj?.PlafondAgrmntAmt | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Maximum Plafond Amount</label>
+                  <label class="col-md-8 adInsLabel" translate>{{resCalculatePlafondAgrmntXObj?.MaxPlafondAgrmntAmt | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Application Info -->
           <lib-ucSubsection [id]="'applicationInfomationId'" [title]="'Application Information'"
             [panel]="'applicationInfomation'">

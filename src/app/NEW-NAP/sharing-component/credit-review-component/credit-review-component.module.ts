@@ -27,6 +27,12 @@ import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/
 import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
 import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.component';
 import { CrdRvwAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-info/crd-rvw-app-info-x.component";
+import { CrdRvwCustPersonalInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-personal-info-x/crd-rvw-cust-personal-info-x.component";
+import { CrdRvwCustCompanyInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-company-info-x/crd-rvw-cust-company-info-x.component";
+import { CrdRvwCustInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-info-x.component";
+import { CrdRvwCustHistDataXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-cust-hist-data-x/crd-rvw-cust-hist-data-x.component";
+import { ViewMainInfoComponentModule } from "../view-main-info-component/view-main-info-component.module";
+import { CrdRvwSurveyDataXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-survey-data-x/crd-rvw-survey-data-x.component";
 
 @NgModule({
     exports: [
@@ -46,12 +52,16 @@ import { CrdRvwAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/cred
         CrdRvwLegalDocComponent,
         AppRvwSummaryAssetComponent,
         CrdRvwAssetAccComponent,
-        CrdRvwAppInfoXComponent
+        CrdRvwAppInfoXComponent,
+        CrdRvwCustInfoXComponent,
+        CrdRvwCustHistDataXComponent,
+        CrdRvwSurveyDataXComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
-        MatRadioModule
+        MatRadioModule,
+        ViewMainInfoComponentModule
     ],
     declarations: [
         CrdRvwCustInfoComponent, 
@@ -77,10 +87,17 @@ import { CrdRvwAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/cred
         CrdRvwTableCustComponent,
         AppRvwSummaryAssetComponent,
         CrdRvwAssetAccComponent,
-        CrdRvwAppInfoXComponent
+        CrdRvwAppInfoXComponent,
+        CrdRvwCustPersonalInfoXComponent,
+        CrdRvwCustCompanyInfoXComponent,
+        CrdRvwCustInfoXComponent,
+        CrdRvwCustHistDataXComponent,
+        CrdRvwSurveyDataXComponent
     ],
     providers: [
         NGXToastrService
+    ],
+    entryComponents: [
     ]
 })
 export class CreditReviewComponentModule { }
