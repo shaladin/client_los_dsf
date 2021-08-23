@@ -29,6 +29,7 @@ export class MouExecutionDetailComponent implements OnInit {
   MouCustId: number = 0;
   WfTaskListId: any;
   MouType: string = "";
+  MrCustTypeCode: string = "";
   businessDtYesterday: Date; 
   StartDt: Date;
   EndDt: Date;
@@ -84,6 +85,7 @@ export class MouExecutionDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: any) => {
         this.MouType = response["MrMouTypeCode"];
+        this.MrCustTypeCode = response.MrCustTypeCode;
         this.resultData = response; 
         if (response["MouCustDt"] != null) {
           response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
