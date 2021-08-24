@@ -22,8 +22,6 @@ export class NapDetailPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   bizTemplateCode: string;
   userAccess: CurrentUserContext;
-  IntegrationObj: IntegrationObj = new IntegrationObj();
-  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
