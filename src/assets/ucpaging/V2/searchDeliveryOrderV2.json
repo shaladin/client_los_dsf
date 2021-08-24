@@ -32,6 +32,15 @@
             "value": "",
             "label": "Customer Name",
             "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "claimById",
+            "value": "",
+            "label": "Task Claim By",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         }
     ],
   "querystring": {
