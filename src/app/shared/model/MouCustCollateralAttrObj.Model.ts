@@ -12,6 +12,7 @@ export class MouCustCollateralAttrObj {
     IsMandatory: boolean;
     constructor() {
         this.AttrQuestionValue = new Array();
+        this.AttrValue = "";
     }
 }
 
