@@ -253,7 +253,6 @@ export class MouRequestAddcollComponent implements OnInit {
 
     this.http.post(URLConstant.GetMouCustCollateralByMouCustId, { Id: this.MouCustId }).subscribe(
       (response) => {
-        console.log(response);
         this.listCollateralData = response['ReturnObject'];
       })
 
@@ -309,7 +308,6 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls["CollateralPrcnt"].disable();
       let collPriceAmt: number = this.AddCollForm.get("CollateralValueAmt").value;
       let maxCollPriceAmt: number = collPriceAmt * this.maxPrcnt / 100;
-      console.log(maxCollPriceAmt);
       this.AddCollForm.controls["CollateralPortionAmt"].setValidators([Validators.required, Validators.min(0), Validators.max(maxCollPriceAmt)]);
       this.AddCollForm.controls["CollateralPortionAmt"].updateValueAndValidity();
     }
@@ -623,7 +621,6 @@ export class MouRequestAddcollComponent implements OnInit {
     this.ListAttrObjs = new Array();
     this.http.post(URLConstant.GenerateMouCollateralAttr, GenObj).subscribe(
       (response: ResMouCustCollateralAttrObj) => {
-        console.log(response);
         if (response.IsDiffWithRefAttr) {
           this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
         }
@@ -690,7 +687,6 @@ export class MouRequestAddcollComponent implements OnInit {
     } else {
       this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, { TrxNo: e.CollateralNo }).subscribe(
         (response) => {
-          console.log(response);
           this.collateralObj = response['MouCustCollateral'];
           this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
@@ -900,8 +896,7 @@ export class MouRequestAddcollComponent implements OnInit {
       MouCustCollateralRegistration: this.mouCustCollateralRegistrationObj,
       ListMouCustCollateralDoc: this.listMouCustCollateralDocObj.MouCustCollateralDocObj,
       ListMouCustCollaterals: this.SetCollateralAttr()
-    }
-    console.log(custCollObj);
+    };
 
     if (this.collateralObj == null) {
       await this.http.post(URLConstant.AddMouCustCollateralData, custCollObj).toPromise().then(
@@ -996,7 +991,7 @@ export class MouRequestAddcollComponent implements OnInit {
       let tempObj: MouCustCollateralAttrObj = new MouCustCollateralAttrObj();
       tempObj.CollateralAttrCode = element["AttrCode"];
       tempObj.CollateralAttrName = element["AttrName"];
-      tempObj.AttrValue = element["AttrValue"];
+      tempObj.AttrValue = element["AttrValue"] ? element["AttrValue"] : "";
       tempList.push(tempObj);
     }
     return tempList;
@@ -1085,10 +1080,10 @@ export class MouRequestAddcollComponent implements OnInit {
     }
     this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, { Id: MouCustCollId }).subscribe(
       (response) => {
-        console.log(response)
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
+        this.maxPrcnt = 100 - this.collateralObj.RemainingCollateralPrcnt;
         this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
         this.inputLookupObj.jsonSelect = this.collateralObj;
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.collateralObj.AssetTypeCode }).subscribe(
@@ -1177,6 +1172,7 @@ export class MouRequestAddcollComponent implements OnInit {
           OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
+        this.CollateralPortionTypeChange();
         this.GenerateCollateralAttr(false, MouCustCollId, !isAddEdit);
 
         this.checkSelfOwnerColl();
@@ -1347,7 +1343,6 @@ export class MouRequestAddcollComponent implements OnInit {
       this.mouCustCollateralObj.CollateralPrcnt = this.AddCollForm.controls.CollateralPrcnt.value;
       this.mouCustCollateralObj.CollateralPortionAmt = this.AddCollForm.controls.CollateralPortionAmt.value;
       this.mouCustCollateralObj.OwnerMobilePhnNo = this.AddCollForm.controls.OwnerMobilePhnNo.value;
-      this.mouCustCollateralObj.ListMouCustCollaterals = this.SetCollateralAttr();
 
       this.http.post(URLConstant.AddExistingCustCollateralData, this.mouCustCollateralObj).subscribe(
         response => {

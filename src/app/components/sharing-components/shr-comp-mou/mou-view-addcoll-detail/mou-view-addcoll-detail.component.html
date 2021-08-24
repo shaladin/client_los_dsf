@@ -28,8 +28,8 @@
     </div>
     <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Collateral Portion (%/AMT)</label>
-        <label class="col-md-4 adInsLabel" translate>{{collateralObj.CollateralPrcnt}}% /
-            {{collateralObj.CollateralPortionAmt}}</label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralObj.CollateralPrcnt | number:'.6':'en-US'}} % /
+            {{collateralObj.CollateralPortionAmt | number:'.2':'en-US'}}</label>
         <label class="col-md-2 adInsLabel" translate>Collateral Notes</label>
         <label class="col-md-4 adInsLabel" *ngIf="collateralObj.CollateralNotes" translate>{{collateralObj.CollateralNotes}} </label>
         <label class="col-md-4 adInsLabel" *ngIf="!collateralObj.CollateralNotes" translate>- </label>
