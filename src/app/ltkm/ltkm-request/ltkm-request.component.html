@@ -155,21 +155,19 @@
                     <ltkm-family-main-data-paging [listFamily]="listFamily"></ltkm-family-main-data-paging>
                     <br />
                     <br />
-                    <!-- Ltkm Analysis -->
-                    <!-- <div *ngIf="isCustomerSelected"> -->
-                      <lib-ucSubsection [id]="'applicationDataId'" [title]="'APPLICATION DATA'" [panel]="'ApplicationData'">
-                      </lib-ucSubsection>                     
-                      <div id="ApplicationData" class="row col-md-12">
-                        <label class="col-md-3 adins-required-label" translate>Application No </label>
-                        <div class="col-md-4">
-                          <lib-uclookupgeneric *ngIf="isCustomerSelected" class="col-md-4" [lookupInput]="inputLookupApplicationObj" [parentForm]='CustDataForm'
-                            [enjiForm]='enjiForm' [identifier]="'appNo'" #applicationData (lookup)="getLookupAppNo($event)"
-                            >
-                          </lib-uclookupgeneric>
-                          <div class="col-md-9" *ngIf="!isCustomerSelected">Input Customer Legal Name terlebih dahulu</div>                          
-                        </div>                                                                    
-                      </div>                           
-                    <!-- </div> -->
+                    <lib-ucSubsection [id]="'applicationDataId'" [title]="'APPLICATION DATA'" [panel]="'ApplicationData'">
+                    </lib-ucSubsection>                     
+                    <div id="ApplicationData" class="row col-md-12">
+                      <label class="col-md-3 adins-required-label" translate>Application No </label>
+                      <div class="col-md-4">
+                        <lib-uclookupgeneric *ngIf="isCustomerSelected" [lookupInput]="inputLookupApplicationObj" [parentForm]='CustDataForm'
+                        [enjiForm]='enjiForm' [identifier]="'appNo'" #applicationData (lookup)="getLookupAppNo($event)"
+                        >
+                      </lib-uclookupgeneric>
+                      <label class="col-md-9" *ngIf="!isCustomerSelected" style="color: red;">Choose Customer First</label>                          
+                    </div>                                                                    
+                  </div>                                               
+                  <!-- Ltkm Analysis -->                    
                     <app-ltkm-request-analysis *ngIf="mode != 'return'" [enjiForm]="enjiForm"
                       [parentForm]="CustDataForm" [identifier]="'ltkmAnalysis'"></app-ltkm-request-analysis>
                   </div>
@@ -326,11 +324,11 @@
                     <div id="ApplicationDataCompany" class="row col-md-12">
                       <label class="col-md-3 adins-required-label" translate>Application No </label>
                       <div  class="col-md-4">
-                        <lib-uclookupgeneric *ngIf="isCustomerCompanySelected" class="col-md-4" [lookupInput]="inputLookupApplicationCompanyObj" [parentForm]='CustDataCompanyForm'
+                        <lib-uclookupgeneric *ngIf="isCustomerCompanySelected" [lookupInput]="inputLookupApplicationCompanyObj" [parentForm]='CustDataCompanyForm'
                           [enjiForm]='enjiForm' [identifier]="'appNo'" #applicationCompanyData (lookup)="getLookupAppNo($event)"
                           >
                         </lib-uclookupgeneric>
-                        <div class="col-md-9" *ngIf="!isCustomerCompanySelected">Input Customer Name terlebih dahulu</div>
+                        <label class="col-md-9" *ngIf="!isCustomerCompanySelected" style="color: red;">Choose Customer First</label>
                       </div>                                                                    
                     </div>                           
                     <app-ltkm-request-analysis 
