@@ -133,6 +133,7 @@ export class LtkmRequestComponent implements OnInit {
     isBindDataDone: boolean = false;
     isExisting: boolean = false;
     inputLookupApplicationObj: InputLookupObj = new InputLookupObj();
+    inputLookupApplicationCompanyObj: InputLookupObj = new InputLookupObj();
     appNo: string;
     selectedCustNo: any;
     isCustomerSelected: boolean = false;
@@ -282,6 +283,15 @@ export class LtkmRequestComponent implements OnInit {
         this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.isRequired = true;   
         this.inputLookupApplicationObj.addCritInput = new Array();
+        // this.inputLookupApplicationObj.isDisable = true;            
+
+        this.inputLookupApplicationCompanyObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationCompanyObj.urlEnviPaging = environment.losUrl + "/v1";
+        this.inputLookupApplicationCompanyObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationCompanyObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationCompanyObj.isRequired = true;   
+        this.inputLookupApplicationCompanyObj.addCritInput = new Array();
+        // this.inputLookupApplicationCompanyObj.isDisable = true;            
             
 
         await this.bindCustTypeObj();
@@ -1918,6 +1928,7 @@ export class LtkmRequestComponent implements OnInit {
         if (event["CustObj"] != undefined) {            
             this.selectedCustNo = event["CustObj"]["CustNo"];                 
             this.isCustomerSelected = true;                            
+            this.isCustomerCompanySelected = false;                 
             var critLookupApplicationObj = new CriteriaObj();
             critLookupApplicationObj.DataType = "text";
             critLookupApplicationObj.restriction = AdInsConstant.RestrictionEq;
@@ -1925,9 +1936,9 @@ export class LtkmRequestComponent implements OnInit {
             critLookupApplicationObj.value = this.selectedCustNo;
             this.inputLookupApplicationObj.addCritInput = [];
             this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
-            this.ucLookupApplicationData.setAddCritInput();   
-            // this.inputLookupApplicationObj.isDisable = true;            
-            this.isCustomerSelected = true;                        
+            this.ucLookupApplicationData.setAddCritInput();               
+            this.inputLookupApplicationObj.isDisable = false;      
+            this.inputLookupApplicationCompanyObj.isDisable = true;                  
         }        
     }
 
@@ -1991,16 +2002,18 @@ export class LtkmRequestComponent implements OnInit {
         //end tambahan        
         if (event["CustObj"] != undefined) {                        
             this.selectedCustNo = event["CustObj"]["CustNo"];                                       
+            this.isCustomerCompanySelected = true;     
+            this.isCustomerSelected = false;
             var critLookupApplicationObj = new CriteriaObj();
             critLookupApplicationObj.DataType = "text";
             critLookupApplicationObj.restriction = AdInsConstant.RestrictionEq;
             critLookupApplicationObj.propName = 'AC.CUST_NO';
             critLookupApplicationObj.value = this.selectedCustNo;
-            this.inputLookupApplicationObj.addCritInput = [];
-            this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
-            this.ucLookupApplicationCompanyData.setAddCritInput();            
-            this.isCustomerCompanySelected = true;                         
-            // this.inputLookupApplicationObj.isDisable = false;     
+            this.inputLookupApplicationCompanyObj.addCritInput = [];
+            this.inputLookupApplicationCompanyObj.addCritInput.push(critLookupApplicationObj);
+            this.ucLookupApplicationCompanyData.setAddCritInput();                                                 
+            this.inputLookupApplicationCompanyObj.isDisable = false;     
+            this.inputLookupApplicationObj.isDisable = true;
         }    
     }
 
