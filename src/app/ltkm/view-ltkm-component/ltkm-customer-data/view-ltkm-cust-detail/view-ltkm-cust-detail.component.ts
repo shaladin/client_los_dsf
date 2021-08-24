@@ -18,8 +18,7 @@ export class ViewLtkmCustDetailComponent implements OnInit {
   constructor(private http: HttpClient, @Optional() public activeModal: NgbActiveModal) {
   }
 
-  async ngOnInit() : Promise<void>{
-    
+  async ngOnInit() : Promise<void>{    
   }
 
   onBackClick(){

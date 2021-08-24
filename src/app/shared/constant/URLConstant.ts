@@ -1494,10 +1494,11 @@ export class URLConstant {
   public static SubmitLtkmReturnAtApv = environment.losUrl + "/v1" + "/Ltkm/SubmitLtkmReturnAtApv";
   public static SubmitLtkmReturnAtApvV2 = environment.losUrl + "/v2" + "/Ltkm/SubmitLtkmReturnAtApv";
   public static GetSummaryByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/GetSummaryByLtkmCustId";
-  public static GetLtkmCustDataPersonalForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustDataPersonalForViewByLtkmCustId";
-  public static GetLtkmCustDataCompanyForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustDataCompanyForViewByLtkmCustId";
-  public static GetLtkmCustCompanyFinDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustCompanyFinDataByLtkmCustId";
-  public static GetLtkmCustById = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustById";
+  public static GetLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/ltkm/getLtkmReqByLtkmCustId";
+  public static GetLtkmCustDataPersonalForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustDataPersonalForViewByLtkmCustId";
+  public static GetLtkmCustDataCompanyForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustDataCompanyForViewByLtkmCustId";
+  public static GetLtkmCustCompanyFinDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustCompanyFinDataByLtkmCustId";
+  public static GetLtkmCustById = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustById";
   public static getLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/getLtkmReqByLtkmCustId";
 
   public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetCustDataByLtkmCustId";
@@ -1507,25 +1508,25 @@ export class URLConstant {
   public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustBankAccAndStatementForView";
   public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustData/DeleteLtkmCustBankAccAndStmnt";
 
-  public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
-  public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmAppRjcByCustNoAndAppStat";
-  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
+  public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
+  public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmAppRjcByCustNoAndAppStat";
+  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
   //ltkm cust attr content
   public static GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup";
 
   //ltkm cust personal fin data
-  public static GetListLtkmCustPersonalFinDataByLtkmCustlId = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmCustPersonalFinDataByLtkmCustlId";
-  public static AddEditLtkmCustPersonalFinData = environment.losUrl + "/v1" + "/LtkmCustData/AddEditLtkmCustPersonalFinData";
+  public static GetListLtkmCustPersonalFinDataByLtkmCustlId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmCustPersonalFinDataByLtkmCustlId";
+  public static AddEditLtkmCustPersonalFinData = environment.losUrl + "/v1" + "/LtkmCustomerData/AddEditLtkmCustPersonalFinData";
 
   //ltkm cust bank stmnt & account
-  public static AddLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustData/AddLtkmCustBankAccAndStmnt";
-  public static EditLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustData/EditLtkmCustBankAccAndStmnt";
+  public static AddLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustomerData/AddLtkmCustBankAccAndStmnt";
+  public static EditLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustomerData/EditLtkmCustBankAccAndStmnt";
 
   //ltkm cust other info
-  public static GetLtkmCustOtherInfoByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustOtherInfoByLtkmCustId";
+  public static GetLtkmCustOtherInfoByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustOtherInfoByLtkmCustId";
 
   //ltkm cust personal return handling
-  public static SaveLtkmRequestPersonalReturnHandling = environment.losUrl + "/v1" + "/LtkmCustData/SaveLtkmRequestPersonalReturnHandling";
+  public static SaveLtkmRequestPersonalReturnHandling = environment.losUrl + "/v1" + "/LtkmCustomerData/SaveLtkmRequestPersonalReturnHandling";
 
   //ltkm return handling
   public static SaveLtkmReturnHandlingPersonal = environment.losUrl + "/v1" + "/Ltkm/SaveLtkmReturnHandlingPersonal";

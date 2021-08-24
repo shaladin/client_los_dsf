@@ -138,7 +138,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.http.post(URLConstant.GetCustPersonalForCopyByCustId, {Id : event.CustId}).subscribe(
       (response) => {
         this.CopyCustomer(response);
-        this.callbackCopyCust.emit(response);
+        this.callbackCopyCust.emit(response);        
       });
 
   }
