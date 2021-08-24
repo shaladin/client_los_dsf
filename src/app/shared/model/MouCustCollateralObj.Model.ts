@@ -32,5 +32,6 @@ export class MouCustCollateralObj{
     RowVersion: string;
     CustNo: string;
     CustName: string;
+    OwnerMobilePhnNo: string;
     ListMouCustCollaterals: Array<MouCustCollateralAttrObj>;
 }
