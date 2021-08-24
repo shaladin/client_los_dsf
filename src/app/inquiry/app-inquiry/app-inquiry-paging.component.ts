@@ -52,7 +52,7 @@ export class AppInquiryPagingComponent implements OnInit {
 
   getEvent(event) {
     if(event.Key == "customer"){
-      this.CustNoObj.CustNo = event.RowObj.custNo;
+      this.CustNoObj.CustNo = event.RowObj.custNo;      
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){

@@ -238,7 +238,9 @@ export class MouCustTabComponent implements OnInit {
 
       if (this.listShareholder != undefined) {
         for (let i = 0; i < this.listShareholder.length; i++) {
-          totalSharePrcnt += this.listShareholder[i].SharePrcnt;
+          if (this.listShareholder[i].IsActive) {
+            totalSharePrcnt += this.listShareholder[i].SharePrcnt;
+          }
         }
         for (const item of this.listShareholder) {
           if (item.IsActive) {
@@ -271,24 +273,24 @@ export class MouCustTabComponent implements OnInit {
         }
       }
 
-        var groupedCustLegalDoc = this.groupBy(this.custDataCompanyObj.MouCustCompanyLegalDocObjs, function (item) {
-          return [item.MrLegalDocTypeCode, item.DocNo];
-        });
-    
-        var duplCustLegalDoc = groupedCustLegalDoc.filter(x => x.length > 1);
-    
-        if(duplCustLegalDoc != undefined){
-          for(var i = 0; i < duplCustLegalDoc.length ; i++){
-            this.ListTempLegalCheck = duplCustLegalDoc[i];
-            var checkGSValue = this.ListLegalDocCantDuplicate.find(x => x == this.ListTempLegalCheck[0].MrLegalDocTypeCode);
-            
-            if(checkGSValue != null){
-              this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
-              return;
-            }
+      var groupedCustLegalDoc = this.groupBy(this.custDataCompanyObj.MouCustCompanyLegalDocObjs, function (item) {
+        return [item.MrLegalDocTypeCode, item.DocNo];
+      });
+
+      var duplCustLegalDoc = groupedCustLegalDoc.filter(x => x.length > 1);
+
+      if (duplCustLegalDoc != undefined) {
+        for (var i = 0; i < duplCustLegalDoc.length; i++) {
+          this.ListTempLegalCheck = duplCustLegalDoc[i];
+          var checkGSValue = this.ListLegalDocCantDuplicate.find(x => x == this.ListTempLegalCheck[0].MrLegalDocTypeCode);
+
+          if (checkGSValue != null) {
+            this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
+            return;
           }
         }
-      
+      }
+
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       if (this.confirmFraudCheck()) {
         if (this.MouCustCompanyId == 0) {
@@ -996,7 +998,7 @@ export class MouCustTabComponent implements OnInit {
             this.setAddrMailingObj(CommonConstant.CustTypePersonal);
 
             this.MouCustPersonalId = this.custDataPersonalObj.MouCustPersonalObj.MouCustPersonalId;
-            this.MouCustAddrId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj != null ? this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.MouCustAddrId : 0 ;
+            this.MouCustAddrId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj != null ? this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.MouCustAddrId : 0;
             this.MouCustPersonalJobDataId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustPersonalJobDataId;
             this.MouCustFinDataId = this.custDataPersonalObj.MouCustPersonalFinDataObj.MouCustPersonalFinDataId;
             this.MouCustAddrLegalId = this.custDataPersonalObj.MouCustAddrLegalObj.MouCustAddrId;
@@ -1571,7 +1573,7 @@ export class MouCustTabComponent implements OnInit {
 
         var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        var gsListLegalDocCantDuplicate = this.returnGeneralSettingObj.find(x=> x.GsCode == CommonConstant.GSCodeListLegalDocCantDuplicate);
+        var gsListLegalDocCantDuplicate = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeListLegalDocCantDuplicate);
 
         if (gsNeedCheckBySystem != undefined) {
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
