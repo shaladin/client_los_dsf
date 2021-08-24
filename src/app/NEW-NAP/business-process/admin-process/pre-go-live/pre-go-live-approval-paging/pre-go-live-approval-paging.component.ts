@@ -14,6 +14,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -24,6 +27,8 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
 
@@ -43,6 +48,11 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchPreGoLiveApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPreGoLiveApproval.json";
     this.inputPagingObj.addCritInput = new Array();
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchPreGoLiveApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchPreGoLiveApprovalV2.json";
+    }
 
     var critInputOnlyOffering = new CriteriaObj();
     critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";

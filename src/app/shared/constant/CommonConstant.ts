@@ -1004,6 +1004,12 @@ export class CommonConstant {
   public static ACT_CODE_CDA = "CDA";
   public static ACT_CODE_CDC = "CDC";
   public static ACT_CODE_INV_VERIF = "INV_VERIF";
+  public static WF_CRP_CF4W_AFT_ACT = "WF_CRP_CF4W_AFT_ACT";
+  public static WF_CRP_FCTR_AFTER_ACT = "WF_CRP_FCTR_AFTER_ACT";
+  public static ACT_CODE_PO = "PO_";
+  public static ACT_CODE_DO = "DO_";
+  public static ACT_CODE_CNFR = "CNFR_";
+  public static ACT_CODE_PGLV = "PGLV_";
   
   public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }

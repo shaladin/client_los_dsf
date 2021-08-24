@@ -1309,8 +1309,10 @@ export class URLConstant {
   // PreGoLive
   public static GetListApprovedByForPreGoLive = environment.losUrl + "/v1" + "/PreGoLive/GetListApprovedByForPreGoLive";
   public static AddPreGoLive = environment.losUrl + "/v1" + "/PreGoLive/AddPreGoLive";
+  public static AddPreGoLiveV2 = environment.losUrl + "/v2" + "/PreGoLive/AddPreGoLive";
   public static CreateRFAPreGoLive = environment.losUrl + "/v1" + "/PreGoLive/CreateRFAPreGoLive";
   public static CreateRFAPreGoLiveNew = environment.losUrl + "/v1" + "/PreGoLive/CreateRFAPreGoLiveNew";
+  public static CreateRFAPreGoLiveNewV2 = environment.losUrl + "/v2" + "/PreGoLive/CreateRFAPreGoLiveNew";
 
   // Survey or Srvy
   public static GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode = environment.FoundationR3Url + "/v1" + "/SrvyTask/GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode";
