@@ -1,0 +1,13 @@
+{
+    "requestDateTime": "",
+    "rowVersion": "",
+    "reportInfo": {
+        "reportName": "Document Trial Calculation",
+        "reportTemplateCode": "TRIAL_CALC",
+        "exportFormat": 0,
+        "reportParameters": [           
+        ],
+        "subReports": []
+    },
+    "requestingUsername": "string"
+}
