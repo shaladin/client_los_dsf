@@ -51,6 +51,9 @@ export class TrialCalculationComponent implements OnInit {
     PayFreqCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrInstSchemeCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrFirstInstTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+    PayFreqValue: [''],
+    MrInstSchemeValue: [''],
+    MrFirstInstTypeValue: [''],
     NumOfInst: [''],
     AppFee: this.fb.array([]),
     LobCode: [''],
@@ -190,8 +193,59 @@ export class TrialCalculationComponent implements OnInit {
     this.TrialForm.patchValue({
       PayFreqCode: '',
       MrInstSchemeCode: '',
-      MrFirstInstTypeCode: ''
+      MrFirstInstTypeCode: '',
+      PayFreqValue: '',
+      MrInstSchemeValue: '',
+      MrFirstInstTypeValue: ''
     });
+  }
+
+
+  getValueForReport() {
+    this.TrialForm.patchValue({
+      PayFreqValue: '',
+      MrInstSchemeValue: '',
+      MrFirstInstTypeValue: ''
+    });
+    this.getDropdownValue(CommonConstant.RefMasterTypeCodeInstSchm);
+    this.getDropdownValue(CommonConstant.RefMasterTypeCodePayFreq);
+    this.getDropdownValue(CommonConstant.RefProdCompFirstInstType);
+  }
+
+  getDropdownValue(refProdCompntCode: string) {
+    var obj = {
+      ProdOfferingCode: this.ProdOfferingCode,
+      RefProdCompntCode: refProdCompntCode,
+    };
+    this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
+      (response) => {
+        var listDDL = response["DDLRefProdComptCode"];
+        this.applicationDDLitems[refProdCompntCode] = listDDL;
+        for (let i = 0; i < this.applicationDDLitems['FIRSTINSTTYPE'].length; i++) {
+          if (this.TrialForm.value.MrFirstInstTypeCode == this.applicationDDLitems['FIRSTINSTTYPE'][i].Key) {
+            this.TrialForm.patchValue({
+              MrFirstInstTypeValue: this.applicationDDLitems['FIRSTINSTTYPE'][i].Value
+            });
+            break;
+          }
+        }
+        for (let i = 0; i < this.applicationDDLitems['INST_SCHM'].length; i++) {
+          if (this.TrialForm.value.MrInstSchemeCode == this.applicationDDLitems['INST_SCHM'][i].Key) {
+            this.TrialForm.patchValue({
+              MrInstSchemeValue: this.applicationDDLitems['INST_SCHM'][i].Value
+            });
+            break;
+          }
+        }
+        for (let i = 0; i < this.applicationDDLitems['PAYFREQ'].length; i++) {
+          if (this.TrialForm.value.PayFreqCode == this.applicationDDLitems['PAYFREQ'][i].Key) {
+            this.TrialForm.patchValue({
+              PayFreqValue: this.applicationDDLitems['PAYFREQ'][i].Value
+            });
+            break;
+          }
+        }
+      });
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
@@ -360,6 +414,7 @@ export class TrialCalculationComponent implements OnInit {
         TotalInsCustAmt: this.TrialForm.controls.TotalInsCustAmt.value,
         InsCptlzAmt: this.TrialForm.controls.InsCptlzAmt.value,
       });
+      this.getValueForReport();
     }
   }
 
