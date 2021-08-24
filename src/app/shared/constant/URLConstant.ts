@@ -1457,7 +1457,7 @@ export class URLConstant {
   //APP INVOICE FCTR
   public static GetListAppInvoiceFctrByAppId = environment.losUrl + "/v1" + "/AppInvoiceFctr/GetListAppInvoiceFctrByAppId";
   public static UpdateAppInvoiceFctr = environment.losUrl + "/v1" + "/AppInvoiceFctr/UpdateAppInvoiceFctr";
-  public static UpdateAppInvoiceFctrV2 = environment.losUrl + "/v1" + "/AppInvoiceFctr/UpdateAppInvoiceFctr";
+  public static UpdateAppInvoiceFctrV2 = environment.losUrl + "/v2" + "/AppInvoiceFctr/UpdateAppInvoiceFctr";
 
   //REF PAY FREQ
   public static GetRefPayFreqByPayFreqCode = environment.FoundationR3Url + "/v1" + "/RefPayFreq/GetRefPayFreqByPayFreqCode";
