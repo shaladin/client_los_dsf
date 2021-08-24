@@ -229,7 +229,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.HandlingForm.controls['ReturnHandlingExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         () => {
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode });
@@ -271,12 +272,12 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   claimTask(){
     if(environment.isCore){
-        if(this.ReturnHandlingHObj.WfTaskListId!= "" && this.ReturnHandlingHObj.WfTaskListId!= undefined){
-          this.claimTaskService.ClaimTaskV2(this.ReturnHandlingHObj.WfTaskListId);
-        }
-      }
-    else if (this.ReturnHandlingHObj.WfTaskListId > 0) {
-          this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
-    }
+      if(this.ReturnHandlingHObj.WfTaskListId!= "" && this.ReturnHandlingHObj.WfTaskListId!= undefined){
+        this.claimTaskService.ClaimTaskV2(this.ReturnHandlingHObj.WfTaskListId);
+      }
+    }
+    else if (this.ReturnHandlingHObj.WfTaskListId> 0) {
+        this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    }
   }
 }

@@ -4,6 +4,6 @@ export class SubmitNapObj {
     WfTaskListId: any;
     constructor() {
         this.AppId = 0;
-        this.WfTaskListId = environment.isCore? "" : 0;
+        this.WfTaskListId = environment.isCore ? "" : 0;
     }
 }

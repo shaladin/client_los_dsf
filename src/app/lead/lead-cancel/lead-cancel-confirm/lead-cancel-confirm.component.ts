@@ -101,7 +101,9 @@ export class LeadCancelConfirmComponent implements OnInit {
       }
       leadObj.ListLeadId = tempId;
       leadObj.ListWfTaskListId = this.tempWfTaskListArr;
-      this.http.post(URLConstant.EditListLeadForCancelByListLeadId, leadObj).subscribe(
+
+      let urlPost = environment.isCore ? URLConstant.EditListLeadForCancelByListLeadIdV2 : URLConstant.EditListLeadForCancelByListLeadId;
+      this.http.post(urlPost, leadObj).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_CANCEL], {});

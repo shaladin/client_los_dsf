@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
@@ -25,8 +24,6 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
 
   ngOnInit() {
-    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouApv.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouApv.json";

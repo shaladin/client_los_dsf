@@ -60,8 +60,8 @@ export class MouDetailFactoringComponent implements OnInit {
     TenorTo: ['', [Validators.min(0)]],
     PayFreqCode: [''],
     MrInstSchmCode: [''],
-    InterestRatePrcnt: ['', [Validators.min(0), Validators.max(100)]],
-    RetentionPrcnt: ['', [Validators.min(0), Validators.max(100)]],
+    InterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
+    RetentionPrcnt: [0, [Validators.min(0), Validators.max(100)]],
     IsListedCust: [false],
     Notes: [''],
     CurrCode: ['', [Validators.required]],
@@ -75,6 +75,7 @@ export class MouDetailFactoringComponent implements OnInit {
     VirtualAccNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
   });
   
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,

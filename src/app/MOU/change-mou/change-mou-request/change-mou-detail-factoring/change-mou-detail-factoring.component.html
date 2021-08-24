@@ -110,7 +110,7 @@
         <div class="col-md-2">
           <input type="" currencyMask class="form-control adInsInput" formControlName="InterestRatePrcnt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.InterestRatePrcnt.invalid }"
-            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }" />
+            [options]="CurrencyMaskPrct" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.InterestRatePrcnt"
             [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
@@ -120,7 +120,7 @@
         <div class="col-md-2">
           <input type="" currencyMask class="form-control adInsInput" formControlName="RetentionPrcnt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.RetentionPrcnt.invalid }"
-            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }" />
+            [options]="CurrencyMaskPrct" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.RetentionPrcnt" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>

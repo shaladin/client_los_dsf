@@ -144,7 +144,9 @@ export class FinancialDataComponent implements OnInit {
         MaxDownPaymentNettPrcnt: 0,
 
         CalcBase: '',
-        NeedReCalculate: true
+        NeedReCalculate: true,
+        IsReCalculate: false,
+        ExistingFinData: false
       }
     );
     this.isReady = true;
@@ -186,7 +188,9 @@ export class FinancialDataComponent implements OnInit {
           SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
           AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
-          DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
+          DiffRateAmt: this.appFinDataObj.DiffRateAmt,
+          SubsidyAmtFromDiffRate: this.appFinDataObj.SubsidyAmtFromDiffRate,
+          CommissionAmtFromDiffRate: this.appFinDataObj.CommissionAmtFromDiffRate,
 
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
 
@@ -218,6 +222,7 @@ export class FinancialDataComponent implements OnInit {
           BalloonBhv: this.appFinDataObj.BalloonBhv,
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
+          ExistingFinData: this.appFinDataObj.ExistingFinData
         });
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
@@ -249,7 +254,7 @@ export class FinancialDataComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  CheckSubsidyRate(event) {
+  CheckSubsidyRate(event, isRefresh = false) {
     if (this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix || this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmBalloon) {
       var listSubsidy: Array<AppSubsidyObj> = event;
 
@@ -271,7 +276,10 @@ export class FinancialDataComponent implements OnInit {
         this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
     }
-    this.LoadAppFinData();
+
+    if(isRefresh){
+      this.LoadAppFinData();
+    }
   }
 
   SetInputByCalcBase(calcBase) {

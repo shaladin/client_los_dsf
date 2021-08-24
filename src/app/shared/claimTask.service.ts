@@ -9,7 +9,7 @@ import { AppObj } from "./model/App/App.Model";
 import { ClaimWorkflowObj } from "./model/Workflow/ClaimWorkflowObj.Model";
 import { ClaimTaskModel } from "./model/Workflow/V2/ClaimTaskModelObj.model";
 import { AdInsConstant } from "./AdInstConstant";
-import { ClaimTaskNapCustMainDataObj } from "./model/V2/ClaimTaskNAPMainDataObj.model";
+import { ReqSubmitNAPDataObj } from "./model/App/ReqSubmitNAPDataV2Obj.model";
 
 @Injectable()
 export class ClaimTaskService{
@@ -40,6 +40,17 @@ export class ClaimTaskService{
       });
   }
   
+  ClaimTaskNapCustMainDataV2(AppId: number, WfTaskListId: string){
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let wfClaimObj = new ReqSubmitNAPDataObj();
+    wfClaimObj.AppId = AppId;
+    wfClaimObj.WfTaskListId = WfTaskListId;
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
+
+    this.http.post(URLConstant.ClaimTaskNapCustmainDataV2, wfClaimObj).subscribe(
+      () => {
+      });
+  }  
 
   ClaimTaskV2(WfTaskListId: string){
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -60,14 +71,11 @@ export class ClaimTaskService{
       });
   }
 
-  ClaimTaskNapCustMainDataV2(AppId: number, WfTaskListId: string){
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimTaskNapCustMainDataObj();
-    wfClaimObj.AppId = AppId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = WfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNapCustmainDataV2, wfClaimObj).subscribe(
+  ClaimTaskSelfVerif(WfTaskListId: number){
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = WfTaskListId.toString();
+    wfClaimObj.pUserID = AdInsConstant.UserCustomer;
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });
   }

@@ -83,7 +83,6 @@ export class ReservedFundComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.allAppReservedFundObj = new AllAppReservedFundObj();
     var appObj = {
       Id: this.ReturnHandlingHObj.AppId
     };
@@ -116,8 +115,9 @@ export class ReservedFundComponent implements OnInit {
       else {
         var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
         this.setAppReservedFundData();
-        let AddEditAppRsvFndUrl = environment.isCore ? URLConstant.AddEditAppReservedFundV2 : URLConstant.AddEditAppReservedFund;
-        this.http.post(AddEditAppRsvFndUrl, this.allAppReservedFundObj).subscribe(
+
+        let AddEditAppReservedFundUrl = environment.isCore ? URLConstant.AddEditAppReservedFundV2 : URLConstant.AddEditAppReservedFund;
+        this.http.post(AddEditAppReservedFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.allAppReservedFundObj.ReturnHandlingHId != 0 || this.allAppReservedFundObj.ReturnHandlingHId != undefined) {
@@ -407,8 +407,8 @@ export class ReservedFundComponent implements OnInit {
     reqReturnHandlingCommRsvFundObj.Reason = this.FormReturnObj.value.Reason;
     reqReturnHandlingCommRsvFundObj.Notes = this.FormReturnObj.value.Notes;
 
-    let SubmitReturnHandlingComRsvFundUrl = environment.isCore?  URLConstant.SubmitReturnHandlingCommRsvFundV2 : URLConstant.SubmitReturnHandlingCommRsvFund;
-    this.http.post(SubmitReturnHandlingComRsvFundUrl, reqReturnHandlingCommRsvFundObj).subscribe(
+    let SubmitReturnHandlingCommRsvFundUrl = environment.isCore ? URLConstant.SubmitReturnHandlingCommRsvFundV2 : URLConstant.SubmitReturnHandlingCommRsvFund;
+    this.http.post(SubmitReturnHandlingCommRsvFundUrl, reqReturnHandlingCommRsvFundObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": this.BizTemplateCode});

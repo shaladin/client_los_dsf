@@ -1,3 +1,5 @@
+import { CurrencyMaskInputMode } from "ngx-currency";
+
 export class CommonConstant {
   
   // REGEX
@@ -705,6 +707,7 @@ export class CommonConstant {
   public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
   public static GSCodeLobKta = "LOB_KTA";
   public static GSSerialNoRegex = "SERIAL_NO_REGEX";
+  public static GSCodeListLegalDocCantDuplicate = "LIST_LEGAL_DOC_CANNOT_DUPLICATE";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -966,8 +969,16 @@ export class CommonConstant {
   public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
   public static RTN_EDIT_APP = "RTN_EDIT_APP_";
   public static EDIT_APP = "EDIT_APP_";
+  public static RTN_EDIT_COM_RSV_FND = "RTN_EDIT_COM_RSV_FND_";
+  public static EDIT_COM_RSV_FND = "EDIT_COM_RSV_FND_";
   public static RTN_EDIT_NAP4 = "RTN_EDIT_NAP4_";
   public static EDIT_NAP4 = "EDIT_NAP4_";
+  public static WF_LTKM_REQ_MANUAL = "WF_LTKM_REQ_MANUAL";
+  public static WF_LTKM_REQ_AUTO = "WF_LTKM_REQ_AUTO";
+  public static LTKM_VERIFY = "LTKM_VERIFY";
+  public static LTKM_RTN = "LTKM_VERIFY";
+
+
 
 
   //WORFKLOW PRODUCT
@@ -988,4 +999,18 @@ export class CommonConstant {
 
   // Financial Data
   public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
+
+  //WORKFLOW NAP
+  public static WF_CODE_CRP_MD = "WF_CRP_MD_";
+  public static ACT_CODE_CUST_MD = "CUST_MD_";
+  public static ACT_CODE_NAPD_MD = "NAPD_MD_";
+  public static ACT_CODE_COM_RSV = "COM_RSV_";
+  public static ACT_CODE_RTN = "RTN_";
+  public static ACT_CODE_PHN = "PHN_";
+  public static WF_CODE_DUP_CHECK_MD = "WF_DUP_CHECK_MD";
+  public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL";
+  public static ACT_CODE_CDA = "CDA";
+  public static ACT_CODE_CDC = "CDC";
+  
+  public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }

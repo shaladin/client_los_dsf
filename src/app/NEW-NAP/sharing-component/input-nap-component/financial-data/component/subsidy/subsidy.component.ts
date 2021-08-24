@@ -19,6 +19,7 @@ export class SubsidyComponent implements OnInit {
   @Input() ParentForm : FormGroup;
   @Input() BizTemplateCode: string;
   @Output() emitData = new EventEmitter();
+  @Output() emitDataWithRefresh = new EventEmitter();
 
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
@@ -42,7 +43,7 @@ export class SubsidyComponent implements OnInit {
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.BizTemplateCode = this.BizTemplateCode;
     modalRef.componentInstance.emitData.subscribe(($e) => {
-      this.LoadSubsidyData();
+      this.LoadSubsidyData(true);
       this.SetNeedReCalculate(true);
     })
   }
@@ -57,7 +58,7 @@ export class SubsidyComponent implements OnInit {
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
     modalRef.componentInstance.BizTemplateCode = this.BizTemplateCode;
     modalRef.componentInstance.emitData.subscribe(($e) => {
-      this.LoadSubsidyData();
+      this.LoadSubsidyData(true);
       this.SetNeedReCalculate(true);
     })
   }
@@ -74,12 +75,16 @@ export class SubsidyComponent implements OnInit {
       }
   }
 
-  LoadSubsidyData()
+  LoadSubsidyData(isRefresh = false)
   {
     this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
-        this.emitData.emit(this.listSubsidy);
+        if(isRefresh){
+          this.emitDataWithRefresh.emit(this.listSubsidy);
+        }else{
+          this.emitData.emit(this.listSubsidy);
+        }
       }
     );
   }
@@ -89,7 +94,7 @@ export class SubsidyComponent implements OnInit {
     this.http.post(URLConstant.GetListAppSubsidyByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
-        this.emitData.emit(this.listSubsidy);
+        this.emitDataWithRefresh.emit(this.listSubsidy);
       }
     );
   }

@@ -11,6 +11,6 @@ export class ReqReturnHandlingCommRsvFundObj {
         this.ReturnTo = "";
         this.Reason = "";
         this.Notes = "";
-        this.WfTaskListId = environment.isCore? "" : 0;
+        this.WfTaskListId = environment.isCore ? "" : 0;
     }
 }

@@ -739,8 +739,8 @@ export class CommissionV2Component implements OnInit {
     reqReturnHandlingCommRsvFundObj.Reason = this.FormReturnObj.value.Reason;
     reqReturnHandlingCommRsvFundObj.Notes = this.FormReturnObj.value.Notes;
 
-    let SubmitReturnHandlingComRsvFundUrl = environment.isCore?  URLConstant.SubmitReturnHandlingCommRsvFundV2 : URLConstant.SubmitReturnHandlingCommRsvFund;
-    this.http.post(SubmitReturnHandlingComRsvFundUrl, reqReturnHandlingCommRsvFundObj).subscribe(
+    let SubmitReturnHandlingCommRsvFundUrl = environment.isCore ? URLConstant.SubmitReturnHandlingCommRsvFundV2 : URLConstant.SubmitReturnHandlingCommRsvFund;
+    this.http.post(SubmitReturnHandlingCommRsvFundUrl, reqReturnHandlingCommRsvFundObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": this.BizTemplateCode});

@@ -16,6 +16,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
+import { ReqDeleteReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReqDeleteReturnHandlingDObj.model';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -25,7 +26,7 @@ import { environment } from 'environments/environment';
 export class ReturnHandlingDetailComponent implements OnInit {
   appId: number;
   returnHandlingHId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   lobCode: string;
   viewObj: string;
   returnHandlingHObj: ReturnHandlingHObj;
@@ -71,7 +72,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
       await this.SetMainInfo();
     }
     this.IsViewReady = true;
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.ClaimTask()
     await this.bindTaskObj();
     await this.getReturnHandling();
   }
@@ -85,7 +86,8 @@ export class ReturnHandlingDetailComponent implements OnInit {
     reqObj.WfTaskListId = this.wfTaskListId;
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
 
-    this.http.post(URLConstant.ResumeReturnHandling, reqObj).subscribe(
+    let ResumeReturnHandlingUrl = environment.isCore ? URLConstant.ResumeReturnHandlingV2 : URLConstant.ResumeReturnHandling;
+    this.http.post(ResumeReturnHandlingUrl, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.lobCode });
@@ -130,7 +132,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
   Delete(item, i) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      var reqObj = new ReturnHandlingDObj();
+      var reqObj = new ReqDeleteReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
       reqObj.ReturnHandlingHId = this.returnHandlingHId;
 
@@ -225,6 +227,17 @@ export class ReturnHandlingDetailComponent implements OnInit {
     }
     else if (event.Key === "ProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
+    }
+  }
+
+  ClaimTask(){
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
   }
 }

@@ -105,6 +105,7 @@ import { MouUnfreezeDetailComponent } from "./mou-unfreeze/mou-unfreeze-detail/m
 import { MouUnfreezeInquiryComponent } from "./mou-unfreeze/mou-unfreeze-inquiry/mou-unfreeze-inquiry.component";
 import { MouUnfreezeViewComponent } from "./mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component";
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -124,6 +125,7 @@ export const customCurrencyMaskConfig = {
     NgbModule,
     RouterModule,
     AdInsModule,
+    ShrCompMouModule,
     MouRoutingModule,
     SharingModule,
     ArchwizardModule,

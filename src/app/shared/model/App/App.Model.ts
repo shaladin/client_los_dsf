@@ -117,7 +117,7 @@ export class AppObj {
         this.RsvField3 = "";
         this.RsvField4 = "";
         this.RsvField5 = "";
-        this.WfTaskListId = environment.isCore? "" : 0;
+        this.WfTaskListId = environment.isCore ? "" : 0;
         this.BizTemplateCode = "";
         this.MrCustTypeCode = "";
         this.RowVersion = "";

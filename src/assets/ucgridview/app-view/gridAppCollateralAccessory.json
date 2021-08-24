@@ -44,14 +44,11 @@
             "property": "AccessoryPriceAmt"
         },
         {
-            "type": "concat",
+            "type": "decimal",
             "position": "right",
-            "propertyList": [
-                {
-                    "property": "DownPaymentPrcnt",
-                    "suffix": "%"
-                }
-            ]
+            "property": "DownPaymentPrcnt",
+            "precision": "0.6",
+            "IsPrcnt": true
         },
         {
             "type": "decimal",

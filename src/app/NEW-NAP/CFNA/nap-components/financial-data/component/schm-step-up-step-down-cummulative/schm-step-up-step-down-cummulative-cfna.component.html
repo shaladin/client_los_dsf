@@ -169,7 +169,7 @@
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()"
-                    [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                    [options]="CurrencyMaskPrct"
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -178,7 +178,7 @@
                   <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
-                    [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                    [options]="CurrencyMaskPrct"
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -304,7 +304,7 @@
               <label translate>Gross Yield</label>
             </div>
             <div *ngIf="!TrialCalc" class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.6-6'}}</label>
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.6-6'}} %</label>
             </div>
           </div>
         </div>
@@ -342,22 +342,22 @@
         <thead>
           <tr class="table-header">
             <th style="text-align: center;">
-              <span class="thead-header" name="MrSubsidyFromTypeName" translate>No</span>
+              <span class="thead-header" name="No" translate>No</span>
             </th>
             <th style="text-align: center;">
-              <span class="thead-header" name="MrSubsidyFromValueName" translate>Installment Amount</span>
+              <span class="thead-header" name="InstAmt" translate>Installment Amount</span>
             </th>
             <th style="text-align: center;">
-              <span class="thead-header" name="MrSubsidyAllocName" translate>Principal Amount</span>
+              <span class="thead-header" name="PrincipalAmt" translate>Principal Amount</span>
             </th>
             <th style="text-align: center;">
-              <span class="thead-header" name="MrSubsidyValueTypeName" translate>Interest Amount</span>
+              <span class="thead-header" name="InterestAmt" translate>Interest Amount</span>
             </th>
             <th style="text-align: center;">
-              <span class="thead-header" name="SubsidyPrcnt" translate>Os Principal Amount</span>
+              <span class="thead-header" name="OsPrincipalAmt" translate>Os Principal Amount</span>
             </th>
             <th style="text-align: center;">
-              <span class="thead-header" name="SubsidyAmt" translate>Os Interest Amount</span>
+              <span class="thead-header" name="OsInterestAmt" translate>Os Interest Amount</span>
             </th>
           </tr>
         </thead>
