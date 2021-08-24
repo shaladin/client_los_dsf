@@ -182,7 +182,7 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING, Title: 'Return Handling - Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SRVY, Title: 'Return Handling - Survey', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING, Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
-          // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] }
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] }
         ], Params: []
       },
       { Path: NavigationConstant.APP_INQUIRY, Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
