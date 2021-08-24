@@ -801,6 +801,7 @@ export class URLConstant {
 
   //DELIVERY ORDER
   public static SubmitDeliveryOrderData = environment.losUrl + "/v1" + "/DeliveryOrder/SubmitDeliveryOrderData";
+  public static SubmitDeliveryOrderDataV2 = environment.losUrl + "/v2" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
   public static GetDeliveryOrderHByAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderHByAgrmntId";
   public static GetAssetListForDOMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAsset";
@@ -821,6 +822,7 @@ export class URLConstant {
   public static EditPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/EditPurchaseOrder";
   public static SubmitNewPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitNewPurchaseOrder";
   public static ResumeWorkflowPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
+  public static ResumeWorkflowPurchaseOrderV2 = environment.losUrl + "/v2" + "/PurchaseOrderH/ResumeWorkflowPurchaseOrder";
   public static GetPurchaseOrderHDetailViewByAgrmntId = environment.losUrl + "/v1" + "/PurchaseOrderH/GetPurchaseOrderHDetailViewByAgrmntId";
   public static GetPurchaseOrderHByAgrmntId = environment.losUrl + "/v1" + "/PurchaseOrderH/GetPurchaseOrderHByAgrmntId";
   public static GetListPurchaseOrderHByAgrmntId = environment.losUrl + "/v1" + "/PurchaseOrderH/GetListPurchaseOrderHByAgrmntId"
@@ -1113,6 +1115,7 @@ export class URLConstant {
   //CUST CONFIRM
   public static GetVerfQuestionAnswerListByAppIdAndSubject = environment.losUrl + "/v1" + "/CustCnfrm/GetVerfQuestionAnswerListByAppIdAndSubject";
   public static AddCustCnfrm = environment.losUrl + "/v1" + "/CustCnfrm/AddCustCnfrm";
+  public static AddCustCnfrmV2 = environment.losUrl + "/v2" + "/CustCnfrm/AddCustCnfrm";
 
   //REF STATUS
   public static GetListActiveRefStatusByStatusGrpCode = environment.FoundationR3Url + "/v1" + "/RefStatus/GetListKeyValueActiveGrpCodeByCode";
@@ -1121,6 +1124,7 @@ export class URLConstant {
   public static GetAppAssetByAppIdAndCriteria = environment.losUrl + "/v1" + "/AgrmntActivation/GetAppAssetByAppIdAndCriteria";
   public static GetAppFinDataAndFeeByAppIdAndListAppAssetId = environment.losUrl + "/v1" + "/AgrmntActivation/GetAppFinDataAndFeeByAppIdAndListAppAssetId";
   public static SubmitAgrmntActivationByHuman = environment.losUrl + "/v1" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
+  public static SubmitAgrmntActivationByHumanV2 = environment.losUrl + "/v2" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
 
   //Asset Accessory
   // public static GetAssetAccessoryByCode = "http://localhost:5000/AssetAccessory/GetAssetAccessoryByCode";
@@ -1309,8 +1313,10 @@ export class URLConstant {
   // PreGoLive
   public static GetListApprovedByForPreGoLive = environment.losUrl + "/v1" + "/PreGoLive/GetListApprovedByForPreGoLive";
   public static AddPreGoLive = environment.losUrl + "/v1" + "/PreGoLive/AddPreGoLive";
+  public static AddPreGoLiveV2 = environment.losUrl + "/v2" + "/PreGoLive/AddPreGoLive";
   public static CreateRFAPreGoLive = environment.losUrl + "/v1" + "/PreGoLive/CreateRFAPreGoLive";
   public static CreateRFAPreGoLiveNew = environment.losUrl + "/v1" + "/PreGoLive/CreateRFAPreGoLiveNew";
+  public static CreateRFAPreGoLiveNewV2 = environment.losUrl + "/v2" + "/PreGoLive/CreateRFAPreGoLiveNew";
 
   // Survey or Srvy
   public static GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode = environment.FoundationR3Url + "/v1" + "/SrvyTask/GetListSrvyTaskAndOrderByTrxNoAndMrSurveySourceCode";
