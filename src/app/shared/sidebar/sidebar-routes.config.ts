@@ -521,7 +521,13 @@ export const ROUTES: RouteInfo[] = [
   //  Submenu: [
   //  ], Params: []
   //},
-  { Path: NavigationConstant.FORMS_REPORT, Title: 'Report', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+
+  { Path: '', Title: 'Report', Icon: 'fa fa-print', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false, 
+    Submenu: [
+      { Path: NavigationConstant.FORMS_REPORT, Title: 'Report', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []  },
+      { Path: NavigationConstant.REPORT_PLAFOND_MOU_SUMMARY, Title: 'Report Plafond Mou Summary', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+    ], Params: [] 
+  },
   {
     Path: '', Title: 'Integration', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
