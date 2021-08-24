@@ -82,13 +82,11 @@ export class ThingsToDoIntegrationV2Obj {
 export class IntegrationReqV2Obj {
     UserName: string;
     OfficeCode: string;
-    RoleCode: String;
     OfficeRoleCodes: Array<string>;
 
     constructor() {
         this.UserName = "";
         this.OfficeCode = "";
-        this.RoleCode = "";
         this.OfficeRoleCodes = new Array<string>();
     }
 }

@@ -47,8 +47,8 @@ export class DashBoardComponent implements OnInit {
       integrationObj.BaseUrl = AdInsConstant.GetThingsToDoCamunda;
       integrationObj.ApiPath = "";
       integrationObj.RequestObj.OfficeCode = this.officeCode;
-      integrationObj.RequestObj.RoleCode = this.roleCode;
       integrationObj.RequestObj.UserName = this.username;
+      integrationObj.RequestObj.OfficeRoleCodes = [this.roleCode, this.roleCode + "-" + this.officeCode, this.officeCode];
     }else{
       integrationObj = new ThingsToDoIntegrationObj();
       integrationObj.RequestObj.Office = this.officeCode;
