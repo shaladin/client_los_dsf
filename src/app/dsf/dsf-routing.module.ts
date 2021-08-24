@@ -6,6 +6,7 @@ import { CustomerGroupPlafondApvInquiryDsfComponent } from './customer/customer-
 import { CustomerGroupPlafondApvPagingDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-paging-dsf/customer-group-plafond-apv-paging-dsf.component';
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
+import { LtkmReportDsfComponent } from './ltkm/ltkm-report-dsf/ltkm-report-dsf.component';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
 import { InvoicekwitansitandaterimaDetailComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-detail/invoicekwitansitandaterima-detail.component';
@@ -185,6 +186,18 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_LTKM,
+        component: LtkmReportDsfComponent,
+        data: {
+          title: "Report LTKM"
+        }
+      }
+    ]
+  }
 ];
 
 @NgModule({

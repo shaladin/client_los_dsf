@@ -50,5 +50,9 @@ export class NavigationConstantDsf {
     //#region 
     public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN;
     //#endregion
+
+    //#region 
+    public static REPORT_LTKM = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_LTKM;
+    //#endregion
 }
  

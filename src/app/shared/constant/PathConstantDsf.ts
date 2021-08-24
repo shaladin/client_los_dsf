@@ -80,4 +80,8 @@ export class PathConstantDsf {
     public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN;
     //#endregion
 
+    //#region
+    public static REPORT_LTKM = "ReportLTKM"
+    public static PRINT_REPORT_LTKM = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_LTKM; 
+    //#endregion
 }
