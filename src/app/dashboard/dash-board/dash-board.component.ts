@@ -37,7 +37,7 @@ export class DashBoardComponent implements OnInit {
     this.url = environment.DashboardURL;
     this.officeCode = context[CommonConstant.OFFICE_CODE];
     this.roleCode = context[CommonConstant.ROLE_CODE];
-    this.Item.Url = AdInsConstant.GetThingsToDoByRole;
+    this.Item.Url = environment.isCore ? AdInsConstant.GetThingsToDoByRoleV2 : AdInsConstant.GetThingsToDoByRole;
     this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
 
     let integrationObj;
