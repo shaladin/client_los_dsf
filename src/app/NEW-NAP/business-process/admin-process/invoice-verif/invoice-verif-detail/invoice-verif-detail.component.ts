@@ -31,7 +31,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   BusinessDate: Date;
   Username: string;
   AppId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   TrxNo: string;
   PlafondAmt: number;
   OsPlafondAmt: number;
@@ -65,7 +65,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTaskService.ClaimTask(this.WfTaskListId);
+    this.claimTask();
 
     await this.httpClient.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
@@ -160,7 +160,6 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   SaveData() {
-
     if(this.MrMouTypeCode == CommonConstant.FACTORING){
       var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
       for (let i = 0; i < fa_listInvoice.length; i++) {
@@ -183,7 +182,9 @@ export class InvoiceVerifDetailComponent implements OnInit {
         ReturnHandlingHObj : this.ReturnHandlingHData
       };
 
-      this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
+      let UpdateAppInvoiceFctrUrl = environment.isCore ? URLConstant.UpdateAppInvoiceFctrV2 : URLConstant.UpdateAppInvoiceFctr;
+      this.httpClient.post(UpdateAppInvoiceFctrUrl, request).subscribe(
+        (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
       });
     }
@@ -218,5 +219,15 @@ export class InvoiceVerifDetailComponent implements OnInit {
     this.InvoiceForm.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
     });
+  }
+
+  claimTask(){
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 }

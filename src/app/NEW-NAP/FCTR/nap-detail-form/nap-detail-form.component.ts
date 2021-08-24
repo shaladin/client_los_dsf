@@ -238,19 +238,25 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   NextStep(Step) {
+    if (this.ReturnHandlingHId == 0) {
+      this.UpdateAppStep(Step);
+    }
+
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
+    
+    this.ChangeTab(Step);
+    this.stepper.next();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
+  }
+
+  UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      () => {
-        this.spinner.show();
-        setTimeout(() => { this.spinner.hide(); }, 1500);
-        this.ChangeTab(Step);
-        this.stepper.next();
+      (response) => {
       }
     )
-    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   CheckIsUseDms() {
@@ -281,7 +287,8 @@ export class NapDetailFormComponent implements OnInit {
 
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+    let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+      this.http.post(SubmitNAPUrl, reqObj).subscribe(
       () => {
         this.Cancel();
       })
