@@ -51,7 +51,7 @@ export class NapDetailPagingComponent implements OnInit {
       var critObj = new CriteriaObj();
       critObj.restriction = AdInsConstant.RestrictionLike;
       critObj.propName = 'WTL.ACT_CODE';
-      critObj.value = "CUST_MD_" + this.bizTemplateCode;
+      critObj.value = "NAPD_MD_" + this.bizTemplateCode;
       this.arrCrit.push(critObj);
     }
   
