@@ -281,7 +281,8 @@ export class NapDetailFormComponent implements OnInit {
 
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+    let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+      this.http.post(SubmitNAPUrl, reqObj).subscribe(
       () => {
         this.Cancel();
       })

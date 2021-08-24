@@ -1003,6 +1003,7 @@ export class CommonConstant {
   public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL";
   public static ACT_CODE_CDA = "CDA";
   public static ACT_CODE_CDC = "CDC";
+  public static ACT_CODE_INV_VERIF = "INV_VERIF";
   
   public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }
