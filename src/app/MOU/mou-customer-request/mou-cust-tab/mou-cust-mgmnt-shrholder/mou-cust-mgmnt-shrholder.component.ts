@@ -134,7 +134,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     var totalPrcnt = 0;
 
     for (let i = 0; i < this.listShareholder.length; i++) {
-      if (currentEditedIndex == -1 || currentEditedIndex != i) {
+      if (this.listShareholder[i].IsActive && (currentEditedIndex == -1 || currentEditedIndex != i)) {
         totalPrcnt += this.listShareholder[i].SharePrcnt;
       }
     }
@@ -260,13 +260,6 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.selectedCustNo = this.listShareholder[i].CustNo;
     this.setValidator(this.listShareholder[i].MrCustTypeCode);
     this.open(content);
-  }
-
-  delete(i) {
-    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.listShareholder.splice(i, 1);
-      this.callbackSubmit.emit(this.listShareholder);
-    }
   }
 
   clearForm() {
