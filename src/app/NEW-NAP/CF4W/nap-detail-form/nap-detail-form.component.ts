@@ -297,9 +297,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async NextStep(Step) {
-    if (this.ReturnHandlingHId > 0) {
-
-    } else {
+    if (this.ReturnHandlingHId == 0) {
       this.UpdateAppStep(Step);
     }
 
