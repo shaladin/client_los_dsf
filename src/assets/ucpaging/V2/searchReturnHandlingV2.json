@@ -1,0 +1,228 @@
+{
+  "title": "Return Handling",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "AppNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.PROD_OFFERING_NAME",
+      "id": "ProdOfferingNameId",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "A.ORI_OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "isQueryIn": true,
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office",
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type" : "claim",
+      "label": "Task Claim Status",
+      "id": "ClaimStatId",
+      "ddlType" : "all",
+      "isCriteriaDataTable" : true
+    },
+    {
+      "type": "textbox",
+      "name": "Assignee",
+      "id": "claimById",
+      "value": "",
+      "label": "Claim By",
+      "placeholder": "Placeholder",
+      "isCriteriaDataTable" : true
+    }
+  ],
+  "querystring": {
+    "name": "searchReturnHandlingV2"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "Assignee"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office",
+      "name": "A.ORI_OFFICE_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application No",
+      "name": "A.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "AC.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Product Offering Name",
+      "name": "A.PROD_OFFERING_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Status",
+      "name": "VRS.DESCR"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "Assignee"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OriOfficeName"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "AppNo",
+      "target": "_blank",
+      "path": "VIEW_APP",
+      "param": [
+        {
+          "type": "AppId",
+          "property": "AppId"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "callback",
+      "key": "ViewProdOffering",
+      "position": "left",
+      "property": "ProdOfferingName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ReturnHStatusName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "Assignee",
+                  "value": null,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "BACK_TO_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "ReturnHandlingHId",
+                    "property": "ReturnHandlingHId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "Id"
+                  },
+                  {
+                    "type": "MrCustTypeCode",
+                    "property": "MrCustTypeCode"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "Assignee",
+                  "value": null,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "BACK_TO_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "ReturnHandlingHId",
+                    "property": "ReturnHandlingHId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "Id"
+                  },
+                  {
+                    "type": "MrCustTypeCode",
+                    "property": "MrCustTypeCode"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

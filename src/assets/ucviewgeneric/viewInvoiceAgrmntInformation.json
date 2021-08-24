@@ -59,9 +59,11 @@
                     ]
                 },
                 {
-                    "type": "text",
+                    "type": "currency",
                     "label": "Retention Percent",
-                    "property": "RetentionPrcnt"
+                    "property": "RetentionPrcnt",
+                    "precision": "0.6",
+                    "IsPrcnt": true
                 },
                 {
                     "type": "text",

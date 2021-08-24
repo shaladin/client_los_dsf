@@ -60,7 +60,7 @@
             <label class="label-control" translate> DP Amount / Percentage </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{crdRvwAssetObj.DpAmount | number:'.2':'en-US'}} / {{crdRvwAssetObj.DpPrcnt}}% </label>
+            <label class="label-control"> {{crdRvwAssetObj.DpAmount | number:'.2':'en-US'}} / {{crdRvwAssetObj.DpPrcnt | number:'.6':'en-US'}} % </label>
           </div>
         </div>
         <div class="row">
@@ -68,7 +68,7 @@
             <label class="label-control" translate> Accessory DP Amount / Percentage </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{totalAccessoryDownPaymentAmt | number:'.2':'en-US'}} / {{totalAccessoryDownPaymentPrcnt | number:'.0-6'}}% </label>
+            <label class="label-control"> {{totalAccessoryDownPaymentAmt | number:'.2':'en-US'}} / {{totalAccessoryDownPaymentPrcnt | number:'.6':'en-US'}} % </label>
           </div>
         </div>
         <div class="row">
@@ -126,7 +126,7 @@
             <td style="text-align: center;">{{i+1}}</td>
             <td style="text-align: left;">{{item.AssetName}}</td>
             <td style="text-align: left;">{{item.AssetPrice | number:'.2':'en-US'}}</td>
-            <td style="text-align: left;">{{item.DpAmount | number:'.2':'en-US'}} / {{item.DpPrcnt}}%</td>
+            <td style="text-align: left;">{{item.DpAmount | number:'.2':'en-US'}} / {{item.DpPrcnt | number:'.6':'en-US'}} %</td>
             <td style="text-align: left;">{{item.Insurance}}</td>
             <td style="text-align: center;" *ngIf="item.IsDoubleFinancing">Yes</td>
             <td style="text-align: center;" *ngIf="!item.IsDoubleFinancing">No</td>

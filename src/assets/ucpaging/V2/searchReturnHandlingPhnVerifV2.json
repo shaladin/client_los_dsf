@@ -43,25 +43,11 @@
       "isQueryIn":true
     },
     {
-      "type": "dropdown",
-      "name": "WTL.CLAIM_STAT",
-      "id": "ActiveStatusId",
+      "type" : "claim",
       "label": "Task Claim Status",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": false,
-      "ddlType": "all",
-      "items": [
-        {
-          "key": "CLAIMED",
-          "value": "CLAIMED"
-        },
-        {
-          "key": "UNCLAIMED",
-          "value": "UNCLAIMED"
-        }
-      ],
-      "itemsUrl": []
+      "id": "ClaimStatId",
+      "ddlType" : "all",
+      "isCriteriaDataTable" : true
     },
     {
       "type": "textbox",
@@ -69,7 +55,8 @@
       "id": "claimById",
       "value": "",
       "label": "Claim By",
-      "placeholder": "Placeholder"
+      "placeholder": "Placeholder",
+      "isCriteriaDataTable" : true
     }
   ],
   "headerList": [

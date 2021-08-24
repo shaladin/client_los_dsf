@@ -50,12 +50,12 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
   IsShowCustFinDataDetail:boolean = false;
   ListCustPersonalFinData : Array<object> = [];
   CustPersonalFinData : object;
-  currentCustFinDataIndex: number;
+  currentCustFinDataIndex: number;  
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
 
-  async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {    
     await this.getCustData();
     this.arrValue.push(this.ltkmCustObj.LtkmCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalMainData.json";
@@ -81,20 +81,20 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
 
   async getCustData() {
       await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
-      (response) => {
+      (response) => {        
         this.ltkmCustObj = response["rLtkmCustObj"];
         this.custModelCode = response["MrCustModelCode"];
         this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
         this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
         this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
         this.ltkmCustPersonalContactPersonObjs = response["rLtkmCustPersonalContactPersonObjs"] == null ? new Array<LtkmCustPersonalContactPersonObj>() : response["rLtkmCustPersonalContactPersonObjs"];
-        this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];
-        this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"];
+        this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];             
+        this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"];  
 
         // filter family yg punya relationship
         if(this.ltkmCustFamilyObjs && this.ltkmCustFamilyObjs.length > 0) {
           this.ltkmCustFamilyObjs = this.ltkmCustFamilyObjs.filter(item => item['MrCustRelationshipCode'])
-        }
+        }        
 
         // filter cust group yg punya cust no & applicant no
         if(this.ltkmCustGrpObjs && this.ltkmCustGrpObjs.length > 0) {
@@ -123,7 +123,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
       this.detailLtkmCustId = LtkmCustId;
       this.detailMrCustTypeCode = MrCustTypeCode;
       this.detailCustomerTitle = 'Family';
-      this.isShowDetail = true;
+      this.isShowDetail = true;      
     }
   }
 

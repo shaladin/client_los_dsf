@@ -1,3 +1,5 @@
+import { CurrencyMaskInputMode } from "ngx-currency";
+
 export class CommonConstant {
   
   // REGEX
@@ -989,4 +991,18 @@ export class CommonConstant {
 
   // Financial Data
   public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
+
+  //WORKFLOW NAP
+  public static WF_CODE_CRP_MD = "WF_CRP_MD_";
+  public static ACT_CODE_CUST_MD = "CUST_MD_";
+  public static ACT_CODE_NAPD_MD = "NAPD_MD_";
+  public static ACT_CODE_COM_RSV = "COM_RSV_";
+  public static ACT_CODE_RTN = "RTN_";
+  public static ACT_CODE_PHN = "PHN_";
+  public static WF_CODE_DUP_CHECK_MD = "WF_DUP_CHECK_MD";
+  public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL";
+  public static ACT_CODE_CDA = "CDA";
+  public static ACT_CODE_CDC = "CDC";
+  
+  public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }

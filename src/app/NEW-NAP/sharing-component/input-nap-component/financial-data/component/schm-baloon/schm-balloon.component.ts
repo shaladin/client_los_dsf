@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -38,6 +38,7 @@ export class SchmBalloonComponent implements OnInit {
   EffRateAfterCalc: number = 0;
   FlatRateAfterCalc: number = 0;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
@@ -47,6 +48,12 @@ export class SchmBalloonComponent implements OnInit {
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
 
+    this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("AppSupplEffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("AppSupplEffectiveRatePrcnt").updateValueAndValidity();
     if (this.AppId != null) {
       if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
         this.PriceLabel = "Financing Amount";

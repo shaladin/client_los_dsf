@@ -108,26 +108,6 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       this.MrCustTypeCode = ev.RowObj.ShareholderType;
       this.AppCustCompanyMgmntShrholderId = ev.RowObj.AppCustCompanyMgmntShrholderId;
     }
-
-    if (ev.Key == "delete") {
-      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        if (ev.RowObj.ShareholderType == CommonConstant.CustTypePublic) {
-          this.http.post(URLConstant.DeleteAppCustCompanyMgmntShrholderPublic, { Id: ev.RowObj.AppCustCompanyMgmntShrholderId }).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.loadMgmntShrholderListData();
-            }
-          );
-          return;
-        }
-        this.http.post(URLConstant.DeleteAppCustMainData, { Id: ev.RowObj.AppCustId }).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.loadMgmntShrholderListData();
-          }
-        );
-      }
-    }
   }
 
   ParentAppCustCompanyId: number = 0;

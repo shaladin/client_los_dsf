@@ -76,15 +76,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-
-    if (this.wfTaskListId != undefined && this.wfTaskListId != null){
-      if(environment.isCore) {
-        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-      }else if(this.wfTaskListId > 0){
-        this.claimTaskService.ClaimTask(this.wfTaskListId);
-      }
-      
-    }
+    this.ClaimTask();
 
     await this.GetAppData();
     await this.GetVerfResultData();
@@ -102,7 +94,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.blankCount == 0) {
       if (!this.isReturnHandling) {
         this.setReturnHandlingH();
-        this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
+
+        let CompleteAppPhoneVerifUrl = environment.isCore ? URLConstant.CompleteAppPhoneVerifV2 : URLConstant.CompleteAppPhoneVerif;
+        this.http.post(CompleteAppPhoneVerifUrl, this.ReturnHandlingHData).subscribe(
           (response) => {
 
             this.toastr.successMessage(response["message"]);
@@ -270,5 +264,16 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.ReturnHandlingForm.controls.UpdateNotes.clearValidators();
     }
     this.ReturnHandlingForm.controls.UpdateNotes.updateValueAndValidity();
+  }
+
+  ClaimTask(){
+    if(environment.isCore){
+      if(this.wfTaskListId != "" && this.wfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }

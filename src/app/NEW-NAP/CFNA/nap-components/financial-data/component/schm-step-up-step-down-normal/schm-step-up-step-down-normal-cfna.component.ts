@@ -28,6 +28,7 @@ export class SchmStepUpStepDownNormalCFNAComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel : string = "Financing Amount";
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
@@ -36,6 +37,10 @@ export class SchmStepUpStepDownNormalCFNAComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
+    this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
     if (this.AppId != 0) {
       this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {

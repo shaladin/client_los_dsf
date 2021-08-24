@@ -81,7 +81,7 @@ export class CustShareholderFL4WComponent implements OnInit {
   });
   businessDt: Date;
 
-
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

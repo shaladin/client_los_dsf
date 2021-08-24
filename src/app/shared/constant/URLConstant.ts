@@ -25,7 +25,9 @@ export class URLConstant {
 
   // New Application
   public static AddNewApplication = environment.losUrl + "/v1" + "/Application/AddNewApplication";
+  public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/Application/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2" + "/Application/AddNewApplicationFromCopy";
   public static AddNewApplicationOplFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationOplFromCopy";
 
   // APP Application
@@ -42,7 +44,9 @@ export class URLConstant {
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/v1" + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/v1" + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/v1" + "/Application/SubmitNAP";
+  public static SubmitNAPV2 = environment.losUrl + "/v2" + "/Application/SubmitNAP";
   public static SubmitNapCustMainData = environment.losUrl + "/v1" + "/Application/SubmitNAPCustMainData";
+  public static SubmitNapCustMainDataV2 = environment.losUrl + "/v2" + "/Application/SubmitNAPCustMainData";
   public static CreateWorkflowDuplicateCheck = environment.losUrl + "/v1" + "/Application/CreateWorkflowDuplicateCheck";
   public static AddEditAppCF2W = environment.losUrl + "/v1" + "/Application/AddEditAppCF2W";
   public static DataTableFeeAndInsNAP = environment.losUrl + "/v1" + "/Application/DataTableFeeAndInsNAP";
@@ -121,6 +125,7 @@ export class URLConstant {
   public static AddOrEditAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/AddOrEditAppCommissionData";
   public static SubmitAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/SubmitAppCommissionData";
   public static SubmitReturnHandlingCommRsvFund = environment.losUrl + "/v1" + "/AppCommission/SubmitReturnHandlingCommRsvFund";
+  public static SubmitReturnHandlingCommRsvFundV2 = environment.losUrl + "/v2" + "/AppCommission/SubmitReturnHandlingCommRsvFund";
   public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionDataForEditByAppId";
   public static DeleteAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionRule";
@@ -1180,6 +1185,7 @@ export class URLConstant {
 
   //App Reserved Fund
   public static AddEditAppReservedFund = environment.losUrl + "/v1" + "/AppReservedFund/AddEditAppReservedFund";
+  public static AddEditAppReservedFundV2 = environment.losUrl + "/v2" + "/AppReservedFund/AddEditAppReservedFund";
   public static GetListAppReservedFundByAppId = environment.losUrl + "/v1" + "/AppReservedFund/GetListAppReservedFundByAppId";
   public static CreateRsvFundRule = environment.losUrl + "/v1" + "/AppReservedFund/CreateRsvFundRule";
   public static CalculateGrossYieldRsvFund = environment.losUrl + "/v1" + "/AppReservedFund/CalculateGrossYieldRsvFund";
@@ -1253,6 +1259,7 @@ export class URLConstant {
   public static MD_GetAppCustDuplicateCheck = environment.losUrl + "/v1" + "/AppDupCheckMainData/GetAppCustDuplicateCheck";
   public static MD_EditApplicantNoCustNoAppCust = environment.losUrl + "/v1" + "/AppDupCheckMainData/EditApplicantNoCustNoAppCust";
   public static MD_SubmitAppDupCheck = environment.losUrl + "/v1" + "/AppDupCheckMainData/SubmitAppDupCheck";
+  public static MD_SubmitAppDupCheckV2 = environment.losUrl + "/v2" + "/AppDupCheckMainData/SubmitAppDupCheck";
 
   // Product Offering
   public static GetListProdOfferingDByProdOfferingCode = environment.FoundationR3Url + "/v1" + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
@@ -1321,6 +1328,7 @@ export class URLConstant {
   public static ClaimTaskV2 = environment.FoundationR3Url + "/v2" + "/Workflow/ClaimTask";
   public static ClaimTaskNap = environment.losUrl + "/v1" + "/Application/ClaimTaskNap";
   public static ClaimTaskNapCustmainData = environment.losUrl + "/v1" + "/Application/ClaimTaskNapCustmainData";
+  public static ClaimTaskNapCustmainDataV2 = environment.losUrl + "/v2" + "/Application/ClaimTaskNapCustmainData";
   public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
 
   //Application Data
@@ -1356,6 +1364,7 @@ export class URLConstant {
   public static UpdateAppCustCompletionPersonal = environment.losUrl + "/v1" + "/AppCust/UpdateAppCustCompletionPersonal";
   public static UpdateAppCustCompletionCompany = environment.losUrl + "/v1" + "/AppCust/UpdateAppCustCompletionCompany";
   public static SubmitAppCustCompletion = environment.losUrl + "/v1" + "/AppCust/SubmitAppCustCompletion";
+  public static SubmitAppCustCompletionV2 = environment.losUrl + "/v2" + "/AppCust/SubmitAppCustCompletion";
   public static SaveAppCustCompletion = environment.losUrl + "/v1" + "/AppCust/SaveAppCustCompletion";
 
   // App Cust Personal Job Data
@@ -1381,6 +1390,7 @@ export class URLConstant {
   public static GetAppCrdRvwById = environment.losUrl + "/v1" + "/AppCrdRvw/GetAppCrdRvwById";
   public static AddOrEditAppCrdRvwDataAndListManualDeviationData = environment.losUrl + "/v1" + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationData";
   public static CrdRvwMakeNewApproval = environment.losUrl + "/v1" + "/AppCrdRvw/CrdRvwMakeNewApproval";
+  public static CrdRvwMakeNewApprovalV2 = environment.losUrl + "/v2" + "/AppCrdRvw/CrdRvwMakeNewApproval";
   public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/v1" + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
   public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/v1" + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
 
@@ -1396,6 +1406,7 @@ export class URLConstant {
   public static RequestReturnTaskV2 = environment.losUrl + "/v2" + "/ReturnHandlingD/RequestReturnTask";
   public static DeleteReturnHandlingD = environment.losUrl + "/v1" + "/ReturnHandlingD/DeleteReturnHandlingD";
   public static ResumeReturnHandling = environment.losUrl + "/v1" + "/ReturnHandlingH/ResumeReturnHandling";
+  public static ResumeReturnHandlingV2 = environment.losUrl + "/v2" + "/ReturnHandlingH/ResumeReturnHandling";
   public static GetReturnHandlingDByReturnHandlingDId = environment.losUrl + "/v1" + "/ReturnHandlingD/GetReturnHandlingDByReturnHandlingDId";
   public static AddReturnHandlingH = environment.losUrl + "/v1" + "/ReturnHandlingH/AddReturnHandlingH";
 
@@ -1435,6 +1446,7 @@ export class URLConstant {
   //Ref App Attr
   public static GetListRefAppAttrCollateral = environment.losUrl + "/v1" + "/RefAppAttr/GetListRefAppAttrCollateral";
   public static CompleteAppPhoneVerif = environment.losUrl + "/v1" + "/PhoneVerif/CompleteAppPhoneVerif";
+  public static CompleteAppPhoneVerifV2 = environment.losUrl + "/v2" + "/PhoneVerif/CompleteAppPhoneVerif";
 
   //Agrmnt Subsidy
   public static GetAgrmntSubsidyListByAgrmntId = environment.losUrl + "/v1" + "/AgrmntSubsidy/GetAgrmntSubsidyListByAgrmntId";
@@ -1481,10 +1493,11 @@ export class URLConstant {
   public static SubmitLtkmReturnAtApv = environment.losUrl + "/v1" + "/Ltkm/SubmitLtkmReturnAtApv";
   public static SubmitLtkmReturnAtApvV2 = environment.losUrl + "/v2" + "/Ltkm/SubmitLtkmReturnAtApv";
   public static GetSummaryByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/GetSummaryByLtkmCustId";
-  public static GetLtkmCustDataPersonalForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustDataPersonalForViewByLtkmCustId";
-  public static GetLtkmCustDataCompanyForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustDataCompanyForViewByLtkmCustId";
-  public static GetLtkmCustCompanyFinDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustCompanyFinDataByLtkmCustId";
-  public static GetLtkmCustById = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustById";
+  public static GetLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/ltkm/getLtkmReqByLtkmCustId";
+  public static GetLtkmCustDataPersonalForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustDataPersonalForViewByLtkmCustId";
+  public static GetLtkmCustDataCompanyForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustDataCompanyForViewByLtkmCustId";
+  public static GetLtkmCustCompanyFinDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustCompanyFinDataByLtkmCustId";
+  public static GetLtkmCustById = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustById";
   public static getLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/getLtkmReqByLtkmCustId";
 
   public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetCustDataByLtkmCustId";
@@ -1494,25 +1507,25 @@ export class URLConstant {
   public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustBankAccAndStatementForView";
   public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustData/DeleteLtkmCustBankAccAndStmnt";
 
-  public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
-  public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmAppRjcByCustNoAndAppStat";
-  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
+  public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
+  public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmAppRjcByCustNoAndAppStat";
+  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
   //ltkm cust attr content
   public static GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup";
 
   //ltkm cust personal fin data
-  public static GetListLtkmCustPersonalFinDataByLtkmCustlId = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmCustPersonalFinDataByLtkmCustlId";
-  public static AddEditLtkmCustPersonalFinData = environment.losUrl + "/v1" + "/LtkmCustData/AddEditLtkmCustPersonalFinData";
+  public static GetListLtkmCustPersonalFinDataByLtkmCustlId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmCustPersonalFinDataByLtkmCustlId";
+  public static AddEditLtkmCustPersonalFinData = environment.losUrl + "/v1" + "/LtkmCustomerData/AddEditLtkmCustPersonalFinData";
 
   //ltkm cust bank stmnt & account
-  public static AddLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustData/AddLtkmCustBankAccAndStmnt";
-  public static EditLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustData/EditLtkmCustBankAccAndStmnt";
+  public static AddLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustomerData/AddLtkmCustBankAccAndStmnt";
+  public static EditLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustomerData/EditLtkmCustBankAccAndStmnt";
 
   //ltkm cust other info
-  public static GetLtkmCustOtherInfoByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustOtherInfoByLtkmCustId";
+  public static GetLtkmCustOtherInfoByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustOtherInfoByLtkmCustId";
 
   //ltkm cust personal return handling
-  public static SaveLtkmRequestPersonalReturnHandling = environment.losUrl + "/v1" + "/LtkmCustData/SaveLtkmRequestPersonalReturnHandling";
+  public static SaveLtkmRequestPersonalReturnHandling = environment.losUrl + "/v1" + "/LtkmCustomerData/SaveLtkmRequestPersonalReturnHandling";
 
   //ltkm return handling
   public static SaveLtkmReturnHandlingPersonal = environment.losUrl + "/v1" + "/Ltkm/SaveLtkmReturnHandlingPersonal";
