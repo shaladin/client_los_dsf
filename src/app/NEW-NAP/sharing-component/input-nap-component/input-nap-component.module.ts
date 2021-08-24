@@ -130,6 +130,8 @@ import { MultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/inp
 import { AssetDataAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-add-edit-x/asset-data-add-edit-x.component";
 import { AssetDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging-x.component";
 import { AssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/asset-data/asset-data-x.component";
+import {CollateralDataCfnaPagingXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-paging/collateral-data-cfna-paging-x.component';
+import {CollateralDataCfnaXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -265,7 +267,9 @@ export const customCurrencyMaskConfig = {
     ViewSubsidyXComponent,
     MultiAssetDataXComponent,
     AssetDataPagingXComponent,
-    AssetDataXComponent
+    AssetDataXComponent,
+    CollateralDataCfnaXComponent,
+    CollateralDataCfnaPagingXComponent
   ],
   imports: [
     CommonModule,
@@ -402,7 +406,9 @@ export const customCurrencyMaskConfig = {
     ViewSubsidyXComponent,
     MultiAssetDataXComponent,
     AssetDataPagingXComponent,
-    AssetDataXComponent
+    AssetDataXComponent,
+    CollateralDataCfnaXComponent,
+    CollateralDataCfnaPagingXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

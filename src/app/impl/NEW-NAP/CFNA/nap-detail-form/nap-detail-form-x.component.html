@@ -118,8 +118,8 @@
                 (outputTab)="NextStep('COLL')"></app-application-data-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-collateral-data-cfna *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [showCancel]="showCancel">
-              </app-collateral-data-cfna>
+              <app-collateral-data-cfna-x *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [showCancel]="showCancel">
+              </app-collateral-data-cfna-x>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
@@ -212,8 +212,8 @@
                 (outputTab)="NextStep('COLL')"></app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-collateral-data-cfna *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [showCancel]="showCancel">
-              </app-collateral-data-cfna>
+              <app-collateral-data-cfna-x *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [showCancel]="showCancel">
+              </app-collateral-data-cfna-x>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
