@@ -27,6 +27,16 @@ export class CessieMonitoringComponent implements OnInit {
       environmentUrl: environment.losUrl + '/v1',
       apiQryPaging: URLConstant.GetPagingObjectBySQL,
       pagingJson: "./assets/ucpaging/searchCessieMonitoring.json",
+      ddlEnvironments: [
+        {
+          name: "UL.UPLOAD_STATUS",
+          environment: environment.FoundationR3Url + "/v1"
+        },
+        {
+          name: "UL.ORI_OFFICE_CODE",
+          environment: environment.FoundationR3Url + "/v1"
+        }
+      ],
       url: URLConstantX.UploadFile,
       isDownloadTmplt : false
     }
