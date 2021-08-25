@@ -19,6 +19,7 @@ import {FinancialDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/in
 import {SingleInstDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/single-inst-dlfn/single-inst-dlfn-x.component';
 import {SchmRegularFixDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn-x.component';
 import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn-x.component';
+import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/DLFN/nap-cust-main-data/nap-cust-main-data-x.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-componen
     FinancialDataDlfnXComponent,
     SingleInstDlfnXComponent,
     SchmRegularFixDlfnXComponent,
-    SchmEvenPrincipalDlfnXComponent
+    SchmEvenPrincipalDlfnXComponent,
+    NapCustMainDataXComponent
   ],
   imports: [
     CommonModule,

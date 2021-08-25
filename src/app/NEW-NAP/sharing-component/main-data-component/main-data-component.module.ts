@@ -11,6 +11,9 @@ import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { CustPublicComponent } from "./components/cust-public/cust-public.component";
 import { CustAttrFormComponent } from "./components/cust-attr-form/cust-attr-form.component";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { CustMainDataXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/cust-main-data/cust-main-data-x.component";
+import { GuarantorMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/guarantor-main-data/guarantor-main-data-paging-x.component";
+import { FamilyMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/family-main-data/family-main-data-paging-x.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -32,7 +35,10 @@ export const customCurrencyMaskConfig = {
         CustAttrFormComponent,
         GuarantorMainDataPagingComponent,
         FamilyMainDataPagingComponent,
-        MngmntShrhldrMainDataPagingComponent
+        MngmntShrhldrMainDataPagingComponent,
+        CustMainDataXComponent,
+        GuarantorMainDataPagingXComponent,
+        FamilyMainDataPagingXComponent
     ],
     imports: [
         CommonModule,
@@ -47,7 +53,10 @@ export const customCurrencyMaskConfig = {
         CustAttrFormComponent,
         GuarantorMainDataPagingComponent,
         FamilyMainDataPagingComponent,
-        MngmntShrhldrMainDataPagingComponent
+        MngmntShrhldrMainDataPagingComponent,
+        CustMainDataXComponent,
+        GuarantorMainDataPagingXComponent,
+        FamilyMainDataPagingXComponent
     ],
     providers: [
         NGXToastrService

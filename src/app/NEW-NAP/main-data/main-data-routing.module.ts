@@ -20,8 +20,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.NAP1_ADD,
-        component: CustMainDataAddXComponent,
+        path: PathConstant.NAP1_ADD,
+        component: CustMainDataAddComponent,
         data: {
           title: 'Add Cust Main Data'
         }
@@ -31,6 +31,13 @@ const routes: Routes = [
         component: NapDetailPagingComponent,
         data: {
           title: 'NAP Detail Paging'
+        }
+      },
+      {
+        path: PathConstantX.NAP1_ADD,
+        component: CustMainDataAddXComponent,
+        data: {
+          title: 'Add Cust Main Data'
         }
       },
     ]

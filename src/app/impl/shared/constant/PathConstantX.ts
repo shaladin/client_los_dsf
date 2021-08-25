@@ -3,6 +3,7 @@ import {PathConstant} from 'app/shared/constant/PathConstant';
 export class PathConstantX {
 
   //#region Common-Path
+  public static X = "X";
   public static PROCESS = "Process";
   public static PAGING = 'PagingX';
   public static CESSIE = 'Cessie';
@@ -11,7 +12,10 @@ export class PathConstantX {
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
   public static NAP2_X = 'NAP2X';
+  public static NAP1_X = 'NAP1X';
   //#endregion
+
+  public static NAP2 = "NAP2X";
 
   //#region layout-routes
   public static LR_IMPL = 'Impl';
@@ -23,8 +27,21 @@ export class PathConstantX {
   //#endregion
 
   //#region Nap-Crd-Prcs
+  public static SUBJECT = 'SubjectX';
+  public static SURVEY_VERIF_X = "SurveyVerif";
+  public static VERIF = 'VerifX';
+  public static VIEW = 'ViewX';
   public static COMM_RSV_FUND_PAGING = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.PAGING;
   public static COMM_RSV_FUND_DETAIL = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.DETAIL_X;
+
+  public static SURVEY_VERIF_PAGING = PathConstantX.SURVEY_VERIF_X + "/" + PathConstantX.PAGING;
+  public static SURVEY_VERIF_SUBJECT = PathConstantX.SURVEY_VERIF_X + "/" + PathConstantX.SUBJECT;
+  public static SURVEY_VERIF_SUBJECT_VERIF = PathConstantX.SURVEY_VERIF_X + "/" + PathConstantX.SUBJECT + "/" + PathConstantX.VERIF;
+  public static SURVEY_VERIF_SUBJECT_VIEW = PathConstantX.SURVEY_VERIF_X + "/" + PathConstantX.SUBJECT + "/" + PathConstantX.VIEW;
+
+  public static CRD_REVIEW_CR_PAGING_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.PAGING;
+  public static CRD_REVIEW_CR_DETAIL_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.DETAIL_X;
+  public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Nap-Main-Data
@@ -34,6 +51,8 @@ export class PathConstantX {
   public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X;
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
   public static CUST_CONFIRM_DETAIL_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
+
+  public static COPY_CANCEL_APP = "CopyCancelledApplicationX";
   //#endregion
 
   //#region Nap-Admin-Prcs
@@ -93,7 +112,24 @@ export class PathConstantX {
   public static GO_LIVE_APV_DETAIL_X = PathConstantX.GO_LIVE_APV_X + '/' + PathConstantX.DETAIL_X;
   //endregion
 
+  //#region Nap-Additional-Prcs
+  public static RETURN_HANDLING_SURVEY_VERIF_PAGING_X = PathConstant.RETURN_HANDLING + "/" + PathConstantX.SURVEY_VERIF_PAGING;
+  //#endregion
+
+  public static PO_EXT_X = "POX";
+  public static PO_PAGING_X = PathConstant.PO + "/" + PathConstantX.PAGING;
+  public static PO_PO_EXT_X = PathConstant.PO + "/" + PathConstantX.PO_EXT_X;
+  public static PO_PO_EXT_DETAIL_X = PathConstantX.PO_PO_EXT_X + "/" + PathConstantX.DETAIL_X;
   public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + '/' + PathConstantX.DETAIL_X;
+  public static TRIAL_CALC_X = "Trial-Calculation-X";
+
+  //#region Nap-Admin-Prcs
+  public static AGRMNT_ACT_DETAIL = PathConstant.AGRMNT_ACT + "/" + PathConstantX.DETAIL_X;
+  //endregion
+
+  //#region View-Enhancing-Module
+  public static VIEW_APP = "AppViewX";
+  //#endregion
 }
 
 

@@ -114,8 +114,8 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel" [BizTemplateCode]="BizTemplateCode"
-                (outputTab)="NextStep('COLL')"></app-application-data>
+              <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel" [BizTemplateCode]="BizTemplateCode"
+                (outputTab)="NextStep('COLL')"></app-application-data-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-collateral-data-cfna *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [showCancel]="showCancel">
@@ -131,7 +131,7 @@
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
+              <app-financial-data-x *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
@@ -221,7 +221,7 @@
               </app-insurance-multi-asset-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
+              <app-financial-data-x *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>

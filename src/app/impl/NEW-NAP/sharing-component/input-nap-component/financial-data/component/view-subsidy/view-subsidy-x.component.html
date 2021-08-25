@@ -1,0 +1,31 @@
+<lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_ViewSubsidy'">
+</lib-ucSubsection>
+<div id="FinData_ViewSubsidy">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>Subsidy From
+          </span>
+        </th>
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromValueName" translate>Subsidy Type
+          </span>
+        </th>
+        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyAllocName" translate>Subsidy Amount
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: left;">ATPM</td>
+        <td style="text-align: left;">SPAF</td>
+        <td style="text-align: right;">{{appFinDataObj.TotalSubsidySPAFAmt | number : '1.2-2'}}</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;">ATPM</td>
+        <td style="text-align: left;">Subvention</td>
+        <td style="text-align: right;">{{appFinDataObj.TotalSubsidySubventionAmt | number : '1.2-2'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

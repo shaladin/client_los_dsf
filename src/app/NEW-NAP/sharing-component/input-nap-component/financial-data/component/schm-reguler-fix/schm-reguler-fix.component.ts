@@ -13,6 +13,10 @@ import { String } from 'typescript-string-operations';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { CalcRegularFixObjForTrialCalc } from 'app/shared/model/AppFinData/CalcRegularFixObjForTrialCalc.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcReportObj.model';
+import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
+import { CookieService } from 'ngx-cookie';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-schm-reguler-fix',
@@ -34,12 +38,20 @@ export class SchmRegulerFixComponent implements OnInit {
   listInstallment: Array<InstallmentObj>;
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;
+  inputReportObj: InputReportObj = new InputReportObj();
+  UserContext: any;
+  RdlcReport: RdlcReportObj = new RdlcReportObj();
+  reportParameters: any;
+  showGenerateReportBtn: boolean;
 
   constructor(private fb: FormBuilder,
+    private cookieService: CookieService,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
 
   ngOnInit() {
+    this.showGenerateReportBtn = false;
+    this.inputReportObj.JsonPath = "./assets/ucreport/ReportTrialCalculation.json";
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
@@ -63,6 +75,143 @@ export class SchmRegulerFixComponent implements OnInit {
         InstAmt: this.InstAmt
       });
     }
+  }
+
+  
+  
+  setReportData() {
+    this.getJSON(this.inputReportObj.JsonPath).subscribe(data => {
+      let obj = this.ParentForm.value;
+      let totalFee = obj.TotalInsCustAmt
+        + obj.AppFee[0].AppFeeAmt
+        + obj.AppFee[1].AppFeeAmt
+        + obj.AppFee[2].AppFeeAmt
+        + obj.AppFee[3].AppFeeAmt
+        + obj.AppFee[4].AppFeeAmt
+        + obj.AppFee[5].AppFeeAmt;
+
+      let totalFeeCapitalized = obj.TotalInsCustAmt
+        + obj.AppFee[0].FeeCapitalizeAmt
+        + obj.AppFee[1].FeeCapitalizeAmt
+        + obj.AppFee[2].FeeCapitalizeAmt
+        + obj.AppFee[3].FeeCapitalizeAmt
+        + obj.AppFee[4].FeeCapitalizeAmt
+        + obj.AppFee[5].FeeCapitalizeAmt;
+
+      let DownPayment = obj.DownPaymentAmt || (obj.DownPaymentPrctg / 100) * obj.AssetPriceAmt;
+      let totalPrincipal = obj.AssetPriceAmt - DownPayment + totalFeeCapitalized;
+      let totalDownPayment = DownPayment + totalFee - totalFeeCapitalized;
+
+      let instAmt = "";
+      if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate) {
+        instAmt = obj.InstallmentTable[0].InstAmt;
+      }
+      if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst) {
+        instAmt = obj.InstAmt;
+      }
+
+      this.reportParameters = [
+        { ParamKey: 'ProductOffering', ParamValue: obj.lookupProductOffering.value },
+        { ParamKey: 'CustName', ParamValue: obj.CustName },
+        { ParamKey: 'Addr', ParamValue: obj.Addr },
+        { ParamKey: 'MobilePhone', ParamValue: obj.MobilePhone },
+        { ParamKey: 'AssetPriceAmt', ParamValue: obj.AssetPriceAmt },
+        { ParamKey: 'DownPaymentAmt', ParamValue: DownPayment },
+        { ParamKey: 'Tenor', ParamValue: obj.Tenor },
+        { ParamKey: 'PayFreq', ParamValue: obj.PayFreqValue },
+        { ParamKey: 'NumOfInst', ParamValue: obj.NumOfInst },
+        { ParamKey: 'MrInstScheme', ParamValue: obj.MrInstSchemeValue },
+        { ParamKey: 'MrFirstInstType', ParamValue: obj.MrFirstInstTypeValue },
+        { ParamKey: 'TotalInsCustAmt', ParamValue: obj.TotalInsCustAmt },
+        { ParamKey: 'InsCptlzAmt', ParamValue: obj.InsCptlzAmt },
+        { ParamKey: 'AppFeeAmt', ParamValue: obj.AppFee[0].AppFeeAmt },
+        { ParamKey: 'FeeCapitalizedAmt', ParamValue: obj.AppFee[0].FeeCapitalizeAmt },
+        { ParamKey: 'AddAdmAmt', ParamValue: obj.AppFee[1].AppFeeAmt },
+        { ParamKey: 'AddAdmCapitalizedAmt', ParamValue: obj.AppFee[1].FeeCapitalizeAmt },
+        { ParamKey: 'NotaryFeeAmt', ParamValue: obj.AppFee[2].AppFeeAmt },
+        { ParamKey: 'NotaryFeeCapitalizedAmt', ParamValue: obj.AppFee[2].FeeCapitalizeAmt },
+        { ParamKey: 'OtherFeeAmt', ParamValue: obj.AppFee[3].AppFeeAmt },
+        { ParamKey: 'OtherFeeCapitalizedAmt', ParamValue: obj.AppFee[3].FeeCapitalizeAmt },
+        { ParamKey: 'FiduciaFeeAmt', ParamValue: obj.AppFee[4].AppFeeAmt },
+        { ParamKey: 'FiduciaFeeCapitalizedAmt', ParamValue: obj.AppFee[4].FeeCapitalizeAmt },
+        { ParamKey: 'ProvisionFeeAmt', ParamValue: obj.AppFee[5].AppFeeAmt },
+        { ParamKey: 'ProvisionFeeCapitalizedAmt', ParamValue: obj.AppFee[5].FeeCapitalizeAmt },
+        { ParamKey: 'TotalFee', ParamValue: obj.TotalFeeAmt },
+        { ParamKey: 'TotalFeeCapitalized', ParamValue: totalFeeCapitalized },
+        { ParamKey: 'EffectiveRatePrcnt', ParamValue: obj.EffectiveRatePrcnt },
+        { ParamKey: 'TotalPincipalAmt', ParamValue: totalPrincipal },
+        { ParamKey: 'TotalInterestAmt', ParamValue: obj.TotalInterestAmt },
+        { ParamKey: 'TotalDownPaymentAmt', ParamValue: totalDownPayment },
+        { ParamKey: 'InstAmt', ParamValue: instAmt },
+        { ParamKey: 'TotalAR', ParamValue: obj.TotalAR },
+      ]
+      this.RdlcReport.ReportInfo.ReportParameters = [];
+      let reportParamObj1: ReportParamObj = new ReportParamObj();
+      reportParamObj1.paramKey = 'agrmntId';
+      reportParamObj1.paramAssignment = 1
+      reportParamObj1.paramValue = '1';
+
+      this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj1);
+
+      console.log(this.reportParameters);
+      for (let i = 0; i < this.reportParameters.length; i++) {
+        let reportParamObj: ReportParamObj = new ReportParamObj();
+        reportParamObj.paramKey = this.reportParameters[i].ParamKey;
+        reportParamObj.paramAssignment = 2
+        reportParamObj.paramValue = this.reportParameters[i].ParamValue;
+
+        this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
+      }
+      let value = this.cookieService.get('UserAccess');
+      let userAccess = this.DecryptString(value, "AdInsFOU12345678");
+
+      this.UserContext = JSON.parse(userAccess);
+      this.RdlcReport.RequestingUsername = this.UserContext.UserName;
+      this.RdlcReport.ReportInfo.ReportName = data.reportInfo.reportName;
+      this.RdlcReport.ReportInfo.ReportTemplateCode = data.reportInfo.reportTemplateCode;
+    });
+  }
+
+  public getJSON(url: string): Observable<any> {
+    return this.http.get(url);
+  }
+
+  private DecryptString(chipperText: string, chipperKey: string) {
+    if (
+      chipperKey == undefined || chipperKey.trim() == '' ||
+      chipperText == undefined || chipperText.trim() == ''
+    ) return chipperText;
+    var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
+    var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
+    var decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, { iv: iv });
+    var plainText = decrypted.toString(CryptoJS.enc.Utf8);
+    return plainText;
+  }
+
+  GenerateReport() {
+    this.RdlcReport.ReportInfo.ExportFormat = 0;
+    console.log(this.RdlcReport);
+    this.http.post(this.inputReportObj.EnvironmentUrl + this.inputReportObj.ApiReportPath, this.RdlcReport).subscribe(
+      (response) => {
+        let linkSource: string = "";
+        let fileName: string = "";
+        fileName = this.RdlcReport.ReportInfo.ReportName;
+
+        linkSource = 'data:application/pdf;base64,' + response["ReportFile"];
+        fileName = fileName + ".pdf";
+
+        if (response["ReportFile"] != undefined) {
+          if (this.RdlcReport.ReportInfo.ExportFormat == 0) {
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.download = fileName;
+            downloadLink.click();
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
+      });
   }
 
   LoadDDLRateType() {
@@ -216,7 +365,8 @@ export class SchmRegulerFixComponent implements OnInit {
           this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
-
+          this.showGenerateReportBtn = true;
+          this.setReportData();
           if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
             this.RefreshSubsidy.emit();
           }

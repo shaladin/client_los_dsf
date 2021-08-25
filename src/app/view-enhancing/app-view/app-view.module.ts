@@ -55,6 +55,8 @@ import { HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { ViewSrvyTaskComponent } from "./view-srvy-task/view-srvy-task.component";
 import { TabApplicationXComponent } from "app/impl/view-enhancing/app-view/tab-application/tab-application-x.component";
+import { AppViewXComponent } from "app/impl/view-enhancing/app-view/app-view-x.component";
+import { ViewSrvyTaskXComponent } from "app/impl/view-enhancing/app-view/view-srvy-task-x/view-srvy-task-x.component";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -124,7 +126,9 @@ export function createTranslateLoader(http: HttpClient) {
         AppCustDataCompanyOplComponent,
         AppViewInsuranceDetailComponent,
         ViewSrvyTaskComponent,
-        TabApplicationXComponent
+        TabApplicationXComponent,
+        AppViewXComponent,
+        ViewSrvyTaskXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -132,7 +136,7 @@ export function createTranslateLoader(http: HttpClient) {
         UcgridviewComponent,
         UcapprovalhistComponent,
         AppMainInfoComponent,
-        AppAssetDataDetailComponent,
+        AppAssetDataDetailComponent
     ]
 })
 export class AppViewModule { }
