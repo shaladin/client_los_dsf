@@ -84,7 +84,9 @@ export class CommissionReservedFundPagingComponent implements OnInit {
       this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.COM_RSV_ + this.BizTemplateCode;
       this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
-      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                               this.userAccess[CommonConstant.OFFICE_CODE], 
+                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
