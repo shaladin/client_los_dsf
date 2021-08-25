@@ -55,9 +55,15 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
+      if (params["AppId"] != null) {
       this.AppId = params["AppId"];
-      this.WfTaskListId = params["TaskListId"];
-      this.TrxNo = params["TrxNo"];
+      }
+      if (params["TaskListId"] != null) {
+        this.WfTaskListId = params["TaskListId"];
+      }
+      if (params["TrxNo"] != null) {
+        this.TrxNo = params["TrxNo"];
+      }
     });
     this.BusinessDate = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

@@ -27,7 +27,9 @@ export class InvoiceVerifPagingComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
-      this.BizTemplateCode = params["BizTemplateCode"];
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+      }
     });
   }
 
