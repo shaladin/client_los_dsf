@@ -80,9 +80,9 @@ export class CommissionReservedFundPagingComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCommissionV2.json";
       this.inputPagingObj.isJoinExAPI = true
       
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CRP_MD + this.BizTemplateCode;
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
       this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.COM_RSV_ + this.BizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_COM_RSV + this.BizTemplateCode;
       this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
                                                this.userAccess[CommonConstant.OFFICE_CODE], 
