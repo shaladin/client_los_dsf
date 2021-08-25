@@ -19,6 +19,7 @@ import { forkJoin } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import {ResSysConfigResultObj} from '../../../shared/model/Response/ResSysConfigResultObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -37,7 +38,7 @@ export class NapDetailFormComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
@@ -76,7 +77,8 @@ export class NapDetailFormComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -330,7 +332,8 @@ export class NapDetailFormComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+      let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+      this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.Cancel();
@@ -343,15 +346,11 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      () => {
-      });
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+    }else{
+      this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+    }
   }
 
   CheckCustType(ev: string) {

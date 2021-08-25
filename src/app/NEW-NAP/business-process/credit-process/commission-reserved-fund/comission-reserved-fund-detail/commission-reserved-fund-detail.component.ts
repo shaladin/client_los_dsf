@@ -148,7 +148,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
                 }
               )
             }
-            this.ChangeTab(CommonConstant.AppStepComm);
           }
         }
       });

@@ -34,4 +34,6 @@ export class AdInsConstant {
   public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/v1" + "/Approval/TakeBack";
   
   public static UserCustomer = "Customer";
+  public static TextTrue = "True";
+  public static TextFalse = "False";
 }
