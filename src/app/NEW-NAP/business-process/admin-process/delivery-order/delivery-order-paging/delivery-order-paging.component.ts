@@ -46,7 +46,7 @@ export class DeliveryOrderPagingComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true
       
       this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CRP_CF4W_AFT_ACT];
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.DO + this.bizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_DO + this.bizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [ UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE] ];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
