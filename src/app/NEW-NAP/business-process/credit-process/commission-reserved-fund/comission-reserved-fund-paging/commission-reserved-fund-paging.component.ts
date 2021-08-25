@@ -39,6 +39,8 @@ export class CommissionReservedFundPagingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
     this.inputPagingObj._url = "./assets/ucpaging/searchCommission.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
 
@@ -73,13 +75,35 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     }
 
 
-    this.inputPagingObj.addCritInput = arrCrit;
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchCommissionV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCommissionV2.json";
+      this.inputPagingObj.isJoinExAPI = true
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
+      this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_COM_RSV + this.BizTemplateCode;
+      this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                               this.userAccess[CommonConstant.OFFICE_CODE], 
+                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "AppNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
+    else{
+      this.inputPagingObj.addCritInput = arrCrit;
+    }
   }
   async GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
+      let wfTaskListIdTemp = environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId;
       if (!await this.CheckRuleObj(ev.RowObj.AppId)) {
         this.toastr.warningMessage("Please complete MaxRefund Rule for " + this.BizTemplateCode + " ");
         return;

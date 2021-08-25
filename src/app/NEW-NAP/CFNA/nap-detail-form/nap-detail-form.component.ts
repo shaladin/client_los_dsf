@@ -341,7 +341,8 @@ export class NapDetailFormComponent implements OnInit {
       let reqObj: SubmitNapObj = new SubmitNapObj();
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
-      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+      let SubmitNapUrl = environment.isCore? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+      this.http.post(SubmitNapUrl, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.Cancel();
@@ -387,12 +388,12 @@ export class NapDetailFormComponent implements OnInit {
 
   claimTask(){
     if(environment.isCore){
-      if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
-        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-      }
-    }
-    else if (this.wfTaskListId> 0) {
-        this.claimTaskService.ClaimTask(this.wfTaskListId);
-    }
+        if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+            this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+          }
+        }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }
