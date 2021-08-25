@@ -4,6 +4,7 @@ import { FormArray, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -16,6 +17,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { CompleteTaskModel } from 'app/shared/model/Workflow/V2/CompleteTaskModelObj.model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
@@ -27,7 +29,6 @@ import { CookieService } from 'ngx-cookie';
 })
 export class InvoiceVerifDetailDFComponent implements OnInit {
     private stepper: Stepper;
-
     bizTemplateCode: string = "";
     viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
     AppId: number;
@@ -36,7 +37,6 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
     token = localStorage.getItem(CommonConstant.TOKEN);
     LobCode: string;
     IsReady: boolean = false;
-
     appTC: AppTCObj;
     RlistAppTCObj: { ListAppTcObj: Array<AppTCObj> };
 
@@ -44,6 +44,7 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
         Invoices: this.fb.array([])
     });
     StepperIndex: number = 1;
+    IsReturnOn: boolean;
 
     constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, 
                 private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
@@ -54,8 +55,9 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
         });
     }
 
-    NextStep(Step) {
-        this.ChangeTab(Step);
+    NextStep(ev: any) {
+        this.IsReturnOn = ev.IsReturnOn;
+        this.ChangeTab(ev.Step);
         this.stepper.next();
     }
 
@@ -166,12 +168,12 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
 
     claimTask(){
         if(environment.isCore){
-          if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
-            this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+            if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+              this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+            }
+          }else if (this.WfTaskListId > 0) {
+            this.claimTaskService.ClaimTask(this.WfTaskListId);
           }
-        }else if (this.WfTaskListId > 0) {
-          this.claimTaskService.ClaimTask(this.WfTaskListId);
-        }
       }
 
     GetCallBack(ev) {
@@ -181,10 +183,19 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
     }
 
     ResumeWf() {
-        var workflowApiObj = new WorkflowApiObj();
-        workflowApiObj.TaskListId = this.WfTaskListId;
-        workflowApiObj.ListValue["pBookmarkValue"] = CommonConstant.BOOKMARK_DONE;
-        this.httpClient.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
+        let requestObj;
+        if(environment.isCore){
+            requestObj = new CompleteTaskModel();
+            requestObj.TaskId = this.WfTaskListId;
+            requestObj.ReturnValue = this.IsReturnOn ? AdInsConstant.TextTrue : AdInsConstant.TextFalse;
+        }else{
+            requestObj = new WorkflowApiObj();
+            requestObj.TaskListId = this.WfTaskListId;
+            requestObj.ListValue["pBookmarkValue"] = CommonConstant.BOOKMARK_DONE;
+        }
+        
+        let ResumeWorkflowUrl = environment.isCore ? URLConstant.CompleteTask : URLConstant.ResumeWorkflow;
+        this.httpClient.post(ResumeWorkflowUrl, requestObj).subscribe(
             response => {
                 this.toastr.successMessage(response["message"]);
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
