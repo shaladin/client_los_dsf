@@ -1,0 +1,233 @@
+{
+    "title": "Offering Validity Checking and Approval",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "agr.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "agr.PROD_OFFERING_NAME",
+        "id": "ProdOfferingNameId",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "agr.AGRMNT_NO",
+        "id": "AgrmntNoId",
+        "value": "",
+        "label": "Agreement No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "vApv.APV_NO",
+        "id": "ApvNoId",
+        "value": "",
+        "label": "Approval No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "vApv.REQUEST_BY",
+        "id": "RequestById",
+        "value": "",
+        "label": "Request By",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "datepicker",
+        "datatype": "date",
+        "name": "vApv.REQUEST_DATE",
+        "id": "RequestDateGteId",
+        "value": "",
+        "restriction": "gte",
+        "label": "Request Date >=",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "vApv.CURRENT_USER_ID",
+        "id": "MainUserId",
+        "value": "",
+        "label": "Current User",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "datepicker",
+        "datatype": "date",
+        "name": "vApv.REQUEST_DATE",
+        "id": "RequestDateLteId",
+        "value": "",
+        "restriction": "lte",
+        "label": "Request Date <=",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "vApv.MAIN_USER_ID",
+        "id": "MainUserId",
+        "value": "",
+        "label": "Task Owner",
+        "placeholder": "Placeholder"
+      }
+  
+    ],
+    "querystring": {
+      "name": "searchOfferingValidityCheckingAndApprovalV2"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Approval No",
+        "name": "vApv.APV_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Agreement No",
+        "name": "agr.AGRMNT_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer Name",
+        "name": "agr.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Name",
+        "name": "agr.PROD_OFFERING_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request By",
+        "name": "vApv.REQUEST_BY"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Task Owner",
+        "name": "vApv.MAIN_USER_ID"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current User",
+        "name": "vApv.CURRENT_USER_ID"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request Date",
+        "name": "vApv.REQUEST_DATE"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Process"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Hold"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Take Back"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ApvNo"
+      },
+      {
+        "type": "link",
+        "position": "center",
+        "property": "AgrmntNo",
+        "target": "_blank",
+        "path": "VIEW_AGRMNT",
+        "param": [
+          {
+            "type": "AgrmntId",
+            "property": "AgrmntId"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CustName"
+      },
+      {
+        "type": "callback",
+        "key": "ViewProdOffering",
+        "position": "left",
+        "property": "ProdOfferingName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RequestBy"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MainUserId"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CurrentUserId"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "RequestDate"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "Process"
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "HoldTask"
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "TakeBack"
+          }
+        ]
+      }
+    ]
+  }
+  
