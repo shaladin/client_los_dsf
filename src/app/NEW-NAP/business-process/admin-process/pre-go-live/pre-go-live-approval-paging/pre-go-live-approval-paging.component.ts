@@ -55,6 +55,11 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
     
     this.inputPagingObj.addCritInput = new Array();
 
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchPreGoLiveApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchPreGoLiveApprovalV2.json";
+    }
+
     var critInputOnlyOffering = new CriteriaObj();
     critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";
     critInputOnlyOffering.restriction = AdInsConstant.RestrictionEq;
