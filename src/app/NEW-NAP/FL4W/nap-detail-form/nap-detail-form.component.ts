@@ -242,8 +242,9 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId == 0) this.UpdateAppStep(Step);
-
+    if (this.ReturnHandlingHId == 0) {
+      this.UpdateAppStep(Step);
+    }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
@@ -283,7 +284,8 @@ export class NapDetailFormComponent implements OnInit {
       let reqObj: SubmitNapObj = new SubmitNapObj();
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
-      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+      let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+      this.http.post(SubmitNAPUrl, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.Cancel();
