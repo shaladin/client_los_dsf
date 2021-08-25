@@ -66,8 +66,6 @@ export class CustCompletionPagingComponent implements OnInit {
       this.inputPagingObj.addCritInput.push(critWorflowAct);
     }
 
-    this.inputPagingObj.addCritInput = new Array();
-
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionEq;
     critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
