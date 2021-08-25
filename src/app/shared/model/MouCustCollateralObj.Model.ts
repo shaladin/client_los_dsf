@@ -23,6 +23,7 @@ export class MouCustCollateralObj{
     AssetTaxDate: Date;
     CollateralNotes: string;
     ManufacturingYear: number;
+    RemainingCollateralPrcnt: number;
     RsvField1: string;
     RsvField2: string;
     RsvField3: string;
@@ -32,5 +33,5 @@ export class MouCustCollateralObj{
     RowVersion: string;
     CustNo: string;
     CustName: string;
-    ListMouCustCollaterals: Array<MouCustCollateralAttrObj>;
+    OwnerMobilePhnNo: string;
 }

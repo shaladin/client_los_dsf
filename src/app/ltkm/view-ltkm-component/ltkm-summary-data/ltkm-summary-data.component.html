@@ -175,7 +175,7 @@
             <div class="col-md-6">
               <label class="adInsLabel"> {{SummaryLtkmObj?.AppInProcessCount}} </label>
             </div>
-          </div>
+          </div> 
         </div>
       </div>
     </div>
@@ -192,12 +192,20 @@
           <label class="adInsLabel"> {{item['ScoringAlias']}} </label>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="adInsLabel">Additional Reason</label>
+        </div>
+        <div class="col-md-3">
+          <label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['AddSrcNotes'] == undefined || SummaryLtkmReqObj['ReturnObject']['AddSrcNotes'] == null ? "-": SummaryLtkmReqObj['ReturnObject']['AddSrcNotes']}}</label>
+        </div>        
+      </div>
     </div>
 
     <div *ngIf="SummaryLtkmObj != null && SummaryLtkmObj.LtkmAnalysisObj != null">
-      <lib-ucSubsection [id]="'ltkmAnalysisId'" [title]="'LTKM Analysis'" [panel]="'ltkmAnalysisId'">
+      <lib-ucSubsection [id]="'ltkmAnalysisId'" [title]="'LTKM Analysis'" [panel]="'ltkmAnalysis'">
       </lib-ucSubsection>
-      <div class="form-body" id="scoringInfo">
+      <div class="form-body" id="ltkmAnalysis">
         <div class="row">
           <div class="col-md-3"><label class="adInsLabel">MF Suspicious Transaction due to</label></div>
           <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrSuspiciousTrxDueToDescr']}}</label></div>
@@ -229,8 +237,72 @@
           <div class="col-md-3">
             <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['Notes']}}</label>
           </div>
-        </div>
-        
+        </div>               
       </div>
     </div>
+    <lib-ucSubsection [id]="'applicationDataId'" [title]="'Application Data'" [panel]="'applicationData'">
+    </lib-ucSubsection>
+    <div class="form-body" id="applicationData">   
+      <div class="form-group row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">Application No</label></div>
+            <div class="col-md-3"><label class="adInsLabel">
+              <a [href]="UrlAppView + '?AppId=' + AppId" target="_blank" noreferrer noopener  *ngIf="SummaryLtkmReqObj['ReturnObject']['AppNo']">
+                {{SummaryLtkmReqObj['ReturnObject']['AppNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AppNo']}}
+              </a>
+              <div *ngIf="!SummaryLtkmReqObj['ReturnObject']['AppNo']">
+                {{SummaryLtkmReqObj['ReturnObject']['AppNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AppNo']}}
+              </div>
+            </label></div>            
+          </div>
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">Agreement No</label></div>            
+            <div class="col-md-6">
+              <a [href]="UrlAgrmntView + '?AgrmntId='+AgrmntId" target="_blank" noreferrer noopener *ngIf="SummaryLtkmReqObj['ReturnObject']['AgrmntNo']">
+                {{SummaryLtkmReqObj['ReturnObject']['AgrmntNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AgrmntNo']}}
+              </a>
+              <div *ngIf="!AgrmntId">
+                {{SummaryLtkmReqObj['ReturnObject']['AgrmntNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AgrmntNo']}}
+              </div>
+            </div>
+          </div>   
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">Dp Amount</label></div>
+            <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['DownPaymentAmt'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['DownPaymentAmt']  | number:'.2':'en-US'}}</label></div>
+          </div>   
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">Dp Percentage</label></div>
+            <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['DownPaymentPrctg'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['DownPaymentPrctg'] | number:'.2'}}%</label></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">Installment Amount</label></div>
+            <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['InstAmt'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['InstAmt'] | number:'.2'}}</label></div>
+          </div>     
+        </div>     
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">BPKB Name</label></div>
+            <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['OwnerName'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['OwnerName']}}</label></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">BPKB Occupancy</label></div>
+            <div class="col-md-3"><label class="adInsLabel">{{SummaryRefProfesionObj['ProfessionName'] == undefined ? "-": SummaryRefProfesionObj['ProfessionName']}}</label></div>
+          </div>      
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">Instalment Source Payment</label></div>
+            <div class="col-md-3"><label class="adInsLabel">{{DescInstSrcPayment['Descr'] == undefined ? "-": DescInstSrcPayment['Descr']}}</label></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6"><label class="adInsLabel">DP Source Payment</label></div>
+            <div class="col-md-3"><label class="adInsLabel">{{DescDpSrcPayment['Descr'] == undefined ? "-": DescDpSrcPayment['Descr']}}</label></div>
+          </div>     
+        </div> 
+      </div>  
+    </div>
   </div>
+
+
+
+
+  

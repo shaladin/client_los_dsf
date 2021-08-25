@@ -207,7 +207,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
+                    [ngClass]="{ 'is-invalid': (enjiForm.submitted || ParentForm.controls.EffectiveRatePrcnt.touched || ParentForm.controls.EffectiveRatePrcnt.dirty) && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="Rate_Keyup($event)"
                     (paste)="Rate_Paste($event)"
@@ -215,6 +215,7 @@
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
+                  {{enjiForm.submitted}} - {{ParentForm.controls.EffectiveRatePrcnt.touched}} - {{ParentForm.controls.EffectiveRatePrcnt.dirty}} - {{ParentForm.controls.EffectiveRatePrcnt.invalid}}
                 </div>
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
@@ -411,7 +412,7 @@
     </div>
 
     <div class="form-inline-right">
-      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0" (click)="Calculate()"
+      <button class="btn btn-raised btn-primary margin-r-5" translate type="submit" tabindex="0" (click)="Calculate()"
         translate>
         Calculate
       </button>

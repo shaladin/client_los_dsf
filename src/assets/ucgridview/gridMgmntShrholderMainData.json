@@ -1,124 +1,108 @@
 {
-    "isSeq": true,
-    "headerList": [
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Shareholder Name",
-        "name": "ShareholderName"
-      },
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "Shareholder Type",
-        "name": "ShareholderTypeDesc"
-      },
-      {
-          "type": "sort",
-          "position": "center",
-          "label": "Is Signer",
-          "name": "IsSigner"
-      },
-      {
-          "type": "sort",
-          "position": "center",
-          "label": "Is Owner",
-          "name": "IsOwner"
-      },
-      {
-          "type": "sort",
-          "position": "center",
-          "label": "Is Active",
-          "name": "IsActive"
-      },
-      {
-        "type": "sort",
-        "position": "right",
-        "label": "Share(%)",
-        "name": "SharePrcnt"
-      },
-      {
-        "type": "label",
-        "position": "center",
-        "label": "Action"
-      }
-    ],
-    "bodyList": [
-      {
-        "type": "text",
-        "position": "left",
-        "property": "ShareholderName"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "ShareholderTypeDesc"
-      },
-      {
-          "type": "boolean",
-          "position": "center",
-          "property": "IsSigner"
-      },
-      {
-          "type": "boolean",
-          "position": "center",
-          "property": "IsOwner"
-      },
-      {
-          "type": "boolean",
-          "position": "center",
-          "property": "IsActive"
-      },
-      {
-          "type": "decimal",
-          "position": "right",
-          "property": "SharePrcnt",
-          "precision": "0.6",
-          "IsPrcnt": true
-      },
-      {
-        "type": "action",
-        "position": "center",
-        "action": [
-          {
-            "type": "callback",
-            "key": "edit",
-            "property": [
-              {
-                "type": "AppCustId",
-                "property": "AppCustId"
-              },
-              {
-                "type": "ShareholderType",
-                "property": "ShareholderType"
-              },
-              {
-                "type": "AppCustCompanyMgmntShrholderId",
-                "property": "AppCustCompanyMgmntShrholderId"
-              },
-              {
-                "type": "mode",
-                "property": "edit"
-              }
-            ]
-          },
-          {
-            "type": "callback",
-            "key": "delete",
-            "property": [
-              {
-                "type": "AppCustId",
-                "property": "AppCustId"
-              },
-              {
-                "type": "AppCustCompanyMgmntShrholderId",
-                "property": "AppCustCompanyMgmntShrholderId"
-              }
-            ],
-            "icon" : "ft-trash-2",
-            "anchor" : "warning"
-          }
-        ]
-      }
-    ]
-  }
+  "isSeq": true,
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Shareholder Name",
+      "name": "ShareholderName"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Shareholder Type",
+      "name": "ShareholderTypeDesc"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Is Signer",
+      "name": "IsSigner"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Is Owner",
+      "name": "IsOwner"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Is Active",
+      "name": "IsActive"
+    },
+    {
+      "type": "sort",
+      "position": "right",
+      "label": "Share(%)",
+      "name": "SharePrcnt"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ShareholderName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ShareholderTypeDesc"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "IsSigner"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "IsOwner"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "IsActive"
+    },
+    {
+      "type": "decimal",
+      "position": "right",
+      "property": "SharePrcnt",
+      "precision": "0.6",
+      "IsPrcnt": true
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "edit",
+          "property": [
+            {
+              "type": "AppCustId",
+              "property": "AppCustId"
+            },
+            {
+              "type": "ShareholderType",
+              "property": "ShareholderType"
+            },
+            {
+              "type": "AppCustCompanyMgmntShrholderId",
+              "property": "AppCustCompanyMgmntShrholderId"
+            },
+            {
+              "type": "mode",
+              "property": "edit"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
