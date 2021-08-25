@@ -133,14 +133,16 @@ export class SchmRegulerFixComponent implements OnInit {
     //   return;  
     // }
 
-    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+    if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
+      && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
       && this.ParentForm.controls.IsSubsidyRateExist.value == false
       && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
       this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE, this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt));
       return;
     }
 
-    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+    if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
+      && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
       && this.ParentForm.controls.IsSubsidyRateExist.value == true
       && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
       this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
@@ -196,11 +198,26 @@ export class SchmRegulerFixComponent implements OnInit {
           this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
           this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
           this.SetInstallmentTable();
-          this.SetNeedReCalculate(false);
 
           if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
             this.RefreshSubsidy.emit();
           }
+
+          if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+            && this.ParentForm.controls.IsSubsidyRateExist.value == false
+            && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
+            this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE, this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt));
+            return;
+          }
+
+          if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+            && this.ParentForm.controls.IsSubsidyRateExist.value == true
+            && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
+            this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
+            return;
+          }
+
+          this.SetNeedReCalculate(false);
         }
       );
     } else {
