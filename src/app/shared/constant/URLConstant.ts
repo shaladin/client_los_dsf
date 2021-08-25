@@ -1164,6 +1164,7 @@ export class URLConstant {
   public static AddEditDisbInfo = environment.losUrl + "/v1" + "/AppInvoice/AddEditDisbInfo";
   public static GetListAppInvoiceAppInvoiceDlrFncngHByAppId = environment.losUrl + "/v1" + "/AppInvoice/GetListAppInvoiceAppInvoiceDlrFncngHByAppId";
   public static UpdateAppInvoiceDlfn = environment.losUrl + "/v1" + "/AppInvoice/UpdateAppInvoiceDlfn";
+  public static UpdateAppInvoiceDlfnV2 = environment.losUrl + "/v2" + "/AppInvoice/UpdateAppInvoiceDlfn";
   public static GetDisbInfoByAppId = environment.losUrl + "/v1" + "/AppInvoice/GetDisbInfoByAppId";
   public static CekDifInvoiceAmountByAppId = environment.losUrl + "/v1" + "/AppInvoice/CekDifInvoiceAmountByAppId";
   public static GetAllNtfAppAmtByMouCustId = environment.losUrl + "/v1" + "/AppInvoice/GetAllNtfAppAmtByMouCustId";
@@ -1336,6 +1337,7 @@ export class URLConstant {
   public static ClaimTaskNapCustmainData = environment.losUrl + "/v1" + "/Application/ClaimTaskNapCustmainData";
   public static ClaimTaskNapCustmainDataV2 = environment.losUrl + "/v2" + "/Application/ClaimTaskNapCustmainData";
   public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
+  public static CompleteTask = environment.FoundationR3Url + "/v2" + "/Workflow/CompleteTask";
 
   //Application Data
   public static SaveApplicationDataFctr = environment.losUrl + "/v1" + "/ApplicationData/SaveApplicationDataFctr"
