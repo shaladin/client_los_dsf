@@ -4,6 +4,7 @@ import { FormArray, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -30,7 +31,7 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
     bizTemplateCode: string = "";
     viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
     AppId: number;
-    WfTaskListId: number;
+    WfTaskListId: any;
     TrxNo: string;
     token = localStorage.getItem(CommonConstant.TOKEN);
     LobCode: string;
@@ -44,7 +45,8 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
     });
     StepperIndex: number = 1;
 
-    constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
+    constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, 
+                private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
         this.route.queryParams.subscribe(params => {
             this.AppId = params["AppId"];
             this.WfTaskListId = params["TaskListId"];
@@ -162,16 +164,15 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
     }
 
-
-    async claimTask() {
-        var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-        wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-        wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-        this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-            () => {
-            });
-    }
+    claimTask(){
+        if(environment.isCore){
+          if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+            this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+          }
+        }else if (this.WfTaskListId > 0) {
+          this.claimTaskService.ClaimTask(this.WfTaskListId);
+        }
+      }
 
     GetCallBack(ev) {
         if (ev.Key == "ViewProdOffering") {
