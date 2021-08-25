@@ -22,6 +22,14 @@
         </div>
         <div class="row">
           <div class="col-md-6">
+            <label class="label-control" translate> Asset Price (Incl. Accessory) </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAssetObj.TotalAssetInclAccPrice | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
             <label class="label-control" translate> Total Accessory Price </label>
           </div>
           <div class="col-md-6 ">
@@ -68,7 +76,15 @@
             <label class="label-control" translate> Accessory DP Amount / Percentage </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{totalAccessoryDownPaymentAmt | number:'.2':'en-US'}} / {{totalAccessoryDownPaymentPrcnt | number:'.6':'en-US'}} % </label>
+            <label class="label-control"> {{crdRvwAssetObj.TotalAssetAccDpAmount | number:'.2':'en-US'}} / {{crdRvwAssetObj.TotalAssetAccDpPrcnt | number:'.6':'en-US'}} % </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control" translate> DP Amount (Incl. Accessory) / Percentage </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAssetObj.TotalAssetInclAccDpAmount | number:'.2':'en-US'}} / {{crdRvwAssetObj.TotalAssetInclAccDpPrcnt | number:'.6':'en-US'}} % </label>
           </div>
         </div>
         <div class="row">
@@ -106,7 +122,13 @@
               <span  name='AssetPrice' translate>Asset Price</span>
             </th>
             <th style="text-align: left;">
+              <span  name='AssetPrice' translate>Asset Price (Incl. Accessory)</span>
+            </th>
+            <th style="text-align: left;">
               <span  name='DPAmt_Prcnt' translate>DP Amount/Percentage</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='DPAmt_Prcnt' translate>DP Amount (Incl. Accessory)/Percentage </span>
             </th>
             <th style="text-align: left;">
               <span  name='Insurance' translate>Insurance</span>
@@ -126,7 +148,9 @@
             <td style="text-align: center;">{{i+1}}</td>
             <td style="text-align: left;">{{item.AssetName}}</td>
             <td style="text-align: left;">{{item.AssetPrice | number:'.2':'en-US'}}</td>
+            <td style="text-align: left;">{{item.TotalAssetInclAccPrice | number:'.2':'en-US'}}</td>
             <td style="text-align: left;">{{item.DpAmount | number:'.2':'en-US'}} / {{item.DpPrcnt | number:'.6':'en-US'}} %</td>
+            <td style="text-align: left;">{{item.TotalAssetInclAccDpAmount | number:'.2':'en-US'}} / {{item.TotalAssetInclAccDpPrcnt | number:'.6':'en-US'}} %</td>
             <td style="text-align: left;">{{item.Insurance}}</td>
             <td style="text-align: center;" *ngIf="item.IsDoubleFinancing">Yes</td>
             <td style="text-align: center;" *ngIf="!item.IsDoubleFinancing">No</td>
