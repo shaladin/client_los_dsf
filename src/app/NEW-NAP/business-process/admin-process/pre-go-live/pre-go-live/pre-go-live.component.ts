@@ -287,7 +287,6 @@ export class PreGoLiveComponent implements OnInit {
 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
-
     if (this.BizTemplateCode != CommonConstant.DF) {
       for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
         this.appTC = new AppTCObj();
@@ -367,14 +366,15 @@ export class PreGoLiveComponent implements OnInit {
       }
     );
   }
+
   claimTask(){
     if(environment.isCore){
-        if(this.TaskListId != "" && this.TaskListId != undefined){
+        if(this.TaskListId != "" && this.TaskListId!= undefined){
             this.claimTaskService.ClaimTaskV2(this.TaskListId);
         }
       }
-      else if (this.TaskListId > 0) {
-        this.claimTaskService.ClaimTask(this.TaskListId);
+      else if (this.TaskListId > 0) {
+         this.claimTaskService.ClaimTask(this.TaskListId);
       }
   }
 }

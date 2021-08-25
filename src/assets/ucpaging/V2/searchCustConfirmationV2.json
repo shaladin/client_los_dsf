@@ -1,10 +1,10 @@
 {
-    "title": "Pre Go Live Paging",
+    "title": "Customer Confirmation Paging",
     "exportExcel": false,
     "component": [
       {
         "type": "textbox",
-        "name": "app.APP_NO",
+        "name": "A.APP_NO",
         "id": "AppNoId",
         "value": "",
         "label": "Application No",
@@ -12,23 +12,23 @@
       },
       {
         "type": "textbox",
-        "name": "agr.AGRMNT_NO",
+        "name": "AGR.AGRMNT_NO",
         "id": "AgreementNoId",
         "value": "",
         "label": "Agreement No",
         "placeholder": "Placeholder"
-      },
+      }, 
       {
         "type": "textbox",
-        "name": "agr.CUST_NAME",
+        "name": "AGR.CUST_NAME",
         "id": "CustNameId",
         "value": "",
         "label": "Customer Name",
         "placeholder": "Placeholder"
-      },
+      }, 
       {
         "type": "textbox",
-        "name": "app.PROD_OFFERING_NAME",
+        "name": "A.PROD_OFFERING_NAME",
         "id": "ProdOfferingNameId",
         "value": "",
         "label": "Product Offering Name",
@@ -37,16 +37,16 @@
       {
         "type": "dropdown",
         "datatype": "text",
-        "name": "app.ORI_OFFICE_CODE",
+        "name": "A.ORI_OFFICE_CODE",
         "id": "OfficeNameId",
         "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
         "ddlType": "all",
-        "isQueryIn": true,
+        "isQueryIn" : true,
         "url": "",
         "environment": "FOU",
-        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
         "label": "Office Name",
         "items": [],
         "itemsUrl": []
@@ -69,10 +69,10 @@
       }
     ],
     "querystring": {
-      "name": "searchPreGoLiveV2"
+      "name": "searchCustConfirmationV2"
     },
     "orderby": {
-      "key": "app.APP_NO",
+      "key": "A.APP_NO",
       "value": "false"
     },
     "headerList": [
@@ -86,31 +86,31 @@
         "type": "sort",
         "position": "left",
         "label": "OFFICE",
-        "name": "app.ORI_OFFICE_NAME"
+        "name": "A.ORI_OFFICE_NAME"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "Application No",
-        "name": "app.APP_NO"
+        "name": "A.APP_NO"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "Agreement No",
-        "name": "agr.AGRMNT_NO"
-      },
+        "name": "AGR.AGRMNT_NO"
+      }, 
       {
         "type": "sort",
         "position": "left",
         "label": "Customer Name",
-        "name": "agr.CUST_NAME"
+        "name": "AGR.CUST_NAME"
       },
       {
         "type": "sort",
         "position": "left",
-        "label": "Product Offering Name",
-        "name": "agr.PROD_OFFERING_NAME"
+        "label": "PRODUCT OFFERING NAME",
+        "name": "A.PROD_OFFERING_NAME"
       },
       {
         "type": "label",
@@ -118,6 +118,7 @@
         "label": "Action"
       }
     ],
+  
     "bodyList": [
       {
         "type": "text",
@@ -154,7 +155,7 @@
             "property": "AgrmntId"
           }
         ]
-      },
+      }, 
       {
         "type": "text",
         "position": "left",
@@ -171,43 +172,32 @@
         "position": "center",
         "action": [
           {
-            "type": "switch",
-            "case": [
+            "type": "edit",
+            "path": "NAP_ADM_PRCS_CUST_CONFIRM_DETAIL",
+            "param": [
               {
-                "conditions": [
-                  {
-                    "isUser": true,
-                    "property": "Assignee",
-                    "value": null,
-                    "restriction": "EQ"
-                  }
-                ],
-                "result": {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
-                },
-                "isHide": false
+                "type": "AgrmntId",
+                "property": "AgrmntId"
               },
               {
-                "conditions": [
-                  {
-                    "isUser": false,
-                    "property": "Assignee",
-                    "value": null,
-                    "restriction": "EQ"
-                  }
-                ],
-                "result": {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
-                },
-                "isHide": false
+                "type": "AgrmntNo",
+                "property": "AgrmntNo"
+              },
+              {
+                "type": "TaskListId",
+                "property": "Id"
+              },
+              {
+                "type": "AppId",
+                "property": "AppId"
+              },
+              {
+                "type": "BizTemplateCode",
+                "property": "BizTemplateCode"
               }
             ]
           }
         ]
       }
     ]
-  }
+}  

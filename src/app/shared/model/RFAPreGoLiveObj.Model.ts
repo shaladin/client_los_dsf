@@ -13,7 +13,7 @@ export class RFAPreGoLiveObj {
     RowVersion: string;
     RequestRFAObj: any;
     constructor() {
-        this.TaskId = "",
+        this.TaskId = "";
         this.RowVersion = "";
         this.TaskListId = environment.isCore ? "" : 0;
     }

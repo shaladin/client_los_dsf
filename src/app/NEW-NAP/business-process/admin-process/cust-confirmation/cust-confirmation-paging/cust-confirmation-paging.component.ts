@@ -5,6 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { CookieService } from 'ngx-cookie';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-confirmation-paging',
@@ -14,8 +19,10 @@ export class CustConfirmationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit = [];
   bizTemplateCode: string;
+  IntegrationObj: IntegrationObj = new IntegrationObj();
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
@@ -28,13 +35,34 @@ export class CustConfirmationPagingComponent implements OnInit {
   }
 
   ngOnInit() {
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
     this.inputPagingObj._url = "./assets/ucpaging/searchCustConfirmation.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustConfirmation.json";
     this.arrCrit = new Array();
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WF.ACT_CODE';
-    critObj.value = "CNFR_" + this.bizTemplateCode;
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchCustConfirmationV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCustConfirmationV2.json";
+      this.inputPagingObj.isJoinExAPI = true
+      
+      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CRP_CF4W_AFT_ACT];
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.CNFR + this.bizTemplateCode;
+      this.RequestTaskModel.OfficeRoleCodes = [ UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE] ];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "AgrmntNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
+    else{
+      var critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionLike;
+      critObj.propName = 'WF.ACT_CODE';
+      critObj.value = "CNFR_" + this.bizTemplateCode;
+      this.arrCrit.push(critObj);
+    }
 
     var critBizTemplate = new CriteriaObj();
     critBizTemplate.propName = "A.BIZ_TEMPLATE_CODE";
@@ -42,7 +70,6 @@ export class CustConfirmationPagingComponent implements OnInit {
     critBizTemplate.value = this.bizTemplateCode;
 
     this.arrCrit.push(critBizTemplate);
-    this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 

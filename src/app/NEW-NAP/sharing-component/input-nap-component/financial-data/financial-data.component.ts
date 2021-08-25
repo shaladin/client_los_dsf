@@ -175,8 +175,8 @@ export class FinancialDataComponent implements OnInit {
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
-          PrcntDp: this.appFinDataObj.DownPaymentGrossAmt / (this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt) * 100,
-          PrcntDpNett: this.appFinDataObj.DownPaymentNettAmt / (this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt) * 100,
+          PrcntDp: this.appFinDataObj.DownPaymentGrossAmt / this.appFinDataObj.TotalAssetPriceAmt * 100,
+          PrcntDpNett: this.appFinDataObj.DownPaymentNettAmt / this.appFinDataObj.TotalAssetPriceAmt * 100,
 
           EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,

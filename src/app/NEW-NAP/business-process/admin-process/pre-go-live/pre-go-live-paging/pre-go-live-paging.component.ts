@@ -8,8 +8,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { CookieService } from 'ngx-cookie';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({

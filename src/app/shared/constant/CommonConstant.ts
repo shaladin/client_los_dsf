@@ -969,6 +969,8 @@ export class CommonConstant {
   public static WF_LTKM_REQ_AUTO = "WF_LTKM_REQ_AUTO";
   public static LTKM_VERIFY = "LTKM_VERIFY";
   public static LTKM_RTN = "LTKM_VERIFY";
+  public static RTN_ADD_TC = "RTN_ADD_TC_";
+  public static ADD_COLTR_ = "ADD_COLTR_";
 
 
 

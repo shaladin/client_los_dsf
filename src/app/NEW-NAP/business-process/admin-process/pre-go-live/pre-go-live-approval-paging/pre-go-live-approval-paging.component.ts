@@ -47,6 +47,12 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchPreGoLiveApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPreGoLiveApproval.json";
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchPreGoLiveApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchPreGoLiveApprovalV2.json";
+    }
+    
     this.inputPagingObj.addCritInput = new Array();
 
     if(environment.isCore){
