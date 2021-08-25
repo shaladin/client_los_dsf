@@ -43,9 +43,7 @@ export class CustCompletionPagingComponent implements OnInit {
 
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_DUP_CHECK_MD;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CDA;
-      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                               this.userAccess[CommonConstant.OFFICE_CODE], 
-                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE]];
 
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
@@ -55,8 +53,8 @@ export class CustCompletionPagingComponent implements OnInit {
       
       var critCurrStep = new CriteriaObj();
       critCurrStep.restriction = AdInsConstant.RestrictionEq;
-      critCurrStep.propName = 'a.CUST_CHECKING_STEP';
-      critCurrStep.value = "CDA";
+      critCurrStep.propName = 'A.CUST_CHECKING_STEP';
+      critCurrStep.value = "CDA_REQ";
       this.inputPagingObj.addCritInput.push(critCurrStep);
     } else {
       var critWorflowAct = new CriteriaObj();
