@@ -227,9 +227,19 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_APV;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_FCTR_APV;
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.TrxNo;
+
+    if(this.TrxType == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP)
+    {
+      this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_EXP_FCTR_APV;
+    }
+    else
+    {
+      this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_FCTR_APV;
+    }
+
     this.IsReady = true;
   }
 }

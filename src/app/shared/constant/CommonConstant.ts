@@ -153,6 +153,7 @@ export class CommonConstant {
   public static AppStepApv = "APV";
   public static AppStepRtn = "RTN";
   public static AppStepAgr = "AGR";
+  public static AppStepLiv = "LIV";
   public static AppStepPO = "PO";
   public static AppStepOFVC = "OFVC";
   public static AppStepOFVA = "OFVA";
@@ -758,6 +759,14 @@ export class CommonConstant {
   public static SCHM_CODE_AML_APV = "AML_APV_SCHM";
   public static SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL = "EDIT_APP_AFT_APV_APV_SCHM_NORMAL";
   public static SCHM_CODE_CHG_MOU_APV = "CHG_MOU_APV";
+  public static SCHM_CODE_CHG_MOU_DLFN_APV = "CHG_MOU_DLFN_APV";
+  public static SCHM_CODE_CHG_MOU_FCTR_APV  = "CHG_MOU_FCTR_APV ";
+  public static SCHM_CODE_MOU_FRZ_UNFRZ_DLFN = "MOU_FRZ_UNFRZ_DLFN";
+  public static SCHM_CODE_MOU_FRZ_UNFRZ_FCTR = "MOU_FRZ_UNFRZ_FCTR";
+  public static SCHM_CODE_CHG_MOU_EXP_APV = "CHG_MOU_EXP_APV";
+  public static SCHM_CODE_CHG_MOU_EXP_DLFN_APV = "CHG_MOU_EXP_DLFN_APV";
+  public static SCHM_CODE_CHG_MOU_EXP_FCTR_APV = "CHG_MOU_EXP_FCTR_APV";
+
 
   public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
   public static CAT_CODE_MOU_APV_DLFN = "MOUC_DLFN_APV";
@@ -844,6 +853,7 @@ export class CommonConstant {
   //MOU TYPE
   public static MOU_TYPE_GENERAL = "GENERAL";
   public static MOU_TYPE_FACTORING = "FACTORING";
+  public static MOU_TYPE_DLFN = "FINANCING";
 
   //Cashflow Item Type
   public static CashFlowItemMasterCodeFeeCptlz = "CASHFLOW_FEE_CPTLZ";
