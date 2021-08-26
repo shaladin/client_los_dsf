@@ -52,11 +52,11 @@ export class AgrmntActivationPagingComponent implements OnInit {
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
 
-      // var critCurrStep = new CriteriaObj();
-      // critCurrStep.restriction = AdInsConstant.RestrictionEq;
-      // critCurrStep.propName = 'A.APP_CURR_STEP';
-      // critCurrStep.value = CommonConstant.AppStepAgr;
-      // this.inputPagingObj.addCritInput.push(critCurrStep);
+      var critCurrStep = new CriteriaObj();
+      critCurrStep.restriction = AdInsConstant.RestrictionIn;
+      critCurrStep.propName = 'A.APP_CURR_STEP';
+      critCurrStep.listValue = [CommonConstant.AppStepAgr, CommonConstant.AppStepLiv];
+      this.inputPagingObj.addCritInput.push(critCurrStep);
     }
     else {
       var arrCrit = new Array();

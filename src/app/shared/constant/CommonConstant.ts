@@ -153,6 +153,7 @@ export class CommonConstant {
   public static AppStepApv = "APV";
   public static AppStepRtn = "RTN";
   public static AppStepAgr = "AGR";
+  public static AppStepLiv = "LIV";
   public static AppStepPO = "PO";
   public static AppStepOFVC = "OFVC";
   public static AppStepOFVA = "OFVA";
