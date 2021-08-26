@@ -22,6 +22,7 @@ import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -148,17 +149,19 @@ export class NapDetailFormComponent implements OnInit {
       var appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
+          if (response != null && ((response["CustNo"] != null && response["CustNo"] != "") || (response["ApplicantNo"] != null && response["ApplicantNo"] != ""))) {
+            let trxNo;
           this.appNo = this.NapObj.AppNo;
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           let isExisting = response['IsExistingCust'];
           if (isExisting) {
-            let custNo = response['CustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+            trxNo = response['CustNo'];
           }
           else {
-            this.dmsObj.MetadataParent = null;
+            trxNo = response['ApplicantNo'];
           }
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
   
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
@@ -174,7 +177,10 @@ export class NapDetailFormComponent implements OnInit {
           else {
             this.isDmsReady = true;
           }
+        } else {
+          this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
         }
+      }
       );
     }  
   }

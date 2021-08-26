@@ -10,6 +10,7 @@ import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskMod
 import { CookieService } from 'ngx-cookie';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-purchase-order-paging',
@@ -46,7 +47,7 @@ export class PurchaseOrderPagingComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchPurchaseOrderV2.json";
       this.inputPagingObj.isJoinExAPI = true
       
-      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CRP_CF4W_AFT_ACT, CommonConstant.WF_CRP_FL4W_AFT_ACT];
+      this.RequestTaskModel.ProcessKey = String.Format(CommonConstant.WF_CRP_AFT_ACT, this.bizTemplateCode);
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_PO + this.bizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
