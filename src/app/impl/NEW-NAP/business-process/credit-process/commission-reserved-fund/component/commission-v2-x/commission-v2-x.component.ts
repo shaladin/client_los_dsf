@@ -99,15 +99,15 @@ export class CommissionV2XComponent implements OnInit {
   HideForm1: boolean = false;
   HideForm2: boolean = false;
   HideForm3: boolean = false;
-  listPriority: Array<string> = new Array();
+  listPrioritySuppl: Array<string> = new Array();
+  listPrioritySupplEmp: Array<string> = new Array();
+  listPriorityReferantor: Array<string> = new Array();
   ListSupplEmpPos: Array<RefMasterObj> = new Array<RefMasterObj>();
 
   async ngOnInit() {
     this.AppId = this.ReturnHandlingHObj.AppId;
     this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
     this.ActRemainingAlloc = this.maxAllocAmt - this.totalRsvFundAmt;
-    console.log(this.RemainingAllocAmt)
-    console.log(this.ActRemainingAlloc)
     
     await this.GetListAppReservedFundByAppId();
     await this.GetListAllocatePriority();
@@ -122,7 +122,9 @@ export class CommissionV2XComponent implements OnInit {
   async GetListAllocatePriority(){
     await this.http.post(URLConstantX.GetAppRsvFundPriorityRule, {Id: this.AppId}).toPromise().then(
       (response) => {
-        this.listPriority = response[CommonConstant.ReturnObj];
+        this.listPrioritySuppl = response["ListPrioritySupplier"];
+        this.listPrioritySupplEmp = response["ListPrioritySupplEmp"];
+        this.listPriorityReferantor = response["ListPriorityReferantor"];
       }
     );
   }
@@ -140,7 +142,6 @@ export class CommissionV2XComponent implements OnInit {
   async EmpPositionSectValidate()
   {
     let validateInsurance: boolean = false;
-    console.log(this.ListResultRefundIncomeInfo)
     for(let i=0;i<this.ListResultRefundIncomeInfo.length;i++)
     {
       if(this.ListResultRefundIncomeInfo[i].RefundAllocationFrom == CommonConstantX.AllocationFronInsuranceIncomeCode && this.ListResultRefundIncomeInfo[i].RefundAmount > 0)
@@ -158,7 +159,6 @@ export class CommissionV2XComponent implements OnInit {
     {
       await this.http.post(URLConstantX.GetAppAssetByAppIdConditionNewBrandMitsubishi, {Id: this.AppId}).toPromise().then(
         (response) => {
-          console.log(response)
           if(response[CommonConstant.ReturnObj].length > 0)
           {
             this.SectionPosition = true;
@@ -175,7 +175,6 @@ export class CommissionV2XComponent implements OnInit {
           this.ListSupplEmpPos = response[CommonConstant.ReturnObj];
         }
       );
-      console.log(this.ListSupplEmpPos)
     }
   }
 
@@ -242,7 +241,7 @@ export class CommissionV2XComponent implements OnInit {
     await this.http.post(URLConstantX.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
         var ResponseObj = response[CommonConstant.ReturnObj];
-        console.log(ResponseObj)
+
         // override hide suppl & suppl emp jika CFRFN4W ignore rule
         if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.LobCode == CommonConstantX.SLB)
         {
@@ -370,7 +369,6 @@ export class CommissionV2XComponent implements OnInit {
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
         var tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
-        console.log(tempObj)
         if (tempObj.length > 0) {
           this.isAutoGenerate = false;
           this.GetFormAddDynamicObj(CommonConstant.ContentSupplier);
@@ -446,16 +444,17 @@ export class CommissionV2XComponent implements OnInit {
   DictTempRemainingIncomeForm: Object = {}
   async NewCalculateTotal(){
     console.log("CALCULATE NEW");
-    console.log(this.CommissionForm)
     this.DictTempRemainingIncomeForm = new Object();
-    for(let j=0;j<this.listPriority.length;j++)
+    
+    for(var dict in this.DictRemainingIncomeForm)
     {
-      let TempObj = new ResultRefundObj();
-      TempObj.RefundAllocationFrom = this.DictRemainingIncomeForm[this.listPriority[j]].RefundAllocationFrom;
-      TempObj.RefundAllocationFromDesc = this.DictRemainingIncomeForm[this.listPriority[j]].RefundAllocationFromDesc;
-      TempObj.RefundAmount = this.DictRemainingIncomeForm[this.listPriority[j]].RefundAmount;
-      this.DictTempRemainingIncomeForm[this.listPriority[j]] = TempObj;
+        let TempObj = new ResultRefundObj();
+        TempObj.RefundAllocationFrom = this.DictRemainingIncomeForm[dict].RefundAllocationFrom;
+        TempObj.RefundAllocationFromDesc = this.DictRemainingIncomeForm[dict].RefundAllocationFromDesc;
+        TempObj.RefundAmount = this.DictRemainingIncomeForm[dict].RefundAmount;
+        this.DictTempRemainingIncomeForm[dict] = TempObj;
     }
+ 
     this.totalSupplier = 0;
     this.totalSupplierEmp = 0;
     this.totalReferantor = 0;
@@ -473,6 +472,7 @@ export class CommissionV2XComponent implements OnInit {
     if(this.AllocateDataWithPriority(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
     if(this.AllocateDataWithPriority(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
     if(this.AllocateDataWithPriority(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    
 
     if(listVendorCode.length > 0)
     {
@@ -485,8 +485,6 @@ export class CommissionV2XComponent implements OnInit {
         ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
         IsSave: false,
       };
-      console.log(obj)
-      console.log(this.ListAppCommHObj)
 
       await this.http.post<ResponseTaxDetailObj>(URLConstantX.GetAppCommissionTaxAndCalcGrossYieldX, obj).toPromise().then(
         (response) => {
@@ -508,8 +506,6 @@ export class CommissionV2XComponent implements OnInit {
         }
       );
     }
-    console.log(this.ListAppCommHObj)
-
   }
 
   mapTaxData(identifier: string, TaxDetailData: ResponseTaxDetailObj, idxStart: number, idxEnd: number)
@@ -610,7 +606,7 @@ export class CommissionV2XComponent implements OnInit {
           const tempListAllocIdxAt = tempListAllocated.get(idx.toString()) as FormGroup;
           const AllocAmt = tempListAllocIdxAt.get("AllocationAmount").value;
 
-          var tempListTrxAmt: Array<number> = this.allocateValue(AllocAmt, tempAppComm.ListappCommissionDObj);
+          var tempListTrxAmt: Array<number> = this.allocateValue(AllocAmt, tempAppComm.ListappCommissionDObj, identifier);
           totalCommAmt = AllocAmt;      
         
         if (totalCommAmt == 0) {
@@ -702,46 +698,49 @@ export class CommissionV2XComponent implements OnInit {
   }
 
 
-  allocateValue(allocAmt: number, tempListAppCommD: Array<AppCommissionDObjX>)
+  allocateValue(allocAmt: number, tempListAppCommD: Array<AppCommissionDObjX>, identifier:string)
   {
     var tempListTrxAmt = new Array<number>();
-    for(var i=0;i<this.listPriority.length;i++)
+    let listPriority = new Array<string>();
+    if(identifier == CommonConstant.CommissionIdentifierSupplier) listPriority = this.listPrioritySuppl;
+    else if(identifier == CommonConstant.CommissionIdentifierSupplierEmp) listPriority = this.listPrioritySupplEmp;
+    else if(identifier == CommonConstant.CommissionIdentifierReferantor) listPriority = this.listPriorityReferantor;
+
+    for(var i=0;i<listPriority.length;i++)
     {
       if(allocAmt == 0)break;
 
-      if(this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount > 0)
+      if(this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount > 0)
       {
         var tempDObj = new AppCommissionDObjX();
-        if(this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount < allocAmt)
+        if(this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount < allocAmt)
         {
-          allocAmt = allocAmt - this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount;
+          allocAmt = allocAmt - this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount;
 
-          tempListTrxAmt.push(this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount);
-          tempDObj.MrCommissionSourceCode= this.listPriority[i],
-          tempDObj.CommissionAmt= this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount,
-          tempDObj.RefundAmt= this.DictMaxIncomeForm[this.listPriority[i]].RefundAmount,
-          tempDObj.CommissionAmtAfterTax = this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount;
+          tempListTrxAmt.push(this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount);
+          tempDObj.MrCommissionSourceCode= listPriority[i],
+          tempDObj.CommissionAmt= this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount,
+          tempDObj.RefundAmt= this.DictMaxIncomeForm[listPriority[i]].RefundAmount,
+          tempDObj.CommissionAmtAfterTax = this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount;
 
           tempListAppCommD.push(tempDObj);
 
-          this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount = 0;
+          this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount = 0;
         }
-        else if(this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount >= allocAmt)
+        else if(this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount >= allocAmt)
         {
-          this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount = this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount - allocAmt
+          this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount = this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount - allocAmt
 
           tempListTrxAmt.push(allocAmt);
-          tempDObj.MrCommissionSourceCode= this.listPriority[i],
+          tempDObj.MrCommissionSourceCode= listPriority[i],
           tempDObj.CommissionAmt= allocAmt,
-          tempDObj.RefundAmt= this.DictMaxIncomeForm[this.listPriority[i]].RefundAmount,
+          tempDObj.RefundAmt= this.DictMaxIncomeForm[listPriority[i]].RefundAmount,
           tempDObj.CommissionAmtAfterTax = allocAmt;
 
           tempListAppCommD.push(tempDObj);
           allocAmt = 0;
           break;
         }
-        console.log(this.listPriority[i])
-        console.log(tempListTrxAmt)
       }
     }
     return tempListTrxAmt;
@@ -777,7 +776,7 @@ export class CommissionV2XComponent implements OnInit {
       ListAppCommissionHEditObj: listAppCommissionHEditObj
     };
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    console.log(obj)
+
     this.http.post(URLConstantX.AddEditAppCommissionData, obj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
