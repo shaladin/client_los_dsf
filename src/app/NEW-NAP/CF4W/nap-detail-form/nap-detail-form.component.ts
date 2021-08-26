@@ -21,6 +21,7 @@ import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { environment } from 'environments/environment';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -92,12 +93,12 @@ export class NapDetailFormComponent implements OnInit {
     });
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     // check DMS
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
-    });
+      });
     this.claimTask();
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
@@ -129,12 +130,12 @@ export class NapDetailFormComponent implements OnInit {
     }
     this.IsDataReady = true;
     this.MakeViewReturnInfoObj();
-    
+
 
   }
 
   async initDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -144,35 +145,40 @@ export class NapDetailFormComponent implements OnInit {
       var appObj = { Id: this.appId };
       await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
         async (response) => {
-          this.appNo = this.NapObj.AppNo;
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-          let isExisting = response['IsExistingCust'];
-          if (isExisting) {
-            let custNo = response['CustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
-          }
-          else {
-            this.dmsObj.MetadataParent = null;
-          }
-  
-          let mouId = this.NapObj.MouCustId;
-          if (mouId != null && mouId != 0) {
-            let mouObj = { Id: mouId };
-            await this.http.post(URLConstant.GetMouCustById, mouObj).toPromise().then(
-              result => {
-                let mouCustNo = result['MouCustNo'];
-                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-                this.isDmsReady = true;
-              }
-            )
-          }
-          else {
-            this.isDmsReady = true;
+          if (response != null && ((response["CustNo"] != null && response["CustNo"] != "") || (response["ApplicantNo"] != null && response["ApplicantNo"] != ""))) {
+            let trxNo;
+            this.appNo = this.NapObj.AppNo;
+            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            let isExisting = response['IsExistingCust'];
+            if (isExisting) {
+              trxNo = response['CustNo'];
+            }
+            else {
+              trxNo = response['ApplicantNo'];
+            }
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
+
+            let mouId = this.NapObj.MouCustId;
+            if (mouId != null && mouId != 0) {
+              let mouObj = { Id: mouId };
+              await this.http.post(URLConstant.GetMouCustById, mouObj).toPromise().then(
+                result => {
+                  let mouCustNo = result['MouCustNo'];
+                  this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                  this.isDmsReady = true;
+                }
+              )
+            }
+            else {
+              this.isDmsReady = true;
+            }
+          } else {
+            this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
           }
         }
       );
-    }  
+    }
   }
 
   stepperMode: string = CommonConstant.CustTypeCompany;
@@ -232,7 +238,7 @@ export class NapDetailFormComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
       this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
@@ -321,10 +327,10 @@ export class NapDetailFormComponent implements OnInit {
     )
   }
 
-  CheckIsUseDms(){
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+  CheckIsUseDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.NextStep(CommonConstant.AppStepUplDoc);
-    }else{
+    } else {
       this.LastStepHandler();
     }
   }
@@ -345,7 +351,7 @@ export class NapDetailFormComponent implements OnInit {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
 
         })
-    }  
+    }
   }
 
   Cancel() {
@@ -380,14 +386,14 @@ export class NapDetailFormComponent implements OnInit {
     this.NextStep(CommonConstant.AppStepGuar);
   }
 
-  claimTask(){
-    if(environment.isCore){
-      if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
-        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-      }
-    }
-    else if (this.wfTaskListId> 0) {
-        this.claimTaskService.ClaimTask(this.wfTaskListId);
-    }
+  claimTask() {
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }

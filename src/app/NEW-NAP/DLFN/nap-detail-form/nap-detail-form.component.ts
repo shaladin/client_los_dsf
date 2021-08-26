@@ -18,7 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import {ResSysConfigResultObj} from '../../../shared/model/Response/ResSysConfigResultObj.model';
+import { ResSysConfigResultObj } from '../../../shared/model/Response/ResSysConfigResultObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
@@ -106,7 +106,7 @@ export class NapDetailFormComponent implements OnInit {
           this.NapObj = response;
           if (this.ReturnHandlingHId > 0) {
             this.stepper.to(this.AppStepIndex);
-          }else{
+          } else {
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
             this.stepper.to(this.AppStepIndex);
             if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
@@ -174,32 +174,37 @@ export class NapDetailFormComponent implements OnInit {
 
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
-          this.appNo = this.NapObj.AppNo;
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-          let isExisting = response['IsExistingCust'];
-          if (isExisting) {
-            let custNo = response['CustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
-          }
-          else {
-            this.dmsObj.MetadataParent = null;
-          }
+          if (response != null && ((response["CustNo"] != null && response["CustNo"] != "") || (response["ApplicantNo"] != null && response["ApplicantNo"] != ""))) {
+            let trxNo;
+            this.appNo = this.NapObj.AppNo;
+            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            let isExisting = response['IsExistingCust'];
+            if (isExisting) {
+              trxNo = response['CustNo'];
+            }
+            else {
+              trxNo = response['ApplicantNo'];
+            }
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
 
-          let mouId = this.NapObj.MouCustId;
-          console.log(this.NapObj.MouCustId);
-          if (mouId != null && mouId != 0) {
-            let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                let mouCustNo = result['MouCustNo'];
-                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-                this.isDmsReady = true;
-              }
-            )
-          }
-          else {
-            this.isDmsReady = true;
+            let mouId = this.NapObj.MouCustId;
+            console.log(this.NapObj.MouCustId);
+            if (mouId != null && mouId != 0) {
+              let mouObj = { Id: mouId };
+              this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+                result => {
+                  let mouCustNo = result['MouCustNo'];
+                  this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                  this.isDmsReady = true;
+                }
+              )
+            }
+            else {
+              this.isDmsReady = true;
+            }
+          } else {
+            this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
           }
         }
       );
@@ -346,9 +351,9 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   ClaimTask() {
-    if(environment.isCore){
+    if (environment.isCore) {
       this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-    }else{
+    } else {
       this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
     }
   }

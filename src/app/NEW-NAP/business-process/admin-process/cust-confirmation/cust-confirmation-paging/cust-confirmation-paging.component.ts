@@ -10,6 +10,7 @@ import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskMod
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-cust-confirmation-paging',
@@ -46,7 +47,7 @@ export class CustConfirmationPagingComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCustConfirmationV2.json";
       this.inputPagingObj.isJoinExAPI = true
       
-      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CRP_CF4W_AFT_ACT];
+      this.RequestTaskModel.ProcessKey = String.Format(CommonConstant.WF_CRP_AFT_ACT, this.bizTemplateCode);
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CNFR + this.bizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [ UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE] ];
       

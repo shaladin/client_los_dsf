@@ -181,6 +181,7 @@ export class ExceptionConstant {
     public static ACCESSORY_PRICE_NOT_SET = "Please Input Accessory Price";
 
     public static PLEASE_COMPLETE_FOLLOWING_FIELD = "Please Complete the following field : ";
+    public static DUP_CHECK_NOT_COMPLETE = "Please complete Duplicate checking first";
     
 }
 
