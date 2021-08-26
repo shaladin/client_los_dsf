@@ -244,10 +244,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId > 0) {
-
-    }
-    else {
+    if (this.ReturnHandlingHId == 0) {
       this.NapObj.AppCurrStep = Step;
       this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
         (response) => {
@@ -274,8 +271,9 @@ export class NapDetailFormComponent implements OnInit {
   LastStepHandler() {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.NapObj.AppId;
-    reqObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+    reqObj.WfTaskListId = this.wfTaskListId;      
+    let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+    this.http.post(SubmitNAPUrl, reqObj).subscribe(
       (response) => {
         this.Cancel();
       })
