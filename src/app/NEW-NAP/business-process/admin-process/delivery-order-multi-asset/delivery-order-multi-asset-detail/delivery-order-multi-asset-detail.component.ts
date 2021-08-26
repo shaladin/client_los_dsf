@@ -22,6 +22,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
 import { AssetListForDOMultiAssetObj } from 'app/shared/model/AssetListForDOMultiAssetObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -38,7 +39,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   isCreateDOInvalid: boolean;
   createDOInvalidMsg: string;
   arrValue: Array<number> = new Array();
-  wfTaskListId: number;
+  wfTaskListId: any;
   isFinal: boolean;
   isHideDP: boolean = true;
 
@@ -86,9 +87,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
-    if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
-      this.claimTaskService.ClaimTask(this.wfTaskListId);
-    }
+    this.claimTask();
     let GetDoObj = new ReqGetDOMultiAssetInformationObj();
     GetDoObj.AppId = this.appId;
     GetDoObj.AgrmntId = this.agrmntId;
@@ -381,7 +380,13 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         // var tcFormData = this.AppTcForm.value.TCList;
         var tcFormData = { "ListAppTcObj": [...this.AppTcForm.getRawValue().TCList] };
         let editTc = this.httpClient.post(URLConstant.EditAppTc, tcFormData);
-        let submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
+        var submitDO = null;
+        if(environment.isCore){
+          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+        }
+        else{
+          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
+        }
         forkJoin([editTc, submitDO]).subscribe(
           (response) => {
             this.toastr.successMessage(response[1]["Message"]);
@@ -393,5 +398,16 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.COMPLETE_SERIAL_NO_1_And_2_ALL_ASSET);
       }
     }
+  }
+
+  claimTask(){
+    if(environment.isCore){
+        if(this.wfTaskListId != "" && this.wfTaskListId != undefined){
+          this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+        }
+      }
+      else if (this.wfTaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+      }
   }
 }

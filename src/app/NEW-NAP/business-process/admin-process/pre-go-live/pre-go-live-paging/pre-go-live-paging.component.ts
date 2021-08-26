@@ -47,9 +47,11 @@ export class PreGoLivePagingComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchPreGoLiveV2.json";
       this.inputPagingObj.isJoinExAPI = true
       
-      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CRP_CF4W_AFT_ACT, CommonConstant.WF_CRP_FCTR_AFTER_ACT];
+      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CRP_CF4W_AFT_ACT, CommonConstant.WF_CRP_FCTR_AFTER_ACT, CommonConstant.WF_CRP_FL4W_AFT_ACT];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_PGLV + this.bizTemplateCode;
-      this.RequestTaskModel.OfficeRoleCodes = [ UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE] ];
+      this.RequestTaskModel.OfficeRoleCodes = [ UserAccess[CommonConstant.ROLE_CODE],
+                                                UserAccess[CommonConstant.OFFICE_CODE],
+                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE] ];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
