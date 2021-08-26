@@ -385,7 +385,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
           submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
         }
         else{
-          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
+          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
         }
         forkJoin([editTc, submitDO]).subscribe(
           (response) => {
