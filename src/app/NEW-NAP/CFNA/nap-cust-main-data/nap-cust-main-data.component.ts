@@ -62,6 +62,8 @@ export class NapCustMainDataComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
+      }else{
+        this.wfTaskListId = environment.isCore ? "" : 0;
       }
       if(params["from"]!= null)
       {
@@ -175,11 +177,8 @@ export class NapCustMainDataComponent implements OnInit {
 
   claimTask(){
     if(environment.isCore){
-    if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
       this.claimTaskService.ClaimTaskNapCustMainDataV2(this.appId, this.wfTaskListId);
-      }
-    }
-    else if (this.wfTaskListId > 0){
+    }else{
       this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
     }
   }
