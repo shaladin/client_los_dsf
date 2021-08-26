@@ -401,6 +401,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
               this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
               this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+              this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+              this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
             });
 
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -439,6 +441,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
               this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
               this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+              this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+              this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
             });
 
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -584,6 +588,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
                 this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
                 this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+                this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+                this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
 
                 // this.inputAddressObjForLegalAddr.isRequired = true;
               });
@@ -626,6 +632,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
                 this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
 
                 this.inputAddressObjForResidenceAddr.isRequired = false;
+                this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+                this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
               });
 
             this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -830,6 +838,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value };
     this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
     this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+
+    this.setEnableZipcodeLookup();
   }
 
   setLegalAddr() {
@@ -1309,5 +1319,12 @@ export class NewLeadInputCustDataComponent implements OnInit {
     }
   }
 
+  setEnableZipcodeLookup() {
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
+
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
+  }
 }
 

@@ -44,14 +44,16 @@ export class LeadCancelComponent implements OnInit {
       this.tempPagingObj.isJoinExAPI = true
       
       this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CODE_LEAD,CommonConstant.WF_CODE_SIMPLE_LEAD];
-      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
-      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
+                                               UserAccess[CommonConstant.OFFICE_CODE],
+                                               UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE],
+                                              ];
       
-      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "LeadNo";
-      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.IntegrationObj.rightColumnToJoin = "BusinessKey";
       this.tempPagingObj.integrationObj = this.IntegrationObj;
     }
 
@@ -83,8 +85,8 @@ export class LeadCancelComponent implements OnInit {
       this.tempLeadCancelObj.LeadIds.push(this.listSelectedId[index].LeadId);
 
       if(environment.isCore) {
-        if (this.listSelectedId[index].ExecutionId != undefined && this.listSelectedId[index].ExecutionId != null)
-          this.tempLeadCancelObj.listWfTaskListId.push(this.listSelectedId[index].ExecutionId);
+        if (this.listSelectedId[index].Id != undefined && this.listSelectedId[index].Id != null)
+          this.tempLeadCancelObj.listWfTaskListId.push(this.listSelectedId[index].Id);
           
         continue;
       }
