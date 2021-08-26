@@ -1,3 +1,5 @@
+import { CurrencyMaskInputMode } from "ngx-currency";
+
 export class CommonConstantX {
 
     //RefMaster
@@ -41,4 +43,6 @@ export class CommonConstantX {
 
     //Default SlikSecEcoCode
     public static DefaultSlikSecEcoCode = "ECOSLIK_DEFAULT";
+
+    public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }

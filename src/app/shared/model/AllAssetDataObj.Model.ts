@@ -6,6 +6,7 @@ import { AppCollateralAccessoryObj } from "./AppCollateralAccessoryObj.Model";
 import { AppCollateralAttrObj } from "./AppCollateralAttrObj.Model";
 import { AppAssetAttrObj } from "./AppAssetAttrObj.Model";
 import { AppAssetAccessoryObj } from "./AppAssetAccessoryObj.model";
+import { AppCollateralDocObj } from "./AppCollateralDocObj.Model";
 
 export class AllAssetDataObj {
   AppAssetObj: AppAssetObj;
@@ -18,6 +19,7 @@ export class AllAssetDataObj {
   AppCollateralAccessoryObjs: Array<AppCollateralAccessoryObj>;
   AppCollateralAttrObj: Array<AppCollateralAttrObj>;
   AppAssetAttrObj: Array<AppAssetAttrObj>;
+  ListAppCollateralDocObj: Array<AppCollateralDocObj>;
   LOBCode: string;
   IsAppAssetAccessoryChanged: boolean;
   VendorEmpId: number;
@@ -36,6 +38,7 @@ export class AllAssetDataObj {
     this.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
     this.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
     this.AppAssetAttrObj = new Array<AppAssetAttrObj>();
+    this.ListAppCollateralDocObj= new Array<AppCollateralDocObj>();
     this.RowVersion = "";
     this.LOBCode = "";
     this.VendorEmpId = 0;

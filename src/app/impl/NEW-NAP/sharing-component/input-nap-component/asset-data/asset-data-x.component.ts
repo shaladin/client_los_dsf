@@ -43,6 +43,9 @@ import { VendorEmpObj } from "app/shared/model/VendorEmp.Model";
 import { environment } from "environments/environment";
 import { AppCustPersonalJobDataObj } from "app/shared/model/AppCustPersonalJobDataObj.Model";
 import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPersonalObj.Model";
+import { ListAppCollateralDocObj } from "app/shared/model/ListAppCollateralDocObj.Model";
+import { AppCollateralDocObj } from "app/shared/model/AppCollateralDocObj.Model";
+import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
 
 @Component({
     selector: 'app-asset-data-x',
@@ -57,6 +60,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
     @Input() mode: string;
     @Output() outputTab: EventEmitter<any> = new EventEmitter();
     @Output() assetValue: EventEmitter<object> = new EventEmitter();
+    @Output() outputCancel: EventEmitter<any> = new EventEmitter();
     BranchManagerName: string = "-";
     inputFieldOwnerAddrObj: InputFieldObj;
     ownerAddrObj: AddrObj;
@@ -84,6 +88,9 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
     appCollateralRegistObj: AppCollateralRegistrationObj;
     isAddressObjDelvReady: boolean = false;
     isAddressObjLocReady: boolean = false;
+    IsReady: boolean = false;
+    listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
+    appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   
     AssetDataForm = this.fb.group({
       /* AppAsset Value that in form*/
@@ -92,7 +99,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
       SupplName: ['', Validators.maxLength(500)],
       AssetPriceAmt: ['', Validators.required],
-      DownPaymentAmt: ['', Validators.required],
+      DownPaymentAmt: ['', [Validators.required, Validators.min(0.00)]],
       DownPaymentPrctg: ['', Validators.max(100)],
       AssetNotes: ['', [Validators.maxLength(4000)]],
       Color: ['', Validators.maxLength(50)],
@@ -135,7 +142,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       /*App Collateral Regist*/
       UserName: ['', Validators.maxLength(50)],
       MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-      OwnerName: ['', Validators.maxLength(50)],
+      OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
       MrIdTypeCode: ['', Validators.maxLength(50)],
       OwnerIdNo: ['', Validators.maxLength(50)],
       MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -172,6 +179,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       AssetAccessoriesObjs: this.fb.array([]),
       items: this.fb.array([]),
       AppAssetAttrObjs: this.fb.array([]),
+      ListDoc: this.fb.array([])
     });
   
     CustType: string = "";
@@ -319,6 +327,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
     ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
     LastRequestedDate: any = "";
   
+    readonly CurrencyMaskPrct = CommonConstantX.CurrencyMaskPrct;
     constructor(
       private fb: FormBuilder,
       private http: HttpClient,
@@ -380,6 +389,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
         this.AssetDataForm.controls.MrOwnerRelationshipCode.clearValidators();
         this.AssetDataForm.controls.selectedDpType.clearValidators();
         this.AssetDataForm.controls.MrIdTypeCode.clearValidators();
+        this.AssetDataForm.controls.OwnerName.clearValidators();
         await this.getListAllAssetData();
       }
       else if(this.mode == 'editAsset') {
@@ -680,83 +690,32 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
         var confirmMsg = "";
         this.isValidOk = true;
         await this.CheckValidation();
-        if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
-          if (this.AssetDataForm.controls.DownPaymentAmt.value < 0) {
-            this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_MORE_THAN + "0.");
-            this.isValidOk = false;
-          }
-          if (this.AssetDataForm.controls.DownPaymentAmt.value > this.AssetDataForm.controls.AssetPriceAmt.value) {
-            this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_LESS_THAN + "Asset Price");
-            this.isValidOk = false;
-          }
-        }
-        if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
-          var tempAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
-          if (tempAmt < 0) {
-            this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_MORE_THAN + "0.");
-            this.isValidOk = false;
-          }
-          if (tempAmt > this.AssetDataForm.controls.AssetPriceAmt.value) {
-            this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_LESS_THAN + "Asset Price");
-            this.isValidOk = false;
-          }
-        }
-  
         if (this.CheckValidationObj) {
+          let sumAssetAccessories: number = 0;
+          if(assetForm.AssetAccessoriesObjs.length > 0){
+            sumAssetAccessories = assetForm.AssetAccessoriesObjs.map(x => x.AccessoryPriceAmt).reduce((acc, curr) => acc + curr);
+          }
+  
           if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
             if (assetForm.DownPaymentPrctg < this.CheckValidationObj.DPMin) {
               this.isValidOk = false;
+              confirmMsg = "Down Payment Percentage is Lower than Minimum Percentage";
             }
             else if (assetForm.DownPaymentPrctg > this.CheckValidationObj.DPMax) {
               this.isValidOk = false;
-            }
-            if (this.AssetDataForm.controls.DownPaymentAmt.value > this.AssetDataForm.controls.AssetPriceAmt.value) {
-              this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_LESS_THAN + "Asset Price");
+              confirmMsg = "Down Payment Percentage is Higher than Maximum Percentage";
             }
           }
-  
-          if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
-            var tempAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
-            if (tempAmt < 0) {
-              this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_MORE_THAN + "0.");
+          else {
+            var assetDPMin = (this.CheckValidationObj.DPMin / 100) * (assetForm.AssetPriceAmt + sumAssetAccessories);
+            var assetDPMax = (this.CheckValidationObj.DPMax / 100) * assetForm.AssetPriceAmt;
+            if (assetForm.DownPaymentAmt < assetDPMin) {
+              this.isValidOk = false;
+              confirmMsg = "Down Payment Amount is Lower than Minimum Amount";
             }
-            else {
-              var assetDPMin = (this.CheckValidationObj.DPMin / 100) * assetForm.AssetPriceAmt;
-              var assetDPMax = (this.CheckValidationObj.DPMax / 100) * assetForm.AssetPriceAmt;
-              if (assetForm.DownPaymentAmt < assetDPMin) {
-                this.isValidOk = false;
-              }
-              if (tempAmt > this.AssetDataForm.controls.AssetPriceAmt.value) {
-                this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_LESS_THAN + "Asset Price");
-              }
-              else if (assetForm.DownPaymentAmt > assetDPMax) {
-                this.isValidOk = false;
-              }
-            }
-          }
-  
-          if (this.CheckValidationObj) {
-            if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
-              if (assetForm.DownPaymentPrctg < this.CheckValidationObj.DPMin) {
-                this.isValidOk = false;
-                confirmMsg = "Down Payment Percentage is Lower than Minimum Percentage";
-              }
-              else if (assetForm.DownPaymentPrctg > this.CheckValidationObj.DPMax) {
-                this.isValidOk = false;
-                confirmMsg = "Down Payment Percentage is Higher than Maximum Percentage";
-              }
-            }
-            else {
-              var assetDPMin = (this.CheckValidationObj.DPMin / 100) * assetForm.AssetPriceAmt;
-              var assetDPMax = (this.CheckValidationObj.DPMax / 100) * assetForm.AssetPriceAmt;
-              if (assetForm.DownPaymentAmt < assetDPMin) {
-                this.isValidOk = false;
-                confirmMsg = "Down Payment Amount is Lower than Minimum Amount";
-              }
-              else if (assetForm.DownPaymentAmt > assetDPMax) {
-                this.isValidOk = false;
-                confirmMsg = "Down Payment Amount is Higher than Maximum Amount";
-              }
+            else if (assetForm.DownPaymentAmt > assetDPMax) {
+              this.isValidOk = false;
+              confirmMsg = "Down Payment Amount is Higher than Maximum Amount";
             }
           }
   
@@ -773,7 +732,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       this.allAssetDataObj = new AllAssetDataObj();
       this.setAllAssetObj();
       this.allAssetDataObj.BizTemplateCode = this.BizTemplateCode;
-      this.allAssetDataObj.LOBCode = CommonConstant.FL4W; // penjagaan supplier tidak boleh berbeda (sama seperti FL4W)
+      this.allAssetDataObj.LOBCode = CommonConstant.FL4W; // penjagaan supplier tidak boleh berbeda (sama seperti FL4W) - CF4W fleet
       if (this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
         if (this.originalAppAssetAccessory && this.originalAppAssetAccessory.length > 0) {
           for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
@@ -796,7 +755,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
                     this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                     break;
                   }
-                  if (newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
+                  if (newAcc.DownPaymentPrcnt != oriAcc.DownPaymentPrcnt || newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
                     this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
                     break;
                   }
@@ -828,62 +787,15 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
             if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.returnBranchManagerSupp.RowVersion;
           }
         }
-        if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
-          if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
-            if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-                (response) => {
-                  this.toastr.successMessage(response["message"]);
-                  this.AssetDataForm.reset();
-                  this.assetValue.emit({ mode: 'paging' });
-                }
-              );
-            }
+        
+        // CF4W fleet
+        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.AssetDataForm.reset();
+            this.assetValue.emit({ mode: 'paging' });
           }
-          else if (!this.IsIntegrator) {
-            if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
-              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-                (response) => {
-                  this.toastr.successMessage(response["message"]);
-                  this.AssetDataForm.reset();
-                  this.assetValue.emit({ mode: 'paging' });
-                }
-              );
-            }
-            else {
-              if (confirm("Submit data without Integrator ?")) {
-                this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-                  (response) => {
-                    this.toastr.successMessage(response["message"]);
-                    this.AssetDataForm.reset();
-                  this.assetValue.emit({ mode: 'paging' });
-                  }
-                );
-              }
-            }
-          }
-          else if (this.IsIntegrator) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
-                  (response) => {
-                  });
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
-              }
-            );
-          }
-        }
-        else {
-          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.AssetDataForm.reset();
-              this.assetValue.emit({ mode: 'paging' });
-            }
-          );
-        }
+        );
       }
       else if (this.BizTemplateCode === "OPL") {
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
@@ -904,7 +816,10 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
           }
         );
       }
-      // }
+    }
+  
+    Cancel() {
+      this.outputCancel.emit();
     }
   
     Back() {
@@ -1114,7 +1029,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       this.allAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AssetDataForm.controls.OwnerProfessionCode.value;
   
       if (this.BizTemplateCode !== "OPL") {
-        for (var i = 0; i < this.items.length; i++) {
+        for (let i = 0; i < this.items.length; i++) {
           if (this.items.controls[i] != null) {
             this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
           }
@@ -1176,7 +1091,8 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
         appAssetAccObj.SupplCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplCodeAccessory;
         appAssetAccObj.SupplName = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplNameAccessory;
         appAssetAccObj.AccessoryPriceAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryPriceAmt;
-        appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryDownPaymentAmt;
+        appAssetAccObj.DownPaymentPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value;
+        appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value;
         appAssetAccObj.AccessoryNotes = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryNotes;
   
         appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
@@ -1204,6 +1120,24 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
           this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
         }
       }
+  
+      this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
+      for (let i = 0; i < this.AssetDataForm.value.ListDoc["length"]; i++) {
+        this.appCollateralDoc = new AppCollateralDocObj();
+        if (this.AssetDataForm.value.ListDoc[i].IsReceived == null) {
+          this.appCollateralDoc.IsReceived = false;
+        }
+        else {
+          this.appCollateralDoc.IsReceived = this.AssetDataForm.value.ListDoc[i].IsReceived;
+        }
+        this.appCollateralDoc.DocCode = this.AssetDataForm.value.ListDoc[i].DocCode;
+        this.appCollateralDoc.DocNo = this.AssetDataForm.value.ListDoc[i].DocNo;
+        this.appCollateralDoc.ExpiredDt = this.AssetDataForm.value.ListDoc[i].ACDExpiredDt;
+        this.appCollateralDoc.DocNotes = this.AssetDataForm.value.ListDoc[i].DocNotes;
+        this.appCollateralDoc.RowVersion = this.AssetDataForm.value.ListDoc[i].RowVersion;
+        this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
+      }
+      this.allAssetDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
     }
   
     async SetSupplier(event) {
@@ -1223,9 +1157,10 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       });
     }
   
-    SetAsset(event) {
+    async SetAsset(event) {
       this.assetMasterObj.FullAssetCode = event.FullAssetCode;
-      this.GetAssetMaster(this.assetMasterObj);
+      await this.GetAssetMaster(this.assetMasterObj);
+      this.GetRefAssetDocList(false);
       this.AssetDataForm.patchValue({
         FullAssetCode: event.FullAssetCode,
         FullAssetName: event.FullAssetName,
@@ -1452,7 +1387,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
     async getAllAssetData() {
       let appAssetObj = { Id: this.AppAssetId };
       await this.http.post(URLConstant.GetAllAssetDataByAppAssetId, appAssetObj).toPromise().then(
-        (response) => {
+        async (response) => {
           this.appAssetObj = response;
           this.returnAppAssetObj = response["ResponseAppAssetObj"];
           this.returnBranchManagerSupp = response["ResponseBranchManagerSupp"];
@@ -1581,7 +1516,8 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
 
       this.DpTypeBefore = "AMT";
       this.assetMasterObj.FullAssetCode = this.returnAppAssetObj.FullAssetCode;
-      this.GetAssetMaster(this.assetMasterObj);
+      await this.GetAssetMaster(this.assetMasterObj);
+      this.GetRefAssetDocList(true);
       this.vendorObj.VendorCode = this.returnAppAssetObj.SupplCode;
       this.GetVendorForView();
       this.districtObj.ProvDistrictCode = this.returnAppAssetObj.TaxCityIssuer;
@@ -1718,6 +1654,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
                   appAssetAccObj.SupplCode = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].SupplCode;
                   appAssetAccObj.SupplName = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].SupplName;
                   appAssetAccObj.AccessoryPriceAmt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryPriceAmt;
+                  appAssetAccObj.DownPaymentPrcnt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryDownPaymentPrcnt;
                   appAssetAccObj.DownPaymentAmt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].DownPaymentAmt;
                   appAssetAccObj.AccessoryNotes = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryNotes;
   
@@ -1938,6 +1875,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
         (response) => {
           this.DpObj = response[CommonConstant.ReturnObj];
+          this.IsReady = true;
         }
       );
     }
@@ -1962,6 +1900,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
         (response: any) => {
           this.AppObj = response;
+          this.BizTemplateCode = this.AppObj.BizTemplateCode;
           this.OfficeCode = this.AppObj.OriOfficeCode;
           if (this.BizTemplateCode != CommonConstant.OPL) {
             this.GetProdOfferingAssetCond();
@@ -2123,8 +2062,8 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       );
     }
   
-    GetAssetMaster(assetMasterObj) {
-      this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: assetMasterObj.FullAssetCode }).subscribe(
+    async GetAssetMaster(assetMasterObj) {
+      await this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: assetMasterObj.FullAssetCode }).toPromise().then(
         (response: any) => {
           this.AssetMasterObj = response;
           this.AssetDataForm.patchValue({
@@ -2253,6 +2192,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
   
           this.setAppAccessorySupplier(i, this.appAssetAccessoriesObjs[i].SupplCode);
           this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
+          this.ChangeAccessoryDPType(i, 'AMT');
         }
       }
     }
@@ -2287,8 +2227,10 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
           AssetAccessoryName: ['', [Validators.maxLength(100)]],
           SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
           SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
-          AccessoryPriceAmt: ['', Validators.required],
-          AccessoryDownPaymentAmt: [0, Validators.required],
+          AccessoryPriceAmt: [0, [Validators.required,Validators.min(0.00)]],
+          AccessoryDownPaymentType: [''],
+          AccessoryDownPaymentPrcnt: [0, Validators.required],
+          AccessoryDownPaymentAmt: [0, [Validators.required,Validators.min(0.00)]],
           AccessoryNotes: ['']
         })
       }
@@ -2299,8 +2241,10 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
           AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(100)]],
           SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
           SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
-          AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, Validators.required],
-          AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, Validators.required],
+          AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required,Validators.min(0.00)]],
+          AccessoryDownPaymentType: [this.DpObj[0].Key],
+          AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, Validators.required],
+          AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, [Validators.required,Validators.min(0.00)]],
           AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]
         })
       }
@@ -2560,7 +2504,57 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
         }
       );
     }
+
+    GetRefAssetDocList(isInit: boolean) {
+      this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
+        (response) => {
+          let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
+          ListDoc.reset();
+          while(ListDoc.length !== 0) {
+            ListDoc.removeAt(0);
+          }
+          if (response[CommonConstant.ReturnObj].length > 0) {
+            for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+              let assetDocumentDetail = this.fb.group({
+                DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+                AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+                IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+                IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+                IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+                IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+                DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+                ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+                DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+                RowVersion: "",
+              }) as FormGroup;
+              ListDoc.push(assetDocumentDetail);
+            }
+          }
+          if(isInit){
+            this.setAppCollateralDoc(this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId']);
+          }
+        });
+    }
   
+    setAppCollateralDoc(AppCollateralId: number = 0) {
+      this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
+        (response) => {
+          let AppCollateralDocs = new Array();
+          AppCollateralDocs = response["AppCollateralDocs"];
+          if (AppCollateralDocs["length"] > 0) {
+            for (let i = 0; i < AppCollateralDocs.length; i++) {
+              this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
+                DocNo: AppCollateralDocs[i].DocNo,
+                DocNotes: AppCollateralDocs[i].DocNotes,
+                ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+                IsReceived: AppCollateralDocs[i].IsReceived,
+                RowVersion: AppCollateralDocs[i].RowVersion,
+              })
+            }
+          }
+        });
+    }
+
     async GetAppCustCoy() {
       await this.http.post(URLConstant.GetAppCustCompanyByAppCustId, {Id: this.AppCustObj.AppCustId}).toPromise().then(
         (response: any) => {
@@ -2668,5 +2662,53 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
       let ListValidator: Array<ValidatorFn> = this.setValidators(appAssetAttrObj);
   
       return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
+    }
+  
+    ChangeAccessoryDPType(i: number, ev){
+      if(ev == CommonConstant.DownPaymentTypeAmt){
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.disable();
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.enable();
+      }else{
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.disable();
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.enable();
+      }
+    }
+  
+    CheckAccessoryDPValue(i: number, from: string){
+      var InputAccessoryPrice = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryPriceAmt.value
+  
+      if(InputAccessoryPrice == 0){
+        this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i+1));
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
+        return;
+      }
+  
+      var InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value
+  
+      if(InputDPAmt > InputAccessoryPrice){
+        this.toastr.warningMessage("Down Payment Amount " + (i+1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i+1));
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
+        return;
+      }
+  
+      var InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
+      
+      if(from == CommonConstant.DownPaymentTypeAmt){
+        var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
+      }else if(from == CommonConstant.DownPaymentTypePrcnt){
+        var DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+      }else{
+        if(this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt){
+          var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
+          this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
+        }else{
+          var DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
+          this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+        }
+      }
     }
   }
