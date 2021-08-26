@@ -135,33 +135,38 @@ export class NapDetailFormComponent implements OnInit {
       let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
-          this.appNo = this.NapObj.AppNo;
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-          let isExisting = response['IsExistingCust'];
-          if (isExisting) {
-            let custNo = response['CustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
-          }
-          else {
-            this.dmsObj.MetadataParent = null;
-          }
+          if (response != null && ((response["CustNo"] != null && response["CustNo"] != "") || (response["ApplicantNo"] != null && response["ApplicantNo"] != ""))) {
+            let trxNo;
+            this.appNo = this.NapObj.AppNo;
+            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            let isExisting = response['IsExistingCust'];
+            if (isExisting) {
+              trxNo = response['CustNo'];
+            }
+            else {
+              trxNo = response['ApplicantNo'];
+            }
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
 
-          let mouId = this.NapObj.MouCustId;
-          this.MouCustId = this.NapObj.MouCustId;
-          console.log(this.NapObj.MouCustId);
-          if (mouId != null && mouId != 0) {
-            let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                let mouCustNo = result['MouCustNo'];
-                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-                this.isDmsReady = true;
-              }
-            )
-          }
-          else {
-            this.isDmsReady = true;
+            let mouId = this.NapObj.MouCustId;
+            this.MouCustId = this.NapObj.MouCustId;
+            console.log(this.NapObj.MouCustId);
+            if (mouId != null && mouId != 0) {
+              let mouObj = { Id: mouId };
+              this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+                result => {
+                  let mouCustNo = result['MouCustNo'];
+                  this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                  this.isDmsReady = true;
+                }
+              )
+            }
+            else {
+              this.isDmsReady = true;
+            }
+          } else {
+            this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
           }
         }
       );
