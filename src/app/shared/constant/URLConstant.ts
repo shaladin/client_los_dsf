@@ -1337,6 +1337,7 @@ export class URLConstant {
   public static ClaimTaskNapCustmainData = environment.losUrl + "/v1" + "/Application/ClaimTaskNapCustmainData";
   public static ClaimTaskNapCustmainDataV2 = environment.losUrl + "/v2" + "/Application/ClaimTaskNapCustmainData";
   public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
+  public static GetAllWorkflowInstance = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllWorkflowInstance";
   public static CompleteTask = environment.FoundationR3Url + "/v2" + "/Workflow/CompleteTask";
 
   //Application Data
