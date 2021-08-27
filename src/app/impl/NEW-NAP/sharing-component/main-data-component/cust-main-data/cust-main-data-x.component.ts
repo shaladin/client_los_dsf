@@ -151,6 +151,8 @@ export class CustMainDataXComponent implements OnInit {
   readonly AttrGroupCustPersonalOther: string = CommonConstant.AttrGroupCustPersonalOther;
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
   MaxDaysThirdPartyChecking: number;
+  isNonMandatory : boolean;
+  // isNonMandatory: boolean = this.lobCode == 'CF' || this.lobCode == 'LF' || this.lobCode == 'SLB' || this.lobCode == 'DT';
 
   constructor(
     private regexService: RegexService,
@@ -179,9 +181,9 @@ export class CustMainDataXComponent implements OnInit {
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
-    MotherMaidenName: ['', Validators.required],
+    MotherMaidenName: this.lobCode == 'CF' || this.lobCode == 'LF' || this.lobCode == 'SLB' || this.lobCode == 'MPF' || this.lobCode == 'DT' ? [''] : ['', Validators.required],
     MrCompanyTypeCode: [''],
-    MobilePhnNo1: this.lobCode == 'CF' ?  ['', [Validators.pattern("^[0-9]+$")]] : ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    MobilePhnNo1: this.lobCode == 'CF' || this.lobCode == 'LF' || this.lobCode == 'SLB' || this.lobCode == 'MPF' || this.lobCode == 'DT'  ?  ['', [Validators.pattern("^[0-9]+$")]] : ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     Email1: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MrJobPositionCode: [''],
     EstablishmentDt: [''],
@@ -189,7 +191,7 @@ export class CustMainDataXComponent implements OnInit {
     SharePrcnt: [0],
     IsSigner: [false],
     IsActive: [false],
-    IsOwner: [false]
+    IsOwner: [false]    
   });
 
   async ngOnInit() {
@@ -659,6 +661,17 @@ export class CustMainDataXComponent implements OnInit {
       );
     }
 
+     if(this.lobCode == 'CF' || 
+        this.lobCode == 'LF'  || 
+        this.lobCode == 'SLB' || 
+        this.lobCode == 'MPF' || 
+        this.lobCode == 'DT')
+        {
+          this.isNonMandatory = true
+        }else {
+          this.isNonMandatory = false;
+        }
+
     if (custType == CommonConstant.CustTypePersonal) {
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
@@ -667,7 +680,7 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      true ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([ Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]) ;
+      this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([ Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]) ;
       this.CustMainDataForm.controls.Email1.setValidators([Validators.pattern(CommonConstant.regexEmail)]);
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
