@@ -21,6 +21,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-nap-detail-form-x',
@@ -79,7 +80,7 @@ export class NapDetailFormXComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService,
     private spinner: NgxSpinnerService,
-    private componentFactoryResolver: ComponentFactoryResolver, 
+    private componentFactoryResolver: ComponentFactoryResolver,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
@@ -158,7 +159,7 @@ export class NapDetailFormXComponent implements OnInit {
           else {
             this.dmsObj.MetadataParent = null;
           }
-  
+
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
@@ -175,7 +176,7 @@ export class NapDetailFormXComponent implements OnInit {
           }
         }
       );
-    }  
+    }
   }
 
   stepperMode: string = CommonConstant.CustTypeCompany;
@@ -340,7 +341,7 @@ export class NapDetailFormXComponent implements OnInit {
       let reqObj: SubmitNapObj = new SubmitNapObj();
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
-      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+      this.http.post(URLConstantX.SubmitNAPX, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.Cancel();

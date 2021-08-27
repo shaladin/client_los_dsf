@@ -22,6 +22,7 @@ import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/ne
 import { SharedModule } from "app/shared/shared.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 import { NapDetailFormXComponent } from "app/impl/NEW-NAP/CFNA/nap-detail-form/nap-detail-form-x.component";
+import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/CFNA/nap-cust-main-data/nap-cust-main-data-x.component";
 
 
 export const customCurrencyMaskConfig = {     
@@ -63,7 +64,8 @@ export const customCurrencyMaskConfig = {
     SubsidyAddEditCFNAComponent,
     NapCustMainDataComponent,
     NapDetailFormComponent,
-    NapDetailFormXComponent
+    NapDetailFormXComponent,
+    NapCustMainDataXComponent
   ],
   providers: [
     NGXToastrService

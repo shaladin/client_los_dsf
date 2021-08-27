@@ -15,7 +15,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { forkJoin } from 'rxjs'; 
+import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
@@ -283,7 +283,8 @@ export class PreGoLiveXComponent implements OnInit {
   RFA() {
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     this.ListAppTCObj = new ListAppTCObj();
-    this.ListAppTCObj["ListAppTcObj"] = new Array();
+    let ListAppTcObj = new Array();
+
     for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
       this.appTC = new AppTCObj();
       this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
@@ -311,9 +312,15 @@ export class PreGoLiveXComponent implements OnInit {
           }
         }
       }
-      this.ListAppTCObj["ListAppTcObj"].push(this.appTC);
+      ListAppTcObj.push(this.appTC);
     }
-    this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
+    this.ListAppTCObj["ListAppTcObj"] =ListAppTcObj;
+
+    const reqObj = {
+      AppId: this.AppId,
+      ListAppTcObj: ListAppTcObj
+    }
+    this.http.post(URLConstantX.EditAppTcX, reqObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_REQ_APPRVL],{ "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
         this.toastr.successMessage(response['message']);

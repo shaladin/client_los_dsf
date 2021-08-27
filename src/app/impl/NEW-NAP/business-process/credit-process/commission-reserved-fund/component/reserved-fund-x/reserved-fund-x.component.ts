@@ -115,7 +115,6 @@ export class ReservedFundXComponent implements OnInit {
   async GetAppRsvFundRule(appObj) {
     await this.http.post(URLConstantX.GetRsvFundSingleRule, appObj).toPromise().then(
       (response) => {
-        console.log(response)
         this.ruleObj = response[CommonConstant.ReturnObj];
         this.appReservedFundObjs = new Array<AppReservedFundXObj>();
         for (let i = 0; i < this.ruleObj.length; i++) {
@@ -128,14 +127,12 @@ export class ReservedFundXComponent implements OnInit {
           this.appReservedFundObjs.push(appReservedFundObj);
         }
 
-        console.log(this.DictRemainingIncomeForm)
         for (let j = 0; j < this.appReservedFundObjs.length; j++) {
           var listAppRsvFunds = this.RsvForm.controls["ReservedFundObjs"] as FormArray;
           listAppRsvFunds.push(this.addGroup(this.appReservedFundObjs[j], j));
         }
       }
     );
-    console.log(this.RsvForm)
   }
 
   addGroup(appReservedFundObjs, i) {
@@ -159,8 +156,7 @@ export class ReservedFundXComponent implements OnInit {
       AppId: this.AppId,
       TotalReserveFundAmt: this.totalRsvFundAmt
     };
-
-    await this.http.post(URLConstant.CalculateGrossYieldRsvFund, grossyieldObj).toPromise().then(
+    await this.http.post(URLConstantX.CalculateGrossYieldRsvFundX, grossyieldObj).toPromise().then(
       (response) => {
         this.calcGrossYieldObj = response;
         this.grossYield = this.calcGrossYieldObj.GrossYieldPrcnt;
@@ -184,8 +180,7 @@ export class ReservedFundXComponent implements OnInit {
     let listPriority: Array<string> = new Array();
     await this.http.post(URLConstantX.GetAppRsvFundPriorityRule, {Id: this.AppId}).toPromise().then(
       (response) => {
-        console.log(response)
-        listPriority = response[CommonConstant.ReturnObj];
+        listPriority = response["ListPrioritySupplier"];
       }
     );
     this.allAppReservedFundObj.GrossYield = this.grossYield;
@@ -253,13 +248,10 @@ export class ReservedFundXComponent implements OnInit {
         }
       }
     }
-    console.log(this.DictTempRemainingIncomeForm)
-    console.log(this.allAppReservedFundObj)
   }
 
   //Save
   SaveForm() {
-    console.log(this.allAppReservedFundObj);
     if (this.isCalculated == false) {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_FIRST);
     }
