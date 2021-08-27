@@ -45,7 +45,7 @@ export class SidebarComponent implements OnInit {
         //         this.menuItems = data;
         //     }
         //     );
-        if (environment.production == true) {
+        if (environment.production == false) {
             this.menuItems = ROUTES.filter(menuItem => menuItem);
         }
         else {
