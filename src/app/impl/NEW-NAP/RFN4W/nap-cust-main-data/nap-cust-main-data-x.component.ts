@@ -80,8 +80,7 @@ export class NapCustMainDataXComponent implements OnInit {
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
-          this.bizTemplateCode = this.NapObj.BizTemplateCode;
-          console.log("cek", this.NapObj.LobCode)
+          this.bizTemplateCode = this.NapObj.BizTemplateCode;          
           this.lobCode = this.NapObj.LobCode;          
           if(this.lobCode == 'CF' || 
             this.lobCode == 'LF'  || 
