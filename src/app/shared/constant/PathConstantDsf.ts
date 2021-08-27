@@ -88,4 +88,9 @@ export class PathConstantDsf {
     public static REPORT_INS_COMP_DETAIL = "ReportInsCompanyDetail";
     public static PRINT_REPORT_INS_COMP_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_INS_COMP_DETAIL;
 
+    public static REPORT_PLAFOND_FACTORING = "PlafondFactoringDsf";
+    public static REPORT_PLAFOND_DF = "PlafondDfDsf";
+    public static PRINT_REPORT_PLAFOND_FACTORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_PLAFOND_FACTORING;
+    public static PRINT_REPORT_PLAFOND_DSF = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_PLAFOND_DF;
+
 }

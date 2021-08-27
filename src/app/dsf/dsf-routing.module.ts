@@ -17,6 +17,8 @@ import { Reminder1Component } from './report/factoring/reminder1/reminder1.compo
 import { Reminder5Component } from './report/factoring/reminder5/reminder5.component';
 import { InsCompSummaryDsfComponent } from './report/insurance-company/ins-comp-summary-dsf/ins-comp-summary-dsf.component';
 import { InsCompDetailDsfComponent } from './report/insurance-company/ins-comp-detail-dsf/ins-comp-detail-dsf.component';
+import { PlafondFactoringDsfComponent } from './report/factoring/plafond-factoring-dsf/plafond-factoring-dsf.component';
+import { PlafondDfDsfComponent } from './report/factoring/plafond-df-dsf/plafond-df-dsf.component';
 
 const routes: Routes = [
   {
@@ -207,6 +209,30 @@ const routes: Routes = [
         component: InsCompDetailDsfComponent,
         data: {
           title: "Report Insurance Company Detail"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_PLAFOND_FACTORING,
+        component: PlafondFactoringDsfComponent,
+        data: {
+          title: "Report Plafond Factoring Dsf"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_PLAFOND_DSF,
+        component: PlafondDfDsfComponent,
+        data: {
+          title: "Report DF Plafond Dsf"
         }
       }
     ]
