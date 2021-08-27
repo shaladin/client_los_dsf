@@ -1137,7 +1137,6 @@ export class LtkmReturnHandlingComponent implements OnInit {
         return listFamilyToBeSave;
     }
 
-    
     setltkmCustOtherInfoDataCompany() {
         this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
         if (this.CustDataCompanyForm.controls["OtherInfoList"]["controls"] != undefined) {
