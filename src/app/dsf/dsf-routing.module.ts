@@ -6,6 +6,7 @@ import { CustomerGroupPlafondApvInquiryDsfComponent } from './customer/customer-
 import { CustomerGroupPlafondApvPagingDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-paging-dsf/customer-group-plafond-apv-paging-dsf.component';
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
+import { LtkmReportDsfComponent } from './ltkm/ltkm-report-dsf/ltkm-report-dsf.component';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
 import { AppStatusDsfComponent } from './report/app-status-dsf/app-status-dsf.component';
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
@@ -17,6 +18,7 @@ import { Reminder1Component } from './report/factoring/reminder1/reminder1.compo
 import { Reminder5Component } from './report/factoring/reminder5/reminder5.component';
 import { InsCompSummaryDsfComponent } from './report/insurance-company/ins-comp-summary-dsf/ins-comp-summary-dsf.component';
 import { InsCompDetailDsfComponent } from './report/insurance-company/ins-comp-detail-dsf/ins-comp-detail-dsf.component';
+import { SuratkonfirmasipersetujuanComponent } from './report/suratkonfirmasipersetujuan/suratkonfirmasipersetujuan.component';
 
 const routes: Routes = [
   {
@@ -191,6 +193,18 @@ const routes: Routes = [
     path:'',
     children: [
       {
+        path: PathConstantDsf.PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN,
+        component: SuratkonfirmasipersetujuanComponent,
+        data: {
+          title: "Report Surat Konfirmasi Persetujuan"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
         path: PathConstantDsf.PRINT_REPORT_INS_COMP_SUMMARY,
         component: InsCompSummaryDsfComponent,
         data: {
@@ -207,6 +221,18 @@ const routes: Routes = [
         component: InsCompDetailDsfComponent,
         data: {
           title: "Report Insurance Company Detail"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_LTKM,
+        component: LtkmReportDsfComponent,
+        data: {
+          title: "Report LTKM"
         }
       }
     ]

@@ -88,4 +88,13 @@ export class PathConstantDsf {
     public static REPORT_INS_COMP_DETAIL = "ReportInsCompanyDetail";
     public static PRINT_REPORT_INS_COMP_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_INS_COMP_DETAIL;
 
+    //#region 
+    public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "ReportSuraKonfirmasiPersetujuan"
+    public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN;
+    //#endregion
+
+    //#region
+    public static REPORT_LTKM = "ReportLTKM"
+    public static PRINT_REPORT_LTKM = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_LTKM; 
+    //#endregion
 }

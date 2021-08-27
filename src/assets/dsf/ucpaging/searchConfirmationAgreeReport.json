@@ -1,0 +1,217 @@
+{
+    "title": "Search Surat Konfirmasi Persetujuan Data",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AC.CUST_NO",
+            "id": "CustomerNo",
+            "value": "",
+            "label": "Customer No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AC.CUST_NAME",
+            "id": "CustomerName",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "AppNo",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "A.APP_STAT",
+            "id": "ActiveStatus",
+            "label": "Application Status",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": "NEW",
+                    "value": "New"
+                },
+                {
+                    "key": "PRP",
+                    "value": "Preparation"
+                },
+                {
+                    "key": "CAN",
+                    "value": "Cancel"
+                },
+                {
+                    "key": "LIV",
+                    "value": "Live"
+                },
+                {
+                    "key": "CPY",
+                    "value": "Copy"
+                },
+                {
+                    "key": "ApproveFinal",
+                    "value": "Approve Final"
+                },
+                {
+                    "key": "RejectFinal",
+                    "value": "Reject Final"
+                },
+                {
+                    "key": "Return",
+                    "value": "Return"
+                },
+                {
+                    "key": "RJC",
+                    "value": "Reject"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgreementNo",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.PROD_OFFERING_NAME",
+            "id": "ProdOfferingName",
+            "value": "",
+            "label": "Product Offering",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "searchConfirmationAgree"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application No",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Agreement No",
+            "name": "AgrmntNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer No",
+            "name": "CustNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer Name",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Product Offering Name",
+            "name": "ProdOfferingName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application Status",
+            "name": "AppStat"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Print"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target" : "_blank", 
+            "path" : "VIEW_APP", 
+            "param" : [ 
+                {
+                    "type" : "AppId", 
+                    "property" : "AppId" 
+                }
+            ]
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target": "_blank",
+            "path": "VIEW_AGRMNT",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+        }, 
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "ProdOfferingName",
+            "target": "_blank",
+            "path": "VIEW_OFFERING",
+            "param": [
+              {
+                "type": "prodOfferingHId",
+                "property": "0"
+              },
+              {
+                "type": "prodOfferingCode",
+                "property": "ProdOfferingCode"
+              },
+              {
+                "type": "prodOfferingVersion",
+                "property": "ProdOfferingVersion"
+              }
+            ]
+        }, 
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppStat"
+        },
+        {
+          "type": "action",
+          "position": "center",
+          "action": [
+            {
+              "type": "callback",
+              "icon": "ft-printer",
+              "property": "AppNo"
+            }
+          ]
+        }       
+        
+    ]
+}

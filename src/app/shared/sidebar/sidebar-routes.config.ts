@@ -517,7 +517,8 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.LTKM_VERIFY_PAGING, Title: 'LTKM Verify', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LTKM_VERIFY_APV_PAGING, Title: 'LTKM Verify Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LTKM_RTN_HANDLING_PAGING, Title: 'LTKM Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: NavigationConstant.LTKM_INQUIRY, Title: 'LTKM Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
+      { Path: NavigationConstant.LTKM_INQUIRY, Title: 'LTKM Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstantDsf.REPORT_LTKM, Title: 'LTKM Report', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
     ], Params: []
   },
   {
@@ -544,12 +545,13 @@ export const ROUTES: RouteInfo[] = [
     { Path: NavigationConstantDsf.REPORT_APP_STATUS, Title: 'Credit Application per Status', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
     { Path: NavigationConstantDsf.REPORT_INS_COMPANY_SUMMARY, Title: 'Insurance Company Summary', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
     { Path: NavigationConstantDsf.REPORT_INS_COMPANY_DETAIL, Title: 'Insurance Company Detail', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+    { Path: NavigationConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN, Title: 'Surat Konfirmasi Persetujuan', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []}
   ], Params: [] },
   {
     Path: '', Title: 'Integration', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: NavigationConstant.INTEGRATION_LOS_ERR_DATA_MONITORING, Title: 'Los Error Data Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-    ], Params: []
+    ], Params: [],
   },
   {
     Path: '', Title: 'Task Reassignment', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
