@@ -27,10 +27,8 @@ export class ViewLeadDataComponent implements OnInit {
   tempLeadObj : any;
   ngOnInit() {
     this.viewLeadAssetData.viewInput = "./assets/ucviewgeneric/viewLeadAssetData.json";
-    this.viewLeadAssetData.viewEnvironment = environment.losUrl;
 
     this.viewLeadAppData.viewInput = "./assets/ucviewgeneric/viewLeadAppData.json";
-    this.viewLeadAppData.viewEnvironment = environment.losUrl;
      
     this.leadAssetObj = new LeadAssetObj();
     this.leadAssetObj.LeadId = this.LeadId;

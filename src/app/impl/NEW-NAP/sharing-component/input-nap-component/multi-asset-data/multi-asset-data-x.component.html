@@ -1,0 +1,19 @@
+<div *ngIf="BizTemplateCode !== 'OPL'">
+  <!-- <app-asset-data-paging [showCancel]="showCancel" *ngIf="mode == 'paging'" [AppId]="AppId" (outputValue)="terimaValue($event)" (outputCancel)="Cancel()"></app-asset-data-paging>
+  <app-asset-data-add-edit-x *ngIf="mode == 'addAsset' || mode =='editAsset'" [mode] = "this.mode" [AppAssetId]="this.AppAssetId" [AppId]="AppId" (assetValue)="terimaValue($event)"></app-asset-data-add-edit-x>
+  <app-collateral-add-edit *ngIf="mode == 'addColl' || mode =='editColl'" [mode] = "this.mode" [AppId]="AppId" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"></app-collateral-add-edit> -->
+
+  <div *ngIf="BizTemplateCode === 'CF4W'">
+    <app-asset-data-paging-x [showCancel]="showCancel" *ngIf="mode == 'paging'" [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" (outputValue)="terimaValue($event)" (outputCancel)="Cancel()"></app-asset-data-paging-x>
+    <app-asset-data-x *ngIf="mode == 'addAsset' || mode =='editAsset'" [mode] = "this.mode" [AppAssetId]="this.AppAssetId" [AppId]="AppId" (assetValue)="terimaValue($event)"></app-asset-data-x>
+  </div>
+  <div *ngIf="BizTemplateCode !== 'CF4W'">
+    <app-asset-data-paging [showCancel]="showCancel" *ngIf="mode == 'paging'" [AppId]="AppId" (outputValue)="terimaValue($event)" (outputCancel)="Cancel()"></app-asset-data-paging>
+    <app-asset-data-add-edit-x *ngIf="mode == 'addAsset' || mode =='editAsset'" [mode] = "this.mode" [AppAssetId]="this.AppAssetId" [AppId]="AppId" (assetValue)="terimaValue($event)"></app-asset-data-add-edit-x>
+    <app-collateral-add-edit *ngIf="mode == 'addColl' || mode =='editColl'" [mode] = "this.mode" [AppId]="AppId" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"></app-collateral-add-edit>
+  </div>
+</div>
+
+<div *ngIf="BizTemplateCode === 'OPL'">
+  <app-asset-data-opl [showCancel]="showCancel" [AppId]="AppId" (outputCancel)="Cancel()" (outputTab)="getOutputTab()"></app-asset-data-opl>
+</div>

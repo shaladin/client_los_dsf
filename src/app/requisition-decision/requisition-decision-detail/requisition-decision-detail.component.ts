@@ -13,7 +13,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
-import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-requisition-decision-detail',
@@ -63,7 +62,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService,
     private fb: FormBuilder, 
-    private cookieService: CookieService,
     private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -82,7 +80,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.InputLookupAssetObj.urlEnviPaging = environment.AMSUrl;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
-    this.InputLookupAssetObj.isRequired = true;
+    this.InputLookupAssetObj.isRequired = false;
     this.InputLookupAssetObj.isReady = true;
 
     await this.SetMainInfo();
@@ -91,7 +89,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
   async SetMainInfo() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
   }
 
   async SetListOfAsset() {
@@ -195,17 +192,28 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   ChangeDecision(decisionCode: string) {
     if(decisionCode === "EXISTING") {
       this.ReqDecForm.controls.AssetNo.setValidators(Validators.required);
-      
+
       if(this.AssetInfoObj.AssetNo !== "" && this.AssetInfoObj.AssetNo !== null) {
         this.InputLookupAssetObj.jsonSelect = { AssetNo: this.AssetInfoObj.AssetNo };
         this.InputLookupAssetObj.idSelect = this.AssetInfoObj.AssetNo;
 
         this.SetAssetData(this.AssetInfoObj.AssetNo);
       }
+      else {
+        this.InputLookupAssetObj.jsonSelect = { AssetNo: "" };
+        this.InputLookupAssetObj.idSelect = "";
+        this.SerialNo1 = "";
+        this.SerialNo2 = "";
+        this.SerialNo3 = "";
+        this.SerialNo4 = "";
+        this.SerialNo5 = "";
+        this.AssetTypeObj = null;
+      }
 
       this.IsExisting = true;
     }
     else {
+      this.AssetInfoObj.AssetNo = "";
       this.ReqDecForm.controls.AssetNo.clearValidators();
       this.IsExisting = false;
       this.ReqDecForm.patchValue({
@@ -216,6 +224,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   SetAssetData(assetNo: string) {
+    this.AssetInfoObj.AssetNo = assetNo;
     this.ReqDecForm.patchValue({
       AssetNo: assetNo
     });
@@ -245,6 +254,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
   Cancel() {
     this.IsSecondDetail = false;
+    this.IsExisting = false;
     this.SetListOfAsset();
   }
 

@@ -1,0 +1,68 @@
+{
+    "url": "",
+    "title":"Lookup Commodity",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "MASTER_CODE",
+        "id": "masterCodeId",
+        "value": "",
+        "label": "Commodity Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "DESCR",
+        "id": "descrId",
+        "value": "",
+        "label": "Commodity Name",
+        "placeholder": ""
+      }
+    ],
+  "querystring": {
+    "name": "lookupCommodity"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Commodity Code",
+            "name": "MasterCode"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Commodity Name",
+            "name": "Descr"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MasterCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Descr"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "MasterCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "MasterCode",
+    "propertyName": "Descr"
+}

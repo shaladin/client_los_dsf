@@ -70,27 +70,6 @@ const routes: Routes = [
         }
       },
       {
-        path: 'SimpleLead/Paging',
-        component: NewLeadInputComponent,
-        data: {
-          title: 'Lead Input Paging'
-        }
-      },
-      {
-        path: 'SimpleLead/Detail',
-        component: NewLeadInputPageComponent,
-        data: {
-          title: 'Lead Detail'
-        }
-      },
-      {
-        path: 'SimpleLead/MainInfo',
-        component: NewLeadInputMainInfoComponent,
-        data: {
-          title: 'Lead Input Main Info'
-        }
-      },
-      {
         path: PathConstant.LEAD_INPUT_CUST_DATA,
         component: LeadInputCustDataComponent,
         data: {
@@ -116,20 +95,6 @@ const routes: Routes = [
         component: FraudVerifPagingComponent,
         data: {
           title: 'Fraud verif paging'
-        },
-      },
-      {
-        path: 'SimpleLeadFraudVerif/Paging',
-        component: NewFraudVerifComponent,
-        data: {
-          title: 'Fraud verif paging'
-        },
-      },
-      {
-        path: 'SimpleLeadFraudVerif/Detail',
-        component: NewFraudVerifDetailComponent,
-        data: {
-          title: 'Fraud verif detail'
         },
       },
       {
@@ -312,55 +277,6 @@ const routes: Routes = [
         component: NewLeadUpdateComponent,
         data: {
           title: 'Lead Update Paging'
-        }
-      },
-      {
-        path: 'PotentialRo/Paging',
-        component: GeneratePotentialRoComponent,
-        data: {
-          title: 'Lead Review Monitoring Detail'
-        }
-      },
-      {
-        path: 'PotentialRo/RoTelemkOffer/Paging',
-        component: RoTelemkOfferPagingComponent,
-        data: {
-          title: 'RO Telemarketing Offering'
-        }
-      },
-      {
-        path: 'PotentialRo/RoTelemkOffer/Detail',
-        component: RoTelemkOfferDetailComponent,
-        data: {
-          title: 'RO Telemarketing Offering Detail'
-        }
-      },
-      {
-        path: 'PotentialRo/RoTelemkOffer/Verif',
-        component: RoTelemkOfferVerifComponent,
-        data: {
-          title: 'RO Telemarketing Offering Verification'
-        }
-      },
-      {
-        path: 'PotentialRo/Inquiry',
-        component: RoPotentialInquiryComponent,
-        data: {
-          title: 'RO Potential Inquiry'
-        }
-      },
-      {
-        path: 'PotentialRo/View',
-        component: RoPotentialViewComponent,
-        data: {
-          title: 'RO Potential View'
-        }
-      },
-      {
-        path: 'PotentialRo/Execution',
-        component: RoPotentialExecutionComponent,
-        data: {
-          title: 'RO Potential Execution'
         }
       }
     ]

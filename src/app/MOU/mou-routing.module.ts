@@ -82,7 +82,7 @@ import {ChangeMouApprovalGeneralXComponent} from 'app/impl/MOU/change-mou/change
 import {MouReviewGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-general/mou-review-general-x.component';
 import { ChangeMouInquiryXComponent } from 'app/impl/MOU/change-mou/change-mou-inquiry/change-mou-inquiry-x.component';
 import { ChangeMouReviewPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component';
-
+import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-execution-paging/mou-execution-paging-x.component';
 
 const routes: Routes = [
   {
@@ -677,6 +677,13 @@ const routes: Routes = [
           title: "Change MOU Review X"
         }
       },
+      {
+        path: PathConstantX.MOU_EXECUTION_PAGING_X,
+        component: MouExecutionPagingXComponent,
+        data: {
+          title: "Mou Execution Paging"
+        }
+      }
     ]
   }
 ];

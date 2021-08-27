@@ -21,7 +21,6 @@ import { CustObj } from 'app/shared/model/CustObj.Model';
 export class ExistingMouCompanyComponent implements OnInit {
   MouCustId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
   MouCustObj: MouCustObj;
   MouCustCompanyObj: MouCustCompanyObj;
   ListDuplicateMouGuarantor: any;

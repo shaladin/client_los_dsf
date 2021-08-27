@@ -13,6 +13,7 @@ import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.compon
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 import { SharedModule } from "app/shared/shared.module";
+import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/ROS/nap-cust-main-data/nap-cust-main-data-x.component";
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { SharedModule } from "app/shared/shared.module";
     NapPagingComponent,
     NapAddDetailComponent,
     NapCustMainDataComponent,
-    NapDetailFormComponent
+    NapDetailFormComponent,
+    NapCustMainDataXComponent
   ],
   providers: [
     NGXToastrService

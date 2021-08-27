@@ -431,7 +431,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
     this.inputLookupObj.pagingJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.genericJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.jsonSelect = {SalesOfficerName: this.resultData.SalesOfficerName};
@@ -537,7 +537,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt
       });
 
-      if (this.resultData.MrWopCode == 'AUTOCOLLECTION') {
+      if (this.resultData.MrWopCode == 'AD') {
         this.GetBankAccCust();
         this.setBankAcc(this.resultData.MrWopCode)
       }
@@ -599,7 +599,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng['MouCustDlrFncngId'];
 
-        if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+        if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
           this.SaveAppOtherInfo();
         }
 
@@ -698,12 +698,12 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (responseAppCust) => {
         this.appCustId = responseAppCust['AppCustId']
         const obj = {
-          AppCustId: this.appCustId
+          Id: this.appCustId
         };
 
         this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
           (response) => {
-            this.listCustBankAcc = response.AppCustBankAccObjs;
+            this.listCustBankAcc = response.ReturnObject["AppCustBankAccObjs"];
           });
       });
   }
@@ -733,7 +733,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   }
 
   selectedBank(event) {
-    if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+    if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
       this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.SalesAppInfoForm.controls['CustBankAcc'].updateValueAndValidity()
       this.selectedBankAcc = this.listCustBankAcc.find(x => x.AppCustBankAccId == event);
@@ -777,7 +777,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   }
 
   setBankAcc(event) {
-    if (event == 'AUTOCOLLECTION') {
+    if (event == 'AD') {
       this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
     } else {
       this.SalesAppInfoForm.controls['CustBankAcc'].clearValidators();

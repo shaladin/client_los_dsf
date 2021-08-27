@@ -22,6 +22,14 @@
         </div>
         <div class="row">
           <div class="col-md-6">
+            <label class="label-control" translate> Total Accessory Price </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{totalAccessoryPriceAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
             <div class="row">
               <div class="col-md-10">
                 <label class="label-control" translate> Negative Asset </label>
@@ -57,6 +65,14 @@
         </div>
         <div class="row">
           <div class="col-md-6">
+            <label class="label-control" translate> Accessory DP Amount / Percentage </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{totalAccessoryDownPaymentAmt | number:'.2':'en-US'}} / {{totalAccessoryDownPaymentPrcnt | number:'.0-6'}}% </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
             <label class="label-control" translate> Insurance </label>
           </div>
           <div class="col-md-6 ">
@@ -81,7 +97,7 @@
         <thead>
           <tr class="table-header">
             <th style="text-align: center;">
-              <span  name='No' translate>No</span>
+              <span  name='No' translate>Asset Seq No</span>
             </th>
             <th style="text-align: left;">
               <span  name='AssetName' translate>Asset Name</span>

@@ -35,6 +35,13 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab *ngIf="IsMultiAsset">
+              <ng-template mat-tab-label>{{ BizTemplateCode == 'CF4W' ? 'Asset' : 'Asset & Collateral Data' }}</ng-template>
+              <ng-template matTabContent>
+                <view-asset-data-x [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></view-asset-data-x>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab *ngIf="IsCollateral" label="Asset & Collateral">
               <ng-template matTabContent>
                 <view-asset-collateral [agrmntId]="AgrmntId"></view-asset-collateral>
@@ -52,6 +59,12 @@
             <mat-tab *ngIf="IsInsurance" label="Insurance">
               <ng-template matTabContent>
                 <view-insurance [AppId]="ResponseAppDetailData?.AppId"></view-insurance>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsMultiInsurance" label="Insurance">
+              <ng-template matTabContent>
+                <view-Insurance-data-x [BizTemplateCode]="BizTemplateCode" [AgrmntId]="AgrmntId"></view-Insurance-data-x>
               </ng-template>
             </mat-tab>
 

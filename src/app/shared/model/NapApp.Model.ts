@@ -58,6 +58,8 @@ export class NapAppModel {
   PrevAgrNo: string;
   WayRestructure: string;
   MrSlikSecEcoCode:string;
+  MrDpSrcPaymentCode:string;
+  MrInstSrcPaymentCode:string;
   constructor() {
     this.RowVersion = "";
     this.IsRos = false;

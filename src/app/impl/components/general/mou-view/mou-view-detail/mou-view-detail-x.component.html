@@ -242,7 +242,7 @@
         </tbody>
       </table>
     </div>
-    <div *ngIf="MouType != 'FINANCING' || MouType != 'FACTORING'" class="form-group row">
+    <div *ngIf="MouType == 'FINANCING' || MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Dealer Grading</label>
       <label class="col-md-4 adInsLabel" translate>{{this.dealerGrading}} / {{this.dealerRating}}%</label>
     </div>

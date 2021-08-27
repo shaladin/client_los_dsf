@@ -138,7 +138,8 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     CopyFromMailing: [''],
     CustBankAcc: [''],
     BpkbStatCode: ['', Validators.required],
-    OrdStatCode: ['']
+    OrdStatCode: [''],
+    CommodityCode: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -153,8 +154,10 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   salesRecommendationItems = [];
   isInputLookupObj: boolean; 
   inputLookupEconomicSectorObj: InputLookupObj;
+  inputLookupCommodityObj: InputLookupObj;
   resMouCustObj: Array<KeyValueObj>;
   CustNo: string;
+  tempCommodityName:string ="";
   ddlMrWopObj: UcDropdownListObj = new UcDropdownListObj();
   async ngOnInit() {
     this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
@@ -283,12 +286,13 @@ export class ApplicationDataFL4WXComponent implements OnInit {
 
   applicationDDLitems; 
   resultResponse: AppObj;
-  getAppModelInfo() {
-    
+  async getAppModelInfo() {
+    await this.getAppXData();
+
     this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).subscribe(
       (response: AppObj) => {
         this.resultResponse = response;
-        this.getAppXData();
+        
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
           LeadId: this.resultResponse.LeadId,
@@ -426,11 +430,16 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     });
   }
 
+  setLookupCommodityData(ev){
+    this.NapAppModelForm.patchValue({
+      CommodityCode: ev.MasterCode
+    });
+  }
+
   makeLookUpObj() {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultResponse;
@@ -438,7 +447,6 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
 
@@ -457,6 +465,20 @@ export class ApplicationDataFL4WXComponent implements OnInit {
           this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
         });
     }
+
+      //Lookup Commodity
+      this.inputLookupCommodityObj = new InputLookupObj();
+      this.inputLookupCommodityObj.urlJson = "./assets/impl/uclookup/lookupCommodity.json";
+      this.inputLookupCommodityObj.pagingJson = "./assets/impl/uclookup/lookupCommodity.json";
+      this.inputLookupCommodityObj.genericJson = "./assets/impl/uclookup/lookupCommodity.json";
+      
+      if(this.NapAppModelForm.controls.CommodityCode.value != "" && this.NapAppModelForm.controls.CommodityCode.value != null)
+      {
+        //this.inputLookupCommodityObj.idSelect = this.NapAppModelForm.controls.CommodityCode.value;
+        this.inputLookupCommodityObj.nameSelect = this.tempCommodityName;
+        this.inputLookupCommodityObj.jsonSelect = { Descr: this.tempCommodityName };
+      }
+
     this.isInputLookupObj = true;
   }
 
@@ -636,6 +658,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       AppId: this.AppId,
       MrStatusBpkbCode: this.NapAppModelForm.controls.BpkbStatCode.value,
       MrOrdStatusCode: this.NapAppModelForm.controls.OrdStatCode.value,
+      MrCommodityCode: this.NapAppModelForm.controls.CommodityCode.value,
     };
     var obj = {
       AppObj: tempAppObj,
@@ -950,14 +973,17 @@ export class ApplicationDataFL4WXComponent implements OnInit {
         }
       })
   }
-  getAppXData(){
-    this.http.post(URLConstantX.GetAppXByAppId, {Id: this.AppId}).subscribe(
+  
+  async getAppXData(){
+    await this.http.post(URLConstantX.GetAppXDataByAppId, {Id: this.AppId}).toPromise().then(
       (response) => {
         if(response["AppId"] != 0){
           this.NapAppModelForm.patchValue({
             BpkbStatCode: response["MrStatusBpkbCode"],
-            OrdStatCode: response["MrOrdStatusCode"]
+            OrdStatCode: response["MrOrdStatusCode"],
+            CommodityCode: response["MrCommodityCode"]
           });
+          this.tempCommodityName = response["CommodityName"];
         }
       }
     );

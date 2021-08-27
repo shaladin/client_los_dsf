@@ -18,8 +18,15 @@
                   <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="GoLiveApvReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
-                <label class="col-md-4 adinsLabel" translate>{{MainInfoForm.controls.EffectiveDt.value | date:
+                <label class="col-md-2 adins-required-label" for="EffectiveDtInp" translate>Effective Date</label>
+                <div class="col-md-4" *ngIf="BizTemplateCode == 'DLFN'">
+                  <input type="date" id="EffectiveDtInp" class="form-control adInsInput name"
+                         formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.EffectiveDt"
+                                      [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <label *ngIf="BizTemplateCode != 'DLFN'" class="col-md-4 adinsLabel" translate>{{MainInfoForm.controls.EffectiveDt.value | date:
                   'dd-MMMM-yyyy'}}</label>
               </div>
 
@@ -35,7 +42,7 @@
 
                 <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
                 <div class="col-md-4">
-                  <input type="date" id="GoLiveEstimated" class="form-control adInsInput name" 
+                  <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
                     formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.GoLiveEstimated"
                     [submit]="GoLiveApvReqForm.submitted">
@@ -111,10 +118,10 @@
 
         <form class="form form-horizontal" [formGroup]="GoLiveApvForm" #GoLiveApvReqForm="ngForm" #enjiForm="ngForm"
           (ngSubmit)="MainInfoForm.valid && GoLiveApvForm.valid &&SaveForm()">
-          <div *ngIf="IsCheckedAll && IsNeedApv && BizTemplateCode != 'DLFN' && isOk || (IsNeedApv && BizTemplateCode == 'DLFN' && isOk)">           
+          <div *ngIf="IsCheckedAll && IsNeedApv && BizTemplateCode != 'DLFN' && isOk || (IsNeedApv && BizTemplateCode == 'DLFN' && isOk)">
             <lib-ucapprovalcreate [parentForm]="GoLiveApvForm" [enjiForm]="GoLiveApvReqForm" [InputObj]="InputGoLiveObj" *ngIf="IsReady" ></lib-ucapprovalcreate>
           </div>
-          
+
           <div class="form-actions right">
             <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
               translate>

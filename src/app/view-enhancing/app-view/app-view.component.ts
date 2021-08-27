@@ -61,6 +61,7 @@ export class AppViewComponent implements OnInit {
   IsUseDigitalization: string;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   OriOfficeCode: string;
+  NumOfAsset: number;
 
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
@@ -96,6 +97,7 @@ export class AppViewComponent implements OnInit {
           this.MouCustId = response.MouCustId;
           this.OriOfficeCode = response.OriOfficeCode;
           this.IsApprovalHist = true;
+          this.NumOfAsset = response.NumOfAsset;
         }
       )
     }
@@ -223,11 +225,13 @@ export class AppViewComponent implements OnInit {
       this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CF4W) {
+      this.IsAsset = this.NumOfAsset < 2 ? true : false;
       this.IsCollateral = false;
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
-      this.IsMultiAsset = false;
-      this.IsMultiInsurance = false;
+      this.IsInsurance = this.NumOfAsset < 2 ? true : false;
+      this.IsMultiAsset = this.NumOfAsset > 1 ? true : false;
+      this.IsMultiInsurance = this.NumOfAsset > 1 ? true : false;
       this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;

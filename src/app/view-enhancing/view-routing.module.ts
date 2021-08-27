@@ -75,6 +75,14 @@ const routes: Routes = [
                 path: PathConstantX.VIEW_CHANGE_MOU_X,
                 loadChildren: './change-mou-view/change-mou-view.module#ChangeMouViewModule'
             },
+            {
+                path: PathConstant.VIEW_CUST_APP_LISTING,
+                loadChildren: './cust-app-list-view/cust-app-list-view.module#CustAppListViewModule'
+            },
+            {
+                path: PathConstant.VIEW_CUST_AGRMNT_LISTING,
+                loadChildren: './cust-agrmnt-list-view/cust-agrmnt-list-view.module#CustAgrmntListViewModule'
+            }
         ]
     }
 ];

@@ -35,10 +35,8 @@ export class AppAssetViewAssetDetailComponent implements OnInit {
   async SetInfo() {
     if(this.BizTemplateCode === CommonConstant.OPL) {
       this.viewGenericSupplAssetObj.viewInput = "./assets/ucviewgeneric/view/app-asset-view/view-application-asset-suppl-asset-information.json";
-      this.viewGenericSupplAssetObj.viewEnvironment = environment.losUrl;
 
       this.viewGenericAddressObj.viewInput = "./assets/ucviewgeneric/view/app-asset-view/view-application-asset-address-information.json";
-      this.viewGenericAddressObj.viewEnvironment = environment.losUrl;
     }
   }
 

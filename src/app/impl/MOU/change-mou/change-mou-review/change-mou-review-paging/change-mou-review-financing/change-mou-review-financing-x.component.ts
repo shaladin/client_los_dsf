@@ -205,12 +205,7 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
       "AttributeValue": this.PlafondAmt
     };
 
-    var attribute2 = {
-      "AttributeName": "Scoring",
-      "AttributeValue": this.ScoreResult
-    };
     Attributes.push(attribute1);
-    Attributes.push(attribute2);
 
     var TypeCode = {
       TypeCode: "CHG_MOU_APV_TYPE",
@@ -220,18 +215,16 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode =
-      URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode =
-      URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
+    this.InputObj.EnvUrl = environment.FoundationR3Url + '/v1';
+    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
+    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
+    this.InputObj.PathUrlGetAdtQuestion =  URLConstant.GetRefAdtQuestion;
     this.InputObj.PathUrlGetPossibleMemberAndAttributeExType =
-      URLConstant.GetPossibleMemberAndAttributeExType;
+    URLConstant.GetPossibleMemberAndAttributeExType;
     this.InputObj.PathUrlGetApprovalReturnHistory =
-      URLConstant.GetApprovalReturnHistory;
+    URLConstant.GetApprovalReturnHistory;
     this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
+    this.InputObj.PathUrlCreateJumpRFA =  URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_APV;
     this.InputObj.Reason = this.listReason;

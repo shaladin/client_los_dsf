@@ -133,18 +133,7 @@
         <label class="col-md-2  adInsLabel" translate>Way of Payment</label>
         <label class="col-md-4  adinslabel" translate
           *ngIf="SummaryObj?.App">{{this.SummaryObj.App.MrWopCode}}</label>
-        <!-- <label class="col-md-2  adInsLabel" translate>Pre Go Live Date</label>
-        <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.App">{{this.SummaryObj.App.PreGoLiveDt  | date: 'dd-MMMM-yyyy'}}</label> -->
       </div>
-      <!-- <div *ngIf="SummaryObj?.AppCustPersonal">
-        <label class="col-md-2  adInsLabel" translate>Way of Payment</label>
-        <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.App">{{this.SummaryObj.App.MrWopCode}}</label>
-        <label class="col-md-2  adInsLabel" translate>Pre Go Live Notes</label>
-        <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.App">{{this.SummaryObj.App.PreGoLiveNotes}}</label>
-      </div> -->
     </div>
     <lib-ucSubsection [id]="'assetId'" [title]="'Asset'" [panel]="'asset'">
     </lib-ucSubsection>

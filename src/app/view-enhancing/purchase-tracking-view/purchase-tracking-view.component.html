@@ -65,10 +65,10 @@
   
                 <div class="form-group row">
                   <label class="col-md-3 adins-label">Allocate to Agreement No</label>
-                  <label class="col-md-9 adins-label" *ngIf="!AgrmntObj">-</label>
-                  <label class="col-md-9 adins-label" *ngIf="AgrmntObj">
-                    <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('AGR')">
-                      {{AgrmntObj.AgrmntNo}}
+                  <label class="col-md-9 adins-label" *ngIf="AssetReqObj.AgrmntNo === null">-</label>
+                  <label class="col-md-9 adins-label" *ngIf="AssetReqObj.AgrmntNo !== null">
+                    <a href="javascript:void(0);" (click)="OpenView('AGR')">
+                      {{AssetReqObj.AgrmntNo}}
                     </a>
                   </label>
                 </div>

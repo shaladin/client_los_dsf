@@ -1,6 +1,5 @@
 <div class="wrapper" [dir]="options.direction">
-    <div class="app-sidebar" data-active-color="white" data-background-color="white"
-        data-image="assets/img/sidebar-bg/01.jpg">
+    <div class="app-sidebar" data-active-color="white" data-background-color="white" data-image="assets/img/sidebar-bg/01.jpg">
         <app-sidebar></app-sidebar>
         <div class="sidebar-background"></div>
     </div>
@@ -8,10 +7,15 @@
     <br>
     <div class="main-panel">
         <div class="main-content">
-            <div class="content-wrapper">
-                <div class="container-fluid" style="padding-bottom: 40px;">
-                    <router-outlet></router-outlet>
+            <div style="position: relative;">
+                <div class="content-wrapper">
+                    <div class="container-fluid" style="padding-bottom: 40px;">
+                        <router-outlet></router-outlet>
+                    </div>
                 </div>
+                <!-- <ngx-spinner [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium" bdColor="rgba(51,51,51,0.3)">
+                    <p class="loading">Loading Awesomeness...</p>
+                </ngx-spinner> -->
             </div>
         </div>
     </div>

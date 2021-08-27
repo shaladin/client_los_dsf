@@ -69,7 +69,6 @@ export class MouReviewDlfnComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",

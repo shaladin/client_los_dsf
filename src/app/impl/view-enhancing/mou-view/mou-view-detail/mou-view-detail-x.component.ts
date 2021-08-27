@@ -60,6 +60,7 @@ export class MouViewDetailXComponent implements OnInit {
   dealerGrading: string;
   dealerRating: number;
 
+
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() {

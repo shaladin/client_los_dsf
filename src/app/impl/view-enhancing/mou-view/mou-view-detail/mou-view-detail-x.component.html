@@ -77,13 +77,15 @@
       </label>
     </div>
 
-    <div *ngIf="MouType == 'FACTORING' && mouCustFctr.MrInstTypeCode == 'MULTIPLE'" class="form-group row">
-      <label class="col-md-2 adInsLabel" translate>Tenor From</label>
-      <label class="col-md-4 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp;
-        {{TenorTo}}</label>
+    <div *ngIf="MouType == 'FACTORING' && mouCustFctr !=null" class="form-group row">
+      <div *ngIf="mouCustFctr.MrInstTypeCode == 'MULTIPLE'">
+        <label class="col-md-2 adInsLabel" translate>Tenor From</label>
+        <label class="col-md-4 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp;
+          {{TenorTo}}</label>
 
-      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label class="col-md-4 adInsLabel" translate>{{dictRefPayFreq[PayFreqCode]}}</label>
+        <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
+        <label class="col-md-4 adInsLabel" translate>{{dictRefPayFreq[PayFreqCode]}}</label>
+      </div>
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
@@ -164,7 +166,7 @@
       </div>
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Link Manufacturer </label>
-        <label class="col-md-4 adInsLabel" translate>          
+        <label class="col-md-4 adInsLabel" translate>
           <a class="link" (click)="ClickLinkManufacturer(MouCustDlrFindData.ManufacturerCode)"> {{MouCustDlrFindData.ManufacturerName}} </a>
         </label>
 
@@ -173,7 +175,7 @@
       </div>
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Link Supplier Grading</label>
-        <label class="col-md-4 adInsLabel" translate>          
+        <label class="col-md-4 adInsLabel" translate>
           <a class="link" (click)="ClickLinkManufacturer(MouCustDlrFindData.DealerCode)"> {{MouCustDlrFindData.DealerName}} </a>
         </label>
 

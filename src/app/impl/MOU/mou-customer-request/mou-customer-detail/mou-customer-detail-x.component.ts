@@ -13,8 +13,8 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
+import {MouMainInfoXComponent} from 'app/impl/view-enhancing/mou-main-info/mou-main-info-x.component';
 
 @Component({
   selector: 'app-mou-customer-detail-x',
@@ -28,7 +28,7 @@ export class MouCustomerDetailXComponent implements OnInit, AfterViewInit {
   @ViewChild("MouTcGeneral") public mouTcGeneral: MouCustTcComponent;
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   @ViewChild("MouTcFinancing") public mouTcFinancing: MouCustTcComponent;
-  @ViewChild("viewMouMainInfo") viewMouMainInfo: MouMainInfoComponent;
+  @ViewChild("viewMouMainInfo") public viewMouMainInfo: MouMainInfoXComponent;
   mouType: string;
   mouCustId: number;
   currentStepIndex: number;

@@ -44,8 +44,6 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchDocChecklistApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocChecklistApproval.json";
     this.inputPagingObj.isJoinExAPI = true;
 

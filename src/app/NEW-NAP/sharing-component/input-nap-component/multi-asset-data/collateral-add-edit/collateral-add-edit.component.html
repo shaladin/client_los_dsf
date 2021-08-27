@@ -52,6 +52,16 @@
                     </div>
                   </div>
                   <div class="form-group row">
+                    <label class="col-md-4 adins-required-label" translate>Manufacturing Year</label>
+                    <div class="col-md-8">
+                      <input type="text" class="form-control" formControlName="ManufacturingYear"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.ManufacturingYear.invalid }">
+                      <lib-uc-show-errors [control]="AddCollForm.controls.ManufacturingYear"
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
                     <label class="col-md-4 adins-required-label" translate>Collateral Price</label>
                     <div class="col-md-8">
                       <input type="" currencyMask class="form-control" formControlName="CollateralValueAmt"
@@ -141,6 +151,15 @@
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
                   <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" translate>Owner Profession</label>
+                <div class="col-md-4">
+                  <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+                    [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
+                    [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+                  </lib-uclookupgeneric>
                 </div>
               </div>
               <div class="form-group row">
