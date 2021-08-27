@@ -971,6 +971,8 @@ export class CommonConstant {
   public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
   public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
   public static RTN_EDIT_APP = "RTN_EDIT_APP_";
+  public static RTN_ADD_COLTR = "RTN_ADD_COLTR_";
+  public static ADD_COLTR = "ADD_COLTR_";
   public static EDIT_APP = "EDIT_APP_";
   public static RTN_EDIT_COM_RSV_FND = "RTN_EDIT_COM_RSV_FND_";
   public static EDIT_COM_RSV_FND = "EDIT_COM_RSV_FND_";
