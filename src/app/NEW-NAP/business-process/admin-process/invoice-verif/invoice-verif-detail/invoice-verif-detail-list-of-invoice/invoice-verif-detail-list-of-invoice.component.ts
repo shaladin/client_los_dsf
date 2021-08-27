@@ -207,7 +207,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     });
   }
 
-  async claimTask() {
+  claimTask() {
     if(environment.isCore){
       if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
         this.claimTaskService.ClaimTaskV2(this.WfTaskListId);

@@ -11,6 +11,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
@@ -71,7 +72,8 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     this.AppAgrmntCancelObj.CancelByRefNo = "null";
     this.AppAgrmntCancelObj.RowVersion = "";
 
-    this.http.post(URLConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
+    let AddAppAgrmntCancelUrl = environment.isCore ? URLConstant.AddAppAgrmntCancelV2 : URLConstant.AddAppAgrmntCancel;
+    this.http.post(AddAppAgrmntCancelUrl, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING], { BizTemplateCode: this.BizTemplateCode });
     });

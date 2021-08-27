@@ -306,10 +306,12 @@ export class ChangeMouRequestDetailComponent implements OnInit {
 
 
   ClaimTask() {
-    if(environment.isCore) {
-      this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+    if (environment.isCore) {
+      if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
     }
-    else {
+    else if (this.WfTaskListId > 0) {
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }

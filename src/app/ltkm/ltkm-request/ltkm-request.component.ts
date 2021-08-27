@@ -62,6 +62,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 @Component({
     selector: 'app-ltkm-request',
     templateUrl: './ltkm-request.component.html',
@@ -200,7 +201,7 @@ export class LtkmRequestComponent implements OnInit {
     AttrGroupFinData: string = CommonConstant.AttrGroupCustPersonalFinData;
     isLockMode: boolean = true;
     private mode: string = "request";
-    private WfTaskListId: number;
+    private WfTaskListId: any;
     ReturnHandlingId: number;
     FinFormIsDetail: boolean = false;
     BankFormIsDetail: boolean = false;
@@ -227,7 +228,8 @@ export class LtkmRequestComponent implements OnInit {
         private http: HttpClient,
         private toastr: NGXToastrService,
         private route: ActivatedRoute,
-        private cookieService: CookieService) {
+        private cookieService: CookieService,
+        private claimTaskService: ClaimTaskService) {
         this.route.queryParams.subscribe(params => {
             if (params["AppId"] != undefined && params["AppId"] != null) {
                 this.appId = params["AppId"];
@@ -304,9 +306,7 @@ export class LtkmRequestComponent implements OnInit {
             this.pageTitle = 'LTKM RETURN HANDLING';
             this.isLockMode = false;
             this.isLockLookupCust = true;
-            if (this.WfTaskListId > 0) {
-                this.claimTask();
-            }
+            this.claimTask();
         }
         await this.getCustData();
         await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
@@ -319,14 +319,16 @@ export class LtkmRequestComponent implements OnInit {
         );        
     }
 
-    async claimTask() {
-        var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-        wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-        wfClaimObj.pUserID = this.UserAccess[CommonConstant.USER_NAME];
-        this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-            (response) => {
-            });
-    }
+    claimTask() {
+        if (environment.isCore) {
+          if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
+            this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+          }
+        }
+        else if (this.WfTaskListId > 0) {
+          this.claimTaskService.ClaimTask(this.WfTaskListId);
+        }
+      }
 
     SaveForm() {
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {

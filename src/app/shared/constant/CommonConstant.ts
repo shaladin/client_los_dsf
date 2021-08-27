@@ -153,6 +153,7 @@ export class CommonConstant {
   public static AppStepApv = "APV";
   public static AppStepRtn = "RTN";
   public static AppStepAgr = "AGR";
+  public static AppStepLiv = "LIV";
   public static AppStepPO = "PO";
   public static AppStepOFVC = "OFVC";
   public static AppStepOFVA = "OFVA";
@@ -758,6 +759,14 @@ export class CommonConstant {
   public static SCHM_CODE_AML_APV = "AML_APV_SCHM";
   public static SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL = "EDIT_APP_AFT_APV_APV_SCHM_NORMAL";
   public static SCHM_CODE_CHG_MOU_APV = "CHG_MOU_APV";
+  public static SCHM_CODE_CHG_MOU_DLFN_APV = "CHG_MOU_DLFN_APV";
+  public static SCHM_CODE_CHG_MOU_FCTR_APV  = "CHG_MOU_FCTR_APV ";
+  public static SCHM_CODE_MOU_FRZ_UNFRZ_DLFN = "MOU_FRZ_UNFRZ_DLFN";
+  public static SCHM_CODE_MOU_FRZ_UNFRZ_FCTR = "MOU_FRZ_UNFRZ_FCTR";
+  public static SCHM_CODE_CHG_MOU_EXP_APV = "CHG_MOU_EXP_APV";
+  public static SCHM_CODE_CHG_MOU_EXP_DLFN_APV = "CHG_MOU_EXP_DLFN_APV";
+  public static SCHM_CODE_CHG_MOU_EXP_FCTR_APV = "CHG_MOU_EXP_FCTR_APV";
+
 
   public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
   public static CAT_CODE_MOU_APV_DLFN = "MOUC_DLFN_APV";
@@ -844,6 +853,7 @@ export class CommonConstant {
   //MOU TYPE
   public static MOU_TYPE_GENERAL = "GENERAL";
   public static MOU_TYPE_FACTORING = "FACTORING";
+  public static MOU_TYPE_DLFN = "FINANCING";
 
   //Cashflow Item Type
   public static CashFlowItemMasterCodeFeeCptlz = "CASHFLOW_FEE_CPTLZ";
@@ -961,6 +971,8 @@ export class CommonConstant {
   public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
   public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
   public static RTN_EDIT_APP = "RTN_EDIT_APP_";
+  public static RTN_ADD_COLTR = "RTN_ADD_COLTR_";
+  public static ADD_COLTR = "ADD_COLTR_";
   public static EDIT_APP = "EDIT_APP_";
   public static RTN_EDIT_COM_RSV_FND = "RTN_EDIT_COM_RSV_FND_";
   public static EDIT_COM_RSV_FND = "EDIT_COM_RSV_FND_";
@@ -1007,8 +1019,7 @@ export class CommonConstant {
   public static ACT_CODE_CDA = "CDA";
   public static ACT_CODE_CDC = "CDC";
   public static ACT_CODE_INV_VERIF = "INV_VERIF";
-  public static WF_CRP_CF4W_AFT_ACT = "WF_CRP_CF4W_AFT_ACT";
-  public static WF_CRP_FCTR_AFTER_ACT = "WF_CRP_FCTR_AFTER_ACT";
+  public static WF_CRP_AFT_ACT = "WF_CRP_{0}_AFT_ACT";
   public static ACT_CODE_PO = "PO_";
   public static ACT_CODE_DO = "DO_";
   public static ACT_CODE_CNFR = "CNFR_";

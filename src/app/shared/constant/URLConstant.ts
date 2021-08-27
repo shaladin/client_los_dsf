@@ -200,6 +200,7 @@ export class URLConstant {
 
   // AppAgrmntCancel
   public static AddAppAgrmntCancel = environment.losUrl + "/v1" + "/AppAgrmntCancel/AddAppAgrmntCancel";
+  public static AddAppAgrmntCancelV2 = environment.losUrl + "/v2" + "/AppAgrmntCancel/AddAppAgrmntCancel";
   public static AddAppAssetCancel = environment.losUrl + "/v1" + "/AppAgrmntCancel/AddAppAssetCancel";
 
   //ORGANIZATION
@@ -814,6 +815,7 @@ export class URLConstant {
   public static GetDeliveryOrderHByDeliveryOrderHId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderHByDeliveryOrderHId";
   public static GetDeliveryOrderDataForOneAssetByAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderDataForOneAssetByAgrmntId";
   public static SubmitDeliveryOrderMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/SubmitDeliveryOrderMultiAsset";
+  public static SubmitDeliveryOrderMultiAssetV2 = environment.losUrl + "/v2" + "/DeliveryOrder/SubmitDeliveryOrderMultiAsset";
   public static CheckAllDeliveryOrderData = environment.losUrl + "/v1" + "/DeliveryOrder/CheckAllDeliveryOrderData";
 
   //PURCHASE ORDER
@@ -1337,6 +1339,7 @@ export class URLConstant {
   public static ClaimTaskNapCustmainData = environment.losUrl + "/v1" + "/Application/ClaimTaskNapCustmainData";
   public static ClaimTaskNapCustmainDataV2 = environment.losUrl + "/v2" + "/Application/ClaimTaskNapCustmainData";
   public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
+  public static GetAllWorkflowInstance = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllWorkflowInstance";
   public static CompleteTask = environment.FoundationR3Url + "/v2" + "/Workflow/CompleteTask";
 
   //Application Data
