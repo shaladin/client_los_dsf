@@ -31,7 +31,7 @@ export class LeadCancelComponent implements OnInit {
   
 
   constructor(private toastr: NGXToastrService, private router: Router, private cookieService: CookieService) { }
-
+ 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
