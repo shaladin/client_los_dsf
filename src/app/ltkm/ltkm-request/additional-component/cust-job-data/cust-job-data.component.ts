@@ -201,7 +201,7 @@ export class LtkmCustJobDataComponent implements OnInit {
   GetIndustryType(event) {
     this.parentForm.controls[this.identifier].patchValue({
       IndustryTypeCode: event.IndustryTypeCode,
-      RefSectorEconomySlikCode: event.RefSectorEconomySlikCode
+      RefSectorEconomySlikCode: event.MasterCode
     });
   }
 
