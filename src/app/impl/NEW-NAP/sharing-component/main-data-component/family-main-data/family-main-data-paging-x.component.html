@@ -58,7 +58,7 @@
   <lib-ucSubsection [id]="'AddEditFamilyId'" [title]="'Add / Edit Family'" [panel]="'AddEditFamily'">
   </lib-ucSubsection>
   <div id="AddEditFamily">
-    <app-cust-main-data-x [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId"
+    <app-cust-main-data-x [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId" [isNonMandatory]="isNonMandatory"
       [inputMode]="inputMode" [isMarried]="isMarried" (outputCancel)="close()" (outputAfterSave)="close()">
     </app-cust-main-data-x>
   </div>

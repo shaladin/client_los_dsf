@@ -83,7 +83,7 @@ export class CustMainDataXComponent implements OnInit {
   @Input() AppCustCompanyMgmntShrholderId: number = 0;
   @Input() appCustId: number = 0;
   @Input() bizTemplateCode: string = "";
-  @Input() lobCode: string = "";
+  @Input() isNonMandatory: boolean;
   @Input() inputMode: string = "ADD";
   @Input() isMarried: boolean = false;
   @Output() outputAfterSave: EventEmitter<any> = new EventEmitter();
@@ -150,9 +150,8 @@ export class CustMainDataXComponent implements OnInit {
   readonly CustTypePublic: string = CommonConstant.CustTypePublic;
   readonly AttrGroupCustPersonalOther: string = CommonConstant.AttrGroupCustPersonalOther;
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
-  MaxDaysThirdPartyChecking: number;
-  isNonMandatory : boolean;
-  // isNonMandatory: boolean = this.lobCode == 'CF' || this.lobCode == 'LF' || this.lobCode == 'SLB' || this.lobCode == 'DT';
+  MaxDaysThirdPartyChecking: number;  
+  
 
   constructor(
     private regexService: RegexService,
@@ -181,9 +180,9 @@ export class CustMainDataXComponent implements OnInit {
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
-    MotherMaidenName: this.lobCode == 'CF' || this.lobCode == 'LF' || this.lobCode == 'SLB' || this.lobCode == 'MPF' || this.lobCode == 'DT' ? [''] : ['', Validators.required],
+    MotherMaidenName: [''], 
     MrCompanyTypeCode: [''],
-    MobilePhnNo1: this.lobCode == 'CF' || this.lobCode == 'LF' || this.lobCode == 'SLB' || this.lobCode == 'MPF' || this.lobCode == 'DT'  ?  ['', [Validators.pattern("^[0-9]+$")]] : ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    MobilePhnNo1: ['', [Validators.pattern("^[0-9]+$")]], 
     Email1: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MrJobPositionCode: [''],
     EstablishmentDt: [''],
@@ -194,8 +193,7 @@ export class CustMainDataXComponent implements OnInit {
     IsOwner: [false]    
   });
 
-  async ngOnInit() {
-    console.log("cek",this.lobCode);
+  async ngOnInit() {    
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
@@ -266,6 +264,11 @@ export class CustMainDataXComponent implements OnInit {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
+    if(!this.isNonMandatory){
+      this.CustMainDataForm.controls.MobilePhnNo1.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+    }
+  
 
     switch (this.custMainDataMode) {
       case CommonConstant.CustMainDataModeCust:
@@ -661,19 +664,10 @@ export class CustMainDataXComponent implements OnInit {
       );
     }
 
-     if(this.lobCode == 'CF' || 
-        this.lobCode == 'LF'  || 
-        this.lobCode == 'SLB' || 
-        this.lobCode == 'MPF' || 
-        this.lobCode == 'DT')
-        {
-          this.isNonMandatory = true
-        }else {
-          this.isNonMandatory = false;
-        }
+
 
     if (custType == CommonConstant.CustTypePersonal) {
-      this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+      this.isNonMandatory ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);

@@ -38,6 +38,8 @@ export class NapCustMainDataXComponent implements OnInit {
   appCustId: number = 0;
   IsViewReady: boolean = false;
   from: string;
+  lobCode: string;
+  isNonMandatory: boolean;
 
   AppStep = {
     "NEW": 1,
@@ -79,6 +81,17 @@ export class NapCustMainDataXComponent implements OnInit {
         if (response) {
           this.NapObj = response;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
+          this.lobCode = this.NapObj.LobCode;          
+          if(this.lobCode == 'CF' || 
+            this.lobCode == 'LF'  || 
+            this.lobCode == 'SLB' || 
+            this.lobCode == 'MPF' || 
+            this.lobCode == 'FD')
+          {
+            this.isNonMandatory = true
+          }else {
+            this.isNonMandatory = false;
+          }
           this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
           this.IsViewReady = true;

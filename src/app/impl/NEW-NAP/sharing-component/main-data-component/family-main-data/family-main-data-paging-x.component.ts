@@ -19,6 +19,7 @@ export class FamilyMainDataPagingXComponent implements OnInit {
   @Input() isMarried: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  @Input() isNonMandatory: boolean;
 
   isDetail: boolean = false;
   inputGridObj: InputGridObj;

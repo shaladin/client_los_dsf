@@ -173,7 +173,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 {{ lobCode == 'CF' OR lobCode == 'LF' OR lobCode == 'SLB' OR lobCode = 'MPF' OR lobCode = 'DT' ? '' : 'adins-required-label' }}" translate>
+                <label class="col-md-4 {{ isNonMandatory ? '' : 'adins-required-label' }}" translate>
                   Mother Maiden Name
                 </label>
                 <div class="col-md-8">
@@ -217,7 +217,7 @@
             </div>
             <div class="col-md-6" *ngIf="true">
               <div class="form-group row">
-                <label class="col-md-4 {{ lobCode == 'CF' || lobCode == 'LF' || lobCode == 'SLB' || lobCode = 'MPF' || lobCode = 'DT' ? '' : 'adins-required-label'}}" translate>
+                <label class="col-md-4 {{ isNonMandatory ? '' : 'adins-required-label'}}" translate>
                   Mobile Phone
                 </label>
                 <div class="col-md-8">
