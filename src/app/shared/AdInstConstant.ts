@@ -36,4 +36,7 @@ export class AdInsConstant {
   public static UserCustomer = "Customer";
   public static TextTrue = "True";
   public static TextFalse = "False";
+
+  // Storage Watch Key
+  public static WatchRoleState = "RoleState";
 }
