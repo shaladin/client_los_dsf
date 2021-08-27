@@ -54,6 +54,7 @@ export class LeadCancelComponent implements OnInit {
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "LeadNo";
       this.IntegrationObj.rightColumnToJoin = "BusinessKey";
+      this.IntegrationObj.joinType = AdInsConstant.JoinTypeLeft;
       this.tempPagingObj.integrationObj = this.IntegrationObj;
     }
 

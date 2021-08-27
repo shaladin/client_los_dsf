@@ -83,7 +83,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   claimTask() {
     if (environment.isCore) {
-      if (this.wfTaskListId) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
         this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
       }
     }

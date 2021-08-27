@@ -1,41 +1,24 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
-import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
-import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { formatDate } from '@angular/common';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
-import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { MatRadioChange } from '@angular/material/radio/typings/public-api';
-import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
-import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
-import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CustPersonalMainDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/personal-main-data/cust-personal-main-data.component';
 import { CustPersonalContactInformationComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/personal-contact-information/cust-personal-contact-information.component';
-import { CustJobDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component';
-import { CustGrpMemberComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/cust-grp-member/cust-grp-member.component';
 import { LtkmOtherInfoComponent } from 'app/ltkm/ltkm-request/additional-component/other-info/other-info.component';
 import { LtkmFinancialPersonalComponent } from 'app/ltkm/ltkm-request/additional-component/financial-personal/financial-personal.component';
 import { LtkmCustJobDataComponent } from 'app/ltkm/ltkm-request/additional-component/cust-job-data/cust-job-data.component';
@@ -48,7 +31,6 @@ import { LtkmFinancialCompanyComponent } from 'app/ltkm/ltkm-request/additional-
 import { LtkmBankSectionComponent } from 'app/ltkm/ltkm-request/additional-component/bank-section/bank-section.component';
 import { LtkmMgmntShrholderComponent } from 'app/ltkm/ltkm-request/additional-component/company/mgmnt-shrholder/mgmnt-shrholder.component';
 import { LtkmCustCompanyMainDataComponent } from 'app/ltkm/ltkm-request/additional-component/company/cust-company-main-data/cust-company-main-data.component';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { LtkmEmergencyContactComponent } from 'app/ltkm/ltkm-request/additional-component/emergency-contact/emergency-contact.component';
 import { LtkmFamilyMainDataPagingComponent } from 'app/ltkm/ltkm-request/additional-component/family-main-data/family-main-data-paging.component';
 import { CustDataCompanyLtkmObj } from 'app/shared/model/LTKM/CustDataCompanyLtkmObj.Model';
@@ -75,6 +57,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { environment } from 'environments/environment';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 @Component({
     selector: 'app-ltkm-return-handling',
     templateUrl: './ltkm-return-handling.component.html',
@@ -224,7 +207,8 @@ export class LtkmReturnHandlingComponent implements OnInit {
         private http: HttpClient,
         private toastr: NGXToastrService,
         private route: ActivatedRoute,
-        private cookieService: CookieService) {
+        private cookieService: CookieService,
+        private claimTaskService: ClaimTaskService) {
         this.route.queryParams.subscribe(params => {
             if (params["AppId"] != undefined && params["AppId"] != null) {
                 this.appId = params["AppId"];
@@ -284,9 +268,7 @@ export class LtkmReturnHandlingComponent implements OnInit {
             this.pageTitle = 'LTKM RETURN HANDLING';
             this.isLockMode = false;
             this.isLockLookupCust = true;
-            if (this.WfTaskListId > 0) {
-                this.claimTask();
-            }
+            this.claimTask();
         }
         await this.getCustData();
         await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
@@ -300,14 +282,16 @@ export class LtkmReturnHandlingComponent implements OnInit {
         );
     }
 
-    async claimTask() {
-        var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-        wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-        wfClaimObj.pUserID = this.UserAccess.UserName;
-        this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-            (response) => {
-            });
-    }
+    claimTask() {
+        if (environment.isCore) {
+          if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
+            this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+          }
+        }
+        else if (this.WfTaskListId > 0) {
+          this.claimTaskService.ClaimTask(this.WfTaskListId);
+        }
+      }
 
     SaveForm() {
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {

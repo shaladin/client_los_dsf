@@ -121,7 +121,7 @@ export class ChangeMouReviewFinancingComponent implements OnInit {
     ApvRecommendation: this.fb.array([]),
   });
 
-  async claimTask() {
+   claimTask() {
     if(environment.isCore){
       if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
         this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
