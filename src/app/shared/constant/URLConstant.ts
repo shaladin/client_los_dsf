@@ -200,6 +200,7 @@ export class URLConstant {
 
   // AppAgrmntCancel
   public static AddAppAgrmntCancel = environment.losUrl + "/v1" + "/AppAgrmntCancel/AddAppAgrmntCancel";
+  public static AddAppAgrmntCancelV2 = environment.losUrl + "/v2" + "/AppAgrmntCancel/AddAppAgrmntCancel";
   public static AddAppAssetCancel = environment.losUrl + "/v1" + "/AppAgrmntCancel/AddAppAssetCancel";
 
   //ORGANIZATION
