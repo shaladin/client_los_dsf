@@ -86,7 +86,7 @@ export class SidebarComponent implements OnInit {
 
     setMenu(){
         this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
-        this.strService.set("abc", false);
+        this.strService.set(AdInsConstant.WatchRoleState, false);
     }
 
     //NGX Wizard - skip url change
