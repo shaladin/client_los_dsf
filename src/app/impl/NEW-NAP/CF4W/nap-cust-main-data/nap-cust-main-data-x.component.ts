@@ -36,6 +36,7 @@ export class NapCustMainDataXComponent implements OnInit {
   appCustId: number = 0;
   IsViewReady: boolean = false;
   from: string;
+  lobCode: string;
 
   AppStep = {
     "NEW": 1,
@@ -76,6 +77,8 @@ export class NapCustMainDataXComponent implements OnInit {
         if (response) {
           this.NapObj = response;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
+          this.lobCode = this.NapObj.LobCode;
+          console.log("cek",this.NapObj.LobCode, typeof this.NapObj.LobCode);
           this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
           this.IsViewReady = true;
@@ -84,6 +87,7 @@ export class NapCustMainDataXComponent implements OnInit {
           this.AppStepIndex = 0;
           this.IsViewReady = true;
         }
+        console.log("cek", this.lobCode, this.bizTemplateCode);
       }
     );
 

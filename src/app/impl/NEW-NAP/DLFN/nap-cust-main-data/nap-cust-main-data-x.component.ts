@@ -107,6 +107,7 @@ export class NapCustMainDataXComponent implements OnInit {
         if (response) {
           this.NapObj = response;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
+          console.log("cek",this.bizTemplateCode, this.NapObj, this.NapObj.LobCode);
           this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
         }

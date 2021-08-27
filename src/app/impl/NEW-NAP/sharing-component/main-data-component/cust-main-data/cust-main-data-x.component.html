@@ -213,6 +213,18 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-6" *ngIf="true">
+              <div class="form-group row">
+                <label class="col-md-4 adins-required-label" translate>Mobile Phone</label>
+                <div class="col-md-8">
+                  <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                    formControlName="MobilePhnNo1"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MobilePhnNo1.invalid}">
+                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MobilePhnNo1" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
             <div class="col-md-6">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Mobile Phone</label>

@@ -83,6 +83,7 @@ export class CustMainDataXComponent implements OnInit {
   @Input() AppCustCompanyMgmntShrholderId: number = 0;
   @Input() appCustId: number = 0;
   @Input() bizTemplateCode: string = "";
+  @Input() lobCode: string = "";
   @Input() inputMode: string = "ADD";
   @Input() isMarried: boolean = false;
   @Output() outputAfterSave: EventEmitter<any> = new EventEmitter();
@@ -180,7 +181,7 @@ export class CustMainDataXComponent implements OnInit {
     BirthDt: ['', Validators.required],
     MotherMaidenName: ['', Validators.required],
     MrCompanyTypeCode: [''],
-    MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    MobilePhnNo1: this.lobCode == 'CF' ?  ['', [Validators.pattern("^[0-9]+$")]] : ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     Email1: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MrJobPositionCode: [''],
     EstablishmentDt: [''],
@@ -192,6 +193,7 @@ export class CustMainDataXComponent implements OnInit {
   });
 
   async ngOnInit() {
+    console.log("cek",this.lobCode);
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
@@ -665,7 +667,7 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      true ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([ Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]) ;
       this.CustMainDataForm.controls.Email1.setValidators([Validators.pattern(CommonConstant.regexEmail)]);
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();

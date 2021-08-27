@@ -49,7 +49,7 @@
           <div class="bs-stepper-content">
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-cust-main-data-x *ngIf="AppStepIndex == 1" [appId]="appId" [custMainDataMode]="'CUST'" 
-              [bizTemplateCode]="bizTemplateCode" [from]="this.from"
+              [bizTemplateCode]="bizTemplateCode" [from]="this.from" [lobCode]="lobCode"
                 [inputMode]="appCustId ? 'EDIT' : 'ADD'" [appCustId]='appCustId' (outputAfterSave)="getEvent($event)"
                 (outputCancel)="Cancel()">
               </app-cust-main-data-x>
@@ -61,6 +61,7 @@
             </div>
             <div id="mgmnt-shrholder-tab" class="content" role="tabpanel" aria-labelledby="mgmnt-shrholder-tab-trigger">
               <app-mngmnt-shrhldr-main-data-paging-x *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()"
+                [lobCode]="lobCode"
                 (outputTab)="NextStep('GUAR')">
               </app-mngmnt-shrhldr-main-data-paging-x>
             </div>
