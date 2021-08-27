@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { ROUTES } from './sidebar-routes.config';
 import { environment } from 'environments/environment';
-import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
 import { AdInsHelper } from '../AdInsHelper';
 import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsConstant } from '../AdInstConstant';
+import { StorageService } from '../services/StorageService';
 
 declare var $: any;
 
@@ -27,8 +27,8 @@ export class SidebarComponent implements OnInit {
     version: string;
     @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
-    constructor(private router: Router,
-        private route: ActivatedRoute, public translate: TranslateService, private http: HttpClient, private cookieService: CookieService) {
+    constructor(private router: Router,public translate: TranslateService, private http: HttpClient, 
+        private strService: StorageService, private cookieService: CookieService) {
         this.version = localStorage.getItem(CommonConstant.VERSION);
 
     }
@@ -45,7 +45,7 @@ export class SidebarComponent implements OnInit {
         //         this.menuItems = data;
         //     }
         //     );
-        if (environment.production == false) {
+        if (environment.production == true) {
             this.menuItems = ROUTES.filter(menuItem => menuItem);
         }
         else {
@@ -82,6 +82,11 @@ export class SidebarComponent implements OnInit {
             arrList[params[i].Attr] = params[i].Value;
         }
         return arrList;
+    }
+
+    setMenu(){
+        this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
+        this.strService.set("abc", false);
     }
 
     //NGX Wizard - skip url change
