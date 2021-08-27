@@ -91,6 +91,7 @@ export class NapCustMainDataXComponent implements OnInit {
           }else {
             this.isNonMandatory = false;
           }          
+          console.log("cek",this.lobCode);
           this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
           this.IsViewReady = true;

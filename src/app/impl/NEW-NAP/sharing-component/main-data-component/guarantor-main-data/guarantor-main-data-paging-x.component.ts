@@ -19,7 +19,6 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
   @Input() appId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  @Input() isNonMandatory: boolean;
 
   isDetail: boolean = false;
   inputGridObj: InputGridObj;

@@ -83,7 +83,7 @@ export class CustMainDataXComponent implements OnInit {
   @Input() AppCustCompanyMgmntShrholderId: number = 0;
   @Input() appCustId: number = 0;
   @Input() bizTemplateCode: string = "";
-  @Input() isNonMandatory: boolean;
+  @Input() isNonMandatory: boolean = false;
   @Input() inputMode: string = "ADD";
   @Input() isMarried: boolean = false;
   @Output() outputAfterSave: EventEmitter<any> = new EventEmitter();
@@ -266,7 +266,7 @@ export class CustMainDataXComponent implements OnInit {
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
     if(!this.isNonMandatory){
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators(Validators.required);
-      this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required)
     }
   
 

@@ -36,6 +36,7 @@ export class NapCustMainDataXComponent implements OnInit {
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
+  isNonMandatory: boolean;
   
   AppStep = {
     "NEW": 1,

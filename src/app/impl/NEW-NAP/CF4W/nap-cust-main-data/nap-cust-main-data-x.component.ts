@@ -37,7 +37,7 @@ export class NapCustMainDataXComponent implements OnInit {
   IsViewReady: boolean = false;
   from: string;
   lobCode: string;
-  isNonMandatory: boolean;
+  isNonMandatory: boolean = false;
 
   AppStep = {
     "NEW": 1,
@@ -96,8 +96,7 @@ export class NapCustMainDataXComponent implements OnInit {
         else {
           this.AppStepIndex = 0;
           this.IsViewReady = true;
-        }
-        console.log("cek", this.lobCode, this.bizTemplateCode);
+        }        
       }
     );
 
@@ -109,6 +108,7 @@ export class NapCustMainDataXComponent implements OnInit {
     })
     // this.MakeViewReturnInfoObj();
   }
+  
 
   async GetCustMainData() {
     let reqObj: GenericObj = new GenericObj();
