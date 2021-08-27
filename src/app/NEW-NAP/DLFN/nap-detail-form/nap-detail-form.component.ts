@@ -352,9 +352,12 @@ export class NapDetailFormComponent implements OnInit {
 
   ClaimTask() {
     if (environment.isCore) {
-      this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-    } else {
-      this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
   }
 

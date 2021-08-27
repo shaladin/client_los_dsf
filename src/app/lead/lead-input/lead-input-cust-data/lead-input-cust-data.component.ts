@@ -54,7 +54,7 @@ export class LeadInputCustDataComponent implements OnInit {
   CopyFrom: string;
   rowVersion: string;
   typePage: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
   tempProfession: string;
@@ -181,6 +181,17 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.addCritInput = arrAddCrit;
   }
 
+  ClaimTask() {
+    if(environment.isCore){	
+      if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
+          this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId> 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }
+  }
+
   async ngOnInit() {
     this.customPattern = new Array<CustomPatternObj>();
     this.inputAddressObjForLegalAddr = new InputAddressObj();
@@ -196,9 +207,8 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForResidenceAddr.showOwnership = false;
 
     this.InitDms();
-    if (this.WfTaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    this.ClaimTask();
+
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
