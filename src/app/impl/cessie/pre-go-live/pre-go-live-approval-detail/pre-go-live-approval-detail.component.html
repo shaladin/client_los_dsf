@@ -15,9 +15,9 @@
         </mat-tab>
         <mat-tab label="Customer Data">
           <ng-template matTabContent>
-            <app-view-app-cust-data-personal [appId]="appId" *ngIf="mrCustTypeCode=='PERSONAL'">
+            <app-view-app-cust-data-personal [appId]="appId" [IsNAPVersionCompletion]="false" *ngIf="mrCustTypeCode=='PERSONAL'">
             </app-view-app-cust-data-personal>
-            <app-view-app-cust-data-company [appId]="appId" *ngIf="mrCustTypeCode=='COMPANY'">
+            <app-view-app-cust-data-company [appId]="appId" [IsNAPVersionCompletion]="false" *ngIf="mrCustTypeCode=='COMPANY'">
             </app-view-app-cust-data-company>
           </ng-template>
         </mat-tab>

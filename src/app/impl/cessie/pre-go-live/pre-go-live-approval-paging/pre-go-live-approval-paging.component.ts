@@ -66,7 +66,7 @@ export class CessiePreGoLiveApprovalPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CESSIE_PGL_APPRVL_DETAIL],{ "CessieHXId": ev.RowObj.CessieHXId, "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CESSIE_PGL_APPRVL_DETAIL],{ "CessieHXId": ev.RowObj.CessieHXId, "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "mrCustTypeCode": ev.RowObj.MrCustTypeCode });
       }
     }
     else if (ev.Key == "HoldTask") {

@@ -36,7 +36,7 @@ export class CommonConstantX {
     public static AdditionalInterestPaidByCustomer = "CU";
 
     //Cessie
-    public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "NYS";
+    public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "-";
 
     //Return Handling
     public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SRVY";
