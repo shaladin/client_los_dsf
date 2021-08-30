@@ -6,6 +6,7 @@ import { ReportAppPendingComponent } from "./report-app-pending/report-app-pendi
 import { RentalSummaryComponent } from "./report-rental-summary/rental-summary.component";
 import { RentalDetailComponent } from "./report-rental-detail/rental-detail.component";
 import { ReportPlafondMouSummaryComponent } from "./report-mou/report-plafond-mou-summary/report-plafond-mou-summary.component";
+import { ReportPlafondMouDetailComponent } from "./report-mou/report-plafond-mou-detail/report-plafond-mou-detail.component";
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: PathConstant.REPORT_RENT_SUMMARY, component: RentalSummaryComponent, data: { title: 'Report Rental Summary' } },
       { path: PathConstant.REPORT_RENT_DETAIL, component: RentalDetailComponent, data: { title: 'Report Rental Detail' } },
       { path: PathConstant.REPORT_PLAFOND_MOU_SUMMARY, component: ReportPlafondMouSummaryComponent, data: { title: 'Report Plafond Mou Summary' } },
+      { path: PathConstant.REPORT_PLAFOND_MOU_DETAIL, component: ReportPlafondMouDetailComponent, data: { title: 'Report Plafond Mou Detail' } },
     ]
   }
 ]
