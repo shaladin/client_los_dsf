@@ -21,6 +21,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppMainInfoComponent } from 'app/view-enhancing/app-main-info/app-main-info.component';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -140,17 +141,19 @@ export class NapDetailFormComponent implements OnInit {
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
       response => {
+        if (response != null && ((response["CustNo"] != null && response["CustNo"] != "") || (response["ApplicantNo"] != null && response["ApplicantNo"] != ""))) {
+          let trxNo;
         this.appNo = response[0]['AppNo'];
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         let isExisting = response[1]['IsExistingCust'];
         if (isExisting) {
-          let custNo = response[1]['CustNo'];
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+          trxNo = response['CustNo'];
         }
         else {
-          this.dmsObj.MetadataParent = null;
+          trxNo = response['ApplicantNo'];
         }
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
 
         let mouId = response[0]['MouCustId'];
         if (mouId != null && mouId != "") {
@@ -166,7 +169,10 @@ export class NapDetailFormComponent implements OnInit {
         else {
           this.isDmsReady = true;
         }
+      } else {
+        this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
       }
+    }
     );
   }
 

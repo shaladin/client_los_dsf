@@ -19,6 +19,7 @@ import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -37,7 +38,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   CustType: string;
   appId: number;
   returnHandlingHId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   // AppObj: any;
   returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
@@ -94,7 +95,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     this.initExistingTc();
     // await this.GetAppData();
     this.getCustType();
@@ -188,7 +189,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           }
         }),
         mergeMap((response) => {
-          return this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData);
+          let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+          return this.http.post(EditReturnHandlingDUrl, this.ReturnHandlingDData);
         })
       ).subscribe(
         (response) => {
@@ -588,5 +590,16 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   cancel() {
     this.modal.close();
+  }
+
+  claimTask(){
+    if(environment.isCore){
+      if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+          this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId> 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }

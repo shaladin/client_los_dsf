@@ -9,6 +9,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-dup-check-md-subj-list',
@@ -18,7 +19,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 export class DupCheckMdSubjListComponent implements OnInit {
 
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   gridSubjectObj: InputGridObj = new InputGridObj();
   addObj: object = {};
@@ -28,7 +29,6 @@ export class DupCheckMdSubjListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: NGXToastrService, 
-    private cookieService: CookieService,
     private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) this.appId = params['AppId'];
@@ -37,7 +37,12 @@ export class DupCheckMdSubjListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+    }else{
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
+    
     this.initViewMainInfo();
     this.getSubjectList();
   }
@@ -86,7 +91,8 @@ export class DupCheckMdSubjListComponent implements OnInit {
   }
 
   buttonSubmitOnClick() {
-    this.http.post(URLConstant.MD_SubmitAppDupCheck, { "AppId": this.appId, "WfTaskListId": this.wfTaskListId }).subscribe(
+    let MD_SubmitAppDupCheckUrl = environment.isCore ? URLConstant.MD_SubmitAppDupCheckV2 : URLConstant.MD_SubmitAppDupCheck;
+    this.http.post(MD_SubmitAppDupCheckUrl, { "AppId": this.appId, "WfTaskListId": this.wfTaskListId }).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         this.buttonBackOnClick();

@@ -17,49 +17,67 @@
           "property": "MonthlyExpenseAmt"
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Return Of Investment (%)",
-          "property": "ReturnOfInvestmentPrcnt"
+          "property": "ReturnOfInvestmentPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Return Of Equity (%)",
-          "property": "ReturnOfEquityPrcnt"
+          "property": "ReturnOfEquityPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Return Of Asset (%)",
-          "property": "ReturnOfAssetPrcnt"
+          "property": "ReturnOfAssetPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Profit Margin (%)",
-          "property": "ProfitMarginPrcnt"
+          "property": "ProfitMarginPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Current Ratio (%)",
-          "property": "CurrentRatioPrcnt"
+          "property": "CurrentRatioPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Debt Equity (%)",
-          "property": "DebtEquityPrcnt"
+          "property": "DebtEquityPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Inventory Turn Over (%)",
-          "property": "InvTurnOverPrcnt"
+          "property": "InvTurnOverPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Ar Turn Over (%)",
-          "property": "ArTurnOverPrcnt"
+          "property": "ArTurnOverPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
-          "type": "text",
+          "type": "currency",
           "label": "Growth (%)",
-          "property": "GrowthPrcnt"
+          "property": "GrowthPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
           "type": "currency",

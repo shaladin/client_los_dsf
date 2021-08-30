@@ -74,7 +74,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     ManufacturingYear: [''],
     AssetPrice: [''],
     DownPaymentAmount: [''],
-    DownPaymentPercent: [''],
+    DownPaymentPercent: ['', [Validators.min(0.00), Validators.max(100.00)]],
     Tenor: [''],
     MrFirstInstTypeCode: [''],
     NTFAmt: [''],
@@ -104,6 +104,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   textButton: string;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
     this.route.queryParams.subscribe(params => {

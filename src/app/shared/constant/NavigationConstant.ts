@@ -441,5 +441,10 @@ export class NavigationConstant {
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
   //EndSettings
+
+  //#region Report
+  public static REPORT_PLAFOND_MOU_SUMMARY = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_SUMMARY; //'/Report/RptPlafondMouSummary'
+  public static REPORT_PLAFOND_MOU_DETAIL = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_DETAIL; //'/Report/RptPlafondMouDetail'
+  //#endregion
   
 }

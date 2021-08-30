@@ -132,6 +132,7 @@ export class InsuranceDataComponent implements OnInit {
     IsFullCapitalizedAmount: [false]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -1598,6 +1599,7 @@ export class InsuranceDataComponent implements OnInit {
           TotalInscoAddPremiAmt: this.appInsObjObj.TotalInscoAddPremiAmt,
           InsCpltzAmt: this.appInsObjObj.InsCpltzAmt,
           InscoAdminFeeAmt: this.appInsObjObj.InscoAdminFeeAmt,
+          InscoStampDutyFeeAmt: this.appInsObjObj.InscoStampDutyFee,
           CustAdminFeeAmt: this.appInsObjObj.CustAdminFeeAmt,
           CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
           CustInscoBranchName: this.appInsObjObj.CustInscoBranchName,
@@ -1633,6 +1635,7 @@ export class InsuranceDataComponent implements OnInit {
           TotalInscoAddPremiAmt: this.appInsObjObj.TotalInscoAddPremiAmt,
           InsCpltzAmt: this.appInsObjObj.InsCpltzAmt,
           InscoAdminFeeAmt: this.appInsObjObj.InscoAdminFeeAmt,
+          InscoStampDutyFeeAmt: this.appInsObjObj.InscoStampDutyFee,
           CustAdminFeeAmt: this.appInsObjObj.CustAdminFeeAmt,
           CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
           CvgAmt: this.appInsObjObj.CvgAmt,

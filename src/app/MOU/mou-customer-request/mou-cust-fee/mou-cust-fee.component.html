@@ -36,7 +36,7 @@
           <td style="text-align: left;">{{item.FeeName}}</td>
           <td style="text-align: left;">{{item.FeeTypeView}}</td>
           <td style="text-align: left;" *ngIf="item.FeeType == 'AMT'">{{item.FeeAmt | currency : "USD" : ""}}</td>
-          <td style="text-align: left;" *ngIf="item.FeeType == 'PRCNT'">{{item.FeeAmt}} %</td>
+          <td style="text-align: left;" *ngIf="item.FeeType == 'PRCNT'">{{item.FeeAmt | number:'.6':'en-US'}} %</td>
           <td style="text-align: left;">{{item.MouCustFeePaymentTypeView}}</td>
           <td style="text-align: left;">{{item.MrAgreementAffectedView}}</td>
           <td style="text-align: center;">

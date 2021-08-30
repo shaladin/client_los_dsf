@@ -70,7 +70,7 @@
                     <td class="text-left">{{item.CustTypeName}}</td>
                     <!-- <td class="text-left">{{item.MrCustRelationshipDescr}}</td> -->
                     <td class="text-center">{{ (item.MrCustTypeCode == 'COMPANY' ? item.EstablishmentDt : item.BirthDt) | date: 'dd-MMMM-yyyy'}}</td>
-                    <td class="text-right">{{item.SharePrcnt | number:'.2':'en-US'}}</td>
+                    <td class="text-right">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
                     <td class="text-center">{{item.IsSigner ? 'Yes' : 'No'}}</td>
                     <td class="text-center">{{item.IsOwner ? 'Yes' : 'No'}}</td>
                     <td class="text-center">{{item.IsActive ? 'Yes' : 'No'}}</td>
@@ -124,39 +124,39 @@
                   </div>
                   <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Return Of Investment Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt != 0">{{CustCoyFinData.ReturnOfInvestmentPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt != 0">{{CustCoyFinData.ReturnOfInvestmentPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt == 0">-</label>
                     <label class="col-md-3 adInsLabel" translate>Return Of Equity Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfEquityPrcnt != 0">{{CustCoyFinData.ReturnOfEquityPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfEquityPrcnt != 0">{{CustCoyFinData.ReturnOfEquityPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfEquityPrcnt == 0">-</label>
                   </div>
                   <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Return Of Asset Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfAssetPrcnt != 0">{{CustCoyFinData.ReturnOfAssetPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfAssetPrcnt != 0">{{CustCoyFinData.ReturnOfAssetPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfAssetPrcnt == 0">-</label>
                     <label class="col-md-3 adInsLabel" translate>Profit Margin Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitMarginPrcnt != 0">{{CustCoyFinData.ProfitMarginPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitMarginPrcnt != 0">{{CustCoyFinData.ProfitMarginPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitMarginPrcnt == 0">-</label>
                   </div>
                   <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Current Ration Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrentRatioPrcnt != 0">{{CustCoyFinData.CurrentRatioPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrentRatioPrcnt != 0">{{CustCoyFinData.CurrentRatioPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrentRatioPrcnt == 0">-</label>
                     <label class="col-md-3 adInsLabel" translate>Debt Equity Ratio Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DebtEquityRatioPrcnt != 0">{{CustCoyFinData.DebtEquityRatioPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DebtEquityRatioPrcnt != 0">{{CustCoyFinData.DebtEquityRatioPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DebtEquityRatioPrcnt == 0">-</label>
                   </div>
                   <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Investment Turn Over Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.InvTurnOverPrcnt != 0">{{CustCoyFinData.InvTurnOverPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.InvTurnOverPrcnt != 0">{{CustCoyFinData.InvTurnOverPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.InvTurnOverPrcnt == 0">-</label>
                     <label class="col-md-3 adInsLabel" translate>Account Receivable Turn Over Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ArTurnOverPrcnt != 0">{{CustCoyFinData.ArTurnOverPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ArTurnOverPrcnt != 0">{{CustCoyFinData.ArTurnOverPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ArTurnOverPrcnt == 0">-</label>
                   </div>
                   <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Growth Percent</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrowthPrcnt != 0">{{CustCoyFinData.GrowthPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrowthPrcnt != 0">{{CustCoyFinData.GrowthPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrowthPrcnt == 0">-</label>
                     <label class="col-md-3 adInsLabel" translate>Working Capital Amount</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.WorkingCapitalAmt != 0">{{CustCoyFinData.WorkingCapitalAmt | number:'.2':'en-US'}}</label>

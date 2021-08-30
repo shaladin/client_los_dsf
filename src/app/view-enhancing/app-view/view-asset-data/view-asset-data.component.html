@@ -30,7 +30,7 @@
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.FullAssetName">{{AppAssetObj.ResponseAppAssetObj.FullAssetName}}</label>
               <label class="col-md-2  adInsLabel" translate>Down Payment (% / Amount)</label>
               <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt">{{AppAssetObj.ResponseAppAssetObj.DownPaymentPrcnt | number:'.2':'en-US'}} | {{AppAssetObj.ResponseAppAssetObj.DownPaymentAmt | number:'.2':'en-US'}}</label>
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt">{{AppAssetObj.ResponseAppAssetObj.DownPaymentPrcnt | number:'.6':'en-US'}} % | {{AppAssetObj.ResponseAppAssetObj.DownPaymentAmt | number:'.2':'en-US'}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Asset Price</label>
@@ -165,7 +165,7 @@
                 / {{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode3}}</label>
             </div>
             <div>
-              <label class="col-md-2  adInsLabel" translate>Id Type</label>
+              <label class="col-md-2  adInsLabel" translate>Owner Id Type</label>
               <label class="col-md-4  adinslabel" translate
                 *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrIdTypeCode">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode}}</label>
               <label class="col-md-2  adInsLabel" translate>Kelurahan</label>
@@ -181,7 +181,7 @@
                 *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode1">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode1}}</label>
             </div>
             <div>
-              <label class="col-md-2  adInsLabel" translate>Mobile Phone No</label>
+              <label class="col-md-2  adInsLabel" translate>Owner Mobile Phone No</label>
               <label class="col-md-4  adinslabel" translate
                 *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerMobilePhnNo">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerMobilePhnNo}}</label>
               <label class="col-md-2  adInsLabel" translate>City</label>
@@ -190,8 +190,7 @@
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Owner Profession</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerProfessionName">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionName}}</label>
+              <label class="col-md-4  adinslabel" translate>{{ AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionName}}</label>
               <label class="col-md-2  adInsLabel" translate>Zipcode</label>
               <label class="col-md-4  adinslabel" translate
                 *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerZipcode">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode}}</label>

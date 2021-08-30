@@ -131,7 +131,9 @@ export class FinancialDataCFNAComponent implements OnInit {
         MaxDownPaymentNettPrcnt: 0,
 
         CalcBase: '',
-        NeedReCalculate: true
+        NeedReCalculate: true,
+        IsReCalculate: false,
+        ExistingFinData: false
       }
     );
     this.LoadAppFinData();
@@ -166,7 +168,9 @@ export class FinancialDataCFNAComponent implements OnInit {
           RoundingAmt: this.appFinDataObj.RoundingAmt,
           SupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
-          DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
+          DiffRateAmt: this.appFinDataObj.DiffRateAmt,
+          SubsidyAmtFromDiffRate: this.appFinDataObj.SubsidyAmtFromDiffRate,
+          CommissionAmtFromDiffRate: this.appFinDataObj.CommissionAmtFromDiffRate,
 
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
 
@@ -193,7 +197,8 @@ export class FinancialDataCFNAComponent implements OnInit {
           BalloonBhv: this.appFinDataObj.BalloonBhv,
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
-          BalloonValueAmt: this.appFinDataObj.BalloonValueAmt
+          BalloonValueAmt: this.appFinDataObj.BalloonValueAmt,
+          ExistingFinData: this.appFinDataObj.ExistingFinData
         });
 
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);

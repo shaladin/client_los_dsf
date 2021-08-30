@@ -76,7 +76,7 @@
                     <div class="col-md-3 margin-b-5">
                       <input type="text" class="form-control" formControlName="AppFeePrcnt"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.AppFeePrcnt.invalid}"
-                        (focusout)="ProvisionFeeInput_FocusOut()"
+                        (focusout)="ProvisionFeeInput_FocusOut()" [options]="CurrencyMaskPrct"
                         [readonly]="ParentForm.controls[identifier].value[i].FeeType == 'AMT'"
                         currencyMask>
                         <!-- (keyup)="AppFeePrcnt_OnChange(ParentForm.controls['AppFee'].value[i].MrFeeTypeCode)" -->

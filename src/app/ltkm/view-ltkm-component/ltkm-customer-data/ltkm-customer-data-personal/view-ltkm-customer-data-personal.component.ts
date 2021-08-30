@@ -43,7 +43,7 @@ export class ViewLtkmCustDataPersonalDataComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     //jika pake NAP versi baru maka langsung arahkan semua ke view completion tanpa init data di view lama
-    if(this.IsNAPVersionCompletion) return;
+    // if(this.IsNAPVersionCompletion) return;
     await this.getCustData();
     this.arrValue.push(this.ltkmCustObj.LtkmCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalMainData.json";
@@ -71,7 +71,7 @@ export class ViewLtkmCustDataPersonalDataComponent implements OnInit {
     await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId }).toPromise().then(
       (response) => {
         this.ltkmCustObj = response["rLtkmCustObj"];
-        this.custModelCode = response["MrCustModelCode"];
+        this.custModelCode = response["MrCustModelCode"];        
         this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
         this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
         this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];

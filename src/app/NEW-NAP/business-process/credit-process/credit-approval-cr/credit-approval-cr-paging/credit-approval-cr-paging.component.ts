@@ -14,6 +14,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { String } from 'typescript-string-operations';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-credit-approval-cr-paging',
@@ -39,6 +40,11 @@ export class CreditApprovalCrPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApproval.json";
 
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchCreditApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCreditApprovalV2.json";
+    }
+    
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
