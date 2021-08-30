@@ -126,7 +126,9 @@ import {ChangeMouReviewFinancingXComponent} from 'app/impl/MOU/change-mou/change
 import {ChangeMouReviewGeneralXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-general/change-mou-review-general-x.component';
 import {ChangeMouApprovalGeneralXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-general/change-mou-approval-general-x.component';
 import {MouReviewGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-general/mou-review-general-x.component';
-import {ChangeMouReviewPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component';
+import { ChangeMouInquiryXComponent } from "app/impl/MOU/change-mou/change-mou-inquiry/change-mou-inquiry-x.component";
+import { ChangeMouDetailXComponent } from "app/impl/MOU/change-mou/change-mou-view/change-mou-detail/change-mou-detail-x.component";
+import { ChangeMouReviewPagingXComponent } from "app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component";
 import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-execution-paging/mou-execution-paging-x.component';
 import {MouViewModule} from '../view-enhancing/mou-view/mou-view.module';
 
@@ -283,6 +285,9 @@ export const customCurrencyMaskConfig = {
     ChangeMouExecutionDetailXComponent,
     ChangeMouAddcollXComponent,
     MouReviewGeneralXComponent,
+    MouReviewDlfnXComponent,
+    ChangeMouInquiryXComponent,
+    ChangeMouDetailXComponent,
     ChangeMouReviewPagingXComponent,
     MouExecutionPagingXComponent,
   ],

@@ -843,6 +843,8 @@ export class AssetDataAddEditComponent implements OnInit {
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
 
+    this.InputLookupSupplierObj. 
+
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";

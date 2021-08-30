@@ -224,4 +224,10 @@
       </tbody>
     </table>
   </div>
+
+  <div class="form-group row" *ngIf="MouType != 'GENERAL'">
+    <label class="col-md-2 adInsLabel" translate>Dealer Grading</label>
+    <label class="col-md-4 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
+  </div>
+
 </form>

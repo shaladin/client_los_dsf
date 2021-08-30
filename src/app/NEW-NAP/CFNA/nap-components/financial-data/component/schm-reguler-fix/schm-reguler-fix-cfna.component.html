@@ -267,11 +267,12 @@
                     <option value="">--Select--</option>
                     <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
                   </select>
-                  <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
-            </div>         
+            </div>
             <!-- <div class="col-md-3 form-inline">
               <label translate>Commission Amount from Diff Rate</label>
             </div>
@@ -297,8 +298,7 @@
               <label translate>Calculate Base</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="CalcBase" class="form-control full-width"
-                (change)="CalcBaseChanged($event)">
+              <select formControlName="CalcBase" class="form-control full-width" (change)="CalcBaseChanged($event)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
               </select>
@@ -343,7 +343,12 @@
     </div>
 
     <div class="form-inline-right">
-      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0" (click)="Calculate()" translate>
+      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0" translate
+        *ngIf="showGenerateReportBtn" (click)="GenerateReport()">
+        Generate Report
+      </button>
+      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0" (click)="Calculate()"
+        translate>
         Calculate
       </button>
     </div>

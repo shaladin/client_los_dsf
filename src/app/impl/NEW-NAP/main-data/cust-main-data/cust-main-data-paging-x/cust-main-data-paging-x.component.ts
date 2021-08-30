@@ -73,7 +73,7 @@ export class CustMainDataPagingXComponent implements OnInit {
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
 
-          if(this.bizTemplateCode == CommonConstant.CFNA)
+          if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
           {
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_ADD], { "BizTemplateCode": this.bizTemplateCode, "addType": addType });
           }

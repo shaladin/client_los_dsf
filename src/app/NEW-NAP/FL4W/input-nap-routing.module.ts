@@ -13,8 +13,9 @@ import { ViewInsuranceDetailComponent } from '../sharing-component/view-agrmnt-c
 import { NapCustMainDataComponent } from './nap-cust-main-data/nap-cust-main-data.component';
 import { NapDetailFormComponent } from './nap-detail-form/nap-detail-form.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
-import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { NapDetailFormXComponent } from 'app/impl/NEW-NAP/FL4W/nap-detail-form/nap-detail-form-x.component';
+import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/FL4W/nap-cust-main-data/nap-cust-main-data-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 
 const routes: Routes = [
   {
@@ -87,23 +88,30 @@ const routes: Routes = [
         path: PathConstant.NAP1,
         component: NapCustMainDataComponent,
         data: {
-            title: 'NAP Cust Main Data'
+          title: 'NAP Cust Main Data'
         }
       },
       {
         path: PathConstant.NAP2,
         component: NapDetailFormComponent,
         data: {
-            title: 'NAP Detail'
-        }
-    },
-    {
-      path: PathConstantX.NAP2_X,
-      component: NapDetailFormXComponent,
-      data: {
           title: 'NAP Detail'
-      }
-  },
+        }
+      },
+      {
+        path: PathConstantX.NAP2,
+        component: NapDetailFormXComponent,
+        data: {
+          title: 'NAP Detail'
+        }
+      },
+      {
+        path: PathConstantX.NAP1_X,
+        component: NapCustMainDataXComponent,
+        data: {
+            title: 'NAP Cust Main Data'
+        }
+      },
     ]
   }
 ];

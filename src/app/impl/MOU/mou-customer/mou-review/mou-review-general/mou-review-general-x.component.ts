@@ -36,7 +36,7 @@ export class MouReviewGeneralXComponent implements OnInit {
   MrCustTypeCode: string;
   resultData: MouCustObj;
   listReason: Array<KeyValueObj>;
-  ScoreResult: number;
+  ScoreResult: number = 0;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   ApprovalCreateOutput: any;
@@ -114,7 +114,9 @@ export class MouReviewGeneralXComponent implements OnInit {
 
     await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { Id: this.MouCustId }).toPromise().then(
       (response) => {
-        this.ScoreResult = response["ScoreResult"];
+        if(response["ScoreResult"] != null){
+          this.ScoreResult = response["ScoreResult"];
+        }
       }
     );
     this.initInputApprovalObj();

@@ -58,7 +58,10 @@ import { FormCommissionGenerateXComponent } from "app/impl/NEW-NAP/business-proc
 import { CreditReviewCrPagingXComponent } from "app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-paging/credit-review-cr-paging-x.component";
 import { CreditReviewCrDetailXComponent } from "app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-detail/credit-review-cr-detail-x.component";
 import { CreditApprovalCrDetailXComponent } from "app/impl/NEW-NAP/business-process/credit-process/credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail-x.component";
-
+import { SurveyPagingXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-paging-x/survey-paging-x.component";
+import { SurveySubjectXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component";
+import { SurveySubjectVerifXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component";
+import { SurveySubjectViewXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -140,7 +143,11 @@ export const customCurrencyMaskConfig = {
     FormCommissionGenerateXComponent,
     CreditReviewCrPagingXComponent,
     CreditReviewCrDetailXComponent,
-    CreditApprovalCrDetailXComponent
+    CreditApprovalCrDetailXComponent,
+    SurveyPagingXComponent,
+    SurveySubjectXComponent,
+    SurveySubjectVerifXComponent,
+    SurveySubjectViewXComponent
   ],
   providers: [
     NGXToastrService
