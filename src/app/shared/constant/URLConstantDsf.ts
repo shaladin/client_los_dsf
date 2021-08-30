@@ -16,4 +16,8 @@ export class URLConstantDsf {
     public static GetCustomerGroupPlafondDsfByCustomerGroupPlafondId = environment.losUrl + "/CustomerGroupPlafondDsf/GetCustomerGroupPlafondDsfByCustomerGroupPlafondId";
 
     public static GetSignerRoleCode = environment.losUrl + "/DocumentDsf/GetDocSignerRoleCodeDsf";
+
+    public static GetCessieByCessieNo = environment.losUrl + "/CessieDsf/GetCessieByCessieNo";
+    public static AddCessiePaymentDueDate = environment.losUrl + "/CessieDsf/AddCessiePaymentDueDate";
+    public static EditCessiePaymentDueDate = environment.losUrl + "/CessieDsf/EditCessiePaymentDueDate";
 }

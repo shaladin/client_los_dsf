@@ -1,0 +1,259 @@
+{
+    "title": "Factoring Disbursement Order Report",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.CessieNo",
+            "id": "CessieNoId",
+            "value": "",
+            "label": "Cessie Number",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "currency",
+            "name": "A.PaymentAmount",
+            "id": "PaymentValueAmtId",
+            "value": "0",
+            "label": "Payment Amount >=",
+            "restriction": "gte",
+            "datatype": "numeric"
+          },
+          {
+            "type": "datepicker",
+            "name": "A.CessieDate",
+            "id": "CessieDateId",
+            "value": "",
+            "label": "Cessie Date",
+            "datatype": "date"
+          },
+          {
+            "type": "currency",
+            "name": "A.PaymentAmount",
+            "id": "PaymentValueAmtId",
+            "value": "0",
+            "label": "Payment Amount <=",
+            "restriction": "lte",
+            "datatype": "numeric"
+          },
+          {
+            "type": "textbox",
+            "name": "A.ClientName",
+            "id": "ClientNameId",
+            "value": "",
+            "label": "Client Name",
+            "placeholder": "Placeholder"
+          },
+          {
+            "type": "datepicker",
+            "name": "A.PaymentDueDate",
+            "id": "PaymentDueDateId",
+            "value": "",
+            "label": "Payment Date",
+            "datatype": "date"
+          },
+          {
+            "type": "textbox",
+            "name": "A.ClientName",
+            "id": "ClientNameId",
+            "value": "",
+            "label": "Product Type",
+            "placeholder": "Placeholder"
+          }
+    ],
+  "querystring": {
+    "name": "searchCessieDisbursementDsf"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Cessie Number",
+            "name": "A.CessieNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Cessie Date",
+            "name": "A.CessieDate"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Client Name",
+            "name": "A.ClientName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Payment Due Date",
+            "name": "A.PaymentDueDate"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Payment Amount",
+            "name": "A.PaymentAmount"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Bank Name",
+            "name": "A.BankName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Print"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CessieNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CessieDate"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ClientName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "PaymentDueDate"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "PaymentAmount"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "BankName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ResultDisb",
+                                    "value": "0",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "REPORT_DISBURSEMENT_ORDER_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "CessieID",
+                                        "property": "CessieID"
+                                    },
+                                    {
+                                        "type": "CessieNo",
+                                        "property": "CessieNo"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "add"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ResultDisb",
+                                    "value": "1",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "REPORT_DISBURSEMENT_ORDER_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "CessieID",
+                                        "property": "CessieID"
+                                    },
+                                    {
+                                        "type": "CessieNo",
+                                        "property": "CessieNo"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ResultDisb",
+                                    "value": "0",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "icon": "ft-printer",
+                                "property": "CessieNo"
+                                
+                            },
+                            "isHide": true
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ResultDisb",
+                                    "value": "1",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "icon": "ft-printer",
+                                "property": "CessieNo"
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+            
+        }
+    ]
+}

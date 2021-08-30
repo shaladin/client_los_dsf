@@ -21,6 +21,8 @@ import { InsCompDetailDsfComponent } from './report/insurance-company/ins-comp-d
 import { SuratkonfirmasipersetujuanComponent } from './report/suratkonfirmasipersetujuan/suratkonfirmasipersetujuan.component';
 import { PlafondFactoringDsfComponent } from './report/factoring/plafond-factoring-dsf/plafond-factoring-dsf.component';
 import { PlafondDfDsfComponent } from './report/factoring/plafond-df-dsf/plafond-df-dsf.component';
+import { DisbursementDetailDsfComponent } from './report/disbursement-dsf/disbursement-detail-dsf/disbursement-detail-dsf.component';
+import { DisbursementPagingDsfComponent } from './report/disbursement-dsf/disbursement-paging-dsf/disbursement-paging-dsf.component';
 
 const routes: Routes = [
   {
@@ -243,10 +245,34 @@ const routes: Routes = [
     path:'',
     children: [
       {
+        path: PathConstantDsf.PRINT_REPORT_DISBURSEMENT_ORDER_PAGING,
+        component: DisbursementPagingDsfComponent,
+        data: {
+          title: "Report Disbursement Order Paging"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
         path: PathConstantDsf.PRINT_REPORT_PLAFOND_FACTORING,
         component: PlafondFactoringDsfComponent,
         data: {
           title: "Report Plafond Factoring Dsf"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_DISBURSEMENT_ORDER_DETAIL,
+        component: DisbursementDetailDsfComponent,
+        data: {
+          title: "Report Disbursement Order Detail"
         }
       }
     ]

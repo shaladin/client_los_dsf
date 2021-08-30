@@ -63,5 +63,7 @@ export class NavigationConstantDsf {
     //#region 
     public static REPORT_LTKM = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_LTKM;
     //#endregion
+
+     public static REPORT_DISBURSEMENR_ORDER_PAGING = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_DISBURSEMENT_ORDER_PAGING;
 }
  

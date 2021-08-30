@@ -450,4 +450,6 @@ export class NavigationConstant {
   //#region  DOC SIGNER DSF
   public static NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.NAP_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/DocumentSigner/Detail'
   //#endregion
+
+  public static REPORT_DISBURSEMENT_ORDER_DETAIL = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_DISBURSEMENT_ORDER_DETAIL;
 }

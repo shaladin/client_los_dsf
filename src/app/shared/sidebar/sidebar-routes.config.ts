@@ -347,7 +347,8 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstantDsf.REPORT_FACT_REMINDER5, Title: 'Reminder Outstanding 5 Day Later', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_NEW_ALLOCATION_CEILING, Title: 'New Allocation Ceiling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_PLAFOND_FACTORING, Title: 'Print FCT/DF', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
-          { Path: NavigationConstantDsf.REPORT_PLAFOND_DF, Title: 'Print Plafond DF', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []}
+          { Path: NavigationConstantDsf.REPORT_PLAFOND_DF, Title: 'Print Plafond DF', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_DISBURSEMENR_ORDER_PAGING, Title: 'Factoring Disbursement Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
         ], Params: [] 
       }
     ], Params: []
