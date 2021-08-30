@@ -5,9 +5,9 @@
         <form class="form form-horizontal" [formGroup]="CollateralDataForm" (ngSubmit)="CollateralDataForm.valid && SaveForm()"
           #enjiForm="ngForm">
           <div class="form-body">
-            <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Attribute'" [panel]="'assetData'">
+            <lib-ucSubsection [id]="'collateralDataId'" [title]="'Collateral Info'" [panel]="'collateralData'">
             </lib-ucSubsection>
-            <div id="assetData">
+            <div id="collateralData">
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Collateral Type</label>
                 <div class="col-md-4">
@@ -113,7 +113,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Portion Percentage</label>
                 <div class="col-md-4">
-                  <input type="" currencyMask id="assetPrcnt" class="form-control" formControlName="CollateralPrcnt" [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                  <input type="" currencyMask id="assetPrcnt" class="form-control" formControlName="CollateralPrcnt" [options]="CurrencyMaskPrct"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralPrcnt.invalid}">
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -125,6 +125,48 @@
                 </div>
               </div>
             </div>
+
+            <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
+            </lib-ucSubsection>
+            <div id="AddCollDocument">
+              <div class="form-body" formArrayName="ListDoc">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th><span translate class="thead-header">Document</span></th>
+                      <th><span translate class="thead-header">Received</span></th>
+                      <th><span translate class="thead-header">Document No</span></th>
+                      <th><span translate class="thead-header">Expired Date</span></th>
+                      <th><span translate class="thead-header">Document Notes</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of CollateralDataForm.controls.ListDoc['controls']; let i = index" [formGroupName]="i">
+                      <td>{{item.controls.AssetDocName.value}}</td>
+                      <td>
+                        <input type="checkbox" class="border-primary" formControlName="IsReceived">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control width-100-per" formControlName="DocNo">
+                        <lib-uc-show-errors [control]="CollateralDataForm.controls.DocNo" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </td>
+                      <td>
+                        <input type="date" class="form-control width-100-per" formControlName="ACDExpiredDt">
+                        <lib-uc-show-errors [control]="CollateralDataForm.controls.ACDExpiredDt" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </td>
+                      <td>
+                        <input type="text" class="form-control width-100-per" formControlName="DocNotes">
+                        <lib-uc-show-errors [control]="CollateralDataForm.controls.DocNotes" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
             <lib-ucSubsection [id]="'userDataId'" [title]="'Asset User'" [panel]="'userData'">
             </lib-ucSubsection>
             <div id="userData">
@@ -172,7 +214,7 @@
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.OwnerName.invalid }">
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.OwnerName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
-                <label class="col-md-2  adInsLabel" translate>Id Type </label>
+                <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Id Type </label>
                 <div class="col-md-4">
                   <select class="form-control" id="idType" formControlName="MrIdTypeCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrIdTypeCode.invalid }">
@@ -183,7 +225,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel " translate>Owner Relationship </label>
+                <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrOwnerRelationshipCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrOwnerRelationshipCode.invalid }">
@@ -192,7 +234,7 @@
                     </option>
                   </select>
                 </div>
-                <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
+                <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Id No </label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OwnerIdNo">
                 </div>
@@ -205,7 +247,7 @@
                     [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
                   </lib-uclookupgeneric>
                 </div>
-                <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
+                <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Mobile Phone No</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
                 </div>
@@ -229,11 +271,11 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-md-12">
-                <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm" [identifier]="'ownerData'" [UCAddrForm]="CollateralDataForm"></lib-ucaddress>
-                <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CollateralDataForm" [enjiForm]="enjiForm" [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj" [showAllPhn]="false"></lib-ucaddress> -->
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm" [identifier]="'ownerData'" [UCAddrForm]="CollateralDataForm"></lib-ucaddress>
+                  <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CollateralDataForm" [enjiForm]="enjiForm" [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj" [showAllPhn]="false"></lib-ucaddress> -->
+                </div>
               </div>
             </div>
 

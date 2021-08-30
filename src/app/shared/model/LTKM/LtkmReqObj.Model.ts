@@ -11,7 +11,8 @@ export class LtkmReqObj {
     ApprovalStat: string;
     LtkmStep: string;
     Notes: string;
-    RowVersion: string;;
+    AppNo: string;
+    RowVersion: string;
     constructor() {
         this.LtkmReqId = 0;
         this.CustNo = "";

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -29,9 +29,10 @@ export class SchmIrregularComponent implements OnInit {
   calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
   calcIrregularObjForTrialCalc: CalcIrregularObjForTrialCalc = new CalcIrregularObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
-  PriceLabel: string = "Asset Price";
+  PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
@@ -39,7 +40,10 @@ export class SchmIrregularComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
-    this.SetEntryInstallment();
+    this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
 
     if (this.AppId != null) {
       if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
@@ -48,6 +52,7 @@ export class SchmIrregularComponent implements OnInit {
       this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
         (response) => {
           this.listInstallment = response['InstallmentTable'];
+          this.SetEntryInstallment();
         });
       this.IsTrialCalc = false;
     }
@@ -88,13 +93,25 @@ export class SchmIrregularComponent implements OnInit {
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    for (let i = 0; i < numOfStep; i++) {
-      const group = this.fb.group({
-        InstSeqNo: i + 1,
-        NumOfInst: [0],
-        InstAmt: [0]
-      });
-      (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
+    
+    if (this.listInstallment.length != 0) {
+      for (let i = 0; i < numOfStep; i++) {
+        const group = this.fb.group({
+          InstSeqNo: i + 1,
+          NumOfInst: [0],
+          InstAmt: [this.listInstallment[i].InstAmt]
+        });
+        (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
+      }
+    } else {
+      for (let i = 0; i < numOfStep; i++) {
+        const group = this.fb.group({
+          InstSeqNo: i + 1,
+          NumOfInst: [0],
+          InstAmt: [0]
+        });
+        (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
+      }
     }
 
   }

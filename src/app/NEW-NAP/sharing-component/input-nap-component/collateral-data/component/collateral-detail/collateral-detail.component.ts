@@ -139,6 +139,7 @@ export class CollateralDetailComponent implements OnInit {
   AppCustData: AppCustObj;
   IntegratorCheckBySystemGsValue: string = "0";
   IsUseDigitalization: string;
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() {

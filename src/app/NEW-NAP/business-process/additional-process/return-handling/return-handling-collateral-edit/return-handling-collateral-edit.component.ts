@@ -16,6 +16,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { environment } from 'environments/environment';
 
 
 
@@ -29,21 +30,21 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   isReturnHandling: boolean = false;
   appId: number;
   returnHandlingHId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   appCollateralObj: Array<AppCollateralObj>;
   AppObj: NapAppModel;
   returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
   IsViewReady: boolean = false;
-  
+
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
   });
 
   rtnHandlingDObj = {
     ReturnHandlingDId: 0,
-    Id:0
+    Id: 0
   };
 
   appCollObj = {
@@ -72,11 +73,22 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     await this.GetAppData();
     await this.GetAppCollateralData();
     if (this.isReturnHandling == true) {
       this.MakeViewReturnInfoObj();
+    }
+  }
+
+  claimTask() {
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
   }
 
@@ -86,7 +98,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     }
     if (this.isReturnHandling == true) {
       this.setReturnHandlingD();
-      this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, this.ReturnHandlingDData).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
@@ -137,7 +150,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.returnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingAddColtr;
       this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.returnHandlingDObj = response;
         });
     }

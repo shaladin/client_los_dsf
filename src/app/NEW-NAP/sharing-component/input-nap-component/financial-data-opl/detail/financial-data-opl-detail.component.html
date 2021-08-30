@@ -41,7 +41,7 @@
                 <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.TotalAssetPrice.value  | number:'.2':'en-US'}}</label>
                 <label class="col-md-3 adInsLabel" translate>Margin (%/Amt)</label>
                 <div class="col-md-1" style="border-right: 1px solid grey">
-                  <input type="" currencyMask id="operatingMarginPrcnt" class="form-control" formControlName="OperatingMarginPrcnt" [options]="{ allowNegative: false}" (focusout)="updateOperatingMarginAmt()"
+                  <input type="" currencyMask id="operatingMarginPrcnt" class="form-control" formControlName="OperatingMarginPrcnt" [options]="CurrencyMaskPrct" (focusout)="updateOperatingMarginAmt()"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.OperatingMarginPrcnt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.OperatingMarginPrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -70,7 +70,7 @@
                 <label class="col-md-3 adInsLabel" translate>Residual Value (%/Amt)</label>
                 <div class="col-md-1" style="border-right: 1px solid grey">
                   <input type="" currencyMask id="residualValuePrcnt" class="form-control" formControlName="ResidualValuePrcnt" 
-                  [options]="{ allowNegative: false}"
+                  [options]="CurrencyMaskPrct"
                   (focusout)="updateResiduAmt()"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.ResidualValuePrcnt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.ResidualValuePrcnt" [submit]="enjiForm.submitted">
@@ -106,7 +106,7 @@
               </div>
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel" translate>COF Interest</label>
-                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.CofAmt.value | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.CofAmt.value | number:'.6':'en-US'}} %</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel" translate>Total Cost</label>

@@ -172,7 +172,7 @@
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.AppSupplEffectiveRatePrcnt.invalid}"
                 (focusout)="SupplEffectiveRatePrcnt_FocusOut()" (keyup)="SupplRate_Keyup($event)"
                 (paste)="SupplRate_Paste($event)"
-                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                [options]="CurrencyMaskPrct"
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.AppSupplEffectiveRatePrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>

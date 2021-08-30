@@ -50,8 +50,8 @@
             <th class="text-center"><span name='no' translate>No</span> </th>
             <th class="text-left"><span name='name' translate>Family Name</span></th>
             <th class="text-left"><span name='relationship' translate>Relationship</span></th>
-            <th class="text-left"><span name='birthPlace' translate>Birh Place</span></th>
-            <th class="text-center"><span name='birthDate' translate>Birh Date</span></th>
+            <th class="text-left"><span name='birthPlace' translate>Birth Place</span></th>
+            <th class="text-center"><span name='birthDate' translate>Birth Date</span></th>
             <th class="text-center"><span translate class="thead-header">View</span></th>
           </tr>
         </thead>
@@ -63,13 +63,13 @@
         <tbody>
           <ng-container *ngFor="let item of ltkmCustFamilyObjs; let i=index">
             <tr>
-              <td class="text-center">{{i + 1}}</td>
+              <td class="text-center">{{ i + 1}}</td>        
               <td class="text-left">{{item.CustName}}</td>
               <td class="text-left">{{item.MrCustRelationshipDescr}}</td>
               <td class="text-left">{{item.BirthPlace}}</td>
               <td class="text-center">{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
               <td class="text-center">
-                <a (click)="viewDetailFamilyHandler(item.AppCustId, item.MrCustTypeCode)" class="success p-0"><i
+                <a (click)="viewDetailFamilyHandler(item.LtkmCustId, item.MrCustTypeCode)" class="success p-0"><i
                     class="ft-edit-2 font-medium-3 mr-2"></i></a>
               </td>
             </tr>

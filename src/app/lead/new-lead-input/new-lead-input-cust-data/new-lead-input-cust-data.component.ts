@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -48,7 +49,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
   businessDt: Date = new Date();
   CopyFrom: number;
   typePage: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
   tempProfession: string;
@@ -135,7 +136,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
     private toastr: NGXToastrService,
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
   }
 
@@ -182,9 +184,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
 
     this.InitDms();
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
-    }
+    this.ClaimTask();
+      
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -401,6 +402,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
               this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
               this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+              this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+              this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
             });
 
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -439,6 +442,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
               this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
               this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+              this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+              this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
             });
 
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -584,6 +589,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
                 this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
                 this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+                this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+                this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
 
                 // this.inputAddressObjForLegalAddr.isRequired = true;
               });
@@ -626,6 +633,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
                 this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
 
                 this.inputAddressObjForResidenceAddr.isRequired = false;
+                this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+                this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
               });
 
             this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -830,6 +839,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value };
     this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
     this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+
+    this.setEnableZipcodeLookup();
   }
 
   setLegalAddr() {
@@ -1026,17 +1037,17 @@ export class NewLeadInputCustDataComponent implements OnInit {
           });
       }
     }
-    console.log('LEEEROOOYY')
-    console.log(this.leadInputObj)
-
   }
 
-  async claimTask() {
-    let currentUserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
+  ClaimTask() {
+    if(environment.isCore){	
+        if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
+            this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+        }	
+    }	
+    else if (this.WfTaskListId> 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }
   }
 
   async getLeadData() {
@@ -1309,5 +1320,12 @@ export class NewLeadInputCustDataComponent implements OnInit {
     }
   }
 
+  setEnableZipcodeLookup() {
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
+
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
+  }
 }
 

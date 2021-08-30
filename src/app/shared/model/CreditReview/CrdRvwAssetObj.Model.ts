@@ -17,6 +17,12 @@ export class CrdRvwAssetObj {
     DpPrcnt: number;
     Insurance: string;
     IsDoubleFinancing: boolean;
+    TotalAssetAccPrice: number;
+    TotalAssetAccDpAmount: number;
+    TotalAssetAccDpPrcnt: number;
+    TotalAssetInclAccPrice: number;
+    TotalAssetInclAccDpAmount: number;
+    TotalAssetInclAccDpPrcnt: number;
 
     constructor() {
         this.NegativeAssetIndicator = CommonConstant.WhiteIndicator;

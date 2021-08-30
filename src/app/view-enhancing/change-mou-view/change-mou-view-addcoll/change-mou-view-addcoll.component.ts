@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ResMouCollForMouViewObj } from 'app/shared/model/Response/MOU/ResMouCollForMouViewObj.model';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ChangeMouViewAddcollComponent implements OnInit {
   @Input() ChangeMouTrxId: number;
 
-  listCollateralData: any;
+  listCollateralData: Array<ResMouCollForMouViewObj> = new Array();
 
   constructor(private http: HttpClient) { }
 
@@ -19,5 +20,21 @@ export class ChangeMouViewAddcollComponent implements OnInit {
         (responseCMCC) => {
           this.listCollateralData = responseCMCC['ReturnObject'];
         })
+  }
+
+  ChangeMouCustCollateralId: number = 0;
+  isView:boolean = false;
+  ViewColl(ChangeMouCustCollateralId: number){
+    console.log(ChangeMouCustCollateralId);
+
+    this.isView = false;
+    setTimeout(() => {      
+      this.ChangeMouCustCollateralId = ChangeMouCustCollateralId;
+      this.isView = true;
+    }, 500);
+  }
+
+  Back() {
+    this.isView = false;
   }
 }

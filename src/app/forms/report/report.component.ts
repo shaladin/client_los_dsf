@@ -43,7 +43,7 @@ export class ReportComponent implements OnInit {
   constructor(private fb: FormBuilder, public translate: TranslateService, private toastr: ToastrService, private http: HttpClient,  private cookieService: CookieService) {
     this.inputReportObj.JsonPath = "./assets/ucreport/ReportTest.json";
     this.inputReportObj.EnvironmentUrl = environment.FoundationR3Url;
-    this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3";
+    this.inputReportObj.ApiReportPath = "/v1/Report/GenerateReportR3";
   }
 
   ngOnInit() {

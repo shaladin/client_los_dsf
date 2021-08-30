@@ -27,6 +27,8 @@ import { UcTestingComponent } from './uc-testing/uc-testing.component';
 import { UcTestComponent } from './uc-test/uc-test.component';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 import { UcDirectiveUpperCaseModule } from '@adins/uc-directive-upper-case';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { RefAttrModule } from '../sharing-components/ref-attr/ref-attr.module';
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -68,9 +70,10 @@ export const customCurrencyMaskConfig = {
         UcaddtotempModule,
         UcthingstodoModule,
         UcdropdownlistModule,
+        RefAttrModule,
         UcreportModule,
         UcTestingComponent,
-        UcTestComponent
+        UcTestComponent,
         //  UcapprovalModule
     ],
     imports: [
@@ -99,6 +102,8 @@ export const customCurrencyMaskConfig = {
         UcthingstodoModule,
         UcreportModule,
         UcdropdownlistModule,
+        RefAttrModule,
+        NgMultiSelectDropDownModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ]
 })

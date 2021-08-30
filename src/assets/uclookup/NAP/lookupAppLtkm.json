@@ -1,0 +1,86 @@
+{
+    "title": "LOOKUP APPLICATION",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_CODE",
+        "id": "prodOfferingCode",
+        "value": "",
+        "label": "Product Offering Code",
+        "placeholder": "Product Offering Code"
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_NAME",
+        "id": "prodOfferingName",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Product Offering Name"
+      },
+      {
+        "type": "textbox",
+        "name": "A.APP_NO",
+        "id": "appNo",
+        "value": "",
+        "label": "Application No",
+        "placeholder": "Application No"
+      }
+    ],    
+  "querystring": {
+    "name": "lookupAppLtkm"
+  },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Product Offering Code",
+          "name": "ProdOfferingCode"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Product Offering Name",
+          "name": "ProdOfferingName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Application No",
+            "name": "AppNo"
+          },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Action"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ProdOfferingCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ProdOfferingName"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "AppNo"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "AppNo"
+          }
+        ]
+      }
+    ],
+    "propertyId": "appNo",
+    "propertyName": "AppNo"
+  }
