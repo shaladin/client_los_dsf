@@ -59,7 +59,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
             }
           }else{
             if (this.WfTaskListId > 0) {
-              this.claimTaskService.ClaimTask(this.WfTaskListId);
+              this.claimTaskService.ClaimTaskSelfVerif(this.WfTaskListId);
             }
           }
           this.stepper = new Stepper(document.querySelector('#stepper1'), {

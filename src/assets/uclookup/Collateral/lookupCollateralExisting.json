@@ -158,7 +158,9 @@
       {
         "type": "decimal",
         "position": "right",
-        "property": "SumCollateralPrcnt"
+        "property": "SumCollateralPrcnt",
+        "precision": "0.6",
+        "IsPrcnt": true
       },
       {
         "type": "action",

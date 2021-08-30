@@ -139,15 +139,16 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
-          if (this.NapObj.AppCurrStep != CommonConstant.AppStepComm && this.NapObj.AppCurrStep != CommonConstant.AppStepRSVFund) {
-            this.NapObj.AppCurrStep = CommonConstant.AppStepComm;
-            this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-              () => {
-                this.ChangeTab(CommonConstant.AppStepComm);
-              }
-            )
+          if (this.ReturnHandlingHObj.ReturnHandlingHId == 0){
+            if (this.NapObj.AppCurrStep != CommonConstant.AppStepComm && this.NapObj.AppCurrStep != CommonConstant.AppStepRSVFund) {
+              this.NapObj.AppCurrStep = CommonConstant.AppStepComm;
+              this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+                () => {
+                  this.ChangeTab(CommonConstant.AppStepComm);
+                }
+              )
+            }
           }
-          this.ChangeTab(CommonConstant.AppStepComm);
         }
       });
   }
@@ -192,17 +193,23 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
-    this.NapObj.AppCurrStep = Step;
-    console.log(this.NapObj);
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      () => {
-        this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
-        this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
-        this.ChangeTab(Step);
-        this.stepper.next();
-
-      }
-    )
+    if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
+      this.ChangeTab(Step);
+      this.stepper.next();
+    }
+    else{
+      this.NapObj.AppCurrStep = Step;
+      console.log(this.NapObj);
+      this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+        () => {
+          this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
+          this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
+          this.ChangeTab(Step);
+          this.stepper.next();
+  
+        }
+      )
+    }
   }
 
   LastStepHandler(allAppReservedFundObj: AllAppReservedFundObj) {

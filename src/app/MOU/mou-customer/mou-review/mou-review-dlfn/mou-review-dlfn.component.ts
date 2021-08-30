@@ -115,7 +115,7 @@ export class MouReviewDlfnComponent implements OnInit {
     this.initInputApprovalObj();
   }
 
-  async claimTask() {
+  claimTask() {
     if (environment.isCore) {
       if (this.WfTaskListId != undefined && this.WfTaskListId != "") {
         this.claimTaskService.ClaimTaskV2(this.WfTaskListId);

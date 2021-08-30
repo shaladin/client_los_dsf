@@ -123,7 +123,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_APPRV_PAGING; //"/Nap/AdminProcess/OfferingValidityApproval/Paging"
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_APPRV_DETAIL; //"/Nap/AdminProcess/OfferingValidityApproval/Detail"
   public static NAP_ADM_PRCS_PGL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_PAGING; //'/Nap/AdminProcess/PreGoLive/Paging'
-  public static NAP_ADM_PRCS_PGL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PGL_DETAIL_X; //'/Nap/AdminProcess/PreGoLive/Detail'
+  public static NAP_ADM_PRCS_PGL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PGL_DETAIL_X; //'/Nap/AdminProcess/PreGoLive/DetailX'
   public static NAP_ADM_PRCS_PGL_OPL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_OPL_PAGING; //'/Nap/AdminProcess/pregoliveopl/paging'
   public static NAP_ADM_PRCS_PGL_OPL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_OPL_DETAIL; //'/Nap/AdminProcess/pregoliveopl/detail'
   public static NAP_ADM_PRCS_PGL_REQ_APPRVL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_REQ_APPRVL; //"/Nap/AdminProcess/PreGoLive/RequestApproval"
@@ -466,6 +466,9 @@ export class NavigationConstant {
   
 
   
+  //#region Report
+  public static REPORT_PLAFOND_MOU_SUMMARY = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_SUMMARY; //'/Setting/AppSource/Paging'
+  //#endregion
   
   //EndCessie
 

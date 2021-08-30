@@ -4,13 +4,13 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ResMouCollForMouViewObj } from 'app/shared/model/Response/MOU/ResMouCollForMouViewObj.model';
 
 @Component({
-  selector: 'app-mou-view-addcoll',
-  templateUrl: './mou-view-addcoll.component.html'
+  selector: 'app-mou-tab-view-addcoll',
+  templateUrl: './mou-tab-view-addcoll.component.html'
 })
-export class MouViewAddcollComponent implements OnInit {
+export class MouTabViewAddcollComponent implements OnInit {
   @Input() MouCustId: number;
 
-  listCollateralData: ResMouCollForMouViewObj;
+  listCollateralData: Array<ResMouCollForMouViewObj> = new Array();
 
   constructor(private http: HttpClient) { }
 
@@ -20,5 +20,19 @@ export class MouViewAddcollComponent implements OnInit {
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       })
+  }
+
+  MouCustCollateralId: number = 0;
+  isView: boolean = false;
+  async ViewColl(MouCustCollateralId: number) {
+    this.isView = false;
+    setTimeout(() => {      
+      this.MouCustCollateralId = MouCustCollateralId;
+      this.isView = true;
+    }, 500);
+  }
+
+  Back() {
+    this.isView = false;
   }
 }

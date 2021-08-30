@@ -156,6 +156,47 @@
               </div>
             </div>
 
+            <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
+            </lib-ucSubsection>
+            <div id="AddCollDocument">
+              <div class="form-body" formArrayName="ListDoc">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th><span translate class="thead-header">Document</span></th>
+                      <th><span translate class="thead-header">Received</span></th>
+                      <th><span translate class="thead-header">Document No</span></th>
+                      <th><span translate class="thead-header">Expired Date</span></th>
+                      <th><span translate class="thead-header">Document Notes</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of AddCollForm.controls.ListDoc['controls']; let i = index" [formGroupName]="i">
+                      <td>{{item.controls.AssetDocName.value}}</td>
+                      <td>
+                        <input type="checkbox" class="border-primary" formControlName="IsReceived">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control width-100-per" formControlName="DocNo">
+                        <lib-uc-show-errors [control]="AddCollForm.controls.DocNo" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </td>
+                      <td>
+                        <input type="date" class="form-control width-100-per" formControlName="ACDExpiredDt">
+                        <lib-uc-show-errors [control]="AddCollForm.controls.ACDExpiredDt" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </td>
+                      <td>
+                        <input type="text" class="form-control width-100-per" formControlName="DocNotes">
+                        <lib-uc-show-errors [control]="AddCollForm.controls.DocNotes" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
             <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
             </lib-ucSubsection>
             <div id="AddCollOwner">
@@ -290,7 +331,7 @@
               </div>
               <div class="form-group row">
                 <label class="col-md-5 adins-required-label" translate>Remaining Portion Percentage (%)</label>
-                <label class="col-md-7">{{AddCollForm.controls.OutstandingCollPrcnt.value}}</label>
+                <label class="col-md-7">{{AddCollForm.controls.OutstandingCollPrcnt.value | number:'.6':'en-US'}} %</label>
               </div>
             </div>
 

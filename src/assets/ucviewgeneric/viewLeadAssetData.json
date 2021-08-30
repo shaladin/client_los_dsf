@@ -37,9 +37,11 @@
           "property": "DownPaymentAmt"
         },
         {
-          "type": "decimal",
+          "type": "currency",
           "label": "Down Payment Percentage",
-          "property": "DownPaymentPrcnt"
+          "property": "DownPaymentPrcnt",
+          "precision": "0.6",
+          "IsPrcnt": true
         },
         {
           "type": "text",

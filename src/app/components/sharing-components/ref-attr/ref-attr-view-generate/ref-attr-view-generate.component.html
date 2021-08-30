@@ -1,0 +1,13 @@
+<lib-ucSubsection [id]="'RefAttrViewContentId'" [title]="Title" [panel]="'RefAttrViewContent'">
+</lib-ucSubsection>
+<div id="RefAttrViewContent">    
+    <div class="form-group row" *ngFor="let item of ListAttrObjs">
+        <label class="col-md-2 adInsLabel" translate>{{item.AttrName}}</label>
+        <label *ngIf="!item.AttrValue" class="col-md-4 adInsLabel" translate>-</label>
+        <div class="col-md-4" *ngIf="item.AttrValue" [ngSwitch]="item.AttrInputType">
+            <label *ngSwitchCase="AttrInputTypeRefMaster" class="adInsLabel" translate>{{DictAttrValue[item.AttrCode]}}</label>
+            <label *ngSwitchCase="AttrInputTypeDate" class="adInsLabel" translate>{{item.AttrValue | date: 'dd-MMM-yyyy'}}</label>
+            <label *ngSwitchDefault class="adInsLabel" translate>{{item.AttrValue}}</label>
+        </div>
+    </div>
+</div>

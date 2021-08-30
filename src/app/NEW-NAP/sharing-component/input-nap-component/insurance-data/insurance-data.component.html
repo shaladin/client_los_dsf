@@ -368,7 +368,7 @@
                           <div class="form-group-row">
                             <input type="" currencyMask class="form-control text-right"
                               formControlName="SumInsuredPrcnt" (ngModelChange)="IsMainCvgChaged($event, i)"
-                              [options]="{ allowNegative: false }"
+                              [options]="CurrencyMaskPrct"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt.invalid }">
                           </div>
                           <lib-uc-show-errors

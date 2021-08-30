@@ -70,7 +70,7 @@
     ],
     "headerList": [
       {
-        "type": "sort",
+        "type": "label",
         "position": "left",
         "label": "CLAIM BY",
         "name": "Assignee"

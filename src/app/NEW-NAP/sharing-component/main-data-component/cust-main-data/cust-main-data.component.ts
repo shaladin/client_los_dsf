@@ -138,6 +138,7 @@ export class CustMainDataComponent implements OnInit {
   rowVersionAppCustAddr: string[];
   rowVersionMgmntShrholder: string[];
   custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly MasterGender = CommonConstant.RefMasterTypeCodeGender;
   MasterCustType: string = "";
   readonly MasterMaritalStat = CommonConstant.RefMasterTypeCodeMaritalStat;
@@ -188,7 +189,7 @@ export class CustMainDataComponent implements OnInit {
     MrJobPositionCode: [''],
     EstablishmentDt: [''],
     EmploymentEstablishmentDt: [''],
-    SharePrcnt: [0],
+    SharePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     IsSigner: [false],
     IsActive: [true],
     IsOwner: [false]

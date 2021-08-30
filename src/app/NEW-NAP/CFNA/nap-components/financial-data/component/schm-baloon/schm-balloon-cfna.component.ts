@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -32,6 +32,7 @@ export class SchmBalloonCFNAComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
@@ -40,6 +41,10 @@ export class SchmBalloonCFNAComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
+    this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
 
     if (this.AppId != 0) {
       this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(

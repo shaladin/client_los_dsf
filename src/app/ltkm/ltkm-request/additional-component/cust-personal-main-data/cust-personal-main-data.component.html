@@ -162,7 +162,7 @@
           <div class="form-group row">
             <label class="col-md-4" for="country" translate>Country</label>
             <div class="col-md-8">
-              <lib-uclookupgeneric *ngIf="!isLocal" [enjiForm]="enjiForm" [lookupInput]="InputLookupCountryObj" [parentForm]="parentForm" [identifier]="'lookupCountry'" (lookup)="GetCountry($event)"></lib-uclookupgeneric>
+              <lib-uclookupgeneric *ngIf="!isLocal" [enjiForm]="enjiForm" [lookupInput]="InputLookupCountryObj" [parentForm]="parentForm" [identifier]="'lookupCountry'" (lookup)="GetCountry($event)"></lib-uclookupgeneric>              
               <label *ngIf="isLocal"> {{selectedNationalityCountryName}} </label>
             </div>
           </div>

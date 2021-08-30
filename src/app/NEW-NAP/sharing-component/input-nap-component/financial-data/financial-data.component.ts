@@ -145,7 +145,7 @@ export class FinancialDataComponent implements OnInit {
 
         CalcBase: '',
         NeedReCalculate: true,
-        IsReCalculate: true,
+        IsReCalculate: false,
         ExistingFinData: false
       }
     );
@@ -175,8 +175,8 @@ export class FinancialDataComponent implements OnInit {
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
-          PrcntDp: this.appFinDataObj.DownPaymentGrossAmt / (this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt) * 100,
-          PrcntDpNett: this.appFinDataObj.DownPaymentNettAmt / (this.appFinDataObj.TotalAssetPriceAmt + this.appFinDataObj.TotalAccessoryPriceAmt) * 100,
+          PrcntDp: this.appFinDataObj.DownPaymentGrossAmt / this.appFinDataObj.TotalAssetPriceAmt * 100,
+          PrcntDpNett: this.appFinDataObj.DownPaymentNettAmt / this.appFinDataObj.TotalAssetPriceAmt * 100,
 
           EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
@@ -188,7 +188,9 @@ export class FinancialDataComponent implements OnInit {
           SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
           AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
-          DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
+          DiffRateAmt: this.appFinDataObj.DiffRateAmt,
+          SubsidyAmtFromDiffRate: this.appFinDataObj.SubsidyAmtFromDiffRate,
+          CommissionAmtFromDiffRate: this.appFinDataObj.CommissionAmtFromDiffRate,
 
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
 
