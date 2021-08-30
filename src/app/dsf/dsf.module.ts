@@ -29,6 +29,8 @@ import { InsCompSummaryDsfComponent } from './report/insurance-company/ins-comp-
 import { InsCompDetailDsfComponent } from './report/insurance-company/ins-comp-detail-dsf/ins-comp-detail-dsf.component';
 import { SuratkonfirmasipersetujuanComponent } from './report/suratkonfirmasipersetujuan/suratkonfirmasipersetujuan.component';
 import { LtkmReportDsfComponent } from './ltkm/ltkm-report-dsf/ltkm-report-dsf.component';
+import { PlafondFactoringDsfComponent } from './report/factoring/plafond-factoring-dsf/plafond-factoring-dsf.component';
+import { PlafondDfDsfComponent } from './report/factoring/plafond-df-dsf/plafond-df-dsf.component';
 export const customCurrencyMaskConfig = {     
 
   align: "right",     
@@ -54,7 +56,7 @@ export const customCurrencyMaskConfig = {
 };
 
 @NgModule({
-  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent, CustomerGroupPlafondPagingComponent, CustomerGroupPlafondDetailComponent, CustomerGroupPlafondApvPagingDsfComponent, CustomerGroupPlafondApvDetailDsfComponent, CustomerGroupPlafondApvInquiryDsfComponent, AppStatusDsfComponent, InsCompSummaryDsfComponent, InsCompDetailDsfComponent,SuratkonfirmasipersetujuanComponent, LtkmReportDsfComponent],
+  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent, CustomerGroupPlafondPagingComponent, CustomerGroupPlafondDetailComponent, CustomerGroupPlafondApvPagingDsfComponent, CustomerGroupPlafondApvDetailDsfComponent, CustomerGroupPlafondApvInquiryDsfComponent, AppStatusDsfComponent, InsCompSummaryDsfComponent, InsCompDetailDsfComponent, PlafondDfDsfComponent, PlafondFactoringDsfComponent, SuratkonfirmasipersetujuanComponent, LtkmReportDsfComponent],
   imports: [
     CommonModule,
     FormsModule,

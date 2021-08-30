@@ -97,4 +97,9 @@ export class PathConstantDsf {
     public static REPORT_LTKM = "ReportLTKM"
     public static PRINT_REPORT_LTKM = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_LTKM; 
     //#endregion
+    public static REPORT_PLAFOND_FACTORING = "PlafondFactoringDsf";
+    public static REPORT_PLAFOND_DF = "PlafondDfDsf";
+    public static PRINT_REPORT_PLAFOND_FACTORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_PLAFOND_FACTORING;
+    public static PRINT_REPORT_PLAFOND_DSF = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_PLAFOND_DF;
+
 }
