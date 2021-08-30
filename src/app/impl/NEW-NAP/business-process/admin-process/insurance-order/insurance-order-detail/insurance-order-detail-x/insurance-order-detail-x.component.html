@@ -1,0 +1,92 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+          <div class="row">
+              <div class="col-md-8">
+                  <h4 class="card-title" translate> Insurance Order </h4>
+              </div>
+          </div>
+      </div>
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="InsuranceOrderForm" #enjiForm="ngForm" novalidate
+            (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+          <lib-ucSubsection [id]="'InsuranceOrderMainInformationId'" [title]="'Main Information'"
+              [panel]="'MainInformationSection'">
+          </lib-ucSubsection>
+          <div id="MainInformationSection" class="col-md-12">
+            <div class="form-body">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" for="AgreementNo" translate>Agreement No</label>
+                <div class="col-md-2">
+                  <a style="color: #299699; cursor: pointer;" (click)="OpenAgrmntView(agrmntId)">{{InsuranceOrderForm.value.AgrmntNo}}</a>
+                  
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" for="CustomerName" translate>Customer Name</label>
+                <div class="col-md-3">
+                  {{InsuranceOrderForm.value.CustName}}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="!Printed">
+                <label class="col-md-3 adInsLabel adins-required-label" for="StartDt" translate>Start
+                    Date</label>
+                <div class="col-md-3">
+                  <input type="date" class="form-control adInsInput" formControlName="StartDt"
+                    min="{{minDt | date:'yyyy-MM-dd'}}"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceOrderForm.controls.StartDt.invalid }"
+                        />
+                  <lib-uc-show-errors [control]="InsuranceOrderForm.controls.StartDt"
+                      [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3" translate>Printed</label>
+                <div class="col-md-9">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="Printed"
+                    (change)="CheckPrinted()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceOrderForm.controls.Printed.invalid }">
+                    <option *ngFor="let it of PrintedDdl" value="{{it.Value}}">
+                      {{it.Key}}</option>
+                  </select>
+                  <lib-uc-show-errors [control]="InsuranceOrderForm.controls.Printed"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <lib-ucSubsection [id]="'InsuranceOrderListingId'" [title]="'Insurance Order Listing'"
+              [panel]="'InsuranceOrderListing'">
+          </lib-ucSubsection>
+          <div id="InsuranceOrderListing" class="col-md-12">
+            <div class="form-body" *ngIf="Printed">
+              <lib-ucaddtotemp *ngIf="tempPagingObjPrinted.isReady" [tempPagingObj]="tempPagingObjPrinted" (callback)="getListTemp($event)">
+              </lib-ucaddtotemp>
+            </div>
+            <div class="form-body" *ngIf="!Printed">
+              <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+              </lib-ucaddtotemp>
+            </div>
+          </div>
+
+          <div class="form-actions right">
+            <button type="button" (click)="cancelHandler()" class="btn btn-raised btn-warning mr-1">
+                <i class="ft-x"></i>
+                Cancel
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary">
+                <i class=" fa fa-arrow-circle-right"></i>
+                Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
