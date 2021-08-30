@@ -1,5 +1,4 @@
-<form class="form form-horizontal" [formGroup]="MouDataForm" (ngSubmit)="MouDataForm.valid"
-  #enjiForm="ngForm">
+<form class="form form-horizontal">
 
   <div class="form-body" *ngIf="MouType != 'FACTORING' && MouType != 'FINANCING'">
     <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
