@@ -12,6 +12,7 @@ export class PathConstantX {
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
   public static NAP2_X = 'NAP2X';
+  public static INSURANCE_ORDER_X = "InsuranceOrder"
   public static REVIEW_FACTORING_X = "ReviewFactoringX";
   public static APPROVAL_FACTORING_X ="ApprovalFactoringX";
   public static NAP1_X = 'NAP1X';
@@ -59,6 +60,8 @@ export class PathConstantX {
 
   //#region Nap-Admin-Prcs
   public static INVOICE_VERIF_INV_DSF_X = PathConstant.INVOICE_VERIF + "/InvoiceDetailDFX";
+  public static INSURANCE_ORDER_PAGING_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.PAGING;
+  public static INSURANCE_ORDER_DETAIL_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Cessie
