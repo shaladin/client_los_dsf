@@ -17,8 +17,8 @@
                     <mat-tab-group>
                         <mat-tab label="MOU Detail">
                             <ng-template matTabContent>
-                                <app-change-mou-detail [ChangeMouTrxId]="changeMouTrxId" [MouCustId]="MouCustId"
-                                    [MouType]="MouType" [TrxType]="TrxType"></app-change-mou-detail>
+                                <app-change-mou-detail-x [ChangeMouTrxId]="changeMouTrxId" [MouCustId]="MouCustId"
+                                    [MouType]="MouType" [TrxType]="TrxType"></app-change-mou-detail-x>
                             </ng-template>
                         </mat-tab>
                         <mat-tab label="Collateral" *ngIf="TrxType != TrxTypeReqExp">

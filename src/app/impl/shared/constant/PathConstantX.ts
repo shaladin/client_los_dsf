@@ -12,6 +12,8 @@ export class PathConstantX {
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
   public static NAP2_X = 'NAP2X';
+  public static REVIEW_FACTORING_X = "ReviewFactoringX";
+  public static APPROVAL_FACTORING_X ="ApprovalFactoringX";
   public static NAP1_X = 'NAP1X';
   //#endregion
 
@@ -99,7 +101,8 @@ export class PathConstantX {
   public static CHANGE_MOU_EXEC_DETAIL_X = PathConstant.CHANGE_MOU + '/ExecDetailX';
   public static CHANGE_MOU_REQ_DETAIL_CUST_X = PathConstant.CHANGE_MOU_REQ + '/' + PathConstant.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X;
   public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X = PathConstant.CHANGE_MOU_REQ + '/' + PathConstant.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X + '/:MOUType';
-  public static CHANGE_MOU_RVW_PAGING_X = PathConstant.CHANGE_MOU + "/ReviewPagingX";
+  public static CHANGE_MOU_INQUIRY_X = PathConstant.CHANGE_MOU_INQUIRY + "X";
+  public static CHANGE_MOU_RVW_PAGING_X = PathConstant.CHANGE_MOU + '/ReviewPagingX';
   //#endregion
 
   //region New Approval

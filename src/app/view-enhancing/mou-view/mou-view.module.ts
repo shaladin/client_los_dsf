@@ -36,7 +36,7 @@ import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-reco
 import { MouViewSrvyTaskComponent } from "./mou-view-srvy-task/mou-view-srvy-task.component";
 import {MouViewXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-x.component';
 import {MouViewAddcollXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
-import {MouViewDetailXComponent} from '../../impl/view-enhancing/mou-view/mou-view-detail/mou-view-detail-x.component';
+import { MouViewDetailXComponent } from "app/impl/view-enhancing/mou-view/mou-view-detail/mou-view-detail-x.component";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -78,7 +78,8 @@ import {MouViewDetailXComponent} from '../../impl/view-enhancing/mou-view/mou-vi
         MouViewApprovalRecommendationComponent,
         MouViewXComponent,
         MouViewAddcollXComponent,
-        MouViewDetailXComponent
+        MouViewDetailXComponent,
+        MouViewXComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

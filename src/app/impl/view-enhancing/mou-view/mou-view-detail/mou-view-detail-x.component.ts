@@ -11,6 +11,7 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMast
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-mou-view-detail-x',
@@ -56,6 +57,8 @@ export class MouViewDetailXComponent implements OnInit {
   SingleInstCalcMthd: string = "-";
   MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
   LinkSupplier: string = "-";
+  dealerGrading: string;
+  dealerRating: number;
 
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
@@ -161,7 +164,20 @@ export class MouViewDetailXComponent implements OnInit {
         this.listAssetData = response[CommonConstant.ReturnObj];
       });
 
+      if(this.MouType == CommonConstant.FINANCING || this.MouType == CommonConstant.FACTORING){
+        this.getDealerGrading();
+      }
+
+
     this.IsReady = true;
+  }
+
+  getDealerGrading() {
+    this.http.post(URLConstantX.GetDealerGradingX, { Id: this.MouCustId }).subscribe(
+      (response) => {
+        this.dealerGrading = response['DealerGrading'];
+        this.dealerRating = response['DealerRating'];
+      });
   }
 
   dictMasterCode: { [id: string]: string } = {};

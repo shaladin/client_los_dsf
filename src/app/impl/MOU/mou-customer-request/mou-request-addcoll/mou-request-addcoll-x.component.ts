@@ -157,7 +157,7 @@ export class MouRequestAddcollXComponent implements OnInit {
     RowVersionCollateralRegistration: [''],
     items: this.fb.array([]),
     MrCollateralConditionCode: [''],
-    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
     CollateralPortionAmt: [0, Validators.required],
     CollateralPortionType: [''],
     ListDoc: this.fb.array([]),
@@ -169,6 +169,8 @@ export class MouRequestAddcollXComponent implements OnInit {
   })
   inputAddressObjForLegalAddr: InputAddressObj;
   inputAddressObjForLocAddr: InputAddressObj;
+  dealerGrading: string;
+  dealerRating: number;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private regexService: RegexService) { this.type = 'Paging'; }
 
@@ -578,7 +580,16 @@ export class MouRequestAddcollXComponent implements OnInit {
       this.AddCollForm.controls.ManufacturingYear.enable();
 
     }
+    this.getDealerGrading();
     this.AddCollForm.updateValueAndValidity();
+  }
+
+  getDealerGrading() {
+    this.http.post(URLConstantX.GetDealerGradingX, { Id: this.MouCustId }).subscribe(
+      (response) => {
+        this.dealerGrading = response['DealerGrading'];
+        this.dealerRating = response['DealerRating'];
+      });
   }
 
   BindExistingCollateralSavedData(listCollateralNo: any) {
@@ -960,7 +971,7 @@ export class MouRequestAddcollXComponent implements OnInit {
   }
 
   editData(MouCustCollId, isAddEdit) {
-
+    this.getDealerGrading();
     if (isAddEdit == true) {
       this.type = "AddEdit";
     } else {
