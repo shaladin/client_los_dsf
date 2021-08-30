@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ControlContainer, FormArray, FormBuilder, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustAttrContent } from 'app/shared/model/AppCust/CustAttrContent/AppCustAttrContent.Model';
-import { ReqGetListAppCustAttrContentObj } from 'app/shared/model/AppCust/CustAttrContent/ReqGetListAppCustAttrContentObj.Model';
+import { ReqGetListAppCustAttr2ContentObj, ReqGetListAppCustAttrContentObj } from 'app/shared/model/AppCust/CustAttrContent/ReqGetListAppCustAttrContentObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -25,9 +25,12 @@ export class CustAttrFormComponent implements OnInit {
   @Input() AttrGroup: string = "";
   @Input() IsVertical: boolean = false;
   @Input() AttrCodes: Array<string> = [];
+  @Input() AttrGrpCodes: Array<string> = [];
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: string = "CustAttrForm";
+  @Output() IncomeAmt: EventEmitter<{ Index: number, Amount: number }> = new EventEmitter();
+  @Output() ExpenseAmt: EventEmitter<{ Index: number, Amount: number }> = new EventEmitter();
 
   dropdownSettings: IDropdownSettings = {
     singleSelection: true,
@@ -57,7 +60,7 @@ export class CustAttrFormComponent implements OnInit {
     };
     // let urlApi: string = URLConstant.GetListCustAttrContentByCustIdAndAttrGroup;
     // if (this.AttrCodes.length > 0) urlApi = URLConstant.GetListCustAttrContentByCustIdAndAttrGroupAndListAttrCodes;
-    await this.http.post(URLConstant.GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes, tempReq).toPromise().then(
+    await this.http.post(this.SetUrlApi(), this.SetReqObj(AppCustId)).toPromise().then(
       (response: GenericListObj) => {
         let tempList: Array<AppCustAttrContent> = response.ReturnObject;
         let tempFormArray: FormArray = this.parentForm.get("CustAttrForm") as FormArray;
@@ -66,11 +69,35 @@ export class CustAttrFormComponent implements OnInit {
         }
         for (let index = 0; index < tempList.length; index++) {
           const element = tempList[index];
-          tempFormArray.push(this.SetFormGroup(element));
           this.dictAttrCodeIdxAt[element.AttrCode] = index;
+          tempFormArray.push(this.SetFormGroup(element));
+          this.CalculateAmt(index);
         }
       }
     )
+  }
+
+  SetReqObj(custId: number) {
+    if (this.AttrGrpCodes.length > 0) {
+      let tempReq: ReqGetListAppCustAttr2ContentObj = {
+        AttrGroups: this.AttrGrpCodes,
+        AppCustId: custId,
+      };
+      return tempReq;
+    }
+    let tempReq: ReqGetListAppCustAttrContentObj = {
+      AttrGroup: this.AttrGroup,
+      AttrCodes: this.AttrCodes,
+      AppCustId: custId,
+    };
+    return tempReq;
+  }
+
+  SetUrlApi(): string {
+    let urlApi: string = "";
+    urlApi = URLConstant.GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes;
+    if (this.AttrGrpCodes.length > 0) urlApi = URLConstant.GetListAppCustAttrContentsByAppCustIdAndListAttrGroups;
+    return urlApi;
   }
 
   readonly AttrInputTypeDate: string = CommonConstant.AttrInputTypeDate;
@@ -86,6 +113,7 @@ export class CustAttrFormComponent implements OnInit {
   tempExistingValueSelected: { [Id: string]: string } = {};
   SetFormGroup(QA: AppCustAttrContent): FormGroup {
     let tempFormGroup: FormGroup = this.fb.group({
+      AttrGroup: QA.AttrGroup,
       AttrCode: QA.AttrCode,
       AttrName: QA.AttrName,
       AttrInputType: QA.AttrInputType,
@@ -212,5 +240,23 @@ export class CustAttrFormComponent implements OnInit {
       let tempFb = tempArray.get(this.dictAttrCodeIdxAt[attrCode].toString()) as FormGroup;
       tempFb.get("AttrValue").patchValue(selectedId[0]);
     }
+  }
+
+  CalculateAmt(index: number) {
+    let tempArray = this.parentForm.get(this.identifier) as FormArray;
+    let tempFb = tempArray.get(index.toString()) as FormGroup;
+    let attrGroup: string = tempFb.get("AttrGroup").value;
+    let InputType: string = tempFb.get("AttrInputType").value;
+    let amount: string = tempFb.get("AttrValue").value;
+
+    if (InputType != this.AttrInputTypeNum) return;
+    switch (attrGroup) {
+      case CommonConstant.AttrGroupCustPersonalFinDataIncome:
+        this.IncomeAmt.emit({ Index: index, Amount: parseFloat(amount.replace(/,/g, '')) });
+        break;
+      case CommonConstant.AttrGroupCustPersonalFinDataExpense:
+        this.ExpenseAmt.emit({ Index: index, Amount: parseFloat(amount.replace(/,/g, '')) });
+        break;
+    };
   }
 }

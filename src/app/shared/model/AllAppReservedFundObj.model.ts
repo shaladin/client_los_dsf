@@ -1,3 +1,4 @@
+import { environment } from "environments/environment";
 import { AppReservedFundObj } from "./AppReservedFundObj.model";
 
 export class AllAppReservedFundObj {
@@ -6,7 +7,7 @@ export class AllAppReservedFundObj {
   RowVersion: string;
   ReturnHandlingHId : number;
   ReturnHandlingExecNotes : string;
-  WfTaskIdListId : number;
+  WfTaskIdListId : any;
   IsPersonal: boolean;
   GrossYield: number;
   TotalReservedFundAmt: number;
@@ -17,7 +18,7 @@ export class AllAppReservedFundObj {
     this.RowVersion = "";
     this.ReturnHandlingHId = 0;
     this.ReturnHandlingExecNotes = "";
-    this.WfTaskIdListId = -999;
+    this.WfTaskIdListId = environment.isCore? "" : -999;
     this.IsPersonal = true;
     this.IsReturn = false;
   }

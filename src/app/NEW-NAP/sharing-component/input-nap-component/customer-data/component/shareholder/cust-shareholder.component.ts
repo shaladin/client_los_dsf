@@ -85,7 +85,7 @@ export class CustShareholderComponent implements OnInit {
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', Validators.maxLength(50)],
-    SharePrcnt: [0, [Validators.min(0), Validators.max(100), Validators.pattern("^[0-9]+$")]],
+    SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
@@ -93,6 +93,7 @@ export class CustShareholderComponent implements OnInit {
     IsGuarantor: [false]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

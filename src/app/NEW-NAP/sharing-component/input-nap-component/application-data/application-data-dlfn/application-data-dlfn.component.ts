@@ -68,8 +68,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     CustBankAcc: [''],
-    IntrstRatePrcnt: [0],
-    TopIntrstRatePrcnt: [0]
+    IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]]
   })
 
   refMasterInterestType: RefMasterObj = new RefMasterObj();
@@ -111,6 +111,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   appCustId: number;
   IsMouSelect: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {

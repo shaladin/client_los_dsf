@@ -7,34 +7,46 @@
           <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
           <mat-tab-group>
             <mat-tab label="MoU Detail">
-              <ng-template matTabContent>
-                <app-mou-view-detail *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId"
-                  [MouType]="MrMouTypeCode"></app-mou-view-detail>
+              <ng-template matTabContent>                
+                <div class="px-3">
+                  <app-mou-view-detail *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId"
+                    [MouType]="MrMouTypeCode"></app-mou-view-detail>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Fee">
               <ng-template matTabContent>
-                <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>
+                <div class="px-3">
+                  <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Collateral">
               <ng-template matTabContent>
-                <app-mou-view-addcoll [MouCustId]="MouCustId"></app-mou-view-addcoll>
+                <div class="px-3">
+                  <app-mou-view-addcoll [MouCustId]="MouCustId"></app-mou-view-addcoll>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Term and Condition">
               <ng-template matTabContent>
-                <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
+                <div class="px-3">
+                  <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab *ngIf="IsDms" label="Document">
               <ng-template matTabContent>
-                <app-dms-iframe *ngIf="IsDms" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                <div class="px-3">
+                  <app-dms-iframe *ngIf="IsDms" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Listed Customer Factoring" *ngIf="this.MrMouTypeCode == 'FACTORING'">
               <ng-template matTabContent>
-                <app-mou-view-listed-cust-factoring [MouCustId]="MouCustId"></app-mou-view-listed-cust-factoring>
+                <div class="px-3">
+                  <app-mou-view-listed-cust-factoring [MouCustId]="MouCustId"></app-mou-view-listed-cust-factoring>
+                </div>
               </ng-template>
             </mat-tab>
             <!-- <mat-tab label="Survey">
@@ -44,33 +56,45 @@
             </mat-tab>  -->
             <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
               <ng-template matTabContent>
-                <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                <div class="px-3">
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab *ngIf="IsReady" label="Approval History">
               <ng-template matTabContent>
-                <app-mou-view-approval-history [MouCustNo]="MouCustNo" [MouCustId]="MouCustId">
-                </app-mou-view-approval-history>
+                <div class="px-3">
+                  <app-mou-view-approval-history [MouCustNo]="MouCustNo" [MouCustId]="MouCustId">
+                  </app-mou-view-approval-history>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab *ngIf="IsReady" label="Change MOU History">
               <ng-template matTabContent>
-                <app-mou-view-change-mou-history [MouCustId]="MouCustId"></app-mou-view-change-mou-history>
+                <div class="px-3">
+                  <app-mou-view-change-mou-history [MouCustId]="MouCustId"></app-mou-view-change-mou-history>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab *ngIf="IsReady" label="Freeze History">
               <ng-template matTabContent>
-                <app-mou-view-freeze-unfreeze-history [MouCustId]="MouCustId"></app-mou-view-freeze-unfreeze-history>
+                <div class="px-3">
+                  <app-mou-view-freeze-unfreeze-history [MouCustId]="MouCustId"></app-mou-view-freeze-unfreeze-history>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Approval Recommendation">
               <ng-template matTabContent>
-                <app-mou-view-approval-recommendation [MouCustNo] = "MouCustNo"></app-mou-view-approval-recommendation>
+                <div class="px-3">
+                  <app-mou-view-approval-recommendation [MouCustNo] = "MouCustNo"></app-mou-view-approval-recommendation>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Survey Task Result">
               <ng-template matTabContent>
-                <app-mou-view-srvy-task [MouCustNo] = "MouCustNo"></app-mou-view-srvy-task>
+                <div class="px-3">
+                  <app-mou-view-srvy-task [MouCustNo] = "MouCustNo"></app-mou-view-srvy-task>
+                </div>
               </ng-template>
             </mat-tab>
 

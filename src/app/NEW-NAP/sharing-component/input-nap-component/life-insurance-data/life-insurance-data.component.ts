@@ -40,6 +40,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   appLifeInsRuleObj: AppLifeInsRuleObj = new AppLifeInsRuleObj();
   CustAdminFeeAmtPatched: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.mode = params["mode"];
@@ -184,7 +185,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     this.LifeInsForm.controls.LifeInscoBranchName.updateValueAndValidity();
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.setValidators(Validators.required);
     this.LifeInsForm.controls.MrLifeInsPaidMethodCode.updateValueAndValidity();
-    this.LifeInsForm.controls.PaidInAdvPrcnt.setValidators([Validators.required]);
+    this.LifeInsForm.controls.PaidInAdvPrcnt.setValidators([Validators.required, Validators.min(0.00), Validators.max(100.00)]);
     this.LifeInsForm.controls.PaidInAdvPrcnt.updateValueAndValidity();
     this.LifeInsForm.controls.CustAdminFeeAmt.setValidators([Validators.required]);
     this.LifeInsForm.controls.CustAdminFeeAmt.updateValueAndValidity();

@@ -34,7 +34,7 @@
               <label class="label-control" translate> Total Residual Value (%/Amt) </label>
             </div>
             <div class="col-md-6 " style="text-align: right;">
-              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.ResidualValuePrcnt | number:'.2':'en-US'}} / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalResidualValueAmt | number:'.2':'en-US'}} </label>
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.ResidualValuePrcnt | number:'.6':'en-US'}} % / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalResidualValueAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="row">
@@ -42,7 +42,7 @@
               <label class="label-control" translate> Total Depreciation (%/Amt) </label>
             </div>
             <div class="col-md-6 " style="text-align: right;">
-              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalDepreciationPrcnt | number:'.2':'en-US'}} / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalDepreciationAmt | number:'.2':'en-US'}} </label>
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.TotalDepreciationPrcnt | number:'.6':'en-US'}} % / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalDepreciationAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="row">
@@ -66,7 +66,7 @@
               <label class="label-control" translate> Total Margin Amount (%/Amt) </label>
             </div>
             <div class="col-md-6 " style="text-align: right;">
-              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.MarginPrcnt | number:'.2':'en-US'}} / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalMarginAmt | number:'.2':'en-US'}} </label>
+              <label class="label-control" > {{appRvwSummaryAsset.SummaryAppReviewObj.MarginPrcnt | number:'.6':'en-US'}} % / {{appRvwSummaryAsset.SummaryAppReviewObj.TotalMarginAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="row">
@@ -116,7 +116,7 @@
               <label class="label-control" translate> Gross Yield (%) </label>
             </div>
             <div class="col-md-6 " style="text-align: right;">
-              <label class="label-control"> {{appRvwSummaryAsset.SummaryAppReviewObj.GrossYieldPrcnt | number:'.2':'en-US'}} </label>
+              <label class="label-control"> {{appRvwSummaryAsset.SummaryAppReviewObj.GrossYieldPrcnt | number:'.6':'en-US'}} % </label>
             </div>
           </div>
           <div class="row">
@@ -194,11 +194,11 @@
           <tr *ngFor="let item of appRvwSummaryAsset.AppRvwRentDataCustomObjs; let i = index">
             <td style="text-align: left;">{{item.AssetName}} - {{item.ManuFacturingYear}} - {{item.Color}} - {{item.MrAssetConditionName}}</td>
             <td style="text-align: right;">{{item.AssetPriceBefDiscAmt | number:'.2':'en-US'}}</td>
-            <td style="text-align: right;">{{item.ResidualValuePrcnt | number:'.2':'en-US'}} / {{item.ResidualValueAmt | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.ResidualValuePrcnt | number:'.6':'en-US'}} % / {{item.ResidualValueAmt | number:'.2':'en-US'}}</td>
             <td style="text-align: right;">{{item.TotalAssetExpense | number:'.2':'en-US'}}</td>
-            <td style="text-align: right;">{{item.MarginPrcnt | number:'.2':'en-US'}} / {{item.MarginAmt | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.MarginPrcnt | number:'.6':'en-US'}} % / {{item.MarginAmt | number:'.2':'en-US'}}</td>
             <td style="text-align: right;">{{item.RentAmt | number:'.2':'en-US'}}</td>
-            <td style="text-align: right;">{{item.GrossYieldPrcnt | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.GrossYieldPrcnt | number:'.6':'en-US'}} %</td>
           </tr>
         </tbody>
       </table>

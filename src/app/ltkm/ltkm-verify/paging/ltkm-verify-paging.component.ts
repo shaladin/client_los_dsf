@@ -4,6 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
+import { environment } from 'environments/environment';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
     selector: 'app-ltkm-verify-paging',
@@ -13,6 +17,9 @@ import { CookieService } from 'ngx-cookie';
 export class LtkmVerifyPagingComponent implements OnInit {
     BizTemplateCode: string;
     inputPagingObj: UcPagingObj = new UcPagingObj();
+    IntegrationObj: IntegrationObj = new IntegrationObj();
+    RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+    
     constructor(private route: ActivatedRoute, private cookieService: CookieService) {
         this.route.queryParams.subscribe(params => {
             if (params["BizTemplateCode"] != null) {
@@ -23,9 +30,28 @@ export class LtkmVerifyPagingComponent implements OnInit {
     }
 
     ngOnInit() {
+        let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        
         this.inputPagingObj._url = "./assets/ucpaging/searchLtkmVerify.json";
         this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLtkmVerify.json";
+
+        if(environment.isCore){
+            this.inputPagingObj._url = "./assets/ucpaging/V2/searchLtkmVerifyV2.json";
+            this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLtkmVerifyV2.json";
+            this.inputPagingObj.isJoinExAPI = true
+      
+            this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_LTKM_REQ_MANUAL, CommonConstant.WF_LTKM_REQ_AUTO];
+            this.RequestTaskModel.TaskDefinitionKey = CommonConstant.LTKM_VERIFY;
+            this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.OFFICE_CODE]];
+            
+            this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+            this.IntegrationObj.requestObj = this.RequestTaskModel;
+            this.IntegrationObj.leftColumnToJoin = "LtkmNo";
+            this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+            this.inputPagingObj.integrationObj = this.IntegrationObj;
+        }
     }
+
     getEvent(ev: any) {
         if (ev.Key == "ltkmno") {
             AdInsHelper.OpenLtkmViewByLtkmCustId(ev.RowObj.LtkmCustId);

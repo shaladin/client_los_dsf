@@ -100,7 +100,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.ClaimTask();
     await this.GetAppNo();
     await this.GetListDeviation();
     await this.BindDDLRecommendation();
@@ -192,7 +192,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   //#region DDL Data
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
-  readonly DDLRecomendation: string = "RECOMENDED";
+  readonly DDLRecomendation: string = CommonConstant.RefReasonTypeCodeCrdReview;
   async BindDDLRecommendation() {
     let Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
@@ -201,7 +201,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
       });
   }
 
-  readonly DDLReason: string = "REASON";
+  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
   async BindDDLReasonReturn() {
     let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
@@ -357,7 +357,9 @@ export class CreditReviewCrDetailComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: this.RFAInfo
     };
-    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+
+    let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
+    this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
@@ -373,8 +375,9 @@ export class CreditReviewCrDetailComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId
     }
-    console.log(apiObj);
-    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+    
+    let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
+    this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
@@ -414,4 +417,15 @@ export class CreditReviewCrDetailComponent implements OnInit {
     return AppCrdRvwDObjs;
   }
   //#endregion
+
+  ClaimTask(){
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
+  }
 }

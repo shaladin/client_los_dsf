@@ -58,7 +58,7 @@
                         <td class="text-center">{{item.JobPositionName}}</td>
                         <td class="text-center">{{item.CustTypeName}}</td>
                         <td class="text-center">{{item.TaxIdNo}}</td>
-                        <td class="text-center">{{item.SharePrcnt}}</td>
+                        <td class="text-center">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
                     </tr>
                 </ng-container>
                 </tbody>

@@ -23,7 +23,7 @@ export class UcTempPagingObj {
 
     constructor() {
         this.urlJson = "";
-        this.enviromentUrl = environment.losUrl + "/v1";
+        this.enviromentUrl = environment.isCore ? environment.losUrl + "/v2" : environment.losUrl + "/v1";
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.pagingJson = "";
         this.isReady = false;
@@ -38,7 +38,7 @@ export class UcTempPagingObj {
         this.isHideSearch = false;
         this.navigationConst = NavigationConstant;
         this.isJoinExAPI = false;
-        this.integrationObj = new IntegrationObj();
+        // this.integrationObj = new IntegrationObj();
     }
 }
 

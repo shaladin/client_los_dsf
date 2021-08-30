@@ -32,7 +32,7 @@
           <td style="text-align: center;">{{item.AssetSeqNo}}</td>
           <td style="text-align: left;">{{item.AssetAccessoryName}}</td>
           <td style="text-align: left;">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
-          <td style="text-align: left;">{{item.DownPaymentAmt | number:'.2':'en-US'}} / {{item.DownPaymentPrcnt}}%</td>
+          <td style="text-align: left;">{{item.DownPaymentAmt | number:'.2':'en-US'}} / {{item.DownPaymentPrcnt | number:'.6':'en-US'}} %</td>
         </tr>
       </tbody>
       <tbody *ngIf="ListAppAssetAccessory.length > 0 && !isMultiAsset">
@@ -40,7 +40,7 @@
           <td style="text-align: center;">{{i+1}}</td>
           <td style="text-align: left;">{{item.AssetAccessoryName}}</td>
           <td style="text-align: left;">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
-          <td style="text-align: left;">{{item.DownPaymentAmt | number:'.2':'en-US'}} / {{item.DownPaymentPrcnt}}%</td>
+          <td style="text-align: left;">{{item.DownPaymentAmt | number:'.2':'en-US'}} / {{item.DownPaymentPrcnt | number:'.6':'en-US'}} %</td>
         </tr>
       </tbody>
     </table>

@@ -71,7 +71,7 @@
         <label class="col-md-4 adInsLabel" translate>Subsidy Value Percentage</label>
         <div class="col-md-3">
           <input type="" class="form-control full-width"
-            formControlName="subsidyPrcnt" 
+            formControlName="subsidyPrcnt" [options]="CurrencyMaskPrct"
             [ngClass]="{ 'is-invalid': isSubmitted && FormAppSubsidy.controls.subsidyPrcnt.invalid}" currencyMask>
           <lib-uc-show-errors [control]="FormAppSubsidy.controls.subsidyPrcnt" [submit]="isSubmitted">
           </lib-uc-show-errors>
