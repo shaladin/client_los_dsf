@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { PathConstant } from 'app/shared/constant/PathConstant';
 
 const routes: Routes = [
@@ -65,6 +66,14 @@ const routes: Routes = [
             {
                 path: PathConstant.VIEW_PEFINDO,
                 loadChildren: './pefindo-view/pefindo-view.module#PefindoViewModule'
+            },
+            {
+                path: PathConstantX.VIEW_MOU_CUST_X,
+                loadChildren: './mou-view/mou-view.module#MouViewModule'
+            },
+            {
+                path: PathConstantX.VIEW_CHANGE_MOU_X,
+                loadChildren: './change-mou-view/change-mou-view.module#ChangeMouViewModule'
             },
             {
                 path: PathConstant.VIEW_CUST_APP_LISTING,

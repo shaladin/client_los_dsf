@@ -9,66 +9,74 @@ import { NapCustMainDataComponent } from './nap-cust-main-data/nap-cust-main-dat
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { NapDetailFormXComponent } from 'app/impl/NEW-NAP/CF4W/nap-detail-form/nap-detail-form-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/CF4W/nap-cust-main-data/nap-cust-main-data-x.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    children: [
-      {
-          path: PathConstant.PAGING,
-          component: NapPagingComponent,
-          data: {
-              title: 'Paging'
-          }
-      },
-      {
-          path: PathConstant.ADD,
-          component: NapAddComponent,
-          data: {
-              title: 'Add'
-          }
-      },
-      {
-          path: PathConstant.ADD_DETAIL,
-          component: NapAddDetailComponent,
-          data: {
-              title: 'AddDetail'
-          }
-      },
-      {
-          path: PathConstant.TEST_FINANCIAL,
-          component: FinancialDataComponent,
-          data: {
-              title: 'Detail'
-          }
-      },
-      {
-        path: PathConstant.NAP1,
-        component: NapCustMainDataComponent,
-        data: {
-            title: 'NAP Cust Main Data'
-        }
-      },
-      {
-        path: PathConstant.NAP2,
-        component: NapDetailFormComponent,
-        data: {
-            title: 'NAP Detail'
-        }
-    },
     {
-        path: PathConstantX.NAP2_X,
-        component: NapDetailFormXComponent,
-        data: {
-            title: 'NAP Detail'
-        }
-    },
-    ]
-  }
+        path: '',
+        children: [
+            {
+                path: PathConstant.PAGING,
+                component: NapPagingComponent,
+                data: {
+                    title: 'Paging'
+                }
+            },
+            {
+                path: PathConstant.ADD,
+                component: NapAddComponent,
+                data: {
+                    title: 'Add'
+                }
+            },
+            {
+                path: PathConstant.ADD_DETAIL,
+                component: NapAddDetailComponent,
+                data: {
+                    title: 'AddDetail'
+                }
+            },
+            {
+                path: PathConstant.TEST_FINANCIAL,
+                component: FinancialDataComponent,
+                data: {
+                    title: 'Detail'
+                }
+            },
+            {
+                path: PathConstant.NAP1,
+                component: NapCustMainDataComponent,
+                data: {
+                    title: 'NAP Cust Main Data'
+                }
+            },
+            {
+                path: PathConstant.NAP2,
+                component: NapDetailFormComponent,
+                data: {
+                    title: 'NAP Detail'
+                }
+            },
+            {
+                path: PathConstantX.NAP2_X,
+                component: NapDetailFormXComponent,
+                data: {
+                    title: 'NAP Detail'
+                }
+            },
+            {
+                path: PathConstantX.NAP1_X,
+                component: NapCustMainDataXComponent,
+                data: {
+                    title: 'NAP Cust Main Data'
+                }
+            },
+        ]
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class InputNapCF4WRoutingModule { }

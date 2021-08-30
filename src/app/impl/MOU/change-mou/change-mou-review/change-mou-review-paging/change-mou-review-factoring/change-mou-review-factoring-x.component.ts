@@ -205,7 +205,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
     this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [];
     var attribute1 = {
-      "AttributeName": "Approval Amount",
+      "AttributeName": "PlafondAmt",
       "AttributeValue": this.PlafondAmt
     };
 

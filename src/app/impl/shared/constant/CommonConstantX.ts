@@ -1,3 +1,5 @@
+import { CurrencyMaskInputMode } from "ngx-currency";
+
 export class CommonConstantX {
 
     //RefMaster
@@ -7,8 +9,14 @@ export class CommonConstantX {
     public static AllocationFronInsuranceIncomeCode= "INSURANCE_INCOME";
     
     //Ref Master Type Code
-    public static RefMasterTypeCodeOrdStatus = 'ORD_STATUS';
-    public static RefMasterTypeCodeStatusBpkb = 'STATUS_BPKB';
+    public static RefMasterTypeCodeOrdStatus = "ORD_STATUS";
+    public static RefMasterTypeCodeStatusBpkb = "STATUS_BPKB";
+    
+    //LOB
+    public static SLB = "SLB";
+    
+    //General Setting Code
+    public static GSVendorSlbCode = "VENDOR_SLB_CODE";
     public static RefMasterTypeCodeMouFctrType = 'MOU_FCTR_TYPE';
 
 
@@ -28,5 +36,13 @@ export class CommonConstantX {
     public static AdditionalInterestPaidByCustomer = "CU";
 
     //Cessie
-    public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "NYS";
+    public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "-";
+
+    //Return Handling
+    public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SRVY";
+
+    //Default SlikSecEcoCode
+    public static DefaultSlikSecEcoCode = "ECOSLIK_DEFAULT";
+
+    public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }

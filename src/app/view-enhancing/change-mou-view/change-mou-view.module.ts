@@ -26,6 +26,7 @@ import { ChangeMouMainInfoComponent } from "../change-mou-main-info/change-mou-m
 import {ChangeMouViewXComponent} from '../../impl/view-enhancing/change-mou-view/change-mou-view-x.component';
 import {ChangeMouViewAddcollXComponent} from '../../impl/view-enhancing/change-mou-view/change-mou-view-addcoll/change-mou-view-addcoll-x.component';
 import {ChangeMouMainInfoXComponent} from '../../impl/view-enhancing/change-mou-main-info/change-mou-main-info-x.component';
+import { ChangeMouViewDetailXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-detail/change-mou-view-detail-x.component";
 
 @NgModule({
     imports: [
@@ -57,7 +58,9 @@ import {ChangeMouMainInfoXComponent} from '../../impl/view-enhancing/change-mou-
         ChangeMouMainInfoComponent,
         ChangeMouViewXComponent,
         ChangeMouViewAddcollXComponent,
-        ChangeMouMainInfoXComponent
+        ChangeMouMainInfoXComponent,
+        ChangeMouViewDetailXComponent,
+        ChangeMouViewXComponent
     ],
     entryComponents: [
         ChangeMouViewAddcollComponent,

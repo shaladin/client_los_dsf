@@ -20,7 +20,7 @@ export class CessieCancellationPagingComponent implements OnInit {
         this.inputPagingObj._url = "./assets/ucpaging/searchCessieCancelPaging.json";
         this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCessieCancelPaging.json";
 
-        this.inputPagingObj.enviromentUrl = environment.losUrl;
+        this.inputPagingObj.enviromentUrl = environment.losUrl + '/v1',
         this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     }
     GetCallBack(ev) {

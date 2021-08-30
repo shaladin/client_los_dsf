@@ -150,6 +150,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   });
   inputAddressObjForLegalAddr: InputAddressObj;
   inputAddressObjForLocAddr: InputAddressObj;
+  dealerGrading: string;
+  dealerRating: number;
 
   constructor(
     private fb: FormBuilder,
@@ -400,7 +402,21 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       this.AddCollForm.controls.Notes.enable();
       this.AddCollForm.controls.ManufacturingYear.enable();
     }
+    this.getDealerGrading();
     this.AddCollForm.updateValueAndValidity();
+  }
+
+  async getDealerGrading() {
+    var changeMouTrxId;
+    await this.http.post(URLConstantX.GetChangeMouTrxbyTrxNo, { ChangeMouTrxNo: this.ChangeMouTrxNo }).toPromise().then(
+      (response) => {
+        changeMouTrxId = response['ChangeMouTrxId'];
+      }); 
+    await this.http.post(URLConstantX.GetChangeMouDealerGradingX, { Id: changeMouTrxId }).toPromise().then(
+      (response) => {
+        this.dealerGrading = response['DealerGrading'];
+        this.dealerRating = response['DealerRating'];
+      });
   }
 
   BindExistingCollateralSavedData(listCollateralNo: any) {
@@ -919,6 +935,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
         });
       }
     );
+    this.getDealerGrading();
   }
 
   Cancel() {
