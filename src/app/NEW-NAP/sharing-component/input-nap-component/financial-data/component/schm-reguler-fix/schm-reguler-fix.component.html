@@ -13,11 +13,21 @@
               <label>{{ParentForm.controls.TotalAssetPriceAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>
-          <div class="row" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
-            <div class="col-md-6 form-inline">
+        </div>
+      </div>
+      <div class="row" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label translate>Total Asset Price</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalAssetPriceAmtOnly.value | number : '1.2-2'}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
               <label translate>Total Asset Accessory Price</label>
             </div>
-            <div class="col-md-6 form-inline form-inline-right">
+            <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAccessoryPriceAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>
@@ -128,6 +138,24 @@
         </div>
         <br />
       </span>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label translate>First Installment Type</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.MrFirstInstTypeName.value}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label translate>Installment Scheme</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.MrInstSchemeName.value}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="row">

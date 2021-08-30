@@ -20,6 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -30,7 +31,7 @@ export class NapDetailFormComponent implements OnInit {
 
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
-  wfTaskListId: number;
+  wfTaskListId: any;
   ReturnHandlingHId: number = 0;
   AppStepIndex: number = 1;
   appId: number;
@@ -100,7 +101,7 @@ export class NapDetailFormComponent implements OnInit {
         this.SysConfigResultObj = response;
       });
 
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     this.NapObj.AppId = this.appId;
 
     await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
@@ -340,7 +341,8 @@ export class NapDetailFormComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.FL4W });
@@ -353,5 +355,16 @@ export class NapDetailFormComponent implements OnInit {
     this.custType = ev;
     this.ChangeStepper();
     this.NextStep(CommonConstant.AppStepGuar);
+  }
+
+  claimTask(){
+    if(environment.isCore){
+      if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId> 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }

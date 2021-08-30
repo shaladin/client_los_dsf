@@ -453,7 +453,7 @@
                     <lib-uc-show-errors [control]="AssetDataForm.controls.OwnerName" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2  adins-required-label" translate>Id Type </label>
+                  <label class="col-md-2  adins-required-label" translate>Owner Id Type </label>
                   <div class="col-md-4">
                     <select class="form-control" id="idType" formControlName="MrIdTypeCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }"
@@ -494,7 +494,7 @@
                       [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
                     </lib-uclookupgeneric>
                   </div>
-                  <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
+                  <label class="col-md-2  adInsLabel" translate>Owner Mobile Phone No </label>
                   <div class="col-md-4">
                     <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
                     <lib-uc-show-errors [control]="AssetDataForm.controls.OwnerMobilePhnNo"

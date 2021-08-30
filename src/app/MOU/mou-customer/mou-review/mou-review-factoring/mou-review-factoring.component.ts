@@ -18,6 +18,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 
 @Component({
   selector: 'app-mou-review-factoring',
@@ -30,7 +32,7 @@ export class MouReviewFactoringComponent implements OnInit {
   mouCustObj: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   MouCustId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   MouType: string = "FACTORING";
   PlafondAmt: number;
   MrCustTypeCode: string;
@@ -64,9 +66,9 @@ export class MouReviewFactoringComponent implements OnInit {
       (response) => {
         this.SysConfigResultObj = response
       });
-    if (this.WfTaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+
+    this.claimTask();
+    
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -126,20 +128,24 @@ export class MouReviewFactoringComponent implements OnInit {
       PlafondAmt: this.PlafondAmt,
       RequestRFAObj: this.RFAInfo
     }
-    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+
+    let SubmitMouRvwUrl = environment.isCore ? URLConstant.SubmitMouReviewNewV2 : URLConstant.SubmitMouReviewNew;
+    this.http.post(SubmitMouRvwUrl, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
-      });
+    })
   }
 
   Return() {
-    var mouObj = { TaskListId: this.WfTaskListId }
-    this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
+    let ReturnMouUrl = environment.isCore ? URLConstant.ReturnMouReviewV2 : URLConstant.ReturnMouReview;
+    let mouObj = new WorkflowApiObj();
+    mouObj.TaskListId = this.WfTaskListId;
+    this.http.post(ReturnMouUrl, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
-      })
+    })
   }
 
   initInputApprovalObj() {
@@ -165,6 +171,17 @@ export class MouReviewFactoringComponent implements OnInit {
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.resultData["MouCustNo"]
     this.IsReady = true;
+  }
+
+  claimTask() {
+    if(environment.isCore){	
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId > 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }		
   }
 
 }

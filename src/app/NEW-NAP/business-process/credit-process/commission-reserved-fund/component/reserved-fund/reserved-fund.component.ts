@@ -63,8 +63,8 @@ export class ReservedFundComponent implements OnInit {
   // totalExpenseAmt: number = 0;
   isReturnOn: boolean = false;
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
-  readonly DDLReason: string = "REASON";
-  readonly DDLTask: string = "TASK";
+  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
+  readonly DDLTask: string = CommonConstant.ReturnTask;
 
 
   FormReturnObj  =this.fb.group({
@@ -392,11 +392,7 @@ export class ReservedFundComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
-        if(this.BizTemplateCode == CommonConstant.CFNA){
-          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
-        }else{
-          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstant.ReturnHandlingAddSurvey);
-        }
+        this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);     
       }
     );
   }

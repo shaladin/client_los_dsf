@@ -36,7 +36,7 @@ export class SchmRegulerFixComponent implements OnInit {
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
   calcRegFixObjForTrialCalc: CalcRegularFixObjForTrialCalc = new CalcRegularFixObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
-  PriceLabel: string = "Asset Price";
+  PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
   inputReportObj: InputReportObj = new InputReportObj();
   UserContext: any;
@@ -229,7 +229,7 @@ export class SchmRegulerFixComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmRegularFix) !== -1);
 
-        if (this.CalcBaseOptions.length == 1) {
+        if (this.CalcBaseOptions.length > 0) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
