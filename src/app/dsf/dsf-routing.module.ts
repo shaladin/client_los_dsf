@@ -17,6 +17,8 @@ import { Reminder1Component } from './report/factoring/reminder1/reminder1.compo
 import { Reminder5Component } from './report/factoring/reminder5/reminder5.component';
 import { InsCompSummaryDsfComponent } from './report/insurance-company/ins-comp-summary-dsf/ins-comp-summary-dsf.component';
 import { InsCompDetailDsfComponent } from './report/insurance-company/ins-comp-detail-dsf/ins-comp-detail-dsf.component';
+import { DisbursementDetailDsfComponent } from './report/disbursement-dsf/disbursement-detail-dsf/disbursement-detail-dsf.component';
+import { DisbursementPagingDsfComponent } from './report/disbursement-dsf/disbursement-paging-dsf/disbursement-paging-dsf.component';
 
 const routes: Routes = [
   {
@@ -210,7 +212,31 @@ const routes: Routes = [
         }
       }
     ]
-  }
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_DISBURSEMENT_ORDER_PAGING,
+        component: DisbursementPagingDsfComponent,
+        data: {
+          title: "Report Disbursement Order Paging"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_DISBURSEMENT_ORDER_DETAIL,
+        component: DisbursementDetailDsfComponent,
+        data: {
+          title: "Report Disbursement Order Detail"
+        }
+      }
+    ]
+  },
 ];
 
 @NgModule({
