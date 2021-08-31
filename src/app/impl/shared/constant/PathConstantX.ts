@@ -12,12 +12,9 @@ export class PathConstantX {
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
   public static NAP2_X = 'NAP2X';
-<<<<<<< HEAD
   public static PERSONAL_X = "PersonalX";
   public static COY_X = "CompanyX";
-=======
   public static INSURANCE_ORDER_X = "InsuranceOrder"
->>>>>>> 5ec81096575e477c369ebcf2964fa70bf4fc714f
   public static REVIEW_FACTORING_X = "ReviewFactoringX";
   public static APPROVAL_FACTORING_X ="ApprovalFactoringX";
   public static NAP1_X = 'NAP1X';
