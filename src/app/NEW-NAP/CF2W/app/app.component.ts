@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   inputAddressObjForOwner: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"] ? params["AppId"] : this.AppId;
@@ -108,8 +109,8 @@ export class AppComponent implements OnInit {
 
     //Dp asset,  
     //  rate type tidak masuk db 
-    EffectiveRatePrcnt: [''],
-    FlatRatePrcnt: [''],
+    EffectiveRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    FlatRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     RateType: [''],
     InstAmt: [''],
     TdpPaidCoyAmt: [''],
@@ -323,11 +324,17 @@ export class AppComponent implements OnInit {
           });
           if (this.tempRateType[0].Key == "FLT") {
             this.appForm.controls.EffectiveRatePrcnt.disable();
+            this.appForm.controls.EffectiveRatePrcnt.clearValidators();
             this.appForm.controls.FlatRatePrcnt.enable();
+            this.appForm.controls.FlatRatePrcnt.setValidators([Validators.min(0.00), Validators.max(100.00)]);
           } else if (this.tempRateType[0].Key == "EFCTV") {
             this.appForm.controls.EffectiveRatePrcnt.enable();
+            this.appForm.controls.EffectiveRatePrcnt.setValidators([Validators.min(0.00), Validators.max(100.00)]);
             this.appForm.controls.FlatRatePrcnt.disable();
+            this.appForm.controls.FlatRatePrcnt.clearValidators();
           }
+          this.appForm.controls.FlatRatePrcnt.updateValueAndValidity();
+          this.appForm.controls.EffectiveRatePrcnt.updateValueAndValidity();
         }
       }
     );
@@ -573,11 +580,17 @@ export class AppComponent implements OnInit {
 
     if (this.EffectiveRateType == CommonConstant.RateTypeFlat) {
       this.appForm.controls.EffectiveRatePrcnt.disable();
+      this.appForm.controls.EffectiveRatePrcnt.clearValidators();
       this.appForm.controls.FlatRatePrcnt.enable();
+      this.appForm.controls.FlatRatePrcnt.setValidators([Validators.min(0.00), Validators.max(100.00)]);
     } else if (this.EffectiveRateType == CommonConstant.RateTypeEffective) {
       this.appForm.controls.EffectiveRatePrcnt.enable();
+      this.appForm.controls.EffectiveRatePrcnt.setValidators([Validators.min(0.00), Validators.max(100.00)]);
       this.appForm.controls.FlatRatePrcnt.disable();
+      this.appForm.controls.FlatRatePrcnt.clearValidators();
     }
+    this.appForm.controls.FlatRatePrcnt.updateValueAndValidity();
+    this.appForm.controls.EffectiveRatePrcnt.updateValueAndValidity();
 
 
   }

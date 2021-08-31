@@ -22,9 +22,18 @@ export class AdminProcessXService {
     SubmitAgrmntActivationXByHuman(Obj: any): Observable<Object> {
         return this.http.post(URLConstantX.SubmitAgrmntActivationByHuman, Obj);
     }
+
+    SubmitInsuranceOrder(Obj: any): Observable<Object> {
+        return this.http.post(URLConstantX.SubmitInsuranceOrder, Obj);
+    }
 }
 
 export class ReqAppAssetAgreementActivationObj {
     AppId: number;
+    ListAppAssetId: Array<number>;
+}
+
+export class ReqAppAssetObjX{
+    AgrmntId: number;
     ListAppAssetId: Array<number>;
 }

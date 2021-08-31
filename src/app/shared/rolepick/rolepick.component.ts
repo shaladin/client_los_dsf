@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 import { CommonConstant } from '../constant/CommonConstant';
 import { AdInsConstant } from '../AdInstConstant';
+import { StorageService } from '../services/StorageService';
 @Component({
   selector: 'app-rolepick',
   templateUrl: './rolepick.component.html',
@@ -19,13 +20,11 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
   listRole: any;
 
-
-
   ngAfterViewInit(): void {
   }
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-    private http: HttpClient, private router: Router, public dialog: MatDialog, private cookieService: CookieService) {
+    private http: HttpClient, private router: Router, public dialog: MatDialog, private cookieService: CookieService, private strService: StorageService) {
     this.listRole = data["response"];
   }
 
@@ -55,6 +54,9 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
           AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
           AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
+
+          this.strService.set(AdInsConstant.WatchRoleState, true);
+
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
           this.dialog.closeAll();
         });

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
@@ -28,7 +28,7 @@ export class SingleInstDlfnComponent implements OnInit {
   IsAppFeePrcntValid: boolean = true;
   TempTotalDisbAmt = 0;
 
-
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -38,6 +38,8 @@ export class SingleInstDlfnComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLInterestType();
     this.LoadMaturityDate();
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
   }
 
   LoadDDLInterestType() {

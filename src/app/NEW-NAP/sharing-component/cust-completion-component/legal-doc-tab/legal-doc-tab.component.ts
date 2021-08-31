@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
@@ -24,6 +25,9 @@ export class LegalDocTabComponent implements OnInit {
   IsDetail: boolean = false;
   ListLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array();
   InputGridObj: InputGridObj = new InputGridObj();
+  ReqByCodeObj: GenericObj = new GenericObj();
+  ListLegalDocCantDuplicate: Array<string> = new Array<string>();
+  ListTempLegalCheck: Array<any> = new Array<any>();
   
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -33,6 +37,18 @@ export class LegalDocTabComponent implements OnInit {
   ngOnInit() {
     this.InputGridObj.pagingJson =  "./assets/ucgridview/gridCustCompletionLegalDoc.json";
     this.LoadListLegalDocData();
+    this.checkGSLegalDoc();
+  }
+
+  async checkGSLegalDoc(){
+    this.ReqByCodeObj.Code = CommonConstant.GSCodeListLegalDocCantDuplicate;
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, this.ReqByCodeObj).toPromise().then(
+      (response) => {
+        if (response["GsValue"] != undefined && response["GsValue"] != "") {
+          this.ListLegalDocCantDuplicate = response["GsValue"].split('|')
+        }
+      }
+    );
   }
 
   LoadListLegalDocData(){
@@ -77,17 +93,22 @@ export class LegalDocTabComponent implements OnInit {
       return;
     }
 
-    var groupedCustLegalDoc = this.groupBy(this.ListLegalDoc, function (item) {
-      return [item.MrLegalDocTypeCode, item.DocNo];
-    });
-
-    var duplCustLegalDoc = groupedCustLegalDoc.find(x => x.length > 1);
-
-    if(duplCustLegalDoc != undefined){
-      this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
-      return;
-    }
-
+      var groupedCustLegalDoc = this.groupBy(this.ListLegalDoc, function (item) {
+        return [item.MrLegalDocTypeCode, item.DocNo];
+      });
+  
+      var duplCustLegalDoc = groupedCustLegalDoc.filter(x => x.length > 1);
+  
+      if(duplCustLegalDoc != undefined){
+        for(var i = 0; i < duplCustLegalDoc.length ; i++){
+          this.ListTempLegalCheck = duplCustLegalDoc[i];
+          var checkGSValue = this.ListLegalDocCantDuplicate.find(x => x == this.ListTempLegalCheck[0].MrLegalDocTypeCode);
+          if(checkGSValue != null){
+            this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
+            return;
+          }
+        }
+      }
 
     this.OutputTab.emit({IsComplete: true});
   }

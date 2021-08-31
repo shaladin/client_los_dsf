@@ -20,6 +20,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/AppCommissionRsvFund/ReqReturnHandlingCommRsvFundObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: "reserved-fund",
@@ -63,8 +64,8 @@ export class ReservedFundComponent implements OnInit {
   // totalExpenseAmt: number = 0;
   isReturnOn: boolean = false;
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
-  readonly DDLReason: string = "REASON";
-  readonly DDLTask: string = "TASK";
+  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
+  readonly DDLTask: string = CommonConstant.ReturnTask;
 
 
   FormReturnObj  =this.fb.group({
@@ -82,7 +83,6 @@ export class ReservedFundComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.allAppReservedFundObj = new AllAppReservedFundObj();
     var appObj = {
       Id: this.ReturnHandlingHObj.AppId
     };
@@ -115,7 +115,9 @@ export class ReservedFundComponent implements OnInit {
       else {
         var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
         this.setAppReservedFundData();
-        this.http.post(URLConstant.AddEditAppReservedFund, this.allAppReservedFundObj).subscribe(
+
+        let AddEditAppReservedFundUrl = environment.isCore ? URLConstant.AddEditAppReservedFundV2 : URLConstant.AddEditAppReservedFund;
+        this.http.post(AddEditAppReservedFundUrl, this.allAppReservedFundObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.allAppReservedFundObj.ReturnHandlingHId != 0 || this.allAppReservedFundObj.ReturnHandlingHId != undefined) {
@@ -392,11 +394,7 @@ export class ReservedFundComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
-        if(this.BizTemplateCode == CommonConstant.CFNA){
-          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
-        }else{
-          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstant.ReturnHandlingAddSurvey);
-        }
+        this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);     
       }
     );
   }
@@ -409,7 +407,8 @@ export class ReservedFundComponent implements OnInit {
     reqReturnHandlingCommRsvFundObj.Reason = this.FormReturnObj.value.Reason;
     reqReturnHandlingCommRsvFundObj.Notes = this.FormReturnObj.value.Notes;
 
-    this.http.post(URLConstant.SubmitReturnHandlingCommRsvFund, reqReturnHandlingCommRsvFundObj).subscribe(
+    let SubmitReturnHandlingCommRsvFundUrl = environment.isCore ? URLConstant.SubmitReturnHandlingCommRsvFundV2 : URLConstant.SubmitReturnHandlingCommRsvFund;
+    this.http.post(SubmitReturnHandlingCommRsvFundUrl, reqReturnHandlingCommRsvFundObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": this.BizTemplateCode});

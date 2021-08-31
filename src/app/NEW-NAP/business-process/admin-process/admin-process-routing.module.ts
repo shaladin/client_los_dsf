@@ -59,6 +59,8 @@ import { PurchaseOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process
 import { PurchaseOrderXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order/purchase-order-x.component';
 import { PurchaseOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging/purchase-order-paging-x.component';
 import { AgrmntActivationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component';
+import { InsuranceOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-paging/insurance-order-paging-x/insurance-order-paging-x.component';
+import { InsuranceOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component';
 
 const routes: Routes = [
   {
@@ -433,6 +435,20 @@ const routes: Routes = [
         component: PreGoLiveXComponent,
         data: {
           title: 'PreGoLive Detail'
+        }
+      },
+      {
+        path: PathConstantX.INSURANCE_ORDER_PAGING_X,
+        component: InsuranceOrderPagingXComponent,
+        data: {
+          title: 'Insurance Order Paging X'
+        }
+      },
+      {
+        path: PathConstantX.INSURANCE_ORDER_DETAIL_X,
+        component: InsuranceOrderDetailXComponent,
+        data: {
+          title: 'Insurance Order Detail X'
         }
       },
       {

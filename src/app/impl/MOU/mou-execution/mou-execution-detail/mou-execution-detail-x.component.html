@@ -8,9 +8,10 @@
         </div>
       </div>
     </div>
-    <div *ngIf="viewGenericObj.viewInput != ''">
+    <app-mou-main-info-x [MouCustId]="MouCustId"></app-mou-main-info-x>
+    <!-- <div *ngIf="viewGenericObj.viewInput != ''">
       <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
-    </div>
+    </div> -->
     <div class="px-3">
       <lib-ucSubsection [id]="'MOUMainInfoId'" [title]="'Main Information'" [panel]="'MOUMainInfoSection'">
       </lib-ucSubsection>

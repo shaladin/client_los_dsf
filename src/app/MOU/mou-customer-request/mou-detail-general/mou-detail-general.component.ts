@@ -56,6 +56,7 @@ export class MouDetailGeneralComponent implements OnInit {
     CurrCode: ['', [Validators.required]]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private route: ActivatedRoute,

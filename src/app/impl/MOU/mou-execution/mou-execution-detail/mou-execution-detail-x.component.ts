@@ -19,7 +19,7 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
   templateUrl: './mou-execution-detail-x.component.html',
 })
 export class MouExecutionDetailXComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  //viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   businessDt: Date;
   MouCustId: number;
   WfTaskListId: number;
@@ -87,11 +87,11 @@ export class MouExecutionDetailXComponent implements OnInit {
 
       });
 
-    if(this.resultData['MrMouTypeCode']==CommonConstant.FACTORING){
-      this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewMouHeaderX.json";
-    }else{
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    }
+    // if(this.resultData['MrMouTypeCode']==CommonConstant.FACTORING){
+    //   this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewMouHeaderX.json";
+    // }else{
+    //   this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
+    // }
 
   }
 

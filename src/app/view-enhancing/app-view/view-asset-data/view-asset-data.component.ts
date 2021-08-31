@@ -33,6 +33,7 @@ export class ViewAssetDataComponent implements OnInit {
   appCollateralList: Array<any>;
   IsHidden: boolean = true;
   AppCollateralId: number;
+  IsReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -81,6 +82,8 @@ export class ViewAssetDataComponent implements OnInit {
           this.appCollateralList = response["AppCollateralObjs"];
         }
       );
+
+      this.IsReady = true;
     }
   }
 

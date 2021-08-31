@@ -16,7 +16,7 @@
                 <label class="col-md-3 adins-label" translate>Rental Period</label>
                 <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.Tenor}} / {{RentalCalculationObj?.FirstInstType}}</label>
                 <label class="col-md-3 adins-label" translate>Margin (% / Amt)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.MarginPrcnt}}% / {{RentalCalculationObj?.MarginAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.MarginPrcnt | number:'.6':'en-US'}} % / {{RentalCalculationObj?.MarginAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
@@ -28,7 +28,7 @@
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Residual Value (% / Amt)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.ResidualValuePrcnt | number:'.6':'en-US'}}% / {{RentalCalculationObj?.ResidualValueAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.ResidualValuePrcnt | number:'.6':'en-US'}} % / {{RentalCalculationObj?.ResidualValueAmt | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label" translate>Rental Amount (Per Period)</label>
                 <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.RentalAmt | number:'1.2-2':'en-US'}}</label>
               </div>
@@ -44,12 +44,12 @@
                 <label class="col-md-3 adins-label" translate>Asset Expense</label>
                 <label class="col-md-3 adins-label text-right">{{TotalAssetExpense | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label" translate>Gross Yield (%)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.GrossYieldPrcnt | number:'.6':'en-US'}} %</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>COF Interest (% / Amt)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.CofInterestPrcnt | number:'.6':'en-US'}}% p.a / {{RentalCalculationObj?.CofInterestAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.CofInterestPrcnt | number:'.6':'en-US'}} % p.a / {{RentalCalculationObj?.CofInterestAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">

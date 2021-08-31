@@ -21,14 +21,14 @@
       <div class="col-md-4">
         <input type="" currencyMask id="returnInvest" min="0" class="form-control adInsInput" formControlName="ReturnOfInvestmentPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfInvestmentPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfInvestmentPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfInvestmentPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="returnEquity" translate>Return of Equity (%) </label>
       <div class="col-md-4">
         <input type="" currencyMask id="returnEquity" min="0" class="form-control adInsInput" formControlName="ReturnOfEquityPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfEquityPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfEquityPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfEquityPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
     </div>
@@ -37,14 +37,14 @@
       <div class="col-md-4">
         <input type="" currencyMask id="returnAsset" min="0" class="form-control adInsInput" formControlName="ReturnOfAssetPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfAssetPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfAssetPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfAssetPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="profitMarginPrcnt" translate>Profit Margin (%) </label>
       <div class="col-md-4">
         <input type="" currencyMask id="profitMarginPrcnt" min="0" class="form-control adInsInput" formControlName="ProfitMarginPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ProfitMarginPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ProfitMarginPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ProfitMarginPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
     </div>
@@ -53,14 +53,14 @@
       <div class="col-md-4">
         <input type=""currencyMask id="currentRatioPrcnt" min="0" class="form-control adInsInput" formControlName="CurrentRatioPrcnt" [(ngModel)]="appCustCompanyFinDataObj.CurrentRatioPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CurrentRatioPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CurrentRatioPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="debtEquityRatioPrcnt" translate>Debt Equity Ratio (%) </label>
       <div class="col-md-4">
         <input type="" currencyMask id="debtEquityRatioPrcnt" min="0" class="form-control adInsInput" formControlName="DebtEquityRatioPrcnt" [(ngModel)]="appCustCompanyFinDataObj.DebtEquityRatioPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].DebtEquityRatioPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].DebtEquityRatioPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
     </div>
@@ -69,14 +69,14 @@
       <div class="col-md-4">
         <input type="" currencyMask id="invTurnOverPrcnt" min="0" class="form-control adInsInput" formControlName="InvTurnOverPrcnt" [(ngModel)]="appCustCompanyFinDataObj.InvTurnOverPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].InvTurnOverPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].InvTurnOverPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="arTurnOverPrcnt" translate>AR Turn Over (%) </label>
       <div class="col-md-4">
         <input type="" currencyMask id="arTurnOverPrcnt" min="0" class="form-control adInsInput" formControlName="ArTurnOverPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ArTurnOverPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ArTurnOverPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ArTurnOverPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
     </div>
@@ -85,7 +85,7 @@
       <div class="col-md-4">
         <input type="" currencyMask id="growthPrcnt" min="0" class="form-control adInsInput" formControlName="GrowthPrcnt" [(ngModel)]="appCustCompanyFinDataObj.GrowthPrcnt"
         [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].GrowthPrcnt.invalid}"
-        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }">
+        [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].GrowthPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="workingCapitalAmt" translate>Working Capital (Amt)</label>
