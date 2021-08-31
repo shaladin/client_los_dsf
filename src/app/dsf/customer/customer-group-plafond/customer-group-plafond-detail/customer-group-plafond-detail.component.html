@@ -115,7 +115,7 @@
                          <lib-ucSubsection [id]="'ApprovalComponentId'" [title]="'Approval'" [panel]="'ApprovalComponent'">
                         </lib-ucSubsection>
                         <div id="ApprovalComponent">
-                          <lib-ucapprovalcreate [parentForm]="plafondProposalForm" [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+                          <lib-ucapprovalcreate [parentForm]="plafondProposalForm" [InputObj]="InputObj" *ngIf="IsReady" [enjiForm]="enjiForm" #ApprovalComponent></lib-ucapprovalcreate>
                         </div>
                         <!-- <lib-ucapprovalcreate [parentForm]="plafondProposalForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent></lib-ucapprovalcreate> -->
                            <div class="form-actions right" style="text-align: right;">
