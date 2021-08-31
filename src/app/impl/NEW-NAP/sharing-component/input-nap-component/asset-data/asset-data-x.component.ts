@@ -441,12 +441,6 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
             this.items.push(eachDataDetail);
           }
   
-          for (let i = 0; i < this.items.length; i++) {
-            if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
-              this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required, Validators.pattern(this.SerialNoRegex)]);
-              this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-            }
-          }
   
           if(this.mode == 'editAsset'){
             if (this.appAssetObj.ResponseAppAssetObj != null) {
@@ -583,7 +577,6 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
         AdminHeadId: this.allAssetDataObj.AppAssetSupplEmpAdminObj.VendorEmpId,
         BranchManagerId: this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId
       });
-      this.setValidatorBpkb();
   
       this.priceAfterDiscount = this.allAssetDataObj.AppAssetObj.AssetPriceAmt - this.allAssetDataObj.AppAssetObj.Discount;
   
@@ -784,9 +777,55 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
             this.allAssetDataObj.AppAssetObj.RowVersion = this.returnAppAssetObj.RowVersion;
             if (this.appAssetObj.ResponseAdminHeadSupp != null) this.allAssetDataObj.AppAssetSupplEmpAdminObj.RowVersion = this.returnAdminHeadSupp.RowVersion;
             if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.returnSalesPersonSupp.RowVersion;
-            if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.returnBranchManagerSupp.RowVersion;
+            if (this.appAssetObj.ResponseBranchManagerSupp != null)this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.returnBranchManagerSupp.RowVersion;
           }
         }
+        if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+          if (this.IsIntegrator) {
+            if (confirm("Submit data without Integrator ?")) {
+              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  this.AssetDataForm.reset();
+                  this.assetValue.emit({ mode: 'paging' });
+                }
+              );
+            }
+          }
+          else if (!this.IsIntegrator) {
+            if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
+              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  this.AssetDataForm.reset();
+                  this.assetValue.emit({ mode: 'paging' });
+                }
+              );
+            }
+            else {
+              if (confirm("Submit data without Integrator ?")) {
+                this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                  (response) => {
+                    this.toastr.successMessage(response["message"]);
+                    this.AssetDataForm.reset();
+                  this.assetValue.emit({ mode: 'paging' });
+                  }
+                );
+              }
+            }
+          }
+          else if (this.IsIntegrator) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+                  (response) => {
+                  });
+                this.AssetDataForm.reset();
+                this.assetValue.emit({ mode: 'paging' });
+              }
+            );
+          }
         
         // CF4W fleet
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
@@ -817,6 +856,7 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
         );
       }
     }
+  }
   
     Cancel() {
       this.outputCancel.emit();
@@ -1423,7 +1463,6 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
             selectedDpType: 'AMT'
           });
 
-          this.setValidatorBpkb();
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
         }
@@ -1740,7 +1779,6 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
       this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
       this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
       this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
-      this.InputLookupProfessionObj.isRequired = false;
       this.InputLookupProfessionObj.isReady = true;
     }
   
@@ -1830,19 +1868,6 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
       await this.bindDownPaymentTypeObj();
     }
   
-    setValidatorBpkb() {
-      let MrAssetConditionCode: string = this.AssetDataForm.controls.MrAssetConditionCode.value;
-      if (MrAssetConditionCode == 'USED') {
-        this.AssetDataForm.controls.TaxCityIssuer.setValidators(Validators.required);
-        this.AssetDataForm.controls.TaxIssueDt.setValidators(Validators.required);
-      } else {
-        this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
-        this.AssetDataForm.controls.TaxIssueDt.clearValidators();
-      }
-      this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
-      this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
-    }
-  
     async bindAssetUsageObj() {
       this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -1921,7 +1946,6 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
           this.AssetDataForm.patchValue({
             MrAssetConditionCode: this.assetCondObj.CompntValue
           });
-          this.setValidatorBpkb();
         }
       );
     }
@@ -2083,7 +2107,17 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
         var filter: any;
         filter = this.AssetConditionObj.filter(
           cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value);
+        
         this.AssetConditionName = filter[0].Value;
+        if(this.AssetConditionName == CommonConstantX.REF_MASTER_ASSET_CONDITION_DESCR_USED)
+        {
+          for (let i = 0; i < this.items.length; i++) 
+          {
+            this.items.controls[i]['controls']['SerialNoValue'].setValidators(Validators.pattern(this.SerialNoRegex));
+            this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+          }
+        }
+ 
       }
       if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
         this.SetDpValue(mode);
@@ -2549,7 +2583,7 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
                 ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
                 IsReceived: AppCollateralDocs[i].IsReceived,
                 RowVersion: AppCollateralDocs[i].RowVersion,
-              })
+              });
             }
           }
         });
@@ -2712,3 +2746,4 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
       }
     }
   }
+  
