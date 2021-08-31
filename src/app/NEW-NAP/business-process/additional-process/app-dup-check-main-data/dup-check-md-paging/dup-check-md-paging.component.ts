@@ -49,11 +49,11 @@ export class DupCheckMdPagingComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppDupCheckMainDataV2.json";
       this.inputPagingObj.isJoinExAPI = true
       
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_DUP_CHECK_MD;
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CDC_MANUAL;
-      // this.RequestTaskModel.RoleCode = userAccess[CommonConstant.ROLE_CODE];
-      // this.RequestTaskModel.OfficeCode = userAccess[CommonConstant.OFFICE_CODE];
-      this.RequestTaskModel.OfficeRoleCodes = [userAccess[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_DUP_CHECK_MD + this.BizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CDC_MANUAL + this.BizTemplateCode;
+      this.RequestTaskModel.OfficeRoleCodes = [userAccess[CommonConstant.ROLE_CODE],
+                                              userAccess[CommonConstant.OFFICE_CODE], 
+                                              userAccess[CommonConstant.ROLE_CODE] + "-" + userAccess[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;

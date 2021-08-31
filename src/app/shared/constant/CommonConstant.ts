@@ -1014,9 +1014,9 @@ export class CommonConstant {
   public static ACT_CODE_COM_RSV = "COM_RSV_";
   public static ACT_CODE_RTN = "RTN_";
   public static ACT_CODE_PHN = "PHN_";
-  public static WF_CODE_DUP_CHECK_MD = "WF_DUP_CHECK_MD";
-  public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL";
-  public static ACT_CODE_CDA = "CDA";
+  public static WF_CODE_DUP_CHECK_MD = "WF_DUP_CHECK_MD_";
+  public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL_";
+  public static ACT_CODE_CDA = "CDA_";
   public static ACT_CODE_CDC = "CDC";
   public static ACT_CODE_INV_VERIF = "INV_VERIF";
   public static WF_CRP_AFT_ACT = "WF_CRP_{0}_AFT_ACT";
