@@ -1018,7 +1018,8 @@ export class CommonConstant {
   public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL_";
   public static ACT_CODE_CDA = "CDA_";
   public static ACT_CODE_CDC = "CDC";
-  public static ACT_CODE_INV_VERIF = "INV_VERIF";
+  public static ACT_CODE_INV_VERIF = "INV_VERIF_";
+  public static ACT_INV_VERIF = "INV_VERIF";
   public static WF_CRP_AFT_ACT = "WF_CRP_{0}_AFT_ACT";
   public static ACT_CODE_PO = "PO_";
   public static ACT_CODE_DO = "DO_";
