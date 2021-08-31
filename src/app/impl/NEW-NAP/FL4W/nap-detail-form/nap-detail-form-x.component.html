@@ -127,9 +127,9 @@
               </app-multi-asset-data-x>
             </div>
             <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady"
+              <app-insurance-multi-asset-data-x *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady"
                 [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
-              </app-insurance-multi-asset-data>
+              </app-insurance-multi-asset-data-x>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
               <app-life-insurance-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL' && IsDataReady"
