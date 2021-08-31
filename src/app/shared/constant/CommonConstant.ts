@@ -1009,6 +1009,7 @@ export class CommonConstant {
 
   //WORKFLOW NAP
   public static WF_CODE_CRP_MD = "WF_CRP_MD_";
+  public static WF_CR_APV_RES_EXP_D = "WF_CR_APV_RES_EXP_D";
   public static ACT_CODE_CUST_MD = "CUST_MD_";
   public static ACT_CODE_NAPD_MD = "NAPD_MD_";
   public static ACT_CODE_COM_RSV = "COM_RSV_";
