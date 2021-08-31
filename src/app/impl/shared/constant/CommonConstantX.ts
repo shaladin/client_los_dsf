@@ -54,4 +54,7 @@ export class CommonConstantX {
     public static DefaultSlikSecEcoCode = "ECOSLIK_DEFAULT";
 
     public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
+
+    //Insurance
+    public static PayPeriodAnnualy = "ANNUALY";
 }
