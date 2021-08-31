@@ -1096,6 +1096,7 @@ export class URLConstant {
   //CREDIT APV RESULT EXTENSION
   public static SubmitNewExpDate = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitNewExpDate";
   public static SubmitReqNewExpDateApv = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitReqNewExpDateApv";
+  public static SubmitReqNewExpDateApvV2 = environment.losUrl + "/v2" + "/PurchaseOrderH/SubmitReqNewExpDateApv";
   public static GetCreditApvResultExtMainData = environment.losUrl + "/v1" + "/PurchaseOrderH/GetCreditApvResultExtMainData";
 
   //VERF
