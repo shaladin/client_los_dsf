@@ -22,6 +22,8 @@ import { CcAddressPagingComponent } from './address-tab/cc-address-paging/cc-add
 import { CcAddressDetailComponent } from './address-tab/cc-address-detail/cc-address-detail.component';
 import { MgmntShrholderComponent } from './mgmnt-shrholder/mgmnt-shrholder.component';
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { FinancialPersonalXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/financial-personal/financial-personal-x.component";
+import { FinancialCompanyXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/financial-company/financial-company-x.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -48,7 +50,9 @@ export const customCurrencyMaskConfig = {
         CcContactInformationTabComponent,
         OtherInfoTabComponent,
         CcAddressPagingComponent,
-        MgmntShrholderComponent
+        MgmntShrholderComponent,
+        FinancialPersonalXComponent,
+        FinancialCompanyXComponent
     ],
     imports: [
         CommonModule,
@@ -74,7 +78,9 @@ export const customCurrencyMaskConfig = {
         FinancialPersonalComponent,
         CcAddressPagingComponent,
         CcAddressDetailComponent,
-        MgmntShrholderComponent
+        MgmntShrholderComponent,
+        FinancialPersonalXComponent,
+        FinancialCompanyXComponent
     ],
     providers: [
         NGXToastrService
