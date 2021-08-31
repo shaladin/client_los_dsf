@@ -72,7 +72,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    let mouCustObj = { Id: this.MouCustId };
+    var mouCustObj = { Id: this.MouCustId };
     if (this.MouType == CommonConstant.GENERAL) {
       this.http
         .post(URLConstant.GetMouCustDataByMouCustId, mouCustObj)

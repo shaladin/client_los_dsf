@@ -55,7 +55,6 @@ export class MouViewAddcollXComponent implements OnInit {
       (response) => {
         var MouCustCollateralDocs = new Array();
         MouCustCollateralDocs = response["MouCustCollateralDocs"];
-        this.isView = true;
         console.log(MouCustCollateralDocs);
         if (MouCustCollateralDocs["length"] > 0) {
 

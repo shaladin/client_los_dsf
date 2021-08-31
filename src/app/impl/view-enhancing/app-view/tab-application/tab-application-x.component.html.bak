@@ -10,7 +10,7 @@
           <tr class="table-header">
             <th class="text-center"><span translate class="thead-header" name='No'>No</span></th>
             <th class="text-center"><span translate class="thead-header" name='AppNo'>Application No</span></th>
-            <th class="text-center"><span translate class="thead-header" name='AgreementNo'>Agreement No</span></th>
+            <th class="text-center"><span translate class="thead-header" name='AgreementNo'>Agreement No</span></th>                      
             <th class="text-left"><span translate class="thead-header" name='CustomerName'>Customer Name</span></th>
           </tr>
         </thead>

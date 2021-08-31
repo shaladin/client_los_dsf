@@ -56,7 +56,6 @@
         <i class="fa fa-check-square-o"></i> Back
       </button>
     </div>
-    <app-mou-view-addcoll-detail [MouCustCollateralId]="MouCustCollateralId"></app-mou-view-addcoll-detail>
 
     <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
     </lib-ucSubsection>
