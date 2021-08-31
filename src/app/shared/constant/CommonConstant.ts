@@ -1024,6 +1024,7 @@ export class CommonConstant {
   public static ACT_CODE_DO = "DO_";
   public static ACT_CODE_CNFR = "CNFR_";
   public static ACT_CODE_PGLV = "PGLV_";
+  public static WF_CODE_RTN = "WF_RTN_";
   
   public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }
