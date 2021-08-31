@@ -16,6 +16,7 @@ import { UcapprovalcreateComponent } from "@adins/ucapprovalcreate";
 import { CookieService } from "ngx-cookie";
 import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
 
 @Component({
   selector: "app-change-mou-review-general-x",
@@ -236,9 +237,19 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
     this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
     this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_APV;
+
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.TrxNo;
+
+    if(this.TrxType == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP)
+    {
+      this.InputObj.SchemeCode = CommonConstantX.SCHM_CODE_CHG_MOU_EXP_APV;
+    }
+    else
+    {
+      this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_APV;
+    }
+
     this.IsReady = true;
   }
 }

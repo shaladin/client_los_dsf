@@ -12,6 +12,8 @@ export class PathConstantX {
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
   public static NAP2_X = 'NAP2X';
+  public static PERSONAL_X = "PersonalX";
+  public static COY_X = "CompanyX";
   public static INSURANCE_ORDER_X = "InsuranceOrder"
   public static REVIEW_FACTORING_X = "ReviewFactoringX";
   public static APPROVAL_FACTORING_X ="ApprovalFactoringX";
@@ -63,6 +65,10 @@ export class PathConstantX {
   public static INSURANCE_ORDER_PAGING_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.PAGING;
   public static INSURANCE_ORDER_DETAIL_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.DETAIL_X;
   //#endregion
+
+  //#region Nap-Cust-Compl
+  public static CUST_COMPL_PRSNL_X = PathConstant.DETAIL + "/" + PathConstantX.PERSONAL_X;
+  public static CUST_COMPL_COY_X = PathConstant.DETAIL + "/" + PathConstantX.COY_X;
 
   //#region Cessie
   public static CESSIE_MONITORING = PathConstantX.CESSIE + "/" + PathConstantX.MONITORING;
