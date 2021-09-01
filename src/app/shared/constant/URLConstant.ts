@@ -1243,6 +1243,7 @@ export class URLConstant {
 
   //Inst table
   public static GetAppInstSchldTableByAppId = environment.losUrl + "/v1" + "/AppInstSchdl/GetAppInstSchldTableByAppId"
+  public static GetAppInsStepSchmByAppId = environment.losUrl + "/v1" + "/AppInstSchdl/GetAppInsStepSchmByAppId"
 
   //CUSTOMER DUPLICATE CHECKING
   public static GetCustomerAndNegativeCustDuplicateCheck = environment.FoundationR3Url + "/v1" + "/CustDuplicateCheck/GetCustomerAndNegativeCustDuplicateCheck";
