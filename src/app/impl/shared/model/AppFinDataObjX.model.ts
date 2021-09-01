@@ -97,6 +97,14 @@ export class AppFinDataObjX {
     TotalSubsidySubventionAmt: number;
     TotalSubsidySPAFAmt: number;
     SubsidySubventionAmt: number;
+
+    TotalAssetPriceAmtOnly: number;
+    MrInstSchemeName: string;
+    MrFirstInstTypeCode: string;
+    MrFirstInstTypeName: string;
+    CommissionAmtFromDiffRate: number;
+    SubsidyAmtFromDiffRate: number;
+    ExistingFinData: boolean;
     constructor() {
     }
 }

@@ -17,7 +17,7 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { map, mergeMap, first } from 'rxjs/operators';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { forkJoin } from 'rxjs';
@@ -41,7 +41,9 @@ import { LookupTaxCityIssuerComponent } from 'app/NEW-NAP/sharing-component/inpu
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
+import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 
 @Component({
   selector: 'app-asset-data-add-edit-x',
@@ -121,6 +123,10 @@ export class AssetDataAddEditXComponent implements OnInit {
   isUsed : boolean = false;
   isSLB : boolean = false;
 
+  listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
+  appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
+
+
 
   InputLookupAccObj: any;
   InputLookupAccSupObj: any;
@@ -196,7 +202,8 @@ export class AssetDataAddEditXComponent implements OnInit {
     DownPaymentAmt: [''],
     items: this.fb.array([]),
     AssetAccessoriesObjs: this.fb.array([]),
-    AppAssetAttrObjs: this.fb.array([])
+    AppAssetAttrObjs: this.fb.array([]),
+    ListDoc: this.fb.array([])
   });
 
   appObj = {
@@ -222,11 +229,14 @@ export class AssetDataAddEditXComponent implements OnInit {
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   InputLookupCityIssuerObj : any;
+  DpObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  IsReady: boolean = false;
 
   //URS-LOS-166
   generalSettingVendorSLBObj: GenericObj;
   vendorSLBId : 0;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.originalAssetAccs = new Array<AppAssetAccessoryObj>();
 
@@ -268,6 +278,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       AssetCategoryCode: event.AssetCategoryCode,
       AssetTypeCode: event.AssetTypeCode
     });
+    this.GetRefAssetDocList(false);
     if (this.checkAssetValidationRequirement()) {
       this.CheckDP();
     }
@@ -330,6 +341,57 @@ export class AssetDataAddEditXComponent implements OnInit {
         this.AssetDataForm.patchValue({ LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'] });
       }
     );
+  }
+
+  GetRefAssetDocList(isInit: boolean) {
+    this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
+      (response) => {
+        let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
+        ListDoc.reset();
+        while(ListDoc.length) {
+          ListDoc.removeAt(0);
+        }
+
+        if (response[CommonConstant.ReturnObj].length > 0) {
+          for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+            let assetDocumentDetail = this.fb.group({
+              DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+              AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+              IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+              IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+              IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+              IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+              DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+              ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+              RowVersion: "",
+            }) as FormGroup;
+            ListDoc.push(assetDocumentDetail);
+          }
+        }
+        if(isInit){
+          this.setAppCollateralDoc(this.returnAppCollateralObj.AppCollateralId);
+        }
+      });
+  }
+
+  setAppCollateralDoc(AppCollateralId: number = 0) {
+    this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
+      (response) => {
+        let AppCollateralDocs = new Array();
+        AppCollateralDocs = response["AppCollateralDocs"];
+        if (AppCollateralDocs["length"] > 0) {
+          for (let i = 0; i < AppCollateralDocs.length; i++) {
+            this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
+              DocNo: AppCollateralDocs[i].DocNo,
+              DocNotes: AppCollateralDocs[i].DocNotes,
+              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              IsReceived: AppCollateralDocs[i].IsReceived,
+              RowVersion: AppCollateralDocs[i].RowVersion,
+            })
+          }
+        }
+      });
   }
 
   copyToLocationAddr() {
@@ -657,8 +719,7 @@ export class AssetDataAddEditXComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
-    this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.isRequired = false;
@@ -686,6 +747,8 @@ export class AssetDataAddEditXComponent implements OnInit {
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
     this.AssetDataForm.controls.MrAssetConditionCode.disable();
+
+    await this.bindDownPaymentTypeObj();
     if (this.mode == 'editAsset') {
       // this.AssetDataForm.controls['ManufacturingYear'].setValidators([Validators.required]);
       // this.AssetDataForm.controls['ManufacturingYear'].updateValueAndValidity();
@@ -839,6 +902,8 @@ export class AssetDataAddEditXComponent implements OnInit {
               this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.LocationZipcode };
               this.inputAddressObjForLoc.default = this.locationAddrObj;
               this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
+
+              this.GetRefAssetDocList(true);
             });
         });
     }
@@ -847,13 +912,13 @@ export class AssetDataAddEditXComponent implements OnInit {
 
     this.InputLookupSupplierObj = new InputLookupObj();
     this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
-    this.InputLookupSupplierObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier_CollateralAsset_FL4W.json";
     
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
@@ -1408,6 +1473,26 @@ export class AssetDataAddEditXComponent implements OnInit {
     }
   }
 
+  setCollateralDocs() {
+    this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
+    for (let i = 0; i < this.AssetDataForm.value.ListDoc["length"]; i++) {
+      this.appCollateralDoc = new AppCollateralDocObj();
+      if (this.AssetDataForm.value.ListDoc[i].IsReceived == null) {
+        this.appCollateralDoc.IsReceived = false;
+      }
+      else {
+        this.appCollateralDoc.IsReceived = this.AssetDataForm.value.ListDoc[i].IsReceived;
+      }
+      this.appCollateralDoc.DocCode = this.AssetDataForm.value.ListDoc[i].DocCode;
+      this.appCollateralDoc.DocNo = this.AssetDataForm.value.ListDoc[i].DocNo;
+      this.appCollateralDoc.ExpiredDt = this.AssetDataForm.value.ListDoc[i].ACDExpiredDt;
+      this.appCollateralDoc.DocNotes = this.AssetDataForm.value.ListDoc[i].DocNotes;
+      this.appCollateralDoc.RowVersion = this.AssetDataForm.value.ListDoc[i].RowVersion;
+      this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
+    }
+    this.allAssetDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
+  }
+
   async SaveForm() {
     var assetForm = this.AssetDataForm.getRawValue();
     var confirmMsg = "";
@@ -1416,6 +1501,11 @@ export class AssetDataAddEditXComponent implements OnInit {
 
 
     if (this.AssetValidationResult) {
+      let sumAssetAccessories: number = 0;
+      if(assetForm.AssetAccessoriesObjs.length > 0){
+        sumAssetAccessories = assetForm.AssetAccessoriesObjs.map(x => x.AccessoryPriceAmt).reduce((acc, curr) => acc + curr);
+      }
+
       if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCNT') {
         if (assetForm.DownPaymentPrctg < this.AssetValidationResult.DPMin) {
           isValidOk = false;
@@ -1427,7 +1517,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         }
       }
       else {
-        var assetDPMin = this.AssetValidationResult.DPMin * assetForm.AssetPrice / 100;
+        var assetDPMin = this.AssetValidationResult.DPMin * (assetForm.AssetPrice + sumAssetAccessories) / 100;
         var assetDPMax = this.AssetValidationResult.DPMax * assetForm.AssetPrice / 100;
         if (assetForm.DownPayment < assetDPMin) {
           isValidOk = false;
@@ -1459,6 +1549,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       this.setCollateralAttribute();
       this.setAppAccessoryForSave();
       this.setAssetAttr();
+      this.setCollateralDocs();
       this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
 
       if (this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt) {
@@ -1558,6 +1649,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       this.setCollateralAttribute();
       this.setAppAccessoryForSave();
       this.setAssetAttr();
+      this.setCollateralDocs();
       this.allAssetDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
       this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
       this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetId;
@@ -1678,8 +1770,10 @@ export class AssetDataAddEditXComponent implements OnInit {
         AssetAccessoryName: ['', [Validators.maxLength(100)]],
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: ['', Validators.required],
-        AccessoryDownPaymentAmt: [0, Validators.required],
+        AccessoryPriceAmt: ['', [Validators.required,Validators.min(0.00)]],
+        AccessoryDownPaymentType: [''],
+        AccessoryDownPaymentPrcnt: [0, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
+        AccessoryDownPaymentAmt: [0, [Validators.required,Validators.min(0.00)]],
         AccessoryNotes: ['']
       })
     } else {
@@ -1689,8 +1783,10 @@ export class AssetDataAddEditXComponent implements OnInit {
         AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(100)]],
         SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, Validators.required],
-        AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, Validators.required],
+        AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required,Validators.min(0.00)]],
+        AccessoryDownPaymentType: [this.DpObj[0].Key],
+        AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
+        AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, [Validators.required,Validators.min(0.00)]],
         AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]
       })
     }
@@ -1708,7 +1804,7 @@ export class AssetDataAddEditXComponent implements OnInit {
 
     this.InputLookupAccObj = new InputLookupObj();
     this.InputLookupAccObj.urlJson = "./assets/uclookup/NAP/lookupAcc.json";
-    this.InputLookupAccObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupAccObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAccObj.pagingJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.genericJson = "./assets/uclookup/NAP/lookupAcc.json";
     this.InputLookupAccObj.addCritInput = arrAddCrit;
@@ -1721,7 +1817,7 @@ export class AssetDataAddEditXComponent implements OnInit {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputLookupAccSupObj = new InputLookupObj();
     this.InputLookupAccSupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    this.InputLookupAccSupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupAccSupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAccSupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupAccSupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
     var suppCrit = new Array();
@@ -1820,6 +1916,7 @@ export class AssetDataAddEditXComponent implements OnInit {
 
         this.setAppAccessorySupplier(i, this.appAssetAccessoriesObjs[i].SupplCode);
         this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
+        this.ChangeAccessoryDPType(i, 'AMT');
       }
     }
   }
@@ -1837,12 +1934,15 @@ export class AssetDataAddEditXComponent implements OnInit {
       appAssetAccObj.SupplCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplCodeAccessory;
       appAssetAccObj.SupplName = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplNameAccessory;
       appAssetAccObj.AccessoryPriceAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryPriceAmt;
-      appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryDownPaymentAmt;
+      appAssetAccObj.DownPaymentPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value;
+      appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value;
+     
       appAssetAccObj.AccessoryNotes = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryNotes;
 
       appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
       appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
       appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
+      appCollateralAccObj.DownPaymentPrcnt = appAssetAccObj.DownPaymentPrcnt;
       appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
       appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
 
@@ -1896,6 +1996,63 @@ export class AssetDataAddEditXComponent implements OnInit {
       this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
     }
     this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
+  }
+
+  async bindDownPaymentTypeObj() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.RefMasterTypeCodeDownPaymentType}).subscribe(
+      (response) => {
+        this.DpObj = response[CommonConstant.ReturnObj];
+        this.IsReady = true;
+      }
+    );
+  }
+
+  ChangeAccessoryDPType(i: number, ev){
+    if(ev == CommonConstant.DownPaymentTypeAmt){
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.disable();
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.enable();
+    }else{
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.disable();
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.enable();
+    }
+  }
+
+  CheckAccessoryDPValue(i: number, from: string){
+    var InputAccessoryPrice = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryPriceAmt.value
+
+    if(InputAccessoryPrice == 0){
+      this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i+1));
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
+      return;
+    }
+
+    var InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value
+
+    if(InputDPAmt > InputAccessoryPrice){
+      this.toastr.warningMessage("Security Deposit Amount " + (i+1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i+1));
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
+      return;
+    }
+
+    var InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
+    
+    if(from == CommonConstant.DownPaymentTypeAmt){
+      var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
+    }else if(from == CommonConstant.DownPaymentTypePrcnt){
+      var DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+    }else{
+      if(this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt){
+        var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
+      }else{
+        var DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
+        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+      }
+    }
   }
 
 }
