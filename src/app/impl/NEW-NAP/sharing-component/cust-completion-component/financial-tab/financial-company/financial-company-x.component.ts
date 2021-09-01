@@ -47,11 +47,11 @@ export class FinancialCompanyXComponent implements OnInit {
     AppCustCompanyFinDataId: [0],
     AppCustId: [0],
     GrossMonthlyIncomeAmt: ['', Validators.required],
-    ReturnOfInvestmentPrcnt: [0],
-    ReturnOfAssetPrcnt: [0],
-    CurrentRatioPrcnt: [0],
-    InvTurnOverPrcnt: [0],
-    GrowthPrcnt: [0],
+    ReturnOfInvestmentPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    ReturnOfAssetPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    CurrentRatioPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    InvTurnOverPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    GrowthPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     OthMonthlyInstAmt: [0],
     Revenue: [0],
     ProfitBeforeTax: [0],
@@ -73,6 +73,7 @@ export class FinancialCompanyXComponent implements OnInit {
     RowVersion: ['']
   })
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,

@@ -99,6 +99,7 @@ export class AppFinDataObjX {
     SubsidySubventionAmt: number;
 
     TotalAssetPriceAmtOnly: number;
+    TotalAccessoryPriceAmt: number;
     MrInstSchemeName: string;
     MrFirstInstTypeCode: string;
     MrFirstInstTypeName: string;

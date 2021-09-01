@@ -25,6 +25,7 @@ export class FeeDlfnXComponent implements OnInit {
   listAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
   isSubmitted: boolean;
   TempProvisionSource: Array<KeyValueObj>;
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -209,7 +210,7 @@ export class FeeDlfnXComponent implements OnInit {
       AppFeeAmt: obj.AppFeeAmt,
       StdFeePrcnt: obj.StdFeePrcnt,
       SellFeePrcnt: obj.SellFeePrcnt,
-      AppFeePrcnt: obj.AppFeePrcnt,
+      AppFeePrcnt: [obj.AppFeePrcnt, [Validators.min(0.00), Validators.max(100.00)]],
       IsCptlz: obj.IsCptlz,
       // CptlzAmt : obj.CptlzAmt,
       FeeCapitalizeType: obj.FeeCapitalizeType,
