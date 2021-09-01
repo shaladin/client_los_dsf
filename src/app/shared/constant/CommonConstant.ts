@@ -1027,4 +1027,5 @@ export class CommonConstant {
   public static WF_CODE_RTN = "WF_RTN_";
   
   public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
+  public static PrcntMinValue: number = 0.000001;
 }
