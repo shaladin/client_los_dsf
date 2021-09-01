@@ -113,7 +113,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     CollateralValueAmt: [0, [Validators.required]],
     CollateralPrcnt: [
       0,
-      [Validators.required, Validators.min(0), Validators.max(this.maxPrcnt)],
+      [Validators.required, Validators.min(1), Validators.max(this.maxPrcnt)],
     ],
     FullAssetCode: [""],
     AssetCategoryCode: [""],
@@ -494,7 +494,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           this.maxPrcnt = 100 - e.SumCollateralPrcnt;
           this.AddCollForm.controls.CollateralPrcnt.setValidators([
             Validators.required,
-            Validators.min(0),
+            Validators.min(1),
             Validators.max(this.maxPrcnt),
           ]);
           this.AddCollForm.controls.CollateralPrcnt.updateValueAndValidity();
@@ -982,7 +982,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       CopyFromLegal: [""],
       AssetTypeCode: ["", [Validators.required]],
       CollateralValueAmt: [0, [Validators.required]],
-      CollateralPrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)],],
+      CollateralPrcnt: [0, [Validators.required, Validators.min(1), Validators.max(100)],],
       FullAssetCode: [""],
       AssetCategoryCode: [""],
       OwnerName: ["", [Validators.required]],
