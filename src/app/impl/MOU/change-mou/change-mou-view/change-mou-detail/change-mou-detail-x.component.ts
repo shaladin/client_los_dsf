@@ -90,46 +90,34 @@ export class ChangeMouDetailXComponent implements OnInit {
     this.arrValue.push(this.MouCustId);
 
 
-      if (this.TrxType == CommonConstant.CHANGE_MOU_TRX_TYPE_CHANGE_MOU) {
-        if (this.MouType == CommonConstant.DEALERFINANCING) {
-          this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDetailFinancing.json";
-          this.viewMainDataObj.viewEnvironment = environment.losUrl;
-          this.viewMainDataObj.whereValue = this.arrValue;
-
+    if (this.TrxType == CommonConstant.CHANGE_MOU_TRX_TYPE_CHANGE_MOU) {
+      if (this.MouType == CommonConstant.DEALERFINANCING) {
+        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDetailFinancing.json";
           this.getChangeMouViewData();
           this.getChangeMouDealerGrading();
         }
         else if (this.MouType == CommonConstant.FACTORING) {
           this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDetailFactoring.json";
-          this.viewMainDataObj.viewEnvironment = environment.losUrl;
-          this.viewMainDataObj.whereValue = this.arrValue;
 
           this.getChangeMouViewData();
           this.getChangeMouDealerGrading();
         }
         else if (this.MouType == CommonConstant.GENERAL) {
           this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDetailGeneral.json";
-          this.viewMainDataObj.viewEnvironment = environment.losUrl;
-          this.viewMainDataObj.whereValue = this.arrValue;
         } 
-      } else if (CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP) {
-        if (this.MouType == CommonConstant.DEALERFINANCING) {
-          this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChgMouDtlFinancingExpType.json";
-          this.viewMainDataObj.viewEnvironment = environment.losUrl;
-          this.viewMainDataObj.whereValue = this.arrValue;
-        }
-        else if (this.MouType == CommonConstant.FACTORING) {
-          this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChgMouDtlFctrForExpType.json";
-          this.viewMainDataObj.viewEnvironment = environment.losUrl;
-          this.viewMainDataObj.whereValue = this.arrValue;
-        }
-        else if (this.MouType == CommonConstant.GENERAL) {
-          this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDtlGenrReqExpType.json";
-          this.viewMainDataObj.viewEnvironment = environment.losUrl;
-          this.viewMainDataObj.whereValue = this.arrValue;
-        } 
+    } else if (CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP) {
+      if (this.MouType == CommonConstant.DEALERFINANCING) {
+        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChgMouDtlFinancingExpType.json";
       }
-    
+      else if (this.MouType == CommonConstant.FACTORING) {
+        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChgMouDtlFctrForExpType.json";
+      }
+      else if (this.MouType == CommonConstant.GENERAL) {
+        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDtlGenrReqExpType.json";
+      }
+    }
+    this.viewMainDataObj.whereValue = this.arrValue;
+
     this.isDataAlreadyLoaded = true;
   }
 
@@ -142,9 +130,9 @@ export class ChangeMouDetailXComponent implements OnInit {
   }
 
   GetCallBack(ev: any) {
-    if(ev.Key == "manufacturer"){
+    if (ev.Key == "manufacturer") {
       this.ClickLinkManufacturer(ev.ViewObj.manufacturerCode)
-    }else if(ev.Key == "dealer"){
+    } else if (ev.Key == "dealer") {
       this.ClickLinkManufacturer(ev.ViewObj.dealerCode)
     }
   }

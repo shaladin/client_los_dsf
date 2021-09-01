@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
@@ -31,6 +31,7 @@ export class SingleInstDlfnXComponent implements OnInit {
   MouOsPlafond: number;
 
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -44,6 +45,9 @@ export class SingleInstDlfnXComponent implements OnInit {
       }
     )
     this.LoadDDLInterestType();
+    this.LoadMaturityDate();
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
   }
 
   LoadDDLInterestType() {
@@ -58,8 +62,27 @@ export class SingleInstDlfnXComponent implements OnInit {
       }
     );
   }
+  LoadMaturityDate() {
+    var topBased = this.ParentForm.get("TopBased").value;
+    var maturityDate: Date;
+    if (topBased == CommonConstant.TopCalcBasedInvcDt) {
+      maturityDate = new Date(this.ParentForm.get("InvcDt").value);
+      maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
+      maturityDate.setMonth(maturityDate.getMonth() + this.ParentForm.get("Tenor").value);
+    }
 
-  Calculate() {
+    if (topBased == CommonConstant.TopCalcBasedEffDt) {
+      maturityDate = new Date(this.ParentForm.get("EstEffDt").value);
+      maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
+      maturityDate.setMonth(maturityDate.getMonth() + this.ParentForm.get("Tenor").value);
+    }
+
+    this.ParentForm.patchValue({
+      MaturityDate: new Date(Date.UTC(maturityDate.getFullYear(), maturityDate.getMonth(), maturityDate.getDate()))
+    });
+  }
+
+  async Calculate() {
     this.IsAppFeePrcntValid = true;
     if (this.ParentForm.value.EstEffDt == "") {
       this.toastr.warningMessage(ExceptionConstant.INSERT_ESTIMATION_EFFECTIVE_DATE);
@@ -80,23 +103,24 @@ export class SingleInstDlfnXComponent implements OnInit {
     }
     else {
       this.calcSingleInstObj = this.ParentForm.value;
-      this.http.post<ResponseCalculateObj>(URLConstant.CalculateSingleInst, this.calcSingleInstObj).subscribe(
-        (response) => {
+      await this.http.post<ResponseCalculateObj>(URLConstant.CalculateSingleInstDlfn, this.calcSingleInstObj).toPromise().then(
+        async (response) => {
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
             EffectiveRatePrcnt: response.EffectiveRatePrcnt,
             InstAmt: response.InstAmt,
             TotalInterestAmt: response.TotalInterestAmt,
             TotalAR: response.TotalARAmt,
-            NtfAmt: response.NtfAmt,
+            NtfAmt: response.NtfAmt - response.TotalInterestAmt,
             RefundInterestAmt: response.RefundInterestAmt,
             TotalDisbAmt: response.TotalDisbAmt,
             GrossYieldPrcnt: response.GrossYieldPrcnt
           });
-          this.TempTotalDisbAmt = response.TotalDisbAmt + response.TotalInterestAmt;
-          this.SetInstallmentTable();
+          this.TempTotalDisbAmt = response.TotalDisbAmt;
+          await this.CalCulateTotalTopAmount(this.AppId, (response.NtfAmt - response.TotalInterestAmt));
+          //this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
-          this.CalCulateTotalTopAmount(this.AppId, response.NtfAmt);
+          //this.CalcInterestAmt();
         }
       );
     }
@@ -115,12 +139,18 @@ export class SingleInstDlfnXComponent implements OnInit {
     for (let i = 0; i < this.listInstallment.length; i++) {
       const group = this.fb.group({
         InstSeqNo: this.listInstallment[i].InstSeqNo,
-        InstAmt: this.listInstallment[i].InstAmt,
-        PrincipalAmt: this.listInstallment[i].PrincipalAmt,
-        InterestAmt: this.listInstallment[i].InterestAmt,
-        OsPrincipalAmt: this.listInstallment[i].OsPrincipalAmt,
-        OsInterestAmt: this.listInstallment[i].OsInterestAmt,
-        DueDt: this.listInstallment[i].DueDt
+        //InstAmt: this.listInstallment[i].InstAmt,
+        InstAmt: this.ParentForm.get("InstAmt").value,
+        //PrincipalAmt: this.listInstallment[i].PrincipalAmt,
+        PrincipalAmt: this.ParentForm.get("InstAmt").value - this.ParentForm.get("TotalInterestAmt").value,
+        //InterestAmt: this.listInstallment[i].InterestAmt,
+        InterestAmt: this.ParentForm.get("TotalInterestAmt").value,
+        //OsPrincipalAmt: this.listInstallment[i].OsPrincipalAmt,
+        OsPrincipalAmt: this.ParentForm.get("InstAmt").value - this.ParentForm.get("TotalInterestAmt").value,
+        //OsInterestAmt: this.listInstallment[i].OsInterestAmt,
+        OsInterestAmt: this.ParentForm.get("TotalInterestAmt").value,
+        //DueDt: this.listInstallment[i].DueDt
+        DueDt: this.ParentForm.get("MaturityDate").value
       });
       (this.ParentForm.controls.InstallmentTable as FormArray).push(group);
     }
@@ -138,11 +168,13 @@ export class SingleInstDlfnXComponent implements OnInit {
     if (topBased == CommonConstant.TopCalcBasedInvcDt) {
       maturityDate = new Date(this.ParentForm.get("InvcDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
+      maturityDate.setMonth(maturityDate.getMonth() + this.ParentForm.get("Tenor").value);
     }
 
     if (topBased == CommonConstant.TopCalcBasedEffDt) {
       maturityDate = new Date(this.ParentForm.get("EstEffDt").value);
       maturityDate.setDate(maturityDate.getDate() + this.ParentForm.get("TopDays").value);
+      maturityDate.setMonth(maturityDate.getMonth() + this.ParentForm.get("Tenor").value);
     }
 
     this.ParentForm.patchValue({
@@ -150,12 +182,12 @@ export class SingleInstDlfnXComponent implements OnInit {
     });
   }
 
-  CalCulateTotalTopAmount(AppId: number, NtfAmount: number) {
+  async CalCulateTotalTopAmount(AppId: number, NtfAmount: number) {
     var generalSettingObj = {
       Code: "DAYS_IN_YEAR"
     }
     var result: ResGeneralSettingObj;
-    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
       (response: ResGeneralSettingObj) => {
         result = response;
         var DaysInYear = 365;
@@ -171,17 +203,111 @@ export class SingleInstDlfnXComponent implements OnInit {
           (responseApp) => {
             var MouCustId = responseApp['MouCustId']
 
-              this.http.post(URLConstant.GetMouCustDlrFindById, { Id: MouCustId }).toPromise().then(
+            this.http.post(URLConstant.GetMouCustDlrFindById, { Id: MouCustId }).toPromise().then(
               (responseCustDlfn) => {
+                var maturityDate = new Date(this.ParentForm.get("MaturityDate").value);
+                var topDays = this.ParentForm.get("TopDays").value;
+                var ntfAmt = this.ParentForm.get("NtfAmt").value;
+                var estEffDt = new Date(this.ParentForm.get("EstEffDt").value);
+                var interestType = this.ParentForm.get("InterestType").value;
+                var interestAmt = this.ParentForm.get("TotalInterestAmt").value;
+                var interestPrcnt = this.ParentForm.get("EffectiveRatePrcnt").value;
+
+                maturityDate.setDate(maturityDate.getDate() - topDays);
+
+                var Time = maturityDate.getTime() - estEffDt.getTime();
+                var Days = Time / (1000 * 3600 * 24); //Diference in Days
+
+                var DaysInYear = 365;
+                if (result.GsValue != undefined && result.GsValue != "") {
+                  DaysInYear = result.GsValue;
+                }
+                if (interestType == "PRCNT") {
+                  interestAmt = (Days / DaysInYear) * ntfAmt * (interestPrcnt / 100);
+                } else {
+                  interestPrcnt = interestAmt / ((Days / DaysInYear) * ntfAmt) * 100;
+                }
+
                 this.ParentForm.patchValue({
                   TotalTopAmount: (responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount,
-                  TotalDisbAmt: this.TempTotalDisbAmt - ((responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount)
+                  TotalDisbAmt: this.TempTotalDisbAmt - ((responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount),
+                  EffectiveRatePrcnt: interestPrcnt,
+                  InstAmt: NtfAmount + interestAmt,
+                  TotalInterestAmt: interestAmt
                 });
+
+                var ctrInstallment = this.ParentForm.get("InstallmentTable");
+                if (!ctrInstallment) {
+                  this.ParentForm.addControl("InstallmentTable", this.fb.array([]))
+                }
+
+                while ((this.ParentForm.controls.InstallmentTable as FormArray).length) {
+                  (this.ParentForm.controls.InstallmentTable as FormArray).removeAt(0);
+                }
+
+                for (let i = 0; i < this.listInstallment.length; i++) {
+                  const group = this.fb.group({
+                    InstSeqNo: this.listInstallment[i].InstSeqNo,
+                    //InstAmt: this.listInstallment[i].InstAmt,
+                    InstAmt: this.ParentForm.get("InstAmt").value,
+                    //PrincipalAmt: this.listInstallment[i].PrincipalAmt,
+                    PrincipalAmt: this.ParentForm.get("InstAmt").value - this.ParentForm.get("TotalInterestAmt").value,
+                    //InterestAmt: this.listInstallment[i].InterestAmt,
+                    InterestAmt: this.ParentForm.get("TotalInterestAmt").value,
+                    //OsPrincipalAmt: this.listInstallment[i].OsPrincipalAmt,
+                    OsPrincipalAmt: this.ParentForm.get("InstAmt").value - this.ParentForm.get("TotalInterestAmt").value,
+                    //OsInterestAmt: this.listInstallment[i].OsInterestAmt,
+                    OsInterestAmt: this.ParentForm.get("TotalInterestAmt").value,
+                    //DueDt: this.listInstallment[i].DueDt
+                    DueDt: this.ParentForm.get("MaturityDate").value
+                  });
+                  (this.ParentForm.controls.InstallmentTable as FormArray).push(group);
+                }
               });
           });
 
       });
+  }
 
+  CalcInterestAmt() {
+    var generalSettingObj = {
+      Code: "DAYS_IN_YEAR"
+    }
+    var result: ResGeneralSettingObj;
+    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+      (response: ResGeneralSettingObj) => {
+        result = response;
 
+        var maturityDate = new Date(this.ParentForm.get("MaturityDate").value);
+        var topDays = this.ParentForm.get("TopDays").value;
+        var ntfAmt = this.ParentForm.get("NtfAmt").value;
+        var estEffDt = new Date(this.ParentForm.get("EstEffDt").value);
+        var interestType = this.ParentForm.get("InterestType").value;
+        var totalDisbAmt = this.ParentForm.get("TotalDisbAmt").value;
+        var totalTopAmount = this.ParentForm.get("TotalTopAmount").value;
+        var interestAmt = this.ParentForm.get("TotalInterestAmt").value;
+        var interestPrcnt = this.ParentForm.get("EffectiveRatePrcnt").value;
+
+        maturityDate.setDate(maturityDate.getDate() - topDays);
+
+        var Time = maturityDate.getTime() - estEffDt.getTime();
+        var Days = Time / (1000 * 3600 * 24); //Diference in Days
+
+        var DaysInYear = 365;
+        if (result.GsValue != undefined && result.GsValue != "") {
+          DaysInYear = result.GsValue;
+        }
+        if (interestType == "PRCNT") {
+          interestAmt = Days * ntfAmt * (interestPrcnt / 100);
+        } else {
+          interestPrcnt = interestAmt / (Days * ntfAmt);
+        }
+
+        this.ParentForm.patchValue({
+          EffectiveRatePrcnt: interestPrcnt,
+          InstAmt: totalDisbAmt - totalTopAmount + interestAmt,
+          TotalInterestAmt: interestAmt
+        });
+      });
   }
 }

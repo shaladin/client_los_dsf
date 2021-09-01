@@ -17,7 +17,7 @@ export class ChangeMouAddcollXComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() ChangeMouTrxId: number;
 
-  listCollateralData: Array<ResMouCollForMouViewObjX>;
+  listCollateralData: Array<ResMouCollForMouViewObjX> = new Array();
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -31,6 +31,20 @@ export class ChangeMouAddcollXComponent implements OnInit {
       })
   }
 
+  ChangeMouCustCollateralId: number = 0;
+  isView: boolean = false;
+  ViewColl(ChangeMouCustCollateralId: number) {
+    this.isView = false;
+    setTimeout(() => {
+      this.ChangeMouCustCollateralId = ChangeMouCustCollateralId;
+      this.isView = true;
+    }, 500);
+  }
+
+  Back() {
+    this.isView = false;
+  }
+  
   AddCollDataForm = this.fb.group({
   })
 }
