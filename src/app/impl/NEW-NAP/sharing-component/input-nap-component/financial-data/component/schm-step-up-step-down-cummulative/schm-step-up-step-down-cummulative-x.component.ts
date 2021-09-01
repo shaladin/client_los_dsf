@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -33,9 +33,13 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
   calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  PriceLabel: string = "Asset Price";
+  PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
+  IsFirstCalc: boolean = true;
+  EffRateAfterCalc: number = 0;
+  FlatRateAfterCalc: number = 0;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
@@ -44,6 +48,10 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
+    this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
 
     if (this.AppId != null) {
       if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
@@ -63,8 +71,10 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
         InstAmt: this.InstAmt
       });
     }
-
-
+    if (this.ParentForm.getRawValue().ExistingFinData) {
+      this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
+      this.FlatRateAfterCalc = this.ParentForm.getRawValue().FlatRatePrcnt;
+    }
   }
 
   LoadDDLRateType() {
@@ -90,11 +100,16 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmStepUpStepDownCummulative) !== -1);
 
-        if (this.CalcBaseOptions.length == 1) {
+        if (this.CalcBaseOptions.length > 0) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
           this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+          if (this.ParentForm.getRawValue().ExistingFinData) {
+            this.ParentForm.patchValue({
+              IsReCalculate: true
+            });
+          }
         }
       }
     );
@@ -148,6 +163,26 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
   }
 
   SetNeedReCalculate(value) {
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate) {
+      if ((this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective && this.EffRateAfterCalc == this.ParentForm.getRawValue().EffectiveRatePrcnt)
+        || (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeFlat && this.FlatRateAfterCalc == this.ParentForm.getRawValue().FlatRatePrcnt)) {
+        this.ParentForm.patchValue({
+          IsReCalculate: true
+        });
+      } else {
+        this.ParentForm.patchValue({
+          IsReCalculate: false
+        });
+      }
+    } else if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst) {
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
+    } else {
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
+    }
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
@@ -181,6 +216,8 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
         (response) => {
           this.listInstallment = response["InstallmentTable"];
           this.listAppInstStepSchm = response["AppInstStepSchmObjs"];
+          this.EffRateAfterCalc = response["EffectiveRatePrcnt"];
+          this.FlatRateAfterCalc = response["FlatRatePrcnt"];
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response["TotalDownPaymentNettAmt"], //muncul di layar
             TotalDownPaymentGrossAmt: response["TotalDownPaymentGrossAmt"], //inmemory
@@ -209,6 +246,9 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
             DiffGrossYieldAmt: response["DiffGrossYieldAmt"]
 
           })
+          this.ParentForm.patchValue({
+            IsReCalculate: true
+          });
           this.SetInstallmentTable();
           this.SetInstStepSchm();
           this.SetNeedReCalculate(false);
@@ -351,9 +391,15 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
     if (calcBase == CommonConstant.FinDataCalcBaseOnRate) {
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
     } else if (calcBase == CommonConstant.FinDataCalcBaseOnInst) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
     } else if (calcBase == CommonConstant.FinDataCalcBaseOnCommission) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
