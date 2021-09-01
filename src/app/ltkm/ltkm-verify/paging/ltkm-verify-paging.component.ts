@@ -42,7 +42,9 @@ export class LtkmVerifyPagingComponent implements OnInit {
       
             this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_LTKM_REQ_MANUAL, CommonConstant.WF_LTKM_REQ_AUTO];
             this.RequestTaskModel.TaskDefinitionKey = CommonConstant.LTKM_VERIFY;
-            this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.OFFICE_CODE]];
+            this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.OFFICE_CODE],
+                                                     UserAccess[CommonConstant.ROLE_CODE],
+                                                     UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
             
             this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
             this.IntegrationObj.requestObj = this.RequestTaskModel;
