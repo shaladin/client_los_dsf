@@ -327,7 +327,7 @@ export class AssetDataPagingXComponent implements OnInit {
     else {
       for(let i=0;i< this.gridAssetDataObj.resultData.Data.length ;i++){
         if(this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == ""  || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null){
-          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
+          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i+1) + ')');
           return;
         }
       }
