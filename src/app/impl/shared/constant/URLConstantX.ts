@@ -38,6 +38,9 @@ export class URLConstantX {
   public static GetAppAssetByAppIdConditionNewBrandMitsubishi = environment.losUrl + "/v1" + "/AppAssetX/GetAppAssetByAppIdConditionNewBrandMitsubishi";
   public static GetAppCommissionTaxAndCalcGrossYieldX = environment.losUrl + "/v1" + "/AppCommissionX/GetAppCommissionTaxAndCalcGrossYield";
 
+  //App Asset
+  public static GetAllAssetDataForPOByAsset = environment.losUrl + "/v1" + "/AppAssetX/GetAllAssetDataForPOByAsset";
+
   // Cessie
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
   public static AssignProduct = environment.losUrl + "/v1" + "/Cessie/AssignProduct";
@@ -92,7 +95,9 @@ export class URLConstantX {
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
   public static AddNewApplication = environment.losUrl + "/v1" + "/AppX/AddNewApplication";
+  public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/AppX/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/AppX/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2" + "/AppX/AddNewApplicationFromCopy";
   public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/v1" +"/AppX/GetAppByCustNoAndIsAppInitDone";
   public static GetAppByCustNoAndAppStat = environment.losUrl + "/v1" + "/AppX/GetAppByCustNoAndAppStat";
 
