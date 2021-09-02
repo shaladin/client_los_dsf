@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-return-handling-survey-verif-x',

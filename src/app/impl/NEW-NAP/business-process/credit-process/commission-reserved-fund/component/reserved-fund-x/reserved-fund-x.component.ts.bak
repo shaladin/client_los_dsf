@@ -12,7 +12,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
@@ -21,6 +20,7 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/AppCommissionRsvFund/ReqReturnHandlingCommRsvFundObj.Model';
 import { environment } from 'environments/environment';
+import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { AppReservedFundXObj } from 'app/impl/shared/model/AppReservedFundXObj.model';
 import { ReqAppReservedFundXObj } from 'app/impl/shared/model/ReqAppReservedFundXObj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
