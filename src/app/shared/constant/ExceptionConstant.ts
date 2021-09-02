@@ -182,6 +182,8 @@ export class ExceptionConstant {
 
     public static PLEASE_COMPLETE_FOLLOWING_FIELD = "Please Complete the following field : ";
     public static DUP_CHECK_NOT_COMPLETE = "Please complete Duplicate checking first";
+    public static MANUFACTURING_YEAR_CAN_NOT_LESS_THAN = "Manufacturing Year can not less than ";
+    public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
     
 }
 
