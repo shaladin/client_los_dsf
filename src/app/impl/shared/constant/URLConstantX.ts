@@ -1,7 +1,7 @@
 import {environment} from 'environments/environment';
 
 export class URLConstantX {
-  // X 
+  // X
   public static CalculateAdditionalInterestX = environment.losUrl+ "/v1" + "/AgrmntX/CalculateAdditionalInterest";
   public static UpdateEffectiveAndAgrmntCreatedDtX = environment.losUrl+ "/v1" + "/AgrmntX/UpdateEffectiveAndAgrmntCreatedDt";
   public static GetListAgrmntParentByCustNoX = environment.losUrl + '/v1' + '/AgrmntX/GetListAgrmntParentByCustNo';
@@ -114,9 +114,11 @@ export class URLConstantX {
   //PO
   public static GetAppCustBankAccsByAppIdX = environment.losUrl  + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";
   public static GetPurchaseOrderHByAgrmntIdAndSupplCodeX = environment.losUrl  + '/v1' + "/PurchaseOrderHX/GetPurchaseOrderHByAgrmntIdAndSupplCode";
+
   //SURVEY VERIF X
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/AddVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
   public static EditVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/EditVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
+  public static CompleteAppSurveyVerifXV2 = environment.losUrl + "/v2" + "/SurveyVerifX/CompleteAppSurveyVerif";
 
   //REF SECTOR ECONOMY SLIK X
   public static GetRefSectorEconomySlikXByCode = environment.FoundationR3Url + "/v1" + "/RefSectorEconomySlikX/GetRefSectorEconomySlikXByCode";
