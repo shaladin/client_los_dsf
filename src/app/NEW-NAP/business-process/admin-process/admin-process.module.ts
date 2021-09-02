@@ -80,6 +80,8 @@ import { PurchaseOrderPagingXComponent } from "app/impl/NEW-NAP/business-process
 import { PurchaseOrderDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail/purchase-order-detail-x.component";
 import { PurchaseOrderXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order/purchase-order-x.component";
 import { AgrmntActivationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component";
+import { InsuranceOrderPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-paging/insurance-order-paging-x/insurance-order-paging-x.component";
+import { InsuranceOrderDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -168,6 +170,9 @@ export const customCurrencyMaskConfig = {
     InvoiceVerifDetailXComponent,
     InvoiceVerifDetailDFXComponent,
     InvoiceVerifDetailListOfInvoiceXComponent,
+    AgrmntActivationDetailXComponent,
+    InsuranceOrderPagingXComponent,
+    InsuranceOrderDetailXComponent,
     PurchaseOrderPagingXComponent,
     PurchaseOrderXComponent,
     PurchaseOrderDetailXComponent,

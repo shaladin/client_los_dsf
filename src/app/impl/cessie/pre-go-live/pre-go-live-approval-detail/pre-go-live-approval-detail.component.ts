@@ -29,6 +29,7 @@ export class CessiePreGoLiveApprovalDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   CessieHXId: number;
   appId: number;
+  mrCustTypeCode: string;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -38,7 +39,7 @@ export class CessiePreGoLiveApprovalDetailComponent implements OnInit {
       this.appId = params["AppId"];
       var ApvHoldObj = new ApprovalObj()
       ApvHoldObj.TaskId = this.taskId;
-
+      this.mrCustTypeCode = params["mrCustTypeCode"];
       this.HoldTask(ApvHoldObj);
     });
   }
@@ -77,7 +78,7 @@ export class CessiePreGoLiveApprovalDetailComponent implements OnInit {
 
   initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
+    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url + '/v1';
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
 

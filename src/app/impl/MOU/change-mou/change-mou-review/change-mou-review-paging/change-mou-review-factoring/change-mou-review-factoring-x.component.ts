@@ -17,6 +17,8 @@ import { CookieService } from "ngx-cookie";
 import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
 import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { ClaimTaskService } from "app/shared/claimTask.service";
+import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
 
 @Component({
   selector: "app-change-mou-review-factoring-x",
@@ -30,13 +32,13 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
   ChangeMouTrxId: number;
   MouCustId: number;
   TrxNo: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   MouType: string = "FACTORING";
   PlafondAmt: number;
   MrCustTypeCode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: Array<ReqGetByTypeCodeObj>;
-  ScoreResult: number;
+  ScoreResult: number = 0;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
   ChangeMouCustId: number;
@@ -49,14 +51,15 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
       this.createComponent = content;
     }
   }
-  ApprovalCreateOutput: any;
+  ApprovalCreateOutput: any; 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe((params) => {
       this.ChangeMouTrxId = params["ChangeMouTrxId"];
@@ -69,9 +72,8 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
-    }
+    this.claimTask();
+
     this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewChangeMouHeaderX.json";
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -107,9 +109,12 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
       });
       await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { Id: this.MouCustId }).toPromise().then(
         (response) => {
-          this.ScoreResult = response["ScoreResult"];
+          if(response["ScoreResult"] != null){
+            this.ScoreResult = response["ScoreResult"];
+          }
         }
       );
+
     this.initInputApprovalObj();
   }
 
@@ -120,22 +125,22 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
     ApvRecommendation: this.fb.array([]),
   });
 
-  async claimTask() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = {
-      pWFTaskListID: this.WfTaskListId,
-      pUserID: currentUserContext[CommonConstant.USER_NAME],
-    };
-    this.http
-      .post(URLConstant.ClaimTask, wfClaimObj)
-      .subscribe((response) => { });
+  claimTask() {
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }
+    else if (this.WfTaskListId > 0){
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 
   Submit() {
-    this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
+      let urlPost = environment.isCore ? URLConstant.SubmitChangeMouReviewV2 : URLConstant.SubmitChangeMouReview;
+      this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
 
       this.mouCustObj.MouCustId = this.MouCustId;
-      this.PlafondAmt = this.PlafondAmt;
       this.changeMouTrxObj.ChangeMouTrxId = this.ChangeMouTrxId;
       this.changeMouTrxObj.ChangeMouTrxNo = this.TrxNo;
 
@@ -143,11 +148,10 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
         MouCust: this.mouCustObj,
         WfTaskListId: this.WfTaskListId,
         ChangeMouTrx: this.changeMouTrxObj,
-        PlafondAmt: this.PlafondAmt,
         RequestRFAObj: this.ApprovalCreateOutput,
       };
       this.http
-        .post(URLConstant.SubmitChangeMouReview, submitChangeMouReviewObj)
+        .post(urlPost, submitChangeMouReviewObj)
         .subscribe((response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(
@@ -159,12 +163,13 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
   }
 
   Return() {
-    var mouObj = {
+    let urlPost = environment.isCore ? URLConstant.ReturnChangeMouReviewV2 : URLConstant.ReturnChangeMouReview;
+    var mouObj = { 
       WfTaskListId: this.WfTaskListId,
       ChangeMouTrxId : this.ChangeMouTrxId
     };
     this.http
-      .post(URLConstant.ReturnChangeMouReview, mouObj)
+      .post(urlPost, mouObj)
       .subscribe((response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(
@@ -203,43 +208,39 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
 
   initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
-    var Attributes = [];
-    var attribute1 = {
-      "AttributeName": "Approval Amount",
-      "AttributeValue": this.PlafondAmt
-    };
 
-    var attribute2 = {
-      "AttributeName": "Scoring",
-      "AttributeValue": this.ScoreResult
-    };
-    Attributes.push(attribute1);
-    Attributes.push(attribute2);
+    var Attributes = [
+      {
+        "AttributeName": "Plafond Amount",
+        "AttributeValue": this.PlafondAmt
+      },
+      {
+        "AttributeName": "Scoring",
+        "AttributeValue": this.ScoreResult
+      }
+    ];
 
     var TypeCode = {
-      TypeCode: "CHG_MOU_APV_TYPE",
+      TypeCode: CommonConstant.APV_TYPE_CHG_MOU_APV_TYPE,
       Attributes: Attributes,
     };
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url + "/v1";
-    this.InputObj.PathUrlGetSchemeBySchemeCode =
-      URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode =
-      URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType =
-      URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory =
-      URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_APV;
+    
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.TrxNo;
+
+    if(this.TrxType == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP)
+    {
+      this.InputObj.SchemeCode = CommonConstantX.SCHM_CODE_CHG_MOU_EXP_FCTR_APV;
+    }
+    else
+    {
+      this.InputObj.SchemeCode = CommonConstantX.SCHM_CODE_CHG_MOU_FCTR_APV;
+    }
     this.IsReady = true;
   }
 }

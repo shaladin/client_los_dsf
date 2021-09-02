@@ -11,7 +11,7 @@ import { LtkmCustAssetObj } from "./LtkmCustAssetObj.Model";
 import { LtkmCustOtherInfoObj } from "./LtkmCustOtherInfoObj.Model";
 import { LtkmAttrContent } from "./LtkmAttrContent.Model";
 import { LtkmCustEmrgncCntctObj } from "./LtkmCustEmrgncCntctObj.Model";
-
+import { LtkmReqObj } from "./LtkmReqObj.Model";
 
 export class LtkmCustDataPersonalObj {
     LtkmCustObj: LtkmCustObj;
@@ -27,6 +27,7 @@ export class LtkmCustDataPersonalObj {
     LtkmCustGrpObjs: Array<LtkmCustGrpObj>;
     LtkmCustAssetList: Array<LtkmCustAssetObj>;
     LtkmCustEmergencyContact: LtkmCustEmrgncCntctObj;
+    LtkmReq: LtkmReqObj;
 
     LtkmCustOtherInfoObj: LtkmCustOtherInfoObj;
 
@@ -48,6 +49,7 @@ export class LtkmCustDataPersonalObj {
         this.LtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
         this.LtkmCustPersonalContactPersonObjs = new Array<LtkmCustPersonalContactPersonObj>();
         this.LtkmCustAssetList = new Array<LtkmCustAssetObj>();
+        this.LtkmReq = new LtkmReqObj();
         
         this.LtkmCustOtherInfoObj = new LtkmCustOtherInfoObj();
 

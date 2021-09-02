@@ -86,7 +86,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
 
     let poUrl = "";
     if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W) {
-      poUrl = URLConstant.GetAllAssetDataForPOByAsset;
+      poUrl = URLConstantX.GetAllAssetDataForPOByAsset;
     }
 
     let appAssetObj : ReqAssetDataObj = new ReqAssetDataObj();

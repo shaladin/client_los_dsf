@@ -1,5 +1,4 @@
-<form class="form form-horizontal" [formGroup]="MouDataForm" (ngSubmit)="MouDataForm.valid"
-  #enjiForm="ngForm">
+<form class="form form-horizontal">
   <lib-ucSubsection [id]="'MouDataId'" [title]="'Mou Data'" [panel]="'MouData'">
   </lib-ucSubsection>
   <div class="form-body" id="MouData">
@@ -79,10 +78,10 @@
     
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
-      <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt}}%</label>
+      <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}} %</label>
       
       <label class="col-md-2 adInsLabel" translate>Retention (%)</label>
-      <label class="col-md-4 adInsLabel" translate>{{RetentionPrcnt}}%</label>
+      <label class="col-md-4 adInsLabel" translate>{{RetentionPrcnt | number:'.6':'en-US'}} %</label>
     </div>
     
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
@@ -101,7 +100,7 @@
     </div> -->
     <div *ngIf="MouType == 'GENERAL'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Down Payment (%)</label>
-      <label class="col-md-4 adInsLabel" translate>{{DownPaymentFromPrcnt}}% &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp; {{DownPaymentToPrcnt}}% </label>
+      <label class="col-md-4 adInsLabel" translate>{{DownPaymentFromPrcnt | number:'.6':'en-US'}} % &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp; {{DownPaymentToPrcnt | number:'.6':'en-US'}} % </label>
       
       <label class="col-md-2 adInsLabel" translate>Tenor</label>
       <label class="col-md-4 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp; {{TenorTo}}</label>

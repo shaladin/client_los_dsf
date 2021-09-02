@@ -1,22 +1,23 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdminProcessXService } from '../../admin-process-x.service';
 import { ReqAppAssetAgreementActivationObj } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { UcTempPagingObj, WhereValueObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { CookieService } from 'ngx-cookie';
 import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model';
 import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
-import { UcTempPagingObj, WhereValueObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
-import { CookieService } from 'ngx-cookie';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ToastrService } from 'ngx-toastr';
-import { AdminProcessXService } from '../../admin-process-x.service';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-agrmnt-activation-detail-x',
@@ -34,7 +35,7 @@ export class AgrmntActivationDetailXComponent implements OnInit {
   isOverwrite: boolean;
   AgrmntNo: string;
   CreateDt: Date;
-  WfTaskListId: number;
+  WfTaskListId: any;
   TrxNo: string;
   AgrmntActForm: FormGroup;
   BizTemplateCode: string;
@@ -81,12 +82,11 @@ export class AgrmntActivationDetailXComponent implements OnInit {
 
   readonly bizCodeFl4w: string = CommonConstant.FL4W;
 
-
   async ngOnInit() {
     await this.CheckApvResultExp();
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.claimTaskService.ClaimTask(this.WfTaskListId);
+    this.claimTask();
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
@@ -194,4 +194,14 @@ export class AgrmntActivationDetailXComponent implements OnInit {
     });
   }
 
+  claimTask(){
+    if (environment.isCore){
+      if (this.WfTaskListId != "" && this.WfTaskListId != undefined ) {
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }
+    else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
+  }
 }

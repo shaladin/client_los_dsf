@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -15,8 +15,12 @@ import { ResDisbInfo, ResGetAllNtfAppAmt } from 'app/shared/model/Response/AppIn
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CookieService } from 'ngx-cookie';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
+import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { environment } from 'environments/environment';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'invoice-verif-detail-list-of-invoice-x',
@@ -35,21 +39,29 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
   verifStatCode: RefMasterObj;
   BusinessDate: Date;
   Username: string;
-  WfTaskListId: string;
+  WfTaskListId: any;
   TrxNo: string;
   PlafondAmt: number;
   OsPlafondAmt: number;
   MrMouTypeCode: string;
   token = localStorage.getItem(CommonConstant.TOKEN);
+  IsReturnOn: boolean = false;
+  listRefReason: Array<KeyValueObj> = new Array();
+  ReturnHandlingHData: ReturnHandlingHObj = new ReturnHandlingHObj();
   LobCode: string;
   IsReady: boolean = false;
   AccName: string;
   BankName: string;
   AccNo: string;
 
-
   InvoiceForm = this.fb.group({
     Invoices: this.fb.array([])
+  });
+
+  ReturnForm = this.fb.group({
+    Reason: ['', [Validators.required]],
+    Notes: ['', [Validators.required]],
+    ReasonDesc: ['']
   });
 
   constructor(
@@ -58,7 +70,8 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private cookieService: CookieService,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, 
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -104,29 +117,42 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
       this.PlafondAmt = responseMou["PlafondAmt"];
       this.MrMouTypeCode = responseMou["MrMouTypeCode"];
 
-      // var GetByMouCustId: GenericObj = new GenericObj();
-      // GetByMouCustId.Id = responseMou["MouCustId"];
-
-      this.httpClient.post(URLConstant.GetListAppInvoiceAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
-        (response) => {
-          this.listInvoice = response["AppInvoiceDlrFncngHObj"];
-          let totalInvoiceDF = 0;
+      if (this.MrMouTypeCode == CommonConstant.FACTORING) {
+        this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
+          this.listInvoice = response["AppInvoiceFctrObjs"];
+          var totalInvoice = 0;
           for (let i = 0; i < this.listInvoice.length; i++) {
-            const fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+            var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
             fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-            if(this.listInvoice[i].IsApproved == true)
-            {
-              totalInvoiceDF += this.listInvoice[i].InvoiceAmt;
-            }
+            totalInvoice += this.listInvoice[i].InvoiceAmt;
           }
-          // this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
-          //   (responseNtfAmt) => {
-          //     this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
-          //   }
-          // )
-
-          this.OsPlafondAmt = this.PlafondAmt - totalInvoiceDF;
+          this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
         });
+      } else {
+        // let GetByMouCustId: GenericObj = new GenericObj();
+        // GetByMouCustId.Id = responseMou["MouCustId"];
+
+        this.httpClient.post(URLConstant.GetListAppInvoiceAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
+          (response) => {
+            this.listInvoice = response["AppInvoiceDlrFncngHObj"];
+            var totalInvoiceDF = 0;
+            for (let i = 0; i < this.listInvoice.length; i++) {
+              var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+              fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
+              if(this.listInvoice[i].IsApproved == true)
+              {
+                totalInvoiceDF += this.listInvoice[i].InvoiceAmt;
+              }
+            }
+            // this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
+            //   (responseNtfAmt) => {
+            //     this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
+            //   }
+            // )
+
+            this.OsPlafondAmt = this.PlafondAmt - totalInvoiceDF;
+          });
+      }
     })
   }
 
@@ -164,22 +190,40 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
       this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
       this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
-    const request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId, IsDF: true };
 
-    this.httpClient.post(URLConstantX.EditAppTcX, request).subscribe(() => {
+    this.ReturnHandlingHData.AppId = this.AppId;
+    this.ReturnHandlingHData.WfTaskListId = this.WfTaskListId;
+
+    if (this.IsReturnOn) {
+      this.ReturnHandlingHData.ReturnBy = this.Username;
+      this.ReturnHandlingHData.ReturnNotes = this.ReturnForm.controls.Notes.value;
+      this.ReturnHandlingHData.ReturnFromTrxType = CommonConstant.VerfTrxTypeCodeInvoice;
+    }
+
+    const request = {
+      Invoices: this.listInvoice,
+      TaskListId: this.WfTaskListId,
+      IsDF: true,
+      IsReturn: this.IsReturnOn,
+      ReturnHandlingHObj: this.ReturnHandlingHData,
+      AppId: this.AppId
+    };
+
+    this.httpClient.post(URLConstantX.UpdateAppInvoiceDlfnX, request).subscribe(() => {
       this.outputTab.emit();
     });
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId;
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
+  claimTask() {
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
+
   Calculate(i) {
     var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
     var item = fa_listInvoice.at(i);
@@ -195,5 +239,24 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
+  }
+
+  switchForm() {
+    if (this.IsReturnOn) {
+      this.ReturnForm.reset();
+      this.IsReturnOn = false;
+    } else {
+      this.ReturnForm.patchValue({
+        Reason:''
+      });
+      this.IsReturnOn = true;
+    }
+    this.ReturnForm.updateValueAndValidity();
+  }
+
+  onChangeReason(ev) {
+    this.ReturnForm.patchValue({
+      ReasonDesc: ev.target.selectedOptions[0].text
+    });
   }
 }

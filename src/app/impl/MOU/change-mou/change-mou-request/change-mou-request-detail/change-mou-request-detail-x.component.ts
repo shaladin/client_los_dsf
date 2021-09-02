@@ -14,6 +14,8 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CookieService } from "ngx-cookie";
+import { ClaimTaskService } from "app/shared/claimTask.service";
+import { environment } from "environments/environment";
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import {CommonConstantX} from '../../../../shared/constant/CommonConstantX';
 
@@ -24,7 +26,7 @@ import {CommonConstantX} from '../../../../shared/constant/CommonConstantX';
 })
 export class ChangeMouRequestDetailXComponent implements OnInit {
   mouType: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLookupCust: InputLookupObj;
   pageType: string = "edit";
   mouCustId: number;
@@ -80,7 +82,8 @@ export class ChangeMouRequestDetailXComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: NGXToastrService,
     private http: HttpClient,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["mode"] != null) {
@@ -280,7 +283,7 @@ export class ChangeMouRequestDetailXComponent implements OnInit {
 
             if (response["ChangeMouStat"] == CommonConstant.ChangeMouNew || response["ChangeMouStat"] == CommonConstant.ChangeMouReturn) {
               this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
-            }
+            }    
           }
 
           this.responseChangeMouObj = response;
@@ -288,8 +291,8 @@ export class ChangeMouRequestDetailXComponent implements OnInit {
           this.GetRefmasterData();
         });
       }
-    }
-    else
+    } 
+    else 
     {
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: this.mouType,
@@ -306,13 +309,16 @@ export class ChangeMouRequestDetailXComponent implements OnInit {
 
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe();
+    if (environment.isCore) {
+      if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }
+    else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
-
+  
   GetRefmasterData(){
     if(this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value === "-"){
       this.revolvingName = "-";

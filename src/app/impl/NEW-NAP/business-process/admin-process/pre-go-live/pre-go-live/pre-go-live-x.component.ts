@@ -7,6 +7,7 @@ import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { PreGoLiveMainObj } from 'app/shared/model/PreGoLiveMainObj.Model';
+import { PreGoLiveObjX } from 'app/impl/shared/model/PreGoLiveObjX.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -15,7 +16,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { forkJoin } from 'rxjs'; 
+import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
@@ -30,9 +31,8 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import { PreGoLiveObjX } from 'app/impl/shared/model/PreGoLiveObjX.Model';
-import {RefPayFreqObj} from 'app/shared/model/RefPayFreqObj.model';
-import {AppObj} from 'app/shared/model/App/App.Model';
+import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-x',
@@ -46,7 +46,7 @@ export class PreGoLiveXComponent implements OnInit {
   AgrmntResult: AgrmntObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   appTC: AppTCObj;
-  TaskListId: number;
+  TaskListId: any;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObjX = new PreGoLiveObjX();
   AgrmntObj: AgrmntObj = new AgrmntObj();
@@ -61,25 +61,22 @@ export class PreGoLiveXComponent implements OnInit {
     EffectiveDt: ['', Validators.required],
     Notes: ['', Validators.required],
     ApprovalStatus: [''],
-    AdditionalInterestPaidBy: ['',Validators.required],
-    AddIntrstAmt:[0],
+    AdditionalInterestPaidBy: ['', Validators.required],
+    AddIntrstAmt: [0],
     GoLiveEstimated: [''],
   })
 
-  GoLiveApvForm = this.fb.group({
-  })
+  GoLiveApvForm = this.fb.group({})
   listAppTCObj: ListAppTCObj;
   ListAppTCObj: ListAppTCObj;
 
-  count1: number = 0;
   ListRfaLogObj: Array<RfaObj>;
   hasApproveFinal: boolean = false;
-  hasRejectFinal: boolean = false;
   isHasPO: boolean = false;
   checkPOReady: boolean = false;
   lengthListRfaLogObj: number;
   IsApvReady: boolean = false;
-  isDmsReady: boolean;
+  isDmsReady: boolean = false;
   dmsObj: DMSObj;
   agrNo: string;
   custNo: string;
@@ -87,34 +84,35 @@ export class PreGoLiveXComponent implements OnInit {
   dmsAppObj: DMSObj;
   mouCustNo: string;
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
-  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   IsGSAddInerestExists: boolean = false;
   ListRmAddInterestPaidByCode: Array<KeyValueObj>;
-  BizTemplateCode: string = "";
+  BizTemplateCode: string = '';
   businessDt: any;
   PODt: Date = new Date();
   MaxEffDt: Date;
   AppObj: AppObj;
   IsNeedApv: boolean = false;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
+
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
-      this.AgrmntId = params["AgrmntId"];
-      this.AppId = params["AppId"];
-      this.TaskListId = params["TaskListId"];
-      this.AgrmntNo = params["AgrmntNo"];
+      this.AgrmntId = params['AgrmntId'];
+      this.AppId = params['AppId'];
+      this.TaskListId = params['TaskListId'];
+      this.AgrmntNo = params['AgrmntNo'];
 
       this.route.queryParams.subscribe(params => {
-        if (params["BizTemplateCode"] != null) {
-          localStorage.setItem("BizTemplateCode", params["BizTemplateCode"]);
-          this.BizTemplateCode = params["BizTemplateCode"];
+        if (params['BizTemplateCode'] != null) {
+          localStorage.setItem('BizTemplateCode', params['BizTemplateCode']);
+          this.BizTemplateCode = params['BizTemplateCode'];
         }
 
       });
     });
   }
 
-  async ngOnInit(): Promise<void>{
+  async ngOnInit(): Promise<void> {
     this.businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     this.MainInfoForm.patchValue({
       GoLiveEstimated: formatDate(this.businessDt, 'yyyy-MM-dd', 'en-US'),
@@ -124,15 +122,15 @@ export class PreGoLiveXComponent implements OnInit {
     reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive;
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, reqGetRfaLogByTrxNoAndApvCategoryObj).subscribe(
       (response) => {
-        this.ListRfaLogObj = response["ListRfaLogObj"];
+        this.ListRfaLogObj = response['ListRfaLogObj'];
         this.lengthListRfaLogObj = this.ListRfaLogObj.length - 1;
         this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
         this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
-        this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
+        this.InputApprovalHistoryObj.PathUrl = '/Approval/GetTaskHistory';
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
-          if (this.ListRfaLogObj[i]["ApvCategory"] == CommonConstant.ApvCategoryPreGoLive) {
+          if (this.ListRfaLogObj[i]['ApvCategory'] == CommonConstant.ApvCategoryPreGoLive) {
             this.InputApprovalHistoryObj.RequestId = this.ListRfaLogObj[i].RfaNo
-            if (this.ListRfaLogObj[i].ApvStat == "ApproveFinal") {
+            if (this.ListRfaLogObj[i].ApvStat == 'ApproveFinal') {
               this.IsCheckedAll = true;
               this.hasApproveFinal = true;
             }
@@ -140,8 +138,8 @@ export class PreGoLiveXComponent implements OnInit {
         }
         this.IsApvReady = true;
       });
-    this.claimTaskService.ClaimTask(this.TaskListId);
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    this.claimTask();
+    this.viewGenericObj.viewInput = './assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json';
 
     const agrmntObj = {
       Id: this.AgrmntId
@@ -156,35 +154,71 @@ export class PreGoLiveXComponent implements OnInit {
         this.AgrmntId = this.AgrmntResult.AgrmntId;
         this.AppId = this.AgrmntResult.AppId;
       });
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+
+    const agrObj = {Id: this.AgrmntId};
+    const appObj = {Id: this.AppId};
+    const sysConfigCodeObj = {Code: CommonConstant.ConfigCodeIsUseDms};
+
+    const getAgr = this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
+    const getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    const getApp = this.http.post<AppObj>(URLConstant.GetAppById, appObj)
+    const getSysConfigResult = this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, sysConfigCodeObj);
+    await forkJoin([getAgr, getAppCust, getApp, getSysConfigResult]).toPromise().then(
       (response) => {
-        this.SysConfigResultObj = response
-      });
+        this.agrNo = response[0]['AgrmntNo'];
+        this.custNo = response[1]['CustNo'];
+        this.AppObj = response[2];
+        this.SysConfigResultObj = response[3];
+
+        this.appNo = this.AppObj.AppNo;
+        const mouId = this.AppObj.MouCustId;
+        this.http.post(URLConstant.GetMouCustById, {Id: mouId}).subscribe(
+          async (result: MouCustObj) => {
+            this.mouCustNo = result.MouCustNo;
+            const endDt = new Date(result.EndDt);
+            this.MaxEffDt = new Date(result.EndDt);
+            let Tenor = this.AgrmntResult.Tenor;
+            if (this.AppObj.MrFirstInstTypeCode == CommonConstant.FirstInstTypeAdvance) {
+              await this.http.post<RefPayFreqObj>(URLConstant.GetRefPayFreqByPayFreqCode, {Code: this.AppObj.PayFreqCode}).toPromise().then(
+                (response) => {
+                  Tenor -= response.PayFreqVal;
+                }
+              );
+            }
+
+            this.MaxEffDt.setMonth(endDt.getMonth() - Tenor)
+            if (this.MaxEffDt.getDate() != endDt.getDate()) { //untuk perhitungan bulan kabisat / tgl 31 ke tgl 30
+              this.MaxEffDt.setDate(0);
+            }
+
+          }
+        )
+      }
+    );
     await this.getPODate();
     await this.getAddInterestPaidBy();
     await this.InitDms();
     await this.LoadRefReason();
-    if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.DF){
+    if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.DF) {
       this.IsNeedApv = true;
       await this.initInputApprovalObj();
     }
   }
 
-  async getPODate(){
+  async getPODate() {
     this.ReqByIdObj.Id = this.AgrmntId;
     this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, this.ReqByIdObj).subscribe(
       (response: AgrmntObj) => {
-        if(response["PurchaseOrderHId"] != 0){
-          this.PODt = response["PurchaseOrderDt"];
+        if (response['PurchaseOrderHId'] != 0) {
+          this.PODt = response['PurchaseOrderDt'];
           this.isHasPO = true;
         }
       });
     this.checkPOReady = true;
   }
 
-  async InitDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
-      this.isDmsReady = false;
+  async InitDms() { 
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.dmsObj = new DMSObj();
       this.dmsAppObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -196,95 +230,54 @@ export class PreGoLiveXComponent implements OnInit {
       this.dmsAppObj.Role = currentUserContext.RoleCode;
       this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
-      const agrObj = { Id: this.AgrmntId };
-      const appObj = { Id: this.AppId };
+      if (this.custNo != '') {
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+      } else {
+        this.dmsAppObj.MetadataParent = null;
+      }
+      this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+      this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
 
-      let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
-      let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-      let getApp = await this.http.post<AppObj>(URLConstant.GetAppById, appObj)
-      forkJoin([getAgr, getAppCust, getApp]).subscribe(
-        (response) => {
-          this.agrNo = response[0]['AgrmntNo'];
-          this.custNo = response[1]['CustNo'];
-          this.AppObj = response[2];
-          this.appNo = this.AppObj.AppNo;
-          const mouId = this.AppObj.MouCustId;
+      this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
 
-          if (this.custNo != null && this.custNo != '') {
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-            this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-          }
-          else {
-            this.dmsAppObj.MetadataParent = null;
-          }
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+      this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
 
-          this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-          if (mouId != null && mouId != 0) {
-            this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
-              async (result: MouCustObj) => {
-                this.mouCustNo = result.MouCustNo;
-                this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
-                this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
-                this.isDmsReady = true;
-
-
-                this.MaxEffDt = new Date(result.EndDt.getTime());
-                let Tenor = this.AgrmntResult.Tenor;
-                if(this.AppObj.MrFirstInstTypeCode == CommonConstant.FirstInstTypeAdvance){
-                  await this.http.post<RefPayFreqObj>(URLConstant.GetRefPayFreqByPayFreqCode, { Code: this.AppObj.PayFreqCode }).toPromise().then(
-                    (response)=>{
-                      Tenor -= response.PayFreqVal;
-                    }
-                  );
-                }
-
-                this.MaxEffDt.setMonth(result.EndDt.getMonth() - Tenor)
-                if (this.MaxEffDt.getDate() != result.EndDt.getDate()) { //untuk perhitungan bulan kabisat / tgl 31 ke tgl 30
-                  this.MaxEffDt.setDate(0);
-                }
-
-              }
-            )
-          }
-          else {
-            this.isDmsReady = true;
-          }
-        }
-      );
+      if (this.AppObj.MouCustId == 0) {
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+        this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+      }
+      this.isDmsReady = true;
     }
   }
 
 
   GetCallBack(ev) {
-    if (ev.Key == "ViewProdOffering") {
+    if (ev.Key == 'ViewProdOffering') {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 
   ReceiveIsChecked(ev) {
     if (this.ListRfaLogObj.length != 0) {
-      if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == "RejectFinal") {
+      if (this.ListRfaLogObj[this.lengthListRfaLogObj].ApvStat == 'RejectFinal') {
         this.IsCheckedAll = false;
         return;
       }
     }
     if (this.hasApproveFinal) {
       return;
-    }
-    else {
+    } else {
       this.IsCheckedAll = ev;
     }
   }
 
   RFA() {
-    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    const businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     this.ListAppTCObj = new ListAppTCObj();
-    this.ListAppTCObj["ListAppTcObj"] = new Array();
-    for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
+    let ListAppTcObj = [];
+
+    for (let i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
       this.appTC = new AppTCObj();
       this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
       this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
@@ -300,22 +293,33 @@ export class PreGoLiveXComponent implements OnInit {
       this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
       this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
 
-      var prmsDt = new Date(this.appTC.PromisedDt);
-      var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
+      let prmsDt = new Date(this.appTC.PromisedDt);
+      let prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
 
       if (this.appTC.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
-            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage('Promise Date for ' + this.appTC.TcName + ' can\'t be lower than Business Date');
             return;
           }
         }
       }
-      this.ListAppTCObj["ListAppTcObj"].push(this.appTC);
+      ListAppTcObj.push(this.appTC);
     }
-    this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
+    this.ListAppTCObj['ListAppTcObj'] = ListAppTcObj;
+
+    const reqObj = {
+      AppId: this.AppId,
+      ListAppTcObj: ListAppTcObj
+    }
+    this.http.post(URLConstantX.EditAppTcX, reqObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_REQ_APPRVL],{ "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_REQ_APPRVL], {
+          'AgrmntId': this.AgrmntId,
+          'AppId': this.AppId,
+          'AgrmntNo': this.AgrmntNo,
+          'TaskListId': this.TaskListId
+        });
         this.toastr.successMessage(response['message']);
 
       });
@@ -323,19 +327,20 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   SaveForm(flag = true) {
+    const effDate = new Date(this.MainInfoForm.controls.EffectiveDt.value);
 
-    if(this.MainInfoForm.controls.EffectiveDt.value > this.MaxEffDt){
-      this.toastr.warningMessage("Maturity Date must be lower than MOU Expired Date");
+    if (effDate.getTime() > this.MaxEffDt.getTime()) {
+      this.toastr.warningMessage('Maturity Date must be lower than MOU Expired Date');
       return;
     }
 
-    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
 
     this.listAppTCObj = new ListAppTCObj();
-    this.listAppTCObj.AppTCObj = new Array();
+    this.listAppTCObj.AppTCObj = [];
 
     if (this.BizTemplateCode != CommonConstant.DF) {
-      for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
+      for (let i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
         this.appTC = new AppTCObj();
         this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
         this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
@@ -351,13 +356,13 @@ export class PreGoLiveXComponent implements OnInit {
         this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
         this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
 
-        var prmsDt = new Date(this.appTC.PromisedDt);
-        var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
+        let prmsDt = new Date(this.appTC.PromisedDt);
+        let prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
 
         if (this.appTC.IsChecked == false) {
           if (prmsDtForm != null) {
             if (prmsDt < businessDt) {
-              this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+              this.toastr.warningMessage('Promise Date for ' + this.appTC.TcName + ' can\'t be lower than Business Date');
               return;
             }
           }
@@ -385,22 +390,23 @@ export class PreGoLiveXComponent implements OnInit {
     this.PreGoLiveObj.AdditionalInterestPaidBy = this.MainInfoForm.controls.AdditionalInterestPaidBy.value;
     this.PreGoLiveObj.TaskListId = this.TaskListId;
     this.PreGoLiveObj.FlagResume = flag;
-    if(this.IsNeedApv){
+    if (this.IsNeedApv) {
       this.PreGoLiveObj.IsNeedApv = true;
       this.PreGoLiveObj.FlagResume = flag;
-      let RFAInfoGoLive = {RFAInfo: this.GoLiveApvForm.controls.RFAInfo.value};
-      this.PreGoLiveObj.RequestRFAGoLiveObj = RFAInfoGoLive;
-      if(this.isNeedEndDateApv){
-        let RFAInfoEndDate = {RFAInfo: this.MainInfoForm.controls.RFAInfo.value};
-        this.PreGoLiveObj.RequestRFAEndDateObj = RFAInfoEndDate;
+      this.PreGoLiveObj.RequestRFAGoLiveObj = {RFAInfo: this.GoLiveApvForm.controls.RFAInfo.value};
+      if (this.isNeedEndDateApv) {
+        this.PreGoLiveObj.RequestRFAEndDateObj = {RFAInfo: this.MainInfoForm.controls.RFAInfo.value};
         this.PreGoLiveObj.IsNeedEndDateApv = true;
       }
     }
 
     console.log(this.PreGoLiveObj);
-    this.http.post(URLConstantX.AddPreGoLiveX, this.PreGoLiveObj).subscribe(
+
+    let AddPreGoLiveXUrl = environment.isCore ? URLConstantX.AddPreGoLiveXV2 : URLConstantX.AddPreGoLiveX;
+
+    this.http.post(AddPreGoLiveXUrl, this.PreGoLiveObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[this.CancelLink],{});
+        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], {});
         this.toastr.successMessage(response['message']);
 
       });
@@ -408,20 +414,24 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   async getAddInterestPaidBy() {
-    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsDiffdaysglveff }).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GsDiffdaysglveff}).toPromise().then(
       (response) => {
-        if (response["GsValue"]) this.IsGSAddInerestExists = true;
+        if (response['GsValue']) {
+          this.IsGSAddInerestExists = true;
+        }
       }
     );
-    if (!this.IsGSAddInerestExists) return;
+    if (!this.IsGSAddInerestExists) {
+      return;
+    }
 
 
     this.MainInfoForm.controls['AdditionalInterestPaidBy'].setValidators([Validators.required]);
     this.MainInfoForm.controls['AdditionalInterestPaidBy'].updateValueAndValidity();
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAdditionalInterestPaidBy }).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAdditionalInterestPaidBy}).toPromise().then(
       (response) => {
         this.ListRmAddInterestPaidByCode = response[CommonConstant.ReturnObj];
-        if(this.BizTemplateCode === CommonConstant.CFNA){
+        if (this.BizTemplateCode === CommonConstant.CFNA) {
           this.MainInfoForm.patchValue({
             AdditionalInterestPaidBy: CommonConstantX.AdditionalInterestPaidByCustomer
           });
@@ -431,27 +441,38 @@ export class PreGoLiveXComponent implements OnInit {
     );
   }
 
-  calculateAddInterest(){
-    var diffDays = 0;
-    var diffTimes = new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime()- new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime();
-    if(diffTimes>0){
-      diffDays = diffTimes / (1000*3600*24)
+  claimTask(){
+    if(environment.isCore){
+        if(this.TaskListId != "" && this.TaskListId!= undefined){
+            this.claimTaskService.ClaimTaskV2(this.TaskListId);
+        }
+      }
+      else if (this.TaskListId > 0) {
+         this.claimTaskService.ClaimTask(this.TaskListId);
+      }
+  }
+
+  calculateAddInterest() {
+    let diffDays = 0;
+    let diffTimes = new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime() - new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime();
+    if (diffTimes > 0) {
+      diffDays = diffTimes / (1000 * 3600 * 24)
       console.log(diffDays);
 
-      this.http.post(URLConstantX.CalculateAdditionalInterestX, { AgrmntId: this.AgrmntId, DiffDays: diffDays }).subscribe(
+      this.http.post(URLConstantX.CalculateAdditionalInterestX, {AgrmntId: this.AgrmntId, DiffDays: diffDays}).subscribe(
         (response) => {
           this.MainInfoForm.patchValue({
-            AddIntrstAmt: response["Result"]
+            AddIntrstAmt: response['Result']
           });
         }
       );
-    }
-    else{
+    } else {
       this.MainInfoForm.patchValue({
         AddIntrstAmt: 0
       });
     }
   }
+
   //JD-LMS-001
   InputEndDateProdObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   InputGoLiveObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -460,49 +481,44 @@ export class PreGoLiveXComponent implements OnInit {
   itemReasonGoLive: Array<KeyValueObj>;
   isOk: boolean = true;
   isNeedEndDateApv: boolean = false;
+
   async initInputApprovalObj() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let obj = {
       ProdOfferingCode: this.AgrmntResult.ProdOfferingCode,
-      RefProdCompntCode: "",
+      RefProdCompntCode: '',
       ProdOfferingVersion: this.AgrmntResult.ProdOfferingVersion
     };
-    if(this.BizTemplateCode != CommonConstant.DF){
-      obj.RefProdCompntCode = "END_DATE_GO_LIVE_APV";
+    if (this.BizTemplateCode != CommonConstant.DF) {
+      obj.RefProdCompntCode = 'END_DATE_GO_LIVE_APV';
 
       await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
         (response) => {
-          if (response && response["StatusCode"] == "200") {
-            var LastDt = new Date(formatDate(response["CompntValue"], 'yyyy-MM-dd', 'en-US'));
-            var NowDt = new Date(formatDate(currentUserContext.BusinessDt, 'yyyy-MM-dd', 'en-US'));
-            if(NowDt<=LastDt){
+          if (response && response['StatusCode'] == '200') {
+            let LastDt = new Date(formatDate(response['CompntValue'], 'yyyy-MM-dd', 'en-US'));
+            let NowDt = new Date(formatDate(currentUserContext.BusinessDt, 'yyyy-MM-dd', 'en-US'));
+            if (NowDt <= LastDt) {
               this.isNeedEndDateApv = false;
-            }
-            else{
-              var AttributesEndDate = [{
-                AttributeName: "Last Go Live Approval Date",
-                AttributeValue: response["CompntValue"].toString()
-              }]
-              var AttributesEndDateEmpty = [{}]
-              var TypeEndDateCode = {
-                "TypeCode": "END_DATE_GO_LIVE_APV_TYPE",
-                "Attributes": AttributesEndDateEmpty,
+            } else {
+              let AttributesEndDateEmpty = [{}]
+              let TypeEndDateCode = {
+                'TypeCode': 'END_DATE_GO_LIVE_APV_TYPE',
+                'Attributes': AttributesEndDateEmpty,
               };
 
               this.InputEndDateProdObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
               this.InputEndDateProdObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
               this.InputEndDateProdObj.ApvTypecodes = [TypeEndDateCode];
-              this.InputEndDateProdObj.CategoryCode = "END_DATE_GO_LIVE_APV";
-              this.InputEndDateProdObj.SchemeCode = "END_DATE_GO_LIVE_APV_SCHM";
+              this.InputEndDateProdObj.CategoryCode = 'END_DATE_GO_LIVE_APV';
+              this.InputEndDateProdObj.SchemeCode = 'END_DATE_GO_LIVE_APV_SCHM';
               this.InputEndDateProdObj.TrxNo = this.AgrmntNo;
               this.InputEndDateProdObj.Reason = this.itemReasonEndDate;
 
               this.isNeedEndDateApv = true;
 
             }
-          }
-          else {
-            this.toastr.warningMessage("No Setting for Prod Offering Component END_DATE_GO_LIVE_APV");
+          } else {
+            this.toastr.warningMessage('No Setting for Prod Offering Component END_DATE_GO_LIVE_APV');
             this.isOk = false;
           }
         },
@@ -513,26 +529,25 @@ export class PreGoLiveXComponent implements OnInit {
     }
 
 
-    obj.RefProdCompntCode = "GO_LIVE_APV";
+    obj.RefProdCompntCode = 'GO_LIVE_APV';
 
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
       (response) => {
-        if (response && response["StatusCode"] == "200") {
-          var AttributesGoLive = [{}]
-          var TypeEnGoLiveDate = {
-            "TypeCode": "GO_LIVE_APV_TYPE",
-            "Attributes": AttributesGoLive,
+        if (response && response['StatusCode'] == '200') {
+          let AttributesGoLive = [{}]
+          let TypeEnGoLiveDate = {
+            'TypeCode': 'GO_LIVE_APV_TYPE',
+            'Attributes': AttributesGoLive,
           };
           this.InputGoLiveObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
           this.InputGoLiveObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
           this.InputGoLiveObj.ApvTypecodes = [TypeEnGoLiveDate];
-          this.InputGoLiveObj.CategoryCode = "GO_LIVE_APV";
-          this.InputGoLiveObj.SchemeCode = response["CompntValue"];
+          this.InputGoLiveObj.CategoryCode = 'GO_LIVE_APV';
+          this.InputGoLiveObj.SchemeCode = response['CompntValue'];
           this.InputGoLiveObj.Reason = this.itemReasonGoLive;
           this.InputGoLiveObj.TrxNo = this.AgrmntNo
-        }
-        else {
-          this.toastr.warningMessage("No Setting for Prod Offering Component GO_LIVE_APV");
+        } else {
+          this.toastr.warningMessage('No Setting for Prod Offering Component GO_LIVE_APV');
           this.isOk = false;
         }
       },
@@ -545,15 +560,15 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   async LoadRefReason() {
-    var refReasonObj: ReqGetByTypeCodeObj = {
-      RefReasonTypeCode: "END_DATE_GO_LIVE_APV"
+    let refReasonObj: ReqGetByTypeCodeObj = {
+      RefReasonTypeCode: 'END_DATE_GO_LIVE_APV'
     }
     await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(
       (response) => {
         this.itemReasonEndDate = response[CommonConstant.ReturnObj];
       }
     );
-    refReasonObj.RefReasonTypeCode = "GO_LIVE_APV"
+    refReasonObj.RefReasonTypeCode = 'GO_LIVE_APV'
 
     await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(
       (response) => {
@@ -562,7 +577,7 @@ export class PreGoLiveXComponent implements OnInit {
     );
   }
 
-  consoleLog(){
+  consoleLog() {
     console.log(this.MainInfoForm);
   }
 }

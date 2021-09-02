@@ -20,9 +20,12 @@ import { CookieService } from "ngx-cookie";
 export class ChangeMouExecutionDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   businessDt: Date;
-  MouCustId: number;
+  MouCustId: number = 0;
   WfTaskListId: number;
   TrxNo : number;
+  TrxType: string;
+  MouType: string = "";
+  ChangeMouTrxId: number = 0;
 
   ChangeMouExecutionForm = this.fb.group({
     MouCustId: [''],
@@ -53,18 +56,23 @@ export class ChangeMouExecutionDetailComponent implements OnInit {
       if (params['TrxNo'] != null) {
         this.TrxNo = params['TrxNo'];
       }
+      if (params['TrxType'] != null) {
+        this.TrxType = params["TrxType"];
+      }
+      if (params['ChangeMouTrxId'] != null) {
+        this.ChangeMouTrxId = params["ChangeMouTrxId"];
+      }
     });
   }
 
   ngOnInit() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
 
-      var datePipe = new DatePipe("en-US");
-      var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      let datePipe = new DatePipe("en-US");
       if (currentUserContext != null && currentUserContext != undefined) {
         this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
         this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -72,6 +80,7 @@ export class ChangeMouExecutionDetailComponent implements OnInit {
 
       this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
         (response) => {
+          this.MouType = response["MrMouTypeCode"];
           if (response["MouCustDt"] != null) {
             response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
           }
@@ -105,7 +114,7 @@ export class ChangeMouExecutionDetailComponent implements OnInit {
 }
 
   SaveForm() {
-    var request = this.ChangeMouExecutionForm.value;
+    let request = this.ChangeMouExecutionForm.value;
     this.httpClient.post(URLConstant.ChangeMouExecutionHumanActivity, request).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);

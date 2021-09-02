@@ -298,7 +298,7 @@ export class CustMainDataAddXComponent implements OnInit {
       reqAddNapObj.BizTemplateCode = this.bizTemplateCode;
 
       requestAddNapObj = reqAddNapObj;
-      AddNapUrl = URLConstantX.AddNewApplication;
+      AddNapUrl = URLConstantX.AddNewApplicationV2;
     }
     else {
 
@@ -312,7 +312,7 @@ export class CustMainDataAddXComponent implements OnInit {
         AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
       }
       else {
-        AddNapUrl = URLConstantX.AddNewApplicationFromCopy;
+        AddNapUrl = URLConstantX.AddNewApplicationFromCopyV2;
       }
     }
 

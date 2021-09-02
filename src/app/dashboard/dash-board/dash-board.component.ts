@@ -5,8 +5,9 @@ import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { ThingsToDoIntegrationObj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
+import { ThingsToDoIntegrationObj, ThingsToDoIntegrationV2Obj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;
@@ -36,13 +37,25 @@ export class DashBoardComponent implements OnInit {
     this.url = environment.DashboardURL;
     this.officeCode = context[CommonConstant.OFFICE_CODE];
     this.roleCode = context[CommonConstant.ROLE_CODE];
-    this.Item.Url = AdInsConstant.GetThingsToDoByRole;
+    this.Item.Url = environment.isCore ? AdInsConstant.GetThingsToDoByRoleV2 : AdInsConstant.GetThingsToDoByRole;
     this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
 
-    let integrationObj = new ThingsToDoIntegrationObj();
-    integrationObj.RequestObj.Office = this.officeCode;
-    integrationObj.RequestObj.Role = this.roleCode;
-    integrationObj.RequestObj.UserName = this.username;
+    let integrationObj;
+
+    if(environment.isCore){
+      integrationObj = new ThingsToDoIntegrationV2Obj();
+      integrationObj.BaseUrl = AdInsConstant.GetThingsToDoCamunda;
+      integrationObj.ApiPath = "";
+      integrationObj.RequestObj.OfficeCode = this.officeCode;
+      integrationObj.RequestObj.UserName = this.username;
+      integrationObj.RequestObj.OfficeRoleCodes = [this.roleCode, this.roleCode + "-" + this.officeCode, this.officeCode];
+    }else{
+      integrationObj = new ThingsToDoIntegrationObj();
+      integrationObj.RequestObj.Office = this.officeCode;
+      integrationObj.RequestObj.Role = this.roleCode;
+      integrationObj.RequestObj.UserName = this.username;
+      
+    }
     this.Item.RequestObj.IntegrationObj.push(integrationObj);
   }
 }

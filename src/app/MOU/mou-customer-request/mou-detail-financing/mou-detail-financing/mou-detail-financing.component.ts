@@ -93,6 +93,7 @@ export class MouDetailFinancingComponent implements OnInit {
     MaximumExtendTimes: [0, [Validators.required]]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,

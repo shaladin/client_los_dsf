@@ -7,3 +7,11 @@ export class ReqGetListAppCustAttrContentObj {
         this.AttrCodes = new Array();
     }
 }
+export class ReqGetListAppCustAttr2ContentObj {
+    AppCustId: number;
+    AttrGroups: Array<string>;
+
+    constructor() {
+        this.AttrGroups = new Array();
+    }
+}

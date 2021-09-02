@@ -72,7 +72,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
-    SharePrcnt: [0, [Validators.min(0), Validators.max(100), Validators.pattern("^[0-9]+$")]],
+    SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     IsOwner: [false],
@@ -82,7 +82,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     IsGuarantor: [false]
   });
 
-
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -134,7 +134,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     var totalPrcnt = 0;
 
     for (let i = 0; i < this.listShareholder.length; i++) {
-      if (currentEditedIndex == -1 || currentEditedIndex != i) {
+      if (this.listShareholder[i].IsActive && (currentEditedIndex == -1 || currentEditedIndex != i)) {
         totalPrcnt += this.listShareholder[i].SharePrcnt;
       }
     }
@@ -260,13 +260,6 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.selectedCustNo = this.listShareholder[i].CustNo;
     this.setValidator(this.listShareholder[i].MrCustTypeCode);
     this.open(content);
-  }
-
-  delete(i) {
-    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.listShareholder.splice(i, 1);
-      this.callbackSubmit.emit(this.listShareholder);
-    }
   }
 
   clearForm() {

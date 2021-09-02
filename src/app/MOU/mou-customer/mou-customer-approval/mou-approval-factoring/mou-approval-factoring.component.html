@@ -11,31 +11,41 @@
           </div>
         </div>
         <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
-        <div class="px-3">
+        <div>
           <mat-tab-group>
             <mat-tab label="MOU Detail">
               <ng-template matTabContent>
-                <app-mou-view-detail [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail>
+                <div class="px-3">
+                  <app-mou-view-detail [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Fee">
               <ng-template matTabContent>
-                <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>
+                <div class="px-3">
+                  <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Collateral">
               <ng-template matTabContent>
-                <app-mou-view-addcoll [MouCustId]="MouCustId"></app-mou-view-addcoll>
+                <div class="px-3">
+                  <app-mou-tab-view-addcoll [MouCustId]="MouCustId"></app-mou-tab-view-addcoll>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Term and Condition">
               <ng-template matTabContent>
-                <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
+                <div class="px-3">
+                  <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
               <ng-template matTabContent>
-                <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                <div class="px-3">
+                  <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                </div>
               </ng-template>
             </mat-tab>
             <!-- <mat-tab label="Survey">
@@ -45,12 +55,16 @@
             </mat-tab> -->
             <mat-tab label="Third Party Checking">
               <ng-template matTabContent>
-                <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
+                <div class="px-3">
+                  <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
+                </div>
               </ng-template>
             </mat-tab>
             <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
               <ng-template matTabContent>
-                <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                <div class="px-3">
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </div>
               </ng-template>
             </mat-tab>
           </mat-tab-group>

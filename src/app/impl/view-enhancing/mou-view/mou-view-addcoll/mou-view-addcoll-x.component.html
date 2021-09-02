@@ -11,7 +11,7 @@
           </th>
           <th><span style="float: left;" class="thead-header" name='MouCustName' translate>CURRENT OWNER NAME</span>
           </th>
-          <th><span style="float: center;" class="thead-header" name='CollStat' translate>COLLATERAL STATUS</span>
+          <th><span style="float: center;" class="thead-header" name='CollStat' translate>COLLATERAL USAGE</span>
           </th>
           <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
           </th>
@@ -25,6 +25,11 @@
           </th>
         </tr>
       </thead>
+      <tbody *ngIf="listCollateralData.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of listCollateralData; let i = index">
           <td>{{item.CollateralNo}}</td>
@@ -46,9 +51,12 @@
   </div>
 
   <div class="form-body" id="AddCollDetailData" *ngIf="isView">
-    <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
-      <i class="fa fa-check-square-o"></i> Back
-    </button>
+    <div class="ucSearch-Button-Right">
+      <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
+        <i class="fa fa-check-square-o"></i> Back
+      </button>
+    </div>    
+    <app-mou-view-addcoll-detail [MouCustCollateralId]="MouCustCollateralId"></app-mou-view-addcoll-detail>
 
     <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
     </lib-ucSubsection>
@@ -58,7 +66,7 @@
           <thead>
             <tr class="table-header">
               <th><span translate class="thead-header">Document</span></th>
-              <th><span translate class="thead-header">Recieved</span></th>
+              <th><span translate class="thead-header">Received</span></th>
               <th><span translate class="thead-header">Document No</span></th>
               <th><span translate class="thead-header">Expired Date</span></th>
               <th><span translate class="thead-header">Document Notes</span></th>
@@ -93,6 +101,10 @@
         <label class="col-md-4 adInsLabel" translate>{{CollateralStatObj.CollateralReceivedDt | date:'yyyy-MM-dd'}}</label>
         <label class="col-md-2 adInsLabel" translate> Release Date</label>
         <label class="col-md-4 adInsLabel" translate>{{CollateralStatObj.CollateralReleasedDt | date:'yyyy-MM-dd'}} </label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Collateral Status</label>
+        <label class="col-md-4 adInsLabel" translate>{{CollateralStatObj.CollateralStat}}</label>
       </div>
     </div>
 

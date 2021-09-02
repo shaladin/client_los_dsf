@@ -10,7 +10,7 @@
       "datatype": "text",
       "isFromURL": true,
       "ddlType": "one",
-      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/v1/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "path": "",
       "items": [],
       "itemsUrl": [],
@@ -26,19 +26,6 @@
       "label": "Claim By",
       "placeholder": "Placeholder",
       "paramAssignment": 1
-    },
-    {
-      "type": "dropdown",
-      "name": "PeriodMonth",
-      "id": "PeriodMonthId",
-      "value": "BD",
-      "placeholder": "Placeholder",
-      "isFromURL": false,
-      "dtmType": "year+-5",
-      "ddlType": "one",
-      "label": "period Month",
-      "items": [],
-      "itemsUrl": []
     }
   ],
   "exportTypeList": []
