@@ -6,9 +6,9 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-  losUrl: 'https://localhost:5001',
+  //losUrl: 'https://localhost:5001',
   // FoundationR3Url: 'http://localhost:5000',
-  //losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL',
+  losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL',
   FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_DSF_IMPL',
   DMSUrl: "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
   AMSUrl: "http://r3app-server.ad-ins.com/AMS_DEMO", //OPL dah ada
@@ -26,5 +26,5 @@ export const environment = {
   ChipperKeyLocalStorage: 'AdInsFOU2020OKOK', // 256 bit atau 16 karakter
   ChipperKeyCookie: 'AdInsFOU12345678', // 256 bit atau 16 karakter & harus sama dengan BE
   Module: 'LOS',
-  isCore: false
+  isCore: true
 };
