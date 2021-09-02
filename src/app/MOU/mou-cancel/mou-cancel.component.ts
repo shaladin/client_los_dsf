@@ -45,9 +45,9 @@ export class MouCancelComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true;
       
       this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
-      //this.RequestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
-      //this.RequestTaskModel.RoleCode = this.user[CommonConstant.ROLE_CODE];
-      this.RequestTaskModel.OfficeRoleCodes = [this.user[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [this.user[CommonConstant.ROLE_CODE],
+                                               this.user[CommonConstant.OFFICE_CODE],
+                                               this.user[CommonConstant.ROLE_CODE] + "-" + this.user[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
