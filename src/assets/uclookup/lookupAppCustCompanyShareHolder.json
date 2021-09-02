@@ -37,7 +37,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Cust Type",
+            "label": "Customer Type",
             "name": "RM2.DESCR"
         },
         {
