@@ -22,6 +22,7 @@ export class ViewAppScoreGradeDatarobotDsfComponent implements OnInit {
 
   AppNo: string;
   AppId: number;
+  MrCustTypeCode: string;
   AppScoreGradeDsrObj: AppScoreGradeDsrObj = new AppScoreGradeDsrObj();
   dataRobotInfoObj:  ThirdPartyDataRobotObj = new ThirdPartyDataRobotObj();
 
@@ -37,7 +38,9 @@ export class ViewAppScoreGradeDatarobotDsfComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.AppNo = response.AppNo;
+        this.MrCustTypeCode = response.MrCustTypeCode;
         this.dataRobotInfoObj.AppNo = this.AppNo;
+        this.dataRobotInfoObj.MrCustTypeCode = this.MrCustTypeCode;
         this.http.post<ThirdPartyDataRobotObj>(URLConstantDsf.GetCrdRvwDataRobot, this.dataRobotInfoObj).subscribe(
           (response) => {
             this.dataRobotInfoObj = response;
