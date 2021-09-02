@@ -1,16 +1,16 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormArray, FormGroup, Validators, NgForm, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ControlContainer, FormArray, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
 import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-form-commission-generate-x',
@@ -43,7 +43,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
   tempDDLContentName: Array<any>;
   lenDDLContentName: number = 0;
   totalDDLContentData: number = 0;
-
   initData() {
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     this.arr = this.parentForm.get(this.identifier) as FormArray;
@@ -53,10 +52,8 @@ export class FormCommissionGenerateXComponent implements OnInit {
   async ngOnInit() {
     this.initData();
     this.GenerateAuto();
-    
-    console.log(this.parentForm)
   }
-  
+
   GenerateAuto() {
     if (this.FormInputObj["isAutoGenerate"]) {
       let tempTotalData = this.lenDDLContentName;
@@ -205,8 +202,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
 
   SetRule(supplCode: string, formIdx: number, role: string) {
     var ruleObj = this.GetTempRuleObj(supplCode, role);
-    console.log(ruleObj)
-    console.log(this.DictMaxIncomeForm)
     var TotalCommisionAmount: number = 0;
     if(ruleObj.length > 0)
     {
@@ -255,8 +250,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
 
       this.UpdateInputType();
 
-      console.log(this.ListSupplEmpPos)
-
       if(this.identifier == CommonConstant.CommissionIdentifierSupplierEmp && this.SectionPosition)
       {
         for(var i=0;i<this.ListSupplEmpPos.length;i++)
@@ -273,7 +266,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
       }
     }
   
-    console.log(TotalCommisionAmount)
     // patch total
     this.parentForm.controls[this.identifier]["controls"][formIdx].patchValue({
       TotalCommisionAmount: TotalCommisionAmount
@@ -284,8 +276,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
     var tempObj;
     console.log("GetTempRuleObj: " + this.FormInputObj['content']);
     console.log(this.FormInputObj);
-    console.log(supplCode)
-    console.log(role)
     if (this.FormInputObj['content'] == CommonConstant.ContentSupplier) {
       console.log("Is Supplier Commission..");
       console.log(supplCode);
@@ -499,7 +489,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
     this.AddNewDataForm();
     let idxDDLContent = this.DDLContentName.findIndex(x => x.Key == appCommObj.CommissionRecipientRefNo);
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
-    console.log(indexFormObj)
     var obj;
     var code;
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
@@ -525,8 +514,10 @@ export class FormCommissionGenerateXComponent implements OnInit {
         ContentName: "",
         ContentNameValue: ""
       });
+
       return this.toastr.warningMessage("There no rule setting for " + code);
     }
+
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
       AppCommissionHId: appCommObj.AppCommissionHId,
       ContentName: this.DDLContentName[idxDDLContent].Key,
@@ -555,9 +546,8 @@ export class FormCommissionGenerateXComponent implements OnInit {
       });
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
-
-    
     var allocAmt = 0;
+  
     for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
       allocAmt += appCommObj.AppCommissionDs[i].CommissionAmt
     }
@@ -569,7 +559,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent, 1);
     this.ChangeAllocPercentageBasedOnAmt(indexFormObj);
-    console.log(this.parentForm)
   }
 
   ReCalcListAllocated(indexFormObj: number) {

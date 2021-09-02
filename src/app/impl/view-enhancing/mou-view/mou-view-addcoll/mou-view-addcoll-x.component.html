@@ -25,6 +25,11 @@
           </th>
         </tr>
       </thead>
+      <tbody *ngIf="listCollateralData.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of listCollateralData; let i = index">
           <td>{{item.CollateralNo}}</td>
@@ -46,9 +51,12 @@
   </div>
 
   <div class="form-body" id="AddCollDetailData" *ngIf="isView">
-    <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
-      <i class="fa fa-check-square-o"></i> Back
-    </button>
+    <div class="ucSearch-Button-Right">
+      <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
+        <i class="fa fa-check-square-o"></i> Back
+      </button>
+    </div>    
+    <app-mou-view-addcoll-detail [MouCustCollateralId]="MouCustCollateralId"></app-mou-view-addcoll-detail>
 
     <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
     </lib-ucSubsection>
