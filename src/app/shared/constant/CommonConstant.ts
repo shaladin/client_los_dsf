@@ -25,6 +25,10 @@ export class CommonConstant {
   public static MOU_FRZ_REQ = 'REQ';
   public static MOU_FRZ_APV = 'APV';
 
+  // PercentageAmt
+  public static InputTypeAmt = 'AMT';
+  public static InputTypePrcnt = 'PRCNT';
+
   // REF CHANGE ITEM STAT
   public static ChangeItemCodeAssetDataSerialNo1 = 'ASSET_DATA_SERIAL_NO_1';
   public static ChangeItemCodeAssetDataSerialNo2 = 'ASSET_DATA_SERIAL_NO_2';
