@@ -13,20 +13,27 @@ import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-execution-detail-x',
   templateUrl: './mou-execution-detail-x.component.html',
 })
 export class MouExecutionDetailXComponent implements OnInit {
-  //viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   businessDt: Date;
-  MouCustId: number;
-  WfTaskListId: number;
+  MouCustId: number = 0;
+  WfTaskListId: any;
+  MouType: string = "";
+  MrCustTypeCode: string = "";
   businessDtYesterday: Date;
   StartDt: Date;
   EndDt: Date;
   MouCustDt: Date;
+  dmsObj: DMSObj = new DMSObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   MouExecutionForm = this.fb.group({
     MouCustId: [''],
@@ -36,7 +43,7 @@ export class MouExecutionDetailXComponent implements OnInit {
     EndDt: ['', [Validators.required]]
   });
   datePipe = new DatePipe("en-US");
-  resultData: MouCustObj;
+  resultData: MouCustObj = new MouCustObj();
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -55,12 +62,22 @@ export class MouExecutionDetailXComponent implements OnInit {
     });
   }
 
+  readonly MouTypeGeneral: string = CommonConstant.GENERAL;
+  isReady: boolean = false;
+
   async ngOnInit() {
+    await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
+
     const currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     const wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
+
+    let datePipe = new DatePipe("en-US");
 
     if (currentUserContext != null && currentUserContext != undefined) {
       this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
@@ -70,6 +87,8 @@ export class MouExecutionDetailXComponent implements OnInit {
 
     await this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: any) => {
+        this.MouType = response["MrMouTypeCode"];
+        this.MrCustTypeCode = response.MrCustTypeCode;
         this.resultData = response;
 
         const datePipe = new DatePipe("en-US");
@@ -84,15 +103,23 @@ export class MouExecutionDetailXComponent implements OnInit {
           EndDt: response["EndDt"],
           MouCustDt: response["MouCustDt"]
         });
-
+        
+        if(this.SysConfigResultObj.ConfigValue == '1'){
+          this.dmsObj = new DMSObj();
+          this.dmsObj.User = currentUserContext.UserName;
+          this.dmsObj.Role = currentUserContext.RoleCode;
+          this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+          if (this.resultData['CustNo'] != null && this.resultData['CustNo'] != "") {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+          }
+          else {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
+          }
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        }
       });
-
-    // if(this.resultData['MrMouTypeCode']==CommonConstant.FACTORING){
-    //   this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewMouHeaderX.json";
-    // }else{
-    //   this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    // }
-
   }
 
   Back() {
@@ -100,10 +127,10 @@ export class MouExecutionDetailXComponent implements OnInit {
   }
 
   SaveForm() {
-    if((this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, "yyyy-MM-dd") < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") )){
-      this.toastr.warningMessage(ExceptionConstant.MOU_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+    if ((this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, "yyyy-MM-dd") < this.datePipe.transform(this.businessDt, "yyyy-MM-dd"))) {
+      this.toastr.warningMessage(ExceptionConstant.MOU_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
       return
-   }
+    }
     if (this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, "yyyy-MM-dd") < this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, "yyyy-MM-dd")) {
       this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, 'MMMM d, y'));
       return;
@@ -112,10 +139,12 @@ export class MouExecutionDetailXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, 'MMMM d, y'));
       return;
     }
-    var request = this.MouExecutionForm.value;
+    let request = this.MouExecutionForm.value;
 
     if (this.ValidateDate()) {
-      this.httpClient.post(URLConstantX.MouCustExecutionHumanActivityX, request).subscribe(
+      let mouCustExecutionHumanActivityUrl = environment.isCore ? URLConstant.MouCustExecutionHumanActivityV2 : URLConstantX.MouCustExecutionHumanActivityX;
+
+      this.httpClient.post(mouCustExecutionHumanActivityUrl, request).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
@@ -128,7 +157,7 @@ export class MouExecutionDetailXComponent implements OnInit {
     this.StartDt = new Date(this.MouExecutionForm.get("StartDt").value);
     this.EndDt = new Date(this.MouExecutionForm.get("EndDt").value);
 
-    if(this.MouCustDt < this.businessDtYesterday){
+    if (this.MouCustDt < this.businessDtYesterday) {
       this.toastr.warningMessage(ExceptionConstant.MOU_DT_MUST_GREATER_THAN_BUSINESS_DT);
       return false;
     }
@@ -158,14 +187,14 @@ export class MouExecutionDetailXComponent implements OnInit {
   }
 
   checkMouDate(ev) {
-    if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
-      this.toastr.warningMessage(ExceptionConstant.MOU_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
-   }
+    if (ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd")) {
+      this.toastr.warningMessage(ExceptionConstant.MOU_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+    }
   }
 
   GetCallBack(event) {
     if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData["CustNo"] };
+      let custObj = { CustNo: this.resultData["CustNo"] };
       this.httpClient.post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);

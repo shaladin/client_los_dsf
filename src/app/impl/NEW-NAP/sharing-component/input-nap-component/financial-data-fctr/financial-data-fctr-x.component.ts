@@ -97,8 +97,6 @@ export class FinancialDataFctrXComponent implements OnInit {
         MrProvisionFeeTypeCode: '',
         MrProvisionFeeCalcMethodCode: '',
         BalloonValueAmt: 0,
-        NeedReCalculate: true,
-
         MrInstTypeCode: "",
         InstTypeName: "",
         MrSingleInstCalcMthdCode: "",
@@ -127,6 +125,9 @@ export class FinancialDataFctrXComponent implements OnInit {
         BalloonBhv: '',
         MinDownPaymentNettPrcnt: 0,
         MaxDownPaymentNettPrcnt: 0,
+        NeedReCalculate: true,
+        IsReCalculate: false,
+        ExistingFinData: false
       }
     );
     await this.LoadMouCust();
@@ -185,7 +186,9 @@ export class FinancialDataFctrXComponent implements OnInit {
           SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
           AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
-          DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
+          DiffRateAmt: this.appFinDataObj.DiffRateAmt,
+          SubsidyAmtFromDiffRate: this.appFinDataObj.SubsidyAmtFromDiffRate,
+          CommissionAmtFromDiffRate: this.appFinDataObj.CommissionAmtFromDiffRate,
 
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
 
@@ -221,7 +224,8 @@ export class FinancialDataFctrXComponent implements OnInit {
           BalloonBhv: this.appFinDataObj.BalloonBhv,
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
-          InstAmt: this.appFinDataObj.InstAmt
+          InstAmt: this.appFinDataObj.InstAmt,
+          ExistingFinData: this.appFinDataObj.ExistingFinData
         });
 
         this.IsParentLoaded = true;
