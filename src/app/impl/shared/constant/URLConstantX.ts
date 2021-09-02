@@ -44,12 +44,15 @@ export class URLConstantX {
 
   // Cessie
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
+  public static UploadFileV2 = environment.FoundationR3Url + "/v2" + "/UploadX/UploadFileV2";
   public static AssignProduct = environment.losUrl + "/v1" + "/Cessie/AssignProduct";
   public static GetListAppForView = environment.losUrl + "/v1" + "/Cessie/GetListAppForView";
   public static SubmitReview = environment.losUrl + "/v1" + "/Cessie/SubmitReview";
+  public static SubmitReviewV2 = environment.losUrl + "/v2" + "/Cessie/SubmitReview";
   public static GetApvAmount = environment.losUrl + "/v1" + "/Cessie/GetApvAmount";
   public static GetListApp = environment.losUrl + "/v1" + "/Cessie/GetListApp";
   public static SubmitPreGoLiveCessie = environment.losUrl + "/v1" + "/Cessie/SubmitPreGoLive";
+  public static SubmitPreGoLiveCessieV2 = environment.losUrl + "/v2" + "/Cessie/SubmitPreGoLive";
   public static SubmitCancel = environment.losUrl + "/v1" + "/Cessie/SubmitCancel";
 
   //MOU CUST X

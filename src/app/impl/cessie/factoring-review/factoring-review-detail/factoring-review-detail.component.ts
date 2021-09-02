@@ -30,7 +30,7 @@ export class FactoringReviewDetailComponent implements OnInit {
     CustId: number;
     selectedBankCode: any;
     IsGridReady: boolean = false;
-    WfTaskListId: number;
+    WfTaskListId: any;
     InputLookupBankObj: InputLookupObj = new InputLookupObj();
     constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,
         private httpClient: HttpClient, private toastr: NGXToastrService, private spinner: NgxSpinnerService, private cookieService: CookieService) {
@@ -162,7 +162,7 @@ export class FactoringReviewDetailComponent implements OnInit {
             CessieHXId: this.CessieHXId,
             WfTaskListId: this.WfTaskListId
         }
-        this.httpClient.post(URLConstantX.SubmitReview, ObjDisbInfo).subscribe(
+        this.httpClient.post(URLConstantX.SubmitReviewV2, ObjDisbInfo).subscribe(
             (response) => {
                 this.toastr.successMessage(response["message"]);
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_FACTORING_REVIEW_PAGING], {});
