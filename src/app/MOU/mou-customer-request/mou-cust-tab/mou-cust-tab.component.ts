@@ -37,6 +37,7 @@ import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
+import { CustAddrObj } from 'app/shared/model/CustAddrObj.Model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -1343,122 +1344,131 @@ export class MouCustTabComponent implements OnInit {
   }
 
   copyAddrFromLookup(event) {
-    if (event["CustAddrLegalObj"] != undefined) {
-      this.legalAddrObj.Addr = event["CustAddrLegalObj"].Addr;
-      this.legalAddrObj.AreaCode1 = event["CustAddrLegalObj"].AreaCode1;
-      this.legalAddrObj.AreaCode2 = event["CustAddrLegalObj"].AreaCode2;
-      this.legalAddrObj.AreaCode3 = event["CustAddrLegalObj"].AreaCode3;
-      this.legalAddrObj.AreaCode4 = event["CustAddrLegalObj"].AreaCode4;
-      this.legalAddrObj.City = event["CustAddrLegalObj"].City;
-      this.legalAddrObj.Fax = event["CustAddrLegalObj"].Fax;
-      this.legalAddrObj.FaxArea = event["CustAddrLegalObj"].FaxArea;
-      this.legalAddrObj.Phn1 = event["CustAddrLegalObj"].Phn1;
-      this.legalAddrObj.Phn2 = event["CustAddrLegalObj"].Phn2;
-      this.legalAddrObj.PhnArea1 = event["CustAddrLegalObj"].PhnArea1;
-      this.legalAddrObj.PhnArea2 = event["CustAddrLegalObj"].PhnArea2;
-      this.legalAddrObj.PhnExt1 = event["CustAddrLegalObj"].PhnExt1;
-      this.legalAddrObj.PhnExt2 = event["CustAddrLegalObj"].PhnExt2;
-      this.legalAddrObj.SubZipcode = event["CustAddrLegalObj"].SubZipcode;
+    var custAddrObjs: Array<CustAddrObj> = event["CustAddrObjs"];
+    var custAddrLegalObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
+    var custAddrResidenceObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence);
+    var custAddrMailingObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeMailing);
 
-      this.inputFieldLegalObj.inputLookupObj.nameSelect = event["CustAddrLegalObj"].Zipcode;
-      this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrLegalObj"].Zipcode };
+    if (custAddrLegalObj != undefined && custAddrLegalObj != null) {
+      this.legalAddrObj.Addr = custAddrLegalObj.Addr;
+      this.legalAddrObj.AreaCode1 = custAddrLegalObj.AreaCode1;
+      this.legalAddrObj.AreaCode2 = custAddrLegalObj.AreaCode2;
+      this.legalAddrObj.AreaCode3 = custAddrLegalObj.AreaCode3;
+      this.legalAddrObj.AreaCode4 = custAddrLegalObj.AreaCode4;
+      this.legalAddrObj.City = custAddrLegalObj.City;
+      this.legalAddrObj.Fax = custAddrLegalObj.Fax;
+      this.legalAddrObj.FaxArea = custAddrLegalObj.FaxArea;
+      this.legalAddrObj.Phn1 = custAddrLegalObj.Phn1;
+      this.legalAddrObj.Phn2 = custAddrLegalObj.Phn2;
+      this.legalAddrObj.PhnArea1 = custAddrLegalObj.PhnArea1;
+      this.legalAddrObj.PhnArea2 = custAddrLegalObj.PhnArea2;
+      this.legalAddrObj.PhnExt1 = custAddrLegalObj.PhnExt1;
+      this.legalAddrObj.PhnExt2 = custAddrLegalObj.PhnExt2;
+      this.legalAddrObj.SubZipcode = custAddrLegalObj.SubZipcode;
+
+      this.inputFieldLegalObj.inputLookupObj.nameSelect = custAddrLegalObj.Zipcode;
+      this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: custAddrLegalObj.Zipcode };
 
       this.inputAddrLegalPersonalObj.default = this.legalAddrObj;
       this.inputAddrLegalPersonalObj.inputField = this.inputFieldLegalObj;
     }
 
-    if (event["CustAddrResidenceObj"] != undefined) {
-      this.residenceAddrObj.Addr = event["CustAddrResidenceObj"].Addr;
-      this.residenceAddrObj.AreaCode1 = event["CustAddrResidenceObj"].AreaCode1;
-      this.residenceAddrObj.AreaCode2 = event["CustAddrResidenceObj"].AreaCode2;
-      this.residenceAddrObj.AreaCode3 = event["CustAddrResidenceObj"].AreaCode3;
-      this.residenceAddrObj.AreaCode4 = event["CustAddrResidenceObj"].AreaCode4;
-      this.residenceAddrObj.City = event["CustAddrResidenceObj"].City;
-      this.residenceAddrObj.Fax = event["CustAddrResidenceObj"].Fax;
-      this.residenceAddrObj.FaxArea = event["CustAddrResidenceObj"].FaxArea;
-      this.residenceAddrObj.Phn1 = event["CustAddrResidenceObj"].Phn1;
-      this.residenceAddrObj.Phn2 = event["CustAddrResidenceObj"].Phn2;
-      this.residenceAddrObj.PhnArea1 = event["CustAddrResidenceObj"].PhnArea1;
-      this.residenceAddrObj.PhnArea2 = event["CustAddrResidenceObj"].PhnArea2;
-      this.residenceAddrObj.PhnExt1 = event["CustAddrResidenceObj"].PhnExt1;
-      this.residenceAddrObj.PhnExt2 = event["CustAddrResidenceObj"].PhnExt2;
-      this.residenceAddrObj.SubZipcode = event["CustAddrResidenceObj"].SubZipcode;
+    if (custAddrResidenceObj != undefined && custAddrResidenceObj != null) {
+      this.residenceAddrObj.Addr = custAddrResidenceObj.Addr;
+      this.residenceAddrObj.AreaCode1 = custAddrResidenceObj.AreaCode1;
+      this.residenceAddrObj.AreaCode2 = custAddrResidenceObj.AreaCode2;
+      this.residenceAddrObj.AreaCode3 = custAddrResidenceObj.AreaCode3;
+      this.residenceAddrObj.AreaCode4 = custAddrResidenceObj.AreaCode4;
+      this.residenceAddrObj.City = custAddrResidenceObj.City;
+      this.residenceAddrObj.Fax = custAddrResidenceObj.Fax;
+      this.residenceAddrObj.FaxArea = custAddrResidenceObj.FaxArea;
+      this.residenceAddrObj.Phn1 = custAddrResidenceObj.Phn1;
+      this.residenceAddrObj.Phn2 = custAddrResidenceObj.Phn2;
+      this.residenceAddrObj.PhnArea1 = custAddrResidenceObj.PhnArea1;
+      this.residenceAddrObj.PhnArea2 = custAddrResidenceObj.PhnArea2;
+      this.residenceAddrObj.PhnExt1 = custAddrResidenceObj.PhnExt1;
+      this.residenceAddrObj.PhnExt2 = custAddrResidenceObj.PhnExt2;
+      this.residenceAddrObj.SubZipcode = custAddrResidenceObj.SubZipcode;
 
-      this.inputFieldResidenceObj.inputLookupObj.nameSelect = event["CustAddrResidenceObj"].Zipcode;
-      this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrResidenceObj"].Zipcode };
+      this.inputFieldResidenceObj.inputLookupObj.nameSelect = custAddrResidenceObj.Zipcode;
+      this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: custAddrResidenceObj.Zipcode };
       this.inputAddrResidenceObj.default = this.residenceAddrObj;
       this.inputAddrResidenceObj.inputField = this.inputFieldResidenceObj;
     }
 
-    if (event["CustAddrMailingObj"] != undefined) {
-      this.mailingAddrObj.Addr = event["CustAddrMailingObj"].Addr;
-      this.mailingAddrObj.AreaCode1 = event["CustAddrMailingObj"].AreaCode1;
-      this.mailingAddrObj.AreaCode2 = event["CustAddrMailingObj"].AreaCode2;
-      this.mailingAddrObj.AreaCode3 = event["CustAddrMailingObj"].AreaCode3;
-      this.mailingAddrObj.AreaCode4 = event["CustAddrMailingObj"].AreaCode4;
-      this.mailingAddrObj.City = event["CustAddrMailingObj"].City;
-      this.mailingAddrObj.Fax = event["CustAddrMailingObj"].Fax;
-      this.mailingAddrObj.FaxArea = event["CustAddrMailingObj"].FaxArea;
-      this.mailingAddrObj.Phn1 = event["CustAddrMailingObj"].Phn1;
-      this.mailingAddrObj.Phn2 = event["CustAddrMailingObj"].Phn2;
-      this.mailingAddrObj.PhnArea1 = event["CustAddrMailingObj"].PhnArea1;
-      this.mailingAddrObj.PhnArea2 = event["CustAddrMailingObj"].PhnArea2;
-      this.mailingAddrObj.PhnExt1 = event["CustAddrMailingObj"].PhnExt1;
-      this.mailingAddrObj.PhnExt2 = event["CustAddrMailingObj"].PhnExt2;
-      this.mailingAddrObj.SubZipcode = event["CustAddrMailingObj"].SubZipcode;
+    if (custAddrMailingObj != undefined && custAddrMailingObj != null) {
+      this.mailingAddrObj.Addr = custAddrMailingObj.Addr;
+      this.mailingAddrObj.AreaCode1 = custAddrMailingObj.AreaCode1;
+      this.mailingAddrObj.AreaCode2 = custAddrMailingObj.AreaCode2;
+      this.mailingAddrObj.AreaCode3 = custAddrMailingObj.AreaCode3;
+      this.mailingAddrObj.AreaCode4 = custAddrMailingObj.AreaCode4;
+      this.mailingAddrObj.City = custAddrMailingObj.City;
+      this.mailingAddrObj.Fax = custAddrMailingObj.Fax;
+      this.mailingAddrObj.FaxArea = custAddrMailingObj.FaxArea;
+      this.mailingAddrObj.Phn1 = custAddrMailingObj.Phn1;
+      this.mailingAddrObj.Phn2 = custAddrMailingObj.Phn2;
+      this.mailingAddrObj.PhnArea1 = custAddrMailingObj.PhnArea1;
+      this.mailingAddrObj.PhnArea2 = custAddrMailingObj.PhnArea2;
+      this.mailingAddrObj.PhnExt1 = custAddrMailingObj.PhnExt1;
+      this.mailingAddrObj.PhnExt2 = custAddrMailingObj.PhnExt2;
+      this.mailingAddrObj.SubZipcode = custAddrMailingObj.SubZipcode;
 
-      this.inputFieldMailingObj.inputLookupObj.nameSelect = event["CustAddrMailingObj"].Zipcode;
-      this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrMailingObj"].Zipcode };
+      this.inputFieldMailingObj.inputLookupObj.nameSelect = custAddrMailingObj.Zipcode;
+      this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: custAddrMailingObj.Zipcode };
       this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
       this.inputAddressObjForMailing.default = this.mailingAddrObj;
     }
   }
 
   copyAddrCompanyFromLookup(event) {
-    if (event["CustAddrLegalObj"] != undefined) {
-      this.legalAddrCompanyObj.Addr = event["CustAddrLegalObj"].Addr;
-      this.legalAddrCompanyObj.AreaCode1 = event["CustAddrLegalObj"].AreaCode1;
-      this.legalAddrCompanyObj.AreaCode2 = event["CustAddrLegalObj"].AreaCode2;
-      this.legalAddrCompanyObj.AreaCode3 = event["CustAddrLegalObj"].AreaCode3;
-      this.legalAddrCompanyObj.AreaCode4 = event["CustAddrLegalObj"].AreaCode4;
-      this.legalAddrCompanyObj.City = event["CustAddrLegalObj"].City;
-      this.legalAddrCompanyObj.Fax = event["CustAddrLegalObj"].Fax;
-      this.legalAddrCompanyObj.FaxArea = event["CustAddrLegalObj"].FaxArea;
-      this.legalAddrCompanyObj.Phn1 = event["CustAddrLegalObj"].Phn1;
-      this.legalAddrCompanyObj.Phn2 = event["CustAddrLegalObj"].Phn2;
-      this.legalAddrCompanyObj.PhnArea1 = event["CustAddrLegalObj"].PhnArea1;
-      this.legalAddrCompanyObj.PhnArea2 = event["CustAddrLegalObj"].PhnArea2;
-      this.legalAddrCompanyObj.PhnExt1 = event["CustAddrLegalObj"].PhnExt1;
-      this.legalAddrCompanyObj.PhnExt2 = event["CustAddrLegalObj"].PhnExt2;
-      this.legalAddrCompanyObj.SubZipcode = event["CustAddrLegalObj"].SubZipcode;
+    var custAddrObjs: Array<CustAddrObj> = event["CustAddrObj"];
+    var custAddrLegalObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
+    var custAddrMailingObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeMailing);
 
-      this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = event["CustAddrLegalObj"].Zipcode;
-      this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrLegalObj"].Zipcode };
+    if (custAddrLegalObj != undefined && custAddrLegalObj != null) {
+      this.legalAddrCompanyObj.Addr = custAddrLegalObj.Addr;
+      this.legalAddrCompanyObj.AreaCode1 = custAddrLegalObj.AreaCode1;
+      this.legalAddrCompanyObj.AreaCode2 = custAddrLegalObj.AreaCode2;
+      this.legalAddrCompanyObj.AreaCode3 = custAddrLegalObj.AreaCode3;
+      this.legalAddrCompanyObj.AreaCode4 = custAddrLegalObj.AreaCode4;
+      this.legalAddrCompanyObj.City = custAddrLegalObj.City;
+      this.legalAddrCompanyObj.Fax = custAddrLegalObj.Fax;
+      this.legalAddrCompanyObj.FaxArea = custAddrLegalObj.FaxArea;
+      this.legalAddrCompanyObj.Phn1 = custAddrLegalObj.Phn1;
+      this.legalAddrCompanyObj.Phn2 = custAddrLegalObj.Phn2;
+      this.legalAddrCompanyObj.PhnArea1 = custAddrLegalObj.PhnArea1;
+      this.legalAddrCompanyObj.PhnArea2 = custAddrLegalObj.PhnArea2;
+      this.legalAddrCompanyObj.PhnExt1 = custAddrLegalObj.PhnExt1;
+      this.legalAddrCompanyObj.PhnExt2 = custAddrLegalObj.PhnExt2;
+      this.legalAddrCompanyObj.SubZipcode = custAddrLegalObj.SubZipcode;
+
+      this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = custAddrLegalObj.Zipcode;
+      this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: custAddrLegalObj.Zipcode };
 
 
       this.inputAddrLegalCompanyObj.inputField = this.inputFieldLegalCompanyObj;
       this.inputAddrLegalCompanyObj.default = this.legalAddrCompanyObj;
     }
 
-    if (event["CustAddrMailingObj"] != undefined) {
-      this.mailingAddrCompanyObj.Addr = event["CustAddrMailingObj"].Addr;
-      this.mailingAddrCompanyObj.AreaCode1 = event["CustAddrMailingObj"].AreaCode1;
-      this.mailingAddrCompanyObj.AreaCode2 = event["CustAddrMailingObj"].AreaCode2;
-      this.mailingAddrCompanyObj.AreaCode3 = event["CustAddrMailingObj"].AreaCode3;
-      this.mailingAddrCompanyObj.AreaCode4 = event["CustAddrMailingObj"].AreaCode4;
-      this.mailingAddrCompanyObj.City = event["CustAddrMailingObj"].City;
-      this.mailingAddrCompanyObj.Fax = event["CustAddrMailingObj"].Fax;
-      this.mailingAddrCompanyObj.FaxArea = event["CustAddrMailingObj"].FaxArea;
-      this.mailingAddrCompanyObj.Phn1 = event["CustAddrMailingObj"].Phn1;
-      this.mailingAddrCompanyObj.Phn2 = event["CustAddrMailingObj"].Phn2;
-      this.mailingAddrCompanyObj.PhnArea1 = event["CustAddrMailingObj"].PhnArea1;
-      this.mailingAddrCompanyObj.PhnArea2 = event["CustAddrMailingObj"].PhnArea2;
-      this.mailingAddrCompanyObj.PhnExt1 = event["CustAddrMailingObj"].PhnExt1;
-      this.mailingAddrCompanyObj.PhnExt2 = event["CustAddrMailingObj"].PhnExt2;
-      this.mailingAddrCompanyObj.SubZipcode = event["CustAddrMailingObj"].SubZipcode;
+    if (custAddrMailingObj != undefined && custAddrMailingObj != null) {
+      this.mailingAddrCompanyObj.Addr = custAddrMailingObj.Addr;
+      this.mailingAddrCompanyObj.AreaCode1 = custAddrMailingObj.AreaCode1;
+      this.mailingAddrCompanyObj.AreaCode2 = custAddrMailingObj.AreaCode2;
+      this.mailingAddrCompanyObj.AreaCode3 = custAddrMailingObj.AreaCode3;
+      this.mailingAddrCompanyObj.AreaCode4 = custAddrMailingObj.AreaCode4;
+      this.mailingAddrCompanyObj.City = custAddrMailingObj.City;
+      this.mailingAddrCompanyObj.Fax = custAddrMailingObj.Fax;
+      this.mailingAddrCompanyObj.FaxArea = custAddrMailingObj.FaxArea;
+      this.mailingAddrCompanyObj.Phn1 = custAddrMailingObj.Phn1;
+      this.mailingAddrCompanyObj.Phn2 = custAddrMailingObj.Phn2;
+      this.mailingAddrCompanyObj.PhnArea1 = custAddrMailingObj.PhnArea1;
+      this.mailingAddrCompanyObj.PhnArea2 = custAddrMailingObj.PhnArea2;
+      this.mailingAddrCompanyObj.PhnExt1 = custAddrMailingObj.PhnExt1;
+      this.mailingAddrCompanyObj.PhnExt2 = custAddrMailingObj.PhnExt2;
+      this.mailingAddrCompanyObj.SubZipcode = custAddrMailingObj.SubZipcode;
 
-      this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = event["CustAddrMailingObj"].Zipcode;
-      this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrMailingObj"].Zipcode };
+      this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = custAddrMailingObj.Zipcode;
+      this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: custAddrMailingObj.Zipcode };
       this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
       this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
     }
