@@ -16,6 +16,7 @@ import { UcapprovalcreateComponent } from "@adins/ucapprovalcreate";
 import { CookieService } from "ngx-cookie";
 import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { ClaimTaskService } from "app/shared/claimTask.service";
 import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
 
 @Component({
@@ -29,7 +30,7 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
   ChangeMouTrxId: number;
   MouCustId: number;
   TrxNo: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   MouType: string = "GENERAL";
   PlafondAmt: number;
   MrCustTypeCode: string;
@@ -56,7 +57,8 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService : ClaimTaskService
   ) {
     this.route.queryParams.subscribe((params) => {
       this.ChangeMouTrxId = params["ChangeMouTrxId"];
@@ -64,18 +66,16 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
       this.WfTaskListId = params["WfTaskListId"];
       this.TrxNo = params["TrxNo"];
       this.ChangeMouCustId = params["ChangeMouCustId"];
-
+      
       this.TrxType = params["TrxType"];
     });
   }
 
   async ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
-    }
+    this.claimTask();
+    
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewChangeMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
@@ -125,30 +125,32 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
     ApvRecommendation: this.fb.array([]),
   });
 
-  async claimTask() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = {
-      pWFTaskListID: this.WfTaskListId,
-      pUserID: currentUserContext[CommonConstant.USER_NAME],
-    };
-    this.http
-      .post(URLConstant.ClaimTask, wfClaimObj)
-      .subscribe((response) => { });
+  claimTask() {
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }
+    else if (this.WfTaskListId > 0){
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 
   Submit() {
-    this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
-      this.mouCustObj.MouCustId = this.MouCustId;
-      this.PlafondAmt = this.PlafondAmt;
+      let urlPost = environment.isCore ? URLConstant.SubmitChangeMouReviewV2 : URLConstant.SubmitChangeMouReview;
 
-      var submitMouReviewObj = {
+      this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
+      this.mouCustObj.MouCustId = this.MouCustId;
+      
+      this.PlafondAmt = this.PlafondAmt;
+      let submitMouReviewObj = {
         WfTaskListId: this.WfTaskListId,
         MouCust: this.mouCustObj,
         PlafondAmt: this.PlafondAmt,
         RequestRFAObj: this.ApprovalCreateOutput,
       };
       this.http
-        .post(URLConstant.SubmitChangeMouReview, submitMouReviewObj)
+        .post(urlPost, submitMouReviewObj)
         .subscribe((response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(
@@ -160,12 +162,13 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
   }
 
   Return() {
-    var mouObj = {
+    let urlPost = environment.isCore ? URLConstant.ReturnChangeMouReviewV2 : URLConstant.ReturnChangeMouReview;
+    let mouObj = { 
       WfTaskListId: this.WfTaskListId,
       ChangeMouTrxId : this.ChangeMouTrxId
     };
     this.http
-      .post(URLConstant.ReturnChangeMouReview, mouObj)
+      .post(urlPost, mouObj)
       .subscribe((response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(
@@ -178,7 +181,7 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
 
   GetCallBack(event) {
     if (event.Key == "customer") {
-      var custObj = { CustNo: event.ViewObj["CustNo"] };
+      let custObj = { CustNo: event.ViewObj["CustNo"] };
       this.http
         .post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
@@ -203,44 +206,28 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
 
   initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
-    var Attributes = [];
-    var attribute1 = {
-      "AttributeName": "Approval Amount",
-      "AttributeValue": this.PlafondAmt
-    };
+    let Attributes = [
+      {
+        "AttributeName": "Plafond Amount",
+        "AttributeValue": this.PlafondAmt
+      },
+      {
+        "AttributeName": "Scoring",
+        "AttributeValue": this.ScoreResult
+      }
+    ];
 
-    var attribute2 = {
-      "AttributeName": "Scoring",
-      "AttributeValue": this.ScoreResult
-    };
-    Attributes.push(attribute1);
-    Attributes.push(attribute2);
-
-    var TypeCode = {
-      TypeCode: "CHG_MOU_APV_TYPE",
+    let TypeCode = {
+      TypeCode: CommonConstant.APV_TYPE_CHG_MOU_APV_TYPE,
       Attributes: Attributes,
     };
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode =
-      URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode =
-      URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType =
-      URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory =
-      URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
-
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.TrxNo;
-
     if(this.TrxType == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP)
     {
       this.InputObj.SchemeCode = CommonConstantX.SCHM_CODE_CHG_MOU_EXP_APV;

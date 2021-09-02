@@ -19,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-purchase-order-x',
@@ -29,7 +30,7 @@ export class PurchaseOrderXComponent implements OnInit {
   lobCode: string;
   AppId: number;
   AgrmntId: number;
-  TaskListId: number;
+  TaskListId: any;
   arrValue: Array<number> = [];
   AppAssetList = [];
   tcForm: FormGroup = this.fb.group({
@@ -48,6 +49,7 @@ export class PurchaseOrderXComponent implements OnInit {
   AppObj: AppObj = new AppObj();
   toastRef: any;
   BizTemplateCode: any;
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService, private toastrSvc: ToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -74,7 +76,8 @@ export class PurchaseOrderXComponent implements OnInit {
     var appAssetObj = {
       Id: this.AgrmntId
     }
-    this.claimTaskService.ClaimTask(this.TaskListId);
+    this.claimTask();
+    
     this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
         this.AppAssetList = response[CommonConstant.ReturnObj];
@@ -231,8 +234,8 @@ export class PurchaseOrderXComponent implements OnInit {
       workflowModel.TaskListId = this.TaskListId;
       workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
 
-
-      this.http.post(URLConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
+      let resumeWorkflowPurcharOrderUrl = environment.isCore? URLConstant.ResumeWorkflowPurchaseOrderV2 : URLConstant.ResumeWorkflowPurchaseOrder;
+      this.http.post(resumeWorkflowPurcharOrderUrl, workflowModel).subscribe(
         (response) => {
           this.AppAssetList = response[CommonConstant.ReturnObj];
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], {});
@@ -243,5 +246,16 @@ export class PurchaseOrderXComponent implements OnInit {
   Cancel() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], { "BizTemplateCode": BizTemplateCode });
+  }
+
+  claimTask(){
+    if(environment.isCore){
+        if(this.TaskListId != "" && this.TaskListId!= undefined){
+            this.claimTaskService.ClaimTaskV2(this.TaskListId);
+          }
+      }
+      else if (this.TaskListId > 0) {
+         this.claimTaskService.ClaimTask(this.TaskListId);
+      }
   }
 }

@@ -4,7 +4,7 @@
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="InsuranceDataForm" (ngSubmit)="InsuranceDataForm.valid"
           #enjiForm="ngForm">
-          <div [hidden]="PageState != 'Paging' || BizTemplateCode == 'FCTR' || BizTemplateCode == 'CFNA' || BizTemplateCode == 'CF4W'">
+          <div [hidden]="PageState != 'Paging' || BizTemplateCode == 'FCTR' || BizTemplateCode == 'CFNA'">
             <lib-ucSubsection [id]="'assetDataId'" [title]="'Loan Object'" [panel]="'assetData'">
             </lib-ucSubsection>
             <div id="assetData">
@@ -13,7 +13,7 @@
           </div>
 
           <div [hidden]="PageState != 'Paging'">
-            <lib-ucSubsection [id]="'collateralId'" [title]="BizTemplateCode == 'CF4W' ? 'Insurance Object' : 'Collateral'" [panel]="'collateral'">
+            <lib-ucSubsection [id]="'collateralId'" [title]="'Collateral'" [panel]="'collateral'">
             </lib-ucSubsection>
             <div id="collateral">
               <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"></lib-ucgridview>
@@ -380,7 +380,7 @@
                             <div class="form-group-row">
                               <input type="" currencyMask class="form-control text-right"
                                 formControlName="SumInsuredPrcnt" (ngModelChange)="IsMainCvgChaged($event, i)"
-                                [options]="{ allowNegative: false }"
+                                [options]="CurrencyMaskPrct"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt.invalid }">
                             </div>
                             <lib-uc-show-errors

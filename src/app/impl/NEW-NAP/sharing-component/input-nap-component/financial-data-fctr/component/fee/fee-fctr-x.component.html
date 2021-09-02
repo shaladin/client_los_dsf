@@ -60,7 +60,7 @@
                     <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}} Percentage</label>
                   </div>
                     <div class="col-md-3 margin-b-5">
-                      <input type="text" class="form-control" formControlName="AppFeePrcnt"
+                      <input type="text" class="form-control" formControlName="AppFeePrcnt" [options]="CurrencyMaskPrct"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.AppFeePrcnt.invalid}"
                         (focusout)="ProvisionFeeInput_FocusOut()"
                         [readonly]="ParentForm.controls[identifier].value[i].FeeType == 'AMT' || ParentForm.controls[identifier].value[i].SellFeeBhv == 'LOCK'"

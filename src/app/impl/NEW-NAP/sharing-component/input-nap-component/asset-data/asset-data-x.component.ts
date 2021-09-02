@@ -1822,6 +1822,8 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
       critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
       critSuppSupplSchmObj.propName = 'vs.VENDOR_SCHM_CODE';
       critSuppSupplSchmObj.value = this.RefProdCmptSupplSchm.CompntValue;
+      console.log('TEST REF PROD COMPONENT SUPPL SCHEME');
+      console.log(this.RefProdCmptSupplSchm.CompntValue);
       suppCrit.push(critSuppSupplSchmObj);
       this.InputLookupSupplierObj.addCritInput = suppCrit;
   
