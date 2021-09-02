@@ -308,34 +308,9 @@ export class ReservedFundXComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
-  DictTempRemainingIncomeForm: Object = {}
-  async setAppRsvFundData()
-  {
-    let listPriority: Array<string> = new Array();
-    await this.http.post(URLConstantX.GetAppRsvFundPriorityRule, {Id: this.AppId}).toPromise().then(
-      (response) => {
-        listPriority = response["ReturnObject"]["ListPrioritySupplier"];
-      }
-    );
-    this.allAppReservedFundObj.GrossYield = this.grossYield;
-    this.allAppReservedFundObj.TotalReservedFundAmt = this.totalRsvFundAmt;
-    this.allAppReservedFundObj.RequestAppReservedFundObjs = new Array<ReqAppReservedFundXObj>();
-
-    this.DictTempRemainingIncomeForm = new Object();
-    for(let j=0;j<listPriority.length;j++)
-    {
-      let TempObj = new ResultRefundObj();
-      TempObj.RefundAllocationFrom = this.DictRemainingIncomeForm[listPriority[j]].RefundAllocationFrom;
-      TempObj.RefundAllocationFromDesc = this.DictRemainingIncomeForm[listPriority[j]].RefundAllocationFromDesc;
-      TempObj.RefundAmount = this.DictRemainingIncomeForm[listPriority[j]].RefundAmount;
-      this.DictTempRemainingIncomeForm[listPriority[j]] = TempObj;
-    }
-=======
   Cancel(){
     this.outputCancel.emit();
   }
->>>>>>> 000683dbd7b2428a12a509312ab0462858d1dc20
 
   switchForm() {
     this.FormReturnObj.patchValue({
