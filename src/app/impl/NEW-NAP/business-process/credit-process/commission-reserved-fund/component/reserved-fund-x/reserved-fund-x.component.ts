@@ -166,6 +166,8 @@ export class ReservedFundXComponent implements OnInit {
     this.calculatedRemainingAmt();
     await this.setAppRsvFundData();
     this.isCalculated = true;
+    console.log('IS CALCULATED');
+    console.log(this.isCalculated);
   }
 
   calculatedRemainingAmt() {
@@ -180,7 +182,7 @@ export class ReservedFundXComponent implements OnInit {
     let listPriority: Array<string> = new Array();
     await this.http.post(URLConstantX.GetAppRsvFundPriorityRule, {Id: this.AppId}).toPromise().then(
       (response) => {
-        listPriority = response["ListPrioritySupplier"];
+        listPriority = response["ReturnObject"]["ListPrioritySupplier"];
       }
     );
     this.allAppReservedFundObj.GrossYield = this.grossYield;

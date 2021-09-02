@@ -17,6 +17,7 @@ import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import Stepper from 'bs-stepper';
+import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -82,7 +83,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
 
   ngOnInit() {
     this.isShow = false;
-    this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    this.claimTask();
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
@@ -256,7 +257,9 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.HandlingForm.controls['ReturnHandlingExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         () => {
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode });
@@ -273,4 +276,14 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
     }
   }
 
+  claimTask(){
+    if(environment.isCore){
+      if(this.ReturnHandlingHObj.WfTaskListId!= "" && this.ReturnHandlingHObj.WfTaskListId!= undefined){
+        this.claimTaskService.ClaimTaskV2(this.ReturnHandlingHObj.WfTaskListId);
+      }
+    }
+    else if (this.ReturnHandlingHObj.WfTaskListId> 0) {
+        this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    }
+  }
 }

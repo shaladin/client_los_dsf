@@ -122,9 +122,9 @@ export class CommissionV2XComponent implements OnInit {
   async GetListAllocatePriority(){
     await this.http.post(URLConstantX.GetAppRsvFundPriorityRule, {Id: this.AppId}).toPromise().then(
       (response) => {
-        this.listPrioritySuppl = response["ListPrioritySupplier"];
-        this.listPrioritySupplEmp = response["ListPrioritySupplEmp"];
-        this.listPriorityReferantor = response["ListPriorityReferantor"];
+        this.listPrioritySuppl = response["ReturnObject"]["ListPrioritySupplier"];
+        this.listPrioritySupplEmp = response["ReturnObject"]["ListPrioritySupplEmp"];
+        this.listPriorityReferantor = response["ReturnObject"]["ListPriorityReferantor"];
       }
     );
   }

@@ -20,6 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-detail-form-x',
@@ -33,7 +34,7 @@ export class NapDetailFormXComponent implements OnInit {
   private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
@@ -97,7 +98,7 @@ export class NapDetailFormXComponent implements OnInit {
       (response) => {
         this.SysConfigResultObj = response;
     });
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
@@ -338,13 +339,27 @@ export class NapDetailFormXComponent implements OnInit {
       let reqObj: SubmitNapObj = new SubmitNapObj();
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
-      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+
+      let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+
+      this.http.post(SubmitNAPUrl, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
 
         })
     }  
+  }
+
+  claimTask() {
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 
   Cancel() {
@@ -363,7 +378,9 @@ export class NapDetailFormXComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.CF4W });

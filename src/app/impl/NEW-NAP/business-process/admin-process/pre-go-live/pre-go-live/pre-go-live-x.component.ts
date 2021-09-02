@@ -46,7 +46,7 @@ export class PreGoLiveXComponent implements OnInit {
   AgrmntResult: AgrmntObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   appTC: AppTCObj;
-  TaskListId: number;
+  TaskListId: any;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObjX = new PreGoLiveObjX();
   AgrmntObj: AgrmntObj = new AgrmntObj();
@@ -138,7 +138,14 @@ export class PreGoLiveXComponent implements OnInit {
         }
         this.IsApvReady = true;
       });
-    this.claimTaskService.ClaimTask(this.TaskListId);
+
+      if(environment.isCore) {
+        if (this.TaskListId != "" && this.TaskListId != undefined) {
+          this.claimTaskService.ClaimTaskV2(this.TaskListId);
+        }
+      } else if (this.TaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.TaskListId);
+      }
     this.viewGenericObj.viewInput = './assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json';
 
     const agrmntObj = {
@@ -401,7 +408,10 @@ export class PreGoLiveXComponent implements OnInit {
     }
 
     console.log(this.PreGoLiveObj);
-    this.http.post(URLConstantX.AddPreGoLiveX, this.PreGoLiveObj).subscribe(
+
+    let AddPreGoLiveXUrl = environment.isCore ? URLConstantX.AddPreGoLiveXV2 : URLConstantX.AddPreGoLiveX;
+
+    this.http.post(AddPreGoLiveXUrl, this.PreGoLiveObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router, [this.CancelLink], {});
         this.toastr.successMessage(response['message']);
