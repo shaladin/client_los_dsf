@@ -42,7 +42,7 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
   add() {
     this.inputMode = "ADD";
     this.isDetail = true;
-    this.appCustId = 0; 
+    this.appCustId = null; 
   }
 
   saveAndContinue() {

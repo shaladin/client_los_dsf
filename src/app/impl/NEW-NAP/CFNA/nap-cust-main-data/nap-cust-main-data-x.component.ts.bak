@@ -15,7 +15,6 @@ import Stepper from 'bs-stepper';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-cust-main-data-x',
@@ -27,16 +26,17 @@ export class NapCustMainDataXComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: any;
+  wfTaskListId: number;
   mode: string;
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
+  IsMultiAsset: string;
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
   IsViewReady: boolean = false;
-  from: string;
+  from:string;
 
   AppStep = {
     "NEW": 1,
@@ -51,7 +51,9 @@ export class NapCustMainDataXComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
+    private toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -59,8 +61,6 @@ export class NapCustMainDataXComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
-      }else{
-        this.wfTaskListId = environment.isCore ? "" : 0;
       }
       if(params["from"]!= null)
       {
@@ -70,11 +70,7 @@ export class NapCustMainDataXComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if(environment.isCore){
-      this.claimTaskService.ClaimTaskNapCustMainDataV2(this.appId, this.wfTaskListId);
-    }else{
-      this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
-    }
+    this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
     this.AppStepIndex = 0;
     this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
@@ -116,10 +112,12 @@ export class NapCustMainDataXComponent implements OnInit {
       }
     );
   }
-
+  
   Back() {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
+
+
   ChangeTab(AppStep) {
     switch (AppStep) {
       case CommonConstant.AppStepCust:
@@ -137,7 +135,6 @@ export class NapCustMainDataXComponent implements OnInit {
       default:
         break;
     }
-    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   async getEvent(event) {
@@ -145,7 +142,7 @@ export class NapCustMainDataXComponent implements OnInit {
     this.MrCustTypeCode = event.MrCustTypeCode != undefined ? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepShr);
 
-    //Fix untuk data kosong saat kembali ke step cust jika save new cust
+    //Fix untuk data kosong saat kembai ke step cust jika save new cust
     if (!this.appCustId) {
       await this.GetCustMainData();
     }
@@ -155,7 +152,7 @@ export class NapCustMainDataXComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
       async (response) => {
-        await this.ChangeTab(Step);
+        this.ChangeTab(Step);
         this.stepper.to(this.AppStepIndex);
       }
     )
@@ -166,9 +163,7 @@ export class NapCustMainDataXComponent implements OnInit {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-
-    let SubmitNapCustMainDataUrl = environment.isCore ? URLConstant.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
-    this.http.post(SubmitNapCustMainDataUrl, reqObj).subscribe(
+    this.http.post(URLConstant.SubmitNapCustMainData, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });

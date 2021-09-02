@@ -1,5 +1,16 @@
 <div class="card-body">
   <div class="px-3">
+    <div class="form-group row" *ngIf="custMainDataMode != CustMainDataFamily">
+      <label class="col-md-2" translate>{{subjectTitle}} Type</label>
+      <div class="col-md-10">
+        <mat-radio-group [(ngModel)]="MrCustTypeCode" (change)="resetInput($event.value)" [disabled]="AppCustCompanyMgmntShrholderId!=0">
+          <mat-radio-button class="custom-control custom-radio display-inline-block"
+            *ngFor="let item of DictRefMaster[MasterCustType]" [value]="item.Key">
+            {{item.Value}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>    
     <form class="form form-horizontal" [formGroup]="CustMainDataForm" (ngSubmit)="CustMainDataForm.valid && SaveForm()"
       #enjiForm="ngForm">
       <div class="form-body">

@@ -5,24 +5,24 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
-
 @Component({
-  selector: 'app-guarantor-main-data-paging-x',
-  templateUrl: './guarantor-main-data-paging-x.component.html',
+  selector: 'app-family-main-data-paging-x',
+  templateUrl: './family-main-data-paging-x.component.html',
   styleUrls: []
 })
-export class GuarantorMainDataPagingXComponent implements OnInit {
+export class FamilyMainDataPagingXComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() isMarried: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   isDetail: boolean = false;
   inputGridObj: InputGridObj;
-  listGuarantor: Array<any> = new Array();
+  listFamily: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
   inputMode: string = "ADD";
@@ -34,27 +34,38 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantorMainData.json";
-    this.custMainDataMode = CommonConstant.CustMainDataModeGuarantor;
+    this.inputGridObj.pagingJson = "./assets/ucpaging/searchFamilyMainData.json";
+
+    this.custMainDataMode = CommonConstant.CustMainDataModeFamily;
     this.loadGuarantorListData();
   }
 
   add() {
     this.inputMode = "ADD";
     this.isDetail = true;
-    this.appCustId = 0; 
+    this.appCustId = null;
   }
 
   saveAndContinue() {
-    for (let i = 0; i < this.listGuarantor.length; i++) {
-      for (let j = i+1; j < this.listGuarantor.length; j++) {
-        if (this.listGuarantor[i]["CustName"] == this.listGuarantor[j]["CustName"] ) {
-          this.toastr.warningMessage("Guarantor No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_GUARANTOR_MEMBER + (j+1));
-          return;
-        }
+    if(this.isMarried){
+      this.loadGuarantorListData();
+      if(this.listFamily.length == 0 || this.listFamily.find(x=>x.MrCustRelationshipCode == 'SPOUSE') == null){
+        this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_SPOUSE_DATA)
+        return;
+      }
+
+      if(this.listFamily.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") != null){
+        this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_FAMILY_DATA)
+        return;
       }
     }
     this.outputTab.emit();
+  }
+
+  
+  close() {
+    this.loadGuarantorListData();
+    this.isDetail = false;
   }
 
   cancel() {
@@ -66,8 +77,7 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
       this.isDetail = true;
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
-    }
-
+    }    
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.http.post(URLConstant.DeleteAppCustMainData, { Id: ev.RowObj.AppCustId }).subscribe(
@@ -83,7 +93,7 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
   loadGuarantorListData() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
-    this.custDataObj.IsGuarantor = true;
+    this.custDataObj.IsFamily = true;
     this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
       (response : ResListCustMainDataObj) => {
         this.inputGridObj.resultData = {
@@ -91,14 +101,8 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response['ListAppCustObj'];
-        this.listGuarantor = this.inputGridObj.resultData.Data;
+        this.listFamily = this.inputGridObj.resultData.Data;
       }
     );
   }
-
-  close() {
-    this.loadGuarantorListData();
-    this.isDetail = false;
-  }
-
 }
