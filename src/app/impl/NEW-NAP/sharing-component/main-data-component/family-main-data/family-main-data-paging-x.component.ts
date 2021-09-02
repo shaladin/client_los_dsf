@@ -43,7 +43,7 @@ export class FamilyMainDataPagingXComponent implements OnInit {
   add() {
     this.inputMode = "ADD";
     this.isDetail = true;
-    this.appCustId = null;
+    this.appCustId = 0;
   }
 
   saveAndContinue() {

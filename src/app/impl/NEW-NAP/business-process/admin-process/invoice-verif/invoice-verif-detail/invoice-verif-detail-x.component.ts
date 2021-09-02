@@ -32,7 +32,7 @@ export class InvoiceVerifDetailXComponent implements OnInit {
   BusinessDate: Date;
   Username: string;
   AppId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   TrxNo: string;
   OsPlafondAmt: number;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
@@ -55,9 +55,15 @@ export class InvoiceVerifDetailXComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
+      if (params["AppId"] != null) {
       this.AppId = params["AppId"];
-      this.WfTaskListId = params["TaskListId"];
-      this.TrxNo = params["TrxNo"];
+      }
+      if (params["TaskListId"] != null) {
+        this.WfTaskListId = params["TaskListId"];
+      }
+      if (params["TrxNo"] != null) {
+        this.TrxNo = params["TrxNo"];
+      }
     });
     this.BusinessDate = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -65,7 +71,7 @@ export class InvoiceVerifDetailXComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTaskService.ClaimTask(this.WfTaskListId);
+    this.claimTask();
 
     await this.httpClient.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
@@ -175,7 +181,6 @@ export class InvoiceVerifDetailXComponent implements OnInit {
   }
 
   SaveData() {
-
     if(this.MrMouTypeCode == CommonConstant.FACTORING){
       var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
       for (let i = 0; i < fa_listInvoice.length; i++) {
@@ -198,7 +203,9 @@ export class InvoiceVerifDetailXComponent implements OnInit {
         ReturnHandlingHObj : this.ReturnHandlingHData
       };
 
-      this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
+      let UpdateAppInvoiceFctrUrl = environment.isCore ? URLConstant.UpdateAppInvoiceFctrV2 : URLConstant.UpdateAppInvoiceFctr;
+      this.httpClient.post(UpdateAppInvoiceFctrUrl, request).subscribe(
+        (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
       });
     }
@@ -233,5 +240,15 @@ export class InvoiceVerifDetailXComponent implements OnInit {
     this.InvoiceForm.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
     });
+  }
+
+  claimTask(){
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 }

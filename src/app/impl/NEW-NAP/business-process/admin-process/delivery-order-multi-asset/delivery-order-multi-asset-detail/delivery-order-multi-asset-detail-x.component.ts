@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CreateDoMultiAssetComponent } from 'app/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/create-do-multi-asset/create-do-multi-asset.component';
 import { map, mergeMap } from 'rxjs/operators';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -21,7 +22,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
 import { AssetListForDOMultiAssetObj } from 'app/shared/model/AssetListForDOMultiAssetObj.Model';
-import { CreateDoMultiAssetComponent } from 'app/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/create-do-multi-asset/create-do-multi-asset.component';
+import { environment } from 'environments/environment';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { formatDate } from '@angular/common';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
@@ -42,7 +43,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   isCreateDOInvalid: boolean;
   createDOInvalidMsg: string;
   arrValue: Array<number> = new Array();
-  wfTaskListId: number;
+  wfTaskListId: any;
   isFinal: boolean;
   isHideDP: boolean = true;
 
@@ -102,7 +103,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
-      this.claimTaskService.ClaimTask(this.wfTaskListId);
+      this.claimTask();
     }
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = this.UserAccess.BusinessDt;
@@ -297,7 +298,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   createDOHandler() {
-    console.log("xxxxxxxxxxxx");
     this.isCreateDOInvalid = true;
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
     for (var i = 0; i < formArray.length; i++) {
@@ -447,6 +447,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       }
     }
   }
+
   calculateAddInterest(){
     var diffDays = 0;
     var diffTimes = new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime()- new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime();
@@ -467,5 +468,16 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         AddIntrstAmt: 0
       });
     }
+  }
+
+  claimTask(){
+    if(environment.isCore){
+        if(this.wfTaskListId != "" && this.wfTaskListId != undefined){
+          this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+        }
+      }
+      else if (this.wfTaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+      }
   }
 }

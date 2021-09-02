@@ -43,7 +43,7 @@ export class ChangeMouRequestDetailCustomerXComponent
   }
   resultData: MouCustObj;
   ChangeMouTrxId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
 
   constructor(
     private router: Router,
@@ -218,13 +218,17 @@ export class ChangeMouRequestDetailCustomerXComponent
 
       if (this.pageType == "return") {
         var returnObj = { TaskListId: this.WfTaskListId };
-        this.httpClient.post(URLConstant.SubmitChangeMouReturn, returnObj).subscribe(() => {
+        let urlPost = environment.isCore ? URLConstant.SubmitChangeMouReturnV2 : URLConstant.SubmitChangeMouReturn;
+
+        this.httpClient.post(urlPost, returnObj).subscribe(() => {
           this.toastr.successMessage("Success");
           this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
         });
       } else {
         var reqByIdObj = { Id: this.mouCustId };
-        this.httpClient.post(URLConstant.SubmitWorkflowChangeMouRequest, reqByIdObj).subscribe(() => {
+        let urlPost = environment.isCore ? URLConstant.SubmitWorkflowChangeMouRequestV2 : URLConstant.SubmitWorkflowChangeMouRequest;
+
+        this.httpClient.post(urlPost, reqByIdObj).subscribe(() => {
           this.toastr.successMessage("Success");
           this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
         });

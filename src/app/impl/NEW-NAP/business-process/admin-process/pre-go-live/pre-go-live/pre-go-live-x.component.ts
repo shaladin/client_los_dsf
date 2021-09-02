@@ -1,38 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {formatDate} from '@angular/common';
-import {AgrmntObj} from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import {ListAppTCObj} from 'app/shared/model/ListAppTCObj.Model';
-import {AppTCObj} from 'app/shared/model/AppTCObj.Model';
-import {PreGoLiveMainObj} from 'app/shared/model/PreGoLiveMainObj.Model';
-import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
-import {environment} from 'environments/environment';
-import {AdInsHelper} from 'app/shared/AdInsHelper';
-import {CookieService} from 'ngx-cookie';
-import {CommonConstant} from 'app/shared/constant/CommonConstant';
-import {URLConstant} from 'app/shared/constant/URLConstant';
-import {UcViewGenericObj} from 'app/shared/model/UcViewGenericObj.model';
-import {DMSObj} from 'app/shared/model/DMS/DMSObj.model';
-import {forkJoin} from 'rxjs';
-import {DMSLabelValueObj} from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import {NavigationConstant} from 'app/shared/constant/NavigationConstant';
-import {UcInputApprovalHistoryObj} from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import {ResSysConfigResultObj} from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import {ReqGetRfaLogByTrxNoAndApvCategoryObj} from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
-import {ClaimTaskService} from 'app/shared/claimTask.service';
-import {KeyValueObj} from 'app/shared/model/KeyValue/KeyValueObj.model';
-import {MouCustObj} from 'app/shared/model/MouCustObj.Model';
-import {RfaObj} from 'app/shared/model/Approval/RfaObj.Model';
-import {GenericObj} from 'app/shared/model/Generic/GenericObj.Model';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
-import {UcInputRFAObj} from 'app/shared/model/UcInputRFAObj.Model';
-import {ReqGetByTypeCodeObj} from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import {PreGoLiveObjX} from 'app/impl/shared/model/PreGoLiveObjX.Model';
-import {RefPayFreqObj} from 'app/shared/model/RefPayFreqObj.model';
-import {AppObj} from 'app/shared/model/App/App.Model';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { formatDate } from '@angular/common';
+import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
+import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { PreGoLiveMainObj } from 'app/shared/model/PreGoLiveMainObj.Model';
+import { PreGoLiveObjX } from 'app/impl/shared/model/PreGoLiveObjX.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-x',
@@ -138,14 +138,7 @@ export class PreGoLiveXComponent implements OnInit {
         }
         this.IsApvReady = true;
       });
-
-      if(environment.isCore) {
-        if (this.TaskListId != "" && this.TaskListId != undefined) {
-          this.claimTaskService.ClaimTaskV2(this.TaskListId);
-        }
-      } else if (this.TaskListId > 0) {
-        this.claimTaskService.ClaimTask(this.TaskListId);
-      }
+    this.claimTask();
     this.viewGenericObj.viewInput = './assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json';
 
     const agrmntObj = {
@@ -224,7 +217,7 @@ export class PreGoLiveXComponent implements OnInit {
     this.checkPOReady = true;
   }
 
-  async InitDms() {
+  async InitDms() { 
     if (this.SysConfigResultObj.ConfigValue == '1') {
       this.dmsObj = new DMSObj();
       this.dmsAppObj = new DMSObj();
@@ -446,6 +439,17 @@ export class PreGoLiveXComponent implements OnInit {
         }
       }
     );
+  }
+
+  claimTask(){
+    if(environment.isCore){
+        if(this.TaskListId != "" && this.TaskListId!= undefined){
+            this.claimTaskService.ClaimTaskV2(this.TaskListId);
+        }
+      }
+      else if (this.TaskListId > 0) {
+         this.claimTaskService.ClaimTask(this.TaskListId);
+      }
   }
 
   calculateAddInterest() {

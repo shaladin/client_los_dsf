@@ -33,7 +33,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
   arrValue = [];
   AgrmntId: number;
   AppId: number;
-  TaskListId: number;
+  TaskListId: any;
   AgrmntNo: string;
   VerfResultList = new Array<VerfResultHObj>();
   CustNoObj: GenericObj = new GenericObj();
@@ -80,11 +80,10 @@ export class CustConfirmationDetailXComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTaskService.ClaimTask(this.TaskListId);
+    this.claimTask();
     this.arrValue.push(this.AgrmntId);
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfoCFNA.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
       this.viewGenericObj.whereValue = this.arrValue;
       this.CustConfirmForm.controls.AgrmntCreatedDt.setValidators(Validators.required);
       this.CustConfirmForm.controls.EffectiveDt.setValidators(Validators.required);
@@ -279,6 +278,17 @@ export class CustConfirmationDetailXComponent implements OnInit {
       this.CustConfirmForm.patchValue({
         AddIntrstAmt: 0
       });
+    }
+  }
+  
+  claimTask(){
+    if (environment.isCore){
+      if (this.TaskListId != "" && this.TaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.TaskListId);
+      }
+    }
+    else if (this.TaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.TaskListId);
     }
   }
 }
