@@ -43,8 +43,8 @@ export class PurchaseOrderPagingXComponent implements OnInit {
     this.arrCrit = new Array();
 
     if(environment.isCore){
-      this.inputPagingObj._url = "./assets/ucpaging/V2/searchPurchaseOrderV2.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchPurchaseOrderV2.json";
+      this.inputPagingObj._url = "./assets/impl/ucpaging/V2/searchPurchaseOrderV2.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/V2/searchPurchaseOrderV2.json";
       this.inputPagingObj.isJoinExAPI = true
       
       this.RequestTaskModel.ProcessKey = String.Format(CommonConstant.WF_CRP_AFT_ACT, this.bizTemplateCode);
