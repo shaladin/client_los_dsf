@@ -135,6 +135,7 @@ export class ReferantorDataComponent implements OnInit {
 
   ClickSave() {
     var url;
+    this.appReferantorObj.AppId = this.appId;
     if (this.ExistedData) {
       if (this.ReferantorOn) {
         // save
@@ -155,7 +156,6 @@ export class ReferantorDataComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         url = URLConstant.AddAppReferantor;
-        this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Save New Data');

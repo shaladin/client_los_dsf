@@ -34,6 +34,10 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditApprovalPagingResultExt.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApprovalPagingResultExt.json";
+    if (environment.isCore) {
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchCreditApprovalPagingResultExtV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCreditApprovalPagingResultExtV2.json";
+    }
 
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();

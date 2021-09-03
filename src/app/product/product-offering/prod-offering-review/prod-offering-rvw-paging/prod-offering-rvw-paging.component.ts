@@ -35,7 +35,9 @@ export class ProdOfferingRvwPagingComponent implements OnInit {
       this.requestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
       this.requestTaskModel.TaskDefinitionKey = CommonConstant.PROD_OFFERING_RVW;
       this.requestTaskModel.RoleCode = this.user[CommonConstant.ROLE_CODE];
-      this.requestTaskModel.OfficeRoleCodes = [this.user[CommonConstant.ROLE_CODE]];
+      this.requestTaskModel.OfficeRoleCodes = [this.user[CommonConstant.ROLE_CODE],
+                                               this.user[CommonConstant.OFFICE_CODE],
+                                               this.user[CommonConstant.ROLE_CODE] + "-" + this.user[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.requestTaskModel;
