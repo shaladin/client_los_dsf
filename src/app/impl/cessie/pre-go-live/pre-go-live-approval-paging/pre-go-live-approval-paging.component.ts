@@ -40,8 +40,8 @@ export class CessiePreGoLiveApprovalPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = new Array();
 
     if(environment.isCore){
-      this.inputPagingObj._url = "./assets/ucpaging/searchCessiePreGoLiveApprovalV2.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCessiePreGoLiveApprovalV2.json";
+      this.inputPagingObj._url = "./assets/impl/ucpaging/V2/searchCessiePreGoLiveApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/V2//searchCessiePreGoLiveApprovalV2.json";
     }
 
     var critInputOnlyOffering = new CriteriaObj();

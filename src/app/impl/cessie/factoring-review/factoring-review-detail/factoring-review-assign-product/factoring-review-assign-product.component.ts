@@ -20,6 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'factoring-review-assign-product',
@@ -40,7 +41,7 @@ export class FactoringReviewAssignProductComponent implements OnInit {
   OfficeName: string;
   CessieNo: string;
   CessieHXId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   CustId: number;
   CustNo: string;
 
@@ -60,7 +61,7 @@ export class FactoringReviewAssignProductComponent implements OnInit {
     PayFreqCode: [''],
   });
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private claimTaskService: ClaimTaskService,
     private http: HttpClient, private toastr: NGXToastrService, private spinner: NgxSpinnerService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["OfficeCode"] != null) this.OfficeCode = params["OfficeCode"];
@@ -74,21 +75,31 @@ export class FactoringReviewAssignProductComponent implements OnInit {
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
+    if (environment.isCore) {
+      if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+        console.log(this.claimTaskService)
+      }
+    }
+    else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
+    // var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    // var wfClaimObj = new ClaimWorkflowObj();
+    // wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    // wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    // this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+    //   (response) => {
+    //   });
   }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.ClaimTask();
 
-    if (this.WfTaskListId > 0) {
-      this.ClaimTask();
-    }
+    // if (this.WfTaskListId > 0) {
+    //   this.ClaimTask();
+    // }
 
     this.MakeLookUpObj();
 
