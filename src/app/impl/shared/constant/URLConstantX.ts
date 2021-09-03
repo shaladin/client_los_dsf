@@ -1,7 +1,7 @@
 import {environment} from 'environments/environment';
 
 export class URLConstantX {
-  // X 
+  // X
   public static CalculateAdditionalInterestX = environment.losUrl+ "/v1" + "/AgrmntX/CalculateAdditionalInterest";
   public static UpdateEffectiveAndAgrmntCreatedDtX = environment.losUrl+ "/v1" + "/AgrmntX/UpdateEffectiveAndAgrmntCreatedDt";
   public static GetListAgrmntParentByCustNoX = environment.losUrl + '/v1' + '/AgrmntX/GetListAgrmntParentByCustNo';
@@ -9,6 +9,7 @@ export class URLConstantX {
   public static SubmitDeliveryOrderDataX = environment.losUrl+ "/v1" + "/DeliveryOrderX/SubmitDeliveryOrderData";
   public static AddCustCnfrmX = environment.losUrl+ "/v1" + "/CustCnfrmX/AddCustCnfrm";
   public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
+  public static AddPreGoLiveXV2 = environment.losUrl+ "/v2" + "/PreGoLiveX/AddPreGoLive";
 
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
@@ -43,12 +44,15 @@ export class URLConstantX {
 
   // Cessie
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
+  public static UploadFileV2 = environment.FoundationR3Url + "/v2" + "/UploadX/UploadFileV2";
   public static AssignProduct = environment.losUrl + "/v1" + "/Cessie/AssignProduct";
   public static GetListAppForView = environment.losUrl + "/v1" + "/Cessie/GetListAppForView";
   public static SubmitReview = environment.losUrl + "/v1" + "/Cessie/SubmitReview";
+  public static SubmitReviewV2 = environment.losUrl + "/v2" + "/Cessie/SubmitReview";
   public static GetApvAmount = environment.losUrl + "/v1" + "/Cessie/GetApvAmount";
   public static GetListApp = environment.losUrl + "/v1" + "/Cessie/GetListApp";
   public static SubmitPreGoLiveCessie = environment.losUrl + "/v1" + "/Cessie/SubmitPreGoLive";
+  public static SubmitPreGoLiveCessieV2 = environment.losUrl + "/v2" + "/Cessie/SubmitPreGoLive";
   public static SubmitCancel = environment.losUrl + "/v1" + "/Cessie/SubmitCancel";
 
   //MOU CUST X
@@ -95,7 +99,9 @@ export class URLConstantX {
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
   public static AddNewApplication = environment.losUrl + "/v1" + "/AppX/AddNewApplication";
+  public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/AppX/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/AppX/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2" + "/AppX/AddNewApplicationFromCopy";
   public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/v1" +"/AppX/GetAppByCustNoAndIsAppInitDone";
   public static GetAppByCustNoAndAppStat = environment.losUrl + "/v1" + "/AppX/GetAppByCustNoAndAppStat";
 
@@ -111,9 +117,11 @@ export class URLConstantX {
   //PO
   public static GetAppCustBankAccsByAppIdX = environment.losUrl  + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";
   public static GetPurchaseOrderHByAgrmntIdAndSupplCodeX = environment.losUrl  + '/v1' + "/PurchaseOrderHX/GetPurchaseOrderHByAgrmntIdAndSupplCode";
+
   //SURVEY VERIF X
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/AddVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
   public static EditVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/EditVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
+  public static CompleteAppSurveyVerifXV2 = environment.losUrl + "/v2" + "/SurveyVerifX/CompleteAppSurveyVerif";
 
   //REF SECTOR ECONOMY SLIK X
   public static GetRefSectorEconomySlikXByCode = environment.FoundationR3Url + "/v1" + "/RefSectorEconomySlikX/GetRefSectorEconomySlikXByCode";

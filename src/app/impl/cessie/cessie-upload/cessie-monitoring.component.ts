@@ -37,8 +37,9 @@ export class CessieMonitoringComponent implements OnInit {
           environment: environment.FoundationR3Url + "/v1"
         }
       ],
-      url: URLConstantX.UploadFile,
+      url: URLConstantX.UploadFileV2,
       isDownloadTmplt : false
     }
+    console.log(this.uploadObj)
   }
 }

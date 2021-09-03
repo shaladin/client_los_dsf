@@ -32,6 +32,9 @@ import { RegexService } from 'app/shared/services/regex.services';
 import { CustomPatternObj } from "app/shared/model/CustomPatternObj.model";
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import {ChangeMouCustCollateralStatXObj} from 'app/impl/shared/model/ChangeMouCustCollateralStatXObjModel';
+import { RefAttrGenerateObj } from "app/shared/model/RefAttrGenerate.Model";
+import { RefAttrGenerate } from "app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service";
+import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from "app/shared/model/MouCustCollateralAttrObj.Model";
 
 @Component({
   selector: "app-change-mou-request-addcoll-x",
@@ -59,7 +62,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   changeMouCustCollateralObj: ChangeMouCustCollateralObj;
   changeMouCustCollateralRegistrationObj: ChangeMouCustCollateralRegistrationObj;
 
-  listCollateralData: any;
+  listCollateralData: Array<any> = new Array();
   inputLookupObj: InputLookupObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
@@ -142,7 +145,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     ManufacturingYear: ["", [Validators.pattern("^[0-9]+$")]],
     CopyToOwnerLocation: [''],
     SelfOwner: [false],
-
+    AttrContentObjs: this.fb.array([]),
     CollateralStatus: [''],
     IsRequiredStatus: [''],
     CollateralReceivedDt: [''],
@@ -153,6 +156,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   dealerGrading: string;
   dealerRating: number;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -187,8 +191,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
   bindUcAddToTempData() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url + '/v1';
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
+    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
 
     const addCritCustNo = new CriteriaObj();
@@ -225,7 +228,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
         }
       });
 
-    var assetObj = {};
+    let assetObj = {};
     this.http.post(URLConstant.GetListAssetTypeByCode, assetObj).subscribe(
       (response) => {
         this.CollTypeList = response["ReturnObject"];
@@ -250,8 +253,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupObj.isReady = true;
@@ -261,8 +263,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.losUrl + '/v1';
+    this.inputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
     this.inputLookupObj.isReady = true;
@@ -289,13 +290,13 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
     } else {
-      var arrMemberList = new Array();
+      let arrMemberList = new Array();
       for (let index = 0; index < this.listCollateralData.length; index++) {
         arrMemberList.push(this.listCollateralData[index].CollateralNo);
       }
 
       if (arrMemberList.length != 0) {
-        var addCritListCollateralNo = new CriteriaObj();
+        let addCritListCollateralNo = new CriteriaObj();
         addCritListCollateralNo.DataType = "numeric";
         addCritListCollateralNo.propName = "MCC.COLLATERAL_NO";
         addCritListCollateralNo.restriction = AdInsConstant.RestrictionNotIn;
@@ -308,6 +309,19 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       this.criteriaObj.propName = "MCC.ASSET_TYPE_CODE";
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
+
+      const criteriaMouCustIdObj = new CriteriaObj();
+      criteriaMouCustIdObj.restriction = AdInsConstant.RestrictionNeq;
+      criteriaMouCustIdObj.propName = "MC.MOU_CUST_ID";
+      criteriaMouCustIdObj.value = this.MouCustId.toString();
+      this.criteriaList.push(criteriaMouCustIdObj);
+
+      const addCritCustNo = new CriteriaObj();
+      addCritCustNo.DataType = 'text';
+      addCritCustNo.propName = 'MC.CUST_NO';
+      addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+      addCritCustNo.value = this.custNo;
+      this.criteriaList.push(addCritCustNo);
     }
 
     this.inputLookupObj.nameSelect = "";
@@ -327,7 +341,6 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn2 = false;
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showFax = false;
-
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
     this.inputAddressObjForLocAddr.showPhn1 = false;
@@ -359,13 +372,15 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     });
   }
 
-  open(pageType) {
+  open(pageType: string) {
     this.isAdd = true;
     this.ResetForm();
     this.AddCollForm.controls.MrCollateralConditionCode.disable();
     this.type = pageType;
+    this.ChgMouCustCollateralId = 0;
+    this.GenerateCollateralAttr(false, 0);
     if (pageType == "AddExisting") {
-      var listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
+      let listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
       listDocExisting.reset();
       while (listDocExisting.length !== 0) {
         listDocExisting.removeAt(0);
@@ -405,17 +420,73 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.getDealerGrading();
     this.AddCollForm.updateValueAndValidity();
   }
+  
+    async getDealerGrading() {
+	    var changeMouTrxId;
+	    await this.http.post(URLConstantX.GetChangeMouTrxbyTrxNo, { ChangeMouTrxNo: this.ChangeMouTrxNo }).toPromise().then(
+	      (response) => {
+	        changeMouTrxId = response['ChangeMouTrxId'];
+	      }); 
+	    await this.http.post(URLConstantX.GetChangeMouDealerGradingX, { Id: changeMouTrxId }).toPromise().then(
+	      (response) => {
+	        this.dealerGrading = response['DealerGrading'];
+	        this.dealerRating = response['DealerRating'];
+	      });
+	}
 
-  async getDealerGrading() {
-    var changeMouTrxId;
-    await this.http.post(URLConstantX.GetChangeMouTrxbyTrxNo, { ChangeMouTrxNo: this.ChangeMouTrxNo }).toPromise().then(
-      (response) => {
-        changeMouTrxId = response['ChangeMouTrxId'];
-      }); 
-    await this.http.post(URLConstantX.GetChangeMouDealerGradingX, { Id: changeMouTrxId }).toPromise().then(
-      (response) => {
-        this.dealerGrading = response['DealerGrading'];
-        this.dealerRating = response['DealerRating'];
+  ChgMouCustCollateralId: number = 0;
+  isAttrReady: boolean = false;
+  IsDisable: boolean = false;
+  refreshAttr() {
+    this.GenerateCollateralAttr(true, this.ChgMouCustCollateralId);
+  }
+
+  readonly identifierAttr: string = "AttrContentObjs";
+  ListAttrObjs: Array<RefAttrGenerateObj> = new Array();
+  async GenerateCollateralAttr(isRefresh: boolean = false, ChgMouCustCollId: number = 0, isCopy: boolean = false) {
+    let GenObj = !isCopy ? {
+      ChangeMouCustCollateralId: ChgMouCustCollId,
+      AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
+      IsRefresh: isRefresh
+    } : {      
+      MouCustCollateralId: ChgMouCustCollId,
+      AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
+      IsRefresh: isRefresh
+    };
+    this.isAttrReady = false;
+    this.IsDisable = false;
+    this.ListAttrObjs = new Array();
+    let urlApi: string = !isCopy ? URLConstant.GenerateChangeMouCollateralAttr : URLConstant.GenerateMouCollateralAttr;
+    this.http.post(urlApi, GenObj).subscribe(
+      (response: ResMouCustCollateralAttrObj) => {
+        if (response.IsDiffWithRefAttr) {
+          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
+        }
+        for (let index = 0; index < response.MouCustCollateralAttrObjs.length; index++) {
+          const element = response.MouCustCollateralAttrObjs[index];
+          const tempObj: RefAttrGenerateObj = {
+            AttrCode: element.CollateralAttrCode,
+            AttrGroup: element.AttrGroup,
+            AttrInputType: element.AttrInputType,
+            AttrLength: element.AttrLength,
+            AttrName: element.CollateralAttrName,
+            AttrQuestionValue: RefAttrGenerate.BindListQuestionByListString(element.AttrQuestionValue),
+            AttrTypeCode: "",
+            AttrValue: element.AttrValue,
+            IsMandatory: element.IsMandatory,
+            MasterTypeCode: element.RefAttrValue,
+            PatternCode: element.PatternCode,
+            PatternValue: element.PatternValue,
+            RsvField1: "",
+            RsvField2: "",
+            RsvField3: "",
+            RsvField4: "",
+            RsvField5: "",
+          };
+          this.ListAttrObjs.push(tempObj);
+        }
+        if(isCopy) this.IsDisable = true;
+        this.isAttrReady = true;
       });
   }
 
@@ -479,8 +550,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
                 this.items.removeAt(0);
               }
               this.SerialNoList = response.ReturnObject;
-              for (var i = 0; i < this.SerialNoList["length"]; i++) {
-                var eachDataDetail = this.fb.group({
+              for (let i = 0; i < this.SerialNoList["length"]; i++) {
+                let eachDataDetail = this.fb.group({
                   SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
                   SerialNoValue: ["", Validators.required],
                   IsMandatory: [this.SerialNoList[i].IsMandatory],
@@ -531,13 +602,16 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
             RowVersionCollateral: this.collateralObj.RowVersion,
 
             MouCustCollateralRegistrationId: this.collateralRegistrationObj.MouCustCollateralRegistrationId,
+            SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer,
             OwnerName: this.collateralRegistrationObj.OwnerName,
             OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
             MrIdTypeCode: this.collateralRegistrationObj.MrIdType,
-            MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
+            OwnerRelationship: this.collateralRegistrationObj.MrOwnerRelationshipCode,
             Notes: this.collateralRegistrationObj.Notes,
             RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
           });
+          this.AddCollForm.get("SelfOwner").disable();
+          this.GenerateCollateralAttr(true, this.collateralObj["MouCustCollateralId"], true);
           this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
           this.legalAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
           this.legalAddrObj.City = this.collateralRegistrationObj.OwnerCity;
@@ -561,6 +635,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
           this.inputAddressObjForLegalAddr.default = this.legalAddrObj;
           this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
+          this.inputAddressObjForLegalAddr.isReadonly = true;
 
           this.locationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
           this.locationAddrObj.City = this.collateralRegistrationObj.LocationCity;
@@ -585,7 +660,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           this.inputAddressObjForLocAddr.default = this.locationAddrObj;
           this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
 
-          this.onItemChange(this.collateralObj.AssetTypeCode, true, true);
+          this.onItemChange(this.collateralObj.AssetTypeCode, true, true, true);
         });
     }
   }
@@ -593,7 +668,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   onItemChange(
     value,
     isInit: boolean = false,
-    isFromLookupEventCallback: boolean = false
+    isFromLookupEventCallback: boolean = false, isCopy: boolean = false
   ) {
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).subscribe(
       (response: GenericListObj) => {
@@ -602,8 +677,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
             this.items.removeAt(0);
           }
           this.SerialNoList = response.ReturnObject;
-          for (var i = 0; i < this.SerialNoList["length"]; i++) {
-            var eachDataDetail = this.fb.group({
+          for (let i = 0; i < this.SerialNoList["length"]; i++) {
+            let eachDataDetail = this.fb.group({
               SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
               SerialNoValue: [""],
               IsMandatory: [this.SerialNoList[i].IsMandatory],
@@ -616,7 +691,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           }
         }
 
-        var listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
+        let listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
         listDocExisting.reset();
         while (listDocExisting.length !== 0) {
           listDocExisting.removeAt(0);
@@ -626,6 +701,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     if (!isFromLookupEventCallback) {
       this.updateUcLookup(value, false, this.type);
     }
+    if(!isCopy) this.GenerateCollateralAttr(false, this.ChgMouCustCollateralId);
   }
 
   SaveAddEdit() {
@@ -649,11 +725,11 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       );
     }
 
-
-    const custCollObj = {
+    let custCollObj = {
       ChangeMouCustCollateral: this.changeMouCustCollateralObj,
       ChangeMouCustCollateralRegistration: this.changeMouCustCollateralRegistrationObj,
       ListChangeMouCustCollateralDoc: this.listMouCustCollateralDocObj.MouCustCollateralDocObj,
+      ListChangeMouCustCollaterals: this.SetCollateralAttr(),
       CollateralReceivedDt : this.AddCollForm.controls.CollateralReceivedDt.value,
       CollateralReleasedDt : this.AddCollForm.controls.CollateralReleasedDt.value
     };
@@ -666,6 +742,20 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
         this.ClearForm();
         this.UpdateCollateral.emit();
       });
+  }
+
+  SetCollateralAttr(): Array<MouCustCollateralAttrObj> {
+    let tempList: Array<MouCustCollateralAttrObj> = new Array();
+    let tempFormArray = this.AddCollForm.get(this.identifierAttr) as FormArray;
+    for (let index = 0; index < tempFormArray.length; index++) {
+      const element = tempFormArray.get(index.toString()).value;
+      let tempObj: MouCustCollateralAttrObj = new MouCustCollateralAttrObj();
+      tempObj.CollateralAttrCode = element["AttrCode"];
+      tempObj.CollateralAttrName = element["AttrName"];
+      tempObj.AttrValue = element["AttrValue"];
+      tempList.push(tempObj);
+    }
+    return tempList;
   }
 
   setCollateralObjForSave() {
@@ -706,7 +796,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
     this.changeMouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.changeMouCustCollateralObj.CollateralPrcnt = this.AddCollForm.controls.CollateralPrcnt.value;
-    this.changeMouCustCollateralObj.CollateralPortionAmt = (this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value)/100
+    this.changeMouCustCollateralObj.CollateralPortionAmt = (this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value) / 100
     this.changeMouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
     this.changeMouCustCollateralObj.ManufacturingYear = this.AddCollForm.controls.ManufacturingYear.value;
 
@@ -766,8 +856,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
   }
 
-  editData(ChangeMouCustCollId) {
-
+  editData(ChangeMouCustCollId: number) {
+    this.ChgMouCustCollateralId = ChangeMouCustCollId;
     this.changeMouCustCollateralObj = new ChangeMouCustCollateralObj();
     this.changeMouCustCollateralObj.ChangeMouCustCollateralId = ChangeMouCustCollId;
     this.isAdd = false;
@@ -790,8 +880,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
               this.items.removeAt(0);
             }
             this.SerialNoList = response.ReturnObject;
-            for (var i = 0; i < this.SerialNoList["length"]; i++) {
-              var eachDataDetail = this.fb.group({
+            for (let i = 0; i < this.SerialNoList["length"]; i++) {
+              let eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
                 SerialNoValue: ["", Validators.required],
                 IsMandatory: [this.SerialNoList[i].IsMandatory],
@@ -866,6 +956,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
           SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF" ? true : false
         });
+        this.GenerateCollateralAttr(false, ChangeMouCustCollId);
         this.checkSelfOwnerColl();
         this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
         this.updateUcLookup(this.collateralObj.AssetTypeCode, false, "AddEdit");
@@ -972,7 +1063,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       ManufacturingYear: ["", [Validators.pattern("^[0-9]+$")]],
       CopyToOwnerLocation: [''],
       SelfOwner: [false],
-
+	  AttrContentObjs: this.fb.array([]),
       CollateralStatus: [''],
       IsRequiredStatus: [''],
       CollateralReceivedDt: [''],
@@ -992,8 +1083,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   }
 
   SaveExistingCollateral() {
-    let collateralPortionAmt: number = (this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value)/100;
-    const existingChangeMouCustCollateralObj = {
+    let collateralPortionAmt: number = (this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value) / 100;
+    let existingChangeMouCustCollateralObj = {
       ChangeMouCustCollateral: {
         CollateralNo: this.collateralObj.CollateralNo,
         ChangeMouCustId: this.ChangeMouCustId,
@@ -1043,8 +1134,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       }
     }
 
-    if(this.returnMouCust.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
-      if(sumCollateralValue < this.returnMouCust.PlafondAmt){
+    if (this.returnMouCust.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
+      if (sumCollateralValue < this.returnMouCust.PlafondAmt) {
         this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
         return;
       }
@@ -1063,14 +1154,14 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {
-          var ListDoc = this.AddCollForm.get("ListDoc") as FormArray;
+          let ListDoc = this.AddCollForm.get("ListDoc") as FormArray;
           if (ListDoc.length > 0) {
             while (ListDoc.length !== 0) {
               ListDoc.removeAt(0)
             }
           }
-          for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
-            var assetDocumentDetail = this.fb.group({
+          for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+            let assetDocumentDetail = this.fb.group({
               DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
               AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
               IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
@@ -1096,7 +1187,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           }
         } else {
           if (this.type == "AddExisting") {
-            var listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
+            let listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
             while (listDocExisting.length !== 0) {
               listDocExisting.removeAt(0);
             }
@@ -1108,10 +1199,10 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   setMouCustCollateralDoc(ChangeMouCustCollateralId: number = 0) {
     this.http.post(URLConstant.GetChangeMouCustCollateralDocByChangeMouCustCollateralId, { Id: ChangeMouCustCollateralId }).subscribe(
       (response) => {
-        var ChangeMouCustCollateralDocs = new Array();
+        let ChangeMouCustCollateralDocs = new Array();
         ChangeMouCustCollateralDocs = response["ReturnObject"];
         if (ChangeMouCustCollateralDocs != null && ChangeMouCustCollateralDocs["length"] > 0) {
-          for (var i = 0; i < ChangeMouCustCollateralDocs.length; i++) {
+          for (let i = 0; i < ChangeMouCustCollateralDocs.length; i++) {
             this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
               DocNo: ChangeMouCustCollateralDocs[i].DocNo,
               DocNotes: ChangeMouCustCollateralDocs[i].DocNotes,
@@ -1121,7 +1212,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           }
         } else {
           if (this.type == "AddExisting") {
-            var listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
+            let listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
             while (listDocExisting.length !== 0) {
               listDocExisting.removeAt(0);
             }
@@ -1134,8 +1225,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     if (this.AddCollForm.controls.SelfOwner.value) {
       await this.http.post(URLConstant.GetMouCustByMouCustId, { Id: this.MouCustId }).toPromise().then(
         (response) => {
-          var CustObj = response["MouCustObj"];
-          var CustAddrObj = response["MouCustAddrLegalObj"];
+          let CustObj = response["MouCustObj"];
+          let CustAddrObj = response["MouCustAddrLegalObj"];
 
           this.AddCollForm.patchValue({
             OwnerName: CustObj.CustName,
@@ -1233,10 +1324,10 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   }
 
   setValidatorPattern(idTypeValue) {
-    var pattern: string = '';
+    let pattern: string = '';
     if (idTypeValue != undefined) {
       if (this.resultPattern != undefined) {
-        var result = this.resultPattern.find(x => x.Key == idTypeValue)
+        let result = this.resultPattern.find(x => x.Key == idTypeValue)
         if (result != undefined) {
           pattern = result.Value;
         }

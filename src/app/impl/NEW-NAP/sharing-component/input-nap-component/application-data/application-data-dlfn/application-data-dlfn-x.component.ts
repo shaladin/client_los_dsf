@@ -70,8 +70,8 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     WayRestructure: [''],
     // MrSlikSecEcoCode: [''],
     CustBankAcc: [''],
-    TopIntrstRatePrcnt: [0],
-    IntrstRatePrcnt: [0]
+    IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]]
   })
 
   refMasterInterestType: RefMasterObj = new RefMasterObj();
@@ -114,6 +114,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   IsMouSelect: boolean = false;
   MouOsPlafond: number;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -228,6 +229,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         this.allInType = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
+            MrInstTypeCode: this.allInType[0].Key,
             MrInstSchemeCode: CommonConstant.InstSchmEvenPrincipal
           });
           this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
@@ -431,7 +433,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.genericJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.jsonSelect = {SalesOfficerName: this.resultData.SalesOfficerName};

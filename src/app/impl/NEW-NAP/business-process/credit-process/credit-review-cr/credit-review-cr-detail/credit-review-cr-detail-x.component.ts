@@ -5,7 +5,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -22,11 +21,11 @@ import { ToastrService } from 'ngx-toastr';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-
 
 @Component({
   selector: 'app-credit-review-cr-detail-x',
@@ -101,7 +100,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.ClaimTask();
     await this.GetAppNo();
     await this.GetListDeviation();
     await this.BindDDLRecommendation();
@@ -364,7 +363,9 @@ export class CreditReviewCrDetailXComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: this.RFAInfo
     };
-    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+
+    let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
+    this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
@@ -380,8 +381,9 @@ export class CreditReviewCrDetailXComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId
     }
-    console.log(apiObj);
-    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+    
+    let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
+    this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
@@ -421,4 +423,15 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     return AppCrdRvwDObjs;
   }
   //#endregion
+
+  ClaimTask(){
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
+  }
 }

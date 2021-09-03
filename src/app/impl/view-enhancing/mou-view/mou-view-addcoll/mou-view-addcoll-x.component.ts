@@ -23,7 +23,7 @@ import {MouCustCollateralStatXObj} from 'app/impl/shared/model/MouCustCollateral
 export class MouViewAddcollXComponent implements OnInit {
   @Input() MouCustId: number;
 
-  listCollateralData: any;
+  listCollateralData: Array<any> = new Array();
   isView: boolean = false;
   listMouCustCollateralDocObj: Array<any>;
   mouCustCollateralDoc: MouCustCollateralDocObj = new MouCustCollateralDocObj();
@@ -48,13 +48,14 @@ export class MouViewAddcollXComponent implements OnInit {
   })
   ViewColl(MouCustCollateralId) {
     this.listMouCustCollateralDocObj = new Array<any>();
-    this.isView = true;
+    this.isView = false;
     const collObj = { Id: MouCustCollateralId };
     console.log(MouCustCollateralId);
     this.http.post(URLConstant.GetListMouCustCollateralDocsByMouCustCollateralId, { Id: MouCustCollateralId }).subscribe(
       (response) => {
         var MouCustCollateralDocs = new Array();
         MouCustCollateralDocs = response["MouCustCollateralDocs"];
+        this.isView = true;
         console.log(MouCustCollateralDocs);
         if (MouCustCollateralDocs["length"] > 0) {
 

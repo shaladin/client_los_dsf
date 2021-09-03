@@ -139,18 +139,21 @@
             <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.TopDays}}</label>
             
             <label class="col-md-2 adInsLabel" translate>Term Of Payment Interest Rate Percent (%) </label>
-            <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.TopInterestRatePrcnt}} </label>
+            <!--<label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.TopInterestRatePrcnt}} </label>-->
+            <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.TopInterestRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
           <div class="form-group row">
             <label class="col-md-2 adInsLabel" translate>Payment Frequency</label>
             <label class="col-md-4 adInsLabel" translate>{{dictRefPayFreq[MouCustDlrFindData.PayFreqCode]}}</label>
             
             <label class="col-md-2 adInsLabel" translate>Interest Rate (%) </label>
-            <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.InterestRatePrcnt}} </label>
+            <!--<label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.InterestRatePrcnt}} </label>-->
+            <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.InterestRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
           <div class="form-group row">
             <label class="col-md-2 adInsLabel" translate>Extend Rate Percent (%)</label>
-            <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ExtendRatePrcnt}}</label>
+            <!--<label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ExtendRatePrcnt}}</label>-->
+            <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ExtendRatePrcnt | number:'.6':'en-US'}} %</label>
             
             <label class="col-md-2 adInsLabel" translate>Maximum Months For Extend</label>
             <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.MaximumMonthsForExtend}} </label>
@@ -160,7 +163,8 @@
             <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.MaximumTimesForExtends}}</label>
             
             <label class="col-md-2 adInsLabel" translate>Principal Paid For Extend (%)</label>
-            <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.PrincipalPaidInExtendPrcntg}} </label>
+            <!--<label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.PrincipalPaidInExtendPrcntg}} </label>-->
+            <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.PrincipalPaidInExtendPrcntg | number:'.6':'en-US'}} %</label>
           </div>
           <div class="form-group row">
             <label class="col-md-2 adInsLabel" translate>Spare Day To Pay</label>

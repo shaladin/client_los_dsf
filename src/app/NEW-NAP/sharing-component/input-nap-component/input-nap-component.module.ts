@@ -134,6 +134,12 @@ import {CollateralDataCfnaPagingXComponent} from 'app/impl/NEW-NAP/sharing-compo
 import {CollateralDataCfnaXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-x.component';
 import { InsuranceMultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/insurance-multi-asset-data-x/insurance-multi-asset-data-x.component";
 
+import {ApplicationDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-dlfn/application-data-dlfn-x.component';
+import {FinancialDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/financial-data-dlfn-x.component';
+import {SingleInstDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/single-inst-dlfn/single-inst-dlfn-x.component';
+import {SchmRegularFixDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn-x.component';
+import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn-x.component';
+
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -271,7 +277,12 @@ export const customCurrencyMaskConfig = {
     AssetDataXComponent,
     CollateralDataCfnaXComponent,
     CollateralDataCfnaPagingXComponent,
-    InsuranceMultiAssetDataXComponent
+    InsuranceMultiAssetDataXComponent,
+    ApplicationDataDlfnXComponent,
+    FinancialDataDlfnXComponent,
+    SingleInstDlfnXComponent,
+    SchmRegularFixDlfnXComponent,
+    SchmEvenPrincipalDlfnXComponent
   ],
   imports: [
     CommonModule,
@@ -411,7 +422,12 @@ export const customCurrencyMaskConfig = {
     AssetDataXComponent,
     CollateralDataCfnaXComponent,
     CollateralDataCfnaPagingXComponent,
-    InsuranceMultiAssetDataXComponent
+    InsuranceMultiAssetDataXComponent,
+    ApplicationDataDlfnXComponent,
+    FinancialDataDlfnXComponent,
+    SingleInstDlfnXComponent,
+    SchmRegularFixDlfnXComponent,
+    SchmEvenPrincipalDlfnXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

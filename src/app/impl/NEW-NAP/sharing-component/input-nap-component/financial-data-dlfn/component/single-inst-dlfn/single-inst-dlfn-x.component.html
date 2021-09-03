@@ -25,10 +25,10 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <!-- <label>Calculation Method</label> -->
+              Top Interest Rate
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <!-- <label>{{ParentForm.controls.SingleInstCalcMthdName.value}}</label> -->
+              {{ParentForm.controls.TopInterestRatePrcnt.value | number:'.6':'en-US'}} %
             </div>
             <div class="col-md-3 form-inline">
               <label>Maturity Date</label>
@@ -53,7 +53,8 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="date" class="form-control" formControlName="EstEffDt" (focusout)="EstEffDtFocusOut($event)"
-                required [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EstEffDt.invalid}">
+                required [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EstEffDt.invalid}"
+                [readonly]="ParentForm.controls.TopBased.value == 'INVC_DT'">
               <lib-uc-show-errors [control]="ParentForm.controls.EstEffDt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -160,7 +161,7 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{(ParentForm.controls.TotalRetentionAmt.value | number : '1.2-2') + ' / ' +
-                (ParentForm.controls.RetentionPrcnt.value | number : '1.2-2')}}</label>
+                (ParentForm.controls.RetentionPrcnt.value | number:'.6':'en-US')}} %</label>
             </div> -->
           </div>
         </div>
@@ -183,7 +184,7 @@
             </div>
             <div *ngIf="ParentForm.controls.InterestType.value == 'PRCNT'"
               class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
+              <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt" [options]="CurrencyMaskPrct"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                 (keyup)="SetNeedReCalculate(true)" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
