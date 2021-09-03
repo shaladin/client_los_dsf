@@ -36,6 +36,7 @@ export class URLConstantX {
   //App Commission
   public static GetAppCommissionRule = environment.losUrl + "/v1" + "/AppCommissionX/GetAppCommissionRule";
   public static AddEditAppCommissionData = environment.losUrl + "/v1" + "/AppCommissionX/AddEditAppCommissionData";
+  public static AddEditAppCommissionDataV2 = environment.losUrl + "/v2" + "/AppCommissionX/AddEditAppCommissionData";
   public static GetAppAssetByAppIdConditionNewBrandMitsubishi = environment.losUrl + "/v1" + "/AppAssetX/GetAppAssetByAppIdConditionNewBrandMitsubishi";
   public static GetAppCommissionTaxAndCalcGrossYieldX = environment.losUrl + "/v1" + "/AppCommissionX/GetAppCommissionTaxAndCalcGrossYield";
 
@@ -62,6 +63,7 @@ export class URLConstantX {
   public static GetMouMainInfoByIdX = environment.losUrl +'/v1' + "/MouCustX/GetMouMainInfoById";
 
   public static CheckMouActiveR2 = environment.losUrl +'/v1' + "/MouCustX/CheckMouActiveR2";
+  public static MouCustExecutionHumanActivityXV2 = environment.losUrl + "/v2" + "/MouCustX/MouCustExecutionHumanActivity";
 
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";
@@ -110,9 +112,6 @@ export class URLConstantX {
 
   //APP INSURANCE X
   public static GetListAppInsObjByAgrmntIdForViewX = environment.losUrl + '/v1' + '/AppInsX/GetListAppInsObjByAgrmntIdForView';
-
-  //APP INVOICE X
-  public static SubmitInvoiceVerifDlfn = environment.losUrl  + '/v1' + "/AppInvoiceX/SubmitInvoiceVerifDlfn";
 
   //PO
   public static GetAppCustBankAccsByAppIdX = environment.losUrl  + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";

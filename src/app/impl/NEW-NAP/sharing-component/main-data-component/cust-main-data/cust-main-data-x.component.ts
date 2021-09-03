@@ -134,7 +134,7 @@ export class CustMainDataXComponent implements OnInit {
   readonly CustMainDataMgmntShrholder = CommonConstant.CustMainDataModeMgmntShrholder;
   MaxDaysThirdPartyChecking: number;
   appObj: AppObj = new AppObj();
-
+  readonly CustTypePublic: string = CommonConstant.CustTypePublic;
   constructor(
     private regexService: RegexService,
     private fb: FormBuilder,

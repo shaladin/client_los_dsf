@@ -28,16 +28,16 @@
     },
     {
       "type": "dropdown",
-      "datatype": "text",
       "name": "A.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
-      "value": "",
+      "value": "Office",
       "placeholder": "Placeholder",
       "isFromURL": true,
-      "isSelectOne": false,
+      "ddlType": "all",
       "isQueryIn": true,
       "url": "",
-      "path": "/v1/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
       "itemsUrl": []
@@ -96,7 +96,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "ClaimBy"
+      "property": "Assignee"
     },
     {
       "type": "link",
