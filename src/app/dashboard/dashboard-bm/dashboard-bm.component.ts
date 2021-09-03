@@ -18,7 +18,6 @@ export class DashboardBmComponent implements OnInit {
   data: any;
   TotalApp: number = 0;
   LobCode: string = "";
-  StepList:any[]=["Application Input", "Duplicate Checking", "Customer Data Completion", "Data Verification"];
 
   // options
   view: any[] = [600, 400];
@@ -63,7 +62,6 @@ export class DashboardBmComponent implements OnInit {
 
   Refresh(){
     this.UserList = [];
-    console.log(this.UserList.length);
     this.done = false;
     if(this.LobCode == "All"){
       this.LobCode = "";
@@ -73,7 +71,6 @@ export class DashboardBmComponent implements OnInit {
 
   radioChange(event){
     this.LobCode = event.target.value;
-    console.log(event.target.value);
     this.UserList = [];
     this.done = false;
     if(event.target.value == "All"){
