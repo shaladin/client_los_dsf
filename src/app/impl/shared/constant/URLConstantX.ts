@@ -124,6 +124,7 @@ export class URLConstantX {
 
   //REF SECTOR ECONOMY SLIK X
   public static GetRefSectorEconomySlikXByCode = environment.FoundationR3Url + "/v1" + "/RefSectorEconomySlikX/GetRefSectorEconomySlikXByCode";
+  public static GetActiveMappingRefSectorEconomySlikXBySectorEconomySlikCode = environment.FoundationR3Url + "/v1" + "/RefSectorEconomySlikX/GetActiveMappingRefSectorEconomySlikXBySectorEconomySlikCode";
 
   //credit review
   public static GetCrdRvwAppByCrdRvwCustInfoId = environment.losUrl  + '/v1' + "/CrdRvwAppX/GetCrdRvwAppByCrdRvwCustInfoId";
