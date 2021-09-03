@@ -4,6 +4,22 @@
     "reportTemplateCode": "PLAFOND_MOU_SUMMARY",
     "component": [
       {
+        "type": "dropdown",
+        "label": "Period Year",
+        "name": "Year",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "one",
+        "url": "",
+        "environment": "FOU",
+        "path": "/ReportPeriod/GetListYearByGeneralSetting",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 0
+      },
+      {
         "type": "textbox",
         "name": "CustName",
         "id": "CustNameId",
@@ -27,22 +43,6 @@
         "criteriaPropName": "",
         "criteriaPropValue": "",
         "paramAssignment": 0
-        },
-        {
-            "type": "dropdown",
-            "label": "Period Year",
-            "name": "Year",
-            "datatype": "text",
-            "isFromURL": true,
-            "ddlType": "one",
-            "url": "",
-            "environment": "FOU",
-            "path": "/ReportPeriod/GetListYearByGeneralSetting",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "",
-            "criteriaPropValue": "",
-            "paramAssignment": 0
         }
     ],
     "exportTypeList": []
