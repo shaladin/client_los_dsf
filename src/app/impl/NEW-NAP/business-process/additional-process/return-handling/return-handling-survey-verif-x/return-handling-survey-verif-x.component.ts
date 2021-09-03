@@ -11,6 +11,7 @@ import {CommonConstant} from 'app/shared/constant/CommonConstant';
 import {CookieService} from 'ngx-cookie';
 import {RequestTaskModelObj} from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import {IntegrationObj} from 'app/shared/model/library/IntegrationObj.model';
+import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-return-handling-survey-verif-x',
@@ -49,10 +50,8 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true;
 
       //Request Obj
-      this.RequestTaskModel.ProcessKey = "RTN_ADD_SRVY_" + this.BizTemplateCode;
-      this.RequestTaskModel.TaskDefinitionKey = "ADD_SRVY_" + this.BizTemplateCode;
-      // this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
-      // this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.ProcessKey = CommonConstantX.RETURN_HANDLING_ADD_SURVEY + this.BizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstantX.APP_STEP_RETURN_SURVEY_VERIF + this.BizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE], UserAccess[CommonConstant.OFFICE_CODE]];
 
       //Integration Obj

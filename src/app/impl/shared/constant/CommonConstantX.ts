@@ -58,4 +58,6 @@ export class CommonConstantX {
     //Survey Verification
     public static ACT_CODE_SURVEY_VERIF = "SURVEY_"
   public static APP_STEP_SURVEY_VERIF = "SRVY_VRF"
+  public static RETURN_HANDLING_ADD_SURVEY = "RTN_ADD_SRVY_";
+  public static APP_STEP_RETURN_SURVEY_VERIF = "ADD_SRVY_"
 }
