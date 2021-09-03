@@ -29,7 +29,7 @@ export class CessiePreGoLiveComponent implements OnInit {
   result: AgrmntObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   appTC: AppTCObj;
-  TaskListId: number;
+  TaskListId: any;
   ReqByIdObj: GenericObj = new GenericObj();
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
@@ -77,7 +77,16 @@ export class CessiePreGoLiveComponent implements OnInit {
 
 
     this.businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
-    this.claimTaskService.ClaimTask(this.TaskListId);
+    // this.claimTaskService.ClaimTask(this.TaskListId);  
+    if (environment.isCore) {
+      if (this.TaskListId != "" && this.TaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.TaskListId);
+      }
+    }
+    else if (this.TaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.TaskListId);
+    }
+
 
     await this.BindDDLReason();
     await this.initInputApprovalObj();
@@ -89,7 +98,7 @@ export class CessiePreGoLiveComponent implements OnInit {
     }
     else if (ev.Key == "customer") {
       var custObj = {
-        CustNo : ev.ViewObj.CustNo
+        CustNo: ev.ViewObj.CustNo
       };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         (response) => {
@@ -106,8 +115,7 @@ export class CessiePreGoLiveComponent implements OnInit {
 
   RFAInfo: Object = new Object();
   SaveForm(flag = true) {
-    if(!this.IsCheckedAll)
-    {
+    if (!this.IsCheckedAll) {
       this.toastr.warningMessage("Please Complete All Required Document");
       return;
     }
@@ -153,10 +161,10 @@ export class CessiePreGoLiveComponent implements OnInit {
       TaskListId: this.TaskListId,
       rAppTcObj: this.listAppTCObj.AppTCObj,
       CessieHXId: this.CessieHXId,
-      RequestRFAObj : this.RFAInfo
+      RequestRFAObj: this.RFAInfo
     };
 
-    this.http.post(URLConstantX.SubmitPreGoLiveCessie, reqObj).subscribe(
+    this.http.post(URLConstantX.SubmitPreGoLiveCessieV2, reqObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router, [this.CancelLink], {});
         this.toastr.successMessage(response['message']);

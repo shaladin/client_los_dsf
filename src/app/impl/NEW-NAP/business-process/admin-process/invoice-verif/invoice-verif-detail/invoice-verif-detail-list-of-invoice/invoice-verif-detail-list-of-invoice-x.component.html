@@ -2,12 +2,10 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header header-title">
-      </div>
-      <br>
+      </div><br>
       <div class="card-body">
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="InvoiceForm" #enjiForm="ngForm"
-                (ngSubmit)="InvoiceForm.valid && SaveData()">
+          <form class="form form-horizontal" [formGroup]="InvoiceForm" #enjiForm="ngForm" (ngSubmit)="InvoiceForm.valid && SaveData()">
             <lib-ucSubsection [id]="'ListOfInvoiceId'" [title]="'List Of Invoice'" [panel]="'ListOfInvoice'">
             </lib-ucSubsection>
             <div class="form-body" id="ListOfInvoice" formArrayName="Invoices">
@@ -133,8 +131,7 @@
                               [panel]="'formReturnInvoice'">
             </lib-ucSubsection>
             <div *ngIf="IsReturnOn" class="form-body" [id]="'formReturnInvoice'">
-              <form class="form form-horizontal" [formGroup]="ReturnForm" #rettForm="ngForm"
-                    (ngSubmit)="ReturnForm.valid && SaveData()">
+              <form class="form form-horizontal" [formGroup]="ReturnForm" #rettForm="ngForm" (ngSubmit)="ReturnForm.valid && SaveData()">
                 <div class="form-group row adins-required">
                   <div class="form-group col-md-2">
                     <label class="adInsLabel">Return Reason</label>
@@ -148,8 +145,7 @@
                         {{it.Value}}
                       </option>
                     </select>
-                    <lib-uc-show-errors [control]="ReturnForm.controls.Reason"
-                                        [submit]="rettForm.submitted"></lib-uc-show-errors>
+                    <lib-uc-show-errors [control]="ReturnForm.controls.Reason" [submit]="rettForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
 
@@ -160,8 +156,7 @@
                   <div class="col-md-4">
                   <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
                             [ngClass]="{ 'is-invalid': rettForm.submitted && ReturnForm.controls.Notes.invalid}"></textarea>
-                    <lib-uc-show-errors [control]="ReturnForm.controls.Notes"
-                                        [submit]="rettForm.submitted"></lib-uc-show-errors>
+                    <lib-uc-show-errors [control]="ReturnForm.controls.Notes" [submit]="rettForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-actions right">
@@ -171,7 +166,7 @@
                   <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()">
                     <i class="ft-x"></i> Cancel
                   </button>
-                  <button type="submit" class="btn btn-raised btn-primary">
+                  <button type="submit" class="btn btn-raised btn-primary" >
                     <i class="fa fa-check-square-o"></i> Submit
                   </button>
                 </div>
@@ -184,7 +179,7 @@
               <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()">
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" >
                 <i class="fa fa-check-square-o"></i> Save
               </button>
             </div>

@@ -33,8 +33,22 @@
           <td align="right">{{item.CollateralValueAmt | number}}</td>
           <td align="center">{{item.CollateralReceivedDt | date: 'dd-MM-yyyy'}}</td>
           <td align="center">{{item.CollateralReleasedDt | date: 'dd-MM-yyyy'}}</td>
+          <td align="center">
+            <a class="success p-0" (click)="ViewColl(item.ChangeMouCustCollateralId)">
+              <i class="ft-edit-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="form-body" id="AddCollDetailData" *ngIf="isView">
+    <div class="ucSearch-Button-Right">
+      <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
+        <i class="fa fa-check-square-o"></i> Back
+      </button>
+    </div>
+    <br>
+    <app-change-mou-view-addcoll-detail [ChangeMouCustCollateralId]="ChangeMouCustCollateralId"></app-change-mou-view-addcoll-detail>
   </div>
 </form>

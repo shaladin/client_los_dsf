@@ -9,13 +9,13 @@
               <div class="row text-left">
                 <div class="card-body">
                   <div class="px-3">
-                    <lib-ucSubsection [id]="'salesInfoId'" [title]="'Sales Information'" [panel]="'salesInfo'">
+                    <lib-ucSubsection [id]="'salesInfoId'" [title]="'MO Information'" [panel]="'salesInfo'">
                     </lib-ucSubsection>
                     <div class="form-body" id="salesInfo">
                       <div class="form-group row">
                         <!-- Sales Officer -->
                         <div class="form-group col-md-2 adins-required">
-                          <label class="adInsLabel">MO Officer </label>
+                          <label class="adInsLabel" translate>MO's Officer </label>
                         </div>
                         <div class="col-md-4" *ngIf="isInputLookupObj">
                           <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='SalesAppInfoForm'
@@ -26,16 +26,16 @@
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <!-- Sales Supervisor -->
-                        <label class="col-md-2 adInsLabel">MO Supervisor </label>
-                        <label class="col-md-4 adInsLabel">{{SalesAppInfoForm.controls.SalesHeadName.value}} </label>
+                        <label class="col-md-2 adInsLabel" translate>MO's Supervisor </label>
+                        <label class="col-md-4 adInsLabel" translate>{{SalesAppInfoForm.controls.SalesHeadName.value}} </label>
                       </div>
 
                       <div class="form-group row">
                         <!-- Sales Notes -->
-                        <label class="col-md-2 adInsLabel">MO Notes </label>
+                        <label class="col-md-2 adInsLabel" translate>MO's Notes </label>
                         <div class="col-md-4">
                           <textarea class="form-control adInsInput width-75-per" id="basicTextarea"
-                            formControlName="SalesNotes" rows="3"></textarea>
+                            formControlName="SalesNotes" rows="3" translate></textarea>
                         </div>
                       </div>
                     </div>
@@ -66,22 +66,22 @@
                         <label class="col-md-3 adins-label" translate>Term Of Payment Interest Rate Percent (%)</label>
                         <div class="col-md-9">
                           <input type="" currencyMask id="topIntrstRatePrcnt" class="form-control width-30-per"
-                                 formControlName="TopIntrstRatePrcnt"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopIntrstRatePrcnt.invalid}">
-                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopIntrstRatePrcnt"
-                                              [submit]="enjiForm.submitted">
-                          </lib-uc-show-errors>
+                          formControlName="TopIntrstRatePrcnt" [options]="CurrencyMaskPrct"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopIntrstRatePrcnt.invalid}">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopIntrstRatePrcnt"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
                         </div>
                       </div>
                       <div class="form-group row" *ngIf="IsMouSelect">
                         <label class="col-md-3 adins-label" translate>Interest Rate (%)</label>
                         <div class="col-md-9">
                           <input type="" currencyMask id="intrstRatePrcnt" class="form-control width-30-per"
-                                 formControlName="IntrstRatePrcnt"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.IntrstRatePrcnt.invalid}">
-                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.IntrstRatePrcnt"
-                                              [submit]="enjiForm.submitted">
-                          </lib-uc-show-errors>
+                          formControlName="IntrstRatePrcnt" [options]="CurrencyMaskPrct"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.IntrstRatePrcnt.invalid}">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.IntrstRatePrcnt"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
                         </div>
                       </div>
                       <div class="form-group row">
@@ -139,7 +139,7 @@
                         <div class="form-group row">
                           <label class="col-md-3 adins-required-label" translate>Payment Frequency</label>
                           <div class="col-md-9">
-                            <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode">
+                            <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"  (change)="changePaymentFreq()">
                               <option value="">-Select One-</option>
                               <option *ngFor="let it of listPayFreq" value="{{it.PayFreqCode}}">
                                 {{it.Descr}}</option>

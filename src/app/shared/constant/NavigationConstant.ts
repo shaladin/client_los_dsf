@@ -189,7 +189,7 @@ export class NavigationConstant {
   public static NAP_DLFN_PAGING = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.PAGING; //"/Nap/DLFN/Paging"
   public static NAP_DLFN_ADD = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.ADD; //"/Nap/DLFN/Add"
   public static NAP_DLFN_ADD_DETAIL = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.ADD_DETAIL; //"/Nap/DLFN/Add/Detail"
-  public static NAP_DLFN_NAP1 = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.NAP1; //"/Nap/DLFN/NAP1"
+  public static NAP_DLFN_NAP1 = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstantX.NAP1_X; //"/Nap/DLFN/NAP1X"
   public static NAP_DLFN_NAP2 = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstantX.NAP2_X; //"/Nap/DLFN/NAP2X"
   //#endregion
 
@@ -198,7 +198,7 @@ export class NavigationConstant {
   public static NAP_CF4W_PAGING = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstant.PAGING; //"/Nap/ConsumerFinance/Paging"
   public static NAP_CF4W_ADD = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstant.ADD; //"Nap/ConsumerFinance/Add"
   public static NAP_CF4W_ADD_DETAIL = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstant.ADD_DETAIL; //"/Nap/ConsumerFinance/Add/Detail"
-  public static NAP_CF4W_NAP1 = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstant.NAP1; //"Nap/ConsumerFinance/NAP1"
+  public static NAP_CF4W_NAP1 = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstantX.NAP1_X; //"Nap/ConsumerFinance/NAP1X"
   public static NAP_CF4W_NAP2 = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstantX.NAP2_X; //"Nap/ConsumerFinance/NAP2"
   //#endregion
 
@@ -208,7 +208,7 @@ export class NavigationConstant {
   public static NAP_FL4W_VIEW_DO_DETAIL = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.FL4W_VIEW_DO_DETAIL; //'/Nap/FinanceLeasing/ViewDo/Detail'
   public static NAP_FL4W_ADD = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.ADD; //"Nap/FinanceLeasing/Add"
   public static NAP_FL4W_ADD_DETAIL = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/FinanceLeasing/Add/Detail"
-  public static NAP_FL4W_NAP1 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstant.NAP1; //"Nap/FinanceLeasing/NAP1"
+  public static NAP_FL4W_NAP1 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstantX.NAP1_X; //"Nap/FinanceLeasing/NAP1X"
   public static NAP_FL4W_NAP2 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstantX.NAP2; //"Nap/FinanceLeasing/NAP2X"
   //#endregion
 
@@ -217,7 +217,7 @@ export class NavigationConstant {
   public static NAP_CFRFN4W_PAGING = "/" + NavigationConstant.NAP_CFRFN4W_HEADER + "/" + PathConstant.PAGING; //"/Nap/CFRefinancing/Paging"
   public static NAP_CFRFN4W_ADD = "/" + NavigationConstant.NAP_CFRFN4W_HEADER + "/" + PathConstant.ADD; //"Nap/CFRefinancing/Add"
   public static NAP_CFRFN4W_ADD_DETAIL = "/" + NavigationConstant.NAP_CFRFN4W_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/CFRefinancing/Add/Detail"
-  public static NAP_CFRFN4W_NAP1 = "/" + NavigationConstant.NAP_CFRFN4W_HEADER + "/" + PathConstant.NAP1; //"Nap/CFRefinancing/NAP1"
+  public static NAP_CFRFN4W_NAP1 = "/" + NavigationConstant.NAP_CFRFN4W_HEADER + "/" + PathConstantX.NAP1_X; //"Nap/CFRefinancing/NAP1X"
   public static NAP_CFRFN4W_NAP2 = "/" + NavigationConstant.NAP_CFRFN4W_HEADER + "/" + PathConstant.NAP2; //"Nap/CFRefinancing/NAP2"
   //#endregion
 
@@ -235,7 +235,7 @@ export class NavigationConstant {
   public static NAP_FCTR_PAGING = "/" + NavigationConstant.NAP_FCTR_HEADER + "/" + PathConstant.PAGING; //"/Nap/Factoring/Paging"
   public static NAP_FCTR_ADD = "/" + NavigationConstant.NAP_FCTR_HEADER + "/" + PathConstant.ADD; //"Nap/Factoring/Add"
   public static NAP_FCTR_ADD_DETAIL = "/" + NavigationConstant.NAP_FCTR_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/Factoring/Add/Detail"
-  public static NAP_FCTR_NAP1 = "/" + NavigationConstant.NAP_FCTR_HEADER + "/" + PathConstant.NAP1; //"Nap/Factoring/NAP1"
+  public static NAP_FCTR_NAP1 = "/" + NavigationConstant.NAP_FCTR_HEADER + "/" + PathConstantX.NAP1_X; //"Nap/Factoring/NAP1X"
   public static NAP_FCTR_NAP2 = "/" + NavigationConstant.NAP_FCTR_HEADER + "/" + PathConstantX.NAP2_X; //"Nap/Factoring/NAP2X"
   //#endregion
 

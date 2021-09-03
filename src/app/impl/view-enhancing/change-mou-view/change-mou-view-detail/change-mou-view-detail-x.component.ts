@@ -44,7 +44,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
   mouCustClause: any;
   mouCustFctr: any;
   mouCustDlrFncng:any;
-  listAssetData: Array<any>;
+  listAssetData: Array<any> = new Array();
   MrPaidByCode: string;
   SingleInstCalcMthd: string;
   isReady: boolean = false;
@@ -72,7 +72,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    var mouCustObj = { Id: this.MouCustId };
+    let mouCustObj = { Id: this.MouCustId };
     if (this.MouType == CommonConstant.GENERAL) {
       this.http
         .post(URLConstant.GetMouCustDataByMouCustId, mouCustObj)

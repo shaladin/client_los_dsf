@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -15,9 +15,12 @@ import { ResDisbInfo, ResGetAllNtfAppAmt } from 'app/shared/model/Response/AppIn
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CookieService } from 'ngx-cookie';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
-import {ReturnHandlingHObj} from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { environment } from 'environments/environment';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'invoice-verif-detail-list-of-invoice-x',
@@ -36,7 +39,7 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
   verifStatCode: RefMasterObj;
   BusinessDate: Date;
   Username: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   TrxNo: string;
   PlafondAmt: number;
   OsPlafondAmt: number;
@@ -50,7 +53,6 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
   AccName: string;
   BankName: string;
   AccNo: string;
-
 
   InvoiceForm = this.fb.group({
     Invoices: this.fb.array([])
@@ -68,7 +70,8 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private cookieService: CookieService,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, 
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -211,14 +214,14 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     });
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
+  claimTask() {
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 
   Calculate(i) {

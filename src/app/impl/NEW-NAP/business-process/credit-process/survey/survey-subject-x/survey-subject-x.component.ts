@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { DatePipe } from '@angular/common';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CookieService } from 'ngx-cookie';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { environment } from 'environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
+import {VerfResultObj} from 'app/shared/model/VerfResult/VerfResult.Model';
+import {DatePipe} from '@angular/common';
+import {WorkflowApiObj} from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import {CommonConstant} from 'app/shared/constant/CommonConstant';
+import {URLConstant} from 'app/shared/constant/URLConstant';
+import {ReturnHandlingDObj} from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import {ReturnHandlingHObj} from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
+import {NavigationConstant} from 'app/shared/constant/NavigationConstant';
+import {DMSObj} from 'app/shared/model/DMS/DMSObj.model';
+import {AdInsHelper} from 'app/shared/AdInsHelper';
+import {CookieService} from 'ngx-cookie';
+import {DMSLabelValueObj} from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import {AppObj} from 'app/shared/model/App/App.Model';
+import {environment} from 'environments/environment';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-survey-subject-x',
@@ -31,7 +32,6 @@ export class SurveySubjectXComponent implements OnInit {
   getAppUrl: any;
   addVerfResultUrl: any;
   rtnHandlingDUrl: any;
-  editRtnHandlingDUrl: any;
   isReturnHandling: boolean = false;
 
   ReturnHandlingForm = this.fb.group({
@@ -55,7 +55,7 @@ export class SurveySubjectXComponent implements OnInit {
   };
 
   verfResObj = {
-    TrxRefNo: "",
+    TrxRefNo: '',
     MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodeSurvey
   };
 
@@ -70,7 +70,6 @@ export class SurveySubjectXComponent implements OnInit {
   blankCount: number = 0;
   addVerifResultObj: VerfResultObj;
   returnHandlingDObj: any;
-  ReturnHandlingDData: ReturnHandlingDObj;
   ReturnHandlingHData: ReturnHandlingHObj;
   OnFormReturnInfo: boolean = false;
   arrValue = [];
@@ -81,8 +80,8 @@ export class SurveySubjectXComponent implements OnInit {
   NapObj: AppObj;
   appNo: string;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, 
-    private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService,
+              private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.appId = params['AppId'];
@@ -103,14 +102,13 @@ export class SurveySubjectXComponent implements OnInit {
     this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
     this.addVerfResultUrl = URLConstant.AddVerfResult;
     this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   async initDms() {
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
-    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, {Id: this.appId}).toPromise().then(
       async (response: AppObj) => {
         if (response) {
           this.NapObj = response;
@@ -123,7 +121,7 @@ export class SurveySubjectXComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppCustByAppId, {Id: this.appId}).toPromise().then(
       async (response) => {
         this.appNo = this.NapObj.AppNo;
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
@@ -141,45 +139,45 @@ export class SurveySubjectXComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.arrValue.push(this.appId);
-    if (this.wfTaskListId != null || this.wfTaskListId != undefined)
+    if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
       this.claimTask();
+    }
 
     this.initUrl();
     await this.initDms();
     this.appObj.id = this.appId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewObj = './assets/ucviewgeneric/viewNapAppMainInformation.json';
     await this.GetAppData();
     await this.GetVerfResultData();
     await this.GetPhnVerfSubjData();
     if (this.isReturnHandling == true) {
       this.MakeViewReturnInfoObj();
-    }
-    else {
+    } else {
       this.ReturnHandlingForm.controls.IsAnyUpdate.setValidators(Validators.required);
       this.ReturnHandlingForm.controls.IsAnyUpdate.updateValueAndValidity();
     }
   }
 
-  onChangeSkipSurvey(){
-    if(this.ReturnHandlingForm.controls.IsAnyUpdate.value == 'YES'){
+  onChangeSkipSurvey() {
+    if (this.ReturnHandlingForm.controls.IsAnyUpdate.value == 'YES') {
       this.isSkipSurvey = true;
-    }else{
+    } else {
       this.isSkipSurvey = false;
     }
   }
 
   async SaveForm() {
-    if(this.isReturnHandling == false && this.isSkipSurvey == false){
-      if(this.phoneVerifObj == undefined || this.phoneVerifObj == null || this.phoneVerifObj.length == 0){
-        this.toastr.errorMessage("Please add survey");
+    if (this.isReturnHandling == false && this.isSkipSurvey == false) {
+      if (this.phoneVerifObj == undefined || this.phoneVerifObj == null || this.phoneVerifObj.length == 0) {
+        this.toastr.errorMessage('Please add survey');
         return;
       }
     }
 
-    if(this.isSkipSurvey){
-      if(this.phoneVerifObj != undefined){
-        if(this.phoneVerifObj.length > 0){
-          this.toastr.errorMessage("Can't skip survey");
+    if (this.isSkipSurvey) {
+      if (this.phoneVerifObj != undefined) {
+        if (this.phoneVerifObj.length > 0) {
+          this.toastr.errorMessage('Can\'t skip survey');
           return;
         }
       }
@@ -187,40 +185,52 @@ export class SurveySubjectXComponent implements OnInit {
 
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     if (this.isReturnHandling == false) {
-      var requestSurveyVerifOjb = {
-        VerfResultNo : this.verifResultObj.VerfResultNo,
-        Notes: this.ReturnHandlingForm.controls["UpdateNotes"].value,
-        WfTaskListId: this.wfTaskListId
-      };
-      this.http.post(URLConstant.CompleteAppSurveyVerif, requestSurveyVerifOjb).subscribe(
+      let urlCompleteAppSurvey, reqObj;
+      if (environment.isCore) {
+        urlCompleteAppSurvey = URLConstantX.CompleteAppSurveyVerifXV2
+        reqObj = {
+          VerfResultNo: this.verifResultObj.VerfResultNo,
+          Notes: this.ReturnHandlingForm.controls['UpdateNotes'].value,
+          TaskId: this.wfTaskListId
+        }
+      } else {
+        urlCompleteAppSurvey = URLConstant.CompleteAppSurveyVerif
+        reqObj = {
+          VerfResultNo: this.verifResultObj.VerfResultNo,
+          Notes: this.ReturnHandlingForm.controls['UpdateNotes'].value,
+          WfTaskListId: this.wfTaskListId
+        }
+      }
+      this.http.post(urlCompleteAppSurvey, reqObj).subscribe(
         (response) => {
 
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+          this.toastr.successMessage(response['message']);
+          this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
         });
     }
     if (this.isReturnHandling == true) {
-      this.setReturnHandlingD();
-      this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+      const ReturnHandlingDData =this.setReturnHandlingD();
+      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingDData).subscribe(
         (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+          this.toastr.successMessage(response['message']);
+          this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
         });
 
     }
 
   }
 
-  setReturnHandlingD() {
-    this.ReturnHandlingDData = new ReturnHandlingDObj();
-    this.ReturnHandlingDData.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
-    this.ReturnHandlingDData.ReturnHandlingHId = this.returnHandlingDObj.ReturnHandlingHId;
-    this.ReturnHandlingDData.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
-    this.ReturnHandlingDData.ReturnStat = this.returnHandlingDObj.ReturnStat;
-    this.ReturnHandlingDData.ReturnHandlingNotes = this.returnHandlingDObj.ReturnHandlingNotes;
-    this.ReturnHandlingDData.ReturnHandlingExecNotes = this.ReturnHandlingForm.controls["ExecNotes"].value;
-    this.ReturnHandlingDData.WfTaskListId = this.wfTaskListId;
-    this.ReturnHandlingDData.RowVersion = this.returnHandlingDObj.RowVersion;
+  setReturnHandlingD(): ReturnHandlingDObj {
+    let ReturnHandlingDData = new ReturnHandlingDObj();
+    ReturnHandlingDData.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
+    ReturnHandlingDData.ReturnHandlingHId = this.returnHandlingDObj.ReturnHandlingHId;
+    ReturnHandlingDData.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
+    ReturnHandlingDData.ReturnStat = this.returnHandlingDObj.ReturnStat;
+    ReturnHandlingDData.ReturnHandlingNotes = this.returnHandlingDObj.ReturnHandlingNotes;
+    ReturnHandlingDData.ReturnHandlingExecNotes = this.ReturnHandlingForm.controls['ExecNotes'].value;
+    ReturnHandlingDData.WfTaskListId = this.wfTaskListId;
+    ReturnHandlingDData.RowVersion = this.returnHandlingDObj.RowVersion;
+    return ReturnHandlingDData;
   }
 
   async GetAppData() {
@@ -263,8 +273,8 @@ export class SurveySubjectXComponent implements OnInit {
     );
     if (this.verifResultObj.VerfResultId == 0) {
       var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DATE);
-      var datePipe = new DatePipe("en-US");
-      var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
+      var datePipe = new DatePipe('en-US');
+      var value = datePipe.transform(Business_Date, 'yyyy-MM-dd');
       var businessDt = new Date(value);
 
       var useraccess = localStorage.getItem(CommonConstant.USER_ACCESS);
@@ -272,12 +282,12 @@ export class SurveySubjectXComponent implements OnInit {
 
       this.addVerifResultObj.TrxRefNo = this.AppObj.AppNo;
       this.addVerifResultObj.VerfDt = businessDt;
-      this.addVerifResultObj.EmpNo = "-";
+      this.addVerifResultObj.EmpNo = '-';
       this.addVerifResultObj.MrVerfResultStatCode = CommonConstant.VerfResultStatCodeNew;
       this.addVerifResultObj.MrVerfTrxTypeCode = CommonConstant.VerfTrxTypeCodeSurvey; //los-urs-153, upd trxtypecode utk survey verif
       this.addVerifResultObj.LobCode = this.AppObj.LobCode;
       this.addVerifResultObj.LobName = this.AppObj.LobCode;
-      this.addVerifResultObj.Notes = "-";
+      this.addVerifResultObj.Notes = '-';
 
       await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
         (response) => {
@@ -299,21 +309,21 @@ export class SurveySubjectXComponent implements OnInit {
   }
 
   View(VerifResultHid, SubjectName) {
-    var link = environment.losR3Web + NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VIEW + "?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid;
+    var link = environment.losR3Web + NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VIEW + '?AppId=' + this.appId + '&VerfResultHId=' + VerifResultHid;
 
-    window.open(link , "_blank");
+    window.open(link, '_blank');
   }
 
   QuestionObj: any;
-  async GetQuestionList(VerfQAObj) : Promise<any> {
-    var isExist : Boolean = true;
+
+  async GetQuestionList(VerfQAObj): Promise<any> {
+    var isExist: Boolean = true;
     await this.http.post(URLConstant.GetVerfQuestionListByAppIdAndSubjectForSurveyVerif, VerfQAObj).toPromise().then(
       (response) => {
         this.QuestionObj = response[CommonConstant.ReturnObj];
         if (this.QuestionObj != null && this.QuestionObj.VerfQuestionAnswerListObj.length != 0) {
-        }
-        else {
-          this.toastr.warningMessage("Questions are not loaded, please check RULE or Question Scheme if there're any typos in RULE or question scheme is not available for this BizTemplateCode");
+        } else {
+          this.toastr.warningMessage('Questions are not loaded, please check RULE or Question Scheme if there\'re any typos in RULE or question scheme is not available for this BizTemplateCode');
           isExist = false;
         }
       }
@@ -321,31 +331,65 @@ export class SurveySubjectXComponent implements OnInit {
     return isExist;
   }
 
-  async Verif(mode:any, VerifResultHid:any, SubjectType:any, SurveyMethod: any, IdSource:any) {
-    if(mode == 'add'){
+  async Verif(mode: any, VerifResultHid: any, SubjectType: any, SurveyMethod: any, IdSource: any) {
+    if (mode == 'add') {
       var surveymethod = this.ReturnHandlingForm.controls.SurveyMethod.value;
       var VerfQAObj = {
         AppId: this.appId,
         Subject: surveymethod
       };
-      const isExist : Boolean = await this.GetQuestionList(VerfQAObj);
+      const isExist: Boolean = await this.GetQuestionList(VerfQAObj);
 
-      if(!isExist){
+      if (!isExist) {
         return;
       }
 
       if (this.isReturnHandling == false) {
-        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], { queryParams: { "AppId": this.appId, "WfTaskListId": this.wfTaskListId, "SurveyMethod": surveymethod, "mode": mode } });
+        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], {
+          queryParams: {
+            'AppId': this.appId,
+            'WfTaskListId': this.wfTaskListId,
+            'SurveyMethod': surveymethod,
+            'mode': mode
+          }
+        });
       }
-      if (this.isReturnHandling == true) {        
-        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], { queryParams: { "AppId": this.appId, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId, "SurveyMethod": surveymethod, "mode": mode } });
+      if (this.isReturnHandling == true) {
+        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], {
+          queryParams: {
+            'AppId': this.appId,
+            'ReturnHandlingHId': this.returnHandlingHId,
+            'WfTaskListId': this.wfTaskListId,
+            'SurveyMethod': surveymethod,
+            'mode': mode
+          }
+        });
       }
-    }else{
-      if (this.isReturnHandling == false) {        
-        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], { queryParams: { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Type": SubjectType, "WfTaskListId": this.wfTaskListId, "SurveyMethod": surveymethod, "mode": mode } });
+    } else {
+      if (this.isReturnHandling == false) {
+        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], {
+          queryParams: {
+            'AppId': this.appId,
+            'VerfResultHId': VerifResultHid,
+            'Type': SubjectType,
+            'WfTaskListId': this.wfTaskListId,
+            'SurveyMethod': surveymethod,
+            'mode': mode
+          }
+        });
       }
-      if (this.isReturnHandling == true) {        
-        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], { queryParams: { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Type": SubjectType, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId, "SurveyMethod": surveymethod, "mode": mode } });
+      if (this.isReturnHandling == true) {
+        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], {
+          queryParams: {
+            'AppId': this.appId,
+            'VerfResultHId': VerifResultHid,
+            'Type': SubjectType,
+            'ReturnHandlingHId': this.returnHandlingHId,
+            'WfTaskListId': this.wfTaskListId,
+            'SurveyMethod': surveymethod,
+            'mode': mode
+          }
+        });
       }
     }
   }
@@ -366,10 +410,10 @@ export class SurveySubjectXComponent implements OnInit {
   back() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     if (this.isReturnHandling == false) {
-      this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+      this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
     }
     if (this.isReturnHandling == true) {
-      this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], { queryParams: { "BizTemplateCode": BizTemplateCode } });
+      this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
     }
   }
 }
