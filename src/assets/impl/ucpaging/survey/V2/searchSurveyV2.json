@@ -96,7 +96,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "ClaimBy"
+      "property": "Assignee"
     },
     {
       "type": "link",

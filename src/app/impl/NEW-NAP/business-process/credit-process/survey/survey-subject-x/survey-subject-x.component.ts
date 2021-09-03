@@ -405,18 +405,17 @@ export class SurveySubjectXComponent implements OnInit {
   }
 
   async claimTask() {
+    const currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     if(environment.isCore){
       const wfClaimObjV2 = {
         TaskId : this.wfTaskListId,
-        AppId : this.appId,
+        UserId : currentUserContext[CommonConstant.USER_NAME],
       }
       this.http.post(URLConstant.ClaimTaskV2 , wfClaimObjV2).subscribe(
         (response) => {
           console.log(response);
         });
-
     }else{
-      const currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       const wfClaimObj = {
         pWFTaskListID: this.wfTaskListId,
         pUserID: currentUserContext[CommonConstant.USER_NAME],
