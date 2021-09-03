@@ -20,13 +20,13 @@
       <label class="col-md-2" for="returnInvest" translate>Return of Investment (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="returnInvest" class="form-control adInsInput" formControlName="ReturnOfInvestmentPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfInvestmentPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfInvestmentPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfInvestmentPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfInvestmentPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="returnEquity" translate>Return of Equity (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="returnEquity" class="form-control adInsInput" formControlName="ReturnOfEquityPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfEquityPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfEquityPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfEquityPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfEquityPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
     </div>
@@ -34,13 +34,13 @@
       <label class="col-md-2" for="returnAsset" translate>Return of Asset (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="returnAsset" class="form-control adInsInput" formControlName="ReturnOfAssetPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ReturnOfAssetPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfAssetPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ReturnOfAssetPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ReturnOfAssetPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="profitMarginPrcnt" translate>Profit Margin (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="profitMarginPrcnt" class="form-control adInsInput" formControlName="ProfitMarginPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ProfitMarginPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ProfitMarginPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ProfitMarginPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ProfitMarginPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
     </div>
@@ -48,13 +48,13 @@
       <label class="col-md-2" for="currentRatioPrcnt" translate>Current Ratio (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="currentRatioPrcnt" class="form-control adInsInput" formControlName="CurrentRatioPrcnt" [(ngModel)]="appCustCompanyFinDataObj.CurrentRatioPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CurrentRatioPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CurrentRatioPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CurrentRatioPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="debtEquityRatioPrcnt" translate>Debt Equity Ratio (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="debtEquityRatioPrcnt" class="form-control adInsInput" formControlName="DebtEquityRatioPrcnt" [(ngModel)]="appCustCompanyFinDataObj.DebtEquityRatioPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].DebtEquityRatioPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].DebtEquityRatioPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].DebtEquityRatioPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
     </div>
@@ -62,13 +62,13 @@
       <label class="col-md-2" for="invTurnOverPrcnt" translate>Inventory Turn Over (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="invTurnOverPrcnt" class="form-control adInsInput" formControlName="InvTurnOverPrcnt" [(ngModel)]="appCustCompanyFinDataObj.InvTurnOverPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].InvTurnOverPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].InvTurnOverPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].InvTurnOverPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="arTurnOverPrcnt" translate>AR Turn Over (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="arTurnOverPrcnt" class="form-control adInsInput" formControlName="ArTurnOverPrcnt" [(ngModel)]="appCustCompanyFinDataObj.ArTurnOverPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ArTurnOverPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ArTurnOverPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ArTurnOverPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
     </div>
@@ -76,7 +76,7 @@
       <label class="col-md-2" for="growthPrcnt" translate>Growth (%) </label>
       <div class="col-md-4">
         <input [attr.disabled]="isLockMode" type="text" currencyMask id="growthPrcnt" class="form-control adInsInput" formControlName="GrowthPrcnt" [(ngModel)]="appCustCompanyFinDataObj.GrowthPrcnt"
-        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].GrowthPrcnt.invalid}">
+        [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].GrowthPrcnt.invalid}" [options]="CurrencyMaskPrct">
         <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].GrowthPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
       </div>
       <label class="col-md-2" for="workingCapitalAmt" translate>Working Capital (Amt)</label>

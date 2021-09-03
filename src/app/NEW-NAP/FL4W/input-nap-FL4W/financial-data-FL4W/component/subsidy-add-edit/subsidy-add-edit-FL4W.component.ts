@@ -36,6 +36,7 @@ export class SubsidyAddEditFL4WComponent implements OnInit {
     showFromValue: boolean = false;
     subsidyMaxRuleObj: ResultSubsidySchmMaxRuleObj = new ResultSubsidySchmMaxRuleObj();
 
+    readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
     constructor(
       private fb: FormBuilder,
       private http: HttpClient,

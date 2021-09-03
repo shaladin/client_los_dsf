@@ -54,7 +54,7 @@ export class LeadInputCustDataComponent implements OnInit {
   CopyFrom: string;
   rowVersion: string;
   typePage: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
   tempProfession: string;
@@ -181,6 +181,17 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.addCritInput = arrAddCrit;
   }
 
+  ClaimTask() {
+    if(environment.isCore){	
+      if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
+          this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId> 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }
+  }
+
   async ngOnInit() {
     this.customPattern = new Array<CustomPatternObj>();
     this.inputAddressObjForLegalAddr = new InputAddressObj();
@@ -194,10 +205,10 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForResidenceAddr.title = "Residence Address";
     this.inputAddressObjForResidenceAddr.showPhn3 = false;
     this.inputAddressObjForResidenceAddr.showOwnership = false;
+
     this.InitDms();
-    if (this.WfTaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    this.ClaimTask();
+
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -682,6 +693,14 @@ export class LeadInputCustDataComponent implements OnInit {
     this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
   }
 
+  setEnableZipcodeLookup() {
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
+
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
+  }
+
   copyAddress() {
     this.residenceAddressObj = new LeadCustAddrObj();
     this.residenceAddressObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
@@ -704,6 +723,8 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value };
     this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
     this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+
+    this.setEnableZipcodeLookup();
   }
 
   setLegalAddr() {
@@ -938,6 +959,7 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputLegalAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrLegalObj.Zipcode };
               this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
               this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+              this.setEnableZipcodeLookup();
             });
 
           let objLeadCustAddrResObj: GenericObj = new GenericObj();
@@ -968,8 +990,9 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrResObj.Zipcode };
               this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
               this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+              this.setEnableZipcodeLookup();
             });
-
+            
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
           this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           let objLeadCustPersonal2 = { Id: this.resLeadCustObj.LeadCustId };
@@ -1019,6 +1042,7 @@ export class LeadInputCustDataComponent implements OnInit {
             });
         }
       });
+
   }
 
   checkIntegrator() {

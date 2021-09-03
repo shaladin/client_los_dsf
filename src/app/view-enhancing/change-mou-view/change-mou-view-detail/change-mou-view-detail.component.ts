@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
@@ -41,18 +39,17 @@ export class ChangeMouViewDetailComponent implements OnInit {
   mouCust: any;
   mouCustClause: any;
   mouCustFctr: any;
-  listAssetData: Array<any>;
+  listAssetData: Array<any> = new Array();
   MrPaidByCode: string;
   SingleInstCalcMthd: string;
   isReady: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
     private http: HttpClient
   ) {}
 
   ngOnInit() {
-    var mouCustObj = { MouCustId: this.MouCustId };
+    let mouCustObj = { Id: this.MouCustId };
     if (this.MouType == CommonConstant.GENERAL) {
       this.http
         .post(URLConstant.GetMouCustDataByMouCustId, mouCustObj)
@@ -115,8 +112,4 @@ export class ChangeMouViewDetailComponent implements OnInit {
         this.listAssetData = response[CommonConstant.ReturnObj];
       });
   }
-
-  MouDataForm = this.fb.group({});
-
-  AssetDataForm = this.fb.group({});
 }

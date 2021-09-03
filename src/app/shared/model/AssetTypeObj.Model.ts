@@ -20,8 +20,33 @@ export class AssetTypeObj {
     HierarchyLabelLevel3: string;
     HierarchyLabelLevel4: string;
     HierarchyLabelLevel5: string;
+    TotalSerialNoLabel: number;
     RowVersion: string;
-    constructor() { this.AssetTypeId = 0, this.RowVersion = "" }
+    constructor() { 
+        this.AssetTypeId = 0;
+        this.AssetTypeCode = "";
+        this.AssetTypeName = "";
+        this.SerialNo1Label = "";
+        this.SerialNo2Label = "";
+        this.SerialNo3Label = "";
+        this.SerialNo4Label = "";
+        this.SerialNo5Label = "";
+        this.IsMndtrySerialNo1 = false;
+        this.IsMndtrySerialNo2 = false;
+        this.IsMndtrySerialNo3 = false;
+        this.IsMndtrySerialNo4 = false;
+        this.IsMndtrySerialNo5 = false;
+        this.IsLoanObj = false;
+        this.IsActive = false;
+        this.MaxHierarchyLevel = 0;
+        this.HierarchyLabelLevel1 = "";
+        this.HierarchyLabelLevel2 = "";
+        this.HierarchyLabelLevel3 = "";
+        this.HierarchyLabelLevel4 = "";
+        this.HierarchyLabelLevel5 = "";
+        this.TotalSerialNoLabel = 0;
+        this.RowVersion = "";
+    }
 }
 
 export class AssetMasterForFraudChecking {

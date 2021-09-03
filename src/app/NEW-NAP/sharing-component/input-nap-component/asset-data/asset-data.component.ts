@@ -43,6 +43,8 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ResAssetValidationRuleObj } from 'app/shared/model/Rule/ResAssetValidationRuleObj.model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
+import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
+import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 
 @Component({
   selector: 'app-asset-data',
@@ -84,6 +86,8 @@ export class AssetDataComponent implements OnInit {
   isAddressObjDelvReady: boolean = false;
   isAddressObjLocReady: boolean = false;
   IsReady: boolean = false;
+  listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
+  appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -93,7 +97,7 @@ export class AssetDataComponent implements OnInit {
     SupplName: ['', Validators.maxLength(500)],
     AssetPriceAmt: ['', Validators.required],
     DownPaymentAmt: ['', [Validators.required, Validators.min(0.00)]],
-    DownPaymentPrctg: ['', Validators.max(100)],
+    DownPaymentPrctg: [0, Validators.max(100)],
     AssetNotes: ['', [Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
     TaxCityIssuer: [''],
@@ -172,6 +176,7 @@ export class AssetDataComponent implements OnInit {
     AssetAccessoriesObjs: this.fb.array([]),
     items: this.fb.array([]),
     AppAssetAttrObjs: this.fb.array([]),
+    ListDoc: this.fb.array([])
   });
 
   CustType: string = "";
@@ -314,6 +319,7 @@ export class AssetDataComponent implements OnInit {
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   LastRequestedDate: any = "";
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -383,7 +389,7 @@ export class AssetDataComponent implements OnInit {
     }
 
     this.GenerataAppAssetAttr(false);
-    var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    let appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
       appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetCond,
       appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
@@ -496,7 +502,7 @@ export class AssetDataComponent implements OnInit {
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
 
-    var appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
+    let appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
     for (let i = 0; i < appAttrObjs.value.length; i++) {
       appAttrObjs.controls[i].patchValue({
         AttrValue: ""
@@ -574,11 +580,11 @@ export class AssetDataComponent implements OnInit {
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
     for (let i = 0; i < this.allAssetDataObj.AppAssetAccessoryObjs.length; i++) {
-      var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+      let appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
       appAccessoryObjs.push(this.addGroup(this.allAssetDataObj.AppAssetAccessoryObjs[i], i));
 
-      var InputLookupAccObj = this.initLookupAcc();
-      var InputLookupAccSupObj = this.initLookupSuppAcc();
+      let InputLookupAccObj = this.initLookupAcc();
+      let InputLookupAccSupObj = this.initLookupSuppAcc();
       this.dictAccLookup[i] = InputLookupAccObj;
       this.dictSuppLookup[i] = InputLookupAccSupObj;
       this.InputLookupAcceObjs.push(InputLookupAccObj);
@@ -588,7 +594,7 @@ export class AssetDataComponent implements OnInit {
       this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
     }
 
-    var appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
+    let appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
     for (let i = 0; i < this.allAssetDataObj.AppCollateralAttrObj.length; i++) {
       appAttrObjs.controls[i].patchValue({
         AttrValue: this.allAssetDataObj.AppCollateralAttrObj[i].AttrValue
@@ -631,8 +637,8 @@ export class AssetDataComponent implements OnInit {
   }
 
   updateValueAssetPrice() {
-    var assetPriceAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
-    var discount = this.AssetDataForm.controls.Discount.value;
+    let assetPriceAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
+    let discount = this.AssetDataForm.controls.Discount.value;
     this.priceAfterDiscount = assetPriceAmt - discount;
   }
 
@@ -643,11 +649,11 @@ export class AssetDataComponent implements OnInit {
 
     await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
+        let returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
         returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        let gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        let gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
 
         if (gsNeedCheckBySystem != undefined) {
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
@@ -669,9 +675,9 @@ export class AssetDataComponent implements OnInit {
   }
 
   async SaveForm() {
-    var assetForm = this.AssetDataForm.getRawValue();
+    let assetForm = this.AssetDataForm.getRawValue();
     if (this.BizTemplateCode !== "OPL") {
-      var confirmMsg = "";
+      let confirmMsg = "";
       this.isValidOk = true;
       await this.CheckValidation();
       if (this.CheckValidationObj) {
@@ -691,8 +697,8 @@ export class AssetDataComponent implements OnInit {
           }
         }
         else {
-          var assetDPMin = (this.CheckValidationObj.DPMin / 100) * (assetForm.AssetPriceAmt + sumAssetAccessories);
-          var assetDPMax = (this.CheckValidationObj.DPMax / 100) * assetForm.AssetPriceAmt;
+          let assetDPMin = (this.CheckValidationObj.DPMin / 100) * (assetForm.AssetPriceAmt + sumAssetAccessories);
+          let assetDPMax = (this.CheckValidationObj.DPMax / 100) * assetForm.AssetPriceAmt;
           if (assetForm.DownPaymentAmt < assetDPMin) {
             this.isValidOk = false;
             confirmMsg = "Down Payment Amount is Lower than Minimum Amount";
@@ -703,9 +709,21 @@ export class AssetDataComponent implements OnInit {
           }
         }
 
+        if (this.CheckValidationObj.Behaviour == CommonConstant.RuleBehaviourLock) {
+          if (this.CheckValidationObj.MinManufYear > this.AssetDataForm.get("ManufacturingYear").value) {
+            this.toastr.warningMessage(ExceptionConstant.MANUFACTURING_YEAR_CAN_NOT_LESS_THAN + this.CheckValidationObj.MinManufYear);
+            return false;
+          }
+        }
+        if (this.CheckValidationObj.MinManufYear > this.AssetDataForm.get("ManufacturingYear").value) {
+          if (confirmMsg != "") confirmMsg += "\n"
+          this.isValidOk = false;
+          confirmMsg += ExceptionConstant.MANUFACTURING_YEAR_IS_LESS_THAN + this.CheckValidationObj.MinManufYear;
+        }
+
         if (!this.isValidOk) {
           confirmMsg += ", Are You Sure to Save This Data ?";
-          var confirmation = confirm(confirmMsg);
+          let confirmation = confirm(confirmMsg);
           if (!confirmation) {
             return false;
           }
@@ -866,7 +884,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetThirdPartyResultH() {
-    var ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
+    let ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
     await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, { TrxNo: this.AppObj.AppNo, TrxTypeCode: "APP", ChassisNo: ChassisNoValue }).toPromise().then(
       (response) => {
         if (response["AppAssetObject"]["SerialNo1"] != null) {
@@ -880,7 +898,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async CheckValidation() {
-    var CheckValidObj = {
+    let CheckValidObj = {
       AppId: this.AppId,
       SupplCode: this.AssetDataForm.controls.SupplCode.value,
       FullAssetCode: this.AssetDataForm.controls.FullAssetCode.value,
@@ -891,7 +909,7 @@ export class AssetDataComponent implements OnInit {
       MrAssetUsageCode: this.AssetDataForm.controls.MrAssetUsageCode.value
     }
     await this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).toPromise().then(
-      (response: any) => {
+      (response: ResAssetValidationRuleObj) => {
         this.CheckValidationObj = response;
       },
       (error) => {
@@ -901,7 +919,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   SetDpValue(mode: string = "add") {
-    var CheckValidObj = {
+    let CheckValidObj = {
       AppId: this.AppId,
       AssetCondition: this.AssetDataForm.controls.MrAssetConditionCode.value,
       ManufacturingYear: this.AssetDataForm.controls.ManufacturingYear.value,
@@ -910,7 +928,7 @@ export class AssetDataComponent implements OnInit {
       MrAssetUsageCode: this.AssetDataForm.controls.MrAssetUsageCode.value
     }
     this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).subscribe(
-      (response: any) => {
+      (response: ResAssetValidationRuleObj) => {
         this.SetDpObj = response;
         if (mode == "add") {
           this.AssetDataForm.patchValue({
@@ -938,13 +956,13 @@ export class AssetDataComponent implements OnInit {
   }
 
   SetMinManuYear() {
-    var CheckValidObj = {
+    let CheckValidObj = {
       AppId: this.AppId,
       SupplCode: this.AssetDataForm.controls.SupplCode.value,
       FullAssetCode: this.AssetDataForm.controls.FullAssetCode.value,
     }
     this.http.post(URLConstant.CheckAssetValidationRule, CheckValidObj).subscribe(
-      (response: any) => {
+      (response: ResAssetValidationRuleObj) => {
         this.SetManuYearObj = response;
         this.AssetDataForm.patchValue({
           ManufacturingYear: this.SetManuYearObj.MinManufYear
@@ -959,7 +977,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   setAllAssetObj() {
-    var assetForm = this.AssetDataForm.getRawValue();
+    let assetForm = this.AssetDataForm.getRawValue();
     this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetId;
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
@@ -1063,7 +1081,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AssetDataForm.controls.OwnerProfessionCode.value;
 
     if (this.BizTemplateCode !== "OPL") {
-      for (var i = 0; i < this.items.length; i++) {
+      for (let i = 0; i < this.items.length; i++) {
         if (this.items.controls[i] != null) {
           this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
         }
@@ -1079,7 +1097,7 @@ export class AssetDataComponent implements OnInit {
         this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm.DownPaymentAmt / assetForm.AssetPriceAmt) * 100;
       }
 
-      for (var i = 0; i < this.items.length; i++) {
+      for (let i = 0; i < this.items.length; i++) {
         if (this.items.controls[i] != null) {
           this.allAssetDataObj.AppCollateralObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
         }
@@ -1118,8 +1136,8 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
 
     for (let i = 0; i < this.AssetDataForm.controls["AssetAccessoriesObjs"].value.length; i++) {
-      var appAssetAccObj = new AppAssetAccessoryObj();
-      var appCollateralAccObj = new AppCollateralAccessoryObj();
+      let appAssetAccObj = new AppAssetAccessoryObj();
+      let appCollateralAccObj = new AppCollateralAccessoryObj();
       appAssetAccObj.AssetAccessoryCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AssetAccessoryCode;
       appAssetAccObj.AssetAccessoryName = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AssetAccessoryName;
       appAssetAccObj.SupplCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplCodeAccessory;
@@ -1140,8 +1158,8 @@ export class AssetDataComponent implements OnInit {
     }
     if (this.AppAssetAttrObj != null) {
       for (let i = 0; i < this.AssetDataForm.controls["AppAssetAttrObjs"].value.length; i++) {
-        var appAssetAttrObj = new AppAssetAttrObj();
-        var appCollAttrcObj = new AppCollateralAttrObj();
+        let appAssetAttrObj = new AppAssetAttrObj();
+        let appCollAttrcObj = new AppCollateralAttrObj();
         appAssetAttrObj.AssetAttrName = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrName;
         appAssetAttrObj.AssetAttrCode = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrCode;
         appAssetAttrObj.AttrValue = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
@@ -1154,6 +1172,24 @@ export class AssetDataComponent implements OnInit {
         this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
       }
     }
+
+    this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
+    for (let i = 0; i < this.AssetDataForm.value.ListDoc["length"]; i++) {
+      this.appCollateralDoc = new AppCollateralDocObj();
+      if (this.AssetDataForm.value.ListDoc[i].IsReceived == null) {
+        this.appCollateralDoc.IsReceived = false;
+      }
+      else {
+        this.appCollateralDoc.IsReceived = this.AssetDataForm.value.ListDoc[i].IsReceived;
+      }
+      this.appCollateralDoc.DocCode = this.AssetDataForm.value.ListDoc[i].DocCode;
+      this.appCollateralDoc.DocNo = this.AssetDataForm.value.ListDoc[i].DocNo;
+      this.appCollateralDoc.ExpiredDt = this.AssetDataForm.value.ListDoc[i].ACDExpiredDt;
+      this.appCollateralDoc.DocNotes = this.AssetDataForm.value.ListDoc[i].DocNotes;
+      this.appCollateralDoc.RowVersion = this.AssetDataForm.value.ListDoc[i].RowVersion;
+      this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
+    }
+    this.allAssetDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
   }
 
   async SetSupplier(event) {
@@ -1173,9 +1209,10 @@ export class AssetDataComponent implements OnInit {
     });
   }
 
-  SetAsset(event) {
+  async SetAsset(event) {
     this.assetMasterObj.FullAssetCode = event.FullAssetCode;
-    this.GetAssetMaster(this.assetMasterObj);
+    await this.GetAssetMaster(this.assetMasterObj);
+    this.GetRefAssetDocList(false);
     this.AssetDataForm.patchValue({
       FullAssetCode: event.FullAssetCode,
       FullAssetName: event.FullAssetName,
@@ -1193,7 +1230,7 @@ export class AssetDataComponent implements OnInit {
 
   SalesPersonChanged(event) {
     if (event.target.value != "") {
-      var temp: any;
+      let temp: any;
       temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.target.value);
       this.AssetDataForm.patchValue({
         SalesPersonId: temp[0].VendorEmpId,
@@ -1214,8 +1251,8 @@ export class AssetDataComponent implements OnInit {
 
   AdminHeadChanged(event) {
     if (event.target.value != "") {
-      var tempId = event.target.value;
-      var temp: any;
+      let tempId = event.target.value;
+      let temp: any;
       temp = this.EmpObj.filter(
         emp => emp.VendorEmpId == tempId);
       this.AssetDataForm.patchValue({
@@ -1237,8 +1274,8 @@ export class AssetDataComponent implements OnInit {
 
   BranchManagerChanged(event) {
     if (event.target.value != "") {
-      var tempId = event.target.value;
-      var temp: any;
+      let tempId = event.target.value;
+      let temp: any;
       temp = this.EmpObj.filter(
         emp => emp.VendorEmpId == tempId);
       this.AssetDataForm.patchValue({
@@ -1287,7 +1324,7 @@ export class AssetDataComponent implements OnInit {
     }
   }
   updateValueDownPaymentAmt() {
-    var DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
+    let DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
     if (DownPaymentAmt > this.AssetDataForm.controls.AssetPriceAmt.value) {
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount!");
       this.AssetDataForm.patchValue({
@@ -1303,7 +1340,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   updateValueDownPaymentPrctg() {
-    var DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
+    let DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
     if (DownPaymentPrctg > 100) {
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount!");
       this.AssetDataForm.patchValue({
@@ -1402,9 +1439,9 @@ export class AssetDataComponent implements OnInit {
   async getAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    var appData = { Id: this.AppId };
+    let appData = { Id: this.AppId };
     await this.http.post(URLConstant.GetAllAssetDataByAppId, appData).toPromise().then(
-      (response) => {
+      async (response) => {
         this.appAssetObj = response;
 
 
@@ -1531,7 +1568,8 @@ export class AssetDataComponent implements OnInit {
 
           this.DpTypeBefore = "AMT";
           this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-          this.GetAssetMaster(this.assetMasterObj);
+          await this.GetAssetMaster(this.assetMasterObj);
+          this.GetRefAssetDocList(true);
           this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
           this.GetVendorForView();
           this.districtObj.ProvDistrictCode = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
@@ -1540,7 +1578,7 @@ export class AssetDataComponent implements OnInit {
           this.updateValueDownPaymentPrctg();
 
           if (this.appAssetObj != null) {
-            for (var i = 0; i < this.items.length; i++) {
+            for (let i = 0; i < this.items.length; i++) {
               if (this.items.controls[i] != null) {
                 this.items.controls[i]["controls"]["SerialNoValue"].value = this.appAssetObj["SerialNo" + (i + 1)];
               }
@@ -1554,7 +1592,7 @@ export class AssetDataComponent implements OnInit {
   async getListAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    var appData = { Id: this.AppId };
+    let appData = { Id: this.AppId };
     await this.http.post(URLConstant.GetListAllAssetDataByAppId, appData).toPromise().then(
       (response) => {
         this.appAssetObj = response[CommonConstant.ReturnObj];
@@ -1664,8 +1702,8 @@ export class AssetDataComponent implements OnInit {
             this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
             if (this.appAssetObj[i].ResponseAppAssetAccessoryObjs != null) {
               for (let j = 0; j < this.appAssetObj[i].ResponseAppAssetAccessoryObjs.length; j++) {
-                var appAssetAccObj = new AppAssetAccessoryObj();
-                var appCollateralAccObj = new AppCollateralAccessoryObj();
+                let appAssetAccObj = new AppAssetAccessoryObj();
+                let appCollateralAccObj = new AppCollateralAccessoryObj();
                 appAssetAccObj.AssetAccessoryCode = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AssetAccessoryCode;
                 appAssetAccObj.AssetAccessoryName = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AssetAccessoryName;
                 appAssetAccObj.SupplCode = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].SupplCode;
@@ -1688,8 +1726,8 @@ export class AssetDataComponent implements OnInit {
 
             if (this.appAssetObj[i].ResponseAppAssetAttrObjs != null) {
               for (let k = 0; k < this.appAssetObj[i].ResponseAppAssetAttrObjs.length; k++) {
-                var appAssetAttrObj = new AppAssetAttrObj();
-                var appCollAttrcObj = new AppCollateralAttrObj();
+                let appAssetAttrObj = new AppAssetAttrObj();
+                let appCollAttrcObj = new AppCollateralAttrObj();
                 appAssetAttrObj.AssetAttrName = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AssetAttrName;
                 appAssetAttrObj.AssetAttrCode = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AssetAttrCode;
                 appAssetAttrObj.AttrValue = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AttrValue;
@@ -1719,8 +1757,8 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.isRequired = false;
-    var disCrit = new Array();
-    var critDisObj = new CriteriaObj();
+    let disCrit = new Array();
+    let critDisObj = new CriteriaObj();
     critDisObj.DataType = 'text';
     critDisObj.restriction = AdInsConstant.RestrictionEq;
     critDisObj.propName = 'TYPE';
@@ -1734,15 +1772,15 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
-    var assetCrit = new Array();
-    var critAssetObj = new CriteriaObj();
+    let assetCrit = new Array();
+    let critAssetObj = new CriteriaObj();
     critAssetObj.DataType = 'text';
     critAssetObj.restriction = AdInsConstant.RestrictionEq;
     critAssetObj.propName = 'B.ASSET_TYPE_CODE';
     critAssetObj.value = this.RefProdCmptAssetType.CompntValue;
     assetCrit.push(critAssetObj);
 
-    var critAssetSchmObj = new CriteriaObj();
+    let critAssetSchmObj = new CriteriaObj();
     critAssetSchmObj.DataType = 'text';
     critAssetSchmObj.restriction = AdInsConstant.RestrictionEq;
     critAssetSchmObj.propName = 'E.ASSET_SCHM_CODE';
@@ -1764,7 +1802,7 @@ export class AssetDataComponent implements OnInit {
   initLookupAcc() {
     let arrAddCrit = new Array();
     if (this.AssetDataForm.get("AssetTypeCode").value != "") {
-      var addCrit = new CriteriaObj();
+      let addCrit = new CriteriaObj();
       addCrit.DataType = "string";
       addCrit.propName = "atp.ASSET_TYPE_CODE";
       addCrit.restriction = AdInsConstant.RestrictionIn;
@@ -1788,15 +1826,15 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    var suppCrit = new Array();
-    var critSuppObj = new CriteriaObj();
+    let suppCrit = new Array();
+    let critSuppObj = new CriteriaObj();
     critSuppObj.DataType = 'text';
     critSuppObj.restriction = AdInsConstant.RestrictionEq;
     critSuppObj.propName = 'ro.OFFICE_CODE';
     critSuppObj.value = this.OfficeCode;
     suppCrit.push(critSuppObj);
 
-    var critSuppSupplSchmObj = new CriteriaObj();
+    let critSuppSupplSchmObj = new CriteriaObj();
     critSuppSupplSchmObj.DataType = 'text';
     critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
     critSuppSupplSchmObj.propName = 'vs.VENDOR_SCHM_CODE';
@@ -1813,22 +1851,22 @@ export class AssetDataComponent implements OnInit {
     this.InputLookupAccSupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAccSupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupAccSupObj.genericJson = "./assets/uclookup/NAP/lookupSupplier.json";
-    var suppCrit = new Array();
-    var critSuppObj = new CriteriaObj();
+    let suppCrit = new Array();
+    let critSuppObj = new CriteriaObj();
     critSuppObj.DataType = 'text';
     critSuppObj.restriction = AdInsConstant.RestrictionEq;
     critSuppObj.propName = 'ro.OFFICE_CODE';
     critSuppObj.value = this.OfficeCode;
     suppCrit.push(critSuppObj);
 
-    var critSupp2Obj = new CriteriaObj();
+    let critSupp2Obj = new CriteriaObj();
     critSupp2Obj.DataType = 'text';
     critSupp2Obj.restriction = AdInsConstant.RestrictionEq;
     critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
     critSupp2Obj.value = 'SUPPLIER';
     suppCrit.push(critSupp2Obj);
 
-    var critSuppSupplSchmObj = new CriteriaObj();
+    let critSuppSupplSchmObj = new CriteriaObj();
     critSuppSupplSchmObj.DataType = 'text';
     critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
     critSuppSupplSchmObj.propName = 'vs.VENDOR_SCHM_CODE';
@@ -1927,7 +1965,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetProdOfferingAssetCond() {
-    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     obj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
     obj.RefProdCompntCode = CommonConstant.RefProdCompAssetCond;
     obj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
@@ -2057,7 +2095,7 @@ export class AssetDataComponent implements OnInit {
 
         for (let i = 0; i < this.EmpObj.length; i++) {
           if (this.EmpObj[i]["SupervisorId"] !== null) {
-            var supervisor = {
+            let supervisor = {
               "VendorEmpId": this.EmpObj[i]["SupervisorId"]
             }
             this.http.post(URLConstant.GetVendorEmpByVendorEmpId, { Id: this.EmpObj[i]["SupervisorId"] }).subscribe(
@@ -2079,8 +2117,8 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetAssetMaster(assetMasterObj) {
-    this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: assetMasterObj.FullAssetCode }).subscribe(
+  async GetAssetMaster(assetMasterObj) {
+    await this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: assetMasterObj.FullAssetCode }).toPromise().then(
       (response: any) => {
         this.AssetMasterObj = response;
         this.AssetDataForm.patchValue({
@@ -2097,7 +2135,7 @@ export class AssetDataComponent implements OnInit {
 
   AssetConditionChanged(mode: string = "add") {
     if (this.AssetConditionObj != null) {
-      var filter: any;
+      let filter: any;
       filter = this.AssetConditionObj.filter(
         cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value);
       this.AssetConditionName = filter[0].Value;
@@ -2165,17 +2203,17 @@ export class AssetDataComponent implements OnInit {
     if (this.AssetDataForm.get("AssetTypeCode").value == "") {
       return this.toastr.warningMessage("Please Choose Asset First");
     }
-    var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
-    var length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;
-    var max = 0;
+    let appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+    let length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;
+    let max = 0;
     if (length > 0) {
       max = this.AssetDataForm.value["AssetAccessoriesObjs"][length - 1].No;
     }
 
     appAccessoryObj.push(this.addGroup(undefined, max + 1));
 
-    var InputLookupAccObj = this.initLookupAcc();
-    var InputLookupAccSupObj = this.initLookupSuppAcc();
+    let InputLookupAccObj = this.initLookupAcc();
+    let InputLookupAccSupObj = this.initLookupSuppAcc();
     this.InputLookupAcceObjs.push(InputLookupAccObj);
     this.InputLookupSupplObjs.push(InputLookupAccSupObj);
 
@@ -2185,8 +2223,8 @@ export class AssetDataComponent implements OnInit {
 
   deleteAccessory(i) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
-      var no = appAccessoryObjs.controls[i]["controls"]["No"].value;
+      let appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+      let no = appAccessoryObjs.controls[i]["controls"]["No"].value;
       appAccessoryObjs.removeAt(i);
       this.AssetDataForm.removeControl("lookupSupplierObj" + no);
       this.AssetDataForm.removeControl("lookupAccObj" + no);
@@ -2197,11 +2235,11 @@ export class AssetDataComponent implements OnInit {
     if (this.appAssetAccessoriesObjs != undefined) {
       this.originalAppAssetAccessory = [...this.appAssetAccessoriesObjs];
       for (let i = 0; i < this.appAssetAccessoriesObjs.length; i++) {
-        var listAppAccessories = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
+        let listAppAccessories = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
         listAppAccessories.push(this.addGroup(this.appAssetAccessoriesObjs[i], i));
 
-        var InputLookupAccObj = this.initLookupAcc();
-        var InputLookupAccSupObj = this.initLookupSuppAcc();
+        let InputLookupAccObj = this.initLookupAcc();
+        let InputLookupAccSupObj = this.initLookupSuppAcc();
         this.dictAccLookup[i] = InputLookupAccObj;
         this.dictSuppLookup[i] = InputLookupAccSupObj;
         this.InputLookupAcceObjs.push(InputLookupAccObj);
@@ -2246,7 +2284,7 @@ export class AssetDataComponent implements OnInit {
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
         AccessoryPriceAmt: [0, [Validators.required,Validators.min(0.00)]],
         AccessoryDownPaymentType: [''],
-        AccessoryDownPaymentPrcnt: [0, Validators.required],
+        AccessoryDownPaymentPrcnt: [0, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
         AccessoryDownPaymentAmt: [0, [Validators.required,Validators.min(0.00)]],
         AccessoryNotes: ['']
       })
@@ -2260,7 +2298,7 @@ export class AssetDataComponent implements OnInit {
         SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
         AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required,Validators.min(0.00)]],
         AccessoryDownPaymentType: [this.DpObj[0].Key],
-        AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, Validators.required],
+        AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
         AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, [Validators.required,Validators.min(0.00)]],
         AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]
       })
@@ -2449,7 +2487,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetAppCust() {
-    var appObj = {
+    let appObj = {
       Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
@@ -2476,7 +2514,7 @@ export class AssetDataComponent implements OnInit {
 
   async GetAppCustPhone() {
     if (typeof (this.AppCustObj) != 'undefined') {
-      var appObj = {
+      let appObj = {
         Id: this.AppId,
       };
       await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
@@ -2488,7 +2526,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetRefProdCompt() {
-    var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    let appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
     appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetType;
     appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
@@ -2499,7 +2537,7 @@ export class AssetDataComponent implements OnInit {
       }
     );
 
-    var appObj2: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    let appObj2: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj2.ProdOfferingCode = this.AppObj.ProdOfferingCode;
     appObj2.RefProdCompntCode = CommonConstant.RefProdCompntSupplSchm;
     appObj2.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
@@ -2510,7 +2548,7 @@ export class AssetDataComponent implements OnInit {
       }
     );
 
-    var appObj3: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    let appObj3: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj3.ProdOfferingCode = this.AppObj.ProdOfferingCode;
     appObj3.RefProdCompntCode = CommonConstant.RefProdCompntAssetSchm;
     appObj3.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
@@ -2520,6 +2558,56 @@ export class AssetDataComponent implements OnInit {
         this.RefProdCmptAssetSchm = response;
       }
     );
+  }
+
+  GetRefAssetDocList(isInit: boolean) {
+    this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
+      (response) => {
+        let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
+        ListDoc.reset();
+        while(ListDoc.length) {
+          ListDoc.removeAt(0);
+        }
+        if (response[CommonConstant.ReturnObj].length > 0) {
+          for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+            let assetDocumentDetail = this.fb.group({
+              DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+              AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+              IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+              IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+              IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+              IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+              DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+              ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+              RowVersion: "",
+            }) as FormGroup;
+            ListDoc.push(assetDocumentDetail);
+          }
+        }
+        if(isInit){
+          this.setAppCollateralDoc(this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId']);
+        }
+      });
+  }
+
+  setAppCollateralDoc(AppCollateralId: number = 0) {
+    this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
+      (response) => {
+        let AppCollateralDocs = new Array();
+        AppCollateralDocs = response["AppCollateralDocs"];
+        if (AppCollateralDocs["length"] > 0) {
+          for (let i = 0; i < AppCollateralDocs.length; i++) {
+            this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
+              DocNo: AppCollateralDocs[i].DocNo,
+              DocNotes: AppCollateralDocs[i].DocNotes,
+              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              IsReceived: AppCollateralDocs[i].IsReceived,
+              RowVersion: AppCollateralDocs[i].RowVersion,
+            })
+          }
+        }
+      });
   }
 
   async GetAppCustCoy() {
@@ -2541,7 +2629,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GenerataAppAssetAttr(isRefresh: boolean) {
-    var GenObj =
+    let GenObj =
     {
       AppAssetId: this.appAssetId,
       AssetTypeCode: this.RefProdCmptAssetType.CompntValue,
@@ -2570,7 +2658,7 @@ export class AssetDataComponent implements OnInit {
       this.appAssetAttrObjs = new Array<AppAssetAttrCustomObj>();
       for (let i = 0; i < this.AppAssetAttrObj.length; i++) {
         this.ListAttrAnswer.push([]);
-        var appAssetAttrObj = new AppAssetAttrCustomObj();
+        let appAssetAttrObj = new AppAssetAttrCustomObj();
         appAssetAttrObj.AssetAttrCode = this.AppAssetAttrObj[i].AttrCode;
         appAssetAttrObj.AssetAttrName = this.AppAssetAttrObj[i].AttrName;
         appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrValue;
@@ -2588,7 +2676,7 @@ export class AssetDataComponent implements OnInit {
         this.appAssetAttrObjs.push(appAssetAttrObj);
 
       }
-      var listAppAssetAttrs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
+      let listAppAssetAttrs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
       while (listAppAssetAttrs.length !== 0) {
         listAppAssetAttrs.removeAt(0);
       }
@@ -2642,7 +2730,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   CheckAccessoryDPValue(i: number, from: string){
-    var InputAccessoryPrice = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryPriceAmt.value
+    let InputAccessoryPrice = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryPriceAmt.value
 
     if(InputAccessoryPrice == 0){
       this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i+1));
@@ -2651,7 +2739,7 @@ export class AssetDataComponent implements OnInit {
       return;
     }
 
-    var InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value
+    let InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value
 
     if(InputDPAmt > InputAccessoryPrice){
       this.toastr.warningMessage("Down Payment Amount " + (i+1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i+1));
@@ -2660,20 +2748,20 @@ export class AssetDataComponent implements OnInit {
       return;
     }
 
-    var InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
+    let InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
     
     if(from == CommonConstant.DownPaymentTypeAmt){
-      var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
+      let DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
     }else if(from == CommonConstant.DownPaymentTypePrcnt){
-      var DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
+      let DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
     }else{
       if(this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt){
-        var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
+        let DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
       }else{
-        var DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
+        let DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
       }
     }

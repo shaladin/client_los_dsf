@@ -14,20 +14,8 @@
             <th style="text-align: left;">
               <span class="thead-header" name='supplierBranch' translate>Supplier Branch</span>
             </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='serialNo1' translate>Serial No. 1</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='serialNo2' translate>Serial No. 2</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='serialNo3' translate>Serial No. 3</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='serialNo4' translate>Serial No. 4</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='serialNo5' translate>Serial No. 5</span>
+            <th style="text-align: left;" *ngFor="let e of [].constructor(MostSerialNoAssetType?.TotalSerialNoLabel); let i = index">
+              <span class="thead-header" name='serialNo5' translate>Serial No. {{i+1}}</span>
             </th>
             <th style="text-align: center;">
               <span class="thead-header" name='viewDetail' translate>View Detail</span>
@@ -45,20 +33,8 @@
             <td style="text-align: left;">
               {{item.SupplName}}
             </td>
-            <td style="text-align: left;">
-              {{item.SerialNo1}}
-            </td>
-            <td style="text-align: left;">
-              {{item.SerialNo2}}
-            </td>
-            <td style="text-align: left;">
-              {{item.SerialNo3}}
-            </td>
-            <td style="text-align: left;">
-              {{item.SerialNo4}}
-            </td>
-            <td style="text-align: left;">
-              {{item.SerialNo5}}
+            <td style="text-align: left;" *ngFor="let e of [].constructor(MostSerialNoAssetType?.TotalSerialNoLabel); index as j">
+              {{item['SerialNo'+(j+1)]}}
             </td>
             <td style="text-align: center;">
               <a (click)="viewDetailHandler(item.AppAssetId)"><i class="fas fa-pencil-alt"></i></a>
@@ -87,14 +63,8 @@
             <th style="text-align: right;">
               <span class="thead-header" name='collateralPrice' translate>Collateral Price</span>
             </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='licensePlateNo' translate>Serial No 3</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='chassisNo' translate>Serial No 1</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='engineNo' translate>Serial No 2</span>
+            <th style="text-align: left;" *ngFor="let e of [].constructor(MostSerialNoCollateralType?.TotalSerialNoLabel); let i = index">
+              <span class="thead-header" name='serialNo5' translate>Serial No. {{i+1}}</span>
             </th>
             <th style="text-align: left;">
               <span class="thead-header" name='ownerName' translate>Owner Name</span>
@@ -116,14 +86,8 @@
             <td style="text-align: right;">
               {{coll.CollateralValueAmt | number:'.2':'en-US'}}
             </td>
-            <td style="text-align: left;">
-              {{coll[coll.LicensePlateNo]}}
-            </td>
-            <td style="text-align: left;">
-              {{coll[coll.ChassisNo]}}
-            </td>
-            <td style="text-align: left;">
-              {{coll[coll.EngineNo]}}
+            <td style="text-align: left;" *ngFor="let e of [].constructor(MostSerialNoCollateralType?.TotalSerialNoLabel); index as j">
+              {{coll['SerialNo'+(j+1)]}}
             </td>
             <td style="text-align: left;">
               {{coll.OwnerName}}

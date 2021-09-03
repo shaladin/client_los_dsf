@@ -24,14 +24,13 @@ import { MouCustCollateralDocObj } from "app/shared/model/MouCustCollateralDocOb
 import { ChangeMouCustCollateralObj } from "app/shared/model/ChangeMouCustCollateralObj.Model";
 import { ChangeMouCustCollateralRegistrationObj } from "app/shared/model/ChangeMouCustCollateralRegistrationObj.Model";
 import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
-import { MouCustCollateralObj } from "app/shared/model/MouCustCollateralObj.Model";
 import { AssetTypeSerialNoLabelObj } from "app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model";
 import { GenericListObj } from "app/shared/model/Generic/GenericListObj.Model";
 import { MouCustAddrObj } from "app/shared/model/MouCustAddrObj.Model";
 import { RegexService } from 'app/shared/services/regex.services';
 import { CustomPatternObj } from "app/shared/model/CustomPatternObj.model";
 import { RefAttrGenerateObj } from "app/shared/model/RefAttrGenerate.Model";
-import { RefAttrGenerate } from "app/components/adins-module/ref-attr-generate/RefAttrGenerate.service";
+import { RefAttrGenerate } from "app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service";
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from "app/shared/model/MouCustCollateralAttrObj.Model";
 
 @Component({
@@ -114,7 +113,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     CollateralValueAmt: [0, [Validators.required]],
     CollateralPrcnt: [
       0,
-      [Validators.required, Validators.min(0), Validators.max(this.maxPrcnt)],
+      [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)],
     ],
     FullAssetCode: [""],
     AssetCategoryCode: [""],
@@ -136,6 +135,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   inputAddressObjForLegalAddr: InputAddressObj;
   inputAddressObjForLocAddr: InputAddressObj;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -286,6 +286,19 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       this.criteriaObj.propName = "MCC.ASSET_TYPE_CODE";
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
+
+      const criteriaMouCustIdObj = new CriteriaObj();
+      criteriaMouCustIdObj.restriction = AdInsConstant.RestrictionNeq;
+      criteriaMouCustIdObj.propName = "MC.MOU_CUST_ID";
+      criteriaMouCustIdObj.value = this.MouCustId.toString();
+      this.criteriaList.push(criteriaMouCustIdObj);
+
+      const addCritCustNo = new CriteriaObj();
+      addCritCustNo.DataType = 'text';
+      addCritCustNo.propName = 'MC.CUST_NO';
+      addCritCustNo.restriction = AdInsConstant.RestrictionEq;
+      addCritCustNo.value = this.custNo;
+      this.criteriaList.push(addCritCustNo);
     }
 
     this.inputLookupObj.nameSelect = "";
@@ -334,7 +347,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     });
   }
 
-  open(pageType) {
+  open(pageType: string) {
     this.isAdd = true;
     this.ResetForm();
     this.AddCollForm.controls.MrCollateralConditionCode.disable();
@@ -481,7 +494,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           this.maxPrcnt = 100 - e.SumCollateralPrcnt;
           this.AddCollForm.controls.CollateralPrcnt.setValidators([
             Validators.required,
-            Validators.min(0),
+            Validators.min(CommonConstant.PrcntMinValue),
             Validators.max(this.maxPrcnt),
           ]);
           this.AddCollForm.controls.CollateralPrcnt.updateValueAndValidity();
@@ -549,13 +562,15 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
             RowVersionCollateral: this.collateralObj.RowVersion,
 
             MouCustCollateralRegistrationId: this.collateralRegistrationObj.MouCustCollateralRegistrationId,
+            SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer,
             OwnerName: this.collateralRegistrationObj.OwnerName,
             OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
             MrIdTypeCode: this.collateralRegistrationObj.MrIdType,
-            MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
+            OwnerRelationship: this.collateralRegistrationObj.MrOwnerRelationshipCode,
             Notes: this.collateralRegistrationObj.Notes,
             RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
           });
+          this.AddCollForm.get("SelfOwner").disable();
           this.GenerateCollateralAttr(true, this.collateralObj["MouCustCollateralId"], true);
           this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
           this.legalAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
@@ -580,6 +595,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
 
           this.inputAddressObjForLegalAddr.default = this.legalAddrObj;
           this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
+          this.inputAddressObjForLegalAddr.isReadonly = true;
 
           this.locationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
           this.locationAddrObj.City = this.collateralRegistrationObj.LocationCity;
@@ -966,7 +982,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       CopyFromLegal: [""],
       AssetTypeCode: ["", [Validators.required]],
       CollateralValueAmt: [0, [Validators.required]],
-      CollateralPrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)],],
+      CollateralPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
       FullAssetCode: [""],
       AssetCategoryCode: [""],
       OwnerName: ["", [Validators.required]],

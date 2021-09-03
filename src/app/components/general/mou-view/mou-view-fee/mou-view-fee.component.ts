@@ -9,7 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 })
 export class MouViewFeeComponent implements OnInit {
   @Input() MouCustId: number;
-  listFeeData: any;
+  listFeeData: Array<any> = new Array();
 
   constructor(private http: HttpClient) { }
 

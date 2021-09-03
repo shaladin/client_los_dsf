@@ -476,6 +476,8 @@ export class PathConstant {
     public static REPORT_APPLICATION_PENDING = "RptAppPending";
     public static REPORT_RENT_SUMMARY = "RptRentSummary";
     public static REPORT_RENT_DETAIL = "RptRentDetail";
+    public static REPORT_PLAFOND_MOU_SUMMARY = "RptPlafondMouSummary";
+    public static REPORT_PLAFOND_MOU_DETAIL = "RptPlafondMouDetail";
     //#endregion
 
     //#region Inquiry-Module

@@ -12,7 +12,7 @@
         },
         {
             "type": "textbox",
-            "name": "ISNULL(APP_NO,'-')",
+            "name": "APP.APP_NO",
             "id": "AppNoId",
             "value": "",
             "label": "App No",

@@ -13,13 +13,13 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from "app/shared/model/RefMast
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 
 @Component({
-    selector: 'ref-attr-generate',
-    templateUrl: './ref-attr-generate.component.html',
+    selector: 'ref-attr-form-generate',
+    templateUrl: './ref-attr-form-generate.component.html',
     providers: [NGXToastrService],
     viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 
-export class RefAttrGenerateComponent implements OnInit {
+export class RefAttrFormGenerateComponent implements OnInit {
 
     @Input() enjiForm: NgForm;
     @Input() parentForm: FormGroup;

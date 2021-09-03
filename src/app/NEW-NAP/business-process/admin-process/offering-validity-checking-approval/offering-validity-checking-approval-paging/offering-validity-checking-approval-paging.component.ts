@@ -14,6 +14,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-offering-validity-checking-approval-paging',
@@ -25,6 +28,8 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   BizTemplateCode: string;
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -45,6 +50,12 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
 
     this.inputPagingObj._url = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchOfferingValidityCheckingAndApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchOfferingValidityCheckingAndApprovalV2.json";
+    }
+    
     this.inputPagingObj.addCritInput = new Array();
     arrCrit.push(critInputOnlyOffering);
 

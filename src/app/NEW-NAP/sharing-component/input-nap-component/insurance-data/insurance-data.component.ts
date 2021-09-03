@@ -132,6 +132,7 @@ export class InsuranceDataComponent implements OnInit {
     IsFullCapitalizedAmount: [false]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,

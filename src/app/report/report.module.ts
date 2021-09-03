@@ -20,6 +20,8 @@ import { RentalSummaryProductReportComponent } from "./report-rental-summary/ren
 import { RentalSummarySupplierReportComponent } from "./report-rental-summary/rental-summary-supplier/rental-summary-supplier.component";
 import { RentalDetailSupplierReportComponent } from "./report-rental-detail/rental-detail-supplier/rental-detail-supplier.component";
 import { ReportRoutingModule } from "./report-routing.module";
+import { ReportPlafondMouSummaryComponent } from "./report-mou/report-plafond-mou-summary/report-plafond-mou-summary.component";
+import { ReportPlafondMouDetailComponent } from "./report-mou/report-plafond-mou-detail/report-plafond-mou-detail.component";
 
 @NgModule({
     declarations: [
@@ -35,7 +37,9 @@ import { ReportRoutingModule } from "./report-routing.module";
     RentalSummaryBrandTypeModelReportComponent,
     RentalSummaryMarketingReportComponent,
     RentalSummaryProductReportComponent,
-    RentalSummarySupplierReportComponent
+    RentalSummarySupplierReportComponent,
+    ReportPlafondMouSummaryComponent,
+    ReportPlafondMouDetailComponent
     ],
     imports: [
         ReportRoutingModule,

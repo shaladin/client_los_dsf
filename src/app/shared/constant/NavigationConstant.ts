@@ -6,7 +6,7 @@ export class NavigationConstant {
   public static PAGES_CONTENT = PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CONTENT_PAGE; //'Pages/Content'
   public static DASHEMPTY = "/" + PathConstant.LR_DASHBOARD + "/" + PathConstant.DASHEMPTY; //'/Dashboard/Dash-Empty'
   public static DASHBOARD = "/" + PathConstant.LR_DASHBOARD + "/" + PathConstant.DASHBOARD; //'/Dashboard/Dash-Board'
-  public static BACK_TO_REQ_PASSWORD = '..' + "/" + PathConstant.CONTENT_PAGE_REQ_PASSWORD; //'../RequestPassword'
+  public static PAGES_REQ_PASSWORD = "/" + PathConstant.LR_PAGES + "/" + PathConstant.CONTENT_PAGE_REQ_PASSWORD; //'/Pages/RequestPassword'
   public static BACK_TO_PAGING = '..' + "/" + PathConstant.PAGING; //'../Paging'
   public static BACK_TO_PAGING_LOWERCASE = '..' + "/" + PathConstant.PAGING_LOWERCASE; //'../paging'
   public static BACK_TO_PAGING2 = '../' + '../' + PathConstant.PAGING; //'../../Paging'
@@ -441,5 +441,10 @@ export class NavigationConstant {
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
   //EndSettings
+
+  //#region Report
+  public static REPORT_PLAFOND_MOU_SUMMARY = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_SUMMARY; //'/Report/RptPlafondMouSummary'
+  public static REPORT_PLAFOND_MOU_DETAIL = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_DETAIL; //'/Report/RptPlafondMouDetail'
+  //#endregion
   
 }

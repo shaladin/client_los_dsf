@@ -37,6 +37,7 @@ import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
+import { CustAddrObj } from 'app/shared/model/CustAddrObj.Model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -50,6 +51,7 @@ export class MouCustTabComponent implements OnInit {
 
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  ListLegalDocCantDuplicate: Array<string> = new Array<string>();
   generalSettingObj: GenericListByCodeObj;
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
@@ -57,6 +59,7 @@ export class MouCustTabComponent implements OnInit {
   thirdPartyRsltHId: number;
   latestReqDtCheckIntegrator: Date;
   reqLatestJson: string;
+  ListTempLegalCheck: Array<any> = new Array<any>();
 
   CustDataForm = this.fb.group({
     CopyFromResidence: [''],
@@ -236,7 +239,9 @@ export class MouCustTabComponent implements OnInit {
 
       if (this.listShareholder != undefined) {
         for (let i = 0; i < this.listShareholder.length; i++) {
-          totalSharePrcnt += this.listShareholder[i].SharePrcnt;
+          if (this.listShareholder[i].IsActive) {
+            totalSharePrcnt += this.listShareholder[i].SharePrcnt;
+          }
         }
         for (const item of this.listShareholder) {
           if (item.IsActive) {
@@ -268,17 +273,25 @@ export class MouCustTabComponent implements OnInit {
           }
         }
       }
+
       var groupedCustLegalDoc = this.groupBy(this.custDataCompanyObj.MouCustCompanyLegalDocObjs, function (item) {
         return [item.MrLegalDocTypeCode, item.DocNo];
       });
-  
-      var duplCustLegalDoc = groupedCustLegalDoc.find(x => x.length > 1);
-  
-      if(duplCustLegalDoc != undefined){
-        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
-        return;
+
+      var duplCustLegalDoc = groupedCustLegalDoc.filter(x => x.length > 1);
+
+      if (duplCustLegalDoc != undefined) {
+        for (var i = 0; i < duplCustLegalDoc.length; i++) {
+          this.ListTempLegalCheck = duplCustLegalDoc[i];
+          var checkGSValue = this.ListLegalDocCantDuplicate.find(x => x == this.ListTempLegalCheck[0].MrLegalDocTypeCode);
+
+          if (checkGSValue != null) {
+            this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_LEGAL_DOC, duplCustLegalDoc[0].MrLegalDocTypeCode, duplCustLegalDoc[0].DocNo));
+            return;
+          }
+        }
       }
-      
+
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       if (this.confirmFraudCheck()) {
         if (this.MouCustCompanyId == 0) {
@@ -986,7 +999,7 @@ export class MouCustTabComponent implements OnInit {
             this.setAddrMailingObj(CommonConstant.CustTypePersonal);
 
             this.MouCustPersonalId = this.custDataPersonalObj.MouCustPersonalObj.MouCustPersonalId;
-            this.MouCustAddrId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj != null ? this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.MouCustAddrId : 0 ;
+            this.MouCustAddrId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj != null ? this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.MouCustAddrId : 0;
             this.MouCustPersonalJobDataId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustPersonalJobDataId;
             this.MouCustFinDataId = this.custDataPersonalObj.MouCustPersonalFinDataObj.MouCustPersonalFinDataId;
             this.MouCustAddrLegalId = this.custDataPersonalObj.MouCustAddrLegalObj.MouCustAddrId;
@@ -1331,126 +1344,131 @@ export class MouCustTabComponent implements OnInit {
   }
 
   copyAddrFromLookup(event) {
-    let addrLegal = event.CustAddrObjs.filter(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
-    let addrResidence = event.CustAddrObjs.filter(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence);
-    let addrMailing = event.CustAddrObjs.filter(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeMailing);
-    if (addrLegal.length != 0) {
-      this.legalAddrObj.Addr = addrLegal[0].Addr;
-      this.legalAddrObj.AreaCode1 = addrLegal[0].AreaCode1;
-      this.legalAddrObj.AreaCode2 = addrLegal[0].AreaCode2;
-      this.legalAddrObj.AreaCode3 = addrLegal[0].AreaCode3;
-      this.legalAddrObj.AreaCode4 = addrLegal[0].AreaCode4;
-      this.legalAddrObj.City = addrLegal[0].City;
-      this.legalAddrObj.Fax = addrLegal[0].Fax;
-      this.legalAddrObj.FaxArea = addrLegal[0].FaxArea;
-      this.legalAddrObj.Phn1 = addrLegal[0].Phn1;
-      this.legalAddrObj.Phn2 = addrLegal[0].Phn2;
-      this.legalAddrObj.PhnArea1 = addrLegal[0].PhnArea1;
-      this.legalAddrObj.PhnArea2 = addrLegal[0].PhnArea2;
-      this.legalAddrObj.PhnExt1 = addrLegal[0].PhnExt1;
-      this.legalAddrObj.PhnExt2 = addrLegal[0].PhnExt2;
-      this.legalAddrObj.SubZipcode = addrLegal[0].SubZipcode;
+    var custAddrObjs: Array<CustAddrObj> = event["CustAddrObjs"];
+    var custAddrLegalObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
+    var custAddrResidenceObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence);
+    var custAddrMailingObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeMailing);
 
-      this.inputFieldLegalObj.inputLookupObj.nameSelect = addrLegal[0].Zipcode;
-      this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: addrLegal[0].Zipcode };
+    if (custAddrLegalObj != undefined && custAddrLegalObj != null) {
+      this.legalAddrObj.Addr = custAddrLegalObj.Addr;
+      this.legalAddrObj.AreaCode1 = custAddrLegalObj.AreaCode1;
+      this.legalAddrObj.AreaCode2 = custAddrLegalObj.AreaCode2;
+      this.legalAddrObj.AreaCode3 = custAddrLegalObj.AreaCode3;
+      this.legalAddrObj.AreaCode4 = custAddrLegalObj.AreaCode4;
+      this.legalAddrObj.City = custAddrLegalObj.City;
+      this.legalAddrObj.Fax = custAddrLegalObj.Fax;
+      this.legalAddrObj.FaxArea = custAddrLegalObj.FaxArea;
+      this.legalAddrObj.Phn1 = custAddrLegalObj.Phn1;
+      this.legalAddrObj.Phn2 = custAddrLegalObj.Phn2;
+      this.legalAddrObj.PhnArea1 = custAddrLegalObj.PhnArea1;
+      this.legalAddrObj.PhnArea2 = custAddrLegalObj.PhnArea2;
+      this.legalAddrObj.PhnExt1 = custAddrLegalObj.PhnExt1;
+      this.legalAddrObj.PhnExt2 = custAddrLegalObj.PhnExt2;
+      this.legalAddrObj.SubZipcode = custAddrLegalObj.SubZipcode;
+
+      this.inputFieldLegalObj.inputLookupObj.nameSelect = custAddrLegalObj.Zipcode;
+      this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: custAddrLegalObj.Zipcode };
 
       this.inputAddrLegalPersonalObj.default = this.legalAddrObj;
       this.inputAddrLegalPersonalObj.inputField = this.inputFieldLegalObj;
     }
 
-    if (addrResidence.length != 0) {
-      this.residenceAddrObj.Addr = addrResidence[0].Addr;
-      this.residenceAddrObj.AreaCode1 = addrResidence[0].AreaCode1;
-      this.residenceAddrObj.AreaCode2 = addrResidence[0].AreaCode2;
-      this.residenceAddrObj.AreaCode3 = addrResidence[0].AreaCode3;
-      this.residenceAddrObj.AreaCode4 = addrResidence[0].AreaCode4;
-      this.residenceAddrObj.City = addrResidence[0].City;
-      this.residenceAddrObj.Fax = addrResidence[0].Fax;
-      this.residenceAddrObj.FaxArea = addrResidence[0].FaxArea;
-      this.residenceAddrObj.Phn1 = addrResidence[0].Phn1;
-      this.residenceAddrObj.Phn2 = addrResidence[0].Phn2;
-      this.residenceAddrObj.PhnArea1 = addrResidence[0].PhnArea1;
-      this.residenceAddrObj.PhnArea2 = addrResidence[0].PhnArea2;
-      this.residenceAddrObj.PhnExt1 = addrResidence[0].PhnExt1;
-      this.residenceAddrObj.PhnExt2 = addrResidence[0].PhnExt2;
-      this.residenceAddrObj.SubZipcode = addrResidence[0].SubZipcode;
-      this.residenceAddrObj.MrHouseOwnershipCode = addrResidence[0].MrHouseOwnershipCode;
+    if (custAddrResidenceObj != undefined && custAddrResidenceObj != null) {
+      this.residenceAddrObj.Addr = custAddrResidenceObj.Addr;
+      this.residenceAddrObj.AreaCode1 = custAddrResidenceObj.AreaCode1;
+      this.residenceAddrObj.AreaCode2 = custAddrResidenceObj.AreaCode2;
+      this.residenceAddrObj.AreaCode3 = custAddrResidenceObj.AreaCode3;
+      this.residenceAddrObj.AreaCode4 = custAddrResidenceObj.AreaCode4;
+      this.residenceAddrObj.City = custAddrResidenceObj.City;
+      this.residenceAddrObj.Fax = custAddrResidenceObj.Fax;
+      this.residenceAddrObj.FaxArea = custAddrResidenceObj.FaxArea;
+      this.residenceAddrObj.Phn1 = custAddrResidenceObj.Phn1;
+      this.residenceAddrObj.Phn2 = custAddrResidenceObj.Phn2;
+      this.residenceAddrObj.PhnArea1 = custAddrResidenceObj.PhnArea1;
+      this.residenceAddrObj.PhnArea2 = custAddrResidenceObj.PhnArea2;
+      this.residenceAddrObj.PhnExt1 = custAddrResidenceObj.PhnExt1;
+      this.residenceAddrObj.PhnExt2 = custAddrResidenceObj.PhnExt2;
+      this.residenceAddrObj.SubZipcode = custAddrResidenceObj.SubZipcode;
 
-      this.inputFieldResidenceObj.inputLookupObj.nameSelect = addrResidence[0].Zipcode;
-      this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: addrResidence[0].Zipcode };
+      this.inputFieldResidenceObj.inputLookupObj.nameSelect = custAddrResidenceObj.Zipcode;
+      this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: custAddrResidenceObj.Zipcode };
       this.inputAddrResidenceObj.default = this.residenceAddrObj;
       this.inputAddrResidenceObj.inputField = this.inputFieldResidenceObj;
     }
 
-    if (addrMailing.length != 0) {
-      this.mailingAddrObj.Addr = addrMailing[0].Addr;
-      this.mailingAddrObj.AreaCode1 = addrMailing[0].AreaCode1;
-      this.mailingAddrObj.AreaCode2 = addrMailing[0].AreaCode2;
-      this.mailingAddrObj.AreaCode3 = addrMailing[0].AreaCode3;
-      this.mailingAddrObj.AreaCode4 = addrMailing[0].AreaCode4;
-      this.mailingAddrObj.City = addrMailing[0].City;
-      this.mailingAddrObj.Fax = addrMailing[0].Fax;
-      this.mailingAddrObj.FaxArea = addrMailing[0].FaxArea;
-      this.mailingAddrObj.Phn1 = addrMailing[0].Phn1;
-      this.mailingAddrObj.Phn2 = addrMailing[0].Phn2;
-      this.mailingAddrObj.PhnArea1 = addrMailing[0].PhnArea1;
-      this.mailingAddrObj.PhnArea2 = addrMailing[0].PhnArea2;
-      this.mailingAddrObj.PhnExt1 = addrMailing[0].PhnExt1;
-      this.mailingAddrObj.PhnExt2 = addrMailing[0].PhnExt2;
-      this.mailingAddrObj.SubZipcode = addrMailing[0].SubZipcode;
+    if (custAddrMailingObj != undefined && custAddrMailingObj != null) {
+      this.mailingAddrObj.Addr = custAddrMailingObj.Addr;
+      this.mailingAddrObj.AreaCode1 = custAddrMailingObj.AreaCode1;
+      this.mailingAddrObj.AreaCode2 = custAddrMailingObj.AreaCode2;
+      this.mailingAddrObj.AreaCode3 = custAddrMailingObj.AreaCode3;
+      this.mailingAddrObj.AreaCode4 = custAddrMailingObj.AreaCode4;
+      this.mailingAddrObj.City = custAddrMailingObj.City;
+      this.mailingAddrObj.Fax = custAddrMailingObj.Fax;
+      this.mailingAddrObj.FaxArea = custAddrMailingObj.FaxArea;
+      this.mailingAddrObj.Phn1 = custAddrMailingObj.Phn1;
+      this.mailingAddrObj.Phn2 = custAddrMailingObj.Phn2;
+      this.mailingAddrObj.PhnArea1 = custAddrMailingObj.PhnArea1;
+      this.mailingAddrObj.PhnArea2 = custAddrMailingObj.PhnArea2;
+      this.mailingAddrObj.PhnExt1 = custAddrMailingObj.PhnExt1;
+      this.mailingAddrObj.PhnExt2 = custAddrMailingObj.PhnExt2;
+      this.mailingAddrObj.SubZipcode = custAddrMailingObj.SubZipcode;
 
-      this.inputFieldMailingObj.inputLookupObj.nameSelect = addrMailing[0].Zipcode;
-      this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: addrMailing[0].Zipcode };
+      this.inputFieldMailingObj.inputLookupObj.nameSelect = custAddrMailingObj.Zipcode;
+      this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: custAddrMailingObj.Zipcode };
       this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
       this.inputAddressObjForMailing.default = this.mailingAddrObj;
     }
   }
 
   copyAddrCompanyFromLookup(event) {
-    let addrLegal = event.CustAddrObj.filter(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
-    let addrMailing = event.CustAddrObj.filter(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeMailing);
-    if(addrLegal.length != 0){
-      this.legalAddrCompanyObj.Addr = addrLegal[0].Addr;
-      this.legalAddrCompanyObj.AreaCode1 = addrLegal[0].AreaCode1;
-      this.legalAddrCompanyObj.AreaCode2 = addrLegal[0].AreaCode2;
-      this.legalAddrCompanyObj.AreaCode3 = addrLegal[0].AreaCode3;
-      this.legalAddrCompanyObj.AreaCode4 = addrLegal[0].AreaCode4;
-      this.legalAddrCompanyObj.City = addrLegal[0].City;
-      this.legalAddrCompanyObj.Fax = addrLegal[0].Fax;
-      this.legalAddrCompanyObj.FaxArea = addrLegal[0].FaxArea;
-      this.legalAddrCompanyObj.Phn1 = addrLegal[0].Phn1;
-      this.legalAddrCompanyObj.Phn2 = addrLegal[0].Phn2;
-      this.legalAddrCompanyObj.PhnArea1 = addrLegal[0].PhnArea1;
-      this.legalAddrCompanyObj.PhnArea2 = addrLegal[0].PhnArea2;
-      this.legalAddrCompanyObj.PhnExt1 = addrLegal[0].PhnExt1;
-      this.legalAddrCompanyObj.PhnExt2 = addrLegal[0].PhnExt2;
-      this.legalAddrCompanyObj.SubZipcode = addrLegal[0].SubZipcode;
+    var custAddrObjs: Array<CustAddrObj> = event["CustAddrObj"];
+    var custAddrLegalObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
+    var custAddrMailingObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeMailing);
 
-      this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = addrLegal[0].Zipcode;
-      this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: addrLegal[0].Zipcode };
+    if (custAddrLegalObj != undefined && custAddrLegalObj != null) {
+      this.legalAddrCompanyObj.Addr = custAddrLegalObj.Addr;
+      this.legalAddrCompanyObj.AreaCode1 = custAddrLegalObj.AreaCode1;
+      this.legalAddrCompanyObj.AreaCode2 = custAddrLegalObj.AreaCode2;
+      this.legalAddrCompanyObj.AreaCode3 = custAddrLegalObj.AreaCode3;
+      this.legalAddrCompanyObj.AreaCode4 = custAddrLegalObj.AreaCode4;
+      this.legalAddrCompanyObj.City = custAddrLegalObj.City;
+      this.legalAddrCompanyObj.Fax = custAddrLegalObj.Fax;
+      this.legalAddrCompanyObj.FaxArea = custAddrLegalObj.FaxArea;
+      this.legalAddrCompanyObj.Phn1 = custAddrLegalObj.Phn1;
+      this.legalAddrCompanyObj.Phn2 = custAddrLegalObj.Phn2;
+      this.legalAddrCompanyObj.PhnArea1 = custAddrLegalObj.PhnArea1;
+      this.legalAddrCompanyObj.PhnArea2 = custAddrLegalObj.PhnArea2;
+      this.legalAddrCompanyObj.PhnExt1 = custAddrLegalObj.PhnExt1;
+      this.legalAddrCompanyObj.PhnExt2 = custAddrLegalObj.PhnExt2;
+      this.legalAddrCompanyObj.SubZipcode = custAddrLegalObj.SubZipcode;
+
+      this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = custAddrLegalObj.Zipcode;
+      this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: custAddrLegalObj.Zipcode };
+
+
       this.inputAddrLegalCompanyObj.inputField = this.inputFieldLegalCompanyObj;
       this.inputAddrLegalCompanyObj.default = this.legalAddrCompanyObj;
     }
 
-    if(addrMailing.length != 0){
-      this.mailingAddrCompanyObj.Addr = addrMailing[0].Addr;
-      this.mailingAddrCompanyObj.AreaCode1 = addrMailing[0].AreaCode1;
-      this.mailingAddrCompanyObj.AreaCode2 = addrMailing[0].AreaCode2;
-      this.mailingAddrCompanyObj.AreaCode3 = addrMailing[0].AreaCode3;
-      this.mailingAddrCompanyObj.AreaCode4 = addrMailing[0].AreaCode4;
-      this.mailingAddrCompanyObj.City = addrMailing[0].City;
-      this.mailingAddrCompanyObj.Fax = addrMailing[0].Fax;
-      this.mailingAddrCompanyObj.FaxArea = addrMailing[0].FaxArea;
-      this.mailingAddrCompanyObj.Phn1 = addrMailing[0].Phn1;
-      this.mailingAddrCompanyObj.Phn2 = addrMailing[0].Phn2;
-      this.mailingAddrCompanyObj.PhnArea1 = addrMailing[0].PhnArea1;
-      this.mailingAddrCompanyObj.PhnArea2 = addrMailing[0].PhnArea2;
-      this.mailingAddrCompanyObj.PhnExt1 = addrMailing[0].PhnExt1;
-      this.mailingAddrCompanyObj.PhnExt2 = addrMailing[0].PhnExt2;
-      this.mailingAddrCompanyObj.SubZipcode = addrMailing[0].SubZipcode;
+    if (custAddrMailingObj != undefined && custAddrMailingObj != null) {
+      this.mailingAddrCompanyObj.Addr = custAddrMailingObj.Addr;
+      this.mailingAddrCompanyObj.AreaCode1 = custAddrMailingObj.AreaCode1;
+      this.mailingAddrCompanyObj.AreaCode2 = custAddrMailingObj.AreaCode2;
+      this.mailingAddrCompanyObj.AreaCode3 = custAddrMailingObj.AreaCode3;
+      this.mailingAddrCompanyObj.AreaCode4 = custAddrMailingObj.AreaCode4;
+      this.mailingAddrCompanyObj.City = custAddrMailingObj.City;
+      this.mailingAddrCompanyObj.Fax = custAddrMailingObj.Fax;
+      this.mailingAddrCompanyObj.FaxArea = custAddrMailingObj.FaxArea;
+      this.mailingAddrCompanyObj.Phn1 = custAddrMailingObj.Phn1;
+      this.mailingAddrCompanyObj.Phn2 = custAddrMailingObj.Phn2;
+      this.mailingAddrCompanyObj.PhnArea1 = custAddrMailingObj.PhnArea1;
+      this.mailingAddrCompanyObj.PhnArea2 = custAddrMailingObj.PhnArea2;
+      this.mailingAddrCompanyObj.PhnExt1 = custAddrMailingObj.PhnExt1;
+      this.mailingAddrCompanyObj.PhnExt2 = custAddrMailingObj.PhnExt2;
+      this.mailingAddrCompanyObj.SubZipcode = custAddrMailingObj.SubZipcode;
 
-      this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = addrMailing[0].Zipcode;
-      this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: addrMailing[0].Zipcode };
+      this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = custAddrMailingObj.Zipcode;
+      this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: custAddrMailingObj.Zipcode };
       this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
       this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
     }
@@ -1557,6 +1575,7 @@ export class MouCustTabComponent implements OnInit {
     this.generalSettingObj = new GenericListByCodeObj();
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeListLegalDocCantDuplicate);
 
     this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
@@ -1564,6 +1583,7 @@ export class MouCustTabComponent implements OnInit {
 
         var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsListLegalDocCantDuplicate = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeListLegalDocCantDuplicate);
 
         if (gsNeedCheckBySystem != undefined) {
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
@@ -1575,6 +1595,12 @@ export class MouCustTabComponent implements OnInit {
           this.isUseDigitalization = gsUseDigitalization.GsValue;
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+
+        if (gsListLegalDocCantDuplicate != undefined) {
+          this.ListLegalDocCantDuplicate = gsListLegalDocCantDuplicate.GsValue.split('|');
+        } else {
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeListLegalDocCantDuplicate));
         }
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (response: MouCustObj) => {

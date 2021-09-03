@@ -1,0 +1,208 @@
+{
+    "title": "DELIVERY ORDER PAGING",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AP.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgreementNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "PO.PURCHASE_ORDER_NO",
+            "id": "PurchaseNoId",
+            "value": "",
+            "label": "Purchase Order No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AP.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "AP.ORI_OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type" : "claim",
+            "label": "Task Claim Status",
+            "id": "ClaimStatId",
+            "ddlType" : "all",
+            "isCriteriaDataTable" : true
+        },
+        {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "ClaimById",
+            "value": "",
+            "label": "Task Claim By",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+        }
+    ],
+  "querystring": {
+    "name": "searchDeliveryOrderMultiAssetV2"
+  },
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Claim By",
+            "name": "Assignee"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "OFFICE",
+            "name": "AP.ORI_OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AP.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AG.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "PURCHASE ORDER NO",
+            "name": "PO.PURCHASE_ORDER_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "AG.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "PRODUCT OFFERING NAME",
+            "name": "AG.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target": "_blank",
+            "path": "VIEW_APP",
+            "param": [
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
+            ]
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target": "_blank",
+            "path": "VIEW_AGRMNT",
+            "param": [
+                {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "PONumber"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "ViewProdOffering",
+            "position": "left",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
+                    "param": [
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        },
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "WfTaskListId",
+                            "property": "Id"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

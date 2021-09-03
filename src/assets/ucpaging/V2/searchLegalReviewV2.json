@@ -60,17 +60,25 @@
         "itemsUrl": []
       },
       {
+        "type" : "claim",
+        "label": "Task Claim Status",
+        "id": "ClaimStatId",
+        "ddlType" : "all",
+        "isCriteriaDataTable" : true
+      },
+      {
         "type": "textbox",
         "name": "Assignee",
-        "id": "AssigneeId",
-        "value": null,
+        "id": "ClaimById",
+        "value": "",
         "label": "Claim By",
-        "placeholder": "Placeholder"
+        "placeholder": "Placeholder",
+        "isCriteriaDataTable" : true
       }
     ],
     "headerList": [
       {
-        "type": "sort",
+        "type": "label",
         "position": "left",
         "label": "CLAIM BY",
         "name": "Assignee"

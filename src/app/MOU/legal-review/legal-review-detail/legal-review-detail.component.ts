@@ -28,7 +28,7 @@ import { environment } from 'environments/environment';
 
 export class LegalReviewDetailComponent implements OnInit {
 
-  MouCustId: number;
+  MouCustId: number = 0;
   WfTaskListId: any;
   responseRefMasterObj: Array<KeyValueObj>;
   items: FormArray;
@@ -89,18 +89,18 @@ export class LegalReviewDetailComponent implements OnInit {
         }
       }
     );
-    var mouObj = { "Id": this.MouCustId };
+    let mouObj = { "Id": this.MouCustId };
     this.http.post(URLConstant.GetMouCustLglReviewByMouCustId, mouObj).subscribe(
       response => {
         this.responseMouObj = response['ReturnObject'];
 
-        var refLglReviewObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeLegalReview, MappingCode: null };
+        let refLglReviewObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeLegalReview, MappingCode: null };
         this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refLglReviewObj).subscribe(
           (response) => {
-            var lengthDataReturnObj = response[CommonConstant.ReturnObj].length;
+            let lengthDataReturnObj = response[CommonConstant.ReturnObj].length;
             this.responseRefMasterObj = response[CommonConstant.ReturnObj];
-            for (var i = 0; i < lengthDataReturnObj; i++) {
-              var eachDataDetail = this.fb.group({
+            for (let i = 0; i < lengthDataReturnObj; i++) {
+              let eachDataDetail = this.fb.group({
                 ReviewComponentName: [response[CommonConstant.ReturnObj][i].Value],
                 ReviewComponentValue: [response[CommonConstant.ReturnObj][i].Key],
                 RowVersion: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].Key, true)],
@@ -117,7 +117,7 @@ export class LegalReviewDetailComponent implements OnInit {
 
   SearchLegalReview(key, isRowVersion) {
     if (this.responseMouObj.length > 0) {
-      for (var i = 0; i < this.responseMouObj.length; i++) {
+      for (let i = 0; i < this.responseMouObj.length; i++) {
         if (this.responseMouObj[i]['MrLglReviewCode'] == key) {
           if (isRowVersion) {
             return this.responseMouObj[i]['RowVersion'];
@@ -134,9 +134,9 @@ export class LegalReviewDetailComponent implements OnInit {
   SaveData(formObj: FormGroup, isSubmit: boolean) {
     if (this.LegalForm.valid) {
       let addMouLglRvwUrl = environment.isCore ? URLConstant.AddRangeMouCustLglReviewV2 : URLConstant.AddRangeMouCustLglReview;
-      var mouLglRvwObj = new ReqListMouCustLglReviewObj();
+      let mouLglRvwObj = new ReqListMouCustLglReviewObj();
       for (let index = 0; index < this.responseRefMasterObj.length; index++) {
-        var tempMouObj = {
+        let tempMouObj = {
           MouCustId: this.MouCustId,
           MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
           LglReviewResult: formObj.value.items[index].values,

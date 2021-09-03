@@ -126,7 +126,9 @@ export class CustCompletionDetailComponent implements OnInit {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitAppCustCompletion, reqObj).subscribe(
+
+    let SubmitAppCustCompletionUrl = environment.isCore ? URLConstant.SubmitAppCustCompletionV2 : URLConstant.SubmitAppCustCompletion;
+    this.http.post(SubmitAppCustCompletionUrl, reqObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         this.buttonBackOnClick();

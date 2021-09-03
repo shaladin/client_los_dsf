@@ -11,7 +11,20 @@ import { AppAddFreeComponent } from "./app-add-free/app-add-free.component";
 import { AppAddFixedComponent } from "./app-add-fixed/app-add-fixed.component";
 import { AppAddDetailComponent } from "./app-add-detail/app-add-detail.component";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 
+export const customCurrencyMaskConfig = {     
+    align: "right",     
+    allowNegative: true,     
+    allowZero: true,     
+    decimal: ".",     
+    precision: 2,     
+    prefix: "",     
+    suffix: "",     
+    thousands: ",",     
+    nullable: false,
+    inputMode: CurrencyMaskInputMode.NATURAL
+  };
 
 @NgModule({
     imports: [
@@ -20,6 +33,7 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
         AdInsModule,
         InputNapComponentModule,
         ArchwizardModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
         ViewMainInfoComponentModule
     ],
     declarations: [ 

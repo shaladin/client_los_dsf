@@ -24,6 +24,8 @@ export class AdInsConstant {
   public static LoginByToken = environment.FoundationR3Url + "/v1" + "/Authenticate/LoginByToken";
   public static UpdateToken = environment.FoundationR3Url + "/v1" + "/Authenticate/UpdateRole";
   public static GetThingsToDoByRole = environment.FoundationR3Url + "/v1" + "/ThingsToDo/GetThingsToDoByRole";
+  public static GetThingsToDoByRoleV2 = environment.FoundationR3Url + "/v2" + "/ThingsToDo/GetThingsToDoByRole";
+  public static GetThingsToDoCamunda = environment.FoundationR3Url + "/v2" + "/ThingsToDo/GetThingsToDoCamunda";
 
   // List Approver
   public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
@@ -32,4 +34,9 @@ export class AdInsConstant {
   public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/v1" + "/Approval/TakeBack";
   
   public static UserCustomer = "Customer";
+  public static TextTrue = "True";
+  public static TextFalse = "False";
+
+  // Storage Watch Key
+  public static WatchRoleState = "RoleState";
 }

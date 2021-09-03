@@ -68,33 +68,20 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "name": "Assignee",
-            "id": "AssigneeId",
+            "type" : "claim",
             "label": "Task Claim Status",
-            "value": null,
-            "placeholder": "Placeholder",
-            "isFromURL": false,
-            "ddlType": "all",
-            "items": [
-                {
-                    "key": "CLAIMED",
-                    "value": "CLAIMED"
-                },
-                {
-                    "key": "UNCLAIMED",
-                    "value": "UNCLAIMED"
-                }
-            ],
-            "itemsUrl": []
+            "id": "ClaimStatId",
+            "ddlType" : "all",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "textbox",
             "name": "Assignee",
-            "id": "AssigneeId",
-            "value": null,
+            "id": "ClaimById",
+            "value": "",
             "label": "Claim By",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         }
     ],
     "querystring": {
@@ -102,7 +89,7 @@
     },
     "headerList": [
         {
-            "type": "sort",
+            "type": "label",
             "position": "left",
             "label": "Claim By",
             "name": "Assignee"

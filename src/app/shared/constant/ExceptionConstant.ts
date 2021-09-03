@@ -23,6 +23,8 @@ export class ExceptionConstant {
     public static BALLOON_AMOUNT_MUST_HIGHER_THAN = "Balloon Amount must be higher than ";
     public static INST_AMOUNT_MUST_HIGHER_THAN = "Installment Amount must be higher than ";
     public static INPUT_INST_AMOUNT = "Please Input Installment Amount on Installment No ";
+    public static INPUT_INST_AMOUNT_SUSD = "Installment No {0} and {1} must different.";
+    public static INPUT_NUM_OF_INST = "Please Input # of Installment on Installment No ";
     public static TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN = "Total Commision Amount cannot more than ";
     public static ID_EXPIRED_DATE_CANNOT_LESS_THAN = "Id Expired Date can not be less than ";
     public static INSURANCE_LENGTH_MUST_HIGHER_THAN = "Insurance Length must be higher than ";
@@ -181,6 +183,9 @@ export class ExceptionConstant {
     public static ACCESSORY_PRICE_NOT_SET = "Please Input Accessory Price";
 
     public static PLEASE_COMPLETE_FOLLOWING_FIELD = "Please Complete the following field : ";
+    public static DUP_CHECK_NOT_COMPLETE = "Please complete Duplicate checking first";
+    public static MANUFACTURING_YEAR_CAN_NOT_LESS_THAN = "Manufacturing Year can not less than ";
+    public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
     
 }
 

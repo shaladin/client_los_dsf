@@ -81,7 +81,8 @@ export class CreditApvResultExtDetailComponent implements OnInit {
         RequestRFAObj: this.RFAInfo
       }
 
-      this.http.post(URLConstant.SubmitReqNewExpDateApv, sendObj).subscribe(
+      let apiUrl = environment.isCore ? URLConstant.SubmitReqNewExpDateApvV2 : URLConstant.SubmitReqNewExpDateApv;
+      this.http.post(apiUrl, sendObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING], { BizTemplateCode: this.BizTemplateCode });
@@ -93,6 +94,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   async GetMainData() {
     this.http.post(URLConstant.GetCreditApvResultExtMainData, { AppId: this.AppId, AgrmntId: this.AgrmntId }).toPromise().then(
       (response: CreditApvResultExtObj) => {
+        console.log(response);
         this.CrdApvMainDataObj = response;
         this.CrdApvRestExtForm.patchValue({
           NewCrdApvResultExpDt: formatDate(this.CrdApvMainDataObj.CrdApvResultExpDt, 'yyyy-MM-dd', 'en-US')

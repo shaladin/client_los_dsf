@@ -1,5 +1,8 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { NavbarComponent } from 'app/shared/navbar/navbar.component';
 import { StorageService } from 'app/shared/services/StorageService';
+import { SidebarComponent } from 'app/shared/sidebar/sidebar.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 var fireRefreshEventOnWindow = function () {
@@ -19,11 +22,23 @@ export class FullLayoutComponent implements OnInit {
     options = {
         direction: 'ltr'
     };
-    subEnd: any;
+    @ViewChild(SidebarComponent) sbComp: SidebarComponent;
+    @ViewChild(NavbarComponent) nbComp: NavbarComponent;
+    
+    unsubscribe: any;
 
     constructor(private elementRef: ElementRef, private strService: StorageService, private spinner: NgxSpinnerService) { }
 
     ngOnInit() {
+        this.unsubscribe = this.strService.watch(AdInsConstant.WatchRoleState).subscribe(
+            (response) => {
+                console.log(response);
+                if (response == true) {
+                    this.sbComp.setMenu();
+                    this.nbComp.setUser();
+                }
+            }
+        );
         // this.subEnd = this.strService.watch("isLoading").subscribe(
         //     (response) => {
         //         if (response == true) {
@@ -47,8 +62,8 @@ export class FullLayoutComponent implements OnInit {
 
     ngOnDestroy() {
         // this.subEnd.unsubscribe();
-        // this.unsubscribe.next();
-        // this.unsubscribe.complete();
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 
     onClick(event) {
