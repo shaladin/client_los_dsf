@@ -657,11 +657,6 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
         OwnerZipcode: this.EditAppAssetForm.controls.OwnerZipcode.value,
       },
       AppAssetAttrObjs: [],
-      AppInsObj:
-      {
-        InsAssetCoverPeriod: '-',
-        InsAssetCoveredBy: '-',
-      }
     }
 
     var listAppAssetAttrs = this.EditAppAssetForm.controls["AppAssetAttrObjs"] as FormArray;
@@ -686,6 +681,14 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
         InscoBranchName: this.EditAppAssetForm.controls.InscoBranchName.value,
         InsAssetCoverPeriod: this.appInsObjObj.InsAssetCoverPeriod,
         InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy
+      };
+    }else{
+      this.AppAssetRelatedOutput.AppInsObj =
+      {
+        InscoBranchCode: "",
+        InscoBranchName: "",
+        InsAssetCoverPeriod: '-',
+        InsAssetCoveredBy: '-',
       };
     }
 
