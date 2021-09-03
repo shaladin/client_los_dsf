@@ -11,6 +11,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/AppFinData/CalcStepUpStepDownObjForTrialCalc.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-schm-step-up-step-down-normal',
@@ -60,13 +61,15 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
 
       this.http.post(URLConstant.GetAppInsStepSchmForSUSDByAppId, { Id: this.AppId }).subscribe(
         (response) => {
-          this.ListExistingAppInstStepSchm = response["ListAppInstStepSchm"];
-          this.ParentForm.patchValue({
-            NumOfStep: this.ListExistingAppInstStepSchm.length,
-            StepUpStepDownInputType: CommonConstant.InputTypeAmt
-          });
+          if (response["ListAppInstStepSchm"] != 0) {
+            this.ListExistingAppInstStepSchm = response["ListAppInstStepSchm"];
+            this.ParentForm.patchValue({
+              NumOfStep: this.ListExistingAppInstStepSchm.length,
+              StepUpStepDownInputType: CommonConstant.InputTypeAmt
+            });
 
-          this.SetEntryInstallment(true);
+            this.SetEntryInstallment(true);
+          }
         });
 
       this.IsTrialCalc = false;
@@ -210,6 +213,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
 
 
   CalculateAmortization() {
+    this.calcStepUpStepDownObj = this.ParentForm.value;
     if (this.ValidateFee() == false) {
       return;
     }
@@ -221,8 +225,31 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
       return;
     }
+
+    let NumOfInstKosong = this.calcStepUpStepDownObj.ListEntryInst.findIndex(x => x.NumOfInst == 0);
+    if (NumOfInstKosong != -1) {
+      this.toastr.warningMessage(ExceptionConstant.INPUT_NUM_OF_INST + (NumOfInstKosong + 1));
+      return;
+    }
+    let InstAmtKosong = this.calcStepUpStepDownObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
+    if (InstAmtKosong != -1) {
+      this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (InstAmtKosong + 1));
+      return;
+    }
+    for (let i = 0; i < this.calcStepUpStepDownObj.ListEntryInst.length; i++) {
+      let indexI = this.calcStepUpStepDownObj.ListEntryInst[i].InstAmt;
+      for (let j = 0; j < this.calcStepUpStepDownObj.ListEntryInst.length; j++) {
+        if (i != j) {
+          let indexJ = this.calcStepUpStepDownObj.ListEntryInst[j].InstAmt;
+          if (indexI == indexJ) {
+            this.toastr.warningMessage(String.Format(ExceptionConstant.INPUT_INST_AMOUNT_SUSD, i + 1, j + 1));
+            return;
+          }
+        }
+      }
+    }
+
     if (!this.IsTrialCalc) {
-      this.calcStepUpStepDownObj = this.ParentForm.value;
       this.calcStepUpStepDownObj["IsRecalculate"] = false;
       this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
       this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
@@ -264,7 +291,6 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
         }
       );
     } else {
-      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.value;
       this.calcStepUpStepDownObjForTrialCalc["IsRecalculate"] = false;
       this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
       this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;

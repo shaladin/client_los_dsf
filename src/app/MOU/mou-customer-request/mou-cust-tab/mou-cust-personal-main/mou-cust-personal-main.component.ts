@@ -90,7 +90,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       NoOfDependents: ['', [Validators.maxLength(4)]],
     }));
 
-    this.initLookup();
+    await this.initLookup();
     this.bindAllRefMasterObj();
     await this.bindCustData();
   }
@@ -166,7 +166,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.selectedNationalityCountryCode = event.CountryCode;
   }
 
-  setCriteriaLookupCustomer(custTypeCode) {
+  async setCriteriaLookupCustomer(custTypeCode) {
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
@@ -243,13 +243,13 @@ export class MouCustPersonalMainComponent implements OnInit {
     }
   }
 
-  initLookup() {
+  async initLookup() {
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
-    this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
+    await this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
 
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -281,7 +281,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
-          if (this.custDataPersonalObj.MouCustPersonalObj.MrGenderCode == null) {
+          if (this.custDataPersonalObj.MouCustPersonalObj.MrGenderCode == null && this.custDataPersonalObj.MouCustObj.MouCustId == 0) {
             this.parentForm.controls[this.identifier].patchValue({
               MrGenderCode: this.GenderObj[0].Key
             });
@@ -294,7 +294,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if (this.MaritalStatObj.length > 0) {
-          if (this.custDataPersonalObj.MouCustPersonalObj.MrMaritalStatCode == null) {
+          if (this.custDataPersonalObj.MouCustPersonalObj.MrMaritalStatCode == null && this.custDataPersonalObj.MouCustObj.MouCustId == 0) {
             this.parentForm.controls[this.identifier].patchValue({
               MrMaritalStatCode: this.MaritalStatObj[0].Key
             });
@@ -320,7 +320,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeEducation }).subscribe(
       (response) => {
         this.EducationObj = response[CommonConstant.ReturnObj];
-        if (this.EducationObj.length > 0) {
+        if (this.EducationObj.length > 0 && this.custDataPersonalObj.MouCustObj.MouCustId == 0) {
           this.parentForm.controls[this.identifier].patchValue({
             MrEducationCode: this.EducationObj[0].Key
           });
@@ -331,7 +331,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeReligion }).subscribe(
       (response) => {
         this.ReligionObj = response[CommonConstant.ReturnObj];
-        if (this.ReligionObj.length > 0) {
+        if (this.ReligionObj.length > 0 && this.custDataPersonalObj.MouCustObj.MouCustId == 0) {
           this.parentForm.controls[this.identifier].patchValue({
             MrReligionCode: this.ReligionObj[0].Key
           });
