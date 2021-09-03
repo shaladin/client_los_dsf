@@ -19,6 +19,8 @@ import {DMSLabelValueObj} from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import {AppObj} from 'app/shared/model/App/App.Model';
 import {environment} from 'environments/environment';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {ClaimTaskService} from 'app/shared/claimTask.service';
+import {ReqSubmitNAPDataObj} from 'app/shared/model/App/ReqSubmitNAPDataV2Obj.model';
 
 @Component({
   selector: 'app-survey-subject-x',
@@ -80,8 +82,15 @@ export class SurveySubjectXComponent implements OnInit {
   NapObj: AppObj;
   appNo: string;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService,
-              private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
+              private fb: FormBuilder,
+    private router: Router,
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.appId = params['AppId'];
@@ -210,7 +219,8 @@ export class SurveySubjectXComponent implements OnInit {
     }
     if (this.isReturnHandling == true) {
       const ReturnHandlingDData =this.setReturnHandlingD();
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingDData).subscribe(
+      const url = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(url, ReturnHandlingDData).subscribe(
         (response) => {
           this.toastr.successMessage(response['message']);
           this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
@@ -395,16 +405,28 @@ export class SurveySubjectXComponent implements OnInit {
   }
 
   async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = {
-      pWFTaskListID: this.wfTaskListId,
-      pUserID: currentUserContext[CommonConstant.USER_NAME],
-      isLoading: false
-    };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-        console.log(response);
-      });
+    if(environment.isCore){
+      const wfClaimObjV2 = {
+        TaskId : this.wfTaskListId,
+        AppId : this.appId,
+      }
+      this.http.post(URLConstant.ClaimTaskV2 , wfClaimObjV2).subscribe(
+        (response) => {
+          console.log(response);
+        });
+
+    }else{
+      const currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      const wfClaimObj = {
+        pWFTaskListID: this.wfTaskListId,
+        pUserID: currentUserContext[CommonConstant.USER_NAME],
+        isLoading: false
+      };
+      this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+        (response) => {
+          console.log(response);
+        });
+    }
   }
 
   back() {

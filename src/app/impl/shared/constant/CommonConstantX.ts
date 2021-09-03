@@ -1,24 +1,22 @@
 import { CurrencyMaskInputMode } from "ngx-currency";
 
 export class CommonConstantX {
-
     //RefMaster
     public static RefMasterTypeCodeSbePositionMnl = "SBE_POSITION_MNL";
 
     //CommissionRsvFund Allocations
     public static AllocationFronInsuranceIncomeCode= "INSURANCE_INCOME";
-    
+
     //Ref Master Type Code
     public static RefMasterTypeCodeOrdStatus = "ORD_STATUS";
     public static RefMasterTypeCodeStatusBpkb = "STATUS_BPKB";
-    
+
     //LOB
     public static SLB = "SLB";
-    
+
     //General Setting Code
     public static GSVendorSlbCode = "VENDOR_SLB_CODE";
     public static RefMasterTypeCodeMouFctrType = 'MOU_FCTR_TYPE';
-
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
@@ -36,13 +34,12 @@ export class CommonConstantX {
 
     //Approval Category
     public static CESSIE_PRE_GPV_APV_CATEGORY = "CESSIE_PGLV_APV";
-    
+
     //Add Interest Paid By
     public static AdditionalInterestPaidByCustomer = "CU";
 
     //Cessie
     public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "-";
-
 
     //Ref Master
     public static REF_MASTER_ASSET_CONDITION_DESCR_USED = "Used";
@@ -57,4 +54,8 @@ export class CommonConstantX {
 
     //Insurance
     public static PayPeriodAnnualy = "ANNUALY";
+
+    //Survey Verification
+    public static ACT_CODE_SURVEY_VERIF = "SURVEY_"
+  public static APP_STEP_SURVEY_VERIF = "SRVY_VRF"
 }
