@@ -14,6 +14,7 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { CustMainDataXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/cust-main-data/cust-main-data-x.component";
 import { GuarantorMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/guarantor-main-data/guarantor-main-data-paging-x.component";
 import { FamilyMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/family-main-data/family-main-data-paging-x.component";
+import { MngmntShrhldrMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/mngmnt-shrhldr-main-data-paging-x/mngmnt-shrhldr-main-data-paging-x.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -38,7 +39,8 @@ export const customCurrencyMaskConfig = {
         MngmntShrhldrMainDataPagingComponent,
         CustMainDataXComponent,
         GuarantorMainDataPagingXComponent,
-        FamilyMainDataPagingXComponent
+        FamilyMainDataPagingXComponent,
+        MngmntShrhldrMainDataPagingXComponent
     ],
     imports: [
         CommonModule,
@@ -56,7 +58,8 @@ export const customCurrencyMaskConfig = {
         MngmntShrhldrMainDataPagingComponent,
         CustMainDataXComponent,
         GuarantorMainDataPagingXComponent,
-        FamilyMainDataPagingXComponent
+        FamilyMainDataPagingXComponent,
+        MngmntShrhldrMainDataPagingXComponent
     ],
     providers: [
         NGXToastrService

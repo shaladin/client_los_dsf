@@ -62,9 +62,9 @@
               </app-family-main-data-paging-x>
             </div>
             <div id="mgmnt-shrholder-tab" class="content" role="tabpanel" aria-labelledby="mgmnt-shrholder-tab-trigger">
-              <app-mngmnt-shrhldr-main-data-paging *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()"
+              <app-mngmnt-shrhldr-main-data-paging-x *ngIf="AppStepIndex == 3" [appId]="appId" (outputCancel)="Cancel()"
                 (outputTab)="NextStep('GUAR')">
-              </app-mngmnt-shrhldr-main-data-paging>
+              </app-mngmnt-shrhldr-main-data-paging-x>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
               <app-guarantor-main-data-paging-x *ngIf="AppStepIndex == 4" [appId]="appId" (outputCancel)="Cancel()"
