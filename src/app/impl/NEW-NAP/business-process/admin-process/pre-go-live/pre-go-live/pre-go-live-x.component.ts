@@ -401,7 +401,10 @@ export class PreGoLiveXComponent implements OnInit {
     }
 
     console.log(this.PreGoLiveObj);
-    this.http.post(URLConstantX.AddPreGoLiveX, this.PreGoLiveObj).subscribe(
+
+    let AddPreGoLiveXUrl = environment.isCore ? URLConstantX.AddPreGoLiveXV2 : URLConstantX.AddPreGoLiveX;
+
+    this.http.post(AddPreGoLiveXUrl, this.PreGoLiveObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router, [this.CancelLink], {});
         this.toastr.successMessage(response['message']);

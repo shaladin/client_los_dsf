@@ -14,6 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -43,6 +44,11 @@ export class GoLiveApprovalPagingXComponent implements OnInit {
     this.inputPagingObj._url = "./assets/impl/ucpaging/searchGoLiveApproval.json";
     this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchGoLiveApproval.json";
     this.inputPagingObj.addCritInput = new Array();
+
+    if(environment.isCore) {
+      this.inputPagingObj._url = "./assets/impl/ucpaging/V2/searchGoLiveApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/V2/searchGoLiveApprovalV2.json";
+    }
 
     var critInputOnlyOffering = new CriteriaObj();
     critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";

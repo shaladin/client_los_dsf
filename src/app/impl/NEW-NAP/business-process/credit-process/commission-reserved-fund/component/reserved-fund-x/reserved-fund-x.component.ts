@@ -296,6 +296,8 @@ export class ReservedFundXComponent implements OnInit {
     this.calculatedRemainingAmt();
     await this.setAppRsvFundData();
     this.isCalculated = true;
+    console.log('IS CALCULATED');
+    console.log(this.isCalculated);
   }
 
   calculating() {
