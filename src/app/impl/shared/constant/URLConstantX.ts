@@ -100,6 +100,7 @@ export class URLConstantX {
 
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
+  public static SubmitNAPXV2 = environment.losUrl + '/v2' + "/AppX/SubmitNAP";
   public static AddNewApplication = environment.losUrl + "/v1" + "/AppX/AddNewApplication";
   public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/AppX/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/AppX/AddNewApplicationFromCopy";

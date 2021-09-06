@@ -333,12 +333,20 @@ export class NapDetailFormXComponent implements OnInit {
     )
   }
 
+  CheckIsUseDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
+      this.NextStep(CommonConstant.AppStepUplDoc);
+    } else {
+      this.LastStepHandler();
+    }
+  }
+  
   LastStepHandler() {  //lmyn miripp
     this.NapObj.WfTaskListId = this.wfTaskListId;
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstantX.SubmitNAPX;
+      let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
       this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
