@@ -36,7 +36,7 @@
                 <label class="col-md-2 adins-required-label" *ngIf="BizTemplateCode == 'DLFN'" for="Note" translate>Notes</label>
                 <div class="col-md-4">
                   <textarea id="Note" class="form-control adInsInput width-75-per" formControlName="Notes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && GoLiveApvReqForm.controls.Notes.invalid }"></textarea>  
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.Notes.invalid }"></textarea>  
                   <lib-uc-show-errors [control]="MainInfoForm.controls.Notes" [submit]="GoLiveApvReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
