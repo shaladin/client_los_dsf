@@ -125,7 +125,6 @@ export class PreGoLiveXComponent implements OnInit {
         this.ListRfaLogObj = response['ListRfaLogObj'];
         this.lengthListRfaLogObj = this.ListRfaLogObj.length - 1;
         this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-        this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
         this.InputApprovalHistoryObj.PathUrl = '/Approval/GetTaskHistory';
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           if (this.ListRfaLogObj[i]['ApvCategory'] == CommonConstant.ApvCategoryPreGoLive) {
@@ -172,27 +171,29 @@ export class PreGoLiveXComponent implements OnInit {
 
         this.appNo = this.AppObj.AppNo;
         const mouId = this.AppObj.MouCustId;
-        this.http.post(URLConstant.GetMouCustById, {Id: mouId}).subscribe(
-          async (result: MouCustObj) => {
-            this.mouCustNo = result.MouCustNo;
-            const endDt = new Date(result.EndDt);
-            this.MaxEffDt = new Date(result.EndDt);
-            let Tenor = this.AgrmntResult.Tenor;
-            if (this.AppObj.MrFirstInstTypeCode == CommonConstant.FirstInstTypeAdvance) {
-              await this.http.post<RefPayFreqObj>(URLConstant.GetRefPayFreqByPayFreqCode, {Code: this.AppObj.PayFreqCode}).toPromise().then(
-                (response) => {
-                  Tenor -= response.PayFreqVal;
-                }
-              );
+        if(this.BizTemplateCode == CommonConstant.DF){
+          this.http.post(URLConstant.GetMouCustById, {Id: mouId}).subscribe(
+            async (result: MouCustObj) => {
+              this.mouCustNo = result.MouCustNo;
+              const endDt = new Date(result.EndDt);
+              this.MaxEffDt = new Date(result.EndDt);
+              let Tenor = this.AgrmntResult.Tenor;
+              if (this.AppObj.MrFirstInstTypeCode == CommonConstant.FirstInstTypeAdvance) {
+                await this.http.post<RefPayFreqObj>(URLConstant.GetRefPayFreqByPayFreqCode, {Code: this.AppObj.PayFreqCode}).toPromise().then(
+                  (response) => {
+                    Tenor -= response.PayFreqVal;
+                  }
+                );
+              }
+  
+              this.MaxEffDt.setMonth(endDt.getMonth() - Tenor)
+              if (this.MaxEffDt.getDate() != endDt.getDate()) { //untuk perhitungan bulan kabisat / tgl 31 ke tgl 30
+                this.MaxEffDt.setDate(0);
+              }
+  
             }
-
-            this.MaxEffDt.setMonth(endDt.getMonth() - Tenor)
-            if (this.MaxEffDt.getDate() != endDt.getDate()) { //untuk perhitungan bulan kabisat / tgl 31 ke tgl 30
-              this.MaxEffDt.setDate(0);
-            }
-
-          }
-        )
+          )
+        }
       }
     );
     await this.getPODate();
@@ -327,11 +328,12 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   SaveForm(flag = true) {
-    const effDate = new Date(this.MainInfoForm.controls.EffectiveDt.value);
-
-    if (effDate.getTime() > this.MaxEffDt.getTime()) {
-      this.toastr.warningMessage('Maturity Date must be lower than MOU Expired Date');
-      return;
+    if(this.BizTemplateCode == CommonConstant.DF){
+      const effDate = new Date(this.MainInfoForm.controls.EffectiveDt.value);
+      if (effDate.getTime() > this.MaxEffDt.getTime()) {
+        this.toastr.warningMessage('Maturity Date must be lower than MOU Expired Date');
+        return;
+      }
     }
 
     let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
@@ -372,7 +374,7 @@ export class PreGoLiveXComponent implements OnInit {
       }
 
     }
-
+    console.log("xxxxxx");
     this.AgrmntObj = new AgrmntObj();
     this.AgrmntObj.AgrmntId = this.AgrmntId;
     this.AgrmntObj.AppId = this.AppId;
