@@ -48,7 +48,6 @@ export class DashboardBmComponent implements OnInit {
       this.done = true;
   }
   ngOnInit() {
-    console.log(this.StepList);
     this.getDropdown();
     this.displayAllUsers("");
   }
