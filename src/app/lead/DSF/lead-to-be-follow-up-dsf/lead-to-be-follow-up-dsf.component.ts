@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 
 @Component({
@@ -11,7 +13,9 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 })
 export class LeadToBeFollowUpDsfComponent implements OnInit {
 
+  ReqByIdObj: GenericObj = new GenericObj();
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustId: string;
 
   constructor(private http: HttpClient) { }
 
@@ -28,14 +32,22 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
         
         }
       )
+
+      this.ReqByIdObj.CustNo = ev.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.ReqByIdObj).subscribe(
+        response => {
+          this.CustId = response["CustId"];
+        }
+      );
+
       if (ev.RowObj.CustType == "PERSONAL")
       {
-      AdInsHelper.EditCustomerMainDataPersonalByCustId(ev.RowObj.CustId, "EditMainData");
+      AdInsHelper.EditCustomerMainDataPersonalByCustId(this.CustId, "EditMainData");
       // AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
       }
       else
       {
-        AdInsHelper.EditCustomerMainDataCompanyByCustId(ev.RowObj.CustId, "EditMainData");
+        AdInsHelper.EditCustomerMainDataCompanyByCustId(this.CustId, "EditMainData");
       }
     }
   }
