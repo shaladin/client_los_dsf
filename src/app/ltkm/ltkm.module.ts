@@ -58,6 +58,8 @@ import { LtkmViewComponent } from "./view-ltkm-component/ltkm-view-component";
 import { LtkmFamilyMainDataPagingComponent } from "./ltkm-request/additional-component/family-main-data/family-main-data-paging.component";
 import { ViewLtkmAppSummaryDataComponent } from "./view-ltkm-component/ltkm-app-summary-data/ltkm-app-summary-data.component";
 import { UcdropdownlistModule } from "@adins/ucdropdownlist";
+import { LtkmReturnHandlingXComponent } from "app/impl/ltkm/ltkm-return-handling/detail/ltkm-return-handling-x.component";
+import { LtkmCustJobDataXComponent } from "app/impl/ltkm/ltkm-request/additional-component/cust-job-data/cust-job-data-x.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -129,7 +131,9 @@ export const customCurrencyMaskConfig = {
     LtkmCustCompanyMainDataComponent,
     LtkmCcContactInformationTabComponent,
     LtkmInquiryComponent,
-    LtkmFamilyMainDataPagingComponent
+    LtkmFamilyMainDataPagingComponent,
+    LtkmReturnHandlingXComponent,
+    LtkmCustJobDataXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

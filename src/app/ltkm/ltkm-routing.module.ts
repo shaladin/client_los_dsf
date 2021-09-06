@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LtkmReturnHandlingXComponent } from 'app/impl/ltkm/ltkm-return-handling/detail/ltkm-return-handling-x.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { LtkmApprovalDetailComponent } from './ltkm-approval/detail/ltkm-approval-detail.component';
 import { LtkmApprovalPagingComponent } from './ltkm-approval/paging/ltkm-approval-paging.component';
@@ -10,6 +11,7 @@ import { LtkmReturnHandlingPagingComponent } from './ltkm-return-handling/paging
 import { LtkmVerifyDetailComponent } from './ltkm-verify/detail/ltkm-verify-detail.component';
 import { LtkmVerifyPagingComponent } from './ltkm-verify/paging/ltkm-verify-paging.component';
 import { LtkmViewComponent } from './view-ltkm-component/ltkm-view-component';
+
 
 const routes: Routes = [
   {
@@ -59,7 +61,7 @@ const routes: Routes = [
       },
       {
         path: PathConstant.RTN_HANDLING_DETAIL,
-        component: LtkmReturnHandlingComponent,
+        component: LtkmReturnHandlingXComponent,
         data: {
           title: 'LTKM Return Handling Detail'
         }
