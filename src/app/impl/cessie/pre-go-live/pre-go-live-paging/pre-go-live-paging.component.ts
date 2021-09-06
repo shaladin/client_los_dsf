@@ -55,7 +55,7 @@ export class CessiePreGoLivePagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
     else if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_PGL_DETAIL], { "CessieHXId": ev.RowObj.CessieHXId, "CessieNo": ev.RowObj.CessieNo, "TaskListId": ev.RowObj.TaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_PGL_DETAIL], { "CessieHXId": ev.RowObj.CessieHXId, "CessieNo": ev.RowObj.CessieNo, "TaskListId": ev.RowObj.Id });
     }
   }
 }

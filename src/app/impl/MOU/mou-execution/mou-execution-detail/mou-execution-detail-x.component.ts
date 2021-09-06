@@ -142,7 +142,7 @@ export class MouExecutionDetailXComponent implements OnInit {
     let request = this.MouExecutionForm.value;
 
     if (this.ValidateDate()) {
-      let mouCustExecutionHumanActivityUrl = environment.isCore ? URLConstant.MouCustExecutionHumanActivityV2 : URLConstantX.MouCustExecutionHumanActivityX;
+      let mouCustExecutionHumanActivityUrl = environment.isCore ? URLConstantX.MouCustExecutionHumanActivityXV2 : URLConstantX.MouCustExecutionHumanActivityX;
 
       this.httpClient.post(mouCustExecutionHumanActivityUrl, request).subscribe(
         (response: any) => {

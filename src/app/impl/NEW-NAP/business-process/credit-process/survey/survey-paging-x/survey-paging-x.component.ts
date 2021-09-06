@@ -11,6 +11,7 @@ import {CommonConstant} from 'app/shared/constant/CommonConstant';
 import {CookieService} from 'ngx-cookie';
 import {RequestTaskModelObj} from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import {IntegrationObj} from 'app/shared/model/library/IntegrationObj.model';
+import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-survey-paging-x',
@@ -49,10 +50,8 @@ export class SurveyPagingXComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true;
 
       //Request Obj
-      this.RequestTaskModel.ProcessKey = "WF_CRP_MD_" + this.BizTemplateCode;
-      this.RequestTaskModel.TaskDefinitionKey = 'SURVEY_'+this.BizTemplateCode;
-      // this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
-      // this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstantX.ACT_CODE_SURVEY_VERIF + this.BizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE], UserAccess[CommonConstant.OFFICE_CODE]];
 
       //Integration Obj
@@ -64,13 +63,11 @@ export class SurveyPagingXComponent implements OnInit {
       this.inputPagingObj.integrationObj = this.IntegrationObj;
 
       critObj = new CriteriaObj();
-      critObj.DataType = 'text';
       critObj.restriction = AdInsConstant.RestrictionEq;
-      critObj.propName = 'a.APP_CURR_STEP';
-      critObj.value = 'SRVY_VRF';
+      critObj.propName = 'A.APP_CURR_STEP';
+      critObj.value = CommonConstantX.APP_STEP_SURVEY_VERIF;
       arrCrit.push(critObj);
-      this.inputPagingObj.addCritInput = arrCrit;
-
+      this.inputPagingObj.addCritInput = arrCrit
     }else{
       this.inputPagingObj._url = "./assets/ucpaging/survey/searchSurvey.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/survey/searchSurvey.json";
@@ -90,13 +87,10 @@ export class SurveyPagingXComponent implements OnInit {
       critObj = new CriteriaObj();
       critObj.restriction = AdInsConstant.RestrictionLike;
       critObj.propName = 'WF.ACT_CODE';
-      critObj.value = 'SURVEY_'+this.BizTemplateCode;
+      critObj.value = CommonConstantX.ACT_CODE_SURVEY_VERIF+this.BizTemplateCode;
       arrCrit.push(critObj);
       this.inputPagingObj.addCritInput = arrCrit;
     }
-
-
-
   }
 
   GetCallBack(ev: any){

@@ -28,12 +28,9 @@ export class MouExecutionPagingXComponent implements OnInit {
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputPagingObj._url = "./assets/impl/ucpaging/mou/searchMouRequestForExecX.json";
-    this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/searchMouRequestForExecX.json";
-
     if (environment.isCore) {
-      this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouRequestForExecV2.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouRequestForExecV2.json";
+      this.inputPagingObj._url = "./assets/impl/ucpaging/mou/V2/searchMouRequestForExecXV2.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/V2/searchMouRequestForExecXV2.json";
 
       this.inputPagingObj.isJoinExAPI = true;
 
@@ -49,6 +46,10 @@ export class MouExecutionPagingXComponent implements OnInit {
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.IntegrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
       this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
+    else{
+      this.inputPagingObj._url = "./assets/impl/ucpaging/mou/searchMouRequestForExecX.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/searchMouRequestForExecX.json";
     }
   }
 

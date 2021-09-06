@@ -12,6 +12,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
     selector: 'factoring-review-detail.component',
@@ -32,9 +33,10 @@ export class FactoringReviewDetailComponent implements OnInit {
     IsGridReady: boolean = false;
     WfTaskListId: any;
     InputLookupBankObj: InputLookupObj = new InputLookupObj();
-    constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,
+    constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private claimTaskService: ClaimTaskService,
         private httpClient: HttpClient, private toastr: NGXToastrService, private spinner: NgxSpinnerService, private cookieService: CookieService) {
         this.route.queryParams.subscribe(params => {
+            console.log(params)
             if (params["CessieHXId"] != null) this.CessieHXId = params["CessieHXId"];
             if (params["CustNo"] != null) this.CustNo = params["CustNo"];
             if (params["CustId"] != null) this.CustId = params["CustId"];
@@ -74,7 +76,7 @@ export class FactoringReviewDetailComponent implements OnInit {
 
         var CessieObj = {
             Id: this.CessieHXId
-        }
+        } 
 
         this.httpClient.post(URLConstantX.GetListAppForView, CessieObj).subscribe(
             (response) => {
@@ -151,7 +153,6 @@ export class FactoringReviewDetailComponent implements OnInit {
     GetBank(event) {
         this.selectedBankCode = event.BankCode;
     }
-
     SaveForm(enjiForm: NgForm) {
         console.log("saveform");
         var ObjDisbInfo = {
