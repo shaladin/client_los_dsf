@@ -12,7 +12,7 @@
         }
     ],
     "querystring": {
-        "name": "searchApprovalCreditApvExtension"
+        "name": "searchApprovalCreditApvExtensionV2"
     },
     "headerList": [
         {

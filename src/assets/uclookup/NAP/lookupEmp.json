@@ -6,7 +6,7 @@
         "name": "re.EMP_NO",
         "id": "salesOfficerNo",
         "value": "",
-        "label": "MO Code",
+        "label": "Sales Code",
         "placeholder": "Sales Office Code"
       },
       {
@@ -14,7 +14,7 @@
         "name": "re.EMP_NAME",
         "id": "salesOfficerName",
         "value": "",
-        "label": "MO Office Name",
+        "label": "Sales Office Name",
         "placeholder": "Sales Officer Name"
       },
       {
@@ -22,7 +22,7 @@
         "name": "ru.USERNAME",
         "id": "salesHeadName",
         "value": "",
-        "label": "MO Head Name",
+        "label": "Sales Head Name",
         "placeholder": "Sales Head Name"
       }
     ],
@@ -33,19 +33,19 @@
         {
           "type": "sort",
           "position": "center",
-          "label": "MO Officer Code",
+          "label": "Sales Officer Code",
           "name": "SalesOfficerNo"
         },
         {
           "type": "sort",
           "position": "left",
-          "label": "MO Officer Name",
+          "label": "Sales Officer Name",
           "name": "SalesOfficerName"
         },
         {
           "type": "sort",
           "position": "left",
-          "label": "MO Head Name",
+          "label": "Sales Head Name",
           "name": "SalesHeadName"
         },
         {

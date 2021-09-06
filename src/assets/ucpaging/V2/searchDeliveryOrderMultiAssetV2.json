@@ -59,19 +59,19 @@
             "itemsUrl": []
         },
         {
-            "type": "textbox",
-            "name": "Assignee",
-            "id": "claimById",
-            "value": "",
-            "label": "Claim By",
-            "placeholder": "Placeholder",
-            "isCriteriaDataTable" : true
-        },
-        {
             "type" : "claim",
             "label": "Task Claim Status",
             "id": "ClaimStatId",
             "ddlType" : "all",
+            "isCriteriaDataTable" : true
+        },
+        {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "ClaimById",
+            "value": "",
+            "label": "Task Claim By",
+            "placeholder": "Placeholder",
             "isCriteriaDataTable" : true
         }
     ],

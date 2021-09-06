@@ -43,19 +43,19 @@
         "isQueryIn":true
       },
       {
+        "type" : "claim",
+        "label": "Task Claim Status",
+        "id": "ClaimStatId",
+        "ddlType" : "all",
+        "isCriteriaDataTable" : true
+      },
+      {
           "type": "textbox",
           "name": "Assignee",
-          "id": "claimById",
+          "id": "ClaimById",
           "value": "",
           "label": "Claim By",
           "placeholder": "Placeholder",
-          "isCriteriaDataTable" : true
-      },
-      {
-          "type" : "claim",
-          "label": "Task Claim Status",
-          "id": "ClaimStatId",
-          "ddlType" : "all",
           "isCriteriaDataTable" : true
       }
     ],

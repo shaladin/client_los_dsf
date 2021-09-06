@@ -29,9 +29,9 @@
         {
             "type": "textbox",
             "name": "Assignee",
-            "id": "claimById",
+            "id": "ClaimById",
             "value": "",
-            "label": "Claim By",
+            "label": "Task Claim By",
             "placeholder": "Placeholder",
             "isCriteriaDataTable" : true
         },

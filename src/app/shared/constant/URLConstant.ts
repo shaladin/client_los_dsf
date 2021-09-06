@@ -15,6 +15,7 @@ export class URLConstant {
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/v1" + "/AssetType/GetListKeyValueByCode";
   public static GetAssetTypeListKeyValueActiveByCode = environment.FoundationR3Url + "/v1" + "/AssetType/GetListKeyValueActiveByCode";
   public static GetAssetTypeByCode = environment.FoundationR3Url + "/v1" + "/AssetType/GetAssetTypeByCode";
+  public static GetMostSerialNoAssetTypeByListAssetTypeCode = environment.FoundationR3Url + "/v1" + "/AssetType/GetMostSerialNoAssetTypeByListAssetTypeCode";
 
   // APPROVAL
   public static GetApprovalScreenViewInfo = environment.FoundationR3Url + "/v1" + "/Approval/GetApprovalScreenViewInfo";
@@ -1096,6 +1097,7 @@ export class URLConstant {
   //CREDIT APV RESULT EXTENSION
   public static SubmitNewExpDate = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitNewExpDate";
   public static SubmitReqNewExpDateApv = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitReqNewExpDateApv";
+  public static SubmitReqNewExpDateApvV2 = environment.losUrl + "/v2" + "/PurchaseOrderH/SubmitReqNewExpDateApv";
   public static GetCreditApvResultExtMainData = environment.losUrl + "/v1" + "/PurchaseOrderH/GetCreditApvResultExtMainData";
 
   //VERF
@@ -1243,6 +1245,7 @@ export class URLConstant {
 
   //Inst table
   public static GetAppInstSchldTableByAppId = environment.losUrl + "/v1" + "/AppInstSchdl/GetAppInstSchldTableByAppId"
+  public static GetAppInsStepSchmForSUSDByAppId = environment.losUrl + "/v1" + "/AppInstSchdl/GetAppInsStepSchmForSUSDByAppId"
 
   //CUSTOMER DUPLICATE CHECKING
   public static GetCustomerAndNegativeCustDuplicateCheck = environment.FoundationR3Url + "/v1" + "/CustDuplicateCheck/GetCustomerAndNegativeCustDuplicateCheck";
@@ -1829,5 +1832,8 @@ export class URLConstant {
   //App Attr Content
   public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
   public static GetListAppAttrContentForView = environment.losUrl + "/v1" + "/AppAttrContent/GetListAppAttrContentForView";
+
+  //Dashboard
+  public static GetAppCountAndMappingStep = environment.losUrl + "/v1" + "/Dashboard/GetAppCountAndMappingStep";
 
 }

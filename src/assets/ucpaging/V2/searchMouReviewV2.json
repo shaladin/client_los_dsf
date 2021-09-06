@@ -68,11 +68,12 @@
         {
             "type": "textbox",
             "name": "Assignee",
-            "id": "AssigneeId",
-            "value": null,
+            "id": "ClaimById",
+            "value": "",
             "label": "Claim By",
-            "placeholder": "Placeholder"
-        }
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+          }
     ],
   "querystring": {
     "name": "searchMouReviewV2"

@@ -47,7 +47,9 @@ export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
       this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.EDIT_COM_RSV_FND + this.BizTemplateCode;
       this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
-      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
+                                                UserAccess[CommonConstant.OFFICE_CODE],
+                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
