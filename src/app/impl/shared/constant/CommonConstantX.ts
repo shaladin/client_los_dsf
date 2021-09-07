@@ -41,6 +41,10 @@ export class CommonConstantX {
     //Cessie
     public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "-";
 
+    //APP ASSET CONDITION
+    public static APP_ASSET_CONDITION_CODE_NEW = "NEW";
+    public static APP_ASSET_CONDITION_CODE_USED = "USED";
+
     //Ref Master
     public static REF_MASTER_ASSET_CONDITION_DESCR_USED = "Used";
 
