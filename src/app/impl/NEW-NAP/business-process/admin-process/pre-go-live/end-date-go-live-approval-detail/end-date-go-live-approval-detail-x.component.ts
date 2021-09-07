@@ -110,7 +110,7 @@ export class EndDateForGoLiveApprovalDetailXComponent implements OnInit {
       Tasks: event.Tasks,
     }
 
-    this.http.post(URLConstantX.EndDateGoLiveApprovalX, ReqPreGoLiveApvCustomObj).subscribe(
+    this.http.post(URLConstantX.GoLiveApprovalX, ReqPreGoLiveApvCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.END_DT_GO_LIVE_APV_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
