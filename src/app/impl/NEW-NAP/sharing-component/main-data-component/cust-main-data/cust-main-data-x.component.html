@@ -1,5 +1,16 @@
 <div class="card-body">
-  <div class="px-3">    
+  <div class="px-3">
+    <div class="form-group row" *ngIf="custMainDataMode != CustMainDataFamily">
+      <label class="col-md-2" translate>{{subjectTitle}} Type</label>
+      <div class="col-md-10">
+        <mat-radio-group [(ngModel)]="MrCustTypeCode" (change)="resetInput($event.value)" [disabled]="AppCustCompanyMgmntShrholderId!=0">
+          <mat-radio-button class="custom-control custom-radio display-inline-block"
+            *ngFor="let item of DictRefMaster[MasterCustType]" [value]="item.Key">
+            {{item.Value}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
     <form *ngIf="MrCustTypeCode != CustTypePublic" class="form form-horizontal" [formGroup]="CustMainDataForm" (ngSubmit)="CustMainDataForm.valid && SaveForm()"
       #enjiForm="ngForm">
       <div class="form-body">
@@ -162,7 +173,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate>Mother Maiden Name</label>
+                <label class="col-md-4 {{ isNonMandatory ? '' : 'adins-required-label' }}" translate>Mother Maiden Name</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                     formControlName="MotherMaidenName"
@@ -175,7 +186,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate>Mobile Phone</label>
+                <label class="col-md-4 {{ isNonMandatory ? '' : 'adins-required-label' }}" translate>Mobile Phone</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                     formControlName="MobilePhnNo1"
@@ -187,7 +198,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 " translate>Email</label>
+                <label class="col-md-4" translate>Email</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                     formControlName="Email1"
