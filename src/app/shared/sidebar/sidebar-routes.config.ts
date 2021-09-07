@@ -530,6 +530,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.FORMS_REPORT, Title: 'Report', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []  },
       { Path: NavigationConstant.REPORT_PLAFOND_MOU_SUMMARY, Title: 'Report Plafond Mou Summary', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_PLAFOND_MOU_DETAIL, Title: 'Report Plafond Mou Detail', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_COLLATERAL_MOU, Title: 'Report Collateral Mou', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: [] 
   },
   {
