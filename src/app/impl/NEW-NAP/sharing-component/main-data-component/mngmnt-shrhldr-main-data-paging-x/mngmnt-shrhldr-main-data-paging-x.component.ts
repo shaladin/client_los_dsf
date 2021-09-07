@@ -19,6 +19,7 @@ import { ShareholderListingObj } from 'app/shared/model/AppCust/Shareholder/Shar
 export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() isNonMandatory: boolean;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
