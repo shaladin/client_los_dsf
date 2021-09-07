@@ -90,7 +90,10 @@ export class CustMainDataXComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Input() from: string;
   @Input() tempTotalSharePrct: number = 0;
+<<<<<<< HEAD
   @Input() isNonMandatory: boolean = false;
+=======
+>>>>>>> 2b3831f005fc21fa5a8bfacabee84174205e83eb
 
   LeadId: number;
   LeadNo: string;
@@ -187,7 +190,11 @@ export class CustMainDataXComponent implements OnInit {
     BirthDt: ['', Validators.required],
     MotherMaidenName:  [''],
     MrCompanyTypeCode: [''],
+<<<<<<< HEAD
     MobilePhnNo1: ['', [Validators.pattern("^[0-9]+$")]],
+=======
+    MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+>>>>>>> 2b3831f005fc21fa5a8bfacabee84174205e83eb
     Email1: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MrJobPositionCode: [''],
     EstablishmentDt: [''],
@@ -768,8 +775,12 @@ export class CustMainDataXComponent implements OnInit {
     }
 
     if (custType == CommonConstant.CustTypePersonal) {
+<<<<<<< HEAD
       this.isNonMandatory ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
       this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([ Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]) ;
+=======
+      this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+>>>>>>> 2b3831f005fc21fa5a8bfacabee84174205e83eb
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
