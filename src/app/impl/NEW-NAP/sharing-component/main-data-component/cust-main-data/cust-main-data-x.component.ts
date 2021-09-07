@@ -90,6 +90,7 @@ export class CustMainDataXComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Input() from: string;
   @Input() tempTotalSharePrct: number = 0;
+  @Input() isNonMandatory: boolean = false;
 
   LeadId: number;
   LeadNo: string;
@@ -184,10 +185,10 @@ export class CustMainDataXComponent implements OnInit {
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
-    MotherMaidenName: ['', Validators.required],
+    MotherMaidenName:  [''],
     MrCompanyTypeCode: [''],
-    MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
-    Email1: ['', [Validators.required, Validators.pattern(CommonConstant.regexEmail)]],
+    MobilePhnNo1: ['', [Validators.pattern("^[0-9]+$")]],
+    Email1: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MrJobPositionCode: [''],
     EstablishmentDt: [''],
     EmploymentEstablishmentDt: [''],
@@ -200,6 +201,7 @@ export class CustMainDataXComponent implements OnInit {
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
   DictUcDDLObj: { [id: string]: UcDropdownListObj } = {};
   async ngOnInit() {
+    console.log("oi",this.isNonMandatory);
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
@@ -353,6 +355,10 @@ export class CustMainDataXComponent implements OnInit {
   async initcustMainDataMode() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
+    if(!this.isNonMandatory){
+      this.CustMainDataForm.controls.MobilePhnNo1.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required)
+    }
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
 
     switch (this.custMainDataMode) {
@@ -762,15 +768,15 @@ export class CustMainDataXComponent implements OnInit {
     }
 
     if (custType == CommonConstant.CustTypePersonal) {
-      this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+      this.isNonMandatory ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+      this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([ Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]) ;
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern(CommonConstant.regexEmail)]);
+      this.CustMainDataForm.controls.Email1.setValidators([ Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
