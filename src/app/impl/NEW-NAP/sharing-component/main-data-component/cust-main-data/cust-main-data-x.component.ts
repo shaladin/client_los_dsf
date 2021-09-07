@@ -771,6 +771,7 @@ export class CustMainDataXComponent implements OnInit {
     if (custType == CommonConstant.CustTypePersonal) {
       this.isNonMandatory ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
       this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([ Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]) ;      
+      this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
