@@ -93,8 +93,8 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       if (params['AgrmntId'] != null) {
         this.agrmntId = params['AgrmntId'];
       }
-      if (params['WfTaskListId'] != null) {
-        this.wfTaskListId = params['WfTaskListId'];
+      if (params['TaskListId'] != null) {
+        this.wfTaskListId = params['TaskListId'];
       }
     });
   }
@@ -433,7 +433,13 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
         };
         let editTc = this.httpClient.post(URLConstant.EditAppTc, tcFormData);
-        let submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId });
+        var submitDO = null;
+        if(environment.isCore){
+          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+        }
+        else{
+          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+        }
         let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
         forkJoin([editTc, submitDO, updateAgrmntDt]).subscribe(
           (response) => {

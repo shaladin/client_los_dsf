@@ -180,9 +180,16 @@ export class AgrmntActivationDetailXComponent implements OnInit {
         AgreementNo: this.AgrmntNo,
         IsEnd: this.IsEnd
       }
-      this.adminProcessSvc.SubmitAgrmntActivationXByHuman(Obj).subscribe((response) => {
-        AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
-      });
+
+      if(environment.isCore){
+        this.adminProcessSvc.SubmitAgrmntActivationXByHumanV2(Obj).subscribe((response) => {
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
+        });
+      } else {
+        this.adminProcessSvc.SubmitAgrmntActivationXByHuman(Obj).subscribe((response) => {
+          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
+        });
+      }
     }
   }
 
