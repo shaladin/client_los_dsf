@@ -74,17 +74,25 @@
       "datatype": "text"
     },
     {
+      "type" : "claim",
+      "label": "Task Claim Status",
+      "id": "ClaimStatId",
+      "ddlType" : "all",
+      "isCriteriaDataTable" : true
+    },
+    {
       "type": "textbox",
       "name": "Assignee",
-      "id": "AssigneeId",
+      "id": "claimById",
       "value": "",
       "label": "Claim By",
-      "placeholder": "Placeholder"
+      "placeholder": "Placeholder",
+      "isCriteriaDataTable" : true
     }
   ],
   "headerList": [
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
       "label": "Claim By",
       "name": "Assignee"

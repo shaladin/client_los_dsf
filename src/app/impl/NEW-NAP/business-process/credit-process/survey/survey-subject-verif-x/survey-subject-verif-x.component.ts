@@ -116,13 +116,13 @@ export class SurveySubjectVerifXComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
-      this.mode = params["mode"]; 
-      this.SurveyMethod = params["SurveyMethod"]; 
-      
+      this.mode = params["mode"];
+      this.SurveyMethod = params["SurveyMethod"];
+
       this.appId = params["AppId"];
       this.verfResultHId = params["VerfResultHId"];
 
-      this.subjectType = params["Type"]; 
+      this.subjectType = params["Type"];
 
       if (params['ReturnHandlingHId'] != null) {
         this.returnHandlingHId = params['ReturnHandlingHId'];
@@ -144,9 +144,8 @@ export class SurveySubjectVerifXComponent implements OnInit {
     this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getRefStatusUrl = URLConstant.GetListActiveRefStatusByStatusGrpCode;
     this.getPhnNumberUrl = URLConstant.GetPhoneNumberByIdSourceAppIdAndSubject;
-    
+
     this.getQuestionUrl = URLConstant.GetVerfQuestionListByAppIdAndSubjectForSurveyVerif;
-    this.saveVerfResultHDetailUrl = URLConstantX.AddVerfResultHeaderAndVerfResultDetailForSurveyVerif; 
   }
 
   async ngOnInit(): Promise<void> {
@@ -172,8 +171,9 @@ export class SurveySubjectVerifXComponent implements OnInit {
 
     if(this.mode == 'edit'){
       await this.setData();
-      this.saveVerfResultHDetailUrl = URLConstantX.EditVerfResultHeaderAndVerfResultDetailForSurveyVerif; 
+      this.saveVerfResultHDetailUrl = URLConstantX.EditVerfResultHeaderAndVerfResultDetailForSurveyVerif;
     }else{
+      this.saveVerfResultHDetailUrl = URLConstantX.AddVerfResultHeaderAndVerfResultDetailForSurveyVerif;
       await this.GetQuestionList(VerfQAObj);
     }
   }
@@ -243,12 +243,12 @@ export class SurveySubjectVerifXComponent implements OnInit {
     this.PhoneDataObj.VerfResultHObj.VerfSchemeHId = this.verfSchemeHId;
 
     this.PhoneDataObj.VerfResultHObj.MrVerfObjectCode = this.verfResHObj.mrVerfObjectCode;
-    
-    this.PhoneDataObj.VerfResultHObj.MrVerfSubjectRelationCode = "CUST"; 
-    this.PhoneDataObj.VerfResultHObj.MrVerfSubjectRelationName = "-"; 
-    this.PhoneDataObj.VerfResultHObj.VerfDt = businessDt; 
-    this.PhoneDataObj.VerfResultHObj.MrVerfResultHStatCode = "-"; 
-    this.PhoneDataObj.VerfResultHObj.Phn = "0"; 
+
+    this.PhoneDataObj.VerfResultHObj.MrVerfSubjectRelationCode = "CUST";
+    this.PhoneDataObj.VerfResultHObj.MrVerfSubjectRelationName = "-";
+    this.PhoneDataObj.VerfResultHObj.VerfDt = businessDt;
+    this.PhoneDataObj.VerfResultHObj.MrVerfResultHStatCode = "-";
+    this.PhoneDataObj.VerfResultHObj.Phn = "0";
     this.PhoneDataObj.VerfResultHObj.PhnType = this.SurveyMethod;
     this.PhoneDataObj.VerfResultHObj.Notes = this.PhoneDataForm.controls["Notes"].value;
     for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"].value.length; i++) {
@@ -440,7 +440,7 @@ export class SurveySubjectVerifXComponent implements OnInit {
           this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
           this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
         }
-      }  
+      }
     }
     else {
       for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {

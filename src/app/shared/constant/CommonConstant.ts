@@ -1,3 +1,5 @@
+import { CurrencyMaskInputMode } from "ngx-currency";
+
 export class CommonConstant {
   
   // REGEX
@@ -151,6 +153,7 @@ export class CommonConstant {
   public static AppStepApv = "APV";
   public static AppStepRtn = "RTN";
   public static AppStepAgr = "AGR";
+  public static AppStepLiv = "LIV";
   public static AppStepPO = "PO";
   public static AppStepOFVC = "OFVC";
   public static AppStepOFVA = "OFVA";
@@ -357,7 +360,7 @@ export class CommonConstant {
   public static AddrTypeMailing = "MAILING";
   public static AddrTypeJob = "JOB";
   public static AddrTypePrevJob = "PREV_JOB";
-  public static AddrTypeOthBiz = "OTHERBIZ";
+  public static AddrTypeOthBiz = "OTH_BIZ";
   public static AddrTypeCompany = "COMPANY";
   public static AddrTypeEmergency = "EMERGENCY";
   public static AddrTypeContactInfo = "CONTACT";
@@ -503,6 +506,7 @@ export class CommonConstant {
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
+  public static ReturnTask = "RETURN_TASK";
 
   public static TitleSupplier = "List Supplier Commission Data";
   public static TitleSupplierEmp = "List Supplier Employee Commission Data";
@@ -704,6 +708,7 @@ export class CommonConstant {
   public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
   public static GSCodeLobKta = "LOB_KTA";
   public static GSSerialNoRegex = "SERIAL_NO_REGEX";
+  public static GSCodeListLegalDocCantDuplicate = "LIST_LEGAL_DOC_CANNOT_DUPLICATE";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -754,6 +759,14 @@ export class CommonConstant {
   public static SCHM_CODE_AML_APV = "AML_APV_SCHM";
   public static SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL = "EDIT_APP_AFT_APV_APV_SCHM_NORMAL";
   public static SCHM_CODE_CHG_MOU_APV = "CHG_MOU_APV";
+  public static SCHM_CODE_CHG_MOU_DLFN_APV = "CHG_MOU_DLFN_APV";
+  public static SCHM_CODE_CHG_MOU_FCTR_APV  = "CHG_MOU_FCTR_APV ";
+  public static SCHM_CODE_MOU_FRZ_UNFRZ_DLFN = "MOU_FRZ_UNFRZ_DLFN";
+  public static SCHM_CODE_MOU_FRZ_UNFRZ_FCTR = "MOU_FRZ_UNFRZ_FCTR";
+  public static SCHM_CODE_CHG_MOU_EXP_APV = "CHG_MOU_EXP_APV";
+  public static SCHM_CODE_CHG_MOU_EXP_DLFN_APV = "CHG_MOU_EXP_DLFN_APV";
+  public static SCHM_CODE_CHG_MOU_EXP_FCTR_APV = "CHG_MOU_EXP_FCTR_APV";
+
 
   public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
   public static CAT_CODE_MOU_APV_DLFN = "MOUC_DLFN_APV";
@@ -840,6 +853,7 @@ export class CommonConstant {
   //MOU TYPE
   public static MOU_TYPE_GENERAL = "GENERAL";
   public static MOU_TYPE_FACTORING = "FACTORING";
+  public static MOU_TYPE_DLFN = "FINANCING";
 
   //Cashflow Item Type
   public static CashFlowItemMasterCodeFeeCptlz = "CASHFLOW_FEE_CPTLZ";
@@ -918,10 +932,20 @@ export class CommonConstant {
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
+  public static WF_MOU_FACTORING = "WF_MOU_FACTORING";
+  public static WF_MOU_DLFN = "WF_MOU_DLFN";
+  public static MOU_REVIEW = "MOU_REVIEW";
+  public static LEGAL_RVW = "LEGAL_RVW";
+  public static MOU_RETURN = "MOU_RETURN";
+  public static MOU_APV = "MOU_APV";
+  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER";
+  public static MOU_EXECUTION = "MOU_EXECUTION";
   public static WF_UPL_SMPL_LEAD = "WF_UPL_SMPL_LEAD";
   public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
   public static PROD_OFF_APV = "PROD_OFF_APV";
   public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
+
   
   // CUST ADDR TYPE
   public static CustAddrTypeLegal = "LEGAL";
@@ -930,7 +954,7 @@ export class CommonConstant {
   public static CustAddrTypeResidence = "RESIDENCE";
   public static CustAddrTypeEmergency = "EMERGENCY";
   public static CustAddrTypeJob = "JOB";
-  public static CustAddrTypeOthBiz = "OTHERBIZ";
+  public static CustAddrTypeOthBiz = "OTH_BIZ";
   public static CustAddrTypePreJob = "PREV_JOB";
   public static CustAddrTypeBiz = "BIZ";
 
@@ -938,6 +962,7 @@ export class CommonConstant {
   public static WF_CODE_LEAD = "WF_LEAD";
   public static WF_CODE_SIMPLE_LEAD = "WF_SIMPLE_LEAD";
   public static ACT_CODE_SIMPLE_FRAUD_VERIFICATION = "SIMPLE_FRAUD_VERIFICATION";
+  public static ACT_CODE_SIMPLE_LEAD_UPD = "SIMPLE_LEAD_UPD";
   public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
@@ -945,6 +970,23 @@ export class CommonConstant {
   //WORFKLOW RETURN HANDLING
   public static WF_RTN_ADD_PHN_VERF = "RTN_ADD_PHN_VERF_";
   public static ACT_CODE_ADD_PHN_VERF = "ADD_PHN_VERF_";
+  public static RTN_EDIT_APP = "RTN_EDIT_APP_";
+  public static RTN_ADD_COLTR = "RTN_ADD_COLTR_";
+  public static ADD_COLTR = "ADD_COLTR_";
+  public static EDIT_APP = "EDIT_APP_";
+  public static RTN_EDIT_COM_RSV_FND = "RTN_EDIT_COM_RSV_FND_";
+  public static EDIT_COM_RSV_FND = "EDIT_COM_RSV_FND_";
+  public static RTN_EDIT_NAP4 = "RTN_EDIT_NAP4_";
+  public static EDIT_NAP4 = "EDIT_NAP4_";
+  public static WF_LTKM_REQ_MANUAL = "WF_LTKM_REQ_MANUAL";
+  public static WF_LTKM_REQ_AUTO = "WF_LTKM_REQ_AUTO";
+  public static LTKM_VERIFY = "LTKM_VERIFY";
+  public static LTKM_RTN = "LTKM_VERIFY";
+  public static RTN_ADD_TC = "RTN_ADD_TC_";
+  public static ADD_COLTR_ = "ADD_COLTR_";
+
+
+
 
   //WORFKLOW PRODUCT
   public static WF_CODE_PROD_HO_APV = "PROD_HO_APV";
@@ -961,5 +1003,27 @@ export class CommonConstant {
   public static LeadStepLeadVerf = "LVR";
   public static LeadStepTeleVerf = "TVR";
   public static LeadStepLeadUpd = "LUP";
+
+  // Financial Data
+  public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
+
+  //WORKFLOW NAP
+  public static WF_CODE_CRP_MD = "WF_CRP_MD_";
+  public static ACT_CODE_CUST_MD = "CUST_MD_";
+  public static ACT_CODE_NAPD_MD = "NAPD_MD_";
+  public static ACT_CODE_COM_RSV = "COM_RSV_";
+  public static ACT_CODE_RTN = "RTN_";
+  public static ACT_CODE_PHN = "PHN_";
+  public static WF_CODE_DUP_CHECK_MD = "WF_DUP_CHECK_MD";
+  public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL";
+  public static ACT_CODE_CDA = "CDA";
+  public static ACT_CODE_CDC = "CDC";
+  public static ACT_CODE_INV_VERIF = "INV_VERIF";
+  public static WF_CRP_AFT_ACT = "WF_CRP_{0}_AFT_ACT";
+  public static ACT_CODE_PO = "PO_";
+  public static ACT_CODE_DO = "DO_";
+  public static ACT_CODE_CNFR = "CNFR_";
+  public static ACT_CODE_PGLV = "PGLV_";
   
+  public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
 }

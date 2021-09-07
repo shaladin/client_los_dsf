@@ -34,9 +34,10 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewModule } from "../view.module";
 import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-recommendation/mou-view-approval-recommendation.component";
 import { MouViewSrvyTaskComponent } from "./mou-view-srvy-task/mou-view-srvy-task.component";
-import {MouViewXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-x.component';
-import {MouViewAddcollXComponent} from 'app/impl/view-enhancing/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
-import {MouViewDetailXComponent} from '../../impl/view-enhancing/mou-view/mou-view-detail/mou-view-detail-x.component';
+import { MouViewXComponent } from 'app/impl/view-enhancing/mou-view/mou-view-x.component';
+import { MouViewAddcollXComponent } from 'app/impl/view-enhancing/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
+import { MouViewDetailXComponent } from "app/impl/view-enhancing/mou-view/mou-view-detail/mou-view-detail-x.component";
+import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -59,6 +60,7 @@ import {MouViewDetailXComponent} from '../../impl/view-enhancing/mou-view/mou-vi
         UcShowErrorsModule,
         SharedModule,
         UcapprovalHistoryModule,
+        ShrCompMouModule,
         ViewModule
     ],
     declarations: [
@@ -86,8 +88,8 @@ import {MouViewDetailXComponent} from '../../impl/view-enhancing/mou-view/mou-vi
         UcgridviewComponent,
         UcapprovalhistComponent,
     ],
-    exports:[
-      MouViewAddcollXComponent
+    exports: [
+        MouViewAddcollXComponent
     ]
 
 })

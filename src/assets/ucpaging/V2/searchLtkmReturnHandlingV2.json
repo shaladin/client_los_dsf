@@ -1,0 +1,145 @@
+{
+    "title": "Ltkm Return Handling Paging",
+    "exportExcel": true,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "LC.CUST_NO",
+        "id": "CustNoId",
+        "value": "",
+        "label": "Customer No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "LC.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "LR.LTKM_NO",
+        "id": "LtkmNoId",
+        "value": "",
+        "label": "LTKM NO",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "LC.ID_NO",
+        "id": "IdNoId",
+        "value": "",
+        "label": "Id No",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "headerList": [
+      {
+        "type": "label",
+        "position": "left",
+        "label": "Claim By",
+        "name": "Assignee"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "CUSTOMER NO",
+        "name": "LC.CUST_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "CUSTOMER NAME",
+        "name": "LC.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "LTKM NO",
+        "name": "LR.LTKM_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "TYPE",
+        "name": "LC.MR_CUST_TYPE_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "ID NO",
+        "name": "LC.ID_NO"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "ACTION"
+      }
+    ],
+    "querystring": {
+      "name": "searchLtkmReturnHandlingV2"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "Assignee"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "callback",
+        "key": "ltkmno",
+        "position": "left",
+        "property": "LtkmNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "MrCustTypeCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "IdNo"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "LTKM_RTN_HANDLING_DETAIL",
+            "param": [
+              {
+                "type": "WfTaskListId",
+                "property": "Id"
+              },
+              {
+                "type": "LtkmNo",
+                "property": "LtkmNo"
+              },
+              {
+                "type": "MrCustTypeCode",
+                "property": "MrCustTypeCode"
+              },
+              {
+                "type": "LtkmCustId",
+                "property": "LtkmCustId"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

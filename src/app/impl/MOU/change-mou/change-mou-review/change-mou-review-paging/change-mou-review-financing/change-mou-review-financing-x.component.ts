@@ -16,6 +16,8 @@ import { UcapprovalcreateComponent } from "@adins/ucapprovalcreate";
 import { CookieService } from "ngx-cookie";
 import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { ClaimTaskService } from "app/shared/claimTask.service";
+import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
 
 @Component({
   selector: "app-change-mou-review-financing-x",
@@ -29,13 +31,13 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
   ChangeMouTrxId: number;
   MouCustId: number;
   TrxNo: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   MouType: string = "FINANCING";
   PlafondAmt: number;
   MrCustTypeCode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  listReason: Array<ReqGetByTypeCodeObj>;
-  ScoreResult: number;
+  listReason: Array<ReqGetByTypeCodeObj>; 
+  ScoreResult: number = 0;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
   ChangeMouCustId: number;
@@ -55,7 +57,8 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe((params) => {
       this.ChangeMouTrxId = params["ChangeMouTrxId"];
@@ -68,12 +71,10 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
-    }
+    this.claimTask();
+      
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewChangeMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
@@ -108,7 +109,9 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
       });
       await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { Id: this.MouCustId }).toPromise().then(
         (response) => {
-          this.ScoreResult = response["ScoreResult"];
+          if(response["ScoreResult"] != null){
+            this.ScoreResult = response["ScoreResult"];
+          }
         }
       );
     this.initInputApprovalObj();
@@ -121,19 +124,21 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
     ApvRecommendation: this.fb.array([]),
   });
 
-  async claimTask() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = {
-      pWFTaskListID: this.WfTaskListId,
-      pUserID: currentUserContext[CommonConstant.USER_NAME],
-    };
-    this.http
-      .post(URLConstant.ClaimTask, wfClaimObj)
-      .subscribe((response) => { });
+   claimTask() {
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }
+    else if (this.WfTaskListId > 0){
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 
   Submit() {
-    this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
+      let urlPost = environment.isCore ? URLConstant.SubmitChangeMouReviewV2 : URLConstant.SubmitChangeMouReview;
+
+      this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
       this.mouCustObj.MouCustId = this.MouCustId;
       this.PlafondAmt = this.PlafondAmt;
 
@@ -144,7 +149,7 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
         RequestRFAObj: this.ApprovalCreateOutput,
       };
       this.http
-        .post(URLConstant.SubmitChangeMouReview, submitMouReviewObj)
+        .post(urlPost, submitMouReviewObj)
         .subscribe((response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(
@@ -156,12 +161,13 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
   }
 
   Return() {
-    var mouObj = {
+    let urlPost = environment.isCore ? URLConstant.ReturnChangeMouReviewV2 : URLConstant.ReturnChangeMouReview;
+    var mouObj = { 
       WfTaskListId: this.WfTaskListId,
       ChangeMouTrxId : this.ChangeMouTrxId
     };
     this.http
-      .post(URLConstant.ReturnChangeMouReview, mouObj)
+      .post(urlPost, mouObj)
       .subscribe((response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(
@@ -199,36 +205,39 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
 
   initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
-    var Attributes = [];
-    var attribute1 = {
-      "AttributeName": "PlafondAmt",
-      "AttributeValue": this.PlafondAmt
-    };
-
-    Attributes.push(attribute1);
+    var Attributes = [
+      {
+        "AttributeName": "Plafond Amount",
+        "AttributeValue": this.PlafondAmt
+      },
+      {
+        "AttributeName": "Scoring",
+        "AttributeValue": this.ScoreResult
+      }
+    ];
 
     var TypeCode = {
-      TypeCode: "CHG_MOU_APV_TYPE",
+      TypeCode: CommonConstant.APV_TYPE_CHG_MOU_APV_TYPE,
       Attributes: Attributes,
     };
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url + '/v1';
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion =  URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType =
-    URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory =
-    URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA =  URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CHG_MOU_APV;
+    
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.TrxNo;
+
+    if(this.TrxType == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP)
+    {
+      this.InputObj.SchemeCode = CommonConstantX.SCHM_CODE_CHG_MOU_EXP_DLFN_APV;
+    }
+    else
+    {
+      this.InputObj.SchemeCode = CommonConstantX.SCHM_CODE_CHG_MOU_DLFN_APV;
+    }
+
     this.IsReady = true;
   }
 }

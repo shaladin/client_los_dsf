@@ -15,6 +15,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -37,6 +38,11 @@ export class CessiePreGoLiveApprovalPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchCessiePreGoLiveApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCessiePreGoLiveApproval.json";
     this.inputPagingObj.addCritInput = new Array();
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/searchCessiePreGoLiveApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCessiePreGoLiveApprovalV2.json";
+    }
 
     var critInputOnlyOffering = new CriteriaObj();
     critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";
@@ -66,7 +72,7 @@ export class CessiePreGoLiveApprovalPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CESSIE_PGL_APPRVL_DETAIL],{ "CessieHXId": ev.RowObj.CessieHXId, "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CESSIE_PGL_APPRVL_DETAIL],{ "CessieHXId": ev.RowObj.CessieHXId, "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "mrCustTypeCode": ev.RowObj.MrCustTypeCode });
       }
     }
     else if (ev.Key == "HoldTask") {

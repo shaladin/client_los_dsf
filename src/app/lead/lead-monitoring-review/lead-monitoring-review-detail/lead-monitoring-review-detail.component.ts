@@ -83,12 +83,14 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   }
 
   claimTask() {
-    if(environment.isCore){
-      this.claimTaskService.ClaimTaskV2(this.taskListId);
+    if(environment.isCore){	
+        if(this.taskListId!= "" && this.taskListId!= undefined){	
+            this.claimTaskService.ClaimTaskV2(this.taskListId);	
+        }	
+    }	
+    else if (this.taskListId> 0) {	
+        this.claimTaskService.ClaimTask(this.taskListId);	
     }
-    else{
-      this.claimTaskService.ClaimTask(this.taskListId);
-    }
-  }
+}
   
 }

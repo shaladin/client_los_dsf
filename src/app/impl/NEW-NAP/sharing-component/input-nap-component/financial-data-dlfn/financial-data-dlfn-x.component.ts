@@ -98,8 +98,6 @@ export class FinancialDataDlfnXComponent implements OnInit {
         MrProvisionFeeTypeCode: '',
         MrProvisionFeeCalcMethodCode: '',
         BalloonValueAmt: 0,
-        NeedReCalculate: true,
-
         MrInstTypeCode: "",
         InstTypeName: "",
         MrSingleInstCalcMthdCode: "SIMPLE",
@@ -129,7 +127,10 @@ export class FinancialDataDlfnXComponent implements OnInit {
         BalloonBhv: '',
         MinDownPaymentNettPrcnt: 0,
         MaxDownPaymentNettPrcnt: 0,
-        TotalTopAmount: 0
+        TotalTopAmount: 0,
+        NeedReCalculate: true,
+        IsReCalculate: false,
+        ExistingFinData: false
       }
     );
     this.LoadAppFinData();
@@ -170,7 +171,9 @@ export class FinancialDataDlfnXComponent implements OnInit {
           SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
           AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
-          DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
+          DiffRateAmt: this.appFinDataObj.DiffRateAmt,
+          SubsidyAmtFromDiffRate: this.appFinDataObj.SubsidyAmtFromDiffRate,
+          CommissionAmtFromDiffRate: this.appFinDataObj.CommissionAmtFromDiffRate,
 
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
 
@@ -213,6 +216,7 @@ export class FinancialDataDlfnXComponent implements OnInit {
 
           InstAmt: this.appFinDataObj.InstAmt,
           TotalTopAmount: this.appFinDataObj.TotalTopAmount != undefined ? this.appFinDataObj.TotalTopAmount : 0,
+          ExistingFinData: this.appFinDataObj.ExistingFinData
         });
 
         this.IsParentLoaded = true;

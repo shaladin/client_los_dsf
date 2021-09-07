@@ -13,6 +13,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
@@ -92,7 +93,8 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.RFAPreGoLive.TaskListId = this.TaskListId;
     this.RFAPreGoLive.RowVersion = "";
     this.RFAPreGoLive.RequestRFAObj = this.RFAInfo;
-    this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
+    let createRFAPreGoLiveUrl = environment.isCore? URLConstant.CreateRFAPreGoLiveNewV2 : URLConstant.CreateRFAPreGoLiveNew;
+    this.http.post(createRFAPreGoLiveUrl, this.RFAPreGoLive).subscribe((response) => {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_PAGING], { BizTemplateCode: localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
     });
   }

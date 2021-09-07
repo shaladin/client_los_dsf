@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ThirdPartyDukcapilRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyDukcapilRsltObj.Model';
 import { ThirdPartyPefindoRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyPefindoRsltObj.Model';
@@ -19,6 +21,7 @@ import { ThirdPartySlikRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPart
 export class CrdRvwThirdPartyCheckingComponent implements OnInit {
 
   @Input() CrdRvwCustInfoId: number;
+  @Input() CrdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   @Input() AppNo: string = "";
   IsUseDigitalization: string;
 
@@ -77,6 +80,10 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
         this.IsUseDigitalization = response.GsValue;
       }
     )
+  }
+
+  pefindoHandler() {
+    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo);
   }
   
 }

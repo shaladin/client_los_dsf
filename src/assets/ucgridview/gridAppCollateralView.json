@@ -43,9 +43,11 @@
             "property": "CollateralValueAmt"
         },
         {
-            "type": "text",
+            "type": "decimal",
             "position": "right",
-            "property": "CollateralPrcnt"
+            "property": "CollateralPrcnt",
+            "precision": "0.6",
+            "IsPrcnt": true
         }
     ]
 }

@@ -1,33 +1,39 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { AppCommissionDObjX } from 'app/impl/shared/model/AppCommissionDObjX.Model';
-import { AppCommissionHObjX } from 'app/impl/shared/model/AppCommissionHObjX.Model';
-import { AppCommSupplEmpObjX } from 'app/impl/shared/model/AppCommSupplEmpObjX.model';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
+import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
+import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissionObj.Model';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { FormCommissionGenerateXComponent } from './form-commission-generate-x/form-commission-generate-x.component';
+import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Model';
+import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
+import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AppCommissionDObjX } from 'app/impl/shared/model/AppCommissionDObjX.Model';
+import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
 import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
-import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { String } from 'typescript-string-operations';
+import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/AppCommissionRsvFund/ReqReturnHandlingCommRsvFundObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissionObj.Model';
-import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
-import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Model';
-import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
-import { FormCommissionGenerateXComponent } from './form-commission-generate-x/form-commission-generate-x.component';
+import { environment } from 'environments/environment';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AppCommissionHObjX } from 'app/impl/shared/model/AppCommissionHObjX.Model';
+import { AppCommSupplEmpObjX } from 'app/impl/shared/model/AppCommSupplEmpObjX.model';
 
 @Component({
   selector: 'app-commission-v2-x',
@@ -47,7 +53,6 @@ export class CommissionV2XComponent implements OnInit {
   @Input() DictMaxIncomeForm: object = {};
   @Input() BizTemplateCode: string;
   @Input() LobCode: string = "";
-  
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
@@ -55,6 +60,7 @@ export class CommissionV2XComponent implements OnInit {
   @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
   @Output() outputCommCondition:EventEmitter<boolean> = new EventEmitter();
   AppId: number = 0;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -99,15 +105,67 @@ export class CommissionV2XComponent implements OnInit {
   HideForm1: boolean = false;
   HideForm2: boolean = false;
   HideForm3: boolean = false;
-  listPriority: Array<string> = new Array();
+
+  listPrioritySuppl: Array<string> = new Array();
+  listPrioritySupplEmp: Array<string> = new Array();
+  listPriorityReferantor: Array<string> = new Array();
   ListSupplEmpPos: Array<RefMasterObj> = new Array<RefMasterObj>();
+
+  isReturnOn: boolean = false;
+  DDLData: { [id: string]: Array<KeyValueObj> } = {};
+  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
+  readonly DDLTask: string = CommonConstant.ReturnTask;
+
+
+  FormReturnObj  =this.fb.group({
+    ReturnTo: [''],
+    Reason: [''],
+    Notes: ['']
+  });
+
+
+  GetFormAddDynamicObj(content) {
+    if (content == CommonConstant.ContentSupplier) {
+      this.FormInputObjSupplier["title"] = CommonConstant.TitleSupplier;
+      this.FormInputObjSupplier["content"] = CommonConstant.ContentSupplier;
+      this.FormInputObjSupplier["labelName"] = CommonConstant.LabelSupplier;
+      this.FormInputObjSupplier["AppId"] = this.AppId;
+      this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
+      this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
+      this.FormInputObjSupplier["isAutoGenerate"] = this.isAutoGenerate;
+      this.FormInputObjSupplier["isCalculated"] = false;
+      this.FormInputObjSupplier["isDataInputed"] = false;
+      this.OnForm1 = true;
+    } else if (content == CommonConstant.ContentSupplierEmp) {
+      this.FormInputObjSupplierEmp["title"] = CommonConstant.TitleSupplierEmp;
+      this.FormInputObjSupplierEmp["content"] = CommonConstant.ContentSupplierEmp;
+      this.FormInputObjSupplierEmp["labelName"] = CommonConstant.LabelSupplierEmp;
+      this.FormInputObjSupplierEmp["AppId"] = this.AppId;
+      this.FormInputObjSupplierEmp["contentObj"] = this.ContentObjSupplierEmp;
+      this.FormInputObjSupplierEmp["ruleObj"] = this.RuleSupplierEmpData;
+      this.FormInputObjSupplierEmp["isAutoGenerate"] = this.isAutoGenerate;
+      this.FormInputObjSupplierEmp["isCalculated"] = false;
+      this.FormInputObjSupplierEmp["isDataInputed"] = false;
+      this.FormInputObjSupplierEmp["dictSuppl"] = this.DictSupplierCode;
+      this.OnForm2 = true;
+    } else if (content == CommonConstant.ContentReferantor) {
+      this.FormInputObjReferantor["title"] = CommonConstant.TitleReferantor;
+      this.FormInputObjReferantor["content"] = CommonConstant.ContentReferantor;
+      this.FormInputObjReferantor["labelName"] = CommonConstant.LabelReferantor;
+      this.FormInputObjReferantor["AppId"] = this.AppId;
+      this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
+      this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
+      this.FormInputObjReferantor["isAutoGenerate"] = this.isAutoGenerate;
+      this.FormInputObjReferantor["isCalculated"] = false;
+      this.FormInputObjReferantor["isDataInputed"] = false;
+      this.OnForm3 = true;
+    }
+  }
 
   async ngOnInit() {
     this.AppId = this.ReturnHandlingHObj.AppId;
     this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
     this.ActRemainingAlloc = this.maxAllocAmt - this.totalRsvFundAmt;
-    console.log(this.RemainingAllocAmt)
-    console.log(this.ActRemainingAlloc)
     
     await this.GetListAppReservedFundByAppId();
     await this.GetListAllocatePriority();
@@ -116,13 +174,16 @@ export class CommissionV2XComponent implements OnInit {
     await this.GetContentData();
     await this.GetRuleDataForForm();
     await this.GetExistingAppCommData();
-
+    await this.bindDDLReasonReturn();
+    await this.bindTaskObj();
   }
 
   async GetListAllocatePriority(){
     await this.http.post(URLConstantX.GetAppRsvFundPriorityRule, {Id: this.AppId}).toPromise().then(
       (response) => {
-        this.listPriority = response[CommonConstant.ReturnObj];
+        this.listPrioritySuppl = response["ReturnObject"]["ListPrioritySupplier"];
+        this.listPrioritySupplEmp = response["ReturnObject"]["ListPrioritySupplEmp"];
+        this.listPriorityReferantor = response["ReturnObject"]["ListPriorityReferantor"];
       }
     );
   }
@@ -140,7 +201,6 @@ export class CommissionV2XComponent implements OnInit {
   async EmpPositionSectValidate()
   {
     let validateInsurance: boolean = false;
-    console.log(this.ListResultRefundIncomeInfo)
     for(let i=0;i<this.ListResultRefundIncomeInfo.length;i++)
     {
       if(this.ListResultRefundIncomeInfo[i].RefundAllocationFrom == CommonConstantX.AllocationFronInsuranceIncomeCode && this.ListResultRefundIncomeInfo[i].RefundAmount > 0)
@@ -158,7 +218,6 @@ export class CommissionV2XComponent implements OnInit {
     {
       await this.http.post(URLConstantX.GetAppAssetByAppIdConditionNewBrandMitsubishi, {Id: this.AppId}).toPromise().then(
         (response) => {
-          console.log(response)
           if(response[CommonConstant.ReturnObj].length > 0)
           {
             this.SectionPosition = true;
@@ -175,7 +234,6 @@ export class CommissionV2XComponent implements OnInit {
           this.ListSupplEmpPos = response[CommonConstant.ReturnObj];
         }
       );
-      console.log(this.ListSupplEmpPos)
     }
   }
 
@@ -232,36 +290,7 @@ export class CommissionV2XComponent implements OnInit {
       (response) => {
         this.GetDDLContent(response, CommonConstant.ContentReferantor);
       });
-  }
 
-  RuleSupplierData: object = {};
-  RuleSupplierEmpData: object = {};
-  RuleReferantorData: object = {};
-  async GetRuleDataForForm() {
-    let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
-    await this.http.post(URLConstantX.GetAppCommissionRule, obj).toPromise().then(
-      (response) => {
-        var ResponseObj = response[CommonConstant.ReturnObj];
-        console.log(ResponseObj)
-        // override hide suppl & suppl emp jika CFRFN4W ignore rule
-        if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.LobCode == CommonConstantX.SLB)
-        {
-          ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
-          ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp = null;
-          this.HideForm1 = true;
-          this.HideForm2 = true;
-        }
-        if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp) { // For CFNA
-          for (var i = 0; i < ResponseObj["length"]; i++) {
-            var temp: RuleCommissionObj = ResponseObj[i][CommonConstant.ReturnObj].RuleDataObjects;
-            this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
-            this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
-          }
-        }
-        if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
-          this.BindRuleData(ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
-      }
-    );
   }
 
   //GetDDl
@@ -307,6 +336,35 @@ export class CommissionV2XComponent implements OnInit {
         }
       }
     }
+  }
+
+  RuleSupplierData: object = {};
+  RuleSupplierEmpData: object = {};
+  RuleReferantorData: object = {};
+  async GetRuleDataForForm() {
+    let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
+    await this.http.post(URLConstantX.GetAppCommissionRule, obj).toPromise().then(
+      (response) => {
+        var ResponseObj = response[CommonConstant.ReturnObj];
+        // override hide suppl & suppl emp jika CFRFN4W ignore rule
+        if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.LobCode == CommonConstantX.SLB)
+        {
+          ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
+          ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp = null;
+          this.HideForm1 = true;
+          this.HideForm2 = true;
+        }
+        if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp) { // For CFNA
+          for (var i = 0; i < ResponseObj["length"]; i++) {
+            var temp: RuleCommissionObj = ResponseObj[i][CommonConstant.ReturnObj].RuleDataObjects;
+            this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
+            this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
+          }
+        }
+        if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
+          this.BindRuleData(ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
+      }
+    );
   }
 
   BindRuleData(tempObj: any, contentType: string, supplCode: string) {
@@ -370,7 +428,6 @@ export class CommissionV2XComponent implements OnInit {
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
         var tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
-        console.log(tempObj)
         if (tempObj.length > 0) {
           this.isAutoGenerate = false;
           this.GetFormAddDynamicObj(CommonConstant.ContentSupplier);
@@ -400,44 +457,6 @@ export class CommissionV2XComponent implements OnInit {
       });
   }
 
-  GetFormAddDynamicObj(content) {
-    if (content == CommonConstant.ContentSupplier) {
-      this.FormInputObjSupplier["title"] = CommonConstant.TitleSupplier;
-      this.FormInputObjSupplier["content"] = CommonConstant.ContentSupplier;
-      this.FormInputObjSupplier["labelName"] = CommonConstant.LabelSupplier;
-      this.FormInputObjSupplier["AppId"] = this.AppId;
-      this.FormInputObjSupplier["contentObj"] = this.ContentObjSupplier;
-      this.FormInputObjSupplier["ruleObj"] = this.RuleSupplierData;
-      this.FormInputObjSupplier["isAutoGenerate"] = this.isAutoGenerate;
-      this.FormInputObjSupplier["isCalculated"] = false;
-      this.FormInputObjSupplier["isDataInputed"] = false;
-      this.OnForm1 = true;
-    } else if (content == CommonConstant.ContentSupplierEmp) {
-      this.FormInputObjSupplierEmp["title"] = CommonConstant.TitleSupplierEmp;
-      this.FormInputObjSupplierEmp["content"] = CommonConstant.ContentSupplierEmp;
-      this.FormInputObjSupplierEmp["labelName"] = CommonConstant.LabelSupplierEmp;
-      this.FormInputObjSupplierEmp["AppId"] = this.AppId;
-      this.FormInputObjSupplierEmp["contentObj"] = this.ContentObjSupplierEmp;
-      this.FormInputObjSupplierEmp["ruleObj"] = this.RuleSupplierEmpData;
-      this.FormInputObjSupplierEmp["isAutoGenerate"] = this.isAutoGenerate;
-      this.FormInputObjSupplierEmp["isCalculated"] = false;
-      this.FormInputObjSupplierEmp["isDataInputed"] = false;
-      this.FormInputObjSupplierEmp["dictSuppl"] = this.DictSupplierCode;
-      this.OnForm2 = true;
-    } else if (content == CommonConstant.ContentReferantor) {
-      this.FormInputObjReferantor["title"] = CommonConstant.TitleReferantor;
-      this.FormInputObjReferantor["content"] = CommonConstant.ContentReferantor;
-      this.FormInputObjReferantor["labelName"] = CommonConstant.LabelReferantor;
-      this.FormInputObjReferantor["AppId"] = this.AppId;
-      this.FormInputObjReferantor["contentObj"] = this.ContentObjReferantor;
-      this.FormInputObjReferantor["ruleObj"] = this.RuleReferantorData;
-      this.FormInputObjReferantor["isAutoGenerate"] = this.isAutoGenerate;
-      this.FormInputObjReferantor["isCalculated"] = false;
-      this.FormInputObjReferantor["isDataInputed"] = false;
-      this.OnForm3 = true;
-    }
-  }
-
   //dari html
   GetData() {
     this.IsCalculated = false;
@@ -446,16 +465,17 @@ export class CommissionV2XComponent implements OnInit {
   DictTempRemainingIncomeForm: Object = {}
   async NewCalculateTotal(){
     console.log("CALCULATE NEW");
-    console.log(this.CommissionForm)
     this.DictTempRemainingIncomeForm = new Object();
-    for(let j=0;j<this.listPriority.length;j++)
+    
+    for(var dict in this.DictRemainingIncomeForm)
     {
-      let TempObj = new ResultRefundObj();
-      TempObj.RefundAllocationFrom = this.DictRemainingIncomeForm[this.listPriority[j]].RefundAllocationFrom;
-      TempObj.RefundAllocationFromDesc = this.DictRemainingIncomeForm[this.listPriority[j]].RefundAllocationFromDesc;
-      TempObj.RefundAmount = this.DictRemainingIncomeForm[this.listPriority[j]].RefundAmount;
-      this.DictTempRemainingIncomeForm[this.listPriority[j]] = TempObj;
+        let TempObj = new ResultRefundObj();
+        TempObj.RefundAllocationFrom = this.DictRemainingIncomeForm[dict].RefundAllocationFrom;
+        TempObj.RefundAllocationFromDesc = this.DictRemainingIncomeForm[dict].RefundAllocationFromDesc;
+        TempObj.RefundAmount = this.DictRemainingIncomeForm[dict].RefundAmount;
+        this.DictTempRemainingIncomeForm[dict] = TempObj;
     }
+ 
     this.totalSupplier = 0;
     this.totalSupplierEmp = 0;
     this.totalReferantor = 0;
@@ -469,13 +489,12 @@ export class CommissionV2XComponent implements OnInit {
     var listVendorEmpNo: Array<string> = new Array<string>();
     var listTrxAmt: Array<Array<number>> = new Array<Array<number>>();
     this.ListAppCommHObj = new Array();
+    if (this.AllocateDataWithPriority(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    if (this.AllocateDataWithPriority(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    if (this.AllocateDataWithPriority(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    
 
-    if(this.AllocateDataWithPriority(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-    if(this.AllocateDataWithPriority(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-    if(this.AllocateDataWithPriority(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-
-    if(listVendorCode.length > 0)
-    {
+    if (listVendorCode.length > 0) {
       let obj: ReqTaxObj = {
         AppId: this.AppId,
         VendorCode: listVendorCode,
@@ -485,8 +504,6 @@ export class CommissionV2XComponent implements OnInit {
         ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
         IsSave: false,
       };
-      console.log(obj)
-      console.log(this.ListAppCommHObj)
 
       await this.http.post<ResponseTaxDetailObj>(URLConstantX.GetAppCommissionTaxAndCalcGrossYieldX, obj).toPromise().then(
         (response) => {
@@ -508,8 +525,6 @@ export class CommissionV2XComponent implements OnInit {
         }
       );
     }
-    console.log(this.ListAppCommHObj)
-
   }
 
   mapTaxData(identifier: string, TaxDetailData: ResponseTaxDetailObj, idxStart: number, idxEnd: number)
@@ -580,7 +595,6 @@ export class CommissionV2XComponent implements OnInit {
         TotalPenaltyAmount: totalPenaltyAmt,
         TotalDisburseAmount: totalDisburseAmount,
       });
-
       this.Summary.TotalCommisionAmount += this.CommissionForm.value[identifier][i].TotalCommisionAmount;
       this.Summary.TotalTaxAmmount += totalTaxAmount;
       this.Summary.TotalVATAmount += totalVATAmount;
@@ -590,6 +604,47 @@ export class CommissionV2XComponent implements OnInit {
     return idxStart;
   }
 
+  SaveForm() {
+    if (!this.IsCalculated || this.ListAppCommHObj.length == 0) return this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
+    if (this.Summary.TotalCommisionAmount > this.maxAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Max Allocated Amount");
+    if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
+
+    let listAppCommissionHAddObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
+    let listAppCommissionHEditObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
+    for(let i=0; i<this.ListAppCommHObj.length;i++)
+    {
+      if(this.ListAppCommHObj[i].AppCommissionHId == 0)
+      {
+        listAppCommissionHAddObj.push(this.ListAppCommHObj[i]);
+      }
+      else
+      {
+        listAppCommissionHEditObj.push(this.ListAppCommHObj[i]);
+      }
+    }
+
+    var obj = {
+      AppId: this.AppId,
+      GrossYield: this.Summary.GrossYield,
+      ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
+      WfTaskIdListId: this.ReturnHandlingHObj.WfTaskListId,
+      IsPersonal: this.AppIsPersonal,
+      ListAppCommissionHAddObj: listAppCommissionHAddObj,
+      ListAppCommissionHEditObj: listAppCommissionHEditObj
+    };
+    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+
+    this.http.post(URLConstantX.AddEditAppCommissionData, obj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        if (this.ReturnHandlingHObj.ReturnHandlingHId != 0 || this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
+          this.outputTab.emit(this.ReturnHandlingHObj.ReturnHandlingHId);
+        } else {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
+        }
+        // this.outputTab.emit();
+      });
+  }
 
   AllocateDataWithPriority(identifier:string, listVendorCode: Array<string>, listVendorEmpNo: Array<string>, listTrxAmt: Array<Array<number>>)
   {
@@ -610,7 +665,7 @@ export class CommissionV2XComponent implements OnInit {
           const tempListAllocIdxAt = tempListAllocated.get(idx.toString()) as FormGroup;
           const AllocAmt = tempListAllocIdxAt.get("AllocationAmount").value;
 
-          var tempListTrxAmt: Array<number> = this.allocateValue(AllocAmt, tempAppComm.ListappCommissionDObj);
+          var tempListTrxAmt: Array<number> = this.allocateValue(AllocAmt, tempAppComm.ListappCommissionDObj, identifier);
           totalCommAmt = AllocAmt;      
         
         if (totalCommAmt == 0) {
@@ -701,93 +756,52 @@ export class CommissionV2XComponent implements OnInit {
     return temp;
   }
 
-
-  allocateValue(allocAmt: number, tempListAppCommD: Array<AppCommissionDObjX>)
+  allocateValue(allocAmt: number, tempListAppCommD: Array<AppCommissionDObjX>, identifier:string)
   {
     var tempListTrxAmt = new Array<number>();
-    for(var i=0;i<this.listPriority.length;i++)
+    let listPriority = new Array<string>();
+    if(identifier == CommonConstant.CommissionIdentifierSupplier) listPriority = this.listPrioritySuppl;
+    else if(identifier == CommonConstant.CommissionIdentifierSupplierEmp) listPriority = this.listPrioritySupplEmp;
+    else if(identifier == CommonConstant.CommissionIdentifierReferantor) listPriority = this.listPriorityReferantor;
+
+    for(var i=0;i<listPriority.length;i++)
     {
       if(allocAmt == 0)break;
 
-      if(this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount > 0)
+      if(this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount > 0)
       {
         var tempDObj = new AppCommissionDObjX();
-        if(this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount < allocAmt)
+        if(this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount < allocAmt)
         {
-          allocAmt = allocAmt - this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount;
+          allocAmt = allocAmt - this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount;
 
-          tempListTrxAmt.push(this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount);
-          tempDObj.MrCommissionSourceCode= this.listPriority[i],
-          tempDObj.CommissionAmt= this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount,
-          tempDObj.RefundAmt= this.DictMaxIncomeForm[this.listPriority[i]].RefundAmount,
-          tempDObj.CommissionAmtAfterTax = this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount;
+          tempListTrxAmt.push(this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount);
+          tempDObj.MrCommissionSourceCode= listPriority[i],
+          tempDObj.CommissionAmt= this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount,
+          tempDObj.RefundAmt= this.DictMaxIncomeForm[listPriority[i]].RefundAmount,
+          tempDObj.CommissionAmtAfterTax = this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount;
 
           tempListAppCommD.push(tempDObj);
 
-          this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount = 0;
+          this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount = 0;
         }
-        else if(this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount >= allocAmt)
+        else if(this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount >= allocAmt)
         {
-          this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount = this.DictTempRemainingIncomeForm[this.listPriority[i]].RefundAmount - allocAmt
+          this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount = this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount - allocAmt
 
           tempListTrxAmt.push(allocAmt);
-          tempDObj.MrCommissionSourceCode= this.listPriority[i],
+          tempDObj.MrCommissionSourceCode= listPriority[i],
           tempDObj.CommissionAmt= allocAmt,
-          tempDObj.RefundAmt= this.DictMaxIncomeForm[this.listPriority[i]].RefundAmount,
+          tempDObj.RefundAmt= this.DictMaxIncomeForm[listPriority[i]].RefundAmount,
           tempDObj.CommissionAmtAfterTax = allocAmt;
 
           tempListAppCommD.push(tempDObj);
           allocAmt = 0;
           break;
         }
-        console.log(this.listPriority[i])
-        console.log(tempListTrxAmt)
       }
     }
     return tempListTrxAmt;
-  }
-
-
-  SaveForm() {
-    if (!this.IsCalculated || this.ListAppCommHObj.length == 0) return this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
-    if (this.Summary.TotalCommisionAmount > this.maxAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Max Allocated Amount");
-    if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
-
-    let listAppCommissionHAddObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
-    let listAppCommissionHEditObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
-    for(let i=0; i<this.ListAppCommHObj.length;i++)
-    {
-      if(this.ListAppCommHObj[i].AppCommissionHId == 0)
-      {
-        listAppCommissionHAddObj.push(this.ListAppCommHObj[i]);
-      }
-      else
-      {
-        listAppCommissionHEditObj.push(this.ListAppCommHObj[i]);
-      }
-    }
-
-    var obj = {
-      AppId: this.AppId,
-      GrossYield: this.Summary.GrossYield,
-      ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
-      WfTaskIdListId: this.ReturnHandlingHObj.WfTaskListId,
-      IsPersonal: this.AppIsPersonal,
-      ListAppCommissionHAddObj: listAppCommissionHAddObj,
-      ListAppCommissionHEditObj: listAppCommissionHEditObj
-    };
-    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    console.log(obj)
-    this.http.post(URLConstantX.AddEditAppCommissionData, obj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        if (this.ReturnHandlingHObj.ReturnHandlingHId != 0 || this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
-          this.outputTab.emit(this.ReturnHandlingHObj.ReturnHandlingHId);
-        } else {
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
-        }
-        // this.outputTab.emit();
-      });
   }
 
   Cancel() {
@@ -797,6 +811,91 @@ export class CommissionV2XComponent implements OnInit {
     this.FormAdd1.UpdateInputType();
     this.FormAdd2.UpdateInputType();
     this.FormAdd3.UpdateInputType();
+  }
+
+  switchForm() {
+    this.FormReturnObj.patchValue({
+      ReturnTo: "",
+      Reason: "",
+      Notes: ""
+    });
+
+    if (!this.isReturnOn) {
+      this.isReturnOn = true;
+      this.FormReturnObj.controls.ReturnTo.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
+    } else {
+      this.isReturnOn = false;
+      this.FormReturnObj.controls.ReturnTo.clearValidators();
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
+    }
+    this.FormReturnObj.controls.ReturnTo.updateValueAndValidity();
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
+
+  }
+
+  async bindDDLReasonReturn() {
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
+    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
+      });
+  }
+
+  async bindTaskObj() {
+    let refMasterTypeCode = '';
+    switch (this.BizTemplateCode) {
+      case CommonConstant.CF4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCF4W;
+        break;
+      case CommonConstant.CFNA:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFNA;
+        break;
+      case CommonConstant.CFRFN4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFRFN4W;
+        break;
+      case CommonConstant.FL4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFL4W;
+        break;
+      case CommonConstant.OPL:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskOPL;
+        break;
+    }
+    if (!refMasterTypeCode) return;
+    var mrCustTypeCode;
+
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.ReturnHandlingHObj.AppId }).toPromise().then(
+      (response: AppCustObj) => {
+        mrCustTypeCode = response.MrCustTypeCode;
+      }
+    );
+
+    let refMasterObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: mrCustTypeCode };
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
+        this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);    
+      }
+    );
+  }
+
+  SaveReturnForm(){
+    var reqReturnHandlingCommRsvFundObj = new ReqReturnHandlingCommRsvFundObj();
+    reqReturnHandlingCommRsvFundObj.AppId = this.ReturnHandlingHObj.AppId;
+    reqReturnHandlingCommRsvFundObj.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
+    reqReturnHandlingCommRsvFundObj.ReturnTo = this.FormReturnObj.value.ReturnTo;
+    reqReturnHandlingCommRsvFundObj.Reason = this.FormReturnObj.value.Reason;
+    reqReturnHandlingCommRsvFundObj.Notes = this.FormReturnObj.value.Notes;
+
+    let SubmitReturnHandlingCommRsvFundUrl = environment.isCore ? URLConstant.SubmitReturnHandlingCommRsvFundV2 : URLConstant.SubmitReturnHandlingCommRsvFund;
+    this.http.post(SubmitReturnHandlingCommRsvFundUrl, reqReturnHandlingCommRsvFundObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
+      });
   }
 
   ChangeEmpPos(idx:number)

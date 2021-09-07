@@ -48,7 +48,7 @@
           },
           {
             "type": "text",
-            "label": "Id Type",
+            "label": "Owner Id Type",
             "property": "IdType"
           },
           {
@@ -68,7 +68,7 @@
           },
           {
             "type": "text",
-            "label": "Mobile Phone No",
+            "label": "Owner Mobile Phone No",
             "property": "MobilePhn"
           },
           {

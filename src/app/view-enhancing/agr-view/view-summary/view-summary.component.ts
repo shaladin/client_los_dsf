@@ -18,7 +18,6 @@ export class ViewAgrmntSummaryComponent implements OnInit {
   };
   totalInsPremi: any;
   SummaryObj: any;
-  totalRsvFund: any;
   inputGridObj: any;
   AppAssetId: any;
   link: string;

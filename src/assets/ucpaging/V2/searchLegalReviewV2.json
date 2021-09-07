@@ -1,0 +1,244 @@
+{
+    "title": "MOU LEGAL REVIEW",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "MC.MOU_CUST_NO",
+        "id": "MouCustNoId",
+        "value": "",
+        "label": "Mou No",
+        "placeholder": "Placeholder",
+        "datatype": "text"
+      },
+      {
+        "type": "dropdown",
+        "name": "MC.MR_MOU_TYPE_CODE",
+        "id": "MouTypeId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment": "FOU",
+        "path":"/RefMaster/GetListKeyValueActiveByCode",
+        "label": "Mou Type",
+        "items": [],
+        "itemsUrl": [],   
+        "criteriaPropName": "RefMasterTypeCode",
+        "criteriaPropValue": "MOU_TYPE"
+      },
+      {
+        "type": "textbox",
+        "name": "MC.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder",
+        "datatype": "text"
+      },
+      {
+        "type": "dropdown",
+        "name": "MC.IS_REVOLVING",
+        "id": "IsRevolvingId",
+        "label": "Revolving",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": false,
+        "ddlType": "all",
+        "items": [
+          {
+            "key": true,
+            "value": "Yes"
+          },
+          {
+            "key": false,
+            "value": "No"
+          }
+        ],
+        "itemsUrl": []
+      },
+      {
+        "type": "textbox",
+        "name": "Assignee",
+        "id": "AssigneeId",
+        "value": null,
+        "label": "Claim By",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "headerList": [
+      {
+        "type": "label",
+        "position": "left",
+        "label": "CLAIM BY",
+        "name": "Assignee"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "MOU NO",
+        "name": "MC.MOU_CUST_NO"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "CUSTOMER NAME",
+        "name": "MC.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "EXPIRED DATE",
+        "name": "MC.END_DT"
+      },
+      {
+        "type": "sort",
+        "position": "right",
+        "label": "PLAFOND AMOUNT",
+        "name": "MC.PLAFOND_AMT"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "REVOLVING",
+        "name": "MC.IS_REVOLVING"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "REFERENCE NO",
+        "name": "MC.REF_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "MOU TYPE",
+        "name": "RM.DESCR"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "REVIEW"
+      }
+    ],
+    "querystring": {
+      "name": "searchLegalReviewV2"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "Assignee"
+      },
+      {
+        "type": "link",
+        "position": "left",
+        "property": "MouCustNo",
+        "path": "VIEW_MOU_CUST",
+        "target": "_blank",
+        "param": [
+          {
+            "type": "MouCustId",
+            "property": "MouCustId"
+          }
+        ]
+      },
+      {
+        "type": "callback",
+        "key": "customer",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "EndDt"
+      },
+      {
+        "type": "decimal",
+        "position": "right",
+        "property": "PlafondAmt"
+      },
+      {
+        "type": "boolean",
+        "position": "center",
+        "property": "IsRevolving"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RefNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MouType"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions": [
+                  {
+                    "isUser": true,
+                    "property": "Assignee",
+                    "value": null,
+                    "restriction": "EQ"
+                  }
+                ],
+                "result": {
+                  "type": "url",
+                  "path": "MOU_CUST_LEGAL_RVW_DETAIL",
+                  "icon": "ft-edit-2",
+                  "param": [
+                    {
+                      "type": "MouCustId",
+                      "property": "MouCustId"
+                    },
+                    {
+                      "type": "WfTaskListId",
+                      "property": "Id"
+                    }
+                  ]
+                },
+                "isHide": false
+              },
+              {
+                "conditions": [
+                  {
+                    "isUser": false,
+                    "property": "Assignee",
+                    "value": null,
+                    "restriction": "EQ"
+                  }
+                ],
+                "result": {
+                  "type": "url",
+                  "path": "MOU_CUST_LEGAL_RVW_DETAIL",
+                  "icon": "ft-edit-2",
+                  "param": [
+                    {
+                      "type": "MouCustId",
+                      "property": "MouCustId"
+                    },
+                    {
+                      "type": "WfTaskListId",
+                      "property": "Id"
+                    }
+                  ]
+                },
+                "isHide": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  

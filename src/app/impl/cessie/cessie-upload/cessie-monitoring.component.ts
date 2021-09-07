@@ -15,7 +15,7 @@ export class CessieMonitoringComponent implements OnInit {
 
   ngOnInit() {
     this.uploadObj = {
-      title: 'Upload Cessie', // Title Paging dan Upload Page
+      title: 'Upload Cessie Factoring', // Title Paging dan Upload Page
       subsectionId: 'UcUploadFile', // Ga perlu diubah
       formatsAllowed: '.txt', // File yang bisa di upload
       UploadTypeCode: 'UPL_CESSIE', // UploadTypeCode berdasarkan keperluan
@@ -37,8 +37,9 @@ export class CessieMonitoringComponent implements OnInit {
           environment: environment.FoundationR3Url + "/v1"
         }
       ],
-      url: URLConstantX.UploadFile,
+      url: URLConstantX.UploadFileV2,
       isDownloadTmplt : false
     }
+    console.log(this.uploadObj)
   }
 }

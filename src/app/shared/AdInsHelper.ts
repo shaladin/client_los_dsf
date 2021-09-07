@@ -158,6 +158,10 @@ export class AdInsHelper {
     window.open(environment.losR3Web + NavigationConstant.VIEW_CUST_EXPSR + "?CrdRvwExposureHId=" + CrdRvwExposureHId + "&Token=" + token, '_blank');
   }
 
+  public static OpenPefindoView(CustNo: string) {
+    window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo);
+  }
+
   public static CreateUserAccess(response) {
     // unused
   }

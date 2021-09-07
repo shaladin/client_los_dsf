@@ -63,12 +63,12 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
     PayFreqCode: [""],
     MrInstSchmCode: [""],
     InterestRatePrcnt: [
-      "",
-      [Validators.pattern("^[0-9]+$"), Validators.min(0), Validators.max(100)],
+      0,
+      [Validators.min(0), Validators.max(100)],
     ],
     RetentionPrcnt: [
-      "",
-      [Validators.pattern("^[0-9]+$"), Validators.min(0), Validators.max(100)],
+      0,
+      [Validators.min(0), Validators.max(100)],
     ],
     IsListedCust: [false],
     Notes: [""],
@@ -80,6 +80,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
     VirAccNo: ['']
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,

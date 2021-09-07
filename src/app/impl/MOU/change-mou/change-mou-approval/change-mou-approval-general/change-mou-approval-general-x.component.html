@@ -17,13 +17,17 @@
                     <mat-tab-group>
                         <mat-tab label="MOU Detail">
                             <ng-template matTabContent>
+                                <div class="px-3">
                                 <app-change-mou-detail [ChangeMouTrxId]="changeMouTrxId" [MouCustId]="MouCustId"
                                     [MouType]="MouType" [TrxType]="TrxType"></app-change-mou-detail>
+                                </div>
                             </ng-template>
                         </mat-tab>
                         <mat-tab label="Collateral" *ngIf="TrxType != TrxTypeReqExp">
                             <ng-template matTabContent>
+                                <div class="px-3">
                                 <app-change-mou-addcoll-x [ChangeMouTrxId]="changeMouTrxId"></app-change-mou-addcoll-x>
+                                </div>
                             </ng-template>
                         </mat-tab>
                     </mat-tab-group>

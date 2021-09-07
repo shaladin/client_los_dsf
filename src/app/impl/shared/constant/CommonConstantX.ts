@@ -25,7 +25,12 @@ export class CommonConstantX {
 
     //Approval Scheme
     public static SCHM_CODE_CESSIE_PGLV_APV = "CESSIE_PGLV_APV_SCHEME";
-    
+    public static SCHM_CODE_CHG_MOU_DLFN_APV = "CHG_MOU_DLFN_APV";
+    public static SCHM_CODE_CHG_MOU_FCTR_APV  = "CHG_MOU_FCTR_APV ";
+    public static SCHM_CODE_CHG_MOU_EXP_APV = "CHG_MOU_EXP_APV";
+    public static SCHM_CODE_CHG_MOU_EXP_DLFN_APV = "CHG_MOU_EXP_DLFN_APV";
+    public static SCHM_CODE_CHG_MOU_EXP_FCTR_APV = "CHG_MOU_EXP_FCTR_APV";
+
     //Approval Type
     public static CESSIE_PRE_GLV_APV_TYPE = "CESSIE_PRE_GLV_APV_TYPE";
 
@@ -36,7 +41,11 @@ export class CommonConstantX {
     public static AdditionalInterestPaidByCustomer = "CU";
 
     //Cessie
-    public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "NYS";
+    public static INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET = "-";
+
+
+    //Ref Master
+    public static REF_MASTER_ASSET_CONDITION_DESCR_USED = "Used";
 
     //Return Handling
     public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SRVY";
@@ -45,4 +54,7 @@ export class CommonConstantX {
     public static DefaultSlikSecEcoCode = "ECOSLIK_DEFAULT";
 
     public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
+
+    //Insurance
+    public static PayPeriodAnnualy = "ANNUALY";
 }

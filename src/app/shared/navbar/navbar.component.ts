@@ -43,51 +43,21 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
         private http: HttpClient, public rolePickService: RolePickService) {
         const browserLang: string = translate.getBrowserLang();
         translate.use(browserLang.match(/en|id|pt|de/) ? browserLang : 'en');
-        var userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        var businessDate = AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE);
-        var date = new Date(businessDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-        businessDate = formatDate(date, 'dd-MMM-yyyy', 'en-US');
-        this.businessDate = businessDate;
-        // this.userId = userAccess.userId;
-        this.userAccess = userAccess;
-        //this.displayName = userAccess.userId + ", " + userAccess.roleName + " - " + userAccess.officeName + " - " + businessDate;
     }
 
     ngOnInit() {
         this.GetListNotifH();
         localStorage.setItem('lang', 'en');
-        // Object.defineProperty(WebSocket, 'OPEN', { value: 1, });
+        
+        this.setUser();
+    }
 
-        // var _hubConnection = new HubConnectionBuilder()
-        //     .withUrl(URLConstant.WebSocketUrl)
-        //     //.withUrl("Http://localhost:5000/Notificationhub")
-        //     .withAutomaticReconnect()
-        //     .build();
-
-        // _hubConnection.start()
-        //     .then(() => console.log("Connection Started !"))
-        //     .then(() => _hubConnection.invoke("SubscribeNotification", this.userAccess.UserName, this.userAccess.RoleCode))
-        //     .catch((e) => console.log("Exception : " + e));
-
-        // _hubConnection.on("ReceiveNotification", (response) => {
-        //     console.log("Response API : " + response);
-        //     if (response.type == "SUCCESS") {
-        //         this.toastr.successMessageTitle(response.title, response.message);
-        //     }
-        //     else if (response.type == "ERROR") {
-        //         this.toastr.errorMessageTitle(response.title, response.message);
-        //     }
-        //     else if (response.type == "INFO") {
-        //         this.toastr.infoMessageTitle(response.title, response.message);
-        //     }
-
-
-        //     this.GetListNotifH();
-        //     if (response.isNeedLogout == true) {
-        //         AdInsHelper.ForceLogOut(response.timeLogOut, this.toastr);
-        //     }
-        //     //this.notifications.push({ title: response, desc: "User " + response });
-        // });
+    setUser(){
+        this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        let businessDate = AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE);
+        let date = new Date(businessDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+        businessDate = formatDate(date, 'dd-MMM-yyyy', 'en-US');
+        this.businessDate = businessDate;
     }
 
     GetListNotifH() {
@@ -103,19 +73,6 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     }
 
     ngAfterViewChecked() {
-
-        // setTimeout(() => {
-        //     var wrapperDiv = document.getElementsByClassName("wrapper")[0];
-        //     var dir = wrapperDiv.getAttribute("dir");           
-        //     if (dir == 'rtl') {
-        //         this.placement = 'bottom-left';
-        //     }
-        //     else if (dir == 'ltr') {
-        //         this.placement = 'bottom-right';
-        //     }
-        // }, 3000);
-
-
     }
 
     ClickNotification(item) {
@@ -128,10 +85,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
         else if (item.MrNotificationMethodCode = "INT_LINK") {
             window.open(item.Url);
         }
-
-
     }
-
 
     logout() {
         this.http.post(AdInsConstant.Logout, "");

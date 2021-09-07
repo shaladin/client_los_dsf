@@ -11,6 +11,22 @@
     <div *ngIf="viewGenericObj.viewInput !=''">
       <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
     </div>
+    <mat-tab-group>
+      <mat-tab label="MOU Detail">
+        <ng-template matTabContent>
+          <div class="px-3">
+            <app-change-mou-detail [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MouType" [TrxType]="TrxType"></app-change-mou-detail>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Collateral">
+        <ng-template matTabContent>
+          <div class="px-3">
+            <app-change-mou-addcoll [ChangeMouTrxId]="ChangeMouTrxId"></app-change-mou-addcoll>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
     <div class="px-3">
       <lib-ucSubsection [id]="'MOUMainInfoId'" [title]="'Main Information'" [panel]="'MOUMainInfoSection'">
       </lib-ucSubsection>

@@ -63,6 +63,8 @@ export class FinancialDataXComponent implements OnInit {
         AppId: this.AppId,
 
         TotalAssetPriceAmt: 0,
+        TotalAccessoryPriceAmt: 0,
+        TotalAssetPriceAmtOnly: 0,
         TotalFeeAmt: 0,
         TotalFeeCptlzAmt: 0,
         TotalInsCustAmt: 0,
@@ -72,6 +74,9 @@ export class FinancialDataXComponent implements OnInit {
         LifeInsCptlzAmt: 0,
         DownPaymentGrossAmt: 0,
         DownPaymentNettAmt: 0,
+        TotalAccessoryDownPaymentAmt: 0,
+        PrcntDp: 0,
+        PrcntDpNett: 0,
 
         TotalDownPaymentNettAmt: 0, //muncul di layar
         TotalDownPaymentGrossAmt: 0, //inmemory
@@ -106,6 +111,9 @@ export class FinancialDataXComponent implements OnInit {
 
         NumOfStep: 0,
         MrInstSchemeCode: "",
+        MrInstSchemeName: "",
+        MrFirstInstTypeCode: "",
+        MrFirstInstTypeName: "",
         CummulativeTenor: 0,
         StepUpStepDownInputType: "",
 
@@ -138,6 +146,8 @@ export class FinancialDataXComponent implements OnInit {
 
         CalcBase: '',
         NeedReCalculate: true,
+        IsReCalculate: false,
+        ExistingFinData: false,
         SubsidyATPMInterestAmt: 0,
         SubsidyATPMRiskAmt: 0,
         SubsidySPAFAmt: 0,
@@ -164,6 +174,8 @@ export class FinancialDataXComponent implements OnInit {
 
         this.FinDataForm.patchValue({
           TotalAssetPriceAmt: this.appFinDataObj.TotalAssetPriceAmt,
+          TotalAccessoryPriceAmt: this.appFinDataObj.TotalAccessoryPriceAmt,
+          TotalAssetPriceAmtOnly: this.appFinDataObj.TotalAssetPriceAmtOnly,
           TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
           TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
@@ -173,9 +185,12 @@ export class FinancialDataXComponent implements OnInit {
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
+          PrcntDp: this.appFinDataObj.DownPaymentGrossAmt / this.appFinDataObj.TotalAssetPriceAmt * 100,
+          PrcntDpNett: this.appFinDataObj.DownPaymentNettAmt / this.appFinDataObj.TotalAssetPriceAmt * 100,
 
           EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
+          FlatRatePrcnt: this.appFinDataObj.FlatRatePrcnt,
 
           NumOfInst: this.appFinDataObj.NumOfInst,
           RoundingAmt: this.appFinDataObj.RoundingAmt,
@@ -183,11 +198,16 @@ export class FinancialDataXComponent implements OnInit {
           SellSupplEffectiveRatePrcnt: this.appFinDataObj.SellSupplEffectiveRatePrcnt,
           AppSupplEffectiveRatePrcnt: this.appFinDataObj.AppSupplEffectiveRatePrcnt,
 
-          DiffRateAmt: +this.appFinDataObj.DiffRateAmt,
+          DiffRateAmt: this.appFinDataObj.DiffRateAmt,
+          SubsidyAmtFromDiffRate: this.appFinDataObj.SubsidyAmtFromDiffRate,
+          CommissionAmtFromDiffRate: this.appFinDataObj.CommissionAmtFromDiffRate,
 
           GrossYieldPrcnt: this.appFinDataObj.GrossYieldPrcnt,
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
+          MrInstSchemeName: this.appFinDataObj.MrInstSchemeName,
+          MrFirstInstTypeCode: this.appFinDataObj.MrFirstInstTypeCode,
+          MrFirstInstTypeName: this.appFinDataObj.MrFirstInstTypeName,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
           TdpPaidCoyAmt: this.appFinDataObj.TdpPaidCoyAmt,
           NtfAmt: this.appFinDataObj.NtfAmt,
@@ -212,7 +232,7 @@ export class FinancialDataXComponent implements OnInit {
           BalloonBhv: this.appFinDataObj.BalloonBhv,
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
-
+          ExistingFinData: this.appFinDataObj.ExistingFinData,
           SubsidyATPMInterestAmt: this.appFinDataObj.SubsidyATPMInterestAmt,
           SubsidyATPMRiskAmt: this.appFinDataObj.SubsidyATPMRiskAmt,
           SubsidySPAFAmt: this.appFinDataObj.SubsidySPAFAmt,
@@ -250,7 +270,7 @@ export class FinancialDataXComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  CheckSubsidyRate(event) {
+  CheckSubsidyRate(event, isRefresh = false) {
     if (this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix || this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmBalloon) {
       var listSubsidy: Array<AppSubsidyObj> = event;
 
@@ -271,6 +291,10 @@ export class FinancialDataXComponent implements OnInit {
         this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
         this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
+    }
+
+    if(isRefresh){
+      this.LoadAppFinData();
     }
   }
 

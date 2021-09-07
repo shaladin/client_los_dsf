@@ -21,6 +21,9 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-nap-detail-form-x',
@@ -33,7 +36,7 @@ export class NapDetailFormXComponent implements OnInit {
   private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
@@ -104,7 +107,7 @@ export class NapDetailFormXComponent implements OnInit {
         this.SysConfigResultObj = response;
     });
 
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
@@ -147,17 +150,19 @@ export class NapDetailFormXComponent implements OnInit {
       var appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
+          if (response != null && ((response["CustNo"] != null && response["CustNo"] != "") || (response["ApplicantNo"] != null && response["ApplicantNo"] != ""))) {
+            let trxNo;
           this.appNo = this.NapObj.AppNo;
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           let isExisting = response['IsExistingCust'];
           if (isExisting) {
-            let custNo = response['CustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+            trxNo = response['CustNo'];
           }
           else {
-            this.dmsObj.MetadataParent = null;
+            trxNo = response['ApplicantNo'];
           }
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
   
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
@@ -173,9 +178,12 @@ export class NapDetailFormXComponent implements OnInit {
           else {
             this.isDmsReady = true;
           }
+        } else {
+          this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
         }
+      }
       );
-    }  
+    }
   }
 
   stepperMode: string = CommonConstant.CustTypeCompany;
@@ -340,7 +348,8 @@ export class NapDetailFormXComponent implements OnInit {
       let reqObj: SubmitNapObj = new SubmitNapObj();
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
-      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+      let SubmitNapUrl = environment.isCore? URLConstant.SubmitNAPV2 : URLConstantX.SubmitNAPX;
+      this.http.post(SubmitNapUrl, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.Cancel();
@@ -364,7 +373,8 @@ export class NapDetailFormXComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.CFNA });
@@ -383,4 +393,14 @@ export class NapDetailFormXComponent implements OnInit {
     AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
+  claimTask(){
+    if(environment.isCore){
+        if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+            this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+          }
+        }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
+  }
 }

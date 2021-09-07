@@ -15,6 +15,7 @@ import Stepper from 'bs-stepper';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-cust-main-data-x',
@@ -26,7 +27,7 @@ export class NapCustMainDataXComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   mode: string;
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
@@ -63,6 +64,8 @@ export class NapCustMainDataXComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
+      }else{
+        this.wfTaskListId = environment.isCore ? "" : 0;
       }
       if(params["from"]!= null)
       {
@@ -72,7 +75,7 @@ export class NapCustMainDataXComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
+    this.claimTask();
     this.AppStepIndex = 0;
     this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
@@ -176,7 +179,8 @@ export class NapCustMainDataXComponent implements OnInit {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNapCustMainData, reqObj).subscribe(
+    let submitNapCustMainDataUrl = environment.isCore? URLConstant.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
+    this.http.post(submitNapCustMainDataUrl, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
@@ -184,4 +188,11 @@ export class NapCustMainDataXComponent implements OnInit {
     );
   }
 
+  claimTask(){
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskNapCustMainDataV2(this.appId, this.wfTaskListId);
+    }else{
+      this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
+    }
+  }
 }

@@ -31,6 +31,11 @@
           <th>ACTION</th>
         </tr>
       </thead>
+      <tbody *ngIf="listCollateralData?.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of listCollateralData; let i = index">
           <td>{{item.CollateralNo}}</td>
@@ -38,7 +43,7 @@
           <td align="left">{{item.FullAssetCode}}</td>
           <td align="left">{{item.CustName}}</td>
           <td align="right">{{item.CollateralValueAmt | number:'.2':'en-US'}}</td>
-          <td align="right">{{item.CollateralPrcnt | number:'.6':'en-US'}}</td>
+          <td align="right">{{item.CollateralPrcnt | number:'.6':'en-US'}} %</td>
           <td>{{item.CollateralStat}}</td>
           <td>
             <a *ngIf="item.CollateralStat == 'NEW'" class="success p-0" (click)="editData(item.ChangeMouCustCollateralId)">
@@ -83,7 +88,7 @@
           </div>
           <div class="form-group row">
             <label class="col-md-4 adins-required-label" translate>Collateral Condition</label>
-              <label class="col-md-8">Used</label>
+              <label class="col-md-8">Used</label> 
           </div>
           <div class="form-group row">
             <label class="col-md-4" translate>Manufacturing Year</label>
@@ -109,7 +114,7 @@
               <input type="text" currencyMask class="form-control adInsInput text-right"
                 formControlName="CollateralPrcnt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid }"
-                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }">
+                [options]="CurrencyMaskPrct">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -147,6 +152,10 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="form-group row" *ngIf="returnMouCust.MrMouTypeCode != 'GENERAL'">
+            <label class="col-md-4 adins-required-label" translate>Dealer Grading</label>
+            <label class="col-md-8">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
           </div>
           <div class="form-group row">
             <label class="col-md-4" translate>Collateral Status</label>
@@ -230,6 +239,8 @@
         </table>
       </div>
     </div>
+
+    <ref-attr-form-generate *ngIf="isAttrReady" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
@@ -359,8 +370,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>Collateral Condition</label>
-              <label class="col-md-8">Used</label>
+            <label class="col-md-4 adins-required-label" translate>Collateral Condition</label> 
+              <label class="col-md-8">Used</label>  
           </div>
           <div class="form-group row">
             <label class="col-md-4" translate>Manufacturing Year</label>
@@ -423,6 +434,10 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="form-group row" *ngIf="returnMouCust.MrMouTypeCode != 'GENERAL'">
+            <label class="col-md-4 adins-required-label" translate>Dealer Grading</label>
+            <label class="col-md-8">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
           </div>
           <div class="form-group row">
             <label class="col-md-4" translate>Collateral Status</label>
@@ -506,6 +521,8 @@
         </table>
       </div>
     </div>
+
+    <ref-attr-form-generate *ngIf="isAttrReady" [IsDisable]="IsDisable" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
