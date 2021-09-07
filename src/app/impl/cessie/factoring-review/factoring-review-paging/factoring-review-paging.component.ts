@@ -33,8 +33,8 @@ export class FactoringReviewPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchCessieFactoringReviewPaging.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCessieFactoringReviewPaging.json";
 
-    this.inputPagingObj.enviromentUrl = environment.losUrl + '/v1';
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
+    // this.inputPagingObj.enviromentUrl = environment.losUrl + '/v1';
+    // this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     if (environment.isCore) {
       this.inputPagingObj._url = "./assets/impl/ucpaging/V2/searchCessieFactoringReviewPagingV2.json";
       this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/V2/searchCessieFactoringReviewPagingV2.json";
@@ -60,10 +60,11 @@ export class FactoringReviewPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
     if (ev.Key == "edit") {
+      console.log(ev)
       if (ev.RowObj.ProdOfferingCode != CommonConstantX.INIT_CRT_CESSIE_PROCESS_DEFAULT_STAT_NOT_YET_SET) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_FACTORING_REVIEW_DETAIL], { "CessieHXId": ev.RowObj.CessieHXId, "WfTaskListId": ev.RowObj.WfTaskListId, "CessieNo": ev.RowObj.CessieNo, "OfficeCode": ev.RowObj.OfficeCode, "OfficeName": ev.RowObj.OfficeName, "CustNo": ev.RowObj.CustNo, "CustId": ev.RowObj.CustId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_FACTORING_REVIEW_DETAIL], { "CessieHXId": ev.RowObj.CessieHXId, "WfTaskListId": ev.RowObj.Id, "CessieNo": ev.RowObj.CessieNo, "OfficeCode": ev.RowObj.OfficeCode, "OfficeName": ev.RowObj.OfficeName, "CustNo": ev.RowObj.CustNo, "CustId": ev.RowObj.CustId });
       } else {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_FACTORING_REVIEW_ASSIGN_PROD], { "CessieHXId": ev.RowObj.CessieHXId, "WfTaskListId": ev.RowObj.WfTaskListId, "CessieNo": ev.RowObj.CessieNo, "OfficeCode": ev.RowObj.OfficeCode, "OfficeName": ev.RowObj.OfficeName, "CustNo": ev.RowObj.CustNo, "CustId": ev.RowObj.CustId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_FACTORING_REVIEW_ASSIGN_PROD], { "CessieHXId": ev.RowObj.CessieHXId, "WfTaskListId": ev.RowObj.Id, "CessieNo": ev.RowObj.CessieNo, "OfficeCode": ev.RowObj.OfficeCode, "OfficeName": ev.RowObj.OfficeName, "CustNo": ev.RowObj.CustNo, "CustId": ev.RowObj.CustId });
       }
     }
   }

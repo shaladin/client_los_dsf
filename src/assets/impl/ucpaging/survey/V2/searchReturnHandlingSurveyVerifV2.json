@@ -34,12 +34,13 @@
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",
+      "isQueryIn": true,
       "url": "",
-      "path": "/v1/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
-      "itemsUrl": [],
-      "isQueryIn": true
+      "itemsUrl": []
     },
     {
       "type": "claim",

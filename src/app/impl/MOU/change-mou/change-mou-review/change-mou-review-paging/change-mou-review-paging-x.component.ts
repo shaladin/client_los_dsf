@@ -17,7 +17,7 @@ import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
   styleUrls: []
 })
 export class ChangeMouReviewPagingXComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: CurrentUserContext;
   link: string;
@@ -29,19 +29,9 @@ export class ChangeMouReviewPagingXComponent implements OnInit {
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/impl/ucpaging/mou/searchChangeMouReviewX.json";
-    this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/searchChangeMouReviewX.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url + "/v1"
-      }
-    ];
-
     if(environment.isCore) {
-      this.inputPagingObj._url = "./assets/ucpaging/mou/V2/searchChangeMouReviewV2.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchChangeMouReviewV2.json";
+      this.inputPagingObj._url = "./assets/impl/ucpaging/mou/V2/searchChangeMouReviewXV2.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/V2/searchChangeMouReviewXV2.json";
       this.inputPagingObj.isJoinExAPI = true;
       
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CHANGE_MOU;
@@ -55,6 +45,16 @@ export class ChangeMouReviewPagingXComponent implements OnInit {
       this.IntegrationObj.leftColumnToJoin = "TrxNo";
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
+    else{
+      this.inputPagingObj._url = "./assets/impl/ucpaging/mou/searchChangeMouReviewX.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/searchChangeMouReviewX.json";
+      this.inputPagingObj.ddlEnvironments = [
+        {
+          name: "MR_MOU_TYPE_CODE",
+          environment: environment.FoundationR3Url + "/v1"
+        }
+      ];
     }
   }
 

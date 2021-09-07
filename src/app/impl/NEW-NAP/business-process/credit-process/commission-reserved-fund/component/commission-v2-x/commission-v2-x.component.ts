@@ -181,9 +181,9 @@ export class CommissionV2XComponent implements OnInit {
   async GetListAllocatePriority(){
     await this.http.post(URLConstantX.GetAppRsvFundPriorityRule, {Id: this.AppId}).toPromise().then(
       (response) => {
-        this.listPrioritySuppl = response["ReturnObject"]["ListPrioritySupplier"];
-        this.listPrioritySupplEmp = response["ReturnObject"]["ListPrioritySupplEmp"];
-        this.listPriorityReferantor = response["ReturnObject"]["ListPriorityReferantor"];
+        this.listPrioritySuppl = response["ListPrioritySupplier"];
+        this.listPrioritySupplEmp = response["ListPrioritySupplEmp"];
+        this.listPriorityReferantor = response["ListPriorityReferantor"];
       }
     );
   }
@@ -633,17 +633,19 @@ export class CommissionV2XComponent implements OnInit {
       ListAppCommissionHEditObj: listAppCommissionHEditObj
     };
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    var AddEditUrl = environment.isCore? URLConstantX.AddEditAppCommissionDataV2 : URLConstantX.AddEditAppCommissionData;
 
-    this.http.post(URLConstantX.AddEditAppCommissionData, obj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        if (this.ReturnHandlingHObj.ReturnHandlingHId != 0 || this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
-          this.outputTab.emit(this.ReturnHandlingHObj.ReturnHandlingHId);
-        } else {
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
-        }
-        // this.outputTab.emit();
-      });
+      this.http.post(AddEditUrl, obj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          if (this.ReturnHandlingHObj.ReturnHandlingHId != 0 || this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
+            this.outputTab.emit(this.ReturnHandlingHObj.ReturnHandlingHId);
+          } else {
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
+          }
+          // this.outputTab.emit();
+        });
+
   }
 
   AllocateDataWithPriority(identifier:string, listVendorCode: Array<string>, listVendorEmpNo: Array<string>, listTrxAmt: Array<Array<number>>)

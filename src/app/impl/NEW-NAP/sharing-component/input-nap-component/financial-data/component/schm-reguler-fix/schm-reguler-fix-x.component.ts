@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { CalcRegularFixObjX } from 'app/impl/shared/model/AppFinData/CalcRegularFixObjX.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ResponseCalculateObjX } from 'app/impl/shared/model/AppFinData/ResponseCalculateObjX.Model';
+import {ExceptionConstantX} from 'app/impl/shared/constant/ExceptionConstantX';
 
 @Component({
   selector: 'app-schm-reguler-fix-x',
@@ -92,8 +93,8 @@ export class SchmRegulerFixXComponent implements OnInit {
     }
   }
 
-  
-  
+
+
   setReportData() {
     this.getJSON(this.inputReportObj.JsonPath).subscribe(data => {
       let obj = this.ParentForm.value;
@@ -268,6 +269,10 @@ export class SchmRegulerFixXComponent implements OnInit {
   }
 
   Calculate() {
+    if(this.ParentForm.controls.TotalFeeAmt.value > this.ParentForm.controls.TotalAssetPriceAmt.value){
+      this.toastr.warningMessage(ExceptionConstantX.FEE_MUST_LOWER_THAN_TOTAL_AMT +this.PriceLabel);
+      return;
+    }
     if (this.ParentForm.getRawValue().CalcBase == '') {
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
       return;
@@ -277,11 +282,11 @@ export class SchmRegulerFixXComponent implements OnInit {
       return;
     }
     // if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-    //     && this.ParentForm.controls.IsSubsidyRateExist.value == false 
+    //     && this.ParentForm.controls.IsSubsidyRateExist.value == false
     //     && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt)
     // {
     //   this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
-    //   return;  
+    //   return;
     // }
 
     if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
@@ -289,7 +294,7 @@ export class SchmRegulerFixXComponent implements OnInit {
       && this.ParentForm.controls.IsSubsidyRateExist.value == false
       && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
       this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE, this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt));
-      return;  
+      return;
     }
 
     if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
@@ -341,12 +346,12 @@ export class SchmRegulerFixXComponent implements OnInit {
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
             AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt,
 
-            
+
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,
             DiffGrossYieldAmt: response.DiffGrossYieldAmt
           })
-          
+
           this.ParentForm.patchValue({
             IsReCalculate: true
           });
