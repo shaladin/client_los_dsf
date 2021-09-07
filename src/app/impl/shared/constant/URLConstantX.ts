@@ -110,6 +110,7 @@ export class URLConstantX {
 
   //AGRMNT ACTIVATION
   public static SubmitAgrmntActivationByHuman = environment.losUrl + '/v1' + "/AgrmntActivationX/SubmitAgrmntActivationByHuman";
+  public static SubmitAgrmntActivationByHumanV2 = environment.losUrl + '/v2' + "/AgrmntActivationX/SubmitAgrmntActivationByHuman";
 
   //APP INSURANCE X
   public static GetListAppInsObjByAgrmntIdForViewX = environment.losUrl + '/v1' + '/AppInsX/GetListAppInsObjByAgrmntIdForView';
