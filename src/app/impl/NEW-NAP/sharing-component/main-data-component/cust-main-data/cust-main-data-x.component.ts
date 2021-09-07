@@ -48,6 +48,7 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CustAttrFormComponent } from 'app/NEW-NAP/sharing-component/main-data-component/components/cust-attr-form/cust-attr-form.component';
 import { CustSetData } from 'app/NEW-NAP/sharing-component/main-data-component/components/CustSetData.Service';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-cust-main-data-x',
@@ -155,6 +156,7 @@ export class CustMainDataXComponent implements OnInit {
   readonly AttrGroupCustPersonalOther: string = CommonConstant.AttrGroupCustPersonalOther;
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
   MaxDaysThirdPartyChecking: number;
+  LobCode: string;
 
   constructor(
     private regexService: RegexService,
@@ -201,6 +203,17 @@ export class CustMainDataXComponent implements OnInit {
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
   DictUcDDLObj: { [id: string]: UcDropdownListObj } = {};
   async ngOnInit() {
+    var AppObj = {
+      Id: this.appId
+    }
+
+    await this.http.post<AppObj>(URLConstant.GetAppById, AppObj).toPromise().then(
+      async (response) => {
+        this.AppNo = response.AppNo;
+        this.LobCode = response.LobCode;
+      }
+    );
+
     console.log("oi",this.isNonMandatory);
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
@@ -245,16 +258,6 @@ export class CustMainDataXComponent implements OnInit {
     await this.getRefMaster();
 
     let resp = await this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.appId }).toPromise()
-
-    var AppObj = {
-      Id: this.appId
-    }
-
-    await this.http.post<AppObj>(URLConstant.GetAppById, AppObj).toPromise().then(
-      async (response) => {
-        this.AppNo = response.AppNo;
-      }
-    );
 
     let isUseLead = false;
     if (resp.LeadId) {
@@ -466,18 +469,35 @@ export class CustMainDataXComponent implements OnInit {
       this.InputLookupCustObj.isDisable = true;
       this.InputLookupCustCoyObj.isDisable = false;
     }
+
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
-    this.InputLookupCustObj.isReadonly = false;
+    if(this.bizTemplateCode == CommonConstant.CFNA){
+      if(this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD)
+      {
+        this.InputLookupCustObj.isReadonly = true;
+      }else{
+        this.InputLookupCustObj.isReadonly = false;
+      }
+    }else{
+      this.InputLookupCustObj.isReadonly = false;
+    }
     this.InputLookupCustObj.isRequired = true;
 
     this.InputLookupCustCoyObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustCoyObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustCoyObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
-    this.InputLookupCustCoyObj.isReadonly = false;
+    if(this.bizTemplateCode == CommonConstant.CFNA){
+      if(this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD)
+      {
+        this.InputLookupCustCoyObj.isReadonly = true;
+      }
+    }else{
+      this.InputLookupCustCoyObj.isReadonly = false;
+    }
     this.InputLookupCustCoyObj.isRequired = true;
     this.InputLookupCustCoyObj.nameSelect = "";
 
@@ -961,8 +981,19 @@ export class CustMainDataXComponent implements OnInit {
     // this.CustMainDataForm.controls.MrIdTypeCode.enable();
     // this.CustMainDataForm.controls.MrMaritalStatCode.enable();
     this.inputAddressObj.isReadonly = false;
-    this.InputLookupCustObj.isReadonly = false;
-    this.InputLookupCustCoyObj.isReadonly = false;
+    if(this.bizTemplateCode == CommonConstant.CFNA){
+      if(this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD)
+      {
+        this.InputLookupCustObj.isReadonly = true;
+        this.InputLookupCustCoyObj.isReadonly = true;
+      }else{
+        this.InputLookupCustObj.isReadonly = false;
+        this.InputLookupCustCoyObj.isReadonly = false;
+      }
+    }else{
+      this.InputLookupCustObj.isReadonly = false;
+      this.InputLookupCustCoyObj.isReadonly = false;
+    }
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = false;
     this.inputAddressObj.inputField.inputLookupObj.isDisable = false;
   }
