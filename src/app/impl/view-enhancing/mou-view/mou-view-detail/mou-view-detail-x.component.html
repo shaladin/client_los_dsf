@@ -228,6 +228,8 @@
   <div class="form-group row" *ngIf="MouType != 'GENERAL'">
     <label class="col-md-2 adInsLabel" translate>Dealer Grading</label>
     <label class="col-md-4 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
+    <label class="col-md-2 adInsLabel" translate>Available OS Plafond Amount</label>
+      <label class="col-md-4 adInsLabel" translate>{{this.MouOsPlafond | number:'.2':'en-US'}}</label>
   </div>
 
 </form>

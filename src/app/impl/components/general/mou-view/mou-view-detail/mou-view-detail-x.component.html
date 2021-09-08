@@ -1,4 +1,4 @@
-<form class="form form-horizontal">
+<form class="form form-horizontal" *ngIf="IsReady">
     <div *ngIf="MouType == 'FACTORING' && listedCustFctrIsReady">
     <lib-ucSubsection [id]="'MouListedCustFctr'" [title]="'Listed Cust Factoring'" [panel]="'MouData'">
     </lib-ucSubsection>
@@ -249,5 +249,7 @@
     <div *ngIf="MouType == 'FINANCING' || MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Dealer Grading</label>
       <label class="col-md-4 adInsLabel" translate>{{this.dealerGrading}} / {{this.dealerRating}}%</label>
+      <label class="col-md-2 adInsLabel" translate>Available OS Plafond Amount</label>
+      <label class="col-md-4 adInsLabel" translate>{{this.MouOsPlafond | number:'.2':'en-US'}}</label>
     </div>
   </form>
