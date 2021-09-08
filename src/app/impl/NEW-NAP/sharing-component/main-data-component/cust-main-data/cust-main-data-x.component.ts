@@ -204,8 +204,7 @@ export class CustMainDataXComponent implements OnInit {
 
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
   DictUcDDLObj: { [id: string]: UcDropdownListObj } = {};
-  async ngOnInit() {
-    console.log("oi",this.isMngmntShrldr);
+  async ngOnInit() {    
     var AppObj = {
       Id: this.appId
     }
