@@ -8,6 +8,7 @@ import { RentalDetailComponent } from "./report-rental-detail/rental-detail.comp
 import { ReportPlafondMouSummaryComponent } from "./report-mou/report-plafond-mou-summary/report-plafond-mou-summary.component";
 import { ReportPlafondMouDetailComponent } from "./report-mou/report-plafond-mou-detail/report-plafond-mou-detail.component";
 import { ReportCollateralMouComponent } from "./report-mou/report-collateral-mou/report-collateral-mou.component";
+import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: PathConstant.REPORT_PLAFOND_MOU_SUMMARY, component: ReportPlafondMouSummaryComponent, data: { title: 'Report Plafond Mou Summary' } },
       { path: PathConstant.REPORT_PLAFOND_MOU_DETAIL, component: ReportPlafondMouDetailComponent, data: { title: 'Report Plafond Mou Detail' } },
       { path: PathConstant.REPORT_COLLATERAL_MOU, component: ReportCollateralMouComponent, data: { title: 'Report Collateral Mou' } },
+      { path: PathConstant.REPORT_CANCEL_LEAD, component: ReportLeadCancelComponent, data: { title: 'Report Cancel Lead' } },
     ]
   }
 ]
