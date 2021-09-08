@@ -71,6 +71,13 @@ export class TrialCalculationXComponent implements OnInit {
     DownPaymentGrossAmt: 0,
     DownPaymentNettAmt: 0,
 
+    MrFirstInstTypeName: "",
+    MrInstSchemeName: "",
+    TotalAssetPriceAmtOnly: 0,
+    TotalAccessoryPriceAmt: 0,
+    PrcntDp: 0,
+    PrcntDpNett: 0,
+
     TotalDownPaymentNettAmt: 0, //muncul di layar
     TotalDownPaymentGrossAmt: 0, //inmemory
     TdpPaidCoyAmt: 0, // input layar
@@ -194,7 +201,9 @@ export class TrialCalculationXComponent implements OnInit {
     this.TrialForm.patchValue({
       PayFreqCode: '',
       MrInstSchemeCode: '',
+      MrInstSchemeName: '',
       MrFirstInstTypeCode: '',
+      MrFirstInstTypeName: '',
       PayFreqValue: '',
       MrInstSchemeValue: '',
       MrFirstInstTypeValue: ''
@@ -261,7 +270,8 @@ export class TrialCalculationXComponent implements OnInit {
         if (refProdCompntCode == CommonConstant.RefProdCompFirstInstType && !this.TrialForm.controls.MrFirstInstTypeCode.value) {
           this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
           this.TrialForm.patchValue({
-            MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
+            MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key,
+            MrFirstInstTypeName: this.applicationDDLitems['FIRSTINSTTYPE'][0].Value
           });
         }
       });
@@ -412,8 +422,13 @@ export class TrialCalculationXComponent implements OnInit {
         DownPaymentNettAmt: this.TrialForm.controls.DownPaymentAmt.value,
         TotalDownPaymentNettAmt: this.TrialForm.controls.DownPaymentAmt.value,
         TotalDownPaymentGrossAmt: this.TrialForm.controls.DownPaymentAmt.value,
+        TotalAssetPriceAmtOnly: this.TrialForm.controls.AssetPriceAmt.value,
         TotalInsCustAmt: this.TrialForm.controls.TotalInsCustAmt.value,
         InsCptlzAmt: this.TrialForm.controls.InsCptlzAmt.value,
+        PrcntDp: this.TrialForm.controls.DownPaymentAmt.value / this.TrialForm.controls.AssetPriceAmt.value * 100,
+        PrcntDpNett: this.TrialForm.controls.DownPaymentAmt.value / this.TrialForm.controls.AssetPriceAmt.value * 100,
+        MrFirstInstTypeName: this.TrialForm.controls.MrFirstInstTypeName.value,
+        MrInstSchemeName:this.TrialForm.controls.MrInstSchemeName.value
       });
       this.getValueForReport();
     }
@@ -488,6 +503,28 @@ export class TrialCalculationXComponent implements OnInit {
       this.TrialForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
       this.TrialForm.controls.NumOfStep.updateValueAndValidity();
     }
+  }
+
+  ChooseFirstInstType(ev) {
+    if (ev.target.selectedIndex == 0) return;
+    var idx = ev.target.selectedIndex - 1;
+    
+    this.TrialForm.patchValue({
+      MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][idx].Key,
+      MrFirstInstTypeName: this.applicationDDLitems['FIRSTINSTTYPE'][idx].Value,
+      MrFirstInstTypeValue: this.applicationDDLitems['FIRSTINSTTYPE'][idx].Value,
+    });
+  }
+
+  ChooseInstScheme(ev) {
+    if (ev.target.selectedIndex == 0) return;
+    var idx = ev.target.selectedIndex - 1;
+    
+    this.TrialForm.patchValue({
+      MrInstSchemeCode: this.applicationDDLitems['INST_SCHM'][idx].Key,
+      MrInstSchemeValue: this.applicationDDLitems['INST_SCHM'][idx].Value,
+      MrInstSchemeName: this.applicationDDLitems['INST_SCHM'][idx].Value,
+    });
   }
 
   Print() {

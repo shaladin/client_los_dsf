@@ -64,4 +64,9 @@ export class CommonConstantX {
   public static APP_STEP_SURVEY_VERIF = "SRVY_VRF"
   public static RETURN_HANDLING_ADD_SURVEY = "RTN_ADD_SRVY_";
   public static APP_STEP_RETURN_SURVEY_VERIF = "ADD_SRVY_"
+
+    //LOB CODE
+    public static CFNA_LOB_CODE_FD = "FD";
+    public static CFNA_LOB_CODE_MPF = "MPF";
+
 }

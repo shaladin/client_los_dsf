@@ -157,7 +157,8 @@
                 </div>
                 <div class="col-md-3">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="MrInstSchemeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MrInstSchemeCode.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MrInstSchemeCode.invalid }"
+                    (change)="ChooseInstScheme($event)">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
                       {{it.Value}}
@@ -173,7 +174,8 @@
                 <label class="col-md-3 adInsLabel" *ngIf="BizTmpltCode == 'OPL'"> First Rental Type </label>
                 <div class="col-md-3">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MrFirstInstTypeCode.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MrFirstInstTypeCode.invalid }"
+                    (change)="ChooseFirstInstType($event)">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
                       {{it.Value}}
