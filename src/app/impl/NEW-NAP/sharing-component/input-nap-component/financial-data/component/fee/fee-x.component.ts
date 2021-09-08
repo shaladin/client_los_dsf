@@ -94,7 +94,7 @@ export class FeeXComponent implements OnInit {
         }
 
         this.PatchProvisionFeeValue();
-        this.ProvisionFeeInput_FocusOut();
+        this.CalculateProvisionFee();
       }
     );
   }
@@ -150,7 +150,7 @@ export class FeeXComponent implements OnInit {
         }
 
         this.PatchProvisionFeeValue();
-        this.ProvisionFeeInput_FocusOut();
+        this.CalculateProvisionFee();
       }
     );
   }
@@ -162,9 +162,14 @@ export class FeeXComponent implements OnInit {
       if (item.get("MrFeeTypeCode").value == feeTypeCode) {
         var isCapitalize: Boolean = item.get("IsCptlz").value;
         if (isCapitalize) {
-          item.patchValue({
-            FeeCapitalizeAmt: item.get("AppFeeAmt").value
-          });
+          if(feeTypeCode != 'PROVISION')
+          {
+            item.patchValue({
+              FeeCapitalizeAmt: item.get("AppFeeAmt").value
+            });
+          }else{
+            this.CalculateProvisionCapitalize();
+          }
           // item.get("AppId").enable();
         }
         else {
@@ -175,7 +180,7 @@ export class FeeXComponent implements OnInit {
         }
       }
     }
-    this.CalculateProvisionFee();
+    //this.CalculateProvisionFee();
     this.CalculateTotalFeeAndCaptlzAmt();
   }
 
@@ -235,7 +240,7 @@ export class FeeXComponent implements OnInit {
   }
 
   FeeCapitalizeAmt_OnChange() {
-    this.CalculateProvisionFee();
+    //this.CalculateProvisionFee();
     this.CalculateTotalFeeAndCaptlzAmt();
   }
 
@@ -319,8 +324,54 @@ export class FeeXComponent implements OnInit {
     })
   }
 
-  ProvisionFeeInput_FocusOut() {
+  async ProvisionFeeInput_FocusOut() {
     this.CalculateProvisionFee();
+  }
+  async ProvisionFeeInputCapitalize_FocusOut() {
+    this.CalculateTotalFeeAndCaptlzAmt();
+  } 
+
+  CalculateProvisionCapitalize() {
+    var fb_provision = this.GetProvisionFormGroup();
+    var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
+    var ProvisionFeeAmt = fb_provision.get("AppFeeAmt").value;
+    var FeeCapitalize: number = 0;
+    var FeeCapitalizeType: string;
+    var FeeCapitalizePrcnt: number;
+    var FeeCapitalizeAmt: number;
+    var IsCptlz: boolean = false;
+    var IsValid: boolean = true;
+    var idx: number = -1;
+    for (let i = 0; i < fa_AppFee.length; i++) {
+      var item = fa_AppFee.at(i);
+      if (item.get("MrFeeTypeCode").value == 'PROVISION') {
+        FeeCapitalizeType = item.get("FeeCapitalizeType").value
+        FeeCapitalizePrcnt = item.get("FeeCapitalizePrcnt").value
+        FeeCapitalizeAmt = item.get("FeeCapitalizeAmt").value
+        IsCptlz = item.get("IsCptlz").value
+        idx = i;
+      }
+    }
+    if (IsCptlz) {
+      if (FeeCapitalizeType == 'PRCNT') {
+        FeeCapitalize = ProvisionFeeAmt * (FeeCapitalizePrcnt / 100);
+        if (FeeCapitalize > ProvisionFeeAmt) {
+          IsValid = false;
+        }
+      } else if (FeeCapitalizeType == 'AMT') {
+        FeeCapitalize = FeeCapitalizeAmt;
+        if (FeeCapitalize > ProvisionFeeAmt) {
+          IsValid = false;
+        }
+      }
+    }
+
+    if (IsValid && FeeCapitalize > 0 && idx >= 0) {
+      var item = fa_AppFee.at(idx);
+      item.patchValue({
+        FeeCapitalizeAmt: FeeCapitalize
+      });
+    }
   }
 
   CalculateProvisionFee() {
@@ -350,7 +401,7 @@ export class FeeXComponent implements OnInit {
           SellFeeAmt: response["SellProvisionFeeAmt"],
           SellFeePrcnt: response["SellProvisionFeePercentage"]
         });
-
+        this.CalculateProvisionCapitalize();
         this.CalculateTotalFeeAndCaptlzAmt();
       }
     );
