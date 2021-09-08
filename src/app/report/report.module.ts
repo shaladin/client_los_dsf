@@ -23,6 +23,7 @@ import { ReportRoutingModule } from "./report-routing.module";
 import { ReportPlafondMouSummaryComponent } from "./report-mou/report-plafond-mou-summary/report-plafond-mou-summary.component";
 import { ReportPlafondMouDetailComponent } from "./report-mou/report-plafond-mou-detail/report-plafond-mou-detail.component";
 import { ReportCollateralMouComponent } from "./report-mou/report-collateral-mou/report-collateral-mou.component";
+import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-daily-incoming-app/report-daily-incoming-app.component";
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { ReportCollateralMouComponent } from "./report-mou/report-collateral-mou
     RentalSummarySupplierReportComponent,
     ReportPlafondMouSummaryComponent,
     ReportPlafondMouDetailComponent,
-    ReportCollateralMouComponent
+    ReportCollateralMouComponent,
+    ReportDailyIncomingAppComponent
     ],
     imports: [
         ReportRoutingModule,
