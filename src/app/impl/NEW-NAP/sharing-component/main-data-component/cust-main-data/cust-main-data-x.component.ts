@@ -214,8 +214,7 @@ export class CustMainDataXComponent implements OnInit {
         this.LobCode = response.LobCode;
       }
     );
-
-    console.log("oi",this.isNonMandatory,this.isFamily);    
+    
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
