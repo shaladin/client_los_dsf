@@ -72,8 +72,8 @@
                   (ResponseMouCust)="stepHandlerGeneral($event)"></app-mou-cust-tab>
               </div>
               <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
-                <app-mou-detail-general *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [Mode]="mode"
-                  (ResponseMouDetailGeneral)="stepHandlerGeneral($event)"></app-mou-detail-general>
+                <app-mou-detail-general-x *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [Mode]="mode"
+                  (ResponseMouDetailGeneral)="stepHandlerGeneral($event)"></app-mou-detail-general-x>
               </div>
 
               <div id="collateral-data-tab" class="content" role="tabpanel"
@@ -255,8 +255,8 @@
                   (ResponseMouCust)="stepHandlerFinancing($event)"></app-mou-cust-tab>
               </div>
               <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
-                <app-mou-detail-financing *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
-                  (ResponseMouCustFactoring)="stepHandlerFinancing($event)"></app-mou-detail-financing>
+                <app-mou-detail-financing-x *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
+                  (ResponseMouCustFactoring)="stepHandlerFinancing($event)"></app-mou-detail-financing-x>
               </div>
 
               <div id="fee-data-tab" class="content" role="tabpanel" aria-labelledby="fee-data-tab-trigger">

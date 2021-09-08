@@ -134,6 +134,8 @@ import { MouViewModule } from '../view-enhancing/mou-view/mou-view.module';
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 import { MouCustFeeXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-fee/mou-cust-fee-x.component';
 import { MouCustListedCustFctrXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr-x.component';
+import { MouDetailFinancingXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-financing/mou-detail-financing-x.component';
+import { MouDetailGeneralXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-general/mou-detail-general-x.component';
 import { MouDetailFactoringXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-factoring/mou-detail-factoring-x.component';
 
 export const customCurrencyMaskConfig = {
@@ -297,7 +299,10 @@ export const customCurrencyMaskConfig = {
     MouExecutionPagingXComponent,
     MouCustFeeXComponent,
     MouDetailFactoringXComponent,
-    MouCustListedCustFctrXComponent
+    MouCustListedCustFctrXComponent,
+    MouDetailFinancingXComponent,
+    MouDetailFactoringXComponent,
+    MouDetailGeneralXComponent
   ],
   exports: [],
   providers: [NGXToastrService],
