@@ -31,10 +31,7 @@ export class ProdHoRvwPagingComponent implements OnInit {
       this.InputPagingObj.isJoinExAPI = true;
 
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_PROD_HO_APV;
-      this.RequestTaskModel.OfficeCode = this.UserAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_PROD_HO_RVW;
-      this.RequestTaskModel.RoleCode = this.UserAccess[CommonConstant.ROLE_CODE];
-      this.RequestTaskModel.OfficeCode = this.UserAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [this.UserAccess[CommonConstant.OFFICE_CODE],
                                                this.UserAccess[CommonConstant.ROLE_CODE],
                                                this.UserAccess[CommonConstant.ROLE_CODE] + "-" + this.UserAccess[CommonConstant.OFFICE_CODE]];
