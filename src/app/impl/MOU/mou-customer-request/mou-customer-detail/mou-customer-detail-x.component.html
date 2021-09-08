@@ -161,8 +161,8 @@
                   (ResponseMouCust)="stepHandlerFactoring($event)"></app-mou-cust-tab>
               </div>
               <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
-                <app-mou-detail-factoring *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
-                  (ResponseMouCustFactoring)="stepHandlerFactoring($event)"></app-mou-detail-factoring>
+                <app-mou-detail-factoring-x *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
+                  (ResponseMouCustFactoring)="stepHandlerFactoring($event)"></app-mou-detail-factoring-x>
               </div>
 
               <div id="fee-data-tab" class="content" role="tabpanel" aria-labelledby="fee-data-tab-trigger">
