@@ -83,6 +83,7 @@ import {MouReviewGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-review/m
 import { ChangeMouInquiryXComponent } from 'app/impl/MOU/change-mou/change-mou-inquiry/change-mou-inquiry-x.component';
 import { ChangeMouReviewPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component';
 import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-execution-paging/mou-execution-paging-x.component';
+import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-review-detail/legal-review-detail-x/legal-review-detail-x.component';
 
 const routes: Routes = [
   {
@@ -163,6 +164,13 @@ const routes: Routes = [
         component: LegalReviewDetailComponent,
         data: {
           title: 'MOU Customer Legal Review Detail'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_LEGAL_RVW_DETAIL_X,
+        component: LegalReviewDetailXComponent,
+        data: {
+          title: 'MOU Customer Legal Review Detail Impl'
         }
       },
       {

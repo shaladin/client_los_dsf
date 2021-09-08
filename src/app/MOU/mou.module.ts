@@ -137,6 +137,7 @@ import { MouCustListedCustFctrXComponent } from 'app/impl/MOU/mou-customer-reque
 import { MouDetailFinancingXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-financing/mou-detail-financing-x.component';
 import { MouDetailGeneralXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-general/mou-detail-general-x.component';
 import { MouDetailFactoringXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-factoring/mou-detail-factoring-x.component';
+import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-review-detail/legal-review-detail-x/legal-review-detail-x.component';
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -302,7 +303,8 @@ export const customCurrencyMaskConfig = {
     MouCustListedCustFctrXComponent,
     MouDetailFinancingXComponent,
     MouDetailFactoringXComponent,
-    MouDetailGeneralXComponent
+    MouDetailGeneralXComponent,
+    LegalReviewDetailXComponent
   ],
   exports: [],
   providers: [NGXToastrService],
