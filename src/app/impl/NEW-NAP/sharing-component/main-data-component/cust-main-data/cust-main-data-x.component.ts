@@ -93,6 +93,7 @@ export class CustMainDataXComponent implements OnInit {
   @Input() tempTotalSharePrct: number = 0;
   @Input() isNonMandatory: boolean = false;
   @Input() isFamily: boolean = false;
+  @Input() isMngmntShrldr: boolean = false;
 
   LeadId: number;
   LeadNo: string;
@@ -203,7 +204,7 @@ export class CustMainDataXComponent implements OnInit {
 
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
   DictUcDDLObj: { [id: string]: UcDropdownListObj } = {};
-  async ngOnInit() {
+  async ngOnInit() {    
     var AppObj = {
       Id: this.appId
     }
