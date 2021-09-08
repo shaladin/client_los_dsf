@@ -132,6 +132,9 @@ import { ChangeMouReviewPagingXComponent } from "app/impl/MOU/change-mou/change-
 import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-execution-paging/mou-execution-paging-x.component';
 import { MouViewModule } from '../view-enhancing/mou-view/mou-view.module';
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
+import { MouDetailFinancingXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-financing/mou-detail-financing-x.component';
+import { MouDetailFactoringXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-factoring/mou-detail-factoring-x.component';
+import { MouDetailGeneralXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-general/mou-detail-general-x.component';
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -292,6 +295,9 @@ export const customCurrencyMaskConfig = {
     ChangeMouDetailXComponent,
     ChangeMouReviewPagingXComponent,
     MouExecutionPagingXComponent,
+    MouDetailFinancingXComponent,
+    MouDetailFactoringXComponent,
+    MouDetailGeneralXComponent
   ],
   exports: [],
   providers: [NGXToastrService],
