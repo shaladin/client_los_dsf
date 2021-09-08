@@ -19,7 +19,16 @@
             "criteriaPropValue": "",
             "paramAssignment": 1
           },
-      {
+          {
+            "type": "textbox",
+            "name": "EmpNo",
+            "id": "EmpNoId",
+            "value": "",
+            "label": "Employee No",
+            "placeholder": "Placeholder",
+            "paramAssignment": 1
+        },
+          {
         "type": "datepicker",
         "label": "Period From >=",
         "name": "PeriodFrom",
@@ -29,24 +38,6 @@
         "paramAssignment": 0
       },
       {
-        "type": "datepicker",
-        "label": "Period To <=",
-        "name": "PeriodTo",
-        "datatype": "date",
-        "value": "BD+10",
-        "restriction": "lte",
-        "paramAssignment": 0
-      },
-      {
-        "type": "textbox",
-        "name": "EmpNo",
-        "id": "EmpNoId",
-        "value": "",
-        "label": "Employee No",
-        "placeholder": "Placeholder",
-        "paramAssignment": 1
-    },
-    {
         "type": "textbox",
         "name": "ProdOfferingCode",
         "id": "ProdOfferingId",
@@ -54,7 +45,16 @@
         "label": "Prod Offering Code",
         "placeholder": "Placeholder",
         "paramAssignment": 1
-    }
+    },
+      {
+        "type": "datepicker",
+        "label": "Period To <=",
+        "name": "PeriodTo",
+        "datatype": "date",
+        "value": "BD+10",
+        "restriction": "lte",
+        "paramAssignment": 0
+      }
     ],
     "exportTypeList": [
     ]
