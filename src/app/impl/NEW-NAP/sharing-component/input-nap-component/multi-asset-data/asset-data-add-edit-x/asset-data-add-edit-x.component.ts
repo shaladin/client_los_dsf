@@ -344,7 +344,7 @@ export class AssetDataAddEditXComponent implements OnInit {
   }
 
   GetRefAssetDocList(isInit: boolean) {
-    this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
+    this.http.post(URLConstantX.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
       (response) => {
         let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
         ListDoc.reset();
@@ -364,9 +364,34 @@ export class AssetDataAddEditXComponent implements OnInit {
               DocNo: response[CommonConstant.ReturnObj][i].DocNo,
               ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
               DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+              IsExpDtMandatory: response[CommonConstant.ReturnObj][i].IsExpDtMandatory,
               RowVersion: "",
             }) as FormGroup;
             ListDoc.push(assetDocumentDetail);
+          }
+
+          //Validasi AssetDoc Asset Condition
+          if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstantX.APP_ASSET_CONDITION_CODE_NEW)
+          {
+            for (let i = 0; i < ListDoc.length; i++) 
+            {
+              if(ListDoc.controls[i]['controls']['IsMandatoryNew'].value)
+              {
+                ListDoc.controls[i]['controls']['IsReceived'].setValidators(Validators.requiredTrue);
+                ListDoc.controls[i]['controls']['IsReceived'].updateValueAndValidity();
+              }
+            }
+          }
+          else if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstantX.APP_ASSET_CONDITION_CODE_USED)
+          {
+            for (let i = 0; i < ListDoc.length; i++) 
+            {
+              if(ListDoc.controls[i]['controls']['IsMandatoryUsed'].value)
+              {
+                ListDoc.controls[i]['controls']['IsReceived'].setValidators(Validators.requiredTrue);
+                ListDoc.controls[i]['controls']['IsReceived'].updateValueAndValidity();
+              }
+            }
           }
         }
         if(isInit){
@@ -392,6 +417,31 @@ export class AssetDataAddEditXComponent implements OnInit {
           }
         }
       });
+  }
+
+  ReceiveDocument(idx)
+  {
+    var listDoc = this.AssetDataForm.get('ListDoc') as FormArray;
+    var DocReceived = listDoc.at(idx);
+
+    if(DocReceived['controls']['IsReceived'].value){
+      if(DocReceived['controls']['IsValueNeeded'].value){
+        DocReceived['controls']['DocNo'].setValidators(Validators.required);
+        DocReceived['controls']['DocNo'].updateValueAndValidity();
+      }
+
+      if(DocReceived['controls']['IsExpDtMandatory'].value){
+        DocReceived['controls']['ACDExpiredDt'].setValidators(Validators.required);
+        DocReceived['controls']['ACDExpiredDt'].updateValueAndValidity();
+      }
+    }
+    else{
+      DocReceived['controls']['DocNo'].clearValidators();
+      DocReceived['controls']['DocNo'].updateValueAndValidity();
+
+      DocReceived['controls']['ACDExpiredDt'].clearValidators();
+      DocReceived['controls']['ACDExpiredDt'].updateValueAndValidity();
+    }
   }
 
   copyToLocationAddr() {

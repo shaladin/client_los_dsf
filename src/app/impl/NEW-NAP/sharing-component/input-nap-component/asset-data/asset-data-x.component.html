@@ -298,21 +298,23 @@
                       <tr *ngFor="let item of AssetDataForm.controls.ListDoc['controls']; let i = index" [formGroupName]="i">
                         <td>{{item.controls.AssetDocName.value}}</td>
                         <td>
-                          <input type="checkbox" class="border-primary" formControlName="IsReceived">
+                          <input type="checkbox" class="border-primary" formControlName="IsReceived" (change)="ReceiveDocument(i)">
+                          <lib-uc-show-errors [control]="AssetDataForm.controls.ListDoc['controls'][i]['controls'].IsReceived" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
                         </td>
                         <td>
                           <input type="text" class="form-control width-100-per" formControlName="DocNo">
-                          <lib-uc-show-errors [control]="AssetDataForm.controls.DocNo" [submit]="enjiForm.submitted">
+                          <lib-uc-show-errors [control]="AssetDataForm.controls.ListDoc['controls'][i]['controls'].DocNo" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </td>
                         <td>
                           <input type="date" class="form-control width-100-per" formControlName="ACDExpiredDt">
-                          <lib-uc-show-errors [control]="AssetDataForm.controls.ACDExpiredDt" [submit]="enjiForm.submitted">
+                          <lib-uc-show-errors [control]="AssetDataForm.controls.ListDoc['controls'][i]['controls'].ACDExpiredDt" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </td>
                         <td>
                           <input type="text" class="form-control width-100-per" formControlName="DocNotes">
-                          <lib-uc-show-errors [control]="AssetDataForm.controls.DocNotes" [submit]="enjiForm.submitted">
+                          <lib-uc-show-errors [control]="AssetDataForm.controls.ListDoc['controls'][i]['controls'].DocNotes" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </td>
                       </tr>
