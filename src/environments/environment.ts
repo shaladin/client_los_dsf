@@ -6,17 +6,17 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-  // losUrl: 'http://localhost:5001',
-  // FoundationR3Url: 'http://localhost:5000',
-  losUrl: 'http://r3app-server.ad-ins.com/LOS',
-  FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
+  losUrl: 'http://localhost:5001',
+  FoundationR3Url: 'http://localhost:5000',
+  // losUrl: 'http://r3app-server.ad-ins.com/LOS',
+  // FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
   DMSUrl: "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
   AMSUrl: "http://r3app-server.ad-ins.com/AMS_DEMO", //OPL dah ada
   LMSUrl: "http://r3app-server.ad-ins.com/LMS_DEMO", //OPL dah ada
   ApprovalR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3/Approval',
   ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
   FoundationR3Web: 'http://r3web-server.ad-ins.com/Foundation',
-  losR3Web: 'http://r3web-server/LOSR3',
+  losR3Web: 'http://r3web-server.ad-ins.com/LOSR3',
   lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
   WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3',
   WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',

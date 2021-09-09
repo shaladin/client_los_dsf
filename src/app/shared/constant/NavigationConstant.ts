@@ -445,6 +445,9 @@ export class NavigationConstant {
   //#region Report
   public static REPORT_PLAFOND_MOU_SUMMARY = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_SUMMARY; //'/Report/RptPlafondMouSummary'
   public static REPORT_PLAFOND_MOU_DETAIL = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_DETAIL; //'/Report/RptPlafondMouDetail'
+  public static REPORT_COLLATERAL_MOU = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_COLLATERAL_MOU; //'/Report/RptCollateralMou'
+  public static REPORT_DAILY_INCOMING_APP = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_INCOMING_APP; //'/Report/RptDailyIncomingApp'
+  public static REPORT_CANCEL_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_CANCEL_LEAD; //'/Report/RptCancelLead'
   //#endregion
   
 }

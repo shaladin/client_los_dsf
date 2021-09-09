@@ -478,6 +478,9 @@ export class PathConstant {
     public static REPORT_RENT_DETAIL = "RptRentDetail";
     public static REPORT_PLAFOND_MOU_SUMMARY = "RptPlafondMouSummary";
     public static REPORT_PLAFOND_MOU_DETAIL = "RptPlafondMouDetail";
+    public static REPORT_COLLATERAL_MOU = "RptCollateralMou";
+    public static REPORT_DAILY_INCOMING_APP = "RptDailyIncomingApp"
+    public static REPORT_CANCEL_LEAD = "RptCancelLead";
     //#endregion
 
     //#region Inquiry-Module

@@ -131,7 +131,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     if (event.body.HeaderObj != undefined) {
                         if (event.body.HeaderObj.StatusCode != undefined && event.body.HeaderObj.StatusCode != '200' && event.body.HeaderObj.StatusCode != "001" && event.body.HeaderObj.StatusCode != "002") {
 
-                            if (event.body.HeaderObj.StatusCode == '400') {
+                            if (event.body.HeaderObj.StatusCode == '400' && event.body.HeaderObj.ErrorMessages != undefined) {
                                 for (var i = 0; i < event.body.HeaderObj.ErrorMessages.length; i++) {
                                     this.toastr.error(event.body.HeaderObj.ErrorMessages[i].Message, 'Status: ' + event.body.HeaderObj.StatusCode, { "tapToDismiss": true });
                                 }
@@ -159,13 +159,14 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                         for (var i = 0; i < error.error.ErrorMessages.length; i++) {
                             this.toastr.error(error.error.ErrorMessages[i].Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
                         }
-                    } else {
+                    } else if (error.error.Message != null) {
                         this.toastr.error(error.error.Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
+                    }else {
+                        this.toastr.error(error.url, 'Status: ' + error.status, { "tapToDismiss": true });
                     }
-                } else if (error.error.Message != null) {
-                    this.toastr.error(error.error.Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
-                }else {
-                    this.toastr.error(error.url, 'Status: ' + error.status, { "tapToDismiss": true });
+                }
+                else {
+                    this.toastr.error(error.message, 'Status: ' + error.status, { "tapToDismiss": true });
                 }
 
                 console.log(JSON.stringify(request.body));

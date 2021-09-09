@@ -48,8 +48,8 @@
     "name": "searchRoPotentialExecutionTempPaging"
   },
     "headerList": [
-        {"type": "sort","position": "center","label": "Customer No","name": "AC.CUST_NO"},
-        {"type": "sort","position": "left","label": "Customer Name","name": "AC.CUST_NAME"},
+        {"type": "sort","position": "center","label": "Customer No","name": "ROP.CUST_NO"},
+        {"type": "sort","position": "left","label": "Customer Name","name": "ROP.CUST_NAME"},
         {"type": "sort","position": "center","label": "Agreement No","name": "AG.AGRMNT_NO"},
         {"type": "sort","position": "center","label": "RO Potential No","name": "ROP.RO_POTENTIAL_NO"},
         {"type": "sort","position": "center","label": "Batch No","name": "GROP.BATCH_NO"}

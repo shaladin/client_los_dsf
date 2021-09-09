@@ -1,0 +1,53 @@
+{
+    "title": "Report Collateral Mou",
+    "reportName": "Collateral Mou",
+    "reportTemplateCode": "COLLATERAL_MOU",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CustName",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder",
+            "paramAssignment": 1
+        },
+        {
+            "type": "textbox",
+            "name": "CollName",
+            "id": "CollNameId",
+            "value": "",
+            "label": "Collateral Name",
+            "placeholder": "Placeholder",
+            "paramAssignment": 1
+        },
+        {
+        "type": "textbox",
+        "name": "SerialNo1",
+        "id": "SerialNo1Id",
+        "value": "",
+        "label": "Serial No 1",
+        "placeholder": "Placeholder",
+        "paramAssignment": 1
+        },
+      {
+        "type": "textbox",
+        "name": "SerialNo2",
+        "id": "SerialNo2Id",
+        "value": "",
+        "label": "Serial No 2",
+        "placeholder": "Placeholder",
+        "paramAssignment": 1
+      },
+      {
+        "type": "textbox",
+        "name": "SerialNo3",
+        "id": "SerialNo3Id",
+        "value": "",
+        "label": "Serial No 3",
+        "placeholder": "Placeholder",
+        "paramAssignment": 1
+      }
+    ],
+    "exportTypeList": []
+  }
