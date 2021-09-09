@@ -75,7 +75,6 @@ export class MouDetailFinancingXComponent implements OnInit {
   InputLookupCustomerObj: InputLookupObj = new InputLookupObj();
 
   MouDetailFinancingForm = this.fb.group({
-    VirtualAccNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     WopCode: ['', [Validators.required]],
     MrInstTypeCode: ['', [Validators.required]],
     TopDays: [0, [Validators.min(0)]],
@@ -209,8 +208,7 @@ export class MouDetailFinancingXComponent implements OnInit {
             AssetCondition: this.MouDlrFinData["AssetCondition"],
             LcRatePrcnt: this.MouDlrFinData["LcRate"],
             MaximumExtendTimes: this.MouDlrFinData["MaximumExtendTimes"],
-            MrInstTypeCode: this.MouDlrFinData["MrInstTypeCode"],
-            VirtualAccNo: this.MouDlrFinData["VirtualAccNo"]
+            MrInstTypeCode: this.MouDlrFinData["MrInstTypeCode"]
           });
 
           if(this.MouDlrFinData['MrInstTypeCode'] == CommonConstant.InstTypeMultiple){
@@ -378,7 +376,6 @@ export class MouDetailFinancingXComponent implements OnInit {
     this.MouCustDlrFindData.Notes = this.MouDetailFinancingForm.controls.Notes.value;
     this.MouCustDlrFindData.MaximumExtendTimes = this.MouDetailFinancingForm.controls.MaximumExtendTimes.value;
     this.MouCustDlrFindData.MrInstTypeCode = this.MouDetailFinancingForm.controls.MrInstTypeCode.value;
-    this.MouCustDlrFindData.VirtualAccNo = this.MouDetailFinancingForm.controls["VirtualAccNo"].value;
     this.MouCustDlrFindData.CurrCode = this.MouDetailFinancingForm.controls.CurrCode.value;
 
     if (this.MouCustDlrFindData.Notes === "") {

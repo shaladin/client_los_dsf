@@ -150,19 +150,8 @@
                                 }
                             ],
                             "result": {
-                                "type": "url",
-                                "path": "MOU_EXECUTION_DETAIL",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
-                                    },
-                                    {
-                                        "type": "WfTaskListId",
-                                        "property": "Id"
-                                    }
-                                ]
+                                "type": "callback",
+                                "key": "exe" 
                             },
                             "isHide": false
                         },
@@ -176,19 +165,8 @@
                                 }
                             ],
                             "result": {
-                                "type": "url",
-                                "path": "MOU_EXECUTION_DETAIL",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
-                                    },
-                                    {
-                                        "type": "WfTaskListId",
-                                        "property": "Id"
-                                    }
-                                ]
+                                "type": "callback",
+                                "key": "exe" 
                             },
                             "isHide": false
                         }

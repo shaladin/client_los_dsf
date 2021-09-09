@@ -5,15 +5,6 @@
   <div id="MouDetailFinancingSection">
     <div class="form-body">
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="VirtualAccNo" translate>Virtual Account No</label>
-        <div class="col-md-4">
-          <input type="text" class="form-control adInsInput" formControlName="VirtualAccNo" min="0"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.VirtualAccNo.invalid }" />
-          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.VirtualAccNo" [submit]="enjiForm.submitted">
-          </lib-uc-show-errors>
-        </div>
-      </div>
-      <div class="form-group row">
         <label class="col-md-3 adInsLabel adins-required-label" for="CurrCode" translate>Currency</label>
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="CurrCode"
@@ -183,7 +174,7 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3" for="LinkSupplGrading" translate>Link Supplier Grading</label>
+        <label class="col-md-3 adInsLabel adins-required-label" for="LinkSupplGrading" translate>Link Supplier</label>
         <div class="col-md-4">
           <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupLinkSupplGradingObj"
             [parentForm]="MouDetailFinancingForm" [identifier]="'lookupLinkSupplGrading'" #LookUpSupplGrading

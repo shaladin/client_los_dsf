@@ -46,6 +46,7 @@ import { ResponseJobDataPersonalObj } from "app/shared/model/ResponseJobDataPers
 import { ListAppCollateralDocObj } from "app/shared/model/ListAppCollateralDocObj.Model";
 import { AppCollateralDocObj } from "app/shared/model/AppCollateralDocObj.Model";
 import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
+import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
 
 @Component({
     selector: 'app-asset-data-x',
@@ -676,6 +677,7 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
         }
       );
     }
+
   
     async SaveForm() {
       var assetForm = this.AssetDataForm.getRawValue();
@@ -852,11 +854,10 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
               }
               this.isListAsset = true;
             }
-          }
-        );
+          });
+        }
       }
     }
-  }
   
     Cancel() {
       this.outputCancel.emit();
@@ -2542,7 +2543,7 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
     }
 
     GetRefAssetDocList(isInit: boolean) {
-      this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
+      this.http.post(URLConstantX.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
         (response) => {
           let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
           ListDoc.reset();
@@ -2561,11 +2562,26 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
                 DocNo: response[CommonConstant.ReturnObj][i].DocNo,
                 ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
                 DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+                IsExpDtMandatory: response[CommonConstant.ReturnObj][i].IsExpDtMandatory,
                 RowVersion: "",
               }) as FormGroup;
               ListDoc.push(assetDocumentDetail);
             }
+
+            //Validasi AssetDoc Asset Condition
+            if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstantX.APP_ASSET_CONDITION_CODE_NEW)
+            {
+              for (let i = 0; i < ListDoc.length; i++) 
+              {
+                if(ListDoc.controls[i]['controls']['IsMandatoryNew'].value)
+                {
+                  ListDoc.controls[i]['controls']['IsReceived'].setValidators(Validators.requiredTrue);
+                  ListDoc.controls[i]['controls']['IsReceived'].updateValueAndValidity();
+                }
+              }
+            }
           }
+          
           if(isInit){
             this.setAppCollateralDoc(this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId']);
           }
@@ -2589,6 +2605,31 @@ import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
             }
           }
         });
+    }
+
+    ReceiveDocument(idx)
+    {
+      var listDoc = this.AssetDataForm.get('ListDoc') as FormArray;
+      var DocReceived = listDoc.at(idx);
+
+      if(DocReceived['controls']['IsReceived'].value){
+        if(DocReceived['controls']['IsValueNeeded'].value){
+          DocReceived['controls']['DocNo'].setValidators(Validators.required);
+          DocReceived['controls']['DocNo'].updateValueAndValidity();
+        }
+
+        if(DocReceived['controls']['IsExpDtMandatory'].value){
+          DocReceived['controls']['ACDExpiredDt'].setValidators(Validators.required);
+          DocReceived['controls']['ACDExpiredDt'].updateValueAndValidity();
+        }
+      }
+      else{
+        DocReceived['controls']['DocNo'].clearValidators();
+        DocReceived['controls']['DocNo'].updateValueAndValidity();
+
+        DocReceived['controls']['ACDExpiredDt'].clearValidators();
+        DocReceived['controls']['ACDExpiredDt'].updateValueAndValidity();
+      }
     }
 
     async GetAppCustCoy() {

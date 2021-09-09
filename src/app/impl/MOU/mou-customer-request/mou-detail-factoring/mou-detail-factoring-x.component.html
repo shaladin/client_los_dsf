@@ -177,9 +177,9 @@
     </div>
   </div>
   <div *ngIf="isRecourse">
-    <app-mou-cust-listed-cust-fctr *ngIf="shouldComponentLoad" [MouCustId]="MouCustId" [IsListedCustFctr]="isListedFctr"
+    <app-mou-cust-listed-cust-fctr-x *ngIf="shouldComponentLoad" [MouCustId]="MouCustId" [IsListedCustFctr]="isListedFctr"
     (OutputData)="GetDataListCustFctr($event)">
-    </app-mou-cust-listed-cust-fctr>
+    </app-mou-cust-listed-cust-fctr-x>
   </div>
   
   <div class="col-md-12" style="padding: 0; text-align: right;">

@@ -166,8 +166,8 @@
               </div>
 
               <div id="fee-data-tab" class="content" role="tabpanel" aria-labelledby="fee-data-tab-trigger">
-                <app-mou-cust-fee *ngIf="currentStepIndex == 3" [MouCustId]="mouCustId"
-                  (ResponseMouCustFee)="stepHandlerFactoring($event)"></app-mou-cust-fee>
+                <app-mou-cust-fee-x *ngIf="currentStepIndex == 3" [MouCustId]="mouCustId"
+                  (ResponseMouCustFee)="stepHandlerFactoring($event)"></app-mou-cust-fee-x>
               </div>
 
               <div id="collateral-data-tab" class="content" role="tabpanel"
@@ -260,8 +260,8 @@
               </div>
 
               <div id="fee-data-tab" class="content" role="tabpanel" aria-labelledby="fee-data-tab-trigger">
-                <app-mou-cust-fee *ngIf="currentStepIndex == 3" [MouCustId]="mouCustId"
-                  (ResponseMouCustFee)="stepHandlerFinancing($event)"></app-mou-cust-fee>
+                <app-mou-cust-fee-x *ngIf="currentStepIndex == 3" [MouCustId]="mouCustId"
+                  (ResponseMouCustFee)="stepHandlerFinancing($event)"></app-mou-cust-fee-x>
               </div>
 
               <div id="collateral-data-tab" class="content" role="tabpanel"

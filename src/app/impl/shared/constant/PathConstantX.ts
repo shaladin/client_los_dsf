@@ -142,6 +142,10 @@ export class PathConstantX {
   //#region View-Enhancing-Module
   public static VIEW_APP = "AppViewX";
   //#endregion
+
+  //#region Mou
+  public static MOU_CUST_LEGAL_RVW_DETAIL_X = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstantX.DETAIL_X;
+  //#endregion
 }
 
 

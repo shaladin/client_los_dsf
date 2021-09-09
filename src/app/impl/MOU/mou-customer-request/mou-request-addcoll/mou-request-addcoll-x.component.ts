@@ -597,6 +597,8 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.GenerateCollateralAttr(false, 0);
 
     this.AddCollForm.controls.MrCollateralConditionCode.disable();
+    this.AddCollForm.controls.CollateralReleasedDt.disable();
+    this.AddCollForm.controls.CollateralReceivedDt.disable();
     this.type = pageType;
     if (pageType == 'AddExisting') {
       this.bindUcLookupExisting();
@@ -1090,6 +1092,8 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.getDealerGrading();
     if (isAddEdit) {
       this.type = "AddEdit";
+      this.AddCollForm.controls.CollateralReleasedDt.disable();
+      this.AddCollForm.controls.CollateralReceivedDt.disable();
     } else {
       this.isEdit = true;
       this.type = "AddExisting";
@@ -1109,6 +1113,8 @@ export class MouRequestAddcollXComponent implements OnInit {
       this.AddCollForm.controls.Notes.disable();
       this.AddCollForm.controls.OwnerMobilePhnNo.disable();
       this.AddCollForm.controls.ManufacturingYear.disable();
+      this.AddCollForm.controls.CollateralReleasedDt.disable();
+      this.AddCollForm.controls.CollateralReceivedDt.disable();
       this.inputAddressObjForLegalAddr.isReadonly = true;
       this.inputAddressObjForLocAddr.isReadonly = true;
     }
@@ -1615,13 +1621,13 @@ export class MouRequestAddcollXComponent implements OnInit {
   }
 
   ChangeCollStat() {
-    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED') {
+    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       this.AddCollForm.controls.CollateralReceivedDt.enable();
 
       this.AddCollForm.controls.CollateralReleasedDt.disable();
       this.AddCollForm.controls.CollateralReleasedDt.clearValidators();
       this.AddCollForm.controls.CollateralReleasedDt.updateValueAndValidity();
-    } else {
+    } else if (this.AddCollForm.controls.CollateralStatus.value == 'RELEASED' && this.AddCollForm.controls.IsRequiredStatus.value == true){
       this.AddCollForm.controls.CollateralReleasedDt.enable();
 
       this.AddCollForm.controls.CollateralReceivedDt.disable();
@@ -1633,15 +1639,18 @@ export class MouRequestAddcollXComponent implements OnInit {
   CollateralReceive() {
     let temp: AbstractControl;
 
-    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED') {
+    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       temp = this.AddCollForm.controls.CollateralReceivedDt;
-    } else {
+    } else if(this.AddCollForm.controls.CollateralStatus.value == 'RELEASED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       temp = this.AddCollForm.controls.CollateralReleasedDt;
     }
 
     if (this.AddCollForm.controls.IsRequiredStatus.value) {
+      temp.enable();
       temp.setValidators([Validators.required]);
     } else {
+      this.AddCollForm.controls.CollateralReceivedDt.disable();
+      this.AddCollForm.controls.CollateralReleasedDt.disable();
       temp.clearValidators();
     }
     temp.updateValueAndValidity();

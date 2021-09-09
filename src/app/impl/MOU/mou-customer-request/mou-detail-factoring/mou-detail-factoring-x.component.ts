@@ -5,7 +5,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { forkJoin } from 'rxjs';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
-import { MouCustListedCustFctrComponent } from 'app/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
@@ -18,7 +17,7 @@ import { CookieService } from 'ngx-cookie';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-
+import { MouCustListedCustFctrComponent } from 'app/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 
 @Component({
   selector: 'app-mou-detail-factoring-x',
