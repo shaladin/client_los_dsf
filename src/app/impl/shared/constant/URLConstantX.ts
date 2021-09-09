@@ -67,6 +67,7 @@ export class URLConstantX {
 
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";
+  public static GetMouFctrOsPlafondById = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouFctrOsPlafondById";
 
   // MOU CUST DLFN X
   public static GetMouDfOsPlafondByIdX = environment.losUrl + '/v1' + "/MouCustDlrFncngX/GetMouDfOsPlafondById";

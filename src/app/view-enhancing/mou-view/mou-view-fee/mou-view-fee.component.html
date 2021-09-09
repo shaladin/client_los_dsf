@@ -13,10 +13,15 @@
           </th>
           <th class="text-left"><span class="thead-header" name='PaymentType' translate>PAYMENT TYPE</span>
           </th>
-          <th class="text-center"><span class="thead-header" name='AgreementOption' translate>AGREEMENT OPTION</span>
+          <th class="text-left"><span class="thead-header" name='AgreementOption' translate>AGREEMENT OPTION</span>
           </th>
         </tr>
       </thead>
+      <tbody *ngIf="listFeeData?.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of listFeeData; let i = index">
           <td class="text-left">{{item.FeeName}}</td>
@@ -24,7 +29,8 @@
           <td class="text-left" *ngIf="item.FeeAmt != 0">{{item.FeeAmt | number}}</td>
           <td class="text-left" *ngIf="item.FeeAmt == 0">{{item.FeePrcnt | number:'.6':'en-US'}} %</td>
           <td class="text-left">{{item.MouCustFeePaymentTypeView}}</td>
-          <td class="text-center">{{item.MrAgreementAffectedView}}</td>
+          <td style="text-align: left;" *ngIf="item.MouCustFeePaymentTypeView == 'Direct Payment'">-</td>
+          <td style="text-align: left;" *ngIf="item.MouCustFeePaymentTypeView != 'Direct Payment'">{{item.MrAgreementAffectedView}}</td>
         </tr>
       </tbody>
     </table>
