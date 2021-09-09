@@ -28,6 +28,7 @@ export class FamilyMainDataPagingXComponent implements OnInit {
   inputMode: string = "ADD";
   custDataObj: CustDataObj;
   custMainDataMode: string;
+  critCust: Array<string> = new Array<string>();
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -77,6 +78,7 @@ export class FamilyMainDataPagingXComponent implements OnInit {
       this.isDetail = true;
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
+      this.critCust = this.critCust.filter((value) => value != ev.RowObj.CustNo);
     }    
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
@@ -102,6 +104,7 @@ export class FamilyMainDataPagingXComponent implements OnInit {
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response['ListAppCustObj'];
         this.listFamily = this.inputGridObj.resultData.Data;
+        this.critCust = response.ListAppCustObj.map(x => x.CustNo);
       }
     );
   }

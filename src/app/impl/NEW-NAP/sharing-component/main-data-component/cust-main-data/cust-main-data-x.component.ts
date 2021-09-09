@@ -91,6 +91,7 @@ export class CustMainDataXComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Input() from: string;
   @Input() tempTotalSharePrct: number = 0;
+  @Input() critCust: Array<string> = new Array<string>();
   @Input() isNonMandatory: boolean = false;
   @Input() isFamily: boolean = false;
 
@@ -201,20 +202,7 @@ export class CustMainDataXComponent implements OnInit {
     SharePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     IsSigner: [false],
     IsActive: [false],
-    IsOwner: [false],
-    Address: this.fb.group({
-      Addr: ['-'],
-      AreaCode1: [''],
-      AreaCode2: [''],
-      AreaCode3: [''],
-      AreaCode4: [''],
-      City: [''],
-      SubZipcode: [''],
-      // MrHouseOwnershipCode: [''],
-    }),
-    AddressZipcode: this.fb.group({
-      value: [''],
-    })
+    IsOwner: [false]
   });
 
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
@@ -533,6 +521,14 @@ export class CustMainDataXComponent implements OnInit {
     critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = custType;
+
+    if(this.critCust.length > 0){
+      critObj.DataType = "text";
+      critObj.propName = 'C.CUST_NO';
+      critObj.restriction = AdInsConstant.RestrictionNotIn;
+      critObj.listValue = this.critCust;
+    }
+
     this.ArrAddCrit.push(critObj);
 
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
@@ -1224,7 +1220,7 @@ export class CustMainDataXComponent implements OnInit {
           AreaCode4: "",
           City: "",
           SubZipcode: "",
-          // MrBuildingOwnershipCode: ""
+          MrHouseOwnershipCode: ""
         },
         AddressZipcode: {
           value: ""
@@ -1946,7 +1942,7 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.get('Address.AreaCode4').clearValidators();
       this.CustMainDataForm.get('Address.City').clearValidators();
       this.CustMainDataForm.get('Address.SubZipcode').clearValidators();
-      // this.CustMainDataForm.get('Address.MrHouseOwnershipCode').clearValidators();
+      this.CustMainDataForm.get('Address.MrHouseOwnershipCode').clearValidators();
       this.CustMainDataForm.get('AddressZipcode.value').clearValidators();
 
       this.CustMainDataForm.get('Address.Addr').updateValueAndValidity();
@@ -1956,7 +1952,7 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.get('Address.AreaCode4').updateValueAndValidity();
       this.CustMainDataForm.get('Address.City').updateValueAndValidity();
       this.CustMainDataForm.get('Address.SubZipcode').updateValueAndValidity();
-      // this.CustMainDataForm.get('Address.MrHouseOwnershipCode').updateValueAndValidity();
+      this.CustMainDataForm.get('Address.MrHouseOwnershipCode').updateValueAndValidity();
       this.CustMainDataForm.get('AddressZipcode.value').updateValueAndValidity();
     }
   }

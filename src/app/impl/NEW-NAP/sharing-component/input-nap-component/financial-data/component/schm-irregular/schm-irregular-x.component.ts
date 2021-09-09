@@ -32,6 +32,8 @@ export class SchmIrregularXComponent implements OnInit {
   listInstallment: Array<InstallmentObj>;
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
+  EffRateAfterCalc: number = 0;
+  FlatRateAfterCalc: number = 0;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
@@ -63,6 +65,13 @@ export class SchmIrregularXComponent implements OnInit {
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
         InstAmt: this.InstAmt
+      });
+    }
+    if (this.ParentForm.getRawValue().ExistingFinData) {
+      this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
+      this.FlatRateAfterCalc = this.ParentForm.getRawValue().FlatRatePrcnt;
+      this.ParentForm.patchValue({
+        IsReCalculate: true
       });
     }
     this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
@@ -149,7 +158,6 @@ export class SchmIrregularXComponent implements OnInit {
       return;
     }
     this.calcIrregularObj = this.ParentForm.value;
-    this.calcIrregularObj["IsRecalculate"] = false;
 
     var IdxKosong = this.calcIrregularObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
     if (IdxKosong != -1) {
@@ -158,10 +166,11 @@ export class SchmIrregularXComponent implements OnInit {
     }
     if (!this.IsTrialCalc) {
       this.calcIrregularObj = this.ParentForm.value;
-      this.calcIrregularObj["IsRecalculate"] = false;
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateIrregularX, this.calcIrregularObj).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
+          this.EffRateAfterCalc = response.EffectiveRatePrcnt;
+          this.FlatRateAfterCalc = response.FlatRatePrcnt;
 
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
@@ -193,12 +202,13 @@ export class SchmIrregularXComponent implements OnInit {
 
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
+          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
+          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
         }
       );
     } else {
       this.calcIrregularObjForTrialCalc = this.ParentForm.value;
-      this.calcIrregularObjForTrialCalc["IsRecalculate"] = false;
-      this.http.post<ResponseCalculateObjX>(environment.losUrl + "/AppFinData/CalculateIrregularForTrialCalc", this.calcIrregularObjForTrialCalc).subscribe(
+      this.http.post<ResponseCalculateObjX>(environment.losUrl + "/v1" + "/AppFinData/CalculateIrregularForTrialCalc", this.calcIrregularObjForTrialCalc).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
 
@@ -228,41 +238,59 @@ export class SchmIrregularXComponent implements OnInit {
 
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
+          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
+          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
         }
       );
     }
   }
 
   EffectiveRatePrcntInput_FocusOut() {
-    var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
     this.ParentForm.patchValue({
-      AppSupplEffectiveRatePrcnt: this.ParentForm.get("EffectiveRatePrcnt").value
+      SubsidyAmtFromDiffRate: 0,
+      CommissionAmtFromDiffRate: 0
     });
-    var SupplEffectiveRatePrcnt = this.ParentForm.get("AppSupplEffectiveRatePrcnt").value
-    var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
-    var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
-
-    var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-    if (diffRate < DiffRateAmtStd) {
-      this.ParentForm.patchValue({
-        DiffRateAmt: 0
-      });
-    }
-    else if (DiffRateAmtStd < 0) {
-      this.ParentForm.patchValue({
-        DiffRateAmt: 0,
-      });
-    }
-    else {
-      this.ParentForm.patchValue({
-        DiffRateAmt: DiffRateAmtStd
-      });
-    }
-
+    this.SetSubsidyAmtFromDiffRateInput(0);
+    this.SetCommissionAmtFromDiffRateInput(0);
     this.SetNeedReCalculate(true);
   }
 
+  SetSubsidyAmtFromDiffRateInput(subsidyAmtFromDiffRate) {
+    if (subsidyAmtFromDiffRate > 0) {
+      this.ParentForm.patchValue({
+        CommissionAmtFromDiffRate: 0
+      });
+      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
+    }
+    else {
+      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+      }
+    }
+  }
+
+  SetCommissionAmtFromDiffRateInput(commissionAmtFromDiffRate) {
+    if (commissionAmtFromDiffRate > 0) {
+      this.ParentForm.patchValue({
+        SubsidyAmtFromDiffRate: 0
+      });
+      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+      }
+    }
+  }
+
   SetNeedReCalculate(value: boolean) {
+    if ((this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective && this.EffRateAfterCalc == this.ParentForm.getRawValue().EffectiveRatePrcnt)
+      || (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeFlat && this.FlatRateAfterCalc == this.ParentForm.getRawValue().FlatRatePrcnt)) {
+      this.ParentForm.patchValue({
+        IsReCalculate: true
+      });
+    } else {
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
+    }
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
