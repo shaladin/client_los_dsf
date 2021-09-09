@@ -93,7 +93,7 @@ export class URLConstantX {
   public static AddExistingChangeMouCustCollateralDataX = environment.losUrl + '/v1' + "/ChangeMouCustCollateralX/AddExistingChangeMouCustCollateralData";
   public static DeleteChangeMouCustCollateralX = environment.losUrl + '/v1' + "/ChangeMouCustCollateralX/DeleteChangeMouCustCollateral";
   public static GetChangeMouDealerGradingX = environment.losUrl + '/v1' + '/ChangeMouCustCollateralX/GetChangeMouDealerGrading';
-  public static GetChangeMouTrxbyTrxNo = environment.losUrl + "/ChangeMou/GetChangeMouTrxbyTrxNo";
+  public static GetChangeMouTrxbyTrxNo = environment.losUrl + '/v1' + "/ChangeMou/GetChangeMouTrxbyTrxNo";
 
   //Approval
   public static NewApproval = environment.losUrl + "/v1" + "/ApprovalX/Approval";
