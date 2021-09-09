@@ -64,8 +64,7 @@ export class SidebarComponent implements OnInit {
                     RowVersion: ""
                 };
                 this.http.post(AdInsConstant.UpdateToken, roleObject).subscribe(
-                    (response) => {
-                        console.log("oi",response)
+                    (response) => {                        
                         AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
                         AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
                         this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
