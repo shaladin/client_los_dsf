@@ -15,6 +15,7 @@ import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
 import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-view-analysis-result.component';
 import { MouViewDetailXComponent } from 'app/impl/components/general/mou-view/mou-view-detail/mou-view-detail-x.component';
 import { ShrCompMouModule } from 'app/components/sharing-components/shr-comp-mou/shr-comp-mou.module';
+import { MouTabViewAddcollXComponent } from 'app/impl/components/general/mou-view/mou-tab-view-addcoll/mou-tab-view-addcoll-x.component';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { ShrCompMouModule } from 'app/components/sharing-components/shr-comp-mou
         MouViewSurveyComponent,
         MouViewTcComponent,
         MouViewAnalysisResultComponent,
-        MouViewDetailXComponent
+        MouViewDetailXComponent,
+        MouTabViewAddcollXComponent
     ],
     exports: [
         MouTabViewAddcollComponent,
@@ -47,7 +49,8 @@ import { ShrCompMouModule } from 'app/components/sharing-components/shr-comp-mou
         MouViewSurveyComponent,
         MouViewTcComponent,
         MouViewAnalysisResultComponent,
-        MouViewDetailXComponent
+        MouViewDetailXComponent,
+        MouTabViewAddcollXComponent
     ]
 })
 export class MouViewComponentsModule { }
