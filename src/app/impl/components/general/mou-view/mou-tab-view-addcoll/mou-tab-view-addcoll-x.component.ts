@@ -26,7 +26,7 @@ export class MouTabViewAddcollXComponent implements OnInit {
   isView: boolean = false;
   async ViewColl(MouCustCollateralId: number) {
     this.isView = false;
-    setTimeout(() => {
+    setTimeout(() => {      
       this.MouCustCollateralId = MouCustCollateralId;
       this.isView = true;
     }, 500);
@@ -36,4 +36,3 @@ export class MouTabViewAddcollXComponent implements OnInit {
     this.isView = false;
   }
 }
-

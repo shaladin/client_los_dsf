@@ -20,13 +20,13 @@ import { MouViewAddcollDetailXComponent } from 'app/impl/components/sharing-comp
     ],
     declarations: [
         MouViewAddcollDetailComponent,
-        MouViewAddcollDetailXComponent,
-        ChangeMouViewAddcollDetailComponent
+        ChangeMouViewAddcollDetailComponent,
+        MouViewAddcollDetailXComponent
     ],
     exports: [
         MouViewAddcollDetailComponent,
-        MouViewAddcollDetailXComponent,
-        ChangeMouViewAddcollDetailComponent
+        ChangeMouViewAddcollDetailComponent,
+        MouViewAddcollDetailXComponent
     ]
 })
 export class ShrCompMouModule { }

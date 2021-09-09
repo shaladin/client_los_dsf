@@ -99,6 +99,7 @@ export class PathConstantX {
   public static MOU_CUST_RVW_GENERAL_X = PathConstant.MOU_CUST + '/ReviewGeneralX';
   public static MOU_EXECUTION_DETAIL_X = PathConstant.MOU_EXECUTION + '/' + PathConstantX.DETAIL_X;
   public static MOU_EXECUTION_PAGING_X = PathConstant.MOU_EXECUTION + "/" + PathConstantX.PAGING;
+  public static MOU_CUST_LEGAL_RVW_DETAIL_X = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Change mou
@@ -149,10 +150,6 @@ export class PathConstantX {
 
   //#region View-Enhancing-Module
   public static VIEW_APP = "AppViewX";
-  //#endregion
-
-  //#region Mou
-  public static MOU_CUST_LEGAL_RVW_DETAIL_X = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstantX.DETAIL_X;
   //#endregion
 }
 

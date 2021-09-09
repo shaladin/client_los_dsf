@@ -4,6 +4,17 @@
       <div class="card-body">
         <form class="form form-horizontal" [formGroup]="LegalForm" #enjiForm="ngForm">
           <div class="px-3">
+
+            <div class="card-header header-title" style="margin-bottom: 10px">
+              <div class="row">
+                <div class="col-md-8">
+                  <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                    MOU Legal Review
+                  </h4>
+                </div>
+              </div>
+            </div>
+
             <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
             <mat-tab-group>
               <mat-tab label="Collateral">
@@ -22,7 +33,8 @@
               </mat-tab>
               <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
                 <ng-template matTabContent>
-                  <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                  <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false">
+                  </app-dms-iframe>
                 </ng-template>
               </mat-tab>
             </mat-tab-group>
@@ -34,7 +46,8 @@
                 <div *ngIf="isItemsReady">
                   <div *ngFor="let item of items.controls; let i = index;">
                     <div class="form-group row" [formGroupName]="i">
-                      <label class="col-md-4 adins-required-label" translate> {{item.controls.ReviewComponentName.value}}
+                      <label class="col-md-4 adins-required-label" translate>
+                        {{item.controls.ReviewComponentName.value}}
                       </label>
                       <div class="col-md-7">
                         <input type="text" class="form-control adInsInput" formControlName="values" required
@@ -48,8 +61,7 @@
               </div>
             </div>
             <div class="float-right">
-              <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="[CancelLink]" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, false) "
