@@ -9,7 +9,8 @@ import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-c
 import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
-    declarations: [],
+    declarations: [
+    ],
     imports: [
         CommonModule,
         MatRadioModule,
@@ -19,7 +20,8 @@ import { SharedModule } from "app/shared/shared.module";
         ViewAppComponentModule,
         SharedModule
     ],
-    exports: [],
+    exports: [
+    ],
     providers: [
         NGXToastrService
       ]

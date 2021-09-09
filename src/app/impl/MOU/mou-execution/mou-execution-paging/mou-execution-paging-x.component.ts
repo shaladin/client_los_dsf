@@ -62,7 +62,7 @@ export class MouExecutionPagingXComponent implements OnInit {
       }
       this.http.post(URLConstantX.CheckMouActiveR2, obj).subscribe(
         response => {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_DETAIL], { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_DETAIL], { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId });
         }
       );
     } else if (event.Key == "customer") {
