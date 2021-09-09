@@ -32,8 +32,8 @@ export class MouViewAddcollDetailXComponent implements OnInit {
     const collObj = { Id: this.MouCustCollateralId };
     this.http.post<MouCustCollateralStatXObj>(URLConstantX.GetMouCustCollateralStatXByMouCustCollateralIdX, collObj).subscribe(
       (response) => {
-        this.CollateralStatObj = response
-      })
+        this.CollateralStatObj = response;
+      });
 
     this.GetAssetType();
     this.http.post(URLConstant.GetListMouCustCollateralDocsByMouCustCollateralId, { Id: this.MouCustCollateralId }).subscribe(

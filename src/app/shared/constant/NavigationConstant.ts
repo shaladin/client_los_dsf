@@ -289,7 +289,7 @@ export class NavigationConstant {
   public static MOU_DOC_SIGNER_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DOC_SIGNER_PAGING; //'/Mou/DocSigner/Paging'
   public static MOU_DOC_SIGNER_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DOC_SIGNER_DETAIL; //'/Mou/DocSigner/Detail'
   public static MOU_CUST_LEGAL_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_LEGAL_RVW_PAGING; //'/Mou/CustomerLegalReview/Paging'
-  public static MOU_CUST_LEGAL_RVW_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_LEGAL_RVW_DETAIL_X; //'/Mou/CustomerLegalReview/Detail'
+  public static MOU_CUST_LEGAL_RVW_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_LEGAL_RVW_DETAIL_X; //'/Mou/CustomerLegalReview/DetailX'
   public static MOU_CUST_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_PAGING; //'/Mou/Cust/ReviewPaging'
   public static MOU_CUST_RVW_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_RVW_FCTR_X; //'/Mou/Cust/ReviewFactoringX'
   public static MOU_CUST_RVW_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_RVW_GENERAL_X; //'/Mou/Cust/ReviewGeneralX'
