@@ -7,11 +7,9 @@ import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 import { SharedModule } from "app/shared/shared.module";
-import {NapCustMainDataXComponent} from '../impl/NEW-NAP/nap-cust-main-data/nap-cust-main-data-x.component';
 
 @NgModule({
     declarations: [
-      NapCustMainDataXComponent
     ],
     imports: [
         CommonModule,
@@ -23,7 +21,6 @@ import {NapCustMainDataXComponent} from '../impl/NEW-NAP/nap-cust-main-data/nap-
         SharedModule
     ],
     exports: [
-      NapCustMainDataXComponent
     ],
     providers: [
         NGXToastrService
