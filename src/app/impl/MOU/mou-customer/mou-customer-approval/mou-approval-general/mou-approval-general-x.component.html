@@ -4,23 +4,25 @@
             <div class="card-body">
                 <div class="card-header header-title" style="margin-bottom: 10px;">
                     <div class="row">
-                        <div *ngIf = "MrMouTypeCode == 'GENERAL'" class="col-md-8">
+                        <div *ngIf="MrMouTypeCode == 'GENERAL'" class="col-md-8">
                             <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Approval - General
                             </h4>
                         </div>
-                        <div *ngIf = "MrMouTypeCode == 'FINANCING'"class="col-md-8">
-                            <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Approval - Dealer Financing
+                        <div *ngIf="MrMouTypeCode == 'FINANCING'" class="col-md-8">
+                            <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Approval - Dealer
+                                Financing
                             </h4>
                         </div>
                     </div>
                 </div>
-                <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
+                <app-mou-main-info-x [MouCustId]="MouCustId"></app-mou-main-info-x>
                 <div>
                     <mat-tab-group>
                         <mat-tab label="MOU Detail">
                             <ng-template matTabContent>
                                 <div class="px-3">
-                                    <app-mou-view-detail-x [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail-x>
+                                    <app-mou-view-detail-x [MouCustId]="MouCustId" [MouType]="MouType">
+                                    </app-mou-view-detail-x>
                                 </div>
                             </ng-template>
                         </mat-tab>
@@ -34,7 +36,8 @@
                         <mat-tab label="Collateral">
                             <ng-template matTabContent>
                                 <div class="px-3">
-                                    <app-mou-view-addcoll-x [MouCustId]="MouCustId"></app-mou-view-addcoll-x>
+                                    <app-mou-tab-view-addcoll-x [MouCustId]="MouCustId">
+                                    </app-mou-tab-view-addcoll-x>
                                 </div>
                             </ng-template>
                         </mat-tab>
@@ -48,7 +51,8 @@
                         <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
                             <ng-template matTabContent>
                                 <div class="px-3">
-                                    <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                                    <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"
+                                        [showButton]="false"></app-dms-iframe>
                                 </div>
                             </ng-template>
                         </mat-tab>
@@ -63,7 +67,7 @@
                                     <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
                                 </div>
                             </ng-template>
-                          </mat-tab>
+                        </mat-tab>
                         <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
                             <ng-template matTabContent>
                                 <div class="px-3">
@@ -81,8 +85,10 @@
 
                 <br>
                 <div>
-                    <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
-                    <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"  (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+                    <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
+                    </lib-ucapprovalgeneralinfo>
+                    <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
+                        (onCancel)="onCancelClick()"></lib-ucapprovalR3>
                 </div>
             </div>
         </div>

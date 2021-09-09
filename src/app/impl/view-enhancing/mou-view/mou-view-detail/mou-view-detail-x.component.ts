@@ -59,11 +59,30 @@ export class MouViewDetailXComponent implements OnInit {
   LinkSupplier: string = "-";
   dealerGrading: string;
   dealerRating: number;
-
+  MouOsPlafond: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() {
+
+    var url: string = "";
+    if(this.MouType == CommonConstant.FACTORING)
+    {
+      url = URLConstantX.GetMouFctrOsPlafondById;
+    }else if(this.MouType == CommonConstant.DEALERFINANCING)
+    {
+      url = URLConstantX.GetMouDfOsPlafondByIdX;
+    }
+
+    if(this.MouType == CommonConstant.FACTORING || this.MouType == CommonConstant.DEALERFINANCING)
+    {
+      await this.http.post(url, {Id: this.MouCustId}).toPromise().then(
+        (response) => {
+          this.MouOsPlafond = response['Result'];
+        }
+      );
+    }
+
     this.GetListActiveRefPayFreq();
     this.GetListKvpActiveRefCurr();
     var mouCustObj = { Id: this.MouCustId };

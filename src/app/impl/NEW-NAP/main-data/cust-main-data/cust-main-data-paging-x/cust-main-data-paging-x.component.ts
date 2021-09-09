@@ -47,23 +47,18 @@ export class CustMainDataPagingXComponent implements OnInit {
       critObj2.listValue = [CommonConstant.AppStepCust, CommonConstant.AppStepFamily, CommonConstant.AppStepGuar, CommonConstant.AppStepShr];
       this.arrCrit.push(critObj2);
     }else{
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "CUST_MD_" + this.bizTemplateCode;
-    this.arrCrit.push(critObj);
-
+      var critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionLike;
+      critObj.propName = 'WTL.ACT_CODE';
+      critObj.value = "CUST_MD_" + this.bizTemplateCode;
+      this.arrCrit.push(critObj);
+    }
+      
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.BIZ_TEMPLATE_CODE';
     critObj.value = this.bizTemplateCode;
     this.arrCrit.push(critObj);
-    }
-    // var critObj2 = new CriteriaObj();
-    // critObj2.restriction = AdInsConstant.RestrictionIn;
-    // critObj2.propName = 'a.APP_CURR_STEP';
-    // critObj2.listValue = [CommonConstant.AppStepCust, CommonConstant.AppStepFamily, CommonConstant.AppStepGuar, CommonConstant.AppStepShr];
-    // this.arrCrit.push(critObj2);
   }
 
   async ngOnInit() {
@@ -72,7 +67,7 @@ export class CustMainDataPagingXComponent implements OnInit {
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj.title = "NAP 1 Paging";
+    this.inputPagingObj.title = "Applicant Data Paging";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.addCritInput = this.arrCrit;
@@ -84,7 +79,9 @@ export class CustMainDataPagingXComponent implements OnInit {
       
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_NAPD_MD + this.bizTemplateCode;
-      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                               this.userAccess[CommonConstant.OFFICE_CODE],
+                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;

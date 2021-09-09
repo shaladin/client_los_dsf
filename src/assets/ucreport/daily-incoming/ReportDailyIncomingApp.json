@@ -1,0 +1,61 @@
+{
+    "title": "Report Daily Incoming App",
+    "reportName": "Report Daily Incoming App",
+    "reportTemplateCode": "DAILY_INCOMING_APP",
+    "component": [
+        {
+            "type": "dropdown",
+            "label": "Office Name",
+            "name": "OfficeCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment":"FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "paramAssignment": 1
+          },
+          {
+            "type": "textbox",
+            "name": "EmpNo",
+            "id": "EmpNoId",
+            "value": "",
+            "label": "Employee No",
+            "placeholder": "Placeholder",
+            "paramAssignment": 1
+        },
+          {
+        "type": "datepicker",
+        "label": "Period From >=",
+        "name": "PeriodFrom",
+        "datatype": "date",
+        "value": "BD-10",
+        "restriction": "gte",
+        "paramAssignment": 0
+      },
+      {
+        "type": "textbox",
+        "name": "ProdOfferingCode",
+        "id": "ProdOfferingId",
+        "value": "",
+        "label": "Prod Offering Code",
+        "placeholder": "Placeholder",
+        "paramAssignment": 1
+    },
+      {
+        "type": "datepicker",
+        "label": "Period To <=",
+        "name": "PeriodTo",
+        "datatype": "date",
+        "value": "BD+10",
+        "restriction": "lte",
+        "paramAssignment": 0
+      }
+    ],
+    "exportTypeList": [
+    ]
+  }

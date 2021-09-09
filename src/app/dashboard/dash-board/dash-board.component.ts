@@ -8,6 +8,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThingsToDoIntegrationObj, ThingsToDoIntegrationV2Obj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { HttpClient } from '@angular/common/http';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;
@@ -24,12 +26,16 @@ export interface Chart {
 export class DashBoardComponent implements OnInit {
   Item: UcThingsToDoObj = new UcThingsToDoObj();
 
+  ReqByCodeObj: GenericObj = new GenericObj();
+  ListRole: Array<string> = [];
+
   username: string;
   url: string;
   officeCode: string;
   roleCode: string;
+  checkRole: boolean = false;
 
-  constructor(private cookieService: CookieService) { }
+  constructor(private cookieService: CookieService, private http: HttpClient) { }
 
   ngOnInit() {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -41,6 +47,8 @@ export class DashBoardComponent implements OnInit {
     this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
 
     let integrationObj;
+
+    this.getRoleFromGeneralSetting();
 
     if(environment.isCore){
       integrationObj = new ThingsToDoIntegrationV2Obj();
@@ -57,5 +65,19 @@ export class DashBoardComponent implements OnInit {
       
     }
     this.Item.RequestObj.IntegrationObj.push(integrationObj);
+
+
   }
+
+  async getRoleFromGeneralSetting(){
+    this.ReqByCodeObj.Code = CommonConstant.GSCodeRoleDashboardLosOperational;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, this.ReqByCodeObj).toPromise().then(
+      (response) => {
+        if(response["GsValue"] != null){
+          this.ListRole = response["GsValue"].split('|');
+        }
+      });
+    this.checkRole = true;
+  }
+
 }

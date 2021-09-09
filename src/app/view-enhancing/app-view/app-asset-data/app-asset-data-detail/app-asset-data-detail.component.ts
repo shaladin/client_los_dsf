@@ -5,6 +5,7 @@ import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-app-asset-data-detail',
@@ -21,6 +22,9 @@ export class AppAssetDataDetailComponent implements OnInit {
   salesName: string;
   branchManagerName: string;
   adminHeadName: string;
+  assetUsageName: string;
+  assetCondition: string;
+  assetUserRelationship: string;
   inputGridObj: InputGridObj = new InputGridObj();
 
   constructor(private httpClient: HttpClient, public activeModal: NgbActiveModal) { }
@@ -54,10 +58,49 @@ export class AppAssetDataDetailComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = this.appAsset.ResponseAppAssetAccessoryObjs;
+
+        this.getAssetConditionDesc(this.appAsset.MrAssetConditionCode);
+        this.getAssetUsageDesc(this.appAsset.MrAssetUsageCode);
+        this.getAssetUserRelationshipDesc(this.appCollateralRegistration.MrUserRelationshipCode);
+        this.getAssetType(this.appAsset.AssetTypeCode);
       }
     );
+  }
 
-    this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
+  getAssetUsageDesc(Code: string){
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = Code;
+    this.httpClient.post(URLConstant.GetRefMasterByMasterCode, reqByCode).subscribe(
+      (response) => {
+        this.assetUsageName = response['Descr'];
+      }
+    );
+  }
+
+  getAssetConditionDesc(Code: string){
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = Code;
+    this.httpClient.post(URLConstant.GetRefMasterByMasterCode, reqByCode).subscribe(
+      (response) => {
+        this.assetCondition = response['Descr'];
+      }
+    );
+  }
+
+  getAssetUserRelationshipDesc(Code: string){
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = Code;
+    this.httpClient.post(URLConstant.GetRefMasterByMasterCode, reqByCode).subscribe(
+      (response) => {
+        this.assetUserRelationship = response['Descr'];
+      }
+    );
+  }
+
+  getAssetType(Code: string){
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = Code;
+    this.httpClient.post(URLConstant.GetAssetTypeByCode, reqByCode).subscribe(
       (response: any) => {
         this.AssetTypeObj = response;
       }

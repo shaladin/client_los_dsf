@@ -12,6 +12,9 @@ export class PathConstantX {
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
   public static NAP2_X = 'NAP2X';
+  public static PERSONAL = 'PersonalX';
+  public static COY = 'CompanyX';
+  public static NAP1 = "NAP1X";
   public static PERSONAL_X = "PersonalX";
   public static COY_X = "CompanyX";
   public static INSURANCE_ORDER_X = "InsuranceOrder"
@@ -96,6 +99,7 @@ export class PathConstantX {
   public static MOU_CUST_RVW_GENERAL_X = PathConstant.MOU_CUST + '/ReviewGeneralX';
   public static MOU_EXECUTION_DETAIL_X = PathConstant.MOU_EXECUTION + '/' + PathConstantX.DETAIL_X;
   public static MOU_EXECUTION_PAGING_X = PathConstant.MOU_EXECUTION + "/" + PathConstantX.PAGING;
+  public static MOU_CUST_LEGAL_RVW_DETAIL_X = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Change mou
@@ -124,6 +128,11 @@ export class PathConstantX {
   public static GO_LIVE_APV_DETAIL_X = PathConstantX.GO_LIVE_APV_X + '/' + PathConstantX.DETAIL_X;
   //endregion
 
+  //#region Nap-Cust-Compl
+  public static CUST_COMPL_PRSNL = PathConstant.DETAIL + "/" + PathConstantX.PERSONAL;
+  public static CUST_COMPL_COY = PathConstant.DETAIL + "/" + PathConstantX.COY;
+  //endregion
+	
   //#region Nap-Additional-Prcs
   public static RETURN_HANDLING_SURVEY_VERIF_PAGING_X = PathConstant.RETURN_HANDLING + "/" + PathConstantX.SURVEY_VERIF_PAGING;
   //#endregion

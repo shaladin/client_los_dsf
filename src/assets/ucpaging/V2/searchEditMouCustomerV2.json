@@ -58,12 +58,20 @@
             "itemsUrl": []
         },
         {
+            "type" : "claim",
+            "label": "Task Claim Status",
+            "id": "ClaimStatId",
+            "ddlType" : "all",
+            "isCriteriaDataTable" : true
+        },
+        {
             "type": "textbox",
             "name": "Assignee",
-            "id": "AssigneeId",
+            "id": "ClaimById",
             "value": "",
             "label": "Claim By",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         }
     ],
   "querystring": {

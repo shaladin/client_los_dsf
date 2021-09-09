@@ -93,7 +93,7 @@ export class LoginPageComponent implements OnInit {
   }
   // On Forgot password link click
   onForgotPassword() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.BACK_TO_REQ_PASSWORD], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PAGES_REQ_PASSWORD], {});
   }
   // On registration link click
   onRegister() {

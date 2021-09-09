@@ -50,7 +50,7 @@
               ],
               "result": {
                 "type": "text",
-                "label": "Num Of Asset",
+                "label": "Number Of Asset",
                 "property": "NumOfAsset"
               }
             }
