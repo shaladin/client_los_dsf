@@ -57,7 +57,7 @@ export class MouViewAddcollDetailXComponent implements OnInit {
 
       });
 
-    await this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, { Id: this.MouCustCollateralId }).toPromise().then(
+    await this.http.post(URLConstantX.GetMouCustCollateralDataForUpdateByMouCustCollateralIdX, { Id: this.MouCustCollateralId }).toPromise().then(
       (response) => {
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];

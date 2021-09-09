@@ -18,7 +18,7 @@
     </div>
     <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Collateral Price</label>
-        <label class="col-md-4 adInsLabel" translate>{{collateralObj.CollateralValueAmt}}</label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralObj.CollateralValueAmt | number:'.2':'en-US'}}</label>
         <label class="col-md-2 adInsLabel" translate>Manufacturing Year</label>
         <label class="col-md-4 adInsLabel" translate>{{collateralObj.ManufacturingYear}} </label>
     </div>
@@ -86,17 +86,6 @@
 </div>
 
 <app-ref-attr-view-generate [Title]="'Collateral Attribute'" [ListAttrObjs]="ListAttrObjs"></app-ref-attr-view-generate>
-
-<lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral User'" [panel]="'AddCollUser'">
-</lib-ucSubsection>
-<div id="AddCollUser" *ngIf="isReady">
-    <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate> Collateral User Name</label>
-        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.UserName}}</label>
-        <label class="col-md-2 adInsLabel" translate> Collateral User Relationship</label>
-        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.MrUserRelationshipCode}} </label>
-    </div>
-</div>
 
 <lib-ucSubsection [id]="'AddCollOwnerid'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
 </lib-ucSubsection>
