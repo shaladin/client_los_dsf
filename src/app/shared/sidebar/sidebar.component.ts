@@ -46,8 +46,7 @@ export class SidebarComponent implements OnInit {
         //     }
         //     );
         if (environment.production == false) {
-            this.menuItems = ROUTES.filter(menuItem => menuItem);
-            console.log("oi atas",this.menuItems);
+            this.menuItems = ROUTES.filter(menuItem => menuItem);            
         }
         else {
             //Update menu if change of environment
