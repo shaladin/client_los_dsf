@@ -35,6 +35,7 @@ export class MouViewDetailXComponent implements OnInit {
   TenorFrom: number;
   TenorTo: number;
   IsReady: boolean = false;
+  VirtualAccNo:string;
 
   WopCode: string;
   PlafondAmt: number;
@@ -121,6 +122,7 @@ export class MouViewDetailXComponent implements OnInit {
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
           this.TenorFrom = this.mouCustFctr.TenorFrom;
           this.TenorTo = this.mouCustFctr.TenorTo;
+          this.VirtualAccNo =  this.mouCustFctr.VirtualAccNo;
 
           this.WopCode = this.mouCustFctr.WopCode;
           this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.mouCustFctr.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);

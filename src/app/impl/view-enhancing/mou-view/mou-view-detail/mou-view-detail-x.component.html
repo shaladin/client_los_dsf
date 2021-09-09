@@ -4,8 +4,11 @@
   </lib-ucSubsection>
   <div class="form-body" id="MouData">
     <div class="form-group row" *ngIf="MouType != 'FINANCING'">
+      <label class="col-md-2 adInsLabel" translate>Virtual Account </label>
+      <label class="col-md-4 adInsLabel" translate>{{VirtualAccNo}} </label>
+
       <label class="col-md-2 adInsLabel" translate>Currency </label>
-      <label class="col-md-2 adInsLabel" translate>{{dictRefCurr[CurrCode]}} </label>
+      <label class="col-md-4 adInsLabel" translate>{{dictRefCurr[CurrCode]}} </label>
     </div>
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Plafond Amount</label>
@@ -166,7 +169,7 @@
       </div>
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Link Manufacturer </label>
-        <label class="col-md-4 adInsLabel" translate>          
+        <label class="col-md-4 adInsLabel" translate>
           <a class="link" (click)="ClickLinkManufacturer(MouCustDlrFindData.ManufacturerCode)"> {{MouCustDlrFindData.ManufacturerName}} </a>
         </label>
 
@@ -175,7 +178,7 @@
       </div>
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Link Supplier Grading</label>
-        <label class="col-md-4 adInsLabel" translate>          
+        <label class="col-md-4 adInsLabel" translate>
           <a class="link" (click)="ClickLinkManufacturer(MouCustDlrFindData.DealerCode)"> {{MouCustDlrFindData.DealerName}} </a>
         </label>
 
