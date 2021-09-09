@@ -67,7 +67,7 @@
                           <div id="collateral-data-tab" class="content" role="tabpanel"
                               aria-labelledby="collateral-data-tab-trigger">
                               <app-change-mou-request-addcoll-x *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [ChangeMouStatus]="ChangeMouStatus" [ChangeMouCustId]="ChangeMouCustId"
-                                  (ResponseMouAddColl)="stepHandlerGeneral($event)"
+                              [ChangeMouTrxNo]="changeMouTrxNo" (ResponseMouAddColl)="stepHandlerGeneral($event)"
                                   (modeDetail)="getModeDetail($event)">
                               </app-change-mou-request-addcoll-x>
                           </div>

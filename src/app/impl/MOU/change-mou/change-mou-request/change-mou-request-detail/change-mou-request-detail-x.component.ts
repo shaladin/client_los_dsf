@@ -475,8 +475,9 @@ export class ChangeMouRequestDetailXComponent implements OnInit {
         .post(URLConstant.EditChangeMou, mouCustFormData)
         .subscribe((response) => {
           this.toastr.successMessage(response["Message"]);
+          this.changeMouTrxNo = response["ChangeMouTrxNo"];
           this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],
-            { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: this.pageType, WfTaskListId: this.WfTaskListId, ChangeMouCustId: this.ChangeMouCustId } }
+            { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, mode: this.pageType, WfTaskListId: this.WfTaskListId, ChangeMouCustId: this.ChangeMouCustId } }
           );
         });
     }
