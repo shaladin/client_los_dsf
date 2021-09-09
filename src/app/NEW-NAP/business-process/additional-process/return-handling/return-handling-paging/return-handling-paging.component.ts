@@ -32,13 +32,6 @@ export class ReturnHandlingPagingComponent implements OnInit {
     });
   }
 
-  TaskDefinitionKeyList(){
-    let arrTaskDefKey = new Array<string>();
-    for(var i = 1; i < 4; i++){
-      arrTaskDefKey.push(CommonConstant.ACT_CODE_RTN + this.BizTemplateCode + "_" + i);
-    }
-    return arrTaskDefKey;
-  }
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandling.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandling.json";
@@ -49,8 +42,8 @@ export class ReturnHandlingPagingComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchReturnHandlingV2.json";
       this.inputPagingObj.isJoinExAPI = true
   
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
-      this.RequestTaskModel.TaskDefinitionKeys = this.TaskDefinitionKeyList();
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RTN + this.BizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
                                                this.userAccess[CommonConstant.OFFICE_CODE], 
                                                this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];

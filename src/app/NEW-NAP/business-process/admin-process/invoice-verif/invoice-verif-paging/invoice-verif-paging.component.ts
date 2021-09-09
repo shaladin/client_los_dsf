@@ -62,8 +62,10 @@ export class InvoiceVerifPagingComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true
 
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_INV_VERIF;
-      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_INV_VERIF + this.BizTemplateCode;
+      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                               this.userAccess[CommonConstant.OFFICE_CODE], 
+                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
 
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
@@ -74,7 +76,7 @@ export class InvoiceVerifPagingComponent implements OnInit {
       var critCurrStep = new CriteriaObj();
       critCurrStep.restriction = AdInsConstant.RestrictionEq;
       critCurrStep.propName = 'A.APP_CURR_STEP';
-      critCurrStep.value = CommonConstant.ACT_CODE_INV_VERIF;
+      critCurrStep.value = CommonConstant.ACT_INV_VERIF;
       arrCrit.push(critCurrStep);
       this.inputPagingObj.addCritInput = arrCrit;
     }

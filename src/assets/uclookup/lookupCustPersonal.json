@@ -31,6 +31,12 @@
         },
         {
             "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "C.MOU_CUST_NO"
+        },
+        {
+            "type": "sort",
             "position": "left",
             "label": "CUSTOMER FULL NAME",
             "name": "CP.CUST_FULL_NAME"
@@ -46,6 +52,11 @@
             "type": "text",
             "position": "center",
             "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MouCustNo"
         },
         {
             "type": "text",

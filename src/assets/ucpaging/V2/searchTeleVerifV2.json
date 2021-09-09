@@ -83,7 +83,7 @@
     {
       "type": "textbox",
       "name": "Assignee",
-      "id": "claimById",
+      "id": "ClaimById",
       "value": "",
       "label": "Claim By",
       "placeholder": "Placeholder",

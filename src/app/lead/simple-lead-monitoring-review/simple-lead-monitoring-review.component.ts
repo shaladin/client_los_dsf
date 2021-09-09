@@ -57,7 +57,9 @@ export class SimpleLeadMonitoringReviewComponent implements OnInit {
       this.requestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.requestTaskModel.TaskDefinitionKey = CommonConstant.UPLOAD_SMPL_LEAD_REVIEW;
       this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
-      this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE]];
+      this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
+                                               UserAccess[CommonConstant.OFFICE_CODE],
+                                               UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.requestTaskModel;

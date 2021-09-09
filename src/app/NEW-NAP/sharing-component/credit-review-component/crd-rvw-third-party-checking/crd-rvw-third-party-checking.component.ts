@@ -83,7 +83,7 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
   }
 
   pefindoHandler() {
-    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo);
+    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true);
   }
   
 }

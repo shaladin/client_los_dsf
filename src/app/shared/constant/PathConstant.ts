@@ -477,6 +477,10 @@ export class PathConstant {
     public static REPORT_RENT_SUMMARY = "RptRentSummary";
     public static REPORT_RENT_DETAIL = "RptRentDetail";
     public static REPORT_PLAFOND_MOU_SUMMARY = "RptPlafondMouSummary";
+    public static REPORT_PLAFOND_MOU_DETAIL = "RptPlafondMouDetail";
+    public static REPORT_COLLATERAL_MOU = "RptCollateralMou";
+    public static REPORT_DAILY_INCOMING_APP = "RptDailyIncomingApp"
+    public static REPORT_CANCEL_LEAD = "RptCancelLead";
     //#endregion
 
     //#region Inquiry-Module
@@ -506,6 +510,7 @@ export class PathConstant {
     public static DASHBOARD2 = "DashBoard2";
     public static DASHBOARD = "Dash-Board";
     public static DASHEMPTY = "Dash-Empty";
+    public static DASHBOARDBM = "DashBoardBM";
     //#endregion
 
     //#region Content-Route
