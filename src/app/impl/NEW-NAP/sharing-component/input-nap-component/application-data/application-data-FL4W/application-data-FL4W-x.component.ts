@@ -39,6 +39,7 @@ import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrConten
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import {ReqRefMasterByTypeCodeAndMappingCodeObj} from '../../../../../../shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import {DatePipe} from '@angular/common';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -175,7 +176,6 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   CustNo: string;
   tempCommodityName = '';
   ddlMrWopObj: UcDropdownListObj = new UcDropdownListObj();
-  isMrCustTypeCompany = false;
   MasterCustType = '';
   MasterIdNoType = '';
   DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -1258,7 +1258,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       (response) => {
         this.initCustBankAccDetail();
         this.initAddressCustBankAcc();
-        if (response['AppId'] != 0) {
+        if (response['AppId'] !== 0) {
           const datePipe = new DatePipe('en-US');
           this.NapAppModelForm.patchValue({
             BpkbStatCode: response['MrStatusBpkbCode'],
