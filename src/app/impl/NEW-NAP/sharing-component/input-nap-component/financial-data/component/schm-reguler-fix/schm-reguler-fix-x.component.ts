@@ -317,6 +317,13 @@ export class SchmRegulerFixXComponent implements OnInit {
       this.calcRegFixObj = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentRegularFixX, this.calcRegFixObj).subscribe(
         (response) => {
+          
+          //Start SITDSFCFRTHREE-171 : Suppl Rate selalu sama dng Effective rate jika CF, FL, SLB, MPF, FD
+          var bizTempSupplRateSame = [CommonConstant.CF4W, CommonConstant.FL4W, CommonConstant.CFNA ];
+          if(bizTempSupplRateSame.indexOf(this.BizTemplateCode) > -1)
+            response.AppSupplEffectiveRatePrcnt = response.EffectiveRatePrcnt
+          //End SITDSFCFRTHREE-171
+
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
@@ -385,6 +392,13 @@ export class SchmRegulerFixXComponent implements OnInit {
       this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentRegularFixForTrialCalc, this.calcRegFixObjForTrialCalc).subscribe(
         (response) => {
+           
+          //Start SITDSFCFRTHREE-171 : Suppl Rate selalu sama dng Effective rate jika CF, FL, SLB, MPF, FD
+          var bizTempSupplRateSame = [CommonConstant.CF4W, CommonConstant.FL4W, CommonConstant.CFNA ];
+          if(bizTempSupplRateSame.indexOf(this.BizTemplateCode) > -1)
+            response.AppSupplEffectiveRatePrcnt = response.EffectiveRatePrcnt
+          //End SITDSFCFRTHREE-171
+
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
