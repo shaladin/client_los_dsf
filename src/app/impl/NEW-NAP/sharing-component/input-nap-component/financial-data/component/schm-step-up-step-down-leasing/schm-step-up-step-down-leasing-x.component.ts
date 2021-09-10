@@ -210,6 +210,9 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
 
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentStepUpStepDownX, this.calcStepUpStepDownObj).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.listAppInstStepSchm = response.AppInstStepSchmObjs;
           this.ParentForm.patchValue({
@@ -255,6 +258,9 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
 
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.listAppInstStepSchm = response.AppInstStepSchmObjs;
           this.ParentForm.patchValue({

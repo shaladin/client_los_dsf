@@ -167,7 +167,9 @@ export class SchmBalloonXComponent implements OnInit {
       this.calcBalloonObj = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentBalloonX, this.calcBalloonObj).subscribe(
         (response: ResponseCalculateObjX) => {
-
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
@@ -250,13 +252,9 @@ export class SchmBalloonXComponent implements OnInit {
       this.calcBalloonObjForTrialCalc = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentBalloonForTrialCalc, this.calcBalloonObjForTrialCalc).subscribe(
         (response) => {
-          
-           //Start SITDSFCFRTHREE-171 : Suppl Rate selalu sama dng Effective rate jika CF, FL, SLB, MPF, FD
-           var bizTempSupplRateSame = [CommonConstant.CF4W, CommonConstant.FL4W, CommonConstant.CFNA ];
-           if(bizTempSupplRateSame.indexOf(this.BizTemplateCode) > -1)
-             response.AppSupplEffectiveRatePrcnt = response.EffectiveRatePrcnt
-           //End SITDSFCFRTHREE-171
-           
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
@@ -388,7 +386,8 @@ export class SchmBalloonXComponent implements OnInit {
       this.ParentForm.get("CommissionAmtFromDiffRate").disable();
     } else {
       if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
       }
     }
   }
@@ -405,7 +404,8 @@ export class SchmBalloonXComponent implements OnInit {
         SubsidyAmtFromDiffRate: 0
       });
       if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
       }
     }
   }

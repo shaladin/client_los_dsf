@@ -317,6 +317,9 @@ export class SchmRegulerFixXComponent implements OnInit {
       this.calcRegFixObj = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentRegularFixX, this.calcRegFixObj).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
@@ -388,6 +391,9 @@ export class SchmRegulerFixXComponent implements OnInit {
       this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentRegularFixForTrialCalc, this.calcRegFixObjForTrialCalc).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
            
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
@@ -522,7 +528,8 @@ export class SchmRegulerFixXComponent implements OnInit {
     }
     else {
       if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
       }
     }
   }
@@ -539,7 +546,8 @@ export class SchmRegulerFixXComponent implements OnInit {
         SubsidyAmtFromDiffRate: 0
       });
       if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
       }
     }
   }

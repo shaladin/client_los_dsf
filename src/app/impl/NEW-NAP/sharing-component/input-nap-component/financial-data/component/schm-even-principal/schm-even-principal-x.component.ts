@@ -150,6 +150,9 @@ export class SchmEvenPrincipalXComponent implements OnInit {
 
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentEvenPrincipalX, this.calcEvenPrincipleObj).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
@@ -198,6 +201,9 @@ export class SchmEvenPrincipalXComponent implements OnInit {
 
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentEvenPrincipalForTrialCalc, this.calcEvenPrincipleObjForTrialCalc).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
