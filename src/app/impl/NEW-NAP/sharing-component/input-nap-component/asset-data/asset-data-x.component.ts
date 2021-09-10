@@ -828,15 +828,7 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
               }
             );
           }
-        
-        // CF4W fleet
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.AssetDataForm.reset();
-            this.assetValue.emit({ mode: 'paging' });
-          }
-        );
+        }
       }
       else if (this.BizTemplateCode === "OPL") {
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
@@ -854,8 +846,8 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
               }
               this.isListAsset = true;
             }
-          });
-        }
+          }
+        );
       }
     }
   
