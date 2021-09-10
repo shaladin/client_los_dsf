@@ -346,8 +346,8 @@
             [enjiForm]="enjiForm" [parentForm]="AppCustAttrListForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups">
           </app-attr-content-component>
 
-          <app-bank-section [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList"
-            (OutputObj)="GetEvent($event)"></app-bank-section>
+          <app-bank-section-x [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList"
+            (OutputObj)="GetEvent($event)"></app-bank-section-x>
 
           <div class="form-actions right" *ngIf="!IsDetail">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(AppCustAttrListForm)"

@@ -99,7 +99,12 @@ export class URLConstantX {
   public static NewApproval = environment.losUrl + "/v1" + "/ApprovalX/Approval";
   public static EndDateGoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/EndDateGoLiveApproval";
   public static GoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/GoLiveApproval";
-
+  //CUST MAIN DATA
+  public static AddAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/AddAppCustBankAccAndStmntX";
+  public static EditAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/EditAppCustBankAccAndStmntX";
+  public static DeleteAppCustBankAccAndStmnt = environment.losUrl +  '/v1' +"/AppCustBankAccX/DeleteAppCustBankAccAndStmntX";
+  public static GetAppCustBankAccAndStatementForView = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccAndStatementForViewX";
+  
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
   public static SubmitNAPXV2 = environment.losUrl + '/v2' + "/AppX/SubmitNAP";

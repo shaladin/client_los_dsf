@@ -24,6 +24,8 @@ import { MgmntShrholderComponent } from './mgmnt-shrholder/mgmnt-shrholder.compo
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { FinancialPersonalXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/financial-personal/financial-personal-x.component";
 import { FinancialCompanyXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/financial-company/financial-company-x.component";
+import { CustBankAccDetailSectionFindataXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/cust-bank-acc-detail-section-findata-x/cust-bank-acc-detail-section-findata-x.component";
+import { BankSectionXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/bank-section-x/bank-section-x.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -46,6 +48,8 @@ export const customCurrencyMaskConfig = {
         EmergencyContactTabComponent,
         FinancialCompanyComponent,
         FinancialPersonalComponent,
+        BankSectionXComponent,
+        CustBankAccDetailSectionFindataXComponent,
         LegalDocTabComponent,
         CcContactInformationTabComponent,
         OtherInfoTabComponent,
@@ -76,6 +80,8 @@ export const customCurrencyMaskConfig = {
         LegalDocDetailComponent,
         FinancialCompanyComponent,
         FinancialPersonalComponent,
+        BankSectionXComponent,
+        CustBankAccDetailSectionFindataXComponent,
         CcAddressPagingComponent,
         CcAddressDetailComponent,
         MgmntShrholderComponent,
@@ -84,6 +90,9 @@ export const customCurrencyMaskConfig = {
     ],
     providers: [
         NGXToastrService
+    ],
+    entryComponents:[
+        CustBankAccDetailSectionFindataXComponent,
     ]
 })
 export class CustCompletionComponentModule { }

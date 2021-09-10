@@ -69,4 +69,7 @@ export class CommonConstantX {
     public static CFNA_LOB_CODE_FD = "FD";
     public static CFNA_LOB_CODE_MPF = "MPF";
 
+    // BOOLEAN CONDITION
+    public static TRUE_CONDITION = "1";
+    public static FALSE_CONDITION = "0";
 }
