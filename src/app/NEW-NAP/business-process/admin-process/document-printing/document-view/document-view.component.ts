@@ -185,7 +185,7 @@ export class DocumentViewComponent implements OnInit {
         this.RdlcReport.ReportInfo.ExportFormat = 0;
 
         let reportParamObj: ReportParamObj = new ReportParamObj();
-        reportParamObj.paramKey = "AgrmntId";
+        reportParamObj.paramKey = "agrmntId";
         reportParamObj.paramValue = this.AgrmntId.toString();
         reportParamObj.paramAssignment = 1;
         this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
