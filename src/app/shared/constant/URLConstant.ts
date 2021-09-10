@@ -492,6 +492,7 @@ export class URLConstant {
   
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
+  public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
   public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
 
   // SERVICE TASK
@@ -1640,8 +1641,10 @@ export class URLConstant {
   //Task Reassignment
   public static GetTaskReassignmentDetail = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetail";
   public static SubmitTaskReassignment = environment.losUrl + "/v1" + "/TaskReassignment/SubmitTaskReassignment";
+  public static SubmitTaskReassignmentV2 = environment.losUrl + "/v2" + "/TaskReassignment/SubmitTaskReassignment";
   public static GetUserRoleByUsernameForReassignment = environment.FoundationR3Url + "/v1" + "/RefUserRole/GetUserRoleByUsernameForReassignment";
   public static GetTaskReassignmentDetailForApproval = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetailForApproval";
+  public static GetTaskReassignmentDetailForApprovalV2 = environment.losUrl + "/v2" + "/TaskReassignment/GetTaskReassignmentDetailForApproval";
 
   //APP CUST BANK ACC
   public static GetListAppCustBankAccByAppCustId = environment.losUrl + "/v1" + "/AppCustBankAcc/GetListAppCustBankAccByAppCustId";

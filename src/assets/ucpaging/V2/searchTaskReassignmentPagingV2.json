@@ -1,0 +1,153 @@
+{
+    "title": "Task Reassignment",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "taskDefinitionKey",
+            "datatype": "text",
+            "name": "TaskDefinitionKey",
+            "id": "WfCodeId",
+            "value": "",
+            "ddlType": "one",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
+            "label": "Activity Name"
+        },
+        {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "UsernameId",
+            "value": "",
+            "label": "Username",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "officeRoleCodes",
+            "datatype": "text",
+            "name": "TaskOfficeCode",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "ProcessInstanceBusinessKey",
+            "id": "TrxCode",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchTaskReassignmentPagingV2"
+    },
+    "orderby": {
+      "key": "ProcessInstanceBusinessKey",
+      "value": "true"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Activity Name",
+            "name": "Name"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Transaction No",
+            "name": "ProcessInstanceBusinessKey"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Created Date",
+            "name": "Created"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Username",
+            "name": "Assignee"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "User Role",
+            "name": "TaskRoleCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Re-Assign"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Name"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProcessInstanceBusinessKey"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "Created"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "TaskRoleCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/TaskReassignment/Detail",
+                    "param": [
+                        {
+                            "type": "Assignee",
+                            "property": "Assignee"
+                        },
+                        {
+                            "type": "WfActivityCode",
+                            "property": "TaskDefinitionKey"
+                        },
+                        {
+                            "type": "WfActivityName",
+                            "property": "Name"
+                        },
+                        {
+                            "type": "WfName",
+                            "property": "ProcessDefinitionId"
+                        },
+                        {
+                            "type": "WfRefNo",
+                            "property": "ProcessInstanceBusinessKey"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
