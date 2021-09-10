@@ -131,7 +131,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     if (event.body.HeaderObj != undefined) {
                         if (event.body.HeaderObj.StatusCode != undefined && event.body.HeaderObj.StatusCode != '200' && event.body.HeaderObj.StatusCode != "001" && event.body.HeaderObj.StatusCode != "002") {
 
-                            if (event.body.HeaderObj.StatusCode == '400') {
+                            if (event.body.HeaderObj.StatusCode == '400' && event.body.HeaderObj.ErrorMessages != undefined) {
                                 for (var i = 0; i < event.body.HeaderObj.ErrorMessages.length; i++) {
                                     this.toastr.error(event.body.HeaderObj.ErrorMessages[i].Message, 'Status: ' + event.body.HeaderObj.StatusCode, { "tapToDismiss": true });
                                 }
