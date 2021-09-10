@@ -533,6 +533,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.REPORT_COLLATERAL_MOU, Title: 'Report Collateral Mou', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_INCOMING_APP, Title: 'Report Daily Incoming App', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_CANCEL_LEAD, Title: 'Report Cancel Lead', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_DAILY_INCOMING_LEAD, Title: 'Report Daily Incoming Lead', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: [] 
   },
   {

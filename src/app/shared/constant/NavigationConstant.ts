@@ -448,6 +448,7 @@ export class NavigationConstant {
   public static REPORT_COLLATERAL_MOU = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_COLLATERAL_MOU; //'/Report/RptCollateralMou'
   public static REPORT_DAILY_INCOMING_APP = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_INCOMING_APP; //'/Report/RptDailyIncomingApp'
   public static REPORT_CANCEL_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_CANCEL_LEAD; //'/Report/RptCancelLead'
+  public static REPORT_DAILY_INCOMING_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_INCOMING_LEAD; //'/Report/RptDailyIncomingLead'
   //#endregion
   
 }
