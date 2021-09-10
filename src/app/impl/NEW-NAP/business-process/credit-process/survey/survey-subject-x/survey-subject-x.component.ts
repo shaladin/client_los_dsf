@@ -21,6 +21,10 @@ import {environment} from 'environments/environment';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import {ClaimTaskService} from 'app/shared/claimTask.service';
 import {ReqSubmitNAPDataObj} from 'app/shared/model/App/ReqSubmitNAPDataV2Obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-survey-subject-x',
@@ -81,6 +85,16 @@ export class SurveySubjectXComponent implements OnInit {
   dmsObj: DMSObj;
   NapObj: AppObj;
   appNo: string;
+
+  isReturnOn: boolean = false;
+  DDLData: { [id: string]: Array<KeyValueObj> } = {};
+  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
+  readonly DDLTask: string = CommonConstant.ReturnTask;
+  FormReturnObj  =this.fb.group({
+    ReturnTo: [''],
+    Reason: [''],
+    Notes: ['']
+  });
 
   constructor(
     private route: ActivatedRoute,
@@ -165,6 +179,45 @@ export class SurveySubjectXComponent implements OnInit {
       this.ReturnHandlingForm.controls.IsAnyUpdate.setValidators(Validators.required);
       this.ReturnHandlingForm.controls.IsAnyUpdate.updateValueAndValidity();
     }
+    await this.bindDDLReasonReturn();
+    await this.bindTaskObj();
+  }
+
+  async bindDDLReasonReturn() {
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
+    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
+      });
+  }
+
+  async bindTaskObj() {
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    let refMasterTypeCode = '';
+    switch (BizTemplateCode) {
+      case CommonConstant.CF4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCF4W;
+        break;
+      case CommonConstant.FL4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFL4W;
+        break;
+    }
+    if (!refMasterTypeCode) return;
+    var mrCustTypeCode;
+
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).toPromise().then(
+      (response: AppCustObj) => {
+        mrCustTypeCode = response.MrCustTypeCode;
+      }
+    );
+
+    let refMasterObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: mrCustTypeCode };
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
+      (response) => {
+        this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
+        this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
+      }
+    );
   }
 
   onChangeSkipSurvey() {
@@ -436,5 +489,46 @@ export class SurveySubjectXComponent implements OnInit {
     if (this.isReturnHandling == true) {
       this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
     }
+  }
+
+  SaveReturnForm(){
+    let request = {
+      AppId: this.appId,
+      WfTaskListId: this.wfTaskListId,
+      ReturnTo: this.FormReturnObj.value.ReturnTo,
+      Reason: this.FormReturnObj.value.Reason,
+      Notes: this.FormReturnObj.value.Notes
+    };
+
+    let SubmitReturnHandlingSurveyVerifUrl = environment.isCore ? URLConstantX.SubmitReturnHandlingCommRsvFundV2 : "";
+    this.http.post(SubmitReturnHandlingSurveyVerifUrl, request).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        this.back();
+      });
+  }
+
+  switchForm() {
+    this.FormReturnObj.patchValue({
+      ReturnTo: "",
+      Reason: "",
+      Notes: ""
+    });
+
+    if (!this.isReturnOn) {
+      this.isReturnOn = true;
+      this.FormReturnObj.controls.ReturnTo.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
+    } else {
+      this.isReturnOn = false;
+      this.FormReturnObj.controls.ReturnTo.clearValidators();
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
+    }
+    this.FormReturnObj.controls.ReturnTo.updateValueAndValidity();
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
+
   }
 }

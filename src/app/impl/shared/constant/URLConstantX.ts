@@ -165,4 +165,7 @@ export class URLConstantX {
   
   //GENERIC
   public static GetPagingObjectR2BySQL = "/GenericX/GetPagingObjectR2BySQL";
+
+  //SURVEY VERIF X
+  public static SubmitReturnHandlingCommRsvFundV2 = environment.losUrl + "/v2" + "/SurveyVerifX/SubmitReturnHandlingSurveyVerif";
 }
