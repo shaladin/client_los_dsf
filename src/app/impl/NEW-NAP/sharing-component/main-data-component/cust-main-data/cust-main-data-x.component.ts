@@ -494,10 +494,10 @@ export class CustMainDataXComponent implements OnInit {
     }
     this.InputLookupCustObj.isRequired = true;
 
-    this.InputLookupCustCoyObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
+    this.InputLookupCustCoyObj.urlJson = "./assets/uclookup/impl/lookUpExistingCustCompanyX.json";
     this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.InputLookupCustCoyObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
-    this.InputLookupCustCoyObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
+    this.InputLookupCustCoyObj.pagingJson = "./assets/uclookup/impl/lookUpExistingCustCompanyX.json";
+    this.InputLookupCustCoyObj.genericJson = "./assets/uclookup/impl/lookUpExistingCustCompanyX.json";
     if(this.bizTemplateCode == CommonConstant.CFNA){
       if(this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD)
       {
