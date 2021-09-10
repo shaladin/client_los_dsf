@@ -173,7 +173,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 {{ isNonMandatory ? '' : 'adins-required-label' }}" translate>Mother Maiden Name</label>
+                <label class="col-md-4 {{ isNonMandatory ? '' : isFamily ? '' : 'adins-required-label' }}" translate>Mother Maiden Name</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                     formControlName="MotherMaidenName"
@@ -288,8 +288,8 @@
               </div>
             </div>
             <div class="col-md-6" *ngIf="MrCustTypeCode == CustTypePersonal">
-              <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate>Establishment Date</label>
+              <div class="form-group row">                
+                <label class="col-md-4 adins-required-label" translate>Start Working Date</label>
                 <div class="col-md-8">
                   <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"
                     formControlName="EstablishmentDt"
@@ -330,13 +330,20 @@
         <lib-ucSubsection [id]="'AddressId'" [title]="'Legal Address'" [panel]="'Address'">
         </lib-ucSubsection>
         <div id="Address">
-          <div class="form-group row" *ngIf="!isCopyBtnLock">
+          <div class="form-group row">
+            <label class="col-md-2 adInsLabel" for="IsAddressKnown" translate>Is Address Known</label>
+            <div class="col-md-9">
+              <input id="IsAddressKnown" type="checkbox" [checked]="checkIsAddressKnown"
+                (change)="OnCheckIsAddressKnown($event.target.checked)" />
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="!isExisting && checkIsAddressKnown">
             <label class="col-md-2" translate>Copy Address From Legal Customer</label>
             <div class="col-md-4">
               <div class="input-group">
                 <div class="input-group-append">
                   <span class="input-group-btn">
-                    <button [disabled]="isCopyBtnLock" type="button" class="btn btn-raised btn-primary"
+                    <button [disabled]="isExisting ? 'true' : null" type="button" class="btn btn-raised btn-primary"
                       (click)="CopyAddress()" translate>
                       <i class="fa fa-files-o"></i> Copy
                     </button>
@@ -345,7 +352,7 @@
               </div>
             </div>
           </div>
-          <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+          <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady && checkIsAddressKnown" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
             [identifier]="'Address'" [UCAddrForm]="CustMainDataForm"></lib-ucaddress>
         </div>
       </div>

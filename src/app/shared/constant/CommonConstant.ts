@@ -25,6 +25,10 @@ export class CommonConstant {
   public static MOU_FRZ_REQ = 'REQ';
   public static MOU_FRZ_APV = 'APV';
 
+  // PercentageAmt
+  public static InputTypeAmt = 'AMT';
+  public static InputTypePrcnt = 'PRCNT';
+
   // REF CHANGE ITEM STAT
   public static ChangeItemCodeAssetDataSerialNo1 = 'ASSET_DATA_SERIAL_NO_1';
   public static ChangeItemCodeAssetDataSerialNo2 = 'ASSET_DATA_SERIAL_NO_2';
@@ -709,6 +713,7 @@ export class CommonConstant {
   public static GSCodeLobKta = "LOB_KTA";
   public static GSSerialNoRegex = "SERIAL_NO_REGEX";
   public static GSCodeListLegalDocCantDuplicate = "LIST_LEGAL_DOC_CANNOT_DUPLICATE";
+  public static GSCodeRoleDashboardLosOperational = "ROLE_DASHBOARD_LOS_OPERATIONAL";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -935,12 +940,12 @@ export class CommonConstant {
   public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
   public static WF_MOU_FACTORING = "WF_MOU_FACTORING";
   public static WF_MOU_DLFN = "WF_MOU_DLFN";
-  public static MOU_REVIEW = "MOU_REVIEW";
-  public static LEGAL_RVW = "LEGAL_RVW";
-  public static MOU_RETURN = "MOU_RETURN";
+  public static MOU_REVIEW = "MOU_REVIEW_";
+  public static LEGAL_RVW = "LEGAL_RVW_";
+  public static MOU_RETURN = "MOU_RETURN_";
   public static MOU_APV = "MOU_APV";
-  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER";
-  public static MOU_EXECUTION = "MOU_EXECUTION";
+  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER_";
+  public static MOU_EXECUTION = "MOU_EXECUTION_";
   public static WF_UPL_SMPL_LEAD = "WF_UPL_SMPL_LEAD";
   public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
   public static PROD_OFF_APV = "PROD_OFF_APV";
@@ -1009,21 +1014,25 @@ export class CommonConstant {
 
   //WORKFLOW NAP
   public static WF_CODE_CRP_MD = "WF_CRP_MD_";
+  public static WF_CR_APV_RES_EXP_D = "WF_CR_APV_RES_EXP_D";
   public static ACT_CODE_CUST_MD = "CUST_MD_";
   public static ACT_CODE_NAPD_MD = "NAPD_MD_";
   public static ACT_CODE_COM_RSV = "COM_RSV_";
   public static ACT_CODE_RTN = "RTN_";
   public static ACT_CODE_PHN = "PHN_";
-  public static WF_CODE_DUP_CHECK_MD = "WF_DUP_CHECK_MD";
-  public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL";
-  public static ACT_CODE_CDA = "CDA";
+  public static WF_CODE_DUP_CHECK_MD = "WF_DUP_CHECK_MD_";
+  public static ACT_CODE_CDC_MANUAL = "CDC_MANUAL_";
+  public static ACT_CODE_CDA = "CDA_";
   public static ACT_CODE_CDC = "CDC";
-  public static ACT_CODE_INV_VERIF = "INV_VERIF";
+  public static ACT_CODE_INV_VERIF = "INV_VERIF_";
+  public static ACT_INV_VERIF = "INV_VERIF";
   public static WF_CRP_AFT_ACT = "WF_CRP_{0}_AFT_ACT";
   public static ACT_CODE_PO = "PO_";
   public static ACT_CODE_DO = "DO_";
   public static ACT_CODE_CNFR = "CNFR_";
   public static ACT_CODE_PGLV = "PGLV_";
+  public static WF_CODE_RTN = "WF_RTN_";
   
   public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
+  public static PrcntMinValue: number = 0.000001;
 }

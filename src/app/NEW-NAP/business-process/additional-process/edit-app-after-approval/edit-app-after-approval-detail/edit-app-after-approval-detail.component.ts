@@ -535,7 +535,8 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         RequestRFAObj: this.RFAInfo
       };
 
-      this.http.post(URLConstant.SubmitEditAppAftApvReq, EditAppAftApvObj).subscribe(
+      let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqV2 : URLConstant.SubmitEditAppAftApvReq;
+      this.http.post(urlPost, EditAppAftApvObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING], {BizTemplateCode : this.BizTemplateCode});

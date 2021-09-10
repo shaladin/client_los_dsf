@@ -11,6 +11,7 @@ import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainDa
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { ShareholderListingObj } from 'app/shared/model/AppCust/Shareholder/ShareholderListingObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-mngmnt-shrhldr-main-data-paging-x',
@@ -64,7 +65,7 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
   }
 
   async saveAndContinue() {
-    await this.http.post(URLConstant.CheckAppCustShareholderMandatoryData, { AppId: this.appId }).toPromise().then(
+    await this.http.post(URLConstantX.CheckAppCustShareholderMandatoryDataX, { AppId: this.appId }).toPromise().then(
       (response) => {
         if (response["StatusCode"] != 200) {
           this.toastr.warningMessage(response["Message"]);

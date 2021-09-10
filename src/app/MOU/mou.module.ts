@@ -70,7 +70,6 @@ import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
 import { SharedModule } from 'app/shared/shared.module';
 import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
 import { UnauthorizedPageComponent } from 'app/unauthorized/unauthorized.component';
-
 import { MouReviewDlfnComponent } from './mou-customer/mou-review/mou-review-dlfn/mou-review-dlfn.component';
 import { ChangeMouApprovalFactoringComponent } from './change-mou/change-mou-approval/change-mou-approval-factoring/change-mou-approval-factoring.component';
 import { ChangeMouApprovalFinancingComponent } from './change-mou/change-mou-approval/change-mou-approval-financing/change-mou-approval-financing.component';
@@ -134,9 +133,10 @@ import { MouViewModule } from '../view-enhancing/mou-view/mou-view.module';
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 import { MouCustFeeXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-fee/mou-cust-fee-x.component';
 import { MouCustListedCustFctrXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr-x.component';
-import { MouDetailFinancingXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-financing/mou-detail-financing-x.component';
 import { MouDetailGeneralXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-general/mou-detail-general-x.component';
 import { MouDetailFactoringXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-factoring/mou-detail-factoring-x.component';
+import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-review-detail/legal-review-detail-x.component';
+import { MouDetailFinancingXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-financing/mou-detail-financing/mou-detail-financing-x.component';
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -302,7 +302,8 @@ export const customCurrencyMaskConfig = {
     MouCustListedCustFctrXComponent,
     MouDetailFinancingXComponent,
     MouDetailFactoringXComponent,
-    MouDetailGeneralXComponent
+    MouDetailGeneralXComponent,
+    LegalReviewDetailXComponent
   ],
   exports: [],
   providers: [NGXToastrService],

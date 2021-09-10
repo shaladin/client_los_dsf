@@ -44,60 +44,37 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchCommission.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
 
-    var arrCrit = new Array();
-
-    if(environment.isCore){
-    this.inputPagingObj._url = "./assets/ucpaging/V2/searchCommissionV2.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCommissionV2.json";
-    this.inputPagingObj.isJoinExAPI = true
-
-    this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
-    this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_COM_RSV + this.BizTemplateCode;
-    this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE]];
-
-    this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
-    this.IntegrationObj.requestObj = this.RequestTaskModel;
-    this.IntegrationObj.leftColumnToJoin = "AppNo";
-    this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
-    this.inputPagingObj.integrationObj = this.IntegrationObj;
-    
-    var critCurrStep = new CriteriaObj();
-    critCurrStep.restriction = AdInsConstant.RestrictionIn;
-    critCurrStep.propName = 'a.APP_CURR_STEP';
-    critCurrStep.listValue = [CommonConstant.AppStepComm,CommonConstant.AppStepRSVFund];
-    this.inputPagingObj.addCritInput.push(critCurrStep);
-    }else{
-      var critObj = new CriteriaObj();
-      critObj.restriction = AdInsConstant.RestrictionLike;
-      critObj.propName = 'WTL.ACT_CODE';
-      critObj.value = "COM_RSV_" + this.BizTemplateCode;
-      arrCrit.push(critObj);  
-    }
-
-
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchCommissionV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCommissionV2.json";
       this.inputPagingObj.isJoinExAPI = true
-      
+
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
-      this.RequestTaskModel.OfficeCode = this.userAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_COM_RSV + this.BizTemplateCode;
-      this.RequestTaskModel.RoleCode = this.userAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                               this.userAccess[CommonConstant.OFFICE_CODE], 
-                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
-      
+                                              this.userAccess[CommonConstant.OFFICE_CODE],
+                                              this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "AppNo";
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
-    }
-    else{
-      this.inputPagingObj.addCritInput = arrCrit;
+      
+      var critCurrStep = new CriteriaObj();
+      critCurrStep.restriction = AdInsConstant.RestrictionIn;
+      critCurrStep.propName = 'a.APP_CURR_STEP';
+      critCurrStep.listValue = [CommonConstant.AppStepComm,CommonConstant.AppStepRSVFund];
+      this.inputPagingObj.addCritInput.push(critCurrStep);
+    }else{
+      var critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionLike;
+      critObj.propName = 'WTL.ACT_CODE';
+      critObj.value = "COM_RSV_" + this.BizTemplateCode;
+      this.inputPagingObj.addCritInput.push(critObj);
     }
   }
+
   async GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);

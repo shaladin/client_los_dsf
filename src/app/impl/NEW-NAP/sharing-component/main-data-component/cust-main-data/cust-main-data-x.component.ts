@@ -44,9 +44,9 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { AppCustAttrContentObj } from 'app/shared/model/AppCust/CustAttrContent/AppCustAttrContentObj.Model';
+import { CustSetData } from 'app/NEW-NAP/sharing-component/main-data-component/components/CustSetData.Service';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CustAttrFormComponent } from 'app/NEW-NAP/sharing-component/main-data-component/components/cust-attr-form/cust-attr-form.component';
-import { CustSetData } from 'app/NEW-NAP/sharing-component/main-data-component/components/CustSetData.Service';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
@@ -91,7 +91,10 @@ export class CustMainDataXComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Input() from: string;
   @Input() tempTotalSharePrct: number = 0;
+  @Input() critCust: Array<string> = new Array<string>();
   @Input() isNonMandatory: boolean = false;
+  @Input() isFamily: boolean = false;
+
 
   LeadId: number;
   LeadNo: string;
@@ -157,6 +160,8 @@ export class CustMainDataXComponent implements OnInit {
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
   MaxDaysThirdPartyChecking: number;
   LobCode: string;
+  checkIsAddressKnown: boolean;
+
 
   constructor(
     private regexService: RegexService,
@@ -196,7 +201,7 @@ export class CustMainDataXComponent implements OnInit {
     EmploymentEstablishmentDt: [''],
     SharePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     IsSigner: [false],
-    IsActive: [true],
+    IsActive: [false],
     IsOwner: [false]
   });
 
@@ -214,7 +219,6 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
 
-    console.log("oi",this.isNonMandatory);
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
@@ -275,6 +279,7 @@ export class CustMainDataXComponent implements OnInit {
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
+    this.isAddressIsNull();
   }
 
   //#region Country
@@ -361,6 +366,9 @@ export class CustMainDataXComponent implements OnInit {
     if(!this.isNonMandatory){
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators(Validators.required);
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required)
+    }
+    if(this.isFamily){
+      this.CustMainDataForm.controls.MotherMaidenName.setValidators(null);
     }
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
 
@@ -513,6 +521,14 @@ export class CustMainDataXComponent implements OnInit {
     critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = custType;
+
+    if(this.critCust.length > 0){
+      critObj.DataType = "text";
+      critObj.propName = 'C.CUST_NO';
+      critObj.restriction = AdInsConstant.RestrictionNotIn;
+      critObj.listValue = this.critCust;
+    }
+
     this.ArrAddCrit.push(critObj);
 
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
@@ -788,7 +804,7 @@ export class CustMainDataXComponent implements OnInit {
     }
 
     if (custType == CommonConstant.CustTypePersonal) {
-      this.isNonMandatory ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+      this.isNonMandatory ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.isFamily ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
       this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([ Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]) ;
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
@@ -796,7 +812,7 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      this.CustMainDataForm.controls.Email1.setValidators([ Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
+      this.CustMainDataForm.controls.Email1.setValidators([ Validators.pattern(CommonConstant.regexEmail)]);
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
@@ -883,10 +899,23 @@ export class CustMainDataXComponent implements OnInit {
   }
 
   async copyCustomerEvent(event) {
-    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode === CommonConstant.CustTypePersonal) {
       this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
+
+          if (
+            (response.CustAddrLegalObj.AreaCode1 === '' || response.CustAddrLegalObj.AreaCode1 == null || response.CustAddrLegalObj.AreaCode1 == "-") &&
+            (response.CustAddrLegalObj.AreaCode2 === '' || response.CustAddrLegalObj.AreaCode2 == null) &&
+            (response.CustAddrLegalObj.AreaCode3 === '' || response.CustAddrLegalObj.AreaCode3 == null) &&
+            (response.CustAddrLegalObj.AreaCode4 === '' || response.CustAddrLegalObj.AreaCode1 == null) &&
+            (response.CustAddrLegalObj.Addr === '' || response.CustAddrLegalObj.Addr == null) &&
+            (response.CustAddrLegalObj.City === '' || response.CustAddrLegalObj.City == null)
+          ) {
+            this.checkIsAddressKnown = false;
+          } else {
+            this.checkIsAddressKnown = true;
+          }
         });
     } else {
       this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
@@ -1180,6 +1209,24 @@ export class CustMainDataXComponent implements OnInit {
     this.custDataPersonalObj.AppCustObj.AppId = this.appId;
     this.custDataPersonalObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
     this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.AppCustId = this.appCustId ? this.appCustId : 0;
+
+    if (this.checkIsAddressKnown != true) {
+      this.CustMainDataForm.patchValue({
+        Address: {
+          Addr: '-',
+          AreaCode1: "",
+          AreaCode2: "",
+          AreaCode3: "",
+          AreaCode4: "",
+          City: "",
+          SubZipcode: "",
+          MrHouseOwnershipCode: ""
+        },
+        AddressZipcode: {
+          value: ""
+        }
+      });
+    }
 
     if (this.isIncludeCustRelation)
       this.custDataPersonalObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
@@ -1868,6 +1915,7 @@ export class CustMainDataXComponent implements OnInit {
 
     return response;
   }
+
   public findInvalidControls() {
     const invalid = [];
     const controls = this.CustMainDataForm.controls;
@@ -1877,5 +1925,53 @@ export class CustMainDataXComponent implements OnInit {
       }
     }
     console.log(invalid);
+  }
+
+  OnCheckIsAddressKnown(isChecked: boolean) {
+    this.checkIsAddressKnown = isChecked;
+    this.setAddressValidator();
+  }
+
+  setAddressValidator() {
+    if (this.checkIsAddressKnown === true) {
+    } else {
+      this.CustMainDataForm.get('Address.Addr').clearValidators();
+      this.CustMainDataForm.get('Address.AreaCode1').clearValidators();
+      this.CustMainDataForm.get('Address.AreaCode2').clearValidators();
+      this.CustMainDataForm.get('Address.AreaCode3').clearValidators();
+      this.CustMainDataForm.get('Address.AreaCode4').clearValidators();
+      this.CustMainDataForm.get('Address.City').clearValidators();
+      this.CustMainDataForm.get('Address.SubZipcode').clearValidators();
+      this.CustMainDataForm.get('Address.MrHouseOwnershipCode').clearValidators();
+      this.CustMainDataForm.get('AddressZipcode.value').clearValidators();
+
+      this.CustMainDataForm.get('Address.Addr').updateValueAndValidity();
+      this.CustMainDataForm.get('Address.AreaCode1').updateValueAndValidity();
+      this.CustMainDataForm.get('Address.AreaCode2').updateValueAndValidity();
+      this.CustMainDataForm.get('Address.AreaCode3').updateValueAndValidity();
+      this.CustMainDataForm.get('Address.AreaCode4').updateValueAndValidity();
+      this.CustMainDataForm.get('Address.City').updateValueAndValidity();
+      this.CustMainDataForm.get('Address.SubZipcode').updateValueAndValidity();
+      this.CustMainDataForm.get('Address.MrHouseOwnershipCode').updateValueAndValidity();
+      this.CustMainDataForm.get('AddressZipcode.value').updateValueAndValidity();
+    }
+  }
+
+  isAddressIsNull() {
+    if (this.inputAddressObj.default)
+      if (
+        (this.inputAddressObj.default.Addr === '' || this.inputAddressObj.default.Addr == null || this.inputAddressObj.default.Addr === "-") &&
+        (this.inputAddressObj.default.AreaCode1 === '' || this.inputAddressObj.default.AreaCode1 == null) &&
+        (this.inputAddressObj.default.AreaCode2 === '' || this.inputAddressObj.default.AreaCode2 == null) &&
+        (this.inputAddressObj.default.AreaCode3 === '' || this.inputAddressObj.default.AreaCode3 == null) &&
+        (this.inputAddressObj.default.AreaCode4 === '' || this.inputAddressObj.default.AreaCode4 == null) &&
+        (this.inputAddressObj.default.City === '' || this.inputAddressObj.default.City == null)
+      // (this.inputAddressObj.default.MrHouseOwnershipCode == null || this.inputAddressObj.default.MrHouseOwnershipCode == "")
+      ) {
+        this.checkIsAddressKnown = false;
+      } else {
+        this.checkIsAddressKnown = true;
+      }
+    console.log(this.inputAddressObj)
   }
 }

@@ -56,7 +56,9 @@ export class ChangeMouReturnPagingComponent implements OnInit {
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CHG_MOU_RTRN;
       this.RequestTaskModel.OfficeCode = this.UserAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.RoleCode = this.UserAccess[CommonConstant.ROLE_CODE];
-      this.RequestTaskModel.OfficeRoleCodes = [this.UserAccess[CommonConstant.ROLE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [this.UserAccess[CommonConstant.ROLE_CODE],
+                                               this.UserAccess[CommonConstant.OFFICE_CODE],
+                                               this.UserAccess[CommonConstant.ROLE_CODE] + "-" + this.UserAccess[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;

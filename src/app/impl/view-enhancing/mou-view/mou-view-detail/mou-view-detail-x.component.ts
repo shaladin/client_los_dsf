@@ -35,6 +35,7 @@ export class MouViewDetailXComponent implements OnInit {
   TenorFrom: number;
   TenorTo: number;
   IsReady: boolean = false;
+  VirtualAccNo:string;
 
   WopCode: string;
   PlafondAmt: number;
@@ -59,11 +60,30 @@ export class MouViewDetailXComponent implements OnInit {
   LinkSupplier: string = "-";
   dealerGrading: string;
   dealerRating: number;
-
+  MouOsPlafond: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() {
+
+    var url: string = "";
+    if(this.MouType == CommonConstant.FACTORING)
+    {
+      url = URLConstantX.GetMouFctrOsPlafondById;
+    }else if(this.MouType == CommonConstant.DEALERFINANCING)
+    {
+      url = URLConstantX.GetMouDfOsPlafondByIdX;
+    }
+
+    if(this.MouType == CommonConstant.FACTORING || this.MouType == CommonConstant.DEALERFINANCING)
+    {
+      await this.http.post(url, {Id: this.MouCustId}).toPromise().then(
+        (response) => {
+          this.MouOsPlafond = response['Result'];
+        }
+      );
+    }
+
     this.GetListActiveRefPayFreq();
     this.GetListKvpActiveRefCurr();
     var mouCustObj = { Id: this.MouCustId };
@@ -102,6 +122,7 @@ export class MouViewDetailXComponent implements OnInit {
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
           this.TenorFrom = this.mouCustFctr.TenorFrom;
           this.TenorTo = this.mouCustFctr.TenorTo;
+          this.VirtualAccNo =  this.mouCustFctr.VirtualAccNo;
 
           this.WopCode = this.mouCustFctr.WopCode;
           this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.mouCustFctr.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);

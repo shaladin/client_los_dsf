@@ -44,7 +44,9 @@ export class LtkmReturnHandlingPagingComponent implements OnInit {
       
       this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_LTKM_REQ_MANUAL, CommonConstant. WF_LTKM_REQ_AUTO];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.LTKM_RTN;
-      this.RequestTaskModel.OfficeRoleCodes = [this.userContext[CommonConstant.OFFICE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [this.userContext[CommonConstant.OFFICE_CODE],
+                                               this.userContext[CommonConstant.ROLE_CODE],
+                                               this.userContext[CommonConstant.ROLE_CODE] + "-" + this.userContext[CommonConstant.OFFICE_CODE]];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;

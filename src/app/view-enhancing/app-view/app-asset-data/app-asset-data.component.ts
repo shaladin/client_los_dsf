@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailComponent } from './app-asset-data-detail/app-asset-data-detail.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 
 @Component({
   selector: 'app-app-asset-data',
@@ -17,6 +19,8 @@ export class AppAssetDataComponent implements OnInit {
   appCollateralList: Array<any>;
   IsHidden: boolean = true;
   AppCollateralId: number;
+  MostSerialNoAssetType: AssetTypeObj = new AssetTypeObj();
+  MostSerialNoCollateralType: AssetTypeObj = new AssetTypeObj();
 
   constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 
@@ -28,6 +32,28 @@ export class AppAssetDataComponent implements OnInit {
       (response) => {
         this.appAssetList = response[0][CommonConstant.ReturnObj];
         this.appCollateralList = response[1]["AppCollateralObjs"];
+        this.checkListAssetType();
+        this.checkListCollType();
+      }
+    );
+  }
+
+  checkListAssetType(){
+    let reqByListCodes: GenericListByCodeObj = new GenericListByCodeObj();
+    reqByListCodes.Codes = Array.from(new Set(this.appAssetList.map(x => x.AssetTypeCode)));
+    this.httpClient.post(URLConstant.GetMostSerialNoAssetTypeByListAssetTypeCode, reqByListCodes).subscribe(
+      (response: AssetTypeObj) => {
+        this.MostSerialNoAssetType = response;
+      }
+    );
+  }
+
+  checkListCollType(){
+    let reqByListCodes: GenericListByCodeObj = new GenericListByCodeObj();
+    reqByListCodes.Codes = Array.from(new Set(this.appCollateralList.map(x => x.AssetTypeCode)));
+    this.httpClient.post(URLConstant.GetMostSerialNoAssetTypeByListAssetTypeCode, reqByListCodes).subscribe(
+      (response: AssetTypeObj) => {
+        this.MostSerialNoCollateralType = response;
       }
     );
   }
