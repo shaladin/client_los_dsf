@@ -1,30 +1,30 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {Validators, FormBuilder} from '@angular/forms';
-import {RefMasterObj} from 'app/shared/model/RefMasterObj.Model';
-import {SalesInfoObj} from 'app/shared/model/SalesInfoObj.Model';
-import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
-import {AdInsConstant} from 'app/shared/AdInstConstant';
-import {InputLookupObj} from 'app/shared/model/InputLookupObj.Model';
-import {environment} from 'environments/environment';
-import {CriteriaObj} from 'app/shared/model/CriteriaObj.model';
-import {CommonConstant} from 'app/shared/constant/CommonConstant';
-import {URLConstant} from 'app/shared/constant/URLConstant';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {NapAppCrossObj} from 'app/shared/model/NapAppCrossObj.Model';
-import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
-import {MouCustDlrFinObj} from 'app/shared/model/moucustdlrfin.model';
-import {AppDlrFncng} from 'app/shared/model/AppData/AppDlrFncng.Model';
-import {KeyValueObj} from 'app/shared/model/KeyValue/KeyValueObj.model';
-import {ResGetListMouByAppAndTypeObj} from 'app/shared/model/Response/MOU/MouCust/ResGetListMouByAppAndTypeObj.model';
-import {ResApplicationDataObj} from 'app/shared/model/Response/ApplicationData/ResApplicationDataObj.model';
-import {RefPayFreqObj} from 'app/shared/model/RefPayFreqObj.model';
-import {RefEmpObj} from 'app/shared/model/RefEmpObj.Model';
-import {AppObj} from 'app/shared/model/App/App.Model';
-import {ProdOfferingDObj} from 'app/shared/model/Product/ProdOfferingDObj.model';
-import {AppCustBankAccObj} from 'app/shared/model/AppCustBankAccObj.Model';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Validators, FormBuilder } from '@angular/forms';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { SalesInfoObj } from 'app/shared/model/SalesInfoObj.Model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { environment } from 'environments/environment';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
+import { AppDlrFncng } from 'app/shared/model/AppData/AppDlrFncng.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResGetListMouByAppAndTypeObj } from 'app/shared/model/Response/MOU/MouCust/ResGetListMouByAppAndTypeObj.model';
+import { ResApplicationDataObj } from 'app/shared/model/Response/ApplicationData/ResApplicationDataObj.model';
+import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
+import { RefEmpObj } from 'app/shared/model/RefEmpObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
@@ -76,7 +76,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     CustBankAcc: [''],
     IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
-	  BpkbStatCode: [''],
+    BpkbStatCode: [''],
     OrdStatCode: [''],
     CommodityCode: [''],
     MrCustTypeOwnerBnkAcc: [''],
@@ -367,7 +367,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
             TopBased: this.allTopBased[0].Key
           });
         } else {
-          this.http.post(URLConstant.GetAppDlrFinByAppId, {Id: this.AppId}).subscribe(
+          this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).subscribe(
             (responseEdit) => {
               this.SalesAppInfoForm.patchValue({
                 TopBased: responseEdit['TopBased']
@@ -469,13 +469,13 @@ export class ApplicationDataDlfnXComponent implements OnInit {
 
 
   async SetPayFreq(MouCustId: number, isInit: boolean) {
-    const getOsPlaffond = this.http.post(URLConstantX.GetMouDfOsPlafondByIdX, {Id: MouCustId}).toPromise().then(
+    const getOsPlaffond = this.http.post(URLConstantX.GetMouDfOsPlafondByIdX, { Id: MouCustId }).toPromise().then(
       (response) => {
         this.MouOsPlafond = response['Result'];
       }
     )
 
-    const getMouCustDlfn = this.http.post<MouCustDlrFinObj>(URLConstant.GetMouCustDlrFindById, {Id: MouCustId}).toPromise().then(
+    const getMouCustDlfn = this.http.post<MouCustDlrFinObj>(URLConstant.GetMouCustDlrFindById, { Id: MouCustId }).toPromise().then(
       async (response) => {
         this.mouCustDlrFinObj = response;
         this.IsMouSelect = true;
@@ -525,7 +525,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   }
 
   changePaymentFreq() {
-    const obj = {Code: this.SalesAppInfoForm.controls.PayFreqCode.value};
+    const obj = { Code: this.SalesAppInfoForm.controls.PayFreqCode.value };
     this.http.post<RefPayFreqObj>(URLConstant.GetRefPayFreqByPayFreqCode, obj).subscribe(
       (response) => {
         this.payFreqObj = response;
@@ -599,7 +599,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.genericJson = './assets/uclookup/NAP/lookupEmp.json';
-    this.inputLookupObj.jsonSelect = {SalesOfficerName: this.resultData.SalesOfficerName};
+    this.inputLookupObj.jsonSelect = { SalesOfficerName: this.resultData.SalesOfficerName };
     this.inputLookupObj.nameSelect = this.resultData.SalesOfficerName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
 
@@ -760,7 +760,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.salesAppInfoObj.AppDlrFncngObj.TopDays = this.SalesAppInfoForm.controls.TopDays.value;
     this.salesAppInfoObj.AppDlrFncngObj.TopInterestRatePrcnt = this.SalesAppInfoForm.controls.TopIntrstRatePrcnt.value;
     this.salesAppInfoObj.AppDlrFncngObj.InterestRatePrcnt = this.SalesAppInfoForm.controls.IntrstRatePrcnt.value;
-    this.http.post(URLConstant.GetMouCustDlrFindById, {Id: this.salesAppInfoObj.MouCustId}).subscribe(
+    this.http.post(URLConstant.GetMouCustDlrFindById, { Id: this.salesAppInfoObj.MouCustId }).subscribe(
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng['MouCustDlrFncngId'];
 
@@ -768,29 +768,50 @@ export class ApplicationDataDlfnXComponent implements OnInit {
           this.SaveAppOtherInfo();
         }
 
+        let appXobj = {};
         if (this.isShowAppCustBankAcc == false) {
           this.resetCustBankAccDetailForm();
+          appXobj = {
+            AppId: this.AppId,
+            MrStatusBpkbCode: this.SalesAppInfoForm.controls.BpkbStatCode.value,
+            MrOrdStatusCode: this.SalesAppInfoForm.controls.OrdStatCode.value,
+            MrCommodityCode: this.SalesAppInfoForm.controls.CommodityCode.value,
+            MrCustTypeOwnerBnkAcc: this.SalesAppInfoForm.controls.MrCustTypeOwnerBnkAcc.value,
+            PrsdntDirectorOwnerBnkAcc: this.SalesAppInfoForm.controls.PrsdntDirectorOwnerBnkAcc.value,
+            MrIdTypeOwnerBnkAcc: this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value,
+            IdNoOwnerBankAcc: this.SalesAppInfoForm.controls.IdNoOwnerBankAcc.value,
+            BirthPlaceOwnerBankAcc: this.SalesAppInfoForm.controls.BirthPlaceOwnerBankAcc.value,
+            BirthDtOwnerBankAcc: this.SalesAppInfoForm.controls.BirthDtOwnerBankAcc.value,
+            AddrOwnerBankAcc: "",
+            AreaCode1OwnerBankAcc: "",
+            AreaCode2OwnerBankAcc: "",
+            AreaCode3OwnerBankAcc: "",
+            AreaCode4OwnerBankAcc: "",
+            CityOwnerBankAcc: "",
+            ZipcodeOwnerBankAcc: "",
+          };
+        } else {
+          appXobj = {
+            AppId: this.AppId,
+            MrStatusBpkbCode: this.SalesAppInfoForm.controls.BpkbStatCode.value,
+            MrOrdStatusCode: this.SalesAppInfoForm.controls.OrdStatCode.value,
+            MrCommodityCode: this.SalesAppInfoForm.controls.CommodityCode.value,
+            MrCustTypeOwnerBnkAcc: this.SalesAppInfoForm.controls.MrCustTypeOwnerBnkAcc.value,
+            PrsdntDirectorOwnerBnkAcc: this.SalesAppInfoForm.controls.PrsdntDirectorOwnerBnkAcc.value,
+            MrIdTypeOwnerBnkAcc: this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value,
+            IdNoOwnerBankAcc: this.SalesAppInfoForm.controls.IdNoOwnerBankAcc.value,
+            BirthPlaceOwnerBankAcc: this.SalesAppInfoForm.controls.BirthPlaceOwnerBankAcc.value,
+            BirthDtOwnerBankAcc: this.SalesAppInfoForm.controls.BirthDtOwnerBankAcc.value,
+            AddrOwnerBankAcc: this.SalesAppInfoForm.controls['BankAccOwnerAddress']['controls'].Addr.value,
+            AreaCode1OwnerBankAcc: this.SalesAppInfoForm.controls['BankAccOwnerAddress']['controls'].AreaCode1.value,
+            AreaCode2OwnerBankAcc: this.SalesAppInfoForm.controls['BankAccOwnerAddress']['controls'].AreaCode2.value,
+            AreaCode3OwnerBankAcc: this.SalesAppInfoForm.controls['BankAccOwnerAddress']['controls'].AreaCode3.value,
+            AreaCode4OwnerBankAcc: this.SalesAppInfoForm.controls['BankAccOwnerAddress']['controls'].AreaCode4.value,
+            CityOwnerBankAcc: this.SalesAppInfoForm.controls['BankAccOwnerAddress']['controls'].City.value,
+            ZipcodeOwnerBankAcc: this.SalesAppInfoForm.controls['BankAccOwnerAddressZipcode']['controls'].value.value,
+          };
         }
 
-        let appXobj = {
-          AppId: this.AppId,
-          MrStatusBpkbCode: this.SalesAppInfoForm.controls.BpkbStatCode.value,
-          MrOrdStatusCode: this.SalesAppInfoForm.controls.OrdStatCode.value,
-          MrCommodityCode: this.SalesAppInfoForm.controls.CommodityCode.value,
-          MrCustTypeOwnerBnkAcc: this.SalesAppInfoForm.controls.MrCustTypeOwnerBnkAcc.value,
-          PrsdntDirectorOwnerBnkAcc: this.SalesAppInfoForm.controls.PrsdntDirectorOwnerBnkAcc.value,
-          MrIdTypeOwnerBnkAcc: this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value,
-          IdNoOwnerBankAcc: this.SalesAppInfoForm.controls.IdNoOwnerBankAcc.value,
-          BirthPlaceOwnerBankAcc: this.SalesAppInfoForm.controls.BirthPlaceOwnerBankAcc.value,
-          BirthDtOwnerBankAcc: this.SalesAppInfoForm.controls.BirthDtOwnerBankAcc.value,
-          AddrOwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].Addr.value,
-          AreaCode1OwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].AreaCode1.value,
-          AreaCode2OwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].AreaCode2.value,
-          AreaCode3OwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].AreaCode3.value,
-          AreaCode4OwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].AreaCode4.value,
-          CityOwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].City.value,
-          ZipcodeOwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddressZipcode"]["controls"].value.value,
-        };
 
 
         if (this.mode == 'add') {
@@ -890,7 +911,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
 
   //#region  BANK ACC
   GetListAppCustBankAcc() {
-    this.http.post<any>(URLConstant.GetAppCustByAppId, {Id: this.AppId}).subscribe(
+    this.http.post<any>(URLConstant.GetAppCustByAppId, { Id: this.AppId }).subscribe(
       (responseAppCust) => {
         this.appCustId = responseAppCust['AppCustId']
         const obj = {
@@ -905,7 +926,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   }
 
   GetBankAccCust() {
-    this.http.post(URLConstant.GetAppOtherInfoByAppId, {AppId: this.AppId}).subscribe(
+    this.http.post(URLConstant.GetAppOtherInfoByAppId, { AppId: this.AppId }).subscribe(
       (responseAoi) => {
         const objectForAppCustBankAcc = {
           BankCode: responseAoi['BankCode'],
@@ -984,7 +1005,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   //#endregion
 
   GetCrossInfoData() {
-    this.http.post(URLConstant.GetListAppCross, {Id: this.AppId}).subscribe(
+    this.http.post(URLConstant.GetListAppCross, { Id: this.AppId }).subscribe(
       (response) => {
         this.resultCrossApp = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.resultCrossApp.length; i++) {

@@ -73,7 +73,7 @@ export class BankSectionXComponent implements OnInit {
     this.BankAccObj.BankCode = event.BankCode;
   }
 
-  custBankHandler(type: string, BankAccAndStmntObjX: AppCustBankAccObjX) {
+  custBankHandler(type: string, BankAccAndStmntObjX: AppCustBankAccObjX = undefined) {
     if (type === 'delete') {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.spinner.show();

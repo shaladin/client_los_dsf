@@ -1,5 +1,5 @@
   <span class="mr-1 pull-right" >
-    <button type="button" class="addButton" (click)="custBankHandler('add','0')" style="margin-right: 0!important;"
+    <button type="button" class="addButton" (click)="custBankHandler('add')" style="margin-right: 0!important;"
       translate>
       <i class="ft-plus-circle"></i> Add
     </button>
@@ -17,7 +17,7 @@
               <i class="fas fa-circle" style="color: red" *ngIf="item.IsActive == false"></i>
               - {{item.BankName}} - {{item.BankBranch}} - {{item.BankAccNo}} - {{item.BankAccName}}
             </h5>
-            <div class="col-md-5" style="display: inline-block; text-align: right;">
+            <div class="col-md-10" style="display: inline-block; text-align: right;">
               <button type="button" class="btn btn-raised btn-primary mr-1"
                 (click)="custBankHandler('editStmnt', item)" translate>
                 Add Bank Statement
