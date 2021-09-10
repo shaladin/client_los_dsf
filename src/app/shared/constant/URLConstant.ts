@@ -41,6 +41,7 @@ export class URLConstant {
   public static GetAppDetailForAppTabById = environment.losUrl + "/v1" + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/v1" + "/Application/AddAppFromLead";
   public static AddAppFromSimpleLead = environment.losUrl + "/v1" + "/Application/AddAppFromSimpleLead";
+  public static AddAppFromSimpleLeadV2 = environment.losUrl + "/v2" + "/Application/AddAppFromSimpleLead";
   public static DataTableNAP = environment.losUrl + "/v1" + "/Application/DataTableNAP";
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/v1" + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/v1" + "/Application/GetAppAndAppCustDetailByAgrmntId";
