@@ -24,6 +24,7 @@ import { environment } from 'environments/environment';
 import { AppReservedFundXObj } from 'app/impl/shared/model/AppReservedFundXObj.model';
 import { ReqAppReservedFundXObj } from 'app/impl/shared/model/ReqAppReservedFundXObj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-reserved-fund-x',
@@ -376,7 +377,12 @@ export class ReservedFundXComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
-        this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);     
+
+        if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W) {
+          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstant.ReturnHandlingAddSurvey);
+        } else {
+          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);     
+        }
       }
     );
   }

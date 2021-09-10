@@ -354,8 +354,11 @@ export class SurveySubjectXComponent implements OnInit {
 
       await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
         (response) => {
-          this.verifResultObj = new VerfResultObj();
-          this.verifResultObj.VerfResultNo = response['VerfResultNo'];
+        }
+      );
+      await this.http.post(this.getVerfResultUrl, this.verfResObj).toPromise().then(
+        (response) => {
+          this.verifResultObj = response;
         }
       );
     }
