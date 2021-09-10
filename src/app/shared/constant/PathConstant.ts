@@ -482,6 +482,7 @@ export class PathConstant {
     public static REPORT_DAILY_INCOMING_APP = "RptDailyIncomingApp";
     public static REPORT_DAILY_INCOMING_LEAD = "RptDailyIncomingLead";
     public static REPORT_CANCEL_LEAD = "RptCancelLead";
+    public static REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT = "RptDailyPreGoLiveByProduct";
     //#endregion
 
     //#region Inquiry-Module

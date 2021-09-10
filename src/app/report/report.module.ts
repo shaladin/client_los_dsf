@@ -26,6 +26,7 @@ import { ReportCollateralMouComponent } from "./report-mou/report-collateral-mou
 import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-daily-incoming-app/report-daily-incoming-app.component";
 import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
 import { ReportDailyIncomingLeadComponent } from './report-daily-incoming/report-daily-incoming-lead/report-daily-incoming-lead.component';
+import { ReportDailyPreGoLiveByProductComponent } from './report-daily-pre-go-live/report-daily-pre-go-live-by-product/report-daily-pre-go-live-by-product.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import { ReportDailyIncomingLeadComponent } from './report-daily-incoming/report
     ReportCollateralMouComponent,
     ReportDailyIncomingAppComponent,
     ReportLeadCancelComponent,
-    ReportDailyIncomingLeadComponent
+    ReportDailyIncomingLeadComponent,
+    ReportDailyPreGoLiveByProductComponent
     ],
     imports: [
         ReportRoutingModule,

@@ -7,9 +7,9 @@ export const environment = {
   production: false,
   navbarColor: 'transparent',
   // losUrl: 'http://localhost:5001',
-  // FoundationR3Url: 'http://localhost:5000',
+  FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3app-server.ad-ins.com/LOS',
-  FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
+  //FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
   DMSUrl: "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
   AMSUrl: "http://r3app-server.ad-ins.com/AMS_DEMO", //OPL dah ada
   LMSUrl: "http://r3app-server.ad-ins.com/LMS_DEMO", //OPL dah ada
