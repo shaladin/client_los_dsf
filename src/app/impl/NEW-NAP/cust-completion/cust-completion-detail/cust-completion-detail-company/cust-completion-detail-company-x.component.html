@@ -78,7 +78,7 @@
           <br><br>
           <div class="bs-stepper-content">
             <div id="customer-detail-tab" class="content" role="tabpanel" aria-labelledby="customer-detail-tab-trigger">
-              <app-cust-detail-company *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event,'Address')"> </app-cust-detail-company>
+              <app-cust-detail-company-x *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event,'Address')"> </app-cust-detail-company-x>
             </div>
             <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
               <app-cc-address-paging *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'COMPANY'" (OutputTab)="GetEvent($event, 'Shrholder')"> </app-cc-address-paging>

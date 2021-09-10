@@ -170,7 +170,7 @@ export class URLConstantX {
 
   //ASSET
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocListX/GetListAssetDocListByAssetTypeCode";
-  
+
   //GENERIC
   public static GetPagingObjectR2BySQL = "/GenericX/GetPagingObjectR2BySQL";
 
@@ -179,4 +179,15 @@ export class URLConstantX {
 
   // App Credit Review
   public static CrdRvwMakeNewApprovalV2 = environment.losUrl + "/v2" + "/AppCrdRvwX/CrdRvwMakeNewApproval";
+
+  //APP CUST X
+  // tslint:disable-next-line:max-line-length
+  public static GetAppCustAndAppCustCompanyDataByAppCustId = environment.losUrl + "/v1" + "/AppCustX/GetAppCustAndAppCustCompanyDataByAppCustId";
+  public static UpdateAppCustCompletionCompany = environment.losUrl + "/v1" + "/AppCustX/UpdateAppCustCompletionCompany";
+
+  //APP CUST PERSONAL JOB DATA X
+  public static AddAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/AddAppCustPersonalJobData";
+  public static EditAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/EditAppCustPersonalJobData";
+  public static GetAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/GetAppCustPersonalJobData";
+
 }

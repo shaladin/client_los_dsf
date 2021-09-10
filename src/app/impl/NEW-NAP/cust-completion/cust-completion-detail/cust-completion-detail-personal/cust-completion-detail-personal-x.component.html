@@ -92,8 +92,8 @@
               </app-family-tab>
             </div>
             <div id="job-data-tab" class="content" role="tabpanel" aria-labelledby="job-data-tab-trigger">
-              <app-job-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId" [CustModelCode]="CustModelCode"
-                (OutputTab)="GetEvent($event, 'Emergency')"> </app-job-tab>
+              <app-job-tab-x *ngIf="stepIndex == 4" [AppCustId]="AppCustId" [CustModelCode]="CustModelCode"
+                (OutputTab)="GetEvent($event, 'Emergency')"> </app-job-tab-x>
             </div>
             <div id="emergency-contact-tab" class="content" role="tabpanel"
               aria-labelledby="emergency-contact-tab-trigger">

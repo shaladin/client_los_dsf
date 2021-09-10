@@ -26,6 +26,8 @@ import { FinancialPersonalXComponent } from "app/impl/NEW-NAP/sharing-component/
 import { FinancialCompanyXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/financial-company/financial-company-x.component";
 import { CustBankAccDetailSectionFindataXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/cust-bank-acc-detail-section-findata-x/cust-bank-acc-detail-section-findata-x.component";
 import { BankSectionXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/bank-section-x/bank-section-x.component";
+import { JobTabXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/job-tab-x/job-tab-x.component";
+import { CustDetailCompanyXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/cust-detail-tab/cust-detail-company-x/cust-detail-company-x.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -56,7 +58,9 @@ export const customCurrencyMaskConfig = {
         CcAddressPagingComponent,
         MgmntShrholderComponent,
         FinancialPersonalXComponent,
-        FinancialCompanyXComponent
+        FinancialCompanyXComponent,
+        JobTabXComponent,
+        CustDetailCompanyXComponent
     ],
     imports: [
         CommonModule,
@@ -86,12 +90,14 @@ export const customCurrencyMaskConfig = {
         CcAddressDetailComponent,
         MgmntShrholderComponent,
         FinancialPersonalXComponent,
-        FinancialCompanyXComponent
+        FinancialCompanyXComponent,
+        JobTabXComponent,
+        CustDetailCompanyXComponent
     ],
     providers: [
         NGXToastrService
     ],
-    entryComponents:[
+    entryComponents: [
         CustBankAccDetailSectionFindataXComponent,
     ]
 })
