@@ -25,6 +25,7 @@ import { ReportPlafondMouDetailComponent } from "./report-mou/report-plafond-mou
 import { ReportCollateralMouComponent } from "./report-mou/report-collateral-mou/report-collateral-mou.component";
 import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-daily-incoming-app/report-daily-incoming-app.component";
 import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
+import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/repo
     ReportPlafondMouDetailComponent,
     ReportCollateralMouComponent,
     ReportDailyIncomingAppComponent,
-    ReportLeadCancelComponent
+    ReportLeadCancelComponent,
+    ReportDailyPendingAppAftApvComponent
     ],
     imports: [
         ReportRoutingModule,
