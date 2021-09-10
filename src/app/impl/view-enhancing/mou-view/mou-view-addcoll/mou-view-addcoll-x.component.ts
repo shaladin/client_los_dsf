@@ -27,8 +27,7 @@ export class MouViewAddcollXComponent implements OnInit {
   isView: boolean = false;
   listMouCustCollateralDocObj: Array<any>;
   mouCustCollateralDoc: MouCustCollateralDocObj = new MouCustCollateralDocObj();
-  mouCustCollateralObj: MouCustCollateralObj;
-  mouCustCollateralRegistrationObj: MouCustCollateralRegistrationObj;
+  MouCustCollateralId: number;
   OwnerRelationshipObj: any;
   collateralObj: MouCustCollateralObj;
   collateralRegistrationObj: any;
@@ -48,7 +47,7 @@ export class MouViewAddcollXComponent implements OnInit {
   })
   ViewColl(MouCustCollateralId) {
     this.listMouCustCollateralDocObj = new Array<any>();
-    this.isView = false;
+    this.MouCustCollateralId = MouCustCollateralId;
     const collObj = { Id: MouCustCollateralId };
     console.log(MouCustCollateralId);
     this.http.post(URLConstant.GetListMouCustCollateralDocsByMouCustCollateralId, { Id: MouCustCollateralId }).subscribe(
@@ -77,7 +76,7 @@ export class MouViewAddcollXComponent implements OnInit {
       });
 
 
-    this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
+    this.http.post(URLConstantX.GetMouCustCollateralDataForUpdateByMouCustCollateralIdX, collObj).subscribe(
       (response) => {
 
         this.collateralObj = response['MouCustCollateral'];

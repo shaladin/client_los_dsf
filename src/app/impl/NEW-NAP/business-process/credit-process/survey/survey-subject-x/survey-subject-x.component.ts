@@ -503,7 +503,7 @@ export class SurveySubjectXComponent implements OnInit {
       Notes: this.FormReturnObj.value.Notes
     };
 
-    let SubmitReturnHandlingSurveyVerifUrl = environment.isCore ? URLConstantX.SubmitReturnHandlingCommRsvFundV2 : "";
+    let SubmitReturnHandlingSurveyVerifUrl = environment.isCore ? URLConstantX.SubmitReturnHandlingSurveyVerif : "";
     this.http.post(SubmitReturnHandlingSurveyVerifUrl, request).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

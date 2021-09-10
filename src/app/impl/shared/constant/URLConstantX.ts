@@ -151,6 +151,9 @@ export class URLConstantX {
   public static CalculateInstallmentStepUpStepDownX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentStepUpStepDown";
   public static SaveAppFinDataX = environment.losUrl + "/v1" + "/AppFinDataX/SaveAppFinData";
 
+  //Application Data DF
+  public static EditApplicationDataDF = environment.losUrl + "/v1" + "/ApplicationDataX/EditApplicationDataDF";
+
   //APP TC
   public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
 
@@ -167,5 +170,8 @@ export class URLConstantX {
   public static GetPagingObjectR2BySQL = "/GenericX/GetPagingObjectR2BySQL";
 
   //SURVEY VERIF X
-  public static SubmitReturnHandlingCommRsvFundV2 = environment.losUrl + "/v2" + "/SurveyVerifX/SubmitReturnHandlingSurveyVerif";
+  public static SubmitReturnHandlingSurveyVerif = environment.losUrl + "/v2" + "/SurveyVerifX/SubmitReturnHandlingSurveyVerif";
+
+  // App Credit Review
+  public static CrdRvwMakeNewApprovalV2 = environment.losUrl + "/v2" + "/AppCrdRvwX/CrdRvwMakeNewApproval";
 }

@@ -39,6 +39,8 @@ import { GenerateAppAttrContentObj } from 'app/shared/model/AppAttrContent/Gener
 import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { DatePipe } from '@angular/common';
 import {ResCalculatePlafondAgrmntXObj} from 'app/impl/shared/model/ResCalculatePlafondAgrmntXObj.Model';
 import {ReqCalculatePlafondAgrmntXObj} from 'app/impl/shared/model/ReqCalculatePlafondAgrmntXObj.Model';
 import {ReqAgrmntMasterDataObjX} from 'app/impl/shared/model/ReqAgrmntMasterDataObjX.model';
@@ -105,6 +107,10 @@ export class ApplicationDataXComponent implements OnInit {
   agrParent: AgrParentObjX;
   agrParentList: Array<AgrParentObjX>;
   plafondDict:{[id:string]: ResCalculatePlafondAgrmntXObj} = {};
+  DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
+  IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  isDdlIdTypeReady: boolean = false;
+  isShowAppCustBankAcc: boolean = false;
   
   isAppAttrContentReady: boolean = false;
   GenerateAppAttrContentObjs: Array<GenerateAppAttrContentObj> = new Array<GenerateAppAttrContentObj>();
@@ -187,7 +193,13 @@ export class ApplicationDataXComponent implements OnInit {
     AppAttrContentObjs: this.fb.array([]),
     BpkbStatCode: ['', Validators.required],
     OrdStatCode: [''],
-    CommodityCode: ['']
+    CommodityCode: [''],
+    MrCustTypeOwnerBnkAcc: [''],
+    MrIdTypeOwnerBnkAcc: [''],
+    PrsdntDirectorOwnerBnkAcc: [''],
+    IdNoOwnerBankAcc: [''],
+    BirthPlaceOwnerBankAcc: [''],
+    BirthDtOwnerBankAcc: [''],
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -198,6 +210,9 @@ export class ApplicationDataXComponent implements OnInit {
   salesOfficerCode: Array<string> = new Array();
   isSalesOfficerCode: boolean = false;
   refEmpSpvObj: ResRefEmpObj;
+  isMrCustTypeCompany: boolean = false;
+  MasterCustType: string = "";
+  MasterIdNoType: string = "";
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -221,7 +236,7 @@ export class ApplicationDataXComponent implements OnInit {
     this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
-
+    // this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.disable();
     this.applicationDDLitems = [];
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
@@ -234,6 +249,7 @@ export class ApplicationDataXComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstantX.RefMasterTypeCodeOrdStatus);
     this.getRefMasterTypeCode(CommonConstantX.RefMasterTypeCodeStatusBpkb);
     this.getAppSrcData();
+    await this.getRefMaster();
     setTimeout(() => { this.getAppModelInfo() }, 2000);
 
     await this.http.post(URLConstant.GetAppCustByAppId, {Id: this.appId}).toPromise().then(
@@ -284,6 +300,91 @@ export class ApplicationDataXComponent implements OnInit {
     );
   }
 
+  checkIdNoType() {
+    if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+      this.NapAppModelForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.NapAppModelForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+  }
+
+  initCustBankAccDetail() {
+    this.NapAppModelForm.get('MrIdTypeOwnerBnkAcc').disable();
+    this.NapAppModelForm.patchValue({
+      MrIdTypeOwnerBnkAcc: CommonConstant.MrIdTypeCodeEKTP,
+      MrCustTypeOwnerBnkAcc: CommonConstant.CustTypePersonal,
+    });
+  }
+
+  inputAddressOwnerBankAccObj: InputAddressObj = new InputAddressObj();
+  inputAddrObj: AddrObj = new AddrObj();
+  inputAddrObjDefault: AddrObj = new AddrObj();
+  initAddressCustBankAcc() {
+    this.inputAddressOwnerBankAccObj.showSubsection = false;
+    this.inputAddressOwnerBankAccObj.title = "Customer Bank Acc Owner Address";
+    this.inputAddressOwnerBankAccObj.showAllPhn = false;
+    this.inputAddressOwnerBankAccObj.inputField.inputLookupObj = new InputLookupObj();
+    this.inputAddressOwnerBankAccObj.isRequired = false;
+    this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.isRequired = false;
+  }
+
+  resetCustBankAccDetailForm() {
+    this.NapAppModelForm.patchValue({
+      MrIdTypeOwnerBnkAcc: CommonConstant.MrIdTypeCodeEKTP,
+      MrCustTypeOwnerBnkAcc: CommonConstant.CustTypePersonal,
+      PrsdntDirectorOwnerBnkAcc: '',
+      IdNoOwnerBankAcc: '',
+      BirthDtOwnerBankAcc: '',
+      BirthPlaceOwnerBankAcc: '',
+      BankAccOwnerAddress: {
+        Addr: '',
+        AreaCode1: '',
+        AreaCode2: '',
+        AreaCode3: '',
+        AreaCode4: '',
+        City: '',
+      },
+      BankAccOwnerAddressZipcode: {
+        value: ''
+      }
+    });
+  }
+
+  async GetListActiveRefMaster(RefMasterTypeCode: string) {
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: RefMasterTypeCode, MappingCode: null };
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, tempReq).toPromise().then(
+      (response) => {
+        this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
+      });
+  }
+
+  async getRefMaster() {
+    this.MasterCustType = CommonConstant.RefMasterTypeCodeCustType;
+    this.MasterIdNoType = CommonConstant.RefMasterTypeCodeIdType;
+    await this.GetListActiveRefMaster(this.MasterCustType);
+    await this.GetListActiveRefMaster(this.MasterIdNoType);
+  }
+
+  changeCustomerType(custType: string = CommonConstant.CustTypePersonal) {
+    this.NapAppModelForm.patchValue({
+      MrCustTypeOwnerBnkAcc: custType
+    });
+    if (custType == CommonConstant.CustTypeCompany) {
+      this.isMrCustTypeCompany = true;
+    } else {
+      this.isMrCustTypeCompany = false;
+      this.NapAppModelForm.patchValue({
+        PrsdntDirectorOwnerBnkAcc: ''
+      });
+    }
+  }
+
+  isCustomerTypeCompany() {
+    if (this.NapAppModelForm.controls.MrCustTypeOwnerBnkAcc.value == CommonConstant.CustTypeCompany) {
+      this.isMrCustTypeCompany = true;
+    } else {
+      this.isMrCustTypeCompany = false;
+    }
+  }
   initDdlMrFirstInstType() {
     this.ddlMrFirstInstTypeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
     this.ddlMrFirstInstTypeObj.requestObj = {
@@ -1036,6 +1137,9 @@ export class ApplicationDataXComponent implements OnInit {
             if (!this.checkPlafondAndTenorAgrmnt(response['listResponseAppLoanPurpose'])) {
               return;
             }
+            if (this.isShowAppCustBankAcc == false) {
+              this.resetCustBankAccDetailForm();
+            }
             this.reqAgrmntMasterDataObjX = new ReqAgrmntMasterDataObjX();
             let tempAppObj = this.GetAppObjValue();
             let tempListAppCrossObj = this.GetListAppCrossValue();
@@ -1047,6 +1151,19 @@ export class ApplicationDataXComponent implements OnInit {
               MrStatusBpkbCode: this.NapAppModelForm.controls.BpkbStatCode.value,
               MrOrdStatusCode: this.NapAppModelForm.controls.OrdStatCode.value,
               MrCommodityCode: this.NapAppModelForm.controls.CommodityCode.value,
+              MrCustTypeOwnerBnkAcc: this.NapAppModelForm.controls.MrCustTypeOwnerBnkAcc.value,
+              PrsdntDirectorOwnerBnkAcc: this.NapAppModelForm.controls.PrsdntDirectorOwnerBnkAcc.value,
+              MrIdTypeOwnerBnkAcc: this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value,
+              IdNoOwnerBankAcc: this.NapAppModelForm.controls.IdNoOwnerBankAcc.value,
+              BirthPlaceOwnerBankAcc: this.NapAppModelForm.controls.BirthPlaceOwnerBankAcc.value,
+              BirthDtOwnerBankAcc: this.NapAppModelForm.controls.BirthDtOwnerBankAcc.value,
+              AddrOwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].Addr.value,
+              AreaCode1OwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].AreaCode1.value,
+              AreaCode2OwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].AreaCode2.value,
+              AreaCode3OwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].AreaCode3.value,
+              AreaCode4OwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].AreaCode4.value,
+              CityOwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].City.value,
+              ZipcodeOwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddressZipcode"]["controls"].value.value,
             };
             this.reqAgrmntMasterDataObjX =
               {
@@ -1087,11 +1204,27 @@ export class ApplicationDataXComponent implements OnInit {
       let tempListAppCrossObj = this.GetListAppCrossValue();
       let tempAppFindDataObj = this.GetAppFinDataValue();
       let tempAppCustAttrContentObj = this.getAppAttrContentObj();
+	  if (this.isShowAppCustBankAcc == false) {
+        this.resetCustBankAccDetailForm();
+      }
       let appXobj = {
         AppId: this.appId,
         MrStatusBpkbCode: this.NapAppModelForm.controls.BpkbStatCode.value,
         MrOrdStatusCode: this.NapAppModelForm.controls.OrdStatCode.value,
         MrCommodityCode: this.NapAppModelForm.controls.CommodityCode.value,
+        MrCustTypeOwnerBnkAcc: this.NapAppModelForm.controls.MrCustTypeOwnerBnkAcc.value,
+        PrsdntDirectorOwnerBnkAcc: this.NapAppModelForm.controls.PrsdntDirectorOwnerBnkAcc.value,
+        MrIdTypeOwnerBnkAcc: this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value,
+        IdNoOwnerBankAcc: this.NapAppModelForm.controls.IdNoOwnerBankAcc.value,
+        BirthPlaceOwnerBankAcc: this.NapAppModelForm.controls.BirthPlaceOwnerBankAcc.value,
+        BirthDtOwnerBankAcc: this.NapAppModelForm.controls.BirthDtOwnerBankAcc.value,
+        AddrOwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].Addr.value,
+        AreaCode1OwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].AreaCode1.value,
+        AreaCode2OwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].AreaCode2.value,
+        AreaCode3OwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].AreaCode3.value,
+        AreaCode4OwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].AreaCode4.value,
+        CityOwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddress"]["controls"].City.value,
+        ZipcodeOwnerBankAcc: this.NapAppModelForm.controls["BankAccOwnerAddressZipcode"]["controls"].value.value,
       };
       let obj = {
         AppObj: tempAppObj,
@@ -1361,10 +1494,12 @@ export class ApplicationDataXComponent implements OnInit {
     if (WOP == this.WopAutoDebit) {
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+      this.isShowAppCustBankAcc = true;
     }
     else {
       this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
       this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+      this.isShowAppCustBankAcc = false;
     }
     this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
   }
@@ -1372,10 +1507,12 @@ export class ApplicationDataXComponent implements OnInit {
   setBankAccDDL(event: UcDropdownListCallbackObj) {
     if (event.selectedValue == this.WopAutoDebit) {
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+      this.isShowAppCustBankAcc = true;
     } else {
       this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
       this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+      this.isShowAppCustBankAcc = false;
     }
     this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
   }
@@ -1471,14 +1608,45 @@ export class ApplicationDataXComponent implements OnInit {
   async getAppXData(){
     await this.http.post(URLConstantX.GetAppXDataByAppId, {Id: this.appId}).toPromise().then(
       (response) => {
-        if(response["AppId"] != 0){
+        this.initCustBankAccDetail();
+        this.initAddressCustBankAcc();
+        if (response["AppId"] != 0) {
+          let datePipe = new DatePipe("en-US");
           this.NapAppModelForm.patchValue({
             BpkbStatCode: response["MrStatusBpkbCode"],
             OrdStatCode: response["MrOrdStatusCode"],
-            CommodityCode: response["MrCommodityCode"]
+            CommodityCode: response["MrCommodityCode"],
+            MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
+            PrsdntDirectorOwnerBnkAcc: response["PrsdntDirectorOwnerBnkAcc"],
+            MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
+            IdNoOwnerBankAcc: response["IdNoOwnerBankAcc"],
+            BirthDtOwnerBankAcc: datePipe.transform(response['BirthDtOwnerBankAcc'], 'yyyy-MM-dd'),
+            BirthPlaceOwnerBankAcc: response["BirthPlaceOwnerBankAcc"],
           });
+
+          this.inputAddrObj.Addr = response["AddrOwnerBankAcc"];
+          this.inputAddrObj.AreaCode1 = response["AreaCode1OwnerBankAcc"];
+          this.inputAddrObj.AreaCode2 = response["AreaCode2OwnerBankAcc"];
+          this.inputAddrObj.AreaCode3 = response["AreaCode3OwnerBankAcc"];
+          this.inputAddrObj.AreaCode4 = response["AreaCode4OwnerBankAcc"];
+          this.inputAddrObj.City = response["CityOwnerBankAcc"];
+
+          this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.nameSelect = response["ZipcodeOwnerBankAcc"];
+          this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["ZipcodeOwnerBankAcc"] };
+          this.inputAddressOwnerBankAccObj.default = this.inputAddrObj;
+          if (response["MrCustTypeOwnerBnkAcc"] != null && response["MrIdTypeOwnerBnkAcc"] != null) {
+            this.NapAppModelForm.patchValue({
+              MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
+              MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
+            });
+          } else {
+            this.initCustBankAccDetail();
+            this.initAddressCustBankAcc();
+          }
           this.tempCommodityName = response["CommodityName"];
         }
+        this.isCustomerTypeCompany();
+        this.checkIdNoType();
       }
     );
   }

@@ -241,6 +241,104 @@
                 </div>
               </div>
 
+              <div *ngIf="isShowAppCustBankAcc">
+                <lib-ucSubsection [id]="'appCustBankAccDetailId'" [title]="'Customer Bank Account Detail'"
+                                  [panel]="'appCustBankAccDetail'">
+                </lib-ucSubsection>
+                <div id="appCustBankAccDetail">
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <div class="form-group row">
+                        <!-- Bank Account Name Type -->
+                        <div class="form-group col-md-2 adins-required">
+                          <label class="adins-required" translate>Bank Account Name Type</label>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-radio-group (change)="changeCustomerType($event.value)"
+                                           formControlName="MrCustTypeOwnerBnkAcc">
+                            <mat-radio-button class="custom-control custom-radio display-inline-block"
+                                              *ngFor="let item of DictRefMaster[MasterCustType]" [value]="item.Key">
+                              {{item.Value}}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                      </div>
+
+
+                      <div class="form-group row" *ngIf="isMrCustTypeCompany">
+                        <!-- President Director -->
+                        <div class="form-group col-md-2 ">
+                          <label translate>President Director</label>
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" formControlName="PrsdntDirectorOwnerBnkAcc"
+                                 [ngClass]="{'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PrsdntDirectorOwnerBnkAcc.invalid}">
+                          <lib-uc-show-errors [control]="NapAppModelForm.controls.PrsdntDirectorOwnerBnkAcc"
+                                              [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+
+                      <div class="form-group row adins-required">
+                        <!-- ID Type -->
+                        <div class="form-group col-md-2 ">
+                          <label class="adins-required" translate>ID Type</label>
+                        </div>
+                        <div class="col-md-4">
+                          <select class="form-control" formControlName="MrIdTypeOwnerBnkAcc" style="width: auto"
+                                  class="form-control" name="MrIdTypeOwnerBnkAcc"
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.invalid }">
+                            <option *ngFor="let item of DictRefMaster[MasterIdNoType]" [value]="item.Key">{{item.Value}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <!-- Id No -->
+                        <label class="col-md-2" translate>ID No</label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" formControlName="IdNoOwnerBankAcc"
+                                 [ngClass]="{'is-invalid': enjiForm.submitted && NapAppModelForm.controls.IdNoOwnerBankAcc.invalid}">
+                          <lib-uc-show-errors [control]="NapAppModelForm.controls.IdNoOwnerBankAcc" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <!-- Birth Place -->
+                        <label class="col-md-2" translate>Birth Place</label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" formControlName="BirthPlaceOwnerBankAcc"
+                                 [ngClass]="{'is-invalid': enjiForm.submitted && NapAppModelForm.controls.BirthPlaceOwnerBankAcc.invalid}">
+                          <lib-uc-show-errors [control]="NapAppModelForm.controls.BirthPlaceOwnerBankAcc" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <!-- Birth Date -->
+                        <label class="col-md-2 " translate>Birth Date</label>
+                        <div class="col-md-4">
+                          <input type="date" class="form-control"
+                                 formControlName="BirthDtOwnerBankAcc"
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.BirthDtOwnerBankAcc.invalid}">
+                          <lib-uc-show-errors [control]="NapAppModelForm.controls.BirthDtOwnerBankAcc "
+                                              [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+
+                      <!-- Address -->
+                      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressOwnerBankAccObj" [enjiForm]="enjiForm"
+                                     [identifier]="'BankAccOwnerAddress'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
             </div>
 
             <div>

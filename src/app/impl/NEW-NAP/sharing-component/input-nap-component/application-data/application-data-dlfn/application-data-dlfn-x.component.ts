@@ -25,6 +25,10 @@ import {AppObj} from 'app/shared/model/App/App.Model';
 import {ProdOfferingDObj} from 'app/shared/model/Product/ProdOfferingDObj.model';
 import {AppCustBankAccObj} from 'app/shared/model/AppCustBankAccObj.Model';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-application-data-dlfn-x',
@@ -71,8 +75,17 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     // MrSlikSecEcoCode: [''],
     CustBankAcc: [''],
     IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
-    TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]]
-  })
+    TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+	  BpkbStatCode: [''],
+    OrdStatCode: [''],
+    CommodityCode: [''],
+    MrCustTypeOwnerBnkAcc: [''],
+    MrIdTypeOwnerBnkAcc: [''],
+    PrsdntDirectorOwnerBnkAcc: [''],
+    IdNoOwnerBankAcc: [''],
+    BirthPlaceOwnerBankAcc: [''],
+    BirthDtOwnerBankAcc: [''],
+  });
 
   refMasterInterestType: RefMasterObj = new RefMasterObj();
   refMasterInsScheme: RefMasterObj = new RefMasterObj();
@@ -115,6 +128,13 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   MouOsPlafond: number;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  isMrCustTypeCompany: boolean = false;
+  MasterCustType: string = "";
+  MasterIdNoType: string = "";
+  DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
+  IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  isDdlIdTypeReady: boolean = false;
+  isShowAppCustBankAcc: boolean = false;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -134,7 +154,11 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         this.listAllActivePayFreq = response[CommonConstant.ReturnObj];
       });
 
+    this.initCustBankAccDetail();
+    this.initAddressCustBankAcc();
     await this.loadData();
+    await this.getRefMaster();
+
     this.GetCrossInfoData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
 
@@ -162,6 +186,145 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt
       });
     }
+
+    this.getAppXData();
+    if (this.SalesAppInfoForm.controls.MrWopCode.value == CommonConstant.WopAutoDebit) {
+      this.isShowAppCustBankAcc = true;
+    } else {
+      this.isShowAppCustBankAcc = false;
+    }
+  }
+
+
+  checkIdNoType() {
+    if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+  }
+
+  initCustBankAccDetail() {
+    this.SalesAppInfoForm.get('MrIdTypeOwnerBnkAcc').disable();
+    this.SalesAppInfoForm.patchValue({
+      MrIdTypeOwnerBnkAcc: CommonConstant.MrIdTypeCodeEKTP,
+      MrCustTypeOwnerBnkAcc: CommonConstant.CustTypePersonal,
+    });
+  }
+
+  inputAddressOwnerBankAccObj: InputAddressObj = new InputAddressObj();
+  inputAddrObj: AddrObj = new AddrObj();
+  inputAddrObjDefault: AddrObj = new AddrObj();
+  initAddressCustBankAcc() {
+    this.inputAddressOwnerBankAccObj.showSubsection = false;
+    this.inputAddressOwnerBankAccObj.title = "Customer Bank Acc Owner Address";
+    this.inputAddressOwnerBankAccObj.showAllPhn = false;
+    this.inputAddressOwnerBankAccObj.inputField.inputLookupObj = new InputLookupObj();
+    this.inputAddressOwnerBankAccObj.isRequired = false;
+    this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.isRequired = false;
+  }
+
+  resetCustBankAccDetailForm() {
+    this.SalesAppInfoForm.patchValue({
+      MrIdTypeOwnerBnkAcc: CommonConstant.MrIdTypeCodeEKTP,
+      MrCustTypeOwnerBnkAcc: CommonConstant.CustTypePersonal,
+      PrsdntDirectorOwnerBnkAcc: '',
+      IdNoOwnerBankAcc: '',
+      BirthDtOwnerBankAcc: '',
+      BirthPlaceOwnerBankAcc: '',
+      BankAccOwnerAddress: {
+        Addr: '',
+        AreaCode1: '',
+        AreaCode2: '',
+        AreaCode3: '',
+        AreaCode4: '',
+        City: '',
+      },
+      BankAccOwnerAddressZipcode: {
+        value: ''
+      }
+    });
+  }
+
+  async GetListActiveRefMaster(RefMasterTypeCode: string) {
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: RefMasterTypeCode, MappingCode: null };
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, tempReq).toPromise().then(
+      (response) => {
+        this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
+      });
+  }
+
+  async getRefMaster() {
+    this.MasterCustType = CommonConstant.RefMasterTypeCodeCustType;
+    this.MasterIdNoType = CommonConstant.RefMasterTypeCodeIdType;
+    await this.GetListActiveRefMaster(this.MasterCustType);
+    await this.GetListActiveRefMaster(this.MasterIdNoType);
+  }
+
+  changeCustomerType(custType: string = CommonConstant.CustTypePersonal) {
+    this.SalesAppInfoForm.patchValue({
+      MrCustTypeOwnerBnkAcc: custType
+    });
+    if (custType == CommonConstant.CustTypeCompany) {
+      this.isMrCustTypeCompany = true;
+    } else {
+      this.isMrCustTypeCompany = false;
+      this.SalesAppInfoForm.patchValue({
+        PrsdntDirectorOwnerBnkAcc: ''
+      });
+    }
+  }
+
+  isCustomerTypeCompany() {
+    if (this.SalesAppInfoForm.controls.MrCustTypeOwnerBnkAcc.value == CommonConstant.CustTypeCompany) {
+      this.isMrCustTypeCompany = true;
+    } else {
+      this.isMrCustTypeCompany = false;
+    }
+  }
+
+  getAppXData() {
+    this.http.post(URLConstantX.GetAppXDataByAppId, { Id: this.AppId }).toPromise().then(
+      (response) => {
+        this.initCustBankAccDetail();
+        this.initAddressCustBankAcc();
+        if (response["AppId"] != 0) {
+          let datePipe = new DatePipe("en-US");
+          this.SalesAppInfoForm.patchValue({
+            BpkbStatCode: response["MrStatusBpkbCode"],
+            OrdStatCode: response["MrOrdStatusCode"],
+            CommodityCode: response["MrCommodityCode"],
+            MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
+            PrsdntDirectorOwnerBnkAcc: response["PrsdntDirectorOwnerBnkAcc"],
+            MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
+            IdNoOwnerBankAcc: response["IdNoOwnerBankAcc"],
+            BirthDtOwnerBankAcc: datePipe.transform(response['BirthDtOwnerBankAcc'], 'yyyy-MM-dd'),
+            BirthPlaceOwnerBankAcc: response["BirthPlaceOwnerBankAcc"],
+          });
+
+          this.inputAddrObj.Addr = response["AddrOwnerBankAcc"];
+          this.inputAddrObj.AreaCode1 = response["AreaCode1OwnerBankAcc"];
+          this.inputAddrObj.AreaCode2 = response["AreaCode2OwnerBankAcc"];
+          this.inputAddrObj.AreaCode3 = response["AreaCode3OwnerBankAcc"];
+          this.inputAddrObj.AreaCode4 = response["AreaCode4OwnerBankAcc"];
+          this.inputAddrObj.City = response["CityOwnerBankAcc"];
+
+          this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.nameSelect = response["ZipcodeOwnerBankAcc"];
+          this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["ZipcodeOwnerBankAcc"] };
+          this.inputAddressOwnerBankAccObj.default = this.inputAddrObj;
+          if (response["MrCustTypeOwnerBnkAcc"] != null && response["MrIdTypeOwnerBnkAcc"] != null) {
+            this.SalesAppInfoForm.patchValue({
+              MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
+              MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
+            });
+          } else {
+            this.initCustBankAccDetail();
+            this.initAddressCustBankAcc();
+          }
+        }
+        this.isCustomerTypeCompany();
+        this.checkIdNoType();
+      }
+    );
   }
 
   async setDropdown() {
@@ -605,6 +768,31 @@ export class ApplicationDataDlfnXComponent implements OnInit {
           this.SaveAppOtherInfo();
         }
 
+        if (this.isShowAppCustBankAcc == false) {
+          this.resetCustBankAccDetailForm();
+        }
+
+        let appXobj = {
+          AppId: this.AppId,
+          MrStatusBpkbCode: this.SalesAppInfoForm.controls.BpkbStatCode.value,
+          MrOrdStatusCode: this.SalesAppInfoForm.controls.OrdStatCode.value,
+          MrCommodityCode: this.SalesAppInfoForm.controls.CommodityCode.value,
+          MrCustTypeOwnerBnkAcc: this.SalesAppInfoForm.controls.MrCustTypeOwnerBnkAcc.value,
+          PrsdntDirectorOwnerBnkAcc: this.SalesAppInfoForm.controls.PrsdntDirectorOwnerBnkAcc.value,
+          MrIdTypeOwnerBnkAcc: this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value,
+          IdNoOwnerBankAcc: this.SalesAppInfoForm.controls.IdNoOwnerBankAcc.value,
+          BirthPlaceOwnerBankAcc: this.SalesAppInfoForm.controls.BirthPlaceOwnerBankAcc.value,
+          BirthDtOwnerBankAcc: this.SalesAppInfoForm.controls.BirthDtOwnerBankAcc.value,
+          AddrOwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].Addr.value,
+          AreaCode1OwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].AreaCode1.value,
+          AreaCode2OwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].AreaCode2.value,
+          AreaCode3OwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].AreaCode3.value,
+          AreaCode4OwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].AreaCode4.value,
+          CityOwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddress"]["controls"].City.value,
+          ZipcodeOwnerBankAcc: this.SalesAppInfoForm.controls["BankAccOwnerAddressZipcode"]["controls"].value.value,
+        };
+
+
         if (this.mode == 'add') {
           this.http.post(URLConstant.SaveApplicationDataDF, this.salesAppInfoObj).subscribe(
             (response) => {
@@ -618,7 +806,13 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         } else {
           this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
           this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
-          this.http.post(URLConstant.EditApplicationDataDF, this.salesAppInfoObj).subscribe(
+
+          let obj = {
+            RequestApplicationDataObj: this.salesAppInfoObj,
+            AppXObj: appXobj,
+          };
+          console.log(obj)
+          this.http.post(URLConstantX.EditApplicationDataDF, obj).subscribe(
             (response) => {
               if (response['StatusCode'] == 200) {
                 this.toastr.successMessage(response['message']);
