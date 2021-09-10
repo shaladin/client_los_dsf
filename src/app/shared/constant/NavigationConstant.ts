@@ -449,6 +449,7 @@ export class NavigationConstant {
   public static REPORT_DAILY_INCOMING_APP = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_INCOMING_APP; //'/Report/RptDailyIncomingApp'
   public static REPORT_CANCEL_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_CANCEL_LEAD; //'/Report/RptCancelLead'
   public static REPORT_MONTHLY_INPROCESS_APP = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_INPROCESS_APP; //'/Report/RptMonthlyInProcessApp'
+  public static REPORT_DAILY_PENDING_APP_AFT_APV = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_PENDING_APP_AFT_APV; //'/Report/RptDailyPendingAppAftApv'
   //#endregion
   
 }

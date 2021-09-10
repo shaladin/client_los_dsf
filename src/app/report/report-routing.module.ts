@@ -11,6 +11,7 @@ import { ReportCollateralMouComponent } from "./report-mou/report-collateral-mou
 import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-daily-incoming-app/report-daily-incoming-app.component";
 import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
 import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-monthly-inprocess-app/report-monthly-inprocess-app.component";
+import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: PathConstant.REPORT_DAILY_INCOMING_APP, component: ReportDailyIncomingAppComponent, data: { title: 'Report Daily Incoming App' } },  
       { path: PathConstant.REPORT_CANCEL_LEAD, component: ReportLeadCancelComponent, data: { title: 'Report Cancel Lead' } },
       { path: PathConstant.REPORT_MONTHLY_INPROCESS_APP, component: ReportMonthlyInprocessAppComponent, data: { title: 'Report Monthly Inprocess Application' } },
+      { path: PathConstant.REPORT_DAILY_PENDING_APP_AFT_APV, component: ReportDailyPendingAppAftApvComponent, data: { title: 'Report Daily Pending App After Approval' } },
     ]
   }
 ]
