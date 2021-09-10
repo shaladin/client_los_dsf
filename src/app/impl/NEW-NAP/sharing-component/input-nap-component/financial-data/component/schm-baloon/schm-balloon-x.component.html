@@ -344,7 +344,7 @@
             <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc"
               class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="CommissionAmtFromDiffRate"
-                [options]="{ allowNegative: false }"
+                [options]="{ allowNegative: false }" [attr.disabled]="'true'"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CommissionAmtFromDiffRate.invalid}"
                 (focusout)="CommissionAmtFromDiffRate_FocusOut($event)" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.CommissionAmtFromDiffRate"

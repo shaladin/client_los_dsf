@@ -210,6 +210,9 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
 
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentStepUpStepDownX, this.calcStepUpStepDownObj).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.listAppInstStepSchm = response.AppInstStepSchmObjs;
           this.ParentForm.patchValue({
@@ -233,7 +236,11 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
             
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,
-            DiffGrossYieldAmt: response.DiffGrossYieldAmt
+            DiffGrossYieldAmt: response.DiffGrossYieldAmt,
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
 
           })
           this.SetInstallmentTable();
@@ -251,6 +258,9 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
 
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.listAppInstStepSchm = response.AppInstStepSchmObjs;
           this.ParentForm.patchValue({
@@ -270,7 +280,11 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
             ApvAmt: response.ApvAmt,
 
             TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-            LifeInsCptlzAmt: response.LifeInsCptlzAmt
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
 
           })
           this.SetInstallmentTable();

@@ -150,6 +150,9 @@ export class SchmEvenPrincipalXComponent implements OnInit {
 
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentEvenPrincipalX, this.calcEvenPrincipleObj).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
@@ -178,7 +181,11 @@ export class SchmEvenPrincipalXComponent implements OnInit {
             
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,
-            DiffGrossYieldAmt: response.DiffGrossYieldAmt
+            DiffGrossYieldAmt: response.DiffGrossYieldAmt,
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
 
           })
           this.ParentForm.patchValue({
@@ -194,6 +201,9 @@ export class SchmEvenPrincipalXComponent implements OnInit {
 
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentEvenPrincipalForTrialCalc, this.calcEvenPrincipleObjForTrialCalc).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
@@ -215,9 +225,13 @@ export class SchmEvenPrincipalXComponent implements OnInit {
             LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
             DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-            DownPaymentNettAmt: response.DownPaymentNettAmt
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
 
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
           })
+
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
 

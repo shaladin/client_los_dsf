@@ -168,6 +168,9 @@ export class SchmIrregularXComponent implements OnInit {
       this.calcIrregularObj = this.ParentForm.value;
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateIrregularX, this.calcIrregularObj).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
@@ -196,8 +199,11 @@ export class SchmIrregularXComponent implements OnInit {
             
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,
-            DiffGrossYieldAmt: response.DiffGrossYieldAmt
+            DiffGrossYieldAmt: response.DiffGrossYieldAmt,
 
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
           })
 
           this.SetInstallmentTable();
@@ -210,6 +216,9 @@ export class SchmIrregularXComponent implements OnInit {
       this.calcIrregularObjForTrialCalc = this.ParentForm.value;
       this.http.post<ResponseCalculateObjX>(environment.losUrl + "/v1" + "/AppFinData/CalculateIrregularForTrialCalc", this.calcIrregularObjForTrialCalc).subscribe(
         (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
           this.listInstallment = response.InstallmentTable;
 
           this.ParentForm.patchValue({
@@ -232,8 +241,11 @@ export class SchmIrregularXComponent implements OnInit {
             LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
             DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-            DownPaymentNettAmt: response.DownPaymentNettAmt
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
 
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
           })
 
           this.SetInstallmentTable();
@@ -264,7 +276,8 @@ export class SchmIrregularXComponent implements OnInit {
     }
     else {
       if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
       }
     }
   }
@@ -275,7 +288,8 @@ export class SchmIrregularXComponent implements OnInit {
         SubsidyAmtFromDiffRate: 0
       });
       if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
       }
     }
   }
