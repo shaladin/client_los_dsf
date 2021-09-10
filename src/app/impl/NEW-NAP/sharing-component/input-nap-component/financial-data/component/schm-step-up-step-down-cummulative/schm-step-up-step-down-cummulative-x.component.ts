@@ -243,7 +243,11 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
             
             CurrGrossYieldAmt: response["CurrGrossYieldAmt"],
             StdGrossYieldAmt: response["StdGrossYieldAmt"],
-            DiffGrossYieldAmt: response["DiffGrossYieldAmt"]
+            DiffGrossYieldAmt: response["DiffGrossYieldAmt"],
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response["EffectiveRatePrcnt"]
+            //End SITDSFCFRTHREE-171
 
           })
           this.ParentForm.patchValue({
@@ -282,7 +286,11 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
             LifeInsCptlzAmt: response["LifeInsCptlzAmt"],
 
             DownPaymentGrossAmt: response["DownPaymentGrossAmt"],
-            DownPaymentNettAmt: response["DownPaymentNettAmt"]
+            DownPaymentNettAmt: response["DownPaymentNettAmt"],
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response["EffectiveRatePrcnt"]
+            //End SITDSFCFRTHREE-171
 
           })
           this.SetInstallmentTable();

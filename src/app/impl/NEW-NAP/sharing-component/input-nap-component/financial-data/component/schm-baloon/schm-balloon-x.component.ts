@@ -167,12 +167,6 @@ export class SchmBalloonXComponent implements OnInit {
       this.calcBalloonObj = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentBalloonX, this.calcBalloonObj).subscribe(
         (response: ResponseCalculateObjX) => {
-          
-          //Start SITDSFCFRTHREE-171 : Suppl Rate selalu sama dng Effective rate jika CF, FL, SLB, MPF, FD
-          var bizTempSupplRateSame = [CommonConstant.CF4W, CommonConstant.FL4W, CommonConstant.CFNA ];
-          if(bizTempSupplRateSame.indexOf(this.BizTemplateCode) > -1)
-            response.AppSupplEffectiveRatePrcnt = response.EffectiveRatePrcnt
-          //End SITDSFCFRTHREE-171
 
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
@@ -202,7 +196,10 @@ export class SchmBalloonXComponent implements OnInit {
 
             SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt,
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            //End SITDSFCFRTHREE-171
 
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,
@@ -286,7 +283,10 @@ export class SchmBalloonXComponent implements OnInit {
 
             SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
 
           })
           this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
