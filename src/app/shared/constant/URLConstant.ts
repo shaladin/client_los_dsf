@@ -33,6 +33,7 @@ export class URLConstant {
 
   // APP Application
   public static AddAppFromCopyCancledApp = environment.losUrl + "/v1" + "/Application/AddAppFromCopyCancledApp";
+  public static AddAppFromCopyCancledAppV2 = environment.losUrl + "/v2" + "/Application/AddAppFromCopyCancledApp";
   public static AddAppMaindata = environment.losUrl + "/v1" + "/Application/AddAppMainData";
   public static GetPurchaseOrderExpDt = environment.losUrl + "/v1" + "/Application/GetPurchaseOrderExpDt";
   public static GetAppById = environment.losUrl + "/v1" + "/Application/GetAppById";
@@ -54,7 +55,9 @@ export class URLConstant {
   public static DataTableFeeAndInsNAP = environment.losUrl + "/v1" + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl + "/v1" + "/Application/UpdateAppStepByAppId";
   public static CopyCancelledApp = environment.losUrl + "/v1" + "/Application/CopyCancelledApp";
+  public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledApp";
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainData";
+  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
   public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
@@ -1022,7 +1025,9 @@ export class URLConstant {
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/SubmitAgrmntSignerData";
+  public static SubmitAgrmntSignerDataV2 = environment.losUrl + "/v2" + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/EditAgrmntSignerData";
+  public static EditAgrmntSignerDataV2 = environment.losUrl + "/v2" + "/AgrmntSigner/EditAgrmntSignerData";
   public static GetAgrmntSignerByAgrmntId = environment.losUrl + "/v1" + "/AgrmntSigner/GetAgrmntSignerByAgrmntId";
 
   //AGRMNT FIN DATA

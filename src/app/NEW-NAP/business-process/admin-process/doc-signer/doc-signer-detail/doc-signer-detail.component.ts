@@ -340,18 +340,16 @@ export class DocSignerDetailComponent implements OnInit {
       this.agrmntSignerObj.AppCustSpouseId = this.ResponseAppCustDataObj.AppCustSpouseId;
     }
 
+    let urlPost = environment.isCore ? URLConstant.SubmitAgrmntSignerDataV2 : URLConstant.SubmitAgrmntSignerData;
+
     if (this.mode == "edit") {
-      this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
-        });
-    } else {
-      this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
-        });
+      urlPost = environment.isCore ? URLConstant.EditAgrmntSignerDataV2 : URLConstant.EditAgrmntSignerData;
     }
+
+    this.http.post(urlPost, this.agrmntSignerObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
+      });
   }
 }
