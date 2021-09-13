@@ -111,8 +111,6 @@ export class InvoiceDataDlfnComponent implements OnInit {
     await this.httpClient.post(URLConstant.GetAppDlrFinByAppId, obj).subscribe(
       (response) => {
         this.AppDlrFncngId = response["AppDlrFncngId"];
-        console.log("oi response", response);
-        console.log("oi dlrfinancingid",this.AppDlrFncngId);
         this.GetListAppInvoiceH();
       });
     await this.httpClient.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, obj).subscribe(
@@ -357,8 +355,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
     }
     this.httpClient.post(URLConstant.AppInvoiceDlrFncngHByAppDlrFncngId, obj).subscribe(
       (response) => {
-        this.dataobj = response[CommonConstant.ReturnObj];
-        console.log("oi app invoice", response);
+        this.dataobj = response[CommonConstant.ReturnObj];        
       });
   }
 
@@ -377,8 +374,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
   }
 
   SaveForm(enjiForm: NgForm) {
-    console.log("DEBUG FE")
-    console.log("oi",this.dataobj);
+    console.log("DEBUG FE")    
     if (this.dataobj["TotalInvoiceAmt"] <= 0) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_INVOICE);
     }
