@@ -95,7 +95,7 @@ export class AssetDataComponent implements OnInit {
     MrAssetConditionCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
     SupplName: ['', Validators.maxLength(500)],
-    AssetPriceAmt: ['', Validators.required],
+    AssetPriceAmt: ['', [Validators.required, Validators.min(1.00)]],
     DownPaymentAmt: ['', [Validators.required, Validators.min(0.00)]],
     DownPaymentPrctg: [0, Validators.max(100)],
     AssetNotes: ['', [Validators.maxLength(4000)]],

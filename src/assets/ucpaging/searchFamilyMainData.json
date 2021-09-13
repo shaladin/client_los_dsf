@@ -17,7 +17,7 @@
       "type": "sort",
       "position": "left",
       "label": "Relationship",
-      "name": "MrCustRelationshipCode"
+      "name": "MrCustRelationshipDescr"
     },
     {
       "type": "sort",
@@ -45,7 +45,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "MrCustRelationshipCode"
+      "property": "MrCustRelationshipDescr"
     },
     {
       "type": "text",
@@ -57,34 +57,67 @@
       "position": "center",
       "action": [
         {
-          "type": "callback",
-          "key": "edit",
-          "property": [
+          "type": "switch",
+          "case": [
             {
-              "type": "AppCustId",
-              "property": "AppCustId"
-            },
-            {
-              "type": "MrCustTypeCode",
-              "property": "MrCustTypeCode"
-            },
-            {
-              "type": "mode",
-              "property": "edit"
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "MrCustRelationshipDescr",
+                  "value": "Self Customer",
+                  "restriction": "NEQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "edit",
+                "icon": "ft-edit-2",
+                "property": [
+                  {
+                    "type": "AppCustId",
+                    "property": "AppCustId"
+                  },
+                  {
+                    "type": "MrCustTypeCode",
+                    "property": "MrCustTypeCode"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "edit"
+                  }
+                ]
+              },
+              "isHide": false
             }
           ]
         },
         {
-          "type": "callback",
-          "key": "delete",
-          "property": [
+          "type": "switch",
+          "case": [
             {
-              "type": "AppCustId",
-              "property": "AppCustId"
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "MrCustRelationshipDescr",
+                  "value": "Self Customer",
+                  "restriction": "NEQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "delete",
+                "property": [
+                  {
+                    "type": "AppCustId",
+                    "property": "AppCustId"
+                  }
+                ],
+                "icon" : "ft-trash-2",
+                "anchor" : "warning"
+              },
+              "isHide": false
             }
-          ],
-          "icon" : "ft-trash-2",
-          "anchor" : "warning"
+          ]
         }
       ]
     }

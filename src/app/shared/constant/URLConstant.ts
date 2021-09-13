@@ -497,6 +497,7 @@ export class URLConstant {
   
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
+  public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
   public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
 
   // SERVICE TASK
@@ -740,7 +741,8 @@ export class URLConstant {
   public static GetMouCustCollateralDataExistingByCollateralNo = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralDataExistingByCollateralNo";
 
   public static CheckMouCustCollateralIntegrator = environment.losUrl + "/v1" + "/MouCustCollateral/CheckMouCustCollateralIntegrator";
-  public static ValidateAddExistingByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateral/ValidateAddExistingByMouCustId";
+  public static ValidateAddExistingByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateral/ValidateAddExistingByMouCustId"
+  public static GetListMouCustCollateralActiveByCustNo = environment.losUrl + "/v1" + "/MouCustCollateral/GetListMouCustCollateralActiveByCustNo";
   // MOU CUST COLLATERAL DOC
 
   // MOU CUST RVW H
@@ -1647,8 +1649,10 @@ export class URLConstant {
   //Task Reassignment
   public static GetTaskReassignmentDetail = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetail";
   public static SubmitTaskReassignment = environment.losUrl + "/v1" + "/TaskReassignment/SubmitTaskReassignment";
+  public static SubmitTaskReassignmentV2 = environment.losUrl + "/v2" + "/TaskReassignment/SubmitTaskReassignment";
   public static GetUserRoleByUsernameForReassignment = environment.FoundationR3Url + "/v1" + "/RefUserRole/GetUserRoleByUsernameForReassignment";
   public static GetTaskReassignmentDetailForApproval = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetailForApproval";
+  public static GetTaskReassignmentDetailForApprovalV2 = environment.losUrl + "/v2" + "/TaskReassignment/GetTaskReassignmentDetailForApproval";
 
   //APP CUST BANK ACC
   public static GetListAppCustBankAccByAppCustId = environment.losUrl + "/v1" + "/AppCustBankAcc/GetListAppCustBankAccByAppCustId";
