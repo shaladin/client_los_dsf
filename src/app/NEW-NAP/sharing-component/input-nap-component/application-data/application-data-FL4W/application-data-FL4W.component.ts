@@ -866,13 +866,9 @@ export class ApplicationDataFL4WComponent implements OnInit {
       if (this.resultCrossApp[idx].AppCrossId != null) {
         var obj = new NapAppCrossObj();
         obj = this.resultCrossApp[idx];
-        this.http.post(URLConstant.DeleteAppCross, obj).subscribe(
-          (response) => {
-          }
-        )
+        this.resultCrossApp.splice(idx, 1);
+        this.ListCrossAppObj["result"].splice(idx, 1);
       }
-      this.resultCrossApp.splice(idx, 1);
-      this.ListCrossAppObj["result"].splice(idx, 1);
     }
   }
 

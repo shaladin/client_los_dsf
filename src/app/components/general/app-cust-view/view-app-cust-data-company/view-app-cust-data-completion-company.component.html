@@ -45,15 +45,13 @@
             <table class="table table-responsive-md text-center table-hover">
                 <thead>
                 <tr class="table-header">
-                    <th class="text-left"><span name='No' translate>No</span> </th>
+                    <th class="text-center"><span name='No' translate>No</span> </th>
                     <th class="text-left"><span name='ShareholderName' translate>Shareholder Name</span> </th>
                     <th class="text-left"><span name='ShareholderType' translate>Shareholder Type</span></th>
-                    <!-- <th class="text-left"><span name='ShareholderRelationship' translate>Shareholder Relationship</span></th> -->
-                    <th class="text-center"><span name='EstablishmentDate' translate>Establishment Date</span></th>
-                    <th class="text-right"><span name='SharePercent' translate>Share Percent</span></th>
-                    <th class="text-center"><span name='IsSigner' translate>Is Signer</span></th>
-                    <th class="text-center"><span name='IsOwner' translate>Is Owner</span></th>
+                    <th class="text-right"><span name='SharePercent' translate>Share (%)</span></th>
                     <th class="text-center"><span name='IsActive' translate>Is Active</span></th>
+                    <th class="text-center"><span name='IsOwner' translate>Is Owner</span></th>
+                    <th class="text-center"><span name='IsSigner' translate>Is Signer</span></th>
                     <th class="text-center"><span translate >View</span></th>
                 </tr>
                 </thead>
@@ -66,16 +64,16 @@
                 <ng-container *ngFor="let item of appCustCompanyMgmntShrholderObjs; let i=index">
                     <tr>
                     <td class="text-center">{{i + 1}}</td>
-                    <td class="text-left">{{item.MgmntShrholderName}}</td>
-                    <td class="text-left">{{item.CustTypeName}}</td>
-                    <!-- <td class="text-left">{{item.MrCustRelationshipDescr}}</td> -->
-                    <td class="text-center">{{ (item.MrCustTypeCode == 'COMPANY' ? item.EstablishmentDt : item.BirthDt) | date: 'dd-MMMM-yyyy'}}</td>
+                    <td class="text-left">{{item.ShareholderName}}</td>
+                    <td class="text-left">{{item.ShareholderTypeDesc}}</td>
                     <td class="text-right">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
-                    <td class="text-center">{{item.IsSigner ? 'Yes' : 'No'}}</td>
-                    <td class="text-center">{{item.IsOwner ? 'Yes' : 'No'}}</td>
                     <td class="text-center">{{item.IsActive ? 'Yes' : 'No'}}</td>
+                    <td class="text-center">{{item.IsOwner ? 'Yes' : 'No'}}</td>
+                    <td class="text-center">{{item.IsSigner ? 'Yes' : 'No'}}</td>
                     <td class="text-center">
-                        <a (click)="viewDetailShareholderHandler(item.AppCustId, item.MrCustTypeCode)" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"></i></a>
+                        <span *ngIf="item.ShareholderType != ShrTypePublic">
+                            <a (click)="viewDetailShareholderHandler(item.AppCustId, item.ShareholderType)" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"></i></a>
+                        </span>
                     </td>
                     </tr>
                 </ng-container>

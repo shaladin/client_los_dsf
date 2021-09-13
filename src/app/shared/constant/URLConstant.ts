@@ -33,6 +33,7 @@ export class URLConstant {
 
   // APP Application
   public static AddAppFromCopyCancledApp = environment.losUrl + "/v1" + "/Application/AddAppFromCopyCancledApp";
+  public static AddAppFromCopyCancledAppV2 = environment.losUrl + "/v2" + "/Application/AddAppFromCopyCancledApp";
   public static AddAppMaindata = environment.losUrl + "/v1" + "/Application/AddAppMainData";
   public static GetPurchaseOrderExpDt = environment.losUrl + "/v1" + "/Application/GetPurchaseOrderExpDt";
   public static GetAppById = environment.losUrl + "/v1" + "/Application/GetAppById";
@@ -41,6 +42,7 @@ export class URLConstant {
   public static GetAppDetailForAppTabById = environment.losUrl + "/v1" + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/v1" + "/Application/AddAppFromLead";
   public static AddAppFromSimpleLead = environment.losUrl + "/v1" + "/Application/AddAppFromSimpleLead";
+  public static AddAppFromSimpleLeadV2 = environment.losUrl + "/v2" + "/Application/AddAppFromSimpleLead";
   public static DataTableNAP = environment.losUrl + "/v1" + "/Application/DataTableNAP";
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/v1" + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/v1" + "/Application/GetAppAndAppCustDetailByAgrmntId";
@@ -53,13 +55,16 @@ export class URLConstant {
   public static DataTableFeeAndInsNAP = environment.losUrl + "/v1" + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl + "/v1" + "/Application/UpdateAppStepByAppId";
   public static CopyCancelledApp = environment.losUrl + "/v1" + "/Application/CopyCancelledApp";
+  public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledApp";
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainData";
+  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
   public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
   public static AddAppFromMou = environment.losUrl + "/v1" + "/Application/AddAppFromMou";
   public static CheckMouCustIntegrator = environment.losUrl + "/v1" + "/MouCust/CheckMouCustIntegrator";
   public static AddNap1FromLead = environment.losUrl + "/v1" + "/Application/AddNap1FromLead";
+  public static AddNap1FromLeadV2 = environment.losUrl + "/v2" + "/Application/AddNap1FromLead";
 
   public static CalculatePlafondAgrmnt = environment.losUrl + "/v1" + "/ApplicationX/CalculatePlafondAgrmnt";
   public static CheckIsMouFreeze = environment.losUrl + "/v1" + "/MouCust/CheckIsMouFreeze";
@@ -1021,7 +1026,9 @@ export class URLConstant {
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/SubmitAgrmntSignerData";
+  public static SubmitAgrmntSignerDataV2 = environment.losUrl + "/v2" + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/EditAgrmntSignerData";
+  public static EditAgrmntSignerDataV2 = environment.losUrl + "/v2" + "/AgrmntSigner/EditAgrmntSignerData";
   public static GetAgrmntSignerByAgrmntId = environment.losUrl + "/v1" + "/AgrmntSigner/GetAgrmntSignerByAgrmntId";
 
   //AGRMNT FIN DATA
