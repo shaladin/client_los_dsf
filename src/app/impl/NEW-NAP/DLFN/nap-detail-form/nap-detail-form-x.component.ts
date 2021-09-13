@@ -350,8 +350,7 @@ export class NapDetailFormXComponent implements OnInit {
         if (IsInValid) {
           this.toastr.warningMessage(ExceptionConstant.MOU_FREEZE_STATE);
           return
-        }
-        console.log("oi IsInValid", IsInValid)
+        }        
         if (IsInValid == false){                 
           this.NapObj.WfTaskListId = this.wfTaskListId;
           if (this.ReturnHandlingHId > 0) {
