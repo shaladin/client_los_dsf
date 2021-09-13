@@ -12,6 +12,7 @@ import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-
 import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
 import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-monthly-inprocess-app/report-monthly-inprocess-app.component";
 import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
+import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: PathConstant.REPORT_CANCEL_LEAD, component: ReportLeadCancelComponent, data: { title: 'Report Cancel Lead' } },
       { path: PathConstant.REPORT_MONTHLY_INPROCESS_APP, component: ReportMonthlyInprocessAppComponent, data: { title: 'Report Monthly Inprocess Application' } },
       { path: PathConstant.REPORT_DAILY_PENDING_APP_AFT_APV, component: ReportDailyPendingAppAftApvComponent, data: { title: 'Report Daily Pending App After Approval' } },
+      { path: PathConstant.REPORT_MONTHLY_PENDING_LEAD, component: ReportMonthlyPendingLeadComponent, data: { title: 'Report Monthly Pending Lead' } },
     ]
   }
 ]
