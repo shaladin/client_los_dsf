@@ -17,7 +17,7 @@
               <i class="fas fa-circle" style="color: red" *ngIf="item.IsActive == false"></i>
               - {{item.BankName}} - {{item.BankBranch}} - {{item.BankAccNo}} - {{item.BankAccName}}
             </h5>
-            <div class="col-md-10" style="display: inline-block; text-align: right;">
+            <div class="col-md-12" style="display: inline-block; text-align: right;">
               <button type="button" class="btn btn-raised btn-primary mr-1"
                 (click)="custBankHandler('editStmnt', item)" translate>
                 Add Bank Statement
