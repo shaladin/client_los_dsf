@@ -105,10 +105,15 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
       this.isDetail = true;
       this.inputMode = "EDIT";
       this.appCustId = ev.RowObj.AppCustId;
-      this.tempTotalSharePrct -= ev.RowObj.SharePrcnt;
       this.MrCustTypeCode = ev.RowObj.ShareholderType;
       this.AppCustCompanyMgmntShrholderId = ev.RowObj.AppCustCompanyMgmntShrholderId;
+
+      if(ev.RowObj.IsActive)
+      {
+        this.tempTotalSharePrct -= ev.RowObj.SharePrcnt;
+      }
     }
+
 
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
