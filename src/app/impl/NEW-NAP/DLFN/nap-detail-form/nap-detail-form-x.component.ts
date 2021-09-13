@@ -43,6 +43,7 @@ export class NapDetailFormXComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
+  MouCustId: number; 
   IsMultiAsset: boolean = false;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
@@ -352,17 +353,14 @@ export class NapDetailFormXComponent implements OnInit {
           return
         }
         console.log("oi IsInValid", IsInValid)
-        if (IsInValid == false){
-          console.log("oi tier luar")          
+        if (IsInValid == false){                 
           this.NapObj.WfTaskListId = this.wfTaskListId;
           if (this.ReturnHandlingHId > 0) {
-            this.IsSavedTC = true;      
-            console.log("oi tier dalam")
+            this.IsSavedTC = true;                  
           } else {      
             let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
             this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
-              (response) => {
-                console.log("oi tier dalame")
+              (response) => {                
                 this.toastr.successMessage(response["message"]);
                 this.Cancel();
               })
