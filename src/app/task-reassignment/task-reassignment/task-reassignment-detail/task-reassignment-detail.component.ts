@@ -11,6 +11,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcLookupObj } from 'app/shared/model/UcLookupObj.Model';
@@ -25,7 +26,7 @@ import { map, mergeMap } from 'rxjs/operators';
   styles: []
 })
 export class TaskReassignmentDetailComponent implements OnInit {
-  WfTaskListId: number;
+  WfTaskListId: any;
   WfActivityName: string;
   InputLookupObj: InputLookupObj;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -33,6 +34,9 @@ export class TaskReassignmentDetailComponent implements OnInit {
   IsReady: boolean;
   WfRoleCode: string;
   WfOfficeCode: string;
+
+  //#region V2
+  //#endregion
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -45,10 +49,13 @@ export class TaskReassignmentDetailComponent implements OnInit {
     TaskReassignmentTrxId: [0],
     TaskReassignmentTrxNo: [''],
     WfRefNo: [''],
+    WfCode: [''],
     WfName: [''],
     WfActivityCode: [''],
+    WfActivityName: [''],
     CurrentUser: ['', [Validators.required]],
     OldCurrentUser: [''],
+    OfficeCode: [''],
     ApvDt: [null],
     TaskReassignmentStat: [CommonConstant.TaskReassignmentApv],
     WfTaskListId: ['']
@@ -60,9 +67,29 @@ export class TaskReassignmentDetailComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private cookieService: CookieService 
+    private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
+      //#region v2 sementara
+      if (params["Assignee"]) {
+        this.TaskReassignmentForm.get("OldCurrentUser").patchValue(params["Assignee"]);
+      }
+      if (params["WfActivityCode"]) {
+        this.TaskReassignmentForm.get("WfActivityCode").patchValue(params["WfActivityCode"]);
+      }
+      if (params["WfRefNo"]) {
+        this.TaskReassignmentForm.get("WfRefNo").patchValue(params["WfRefNo"]);
+      }
+      if (params["WfName"]) {
+        let WfRefNoSplit: Array<string> = params["WfName"].split(":");
+        this.TaskReassignmentForm.get("WfCode").patchValue(WfRefNoSplit[0]);
+        this.TaskReassignmentForm.get("WfName").patchValue(WfRefNoSplit[0]);
+      }
+      if (params["WfActivityName"]) {
+        this.WfActivityName = params["WfActivityName"];
+        this.TaskReassignmentForm.get("WfActivityName").patchValue(params["WfActivityName"]);
+      }
+      //#endregion
       if (params["WfTaskListId"]) {
         this.WfTaskListId = params["WfTaskListId"];
         this.TaskReassignmentForm.patchValue({
@@ -77,60 +104,96 @@ export class TaskReassignmentDetailComponent implements OnInit {
     this.InputLookupObj.genericJson = "./assets/uclookup/lookupUserForReassignment.json";
   }
 
-  ngOnInit() {
-    this.http.post(URLConstant.GetTaskReassignmentDetail, { WfTaskListId: this.WfTaskListId }).pipe(
-      map((response) => {
-        this.TaskReassignmentForm.patchValue({
-          WfRefNo: response["WfRefNo"],
-          WfName: response["WfName"],
-          WfActivityCode: response["WfActivityCode"],
-          OldCurrentUser: response["CurrentUser"]
-        });
-        this.WfActivityName = response["WfActivityName"];
-        this.WfRoleCode = response["RoleCode"];
-        this.WfOfficeCode = response["OfficeCode"];
-        return response;
-      }),
-      mergeMap((response) => {
-        var Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
-        let getDDLRec = this.http.post(URLConstant.GetListActiveRefReason, Obj);
-        let getUserRole = this.http.post(URLConstant.GetUserRoleByUsernameForReassignment, { Username: response["CurrentUser"] });
-        return forkJoin([getUserRole, getDDLRec]);
-      })
-    ).toPromise().then(
-      (response) => {
+  async ngOnInit() {
+    if (!environment.isCore) {
+      this.http.post(URLConstant.GetTaskReassignmentDetail, { WfTaskListId: this.WfTaskListId }).pipe(
+        map((response) => {
+          this.TaskReassignmentForm.patchValue({
+            WfRefNo: response["WfRefNo"],
+            WfName: response["WfName"],
+            WfActivityCode: response["WfActivityCode"],
+            WfActivityName: response["WfActivityName"],
+            OldCurrentUser: response["CurrentUser"],
+            OfficeCode: response["OfficeCode"]
+          });
+          this.WfActivityName = response["WfActivityName"];
+          this.WfRoleCode = response["RoleCode"];
+          this.WfOfficeCode = response["OfficeCode"];
+          return response;
+        }),
+        mergeMap((response) => {
+          let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+          let getDDLRec = this.http.post(URLConstant.GetListActiveRefReason, Obj);
+          let getUserRole = this.http.post(URLConstant.GetUserRoleByUsernameForReassignment, { Username: response["CurrentUser"] });
+          return forkJoin([getUserRole, getDDLRec]);
+        })
+      ).toPromise().then(
+        (response) => {
 
-        this.DDLRecomendation = response[1][CommonConstant.ReturnObj];
+          this.DDLRecomendation = response[1][CommonConstant.ReturnObj];
 
-        var criteriaList = new Array<CriteriaObj>();
-        var criteriaObj = new CriteriaObj();
-        criteriaObj.restriction = AdInsConstant.RestrictionEq;
-        criteriaObj.propName = 'OO.ROLE_CODE'//'UR.REF_ROLE_ID';
-        criteriaObj.value = this.WfRoleCode;//response[0]["RefRoleId"];
-        criteriaList.push(criteriaObj);
+          let criteriaList = new Array<CriteriaObj>();
+          let criteriaObj = new CriteriaObj();
+          criteriaObj.restriction = AdInsConstant.RestrictionEq;
+          criteriaObj.propName = 'OO.ROLE_CODE'//'UR.REF_ROLE_ID';
+          criteriaObj.value = this.WfRoleCode;//response[0]["RefRoleId"];
+          criteriaList.push(criteriaObj);
 
-        criteriaObj = new CriteriaObj();
-        criteriaObj.restriction = AdInsConstant.RestrictionEq;
-        criteriaObj.propName = 'OO.OFFICE_CODE';
-        criteriaObj.value = this.WfOfficeCode;//response[0]["RefOfficeId"];
-        criteriaList.push(criteriaObj);
-        this.InputLookupObj.addCritInput = criteriaList;
+          criteriaObj = new CriteriaObj();
+          criteriaObj.restriction = AdInsConstant.RestrictionEq;
+          criteriaObj.propName = 'OO.OFFICE_CODE';
+          criteriaObj.value = this.WfOfficeCode;//response[0]["RefOfficeId"];
+          criteriaList.push(criteriaObj);
+          this.InputLookupObj.addCritInput = criteriaList;
 
-        criteriaObj = new CriteriaObj();
-        criteriaObj.restriction = AdInsConstant.RestrictionNeq;
-        criteriaObj.propName = 'U.USERNAME';
-        criteriaObj.value = this.TaskReassignmentForm.controls.OldCurrentUser.value;
-        criteriaList.push(criteriaObj);
-        this.InputLookupObj.addCritInput = criteriaList;
+          criteriaObj = new CriteriaObj();
+          criteriaObj.restriction = AdInsConstant.RestrictionNeq;
+          criteriaObj.propName = 'U.USERNAME';
+          criteriaObj.value = this.TaskReassignmentForm.controls.OldCurrentUser.value;
+          criteriaList.push(criteriaObj);
+          this.InputLookupObj.addCritInput = criteriaList;
 
-        this.initInputApprovalObj();
+          this.initInputApprovalObj();
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+      return;
+    }
+
+    let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
+      (response: GenericListObj) => {
+        this.DDLRecomendation = response[CommonConstant.ReturnObj];
       }
-    ).catch(
-      (error) => {
-        console.log(error);
-      }
-    );
+    )
+    let userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let criteriaList = new Array<CriteriaObj>();
+    let criteriaObj = new CriteriaObj();
+    criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    criteriaObj.propName = 'OO.ROLE_CODE'//'UR.REF_ROLE_ID';
+    criteriaObj.value = userAccess[CommonConstant.ROLE_CODE];
+    this.WfRoleCode = userAccess[CommonConstant.ROLE_CODE];
+    criteriaList.push(criteriaObj);
 
+    criteriaObj = new CriteriaObj();
+    criteriaObj.restriction = AdInsConstant.RestrictionEq;
+    criteriaObj.propName = 'OO.OFFICE_CODE';
+    this.WfOfficeCode = userAccess[CommonConstant.OFFICE_CODE];
+    criteriaObj.value = this.WfOfficeCode;//response[0]["RefOfficeId"];
+    this.TaskReassignmentForm.get("OfficeCode").patchValue(this.WfOfficeCode);
+    criteriaList.push(criteriaObj);
+
+    criteriaObj = new CriteriaObj();
+    criteriaObj.restriction = AdInsConstant.RestrictionNeq;
+    criteriaObj.propName = 'U.USERNAME';
+    criteriaObj.value = this.TaskReassignmentForm.get("OldCurrentUser").value;
+    criteriaList.push(criteriaObj);
+    this.InputLookupObj.addCritInput = criteriaList;
+
+    this.initInputApprovalObj();
 
   }
 
@@ -145,10 +208,11 @@ export class TaskReassignmentDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    var obj = this.TaskReassignmentForm.value;
-    obj["RequestRFAObj"] = {RFAInfo: this.TaskReassignmentForm.controls.RFAInfo.value};
+    let obj = this.TaskReassignmentForm.value;
+    obj["RequestRFAObj"] = { RFAInfo: this.TaskReassignmentForm.controls.RFAInfo.value };
     if (obj["RequestRFAObj"] != undefined) {
-      this.http.post(URLConstant.SubmitTaskReassignment, obj).toPromise().then(
+      let urlApi: string = environment.isCore ? URLConstant.SubmitTaskReassignmentV2 : URLConstant.SubmitTaskReassignment;
+      this.http.post(urlApi, obj).toPromise().then(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.router.navigate([NavigationConstant.TASK_REASSIGN_PAGING]);
@@ -162,9 +226,9 @@ export class TaskReassignmentDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    
-    var Attributes = [];
-    var TypeCode = {
+
+    let Attributes = [];
+    let TypeCode = {
       "TypeCode": "RASGN_APV_TYPE",
       "Attributes": Attributes,
     };

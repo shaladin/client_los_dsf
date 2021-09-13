@@ -13,6 +13,9 @@ import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/repo
 import { ReportDailyIncomingLeadComponent } from "./report-daily-incoming/report-daily-incoming-lead/report-daily-incoming-lead.component";
 import { ReportDailyPreGoLiveByProductComponent } from "./report-daily-pre-go-live/report-daily-pre-go-live-by-product/report-daily-pre-go-live-by-product.component";
 import { ReportDailyPreGoLiveByCmoComponent } from "./report-daily-pre-go-live/report-daily-pre-go-live-by-cmo/report-daily-pre-go-live-by-cmo.component";
+import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-monthly-inprocess-app/report-monthly-inprocess-app.component";
+import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
+import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
 
 const routes: Routes = [
   {
@@ -30,6 +33,9 @@ const routes: Routes = [
       { path: PathConstant.REPORT_DAILY_INCOMING_LEAD, component: ReportDailyIncomingLeadComponent, data: { title: 'Report Daily Incoming Lead' } },
       { path: PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT, component: ReportDailyPreGoLiveByProductComponent, data: { title: 'Report Daily Pre Go Live By Product' } },
       { path: PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_CMO, component: ReportDailyPreGoLiveByCmoComponent, data: { title: 'Report Daily Pre Go Live By CMO' } },
+      { path: PathConstant.REPORT_MONTHLY_INPROCESS_APP, component: ReportMonthlyInprocessAppComponent, data: { title: 'Report Monthly Inprocess Application' } },
+      { path: PathConstant.REPORT_DAILY_PENDING_APP_AFT_APV, component: ReportDailyPendingAppAftApvComponent, data: { title: 'Report Daily Pending App After Approval' } },
+      { path: PathConstant.REPORT_MONTHLY_PENDING_LEAD, component: ReportMonthlyPendingLeadComponent, data: { title: 'Report Monthly Pending Lead' } },
     ]
   }
 ]
