@@ -82,6 +82,10 @@ const routes: Routes = [
             {
                 path: PathConstant.VIEW_CUST_AGRMNT_LISTING,
                 loadChildren: './cust-agrmnt-list-view/cust-agrmnt-list-view.module#CustAgrmntListViewModule'
+            },
+            {
+                path: PathConstantX.VIEW_CESSIE,
+                loadChildren: 'app/impl/view-enhancing/cessie-view/cessie-view.module#CessieViewModule'
             }
         ]
     }
