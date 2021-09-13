@@ -42,8 +42,7 @@ export class NapDetailFormXComponent implements OnInit {
   wfTaskListId: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
-  NapObj: AppObj;
-  MouCustId: number; 
+  NapObj: AppObj;  
   IsMultiAsset: boolean = false;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
