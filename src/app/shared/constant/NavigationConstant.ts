@@ -450,6 +450,7 @@ export class NavigationConstant {
   public static REPORT_CANCEL_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_CANCEL_LEAD; //'/Report/RptCancelLead'
   public static REPORT_DAILY_INCOMING_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_INCOMING_LEAD; //'/Report/RptDailyIncomingLead'
   public static REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT; //'/Report/RptDailyPreGoLiveByProduct'
+  public static REPORT_DAILY_PRE_GO_LIVE_BY_CMO = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_CMO; //'/Report/RptDailyPreGoLiveByCMO'
   //#endregion
   
 }

@@ -535,6 +535,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.REPORT_CANCEL_LEAD, Title: 'Report Cancel Lead', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_INCOMING_LEAD, Title: 'Report Daily Incoming Lead', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT, Title: 'Report Daily Pre Go Live By Product', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_DAILY_PRE_GO_LIVE_BY_CMO, Title: 'Report Daily Pre Go Live By CMO', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: [] 
   },
   {

@@ -12,6 +12,7 @@ import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-
 import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
 import { ReportDailyIncomingLeadComponent } from "./report-daily-incoming/report-daily-incoming-lead/report-daily-incoming-lead.component";
 import { ReportDailyPreGoLiveByProductComponent } from "./report-daily-pre-go-live/report-daily-pre-go-live-by-product/report-daily-pre-go-live-by-product.component";
+import { ReportDailyPreGoLiveByCmoComponent } from "./report-daily-pre-go-live/report-daily-pre-go-live-by-cmo/report-daily-pre-go-live-by-cmo.component";
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: PathConstant.REPORT_CANCEL_LEAD, component: ReportLeadCancelComponent, data: { title: 'Report Cancel Lead' } },
       { path: PathConstant.REPORT_DAILY_INCOMING_LEAD, component: ReportDailyIncomingLeadComponent, data: { title: 'Report Daily Incoming Lead' } },
       { path: PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT, component: ReportDailyPreGoLiveByProductComponent, data: { title: 'Report Daily Pre Go Live By Product' } },
+      { path: PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_CMO, component: ReportDailyPreGoLiveByCmoComponent, data: { title: 'Report Daily Pre Go Live By CMO' } },
     ]
   }
 ]
