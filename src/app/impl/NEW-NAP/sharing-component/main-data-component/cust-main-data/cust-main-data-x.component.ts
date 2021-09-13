@@ -184,6 +184,8 @@ export class CustMainDataXComponent implements OnInit {
     MrCustRelationshipCode: ['', Validators.maxLength(50)],
     CustNo: [],
     CompanyType: [''],
+    CustPrefixName:[''],
+    CustSuffixName: [''],
     MrMaritalStatCode: ['', Validators.required],
     MrIdTypeCode: ['', Validators.required],
     IdNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
@@ -726,7 +728,8 @@ export class CustMainDataXComponent implements OnInit {
   async getCustMainData() {
     let reqObj: GenericObj = new GenericObj();
     reqObj.Id = this.appCustId;
-    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, reqObj).toPromise().then(
+    //await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, reqObj).toPromise().then(
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstantX.GetAppCustMainDataByAppCustIdX, reqObj).toPromise().then(
       async (response) => {
         if (response.AppCustObj) {
           if (!this.appCustId) this.appCustId = response.AppCustObj.AppCustId
@@ -1036,7 +1039,9 @@ export class CustMainDataXComponent implements OnInit {
       TaxIdNo: '',
       MotherMaidenName: '',
       MobilePhnNo1: '',
-      Email1: ''
+      Email1: '',
+      CustPrefixName:'',
+      CustSuffixName:''
     });
   }
 
@@ -1068,6 +1073,8 @@ export class CustMainDataXComponent implements OnInit {
         WnaCountryCode: CustPersonalObj.NationalityCountryCode,
         MrNationalityCode: CustPersonalObj.MrNationalityCode,
         MotherMaidenName: CustPersonalObj.MotherMaidenName,
+        CustPrefixName: CustPersonalObj.CustPrefixName,
+        CustSuffixName: CustPersonalObj.CustSuffixName,
         BirthPlace: CustPersonalObj.BirthPlace,
         BirthDt: formatDate(CustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US'),
         MobilePhnNo1: CustPersonalObj.MobilePhnNo1,
@@ -1237,6 +1244,10 @@ export class CustMainDataXComponent implements OnInit {
     this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustMainDataForm.controls.BirthPlace.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthDt = this.CustMainDataForm.controls.BirthDt.value;
     this.custDataPersonalObj.AppCustPersonalObj.MotherMaidenName = this.CustMainDataForm.controls.MotherMaidenName.value;
+
+    this.custDataPersonalObj.AppCustPersonalObj.CustSuffixName = this.CustMainDataForm.controls.CustSuffixName.value;
+    this.custDataPersonalObj.AppCustPersonalObj.CustPrefixName = this.CustMainDataForm.controls.CustPrefixName.value;
+
     this.custDataPersonalObj.AppCustPersonalObj.MobilePhnNo1 = this.CustMainDataForm.controls.MobilePhnNo1.value,
       this.custDataPersonalObj.AppCustPersonalObj.Email1 = this.CustMainDataForm.controls.Email1.value,
 
@@ -1414,7 +1425,8 @@ export class CustMainDataXComponent implements OnInit {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.setDataCustomerPersonalForSave();
       if (this.appCustId == null || this.appCustId == 0) {
-        this.http.post(URLConstant.AddCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+        //this.http.post(URLConstant.AddCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+        this.http.post(URLConstantX.AddCustMainDataPersonalX, this.custDataPersonalObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
               this.toastr.successMessage(response["message"]);
@@ -1428,7 +1440,8 @@ export class CustMainDataXComponent implements OnInit {
           }
         );
       } else {
-        this.http.post(URLConstant.EditCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+        //this.http.post(URLConstant.EditCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+        this.http.post(URLConstantX.EditCustMainDataPersonalX, this.custDataPersonalObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
               this.toastr.successMessage(response["message"]);

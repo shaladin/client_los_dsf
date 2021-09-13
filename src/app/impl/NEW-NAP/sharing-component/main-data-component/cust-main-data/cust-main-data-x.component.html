@@ -41,7 +41,8 @@
                   </lib-uclookupgeneric>
                 </div>
               </div>
-            </div>
+            </div>           
+
             <div class="col-md-6" *ngIf="MrCustTypeCode == CustTypePersonal">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Gender</label>
@@ -51,6 +52,7 @@
                 </div>
               </div>
             </div>
+
             <div class="col-md-6" *ngIf="MrCustTypeCode == CustTypeCompany">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Company Type</label>
@@ -86,6 +88,27 @@
             </div>
           </div>
           <div class="row" *ngIf="MrCustTypeCode == CustTypePersonal">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4" translate>Gelar Depan</label>
+                <div class="col-md-8">
+                  <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                    formControlName="CustPrefixName"
+                    >
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4" translate>Gelar Belakang</label>
+                <div class="col-md-8">
+                  <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                    formControlName="CustSuffixName"
+                    >
+                </div>
+              </div>
+            </div>  
             <div class="col-md-6">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Birth Place</label>
