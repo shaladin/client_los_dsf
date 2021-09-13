@@ -97,7 +97,7 @@ export class NapDetailFormXComponent implements OnInit {
   ngOnInit() {
     this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
-        this.SysConfigResultObj = response;
+        this.SysConfigResultObj = response;        
       });
 
     let appObj = { Id: this.appId };
@@ -342,17 +342,34 @@ export class NapDetailFormXComponent implements OnInit {
   }
   
   LastStepHandler() {  //lmyn miripp
-    this.NapObj.WfTaskListId = this.wfTaskListId;
-    if (this.ReturnHandlingHId > 0) {
-      this.IsSavedTC = true;
-    } else {
-      let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
-      this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.Cancel();
-        })
-    }
+    
+    let IsInValid;
+    this.http.post(URLConstant.CheckIsMouFreeze, {MouCustId : this.NapObj.MouCustId}).toPromise().then(
+      (response) => {
+        IsInValid = response["IsFreeze"]
+        if (IsInValid) {
+          this.toastr.warningMessage(ExceptionConstant.MOU_FREEZE_STATE);
+          return
+        }
+        console.log("oi IsInValid", IsInValid)
+        if (IsInValid == false){
+          console.log("oi tier luar")          
+          this.NapObj.WfTaskListId = this.wfTaskListId;
+          if (this.ReturnHandlingHId > 0) {
+            this.IsSavedTC = true;      
+            console.log("oi tier dalam")
+          } else {      
+            let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
+            this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
+              (response) => {
+                console.log("oi tier dalame")
+                this.toastr.successMessage(response["message"]);
+                this.Cancel();
+              })
+          }
+        }
+      }
+    );        
   }
 
   Cancel() {
