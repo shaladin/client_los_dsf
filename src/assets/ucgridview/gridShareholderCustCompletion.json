@@ -2,74 +2,52 @@
   "isSeq": true,
   "headerList": [
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
       "label": "Shareholder Name",
-      "name": "MgmntShrholderName"
+      "name": "ShareholderName"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
       "label": "Shareholder Type",
-      "name": "MrCustTypeCode"
+      "name": "ShareholderTypeDesc"
     },
     {
-      "type": "sort",
-      "position": "left",
-      "label": "Shareholder Relationship",
-      "name": "MrCustRelationshipDescr"
-    },
-    {
-      "type": "sort",
-      "position": "center",
-      "label": "Establishment Date",
-      "name": "EstablishmentDt"
-    },
-    {
-      "type": "sort",
-      "position": "center",
+      "type": "label",
+      "position": "right",
       "label": "Share(%)",
       "name": "SharePrcnt"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
-      "label": "Is Signer",
-      "name": "IsSigner"
+      "label": "Is Active",
+      "name": "IsActive"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
       "label": "Is Owner",
       "name": "IsOwner"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
-      "label": "Is Active",
-      "name": "IsActive"
+      "label": "Is Signer",
+      "name": "IsSigner"
     }
   ],
   "bodyList": [
     {
       "type": "text",
       "position": "left",
-      "property": "MgmntShrholderName"
+      "property": "ShareholderName"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "MrCustTypeCode"
-    },
-    {
-      "type": "text",
-      "position": "left",
-      "property": "MrCustRelationshipDescr"
-    },
-    {
-      "type": "date",
-      "position": "center",
-      "property": "EstablishmentDt"
+      "property": "ShareholderTypeDesc"
     },
     {
       "type": "decimal",
@@ -81,7 +59,7 @@
     {
       "type": "boolean",
       "position": "center",
-      "property": "IsSigner"
+      "property": "IsActive"
     },
     {
       "type": "boolean",
@@ -91,7 +69,7 @@
     {
       "type": "boolean",
       "position": "center",
-      "property": "IsActive"
+      "property": "IsSigner"
     }
   ]
 }
