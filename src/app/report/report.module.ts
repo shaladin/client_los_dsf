@@ -27,10 +27,7 @@ import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-
 import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
 import { ReportDailyIncomingLeadComponent } from './report-daily-incoming/report-daily-incoming-lead/report-daily-incoming-lead.component';
 import { ReportDailyPreGoLiveByProductComponent } from './report-daily-pre-go-live/report-daily-pre-go-live-by-product/report-daily-pre-go-live-by-product.component';
-<<<<<<< HEAD
-=======
 import { ReportDailyPreGoLiveByCmoComponent } from "./report-daily-pre-go-live/report-daily-pre-go-live-by-cmo/report-daily-pre-go-live-by-cmo.component";
->>>>>>> 0d08018c66339aad20f0b073611b90df90a1fbb8
 import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-monthly-inprocess-app/report-monthly-inprocess-app.component";
 import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
 import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
@@ -57,10 +54,7 @@ import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-month
     ReportLeadCancelComponent,
     ReportDailyIncomingLeadComponent,
     ReportDailyPreGoLiveByProductComponent,
-<<<<<<< HEAD
-=======
     ReportDailyPreGoLiveByCmoComponent,
->>>>>>> 0d08018c66339aad20f0b073611b90df90a1fbb8
     ReportMonthlyInprocessAppComponent,
     ReportDailyPendingAppAftApvComponent,
     ReportMonthlyPendingLeadComponent
