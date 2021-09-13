@@ -741,7 +741,8 @@ export class URLConstant {
   public static GetMouCustCollateralDataExistingByCollateralNo = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralDataExistingByCollateralNo";
 
   public static CheckMouCustCollateralIntegrator = environment.losUrl + "/v1" + "/MouCustCollateral/CheckMouCustCollateralIntegrator";
-  public static ValidateAddExistingByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateral/ValidateAddExistingByMouCustId";
+  public static ValidateAddExistingByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateral/ValidateAddExistingByMouCustId"
+  public static GetListMouCustCollateralActiveByCustNo = environment.losUrl + "/v1" + "/MouCustCollateral/GetListMouCustCollateralActiveByCustNo";
   // MOU CUST COLLATERAL DOC
 
   // MOU CUST RVW H
