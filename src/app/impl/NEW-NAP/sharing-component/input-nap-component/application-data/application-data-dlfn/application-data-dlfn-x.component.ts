@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { SalesInfoObj } from 'app/shared/model/SalesInfoObj.Model';
+import { SalesInfoObjX } from 'app/impl/shared/model/SalesInfoObjX.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -29,6 +29,8 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { DatePipe } from '@angular/common';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-application-data-dlfn-x',
@@ -40,12 +42,12 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode: string;
-  salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
+  salesAppInfoObj: SalesInfoObjX = new SalesInfoObjX();
   mouCustDlrFinObj: MouCustDlrFinObj = new MouCustDlrFinObj();
   isSingle: boolean = false;
 
   ListCrossAppObj: any = {};
-
+  inputLookupEconomicSectorObj: InputLookupObj;
   inputLookupObj: InputLookupObj;
   arrAddCrit: Array<CriteriaObj>;
   employeeIdentifier;
@@ -72,7 +74,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     CharaCredit: [''],
     PrevAgrNo: [''],
     WayRestructure: [''],
-    // MrSlikSecEcoCode: [''],
+    MrSlikSecEcoCode: [''],
     CustBankAcc: [''],
     IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
@@ -86,7 +88,8 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     BirthPlaceOwnerBankAcc: [''],
     BirthDtOwnerBankAcc: [''],
   });
-
+  slikSecDescr: string = "";
+  defaultSlikSecEcoCode: string;
   refMasterInterestType: RefMasterObj = new RefMasterObj();
   refMasterInsScheme: RefMasterObj = new RefMasterObj();
   refMasterInsType: RefMasterObj = new RefMasterObj();
@@ -148,7 +151,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.ListCrossAppObj['result'] = [];
 
     this.isInputLookupObj = false;
-
+    this.defaultSlikSecEcoCode = CommonConstantX.DefaultSlikSecEcoCode;
     await this.http.post(URLConstant.GetListRefPayFreqForMou, null).toPromise().then(
       (response: any) => {
         this.listAllActivePayFreq = response[CommonConstant.ReturnObj];
@@ -183,7 +186,8 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         PrevAgrNo: this.resultData.PrevAgrNo,
         WayRestructure: this.resultData.WayRestructure,
         IntrstRatePrcnt: this.resultData.InterestRatePrcnt,
-        TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt
+        TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt,
+        MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode,
       });
     }
 
@@ -603,6 +607,30 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.inputLookupObj.nameSelect = this.resultData.SalesOfficerName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
 
+    this.inputLookupEconomicSectorObj = new InputLookupObj();
+    this.inputLookupEconomicSectorObj.urlJson = "./assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json";
+    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+    this.inputLookupEconomicSectorObj.pagingJson = "./assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json";
+    this.inputLookupEconomicSectorObj.genericJson = "./assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json";
+
+    console.log(this.resultData);
+    let slikReqCode = {
+      Code: this.defaultSlikSecEcoCode
+    }
+    if (this.resultData["MrSlikSecEcoCode"] != null && this.resultData["MrSlikSecEcoCode"] != "") {
+      slikReqCode.Code = this.resultData["MrSlikSecEcoCode"];
+    }
+
+    this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, slikReqCode).subscribe(
+      (response: any) => {
+        this.slikSecDescr = response.SectorEconomySlikName;
+        this.inputLookupEconomicSectorObj.nameSelect = response.SectorEconomySlikName;
+        this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: response.SectorEconomySlikName };
+        this.SalesAppInfoForm.patchValue({
+          MrSlikSecEcoCode: response.SectorEconomySlikCode
+        });
+      });
+
     this.isInputLookupObj = true;
   }
 
@@ -699,7 +727,8 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         PrevAgrNo: this.resultData.PrevAgrNo,
         WayRestructure: this.resultData.WayRestructure,
         IntrstRatePrcnt: this.resultData.InterestRatePrcnt,
-        TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt
+        TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt,
+        MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode,
       });
 
       if (this.resultData.MrWopCode == 'AD') {
@@ -1027,5 +1056,11 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       arr.push(temp);
     }
     return arr;
+  }
+
+  getLookupEconomicSector(ev) {
+    this.SalesAppInfoForm.patchValue({
+      MrSlikSecEcoCode: ev.RefSectorEconomySlikCode
+    });
   }
 }
