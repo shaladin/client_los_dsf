@@ -355,7 +355,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
     }
     this.httpClient.post(URLConstant.AppInvoiceDlrFncngHByAppDlrFncngId, obj).subscribe(
       (response) => {
-        this.dataobj = response[CommonConstant.ReturnObj];        
+        this.dataobj = response[CommonConstant.ReturnObj];
       });
   }
 
@@ -374,7 +374,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
   }
 
   SaveForm(enjiForm: NgForm) {
-    console.log("DEBUG FE")    
+    console.log("DEBUG FE")
     if (this.dataobj["TotalInvoiceAmt"] <= 0) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_INVOICE);
     }
