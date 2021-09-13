@@ -16,6 +16,7 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-nap-cust-main-data-x',
@@ -86,12 +87,8 @@ export class NapCustMainDataXComponent implements OnInit {
           this.NapObj = response;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
           this.lobCode = this.NapObj.LobCode;          
-          if(this.lobCode == 'CF' || 
-            this.lobCode == 'LF'  || 
-            this.lobCode == 'SLB' || 
-            this.lobCode == 'MPF' || 
-            this.lobCode == 'FD')
-          {
+          if(this.lobCode = CommonConstantX.CF4W_LOB_CODE_CF)
+          {            
             this.isNonMandatory = true
           }else {
             this.isNonMandatory = false;

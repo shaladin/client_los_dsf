@@ -16,6 +16,7 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-nap-cust-main-data-x',
@@ -39,7 +40,7 @@ export class NapCustMainDataXComponent implements OnInit {
   IsViewReady: boolean = false;
   from:string;
   lobCode: string;
-  isNonMandatory: boolean;
+  isNonMandatory: boolean = false;
 
   AppStep = {
     "NEW": 1,
@@ -85,13 +86,10 @@ export class NapCustMainDataXComponent implements OnInit {
           this.NapObj = response;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
           this.lobCode = this.NapObj.LobCode;          
-          if(this.lobCode == 'CF' || 
-          this.lobCode == 'LF'  || 
-          this.lobCode == 'SLB' || 
-          this.lobCode == 'MPF' || 
-          this.lobCode == 'FD')
-        {
-          this.isNonMandatory = true
+          if(this.lobCode == CommonConstantX.CFNA_LOB_CODE_FD ||
+             this.lobCode == CommonConstantX.CFNA_LOB_CODE_MPF)
+          {            
+            this.isNonMandatory = true
         }else {
           this.isNonMandatory = false;
         }
