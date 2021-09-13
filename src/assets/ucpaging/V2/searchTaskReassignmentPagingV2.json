@@ -20,7 +20,8 @@
             "id": "UsernameId",
             "value": "",
             "label": "Username",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "officeRoleCodes",
@@ -44,7 +45,8 @@
             "id": "TrxCode",
             "value": "",
             "label": "Transaction No",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         }
     ],
     "querystring": {
