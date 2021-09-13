@@ -49,6 +49,7 @@ import { CreditApprovalResultExtensionApprovalDetailComponent } from './credit-a
 import { CreditApprovalResultExtensionApprovalPagingComponent } from './credit-apv-result-ext/approval/paging/paging.component';
 import { ReturnHandlingSurveyVerifXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-survey-verif-x/return-handling-survey-verif-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { CopyCancelledApplicationXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/copy-cancelled-application-x/copy-cancelled-application-x.component';
 
 
 const routes: Routes = [
@@ -219,6 +220,13 @@ const routes: Routes = [
       {
         path: PathConstant.COPY_CANCEL_APP,
         component: CopyCancelledApplicationComponent,
+        data: {
+          title: 'Copy From Cancelled Application'
+        }
+      },
+      {
+        path: PathConstantX.COPY_CANCEL_APP,
+        component: CopyCancelledApplicationXComponent,
         data: {
           title: 'Copy From Cancelled Application'
         }
