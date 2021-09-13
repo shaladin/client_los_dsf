@@ -391,10 +391,6 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (response) => {
         this.allInType = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
-          this.SalesAppInfoForm.patchValue({
-            MrInstTypeCode: this.allInType[0].Key,
-            MrInstSchemeCode: CommonConstant.InstSchmEvenPrincipal
-          });
           this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
         }
       });
@@ -500,23 +496,15 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     } else {
       payFreqCode = this.mouCustDlrFinObj.PayFreqCode
     }
-    if (!isInit) {
-      this.SalesAppInfoForm.patchValue({
-        TopDays: this.mouCustDlrFinObj.TopDays,
-        PayFreqCode: payFreqCode,
-        MrInstSchemeCode: CommonConstant.InstSchmRegularFix,
-        MrInstTypeCode: this.mouCustDlrFinObj.MrInstTypeCode,
-        MrWopCode: this.mouCustDlrFinObj.WopCode,
-        IntrstRatePrcnt: this.mouCustDlrFinObj.InterestRatePrcnt,
-        TopIntrstRatePrcnt: this.mouCustDlrFinObj.TopInterestRatePrcnt
-      });
-    } else {
-      this.SalesAppInfoForm.patchValue({
-        MrInstSchemeCode: CommonConstant.InstSchmRegularFix,
-        MrInstTypeCode: this.mouCustDlrFinObj.MrInstTypeCode,
-        MrWopCode: this.mouCustDlrFinObj.WopCode,
-      });
-    }
+    this.SalesAppInfoForm.patchValue({
+      TopDays: this.mouCustDlrFinObj.TopDays,
+      PayFreqCode: payFreqCode,
+      MrInstSchemeCode: CommonConstant.InstSchmRegularFix,
+      MrInstTypeCode: this.mouCustDlrFinObj.MrInstTypeCode,
+      MrWopCode: this.mouCustDlrFinObj.WopCode,
+      IntrstRatePrcnt: this.mouCustDlrFinObj.InterestRatePrcnt,
+      TopIntrstRatePrcnt: this.mouCustDlrFinObj.TopInterestRatePrcnt
+    });
 
     this.changePaymentFreq();
     this.CheckInstType();
