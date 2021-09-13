@@ -317,10 +317,14 @@ export class JobTabXComponent implements OnInit {
     }
     else if (this.CustModelCode == CommonConstant.CustModelProfessional) {
       this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
+    } else if (this.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
+      this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
+      this.JobDataForm.controls.NumOfEmployee.setValidators([Validators.required]);
     }
     this.JobDataForm.controls.MrJobPositionCode.updateValueAndValidity();
     this.JobDataForm.controls.MrJobStatCode.updateValueAndValidity();
     this.JobDataForm.controls.EmploymentEstablishmentDt.updateValueAndValidity();
+    this.JobDataForm.controls.NumOfEmployee.updateValueAndValidity();
   }
 
   SaveForm() {
