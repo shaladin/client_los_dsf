@@ -246,7 +246,7 @@
                                        [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data-FL4W> -->
               <app-financial-data-x *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+                [showCancel]="showCancel" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
