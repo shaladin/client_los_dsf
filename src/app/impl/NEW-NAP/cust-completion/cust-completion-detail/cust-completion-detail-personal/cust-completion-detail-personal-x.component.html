@@ -76,6 +76,14 @@
                 <span class="bs-stepper-label">Other Attribute</span>
               </button>
             </div>
+            <div class="line"></div>
+            <div class="step" data-target="#cust-upl-doc">
+              <button type="button" class="step-trigger" role="tab" aria-controls="cust-upl-doc"
+                      id="cust-upl-doc-trigger" (click)="EnterTab('UplDoc')">
+                <span class="bs-stepper-circle">9</span>
+                <span class="bs-stepper-label">Upload Document</span>
+              </button>
+            </div>
           </div>
           <br><br>
           <div class="bs-stepper-content">
@@ -112,7 +120,13 @@
             </div>
             <div id="cust-attr-tab" class="content" role="tabpanel" aria-labelledby="cust-attr-tab-trigger">
               <app-other-info-tab [CustTypeCode]="'PERSONAL'" *ngIf="stepIndex == 8"
-                (OutputTab)="GetEvent($event, 'Save')"> </app-other-info-tab>
+                (OutputTab)="GetEvent($event, 'UplDoc')"> </app-other-info-tab>
+            </div>
+            <div id="cust-upl-doc" class="content" role="tabpanel" aria-labelledby="cust-upl-doc-trigger">
+              <app-dms-iframe *ngIf="stepIndex == 9 && isDmsReady && SysConfigResultObj?.ConfigValue == 1"
+                              (outputTab)="GetEvent($event, 'Save')"
+                              [showButton]="ReturnHandlingHId == 0"
+                              [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
