@@ -88,8 +88,7 @@ export class NapCustMainDataXComponent implements OnInit {
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
           this.lobCode = this.NapObj.LobCode;          
           if(this.lobCode = CommonConstantX.CF4W_LOB_CODE_CF)
-          {
-            console.log(this.lobCode);
+          {            
             this.isNonMandatory = true
           }else {
             this.isNonMandatory = false;

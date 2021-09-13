@@ -88,8 +88,7 @@ export class NapCustMainDataXComponent implements OnInit {
           this.lobCode = this.NapObj.LobCode;          
           if(this.lobCode == CommonConstantX.CFNA_LOB_CODE_FD ||
              this.lobCode == CommonConstantX.CFNA_LOB_CODE_MPF)
-          {
-            console.log(this.lobCode);
+          {            
             this.isNonMandatory = true
         }else {
           this.isNonMandatory = false;
