@@ -42,7 +42,7 @@ export class NapDetailFormXComponent implements OnInit {
   wfTaskListId: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
-  NapObj: AppObj;
+  NapObj: AppObj;  
   IsMultiAsset: boolean = false;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
@@ -97,7 +97,7 @@ export class NapDetailFormXComponent implements OnInit {
   ngOnInit() {
     this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
-        this.SysConfigResultObj = response;
+        this.SysConfigResultObj = response;        
       });
 
     let appObj = { Id: this.appId };
@@ -342,17 +342,30 @@ export class NapDetailFormXComponent implements OnInit {
   }
   
   LastStepHandler() {  //lmyn miripp
-    this.NapObj.WfTaskListId = this.wfTaskListId;
-    if (this.ReturnHandlingHId > 0) {
-      this.IsSavedTC = true;
-    } else {
-      let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
-      this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.Cancel();
-        })
-    }
+    
+    let IsInValid;
+    this.http.post(URLConstant.CheckIsMouFreeze, {MouCustId : this.NapObj.MouCustId}).toPromise().then(
+      (response) => {
+        IsInValid = response["IsFreeze"]
+        if (IsInValid) {
+          this.toastr.warningMessage(ExceptionConstant.MOU_FREEZE_STATE);
+          return
+        }        
+        if (IsInValid == false){                 
+          this.NapObj.WfTaskListId = this.wfTaskListId;
+          if (this.ReturnHandlingHId > 0) {
+            this.IsSavedTC = true;                  
+          } else {      
+            let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
+            this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
+              (response) => {                
+                this.toastr.successMessage(response["message"]);
+                this.Cancel();
+              })
+          }
+        }
+      }
+    );        
   }
 
   Cancel() {
