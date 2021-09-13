@@ -299,6 +299,13 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       addCritCustNo.restriction = AdInsConstant.RestrictionEq;
       addCritCustNo.value = this.custNo;
       this.criteriaList.push(addCritCustNo);
+
+      const addMouActive = new CriteriaObj();
+      addMouActive.DataType = 'text';
+      addMouActive.propName = 'MC.MOU_STAT';
+      addMouActive.restriction = AdInsConstant.RestrictionEq;
+      addMouActive.value = CommonConstant.STAT_CODE_ACT;
+      this.criteriaList.push(addMouActive);
     }
 
     this.inputLookupObj.nameSelect = "";
@@ -346,8 +353,8 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       ManufacturingYear: ''
     });
   }
-
-  open(pageType: string) {
+  isAddExistingOK: boolean = true;
+  async open(pageType: string) {
     this.isAdd = true;
     this.ResetForm();
     this.AddCollForm.controls.MrCollateralConditionCode.disable();
@@ -355,6 +362,21 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.ChgMouCustCollateralId = 0;
     this.GenerateCollateralAttr(false, 0);
     if (pageType == "AddExisting") {
+      await this.http.post(URLConstant.GetListMouCustCollateralActiveByCustNo, { TrxNo: this.custNo }).toPromise().then(
+        (response) => {
+          if(response["ReturnObject"].length < 1){
+            this.isAddExistingOK = false;
+          }
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+      if(!this.isAddExistingOK){
+        this.toastr.warningMessage(ExceptionConstant.NO_EXISTING_COLL);
+        return;
+      }
       let listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
       listDocExisting.reset();
       while (listDocExisting.length !== 0) {

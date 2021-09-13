@@ -1,0 +1,57 @@
+{
+    "title": "Report Daily Pending App After Approval",
+    "reportName": "Report Daily Pending App After Approval",
+    "reportTemplateCode": "DAILY_PENDING_APP_AFT_APV",
+    "component": [
+        {
+            "type": "dropdown",
+            "label": "Office Name",
+            "name": "OfficeCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "one",
+            "url": "",
+            "environment":"FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "items": [],
+            "itemsUrl": [],
+            "isEvent": "true",
+            "affectedFilter": ["ProdOfferingCode", "EmpNo"],
+            "paramAssignment": 1
+          },
+          {
+            "type": "dropdown",
+            "label": "Marketing Name",
+            "name": "EmpNo",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment":"FOU",
+            "path": "/RefEmp/GetRefEmpForPaging",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "paramAssignment": 1
+          },
+      {
+        "type": "dropdown",
+        "label": "Product Offering",
+        "name": "ProdOfferingCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment":"LOS",
+        "path": "/ProductOffering/GetProdOfferingForPaging",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 1
+      }
+    ],
+    "exportTypeList": [
+    ]
+  }

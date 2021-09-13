@@ -13,6 +13,10 @@ import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCode
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { ReqCopyAssetObj } from 'app/shared/model/Request/AppAsset/ReqCopyAssetObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -67,7 +71,7 @@ export class AssetDataPagingComponent implements OnInit {
             this.mouCustId = response['MouCustId'];
           }
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
-            (response : ResThirdPartyRsltHObj) => {
+            (response: ResThirdPartyRsltHObj) => {
               if (response.ThirdPartyRsltHId != null) {
                 this.LastRequestedDate = response.ReqDt;
                 this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
@@ -121,8 +125,8 @@ export class AssetDataPagingComponent implements OnInit {
 
         var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined){
+
+        if (gsNeedCheckBySystem != undefined) {
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
@@ -208,7 +212,7 @@ export class AssetDataPagingComponent implements OnInit {
     else {
       let splitted = this.selectedAsset.split(";");
 
-      if(splitted.length == 1){
+      if (splitted.length == 1) {
         this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
         return;
       }
@@ -224,7 +228,7 @@ export class AssetDataPagingComponent implements OnInit {
       reqCopyAssetObj.AssetPriceAmt = +splitted[4];
       reqCopyAssetObj.MrAssetUsageCode = splitted[5];
       reqCopyAssetObj.TotalAccessoryPriceAmt = +splitted[6];
-      
+
       this.http.post(URLConstant.CopyAppAsset, reqCopyAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -270,6 +274,7 @@ export class AssetDataPagingComponent implements OnInit {
     // this.appAssetObj.AppAssetId = "-";
     this.appAssetObj.AppId = this.AppId;
     this.getListDataAsset();
+    this.GetListAssetSerialNo();
 
 
     this.gridAppCollateralObj = new InputGridObj();
@@ -291,6 +296,22 @@ export class AssetDataPagingComponent implements OnInit {
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       });
     this.GetGS();
+  }
+
+  SerialNoList: Array<SerialNoObj> = new Array();
+  GetListAssetSerialNo() {
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response: AppObj) => {
+        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion }).toPromise().then(
+          (response2: ProdOfferingDObj) => {
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response2.CompntValue }).subscribe(
+              (response3: GenericListObj) => {
+                this.SerialNoList = response3[CommonConstant.ReturnObj];
+              })
+          }
+        )
+      }
+    );
   }
 
   getGridCollateral() {
@@ -319,20 +340,39 @@ export class AssetDataPagingComponent implements OnInit {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
+  checkValidityAssetUsed() {
+    let listAsset: Array<AppAssetObj> = this.gridAssetDataObj.resultData.Data;
+    let flag: boolean = false;
+    for (let index = 0; index < listAsset.length; index++) {
+      const element = listAsset[index];
+      if (element.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
+        for (let index = 0; index < this.SerialNoList.length; index++) {
+          if (!element["SerialNo" + (index + 1)]) {
+            flag = true;
+            this.toastr.warningMessage(element.FullAssetName + "\'s data not complete");
+            break;
+          }
+        }
+      }
+    }
+    return flag;
+  }
+
   next() {
     if (this.gridAssetDataObj.resultData.Data.length < 1) {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;
     }
     else {
-      for(let i=0;i< this.gridAssetDataObj.resultData.Data.length ;i++){
-        if(this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == ""  || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null){
-          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i+1) + ')');
+      for (let i = 0; i < this.gridAssetDataObj.resultData.Data.length; i++) {
+        if (this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == "" || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null) {
+          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i + 1) + ')');
           return;
         }
       }
     }
-      
+    if (this.checkValidityAssetUsed()) return;
+
     if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
 
       if (!this.IsCalledIntegrator) {

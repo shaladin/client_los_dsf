@@ -27,6 +27,9 @@ import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-
 import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
 import { ReportDailyIncomingLeadComponent } from './report-daily-incoming/report-daily-incoming-lead/report-daily-incoming-lead.component';
 import { ReportDailyPreGoLiveByProductComponent } from './report-daily-pre-go-live/report-daily-pre-go-live-by-product/report-daily-pre-go-live-by-product.component';
+import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-monthly-inprocess-app/report-monthly-inprocess-app.component";
+import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
+import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
 
 @NgModule({
     declarations: [
@@ -49,7 +52,10 @@ import { ReportDailyPreGoLiveByProductComponent } from './report-daily-pre-go-li
     ReportDailyIncomingAppComponent,
     ReportLeadCancelComponent,
     ReportDailyIncomingLeadComponent,
-    ReportDailyPreGoLiveByProductComponent
+    ReportDailyPreGoLiveByProductComponent,
+    ReportMonthlyInprocessAppComponent,
+    ReportDailyPendingAppAftApvComponent,
+    ReportMonthlyPendingLeadComponent
     ],
     imports: [
         ReportRoutingModule,
