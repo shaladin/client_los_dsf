@@ -35,6 +35,7 @@
         "placeholder": "Placeholder",
         "isFromURL": true,
         "ddlType": "one",
+        "environment": "LOSV2",
         "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
         "label": "Activity Name",
         "items": [],
