@@ -545,6 +545,8 @@ export const ROUTES: RouteInfo[] = [
         ], Params: []
       },
       { Path: NavigationConstant.CESSIE_CANCEL_PAGING, Title: 'Cessie Cancellation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.CESSIE_INQUIRY, Title: 'Cessie Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.APP_INQUIRY, Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] }
     ], Params: []
   },
   {

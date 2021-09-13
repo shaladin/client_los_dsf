@@ -15,8 +15,6 @@ import { CessiePreGoLivePagingComponent } from "./cessie/pre-go-live/pre-go-live
 import { CessiePreGoLiveComponent } from "./cessie/pre-go-live/pre-go-live/pre-go-live.component";
 import { CessiePreGoLiveApprovalPagingComponent } from "./cessie/pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component";
 import { CessiePreGoLiveApprovalDetailComponent } from "./cessie/pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component";
-import { SalesOrderComponent } from "./cessie/sharing-component/sales-order/sales-order.component";
-import { CessieSummaryComponent } from "./view-enhancing/cessie-view/cessie-summary/cessie-summary.component";
 import { CessieCancellationDetailComponent } from "./cessie/cessie-cancel/detail/cessie-cancel-detail.component";
 import { CessieCancellationPagingComponent } from "./cessie/cessie-cancel/paging/cessie-cancel-paging.component";
 import { TcSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/tc-sharing-component.module";
@@ -26,6 +24,8 @@ import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
+import { CessieInquiryComponent } from "./cessie/cessie-inquiry/cessie-inquiry.component";
+import { CessieViewModule } from "./view-enhancing/cessie-view/cessie-view.module";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -54,7 +54,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalgeneralinfoModule,
     MatTabsModule,
     AppCustViewComponentsModule,
-    ProcessComponentModule
+    ProcessComponentModule,
+    CessieViewModule
   ],
   declarations: [
     CessieMonitoringComponent,
@@ -67,10 +68,9 @@ export const customCurrencyMaskConfig = {
     CessiePreGoLiveComponent,
     CessiePreGoLiveApprovalPagingComponent,
     CessiePreGoLiveApprovalDetailComponent,
-    SalesOrderComponent,
-    CessieSummaryComponent,
     CessieCancellationPagingComponent,
-    CessieCancellationDetailComponent
+    CessieCancellationDetailComponent,
+    CessieInquiryComponent
   ]
 })
 

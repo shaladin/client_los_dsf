@@ -25,7 +25,7 @@ export class NavigationConstant {
   public static PAGES_CHANGE_PASSWORD = "/" + PathConstant.LR_PAGES + "/" + PathConstant.CONTENT_PAGE_CHANGE_PASSWORD; //'/Pages/ChangePassword'
 
   //#region Inquiry
-  public static APP_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_INQUIRY; //'/Inquiry/AppInquiry'
+  public static APP_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstantX.APP_INQUIRY; //'/Inquiry/AppInquiryX'
   public static PURCHASE_TRACKING_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.PURCHASE_TRACKING_INQUIRY; //'/Inquiry/PurchaseTrackingInquiry'
   //#endregion
 
@@ -465,9 +465,9 @@ export class NavigationConstant {
   public static CESSIE_PGL_APPRVL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_PGL_APPRVL_DETAIL; //'/Impl/Cessie/Process/PreGoLive/Approval/Detail'
   public static CESSIE_CANCEL_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_CANCEL_PAGING; //'/Impl/Cessie/CessieCancellation/Paging'
   public static CESSIE_CANCEL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_CANCEL_DETAIL; //'/Impl/Cessie/CessieCancellation/Detail'
-  
+  public static CESSIE_INQUIRY = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.CESSIE_INQUIRY; //'/Impl/Cessie/Inquiry'
+  public static VIEW_CESSIE = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_CESSIE; //"/View/Cessie"
 
-  
   //#region Report
   public static REPORT_PLAFOND_MOU_SUMMARY = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_SUMMARY; //'/Report/RptPlafondMouSummary'
   public static REPORT_PLAFOND_MOU_DETAIL = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_PLAFOND_MOU_DETAIL; //'/Report/RptPlafondMouDetail'
