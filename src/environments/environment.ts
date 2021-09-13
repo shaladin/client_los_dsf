@@ -6,7 +6,11 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
+<<<<<<< HEAD
   // losUrl: 'http://localhost:5001',
+=======
+  //losUrl: 'http://localhost:5001',
+>>>>>>> 0d08018c66339aad20f0b073611b90df90a1fbb8
   //FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3app-server.ad-ins.com/LOS',
   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
