@@ -66,6 +66,8 @@ export class BankSectionXComponent implements OnInit {
       (response) => {
         this.AppCustBankAccList = response["AppCustBankAccList"]
       });
+    console.log('jalan');
+    console.log(this.AppCustBankAccList)
     this.OutputObj.emit({ Key: 'IsDetail', Value: false });
   }
 
@@ -73,7 +75,7 @@ export class BankSectionXComponent implements OnInit {
     this.BankAccObj.BankCode = event.BankCode;
   }
 
-  custBankHandler(type: string, BankAccAndStmntObjX: AppCustBankAccObjX = undefined) {
+  custBankHandler(type: string, BankAccAndStmntObjX: AppCustBankAccObjX) {
     if (type === 'delete') {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.spinner.show();
