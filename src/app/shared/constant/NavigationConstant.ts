@@ -56,7 +56,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH; //"/Nap/AddProcess/AppDupCheckMainData/SubjMatch"
   public static NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPRVL_RES_EXT_PAGING; //"/Nap/AddProcess/CreditApprovalResultExt/Paging"
   public static NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPRVL_RES_EXT_DETAIL; //"/Nap/AddProcess/CreditApprovalResultExt/Detail"
-  public static NAP_ADD_PRCS_COPY_CANCEL_APP = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.COPY_CANCEL_APP; //'/Nap/AddProcess/CopyCancelledApplication'
+  public static NAP_ADD_PRCS_COPY_CANCEL_APP = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.COPY_CANCEL_APP; //'/Nap/AddProcess/CopyCancelledApplicationX'
   public static NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.COPY_CANCEL_APP_CROSS_BL; //"/Nap/AddProcess/CopyCancelledApplicationCrossBl"
   public static NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.COPY_CANCEL_APP_CROSS_BL_DETAIL; //"/Nap/AddProcess/CopyCancelledApplicationCrossBl/Detail"
   public static NAP_ADD_PRCS_OUTSTANDING_TC_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.OUTSTANDING_TC_PAGING; //"/Nap/AddProcess/OutstandingTC/Paging"
