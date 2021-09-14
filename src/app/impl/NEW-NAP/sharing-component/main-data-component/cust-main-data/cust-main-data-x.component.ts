@@ -98,7 +98,7 @@ export class CustMainDataXComponent implements OnInit {
 
   LeadId: number;
   LeadNo: string;
-  AppNo: string; 
+  AppNo: string;
 
   agrmntParentNo: string = "";
   isExisting: boolean = false;
@@ -160,7 +160,7 @@ export class CustMainDataXComponent implements OnInit {
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
   MaxDaysThirdPartyChecking: number;
   LobCode: string;
-  checkIsAddressKnown: boolean;
+  checkIsAddressKnown: boolean = false;
 
 
   constructor(
@@ -184,7 +184,7 @@ export class CustMainDataXComponent implements OnInit {
     MrCustRelationshipCode: ['', Validators.maxLength(50)],
     CustNo: [],
     CompanyType: [''],
-    CustPrefixName:[''],
+    CustPrefixName: [''],
     CustSuffixName: [''],
     MrMaritalStatCode: ['', Validators.required],
     MrIdTypeCode: ['', Validators.required],
@@ -194,7 +194,7 @@ export class CustMainDataXComponent implements OnInit {
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
-    MotherMaidenName:  [''],
+    MotherMaidenName: [''],
     MrCompanyTypeCode: [''],
     MobilePhnNo1: ['', [Validators.pattern("^[0-9]+$")]],
     Email1: ['', [Validators.pattern(CommonConstant.regexEmail)]],
@@ -204,7 +204,20 @@ export class CustMainDataXComponent implements OnInit {
     SharePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     IsSigner: [false],
     IsActive: [false],
-    IsOwner: [false]
+    IsOwner: [false],
+    Address: this.fb.group({
+      Addr: ['-'],
+      AreaCode1: [''],
+      AreaCode2: [''],
+      AreaCode3: [''],
+      AreaCode4: [''],
+      City: [''],
+      SubZipcode: [''],
+      MrHouseOwnershipCode: [''],
+    }),
+    AddressZipcode: this.fb.group({
+      value: [''],
+    })
   });
 
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
@@ -276,12 +289,17 @@ export class CustMainDataXComponent implements OnInit {
       await this.getCustMainData();
     }
     await this.SetCustModel();
+    this.isAddressIsNull();
+    if (this.custMainDataMode != this.CustMainDataFamily || this.MrCustTypeCode != this.CustTypePersonal) {
+      this.checkIsAddressKnown = true;
+    }
+
     this.jobPositionLookupObj.isReady = true;
     this.positionSlikLookUpObj.isReady = true;
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
-    this.isAddressIsNull();
+
   }
 
   //#region Country
@@ -308,7 +326,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-  
+
   ListNationality: Array<RefMasterObj> = new Array();
   GetListRefCountry() {
     this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).subscribe(
@@ -335,7 +353,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-  
+
   getLookUpCountry(ev) {
     this.CustMainDataForm.patchValue({
       WnaCountryCode: ev.CountryCode,
@@ -365,11 +383,11 @@ export class CustMainDataXComponent implements OnInit {
   async initcustMainDataMode() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
-    if(!this.isNonMandatory){
+    if (!this.isNonMandatory) {
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators(Validators.required);
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required)
     }
-    if(this.isFamily){
+    if (this.isFamily) {
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(null);
     }
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
@@ -484,14 +502,13 @@ export class CustMainDataXComponent implements OnInit {
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
-    if(this.bizTemplateCode == CommonConstant.CFNA){
-      if(this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD)
-      {
+    if (this.bizTemplateCode == CommonConstant.CFNA) {
+      if (this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD) {
         this.InputLookupCustObj.isReadonly = true;
-      }else{
+      } else {
         this.InputLookupCustObj.isReadonly = false;
       }
-    }else{
+    } else {
       this.InputLookupCustObj.isReadonly = false;
     }
     this.InputLookupCustObj.isRequired = true;
@@ -500,12 +517,11 @@ export class CustMainDataXComponent implements OnInit {
     this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustCoyObj.pagingJson = "./assets/uclookup/impl/lookUpExistingCustCompanyX.json";
     this.InputLookupCustCoyObj.genericJson = "./assets/uclookup/impl/lookUpExistingCustCompanyX.json";
-    if(this.bizTemplateCode == CommonConstant.CFNA){
-      if(this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD)
-      {
+    if (this.bizTemplateCode == CommonConstant.CFNA) {
+      if (this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD) {
         this.InputLookupCustCoyObj.isReadonly = true;
       }
-    }else{
+    } else {
       this.InputLookupCustCoyObj.isReadonly = false;
     }
     this.InputLookupCustCoyObj.isRequired = true;
@@ -524,7 +540,7 @@ export class CustMainDataXComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = custType;
 
-    if(this.critCust.length > 0){
+    if (this.critCust.length > 0) {
       critObj.DataType = "text";
       critObj.propName = 'C.CUST_NO';
       critObj.restriction = AdInsConstant.RestrictionNotIn;
@@ -762,7 +778,7 @@ export class CustMainDataXComponent implements OnInit {
 
   appCustPersonalJobDataRowVersion: string[] = null;
   async setDataCustPersonalJobData(AppCustPersonalJobDataObj: AppCustPersonalJobDataObj) {
-    if(!AppCustPersonalJobDataObj) return;
+    if (!AppCustPersonalJobDataObj) return;
     this.CustMainDataForm.patchValue({
       MrJobPositionCode: AppCustPersonalJobDataObj.MrJobPositionCode,
       MrProfessionCode: AppCustPersonalJobDataObj.MrProfessionCode,
@@ -808,14 +824,14 @@ export class CustMainDataXComponent implements OnInit {
 
     if (custType == CommonConstant.CustTypePersonal) {
       this.isNonMandatory ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.isFamily ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
-      this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([ Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]) ;
+      this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      this.CustMainDataForm.controls.Email1.setValidators([ Validators.pattern(CommonConstant.regexEmail)]);
+      this.CustMainDataForm.controls.Email1.setValidators([Validators.pattern(CommonConstant.regexEmail)]);
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
@@ -919,6 +935,9 @@ export class CustMainDataXComponent implements OnInit {
           } else {
             this.checkIsAddressKnown = true;
           }
+          if (this.custMainDataMode != this.CustMainDataFamily || this.MrCustTypeCode != this.CustTypePersonal) {
+            this.checkIsAddressKnown = true;
+          }
         });
     } else {
       this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
@@ -981,7 +1000,7 @@ export class CustMainDataXComponent implements OnInit {
       if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
         //note: dari html cmn company yang ditampilkan
         this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
-      }else{
+      } else {
         this.CustMainDataForm.controls.EstablishmentDt.clearValidators();
       }
       this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
@@ -1008,21 +1027,20 @@ export class CustMainDataXComponent implements OnInit {
 
   enableInput() {
     this.isExisting = false;
-    if(this.custMainDataMode != CommonConstant.CustMainDataModeCust)this.isCopyBtnLock = false;
+    if (this.custMainDataMode != CommonConstant.CustMainDataModeCust) this.isCopyBtnLock = false;
     // this.CustMainDataForm.controls.MrGenderCode.enable();
     // this.CustMainDataForm.controls.MrIdTypeCode.enable();
     // this.CustMainDataForm.controls.MrMaritalStatCode.enable();
     this.inputAddressObj.isReadonly = false;
-    if(this.bizTemplateCode == CommonConstant.CFNA){
-      if(this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD)
-      {
+    if (this.bizTemplateCode == CommonConstant.CFNA) {
+      if (this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD) {
         this.InputLookupCustObj.isReadonly = true;
         this.InputLookupCustCoyObj.isReadonly = true;
-      }else{
+      } else {
         this.InputLookupCustObj.isReadonly = false;
         this.InputLookupCustCoyObj.isReadonly = false;
       }
-    }else{
+    } else {
       this.InputLookupCustObj.isReadonly = false;
       this.InputLookupCustCoyObj.isReadonly = false;
     }
@@ -1040,8 +1058,8 @@ export class CustMainDataXComponent implements OnInit {
       MotherMaidenName: '',
       MobilePhnNo1: '',
       Email1: '',
-      CustPrefixName:'',
-      CustSuffixName:''
+      CustPrefixName: '',
+      CustSuffixName: ''
     });
   }
 
@@ -1217,23 +1235,27 @@ export class CustMainDataXComponent implements OnInit {
     this.custDataPersonalObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
     this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.AppCustId = this.appCustId ? this.appCustId : 0;
 
-    if (this.checkIsAddressKnown != true) {
-      this.CustMainDataForm.patchValue({
-        Address: {
-          Addr: '-',
-          AreaCode1: "",
-          AreaCode2: "",
-          AreaCode3: "",
-          AreaCode4: "",
-          City: "",
-          SubZipcode: "",
-          MrHouseOwnershipCode: ""
-        },
-        AddressZipcode: {
-          value: ""
-        }
-      });
+    if (this.custMainDataMode != this.CustMainDataFamily || this.MrCustTypeCode != this.CustTypePersonal) {
+      this.checkIsAddressKnown = true;
     }
+
+      if (this.checkIsAddressKnown == false) {
+        this.CustMainDataForm.patchValue({
+          Address: {
+            Addr: '-',
+            AreaCode1: "",
+            AreaCode2: "",
+            AreaCode3: "",
+            AreaCode4: "",
+            City: "",
+            SubZipcode: "",
+            MrHouseOwnershipCode: ""
+          },
+          AddressZipcode: {
+            value: ""
+          }
+        });
+      }
 
     if (this.isIncludeCustRelation)
       this.custDataPersonalObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
@@ -1504,14 +1526,14 @@ export class CustMainDataXComponent implements OnInit {
     if (this.bizTemplateCode == CommonConstant.CFNA) {
       this.http.post(URLConstantX.CheckIfCustHasOngoingAppX, obj).subscribe(
         (response) => {
-         this.SaveCustomer();
+          this.SaveCustomer();
         }
       );
     } else {
       this.SaveCustomer();
     }
   }
-  
+
   cancel() {
     this.outputCancel.emit();
   }
@@ -1978,13 +2000,13 @@ export class CustMainDataXComponent implements OnInit {
         (this.inputAddressObj.default.AreaCode2 === '' || this.inputAddressObj.default.AreaCode2 == null) &&
         (this.inputAddressObj.default.AreaCode3 === '' || this.inputAddressObj.default.AreaCode3 == null) &&
         (this.inputAddressObj.default.AreaCode4 === '' || this.inputAddressObj.default.AreaCode4 == null) &&
-        (this.inputAddressObj.default.City === '' || this.inputAddressObj.default.City == null)
-      // (this.inputAddressObj.default.MrHouseOwnershipCode == null || this.inputAddressObj.default.MrHouseOwnershipCode == "")
+        (this.inputAddressObj.default.City === '' || this.inputAddressObj.default.City == null) &&
+        (this.inputAddressObj.default.MrHouseOwnershipCode == null || this.inputAddressObj.default.MrHouseOwnershipCode == "")
       ) {
         this.checkIsAddressKnown = false;
       } else {
         this.checkIsAddressKnown = true;
       }
-    console.log(this.inputAddressObj)
+
   }
 }

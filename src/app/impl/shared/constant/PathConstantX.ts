@@ -87,6 +87,7 @@ export class PathConstantX {
   public static CESSIE_CANCEL = "CessieCancellation";
   public static CESSIE_CANCEL_PAGING = PathConstantX.CESSIE + "/" + PathConstantX.CESSIE_CANCEL + "/" + PathConstant.PAGING;
   public static CESSIE_CANCEL_DETAIL = PathConstantX.CESSIE + "/" + PathConstantX.CESSIE_CANCEL + "/" + PathConstant.DETAIL;
+  public static CESSIE_INQUIRY = PathConstantX.CESSIE + "/" + PathConstant.INQUIRY;
   //#endregion
 
   //#region MOU
@@ -150,6 +151,11 @@ export class PathConstantX {
 
   //#region View-Enhancing-Module
   public static VIEW_APP = "AppViewX";
+  public static VIEW_CESSIE = "CessieView";
+  //#endregion
+
+  //#region Inquiry-Module
+  public static APP_INQUIRY = "AppInquiryX";
   //#endregion
 }
 

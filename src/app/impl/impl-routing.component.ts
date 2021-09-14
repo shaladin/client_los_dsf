@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CessieCancellationDetailComponent } from './cessie/cessie-cancel/detail/cessie-cancel-detail.component';
 import { CessieCancellationPagingComponent } from './cessie/cessie-cancel/paging/cessie-cancel-paging.component';
+import { CessieInquiryComponent } from './cessie/cessie-inquiry/cessie-inquiry.component';
 
 import { CessieMonitoringComponent } from './cessie/cessie-upload/cessie-monitoring.component';
 import { FactoringReviewAssignProductComponent } from './cessie/factoring-review/factoring-review-detail/factoring-review-assign-product/factoring-review-assign-product.component';
@@ -86,7 +87,14 @@ const routes: Routes = [
         data: {
           title: 'Cessie Cancellation Detail'
         }
-      }
+      },
+      {
+        path: PathConstantX.CESSIE_INQUIRY,
+        component: CessieInquiryComponent,
+        data: {
+          title: 'Cessie Inquiry'
+        }
+      },
     ]
   }
 ];
