@@ -611,12 +611,13 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     let minAmt = this.NTFAmt / this.Tenor;
-    if (this.Tenor == 0 || (this.Tenor == null)) {
-      this.toastr.warningMessage("Fill The Tenor First!");
+    if (!this.LeadDataForm.controls["InstallmentAmt"].value || this.LeadDataForm.controls["InstallmentAmt"].value < minAmt) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
+    this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
+
+    if (this.NTFAmt && this.InstAmt > this.NTFAmt) {
+      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
       return;
     }
-    if (this.LeadDataForm.controls["InstallmentAmt"].value == 0 || this.LeadDataForm.controls["InstallmentAmt"].value == null) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
-    this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
     if (this.AssetPrice <= 0) {
       this.toastr.warningMessage("Please input Asset Price!");
@@ -630,19 +631,14 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Please input Down Payment Amount!");
       return;
     }
-
-    if (this.NTFAmt && this.InstAmt > this.NTFAmt) {
-      this.toastr.warningMessage("Installment Amount cannot be bigger than NTF Amount");
+    if (this.Tenor == null || this.Tenor == undefined) {
+      this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
+
     this.LeadDataForm.patchValue({
       NTFAmt: this.NTFAmt
     });
-
-    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
-      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
-      return;
-    }
 
     if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
       this.TotalDownPayment = this.DPAmount + this.InstAmt;
@@ -650,10 +646,10 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     else {
       this.TotalDownPayment = this.DPAmount;
     }
-
     this.LeadDataForm.patchValue({
       TotalDownPayment: this.TotalDownPayment
     });
+
     this.Calculate = true;
   }
 
