@@ -1575,15 +1575,28 @@ export class MouRequestAddcollXComponent implements OnInit {
         let MouCustCollateralDocs = new Array();
         MouCustCollateralDocs = response["MouCustCollateralDocs"];
         if (MouCustCollateralDocs["length"] > 0) {
-
-          for (let i = 0; i < MouCustCollateralDocs.length; i++) {
-            this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
-              DocNo: MouCustCollateralDocs[i].DocNo,
-              DocNotes: MouCustCollateralDocs[i].DocNotes,
-              ACDExpiredDt: formatDate(MouCustCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: MouCustCollateralDocs[i].IsReceived
-            })
+          console.log("meow meow")
+          //region sementara gini dulu, kalo core ada perubahan, ambil core
+          for (let i = 0; i < this.AddCollForm.controls.ListDoc["controls"].length; i++) {
+            let tempDoc = MouCustCollateralDocs.find(x=>x.DocCode === this.AddCollForm.controls.ListDoc["controls"][i]["controls"]["DocCode"].value)
+            if(tempDoc != null){
+              this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
+                DocNo: tempDoc.DocNo,
+                DocNotes: tempDoc.DocNotes,
+                ACDExpiredDt: formatDate(tempDoc.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+                IsReceived: tempDoc.IsReceived
+              })
+            }
           }
+          //end region
+          // for (let i = 0; i < MouCustCollateralDocs.length; i++) {
+          //   this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
+          //     DocNo: MouCustCollateralDocs[i].DocNo,
+          //     DocNotes: MouCustCollateralDocs[i].DocNotes,
+          //     ACDExpiredDt: formatDate(MouCustCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+          //     IsReceived: MouCustCollateralDocs[i].IsReceived
+          //   })
+          // }
         } else {
           if (this.type == 'AddExisting') {
             let listDocExisting = this.AddCollForm.get('ListDoc') as FormArray;
