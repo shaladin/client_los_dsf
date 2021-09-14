@@ -65,7 +65,7 @@ export class CessieCancellationDetailComponent implements OnInit {
       CancelbyRefNo: this.userContext.EmpNo
     };
 
-    this.http.post(URLConstantX.SubmitCancel, CancelReqObj).subscribe((response) => {
+    this.http.post(URLConstantX.SubmitCancelV2, CancelReqObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_CANCEL_PAGING], {});
     });
