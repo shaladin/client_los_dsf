@@ -60,6 +60,7 @@ export class URLConstantX {
   public static SubmitPreGoLiveCessie = environment.losUrl + "/v1" + "/Cessie/SubmitPreGoLive";
   public static SubmitPreGoLiveCessieV2 = environment.losUrl + "/v2" + "/Cessie/SubmitPreGoLive";
   public static SubmitCancel = environment.losUrl + "/v1" + "/Cessie/SubmitCancel";
+  public static SubmitCancelV2 = environment.losUrl + "/v2" + "/Cessie/SubmitCancelV2";
 
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
