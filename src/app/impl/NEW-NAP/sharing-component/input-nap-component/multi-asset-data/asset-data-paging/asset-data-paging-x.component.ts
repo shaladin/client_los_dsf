@@ -13,6 +13,10 @@ import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { ReqCopyAssetObj } from 'app/shared/model/Request/AppAsset/ReqCopyAssetObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 
 @Component({
   selector: 'app-asset-data-paging-x',
@@ -261,6 +265,22 @@ export class AssetDataPagingXComponent implements OnInit {
     );
   }
 
+  SerialNoList: Array<SerialNoObj> = new Array();
+  GetListAssetSerialNo() {
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response: AppObj) => {
+        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion }).toPromise().then(
+          (response2: ProdOfferingDObj) => {
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response2.CompntValue }).subscribe(
+              (response3: GenericListObj) => {
+                this.SerialNoList = response3[CommonConstant.ReturnObj];
+              })
+          }
+        )
+      }
+    );
+  }
+  
   ngOnInit() {
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
@@ -270,6 +290,7 @@ export class AssetDataPagingXComponent implements OnInit {
     // this.appAssetObj.AppAssetId = "-";
     this.appAssetObj.AppId = this.AppId;
     this.getListDataAsset();
+    this.GetListAssetSerialNo();
 
 
     this.gridAppCollateralObj = new InputGridObj();
@@ -319,6 +340,24 @@ export class AssetDataPagingXComponent implements OnInit {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
+  checkValidityAssetUsed() {
+    let listAsset: Array<AppAssetObj> = this.gridAssetDataObj.resultData.Data;
+    let flag: boolean = false;
+    for (let index = 0; index < listAsset.length; index++) {
+      const element = listAsset[index];
+      if (element.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
+        for (let index = 0; index < this.SerialNoList.length; index++) {
+          if (!element["SerialNo" + (index + 1)]) {
+            flag = true;
+            this.toastr.warningMessage(element.FullAssetName + "\'s data not complete");
+            break;
+          }
+        }
+      }
+    }
+    return flag;
+  }
+
   next() {
     if (this.gridAssetDataObj.resultData.Data.length < 1) {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
@@ -332,6 +371,7 @@ export class AssetDataPagingXComponent implements OnInit {
         }
       }
     }
+    if (this.checkValidityAssetUsed()) return;
       
     if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
 
