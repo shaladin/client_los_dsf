@@ -26,7 +26,7 @@
                   <label class="col-md-8">{{TaskReassignmentForm.controls.OldCurrentUser.value}}</label>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4" translate>Assign To</label>
+                  <label class="col-md-4 adins-required-label" translate>Assign To</label>
                   <div class="col-md-8">
                     <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupObj"
                       [parentForm]="TaskReassignmentForm" [identifier]="'User'" *ngIf="IsReady"

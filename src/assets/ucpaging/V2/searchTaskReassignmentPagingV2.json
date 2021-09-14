@@ -11,6 +11,7 @@
             "ddlType": "one",
             "placeholder": "Placeholder",
             "isFromURL": true,
+            "environment": "LOSV2",
             "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
             "label": "Activity Name"
         },
@@ -20,7 +21,8 @@
             "id": "UsernameId",
             "value": "",
             "label": "Username",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "officeRoleCodes",
@@ -33,6 +35,7 @@
             "ddlType": "all",
             "isQueryIn": true,
             "url": "",
+            "environment": "FOU",
             "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office Name",
             "items": [],
@@ -44,7 +47,8 @@
             "id": "TrxCode",
             "value": "",
             "label": "Transaction No",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         }
     ],
     "querystring": {

@@ -765,7 +765,11 @@ export class URLConstant {
   public static AddMouCustSignerV2 = environment.losUrl + "/v2" + "/MouCustSigner/AddMouCustSigner";
   public static GetMouCustSignerByMouCustId = environment.losUrl + "/v1" + "/MouCustSigner/GetMouCustSignerByMouCustId";
 
+  // MOU CUST DOC
+  public static GetListMouCustDocByMouCustId = environment.losUrl + "/v1" + "/MouCustDoc/GetListMouCustDocByMouCustId";
+
   // MOU CUST DOC PRINT
+  public static AddMouCustDocPrint = environment.losUrl + "/v1" + "/MouCustDocPrint/AddMouCustDocPrint";
   public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/v1" + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
   public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/v1" + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
 
