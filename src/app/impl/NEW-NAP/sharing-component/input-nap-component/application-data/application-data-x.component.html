@@ -60,7 +60,7 @@
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-4 adInsLabel" translate>Go Live Dt</label>
-                  <label class="col-md-8 adInsLabel" translate>{{goLiveDt}}</label>
+                  <label class="col-md-8 adInsLabel" translate>{{goLiveDt | date: 'dd-MMM-yyyy'}}</label>
                 </div>
               </div>
               <div class="col-md-6">
@@ -178,7 +178,7 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
-                
+
                 <div class="form-group row">
                   <!-- MOU Cust -->
                   <label class="col-md-4 adins-required-label" translate>Status BPKB</label>

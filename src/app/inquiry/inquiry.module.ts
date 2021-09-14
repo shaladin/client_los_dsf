@@ -11,6 +11,7 @@ import { UcgridfooterModule } from "@adins/ucgridfooter";
 import { InquiryRoutingComponent } from "./inquiry-routing.module";
 import { AppInquiryPagingComponent } from "./app-inquiry/app-inquiry-paging.component";
 import { PurchaseTrackingInquiryComponent } from './purchase-tracking-inquiry/purchase-tracking-inquiry.component';
+import { AppInquiryPagingXComponent } from "app/impl/inquiry/app-inquiry/app-inquiry-paging-x/app-inquiry-paging-x.component";
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { PurchaseTrackingInquiryComponent } from './purchase-tracking-inquiry/pu
   ],
   declarations: [
     AppInquiryPagingComponent,
-    PurchaseTrackingInquiryComponent
+    PurchaseTrackingInquiryComponent,
+    AppInquiryPagingXComponent
   ]
 })
 export class InquiryModule { }
