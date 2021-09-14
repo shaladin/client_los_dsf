@@ -1652,6 +1652,7 @@ export class URLConstant {
 
   //Task Reassignment
   public static GetTaskReassignmentDetail = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetail";
+  public static GetTaskReassignmentDetailV2 = environment.losUrl + "/v2" + "/TaskReassignment/GetTaskReassignmentDetail";
   public static SubmitTaskReassignment = environment.losUrl + "/v1" + "/TaskReassignment/SubmitTaskReassignment";
   public static SubmitTaskReassignmentV2 = environment.losUrl + "/v2" + "/TaskReassignment/SubmitTaskReassignment";
   public static GetUserRoleByUsernameForReassignment = environment.FoundationR3Url + "/v1" + "/RefUserRole/GetUserRoleByUsernameForReassignment";
