@@ -5,27 +5,29 @@
   <table class="table table-responsive-md text-center table-hover" *ngIf="responseObj.length > 0">
     <thead>
       <tr class="table-header">
-        <th class="text-left"><span class="thead-header" name='docName' translate>DOCUMENT NAME</span>
+        <th><span translate class="thead-header" name='SeqNo'>No</span></th>
+        <th class="text-left"><span translate class="thead-header" name='DocName'>Document Name</span></th>
+        <th><span translate class="thead-header" name='IsNeedToBePrinted'>Need To Print</span>
         </th>
-        <th class="text-center"><span class="thead-header" name='lastPrintedDt' translate>LAST PRINTED DATE</span>
+        <th class="text-center"><span translate class="thead-header" name='LastPrintDt'>Last Printed</span></th>
+        <th class="text-left"><span translate class="thead-header" name='EmpName'>Last Printed By</span></th>
+        <th><span translate class="thead-header" name='NumOfDocPrinted'>Number Of Printed</span>
         </th>
-        <th class="text-left"><span class="thead-header" name='lastPrintedBy' translate>LAST PRINTED BY</span>
-        </th>
-        <th class="text-right"><span class="thead-header" name='numOfPrinted' translate>NUMBER OF PRINTED</span>
-        </th>
-        <th><span class="thead-header text-center" name='print' translate>PRINT</span>
-        </th>
+        <th class="text-center"><span translate class="thead-header" name='Print'>Print</span></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of responseObj">
-        <td class="text-left">{{item.DocumentName}}</td>
-        <td class="text-center">{{item.LastPrintedDate | date: 'dd-MM-yyyy'}}</td>
-        <td class="text-left">{{item.LastPrintedByName}}</td>
-        <td class="text-right">{{item.NumOfPrinted}}</td>
-        <td class="text-center">
-          <a class="success p-0" (click)="print(item.MouCustDocPrintId)">
-            <i class="ft-printer font-medium-3 mr-2"></i>
+        <td>{{item.SeqNo}}</td>
+        <td class="text-left">{{item.DocName}}</td>
+        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
+        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
+        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
+        <td class="text-left">{{item.EmpName}}</td>
+        <td>{{item.NumOfDocPrinted}}</td>
+        <td>
+          <a class="primary p-0" (click)="Print(item)">
+            <i class="font-medium-3 fa fa-print"></i>
           </a>
         </td>
       </tr>
