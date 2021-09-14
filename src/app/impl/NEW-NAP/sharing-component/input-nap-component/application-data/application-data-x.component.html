@@ -52,7 +52,7 @@
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && resCalculatePlafondAgrmntXObj == null }"
                             (change)="copyAgrmntParentEvent($event.target.value)">
                       <option [value]="">Select One</option>
-                      <option *ngFor="let item of agrParentList; let i = index" [value]="i">{{item.AgrmntNo}}</option>
+                      <option *ngFor="let item of agrParentList; let i = index" [value]="i" [selected]="agrmntParentNo == item.AgrmntNo ? true : false">{{item.AgrmntNo}}</option>
                     </select>
                   </div>
                 </div>
@@ -457,7 +457,7 @@
                     <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
                     <td style="text-align: left;">{{item.CustName}}</td>
-                    <td *ngIf="agrmntParentNo != item.CrossAgrmntNo || BizTemplateCode != 'CFNA'">
+                    <td *ngIf="agrmntParentNo != item.CrossAgrmntNo && BizTemplateCode != 'CFNA'">
                       <a class="warning p-0" (click)="DeleteCrossApp(i)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
                       </a>

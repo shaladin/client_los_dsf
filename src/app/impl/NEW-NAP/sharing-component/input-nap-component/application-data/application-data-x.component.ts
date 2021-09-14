@@ -264,14 +264,11 @@ export class ApplicationDataXComponent implements OnInit {
           MrMouTypeCode: CommonConstant.GENERAL
         }).subscribe(
           (response) => {
-            console.log(response);
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
         );
       }
     );
-
-    this.getAppModelInfo()
 
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
       (response: GeneralSettingObj) => {
@@ -839,13 +836,19 @@ export class ApplicationDataXComponent implements OnInit {
 
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       //lookup Agreement Parent
-      this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).subscribe(
+      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
         (response) => {
           this.agrParentList = response;
-          console.log(this.agrParentList);
         }
       );
       this.agrmntParentNo = this.resultResponse.AgrmntParentNo;
+      
+      if(this.agrParentList.length)
+      {
+        var idx = -1;
+        for(var i=0; i<this.agrParentList.length; i++) if(this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
+        if (idx > -1) this.copyAgrmntParentEvent(idx);
+      }   
     }
 
     if (this.resultResponse["MrSlikSecEcoDescr"] != null && this.resultResponse["MrSlikSecEcoDescr"] != "") {
@@ -944,7 +947,6 @@ export class ApplicationDataXComponent implements OnInit {
     if (idx == null) return;
 
     this.agrParent = this.agrParentList[idx];
-    console.log(this.agrParent);
 
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
@@ -992,7 +994,7 @@ export class ApplicationDataXComponent implements OnInit {
       this.agrmntParentNo = this.agrParent.AgrmntNo;
 
     } else {
-      this.resultCrossApp.push(tempCrossApp);
+      this.resultCrossApp = [tempCrossApp];
       this.agrmntParentNo = this.agrParent.AgrmntNo;
     }
   }
@@ -1562,7 +1564,6 @@ export class ApplicationDataXComponent implements OnInit {
 
   setTenorOnChange(event) {
     if (event != 'null') {
-      console.log(event);
       this.isFromMouCust = true;
       let mouCustObj = { Id: event }
       this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
