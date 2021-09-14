@@ -31,7 +31,7 @@
             "type": "currency",
             "name": "A.PaymentAmount",
             "id": "PaymentValueAmtId",
-            "value": "0",
+            "value": "9999999999",
             "label": "Payment Amount <=",
             "restriction": "lte",
             "datatype": "numeric"
