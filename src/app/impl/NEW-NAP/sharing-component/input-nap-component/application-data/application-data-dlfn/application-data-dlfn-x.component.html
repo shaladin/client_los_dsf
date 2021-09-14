@@ -63,7 +63,7 @@
                         <label class="col-md-9 adInsLabel">{{MouOsPlafond| number:'.2':'en-US'}} </label>
                       </div>
                       <div class="form-group row" *ngIf="IsMouSelect">
-                        <label class="col-md-3 adins-label" translate>Term Of Payment Interest Rate Percent (%)</label>
+                        <label class="col-md-3 adins-label" translate>Term Of Payment Interest Rate Percent (%) (In Years)</label>
                         <div class="col-md-9">
                           <input type="" currencyMask id="topIntrstRatePrcnt" class="form-control width-30-per"
                           formControlName="TopIntrstRatePrcnt" [options]="CurrencyMaskPrct"
@@ -74,7 +74,7 @@
                         </div>
                       </div>
                       <div class="form-group row" *ngIf="IsMouSelect">
-                        <label class="col-md-3 adins-label" translate>Interest Rate (%)</label>
+                        <label class="col-md-3 adins-label" translate>Interest Rate (%) (In Years)</label>
                         <div class="col-md-9">
                           <input type="" currencyMask id="intrstRatePrcnt" class="form-control width-30-per"
                           formControlName="IntrstRatePrcnt" [options]="CurrencyMaskPrct"
@@ -113,7 +113,7 @@
                       </div>
                       <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
                         <div class="form-group row">
-                          <label class="col-md-3 adins-required-label" translate>Term Of Payment (Days)</label>
+                          <label class="col-md-3 adins-required-label" translate>Term Of Payment (In Days)</label>
                           <div class="col-md-9">
                             <input type="text" class="form-control adInsInput width-30-per" formControlName="TopDays"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopDays.invalid }">
@@ -240,7 +240,7 @@
                       <div id="appCustBankAccDetail">
                         <div class="row">
                           <div class="col-md-12">
-                   
+
                             <div class="form-group row">
                               <!-- Bank Account Name Type -->
                               <div class="form-group col-md-2 adins-required">
