@@ -9,14 +9,13 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
-import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
@@ -82,7 +81,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     InstallmentAmt: [''],
     items: this.fb.array([]),
   });
-  generalSettingObj: GeneralSettingObj;
+  generalSettingObj: GenericListByCodeObj;
   lobKta = new Array();
   leadObj: LeadObj;
   returnLobCode: string;
@@ -137,15 +136,11 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
     this.InputLookupAssetObj.isRequired = false;
 
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push("LOB_KTA");
-    this.generalSettingObj.ListGsCode.push("INTEGRATOR_CHECK_BY_SYSTEM");
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeLobKta);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
 
-    let obj = {
-      Codes: this.generalSettingObj.ListGsCode
-    }
-
-    this.http.post(URLConstant.GetListGeneralSettingByListGsCode, obj).subscribe(
+    this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
         let returnGeneralSettingObj = response;
         this.lobKta = returnGeneralSettingObj["ResGetListGeneralSettingObj"][0].GsValue.split(',');
@@ -247,9 +242,9 @@ export class NewLeadInputLeadDataComponent implements OnInit {
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
               MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
-              AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
-              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
+              AssetPrice: this.resLeadAssetObj.AssetPriceAmt == null ? '' : this.resLeadAssetObj.AssetPriceAmt,
+              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt == null ? '' : this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt == null ? '' : this.resLeadAssetObj.DownPaymentPrcnt
             });
           }
 
@@ -275,7 +270,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
               this.http.post(URLConstant.GetAssetTypeById, obj).subscribe(
                 (response: AssetTypeObj) => {
 
-                  let AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
+                  let AssetTypeCode = { Code: response.AssetTypeCode };
                   this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
                     (response: GenericListObj) => {
                       while (this.items.length) {
@@ -361,9 +356,9 @@ export class NewLeadInputLeadDataComponent implements OnInit {
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
               MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
-              AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
-              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
-              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
+              AssetPrice: this.resLeadAssetObj.AssetPriceAmt == null ? '' : this.resLeadAssetObj.AssetPriceAmt,
+              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt == null ? '' : this.resLeadAssetObj.DownPaymentAmt,
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt == null ? '' : this.resLeadAssetObj.DownPaymentPrcnt
             });
             if (this.resLeadAssetObj.MrDownPaymentTypeCode == CommonConstant.DownPaymentTypeAmt) {
               this.LeadDataForm.controls.DownPaymentPercent.disable();
@@ -394,10 +389,10 @@ export class NewLeadInputLeadDataComponent implements OnInit {
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                 let assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+                this.http.post(URLConstant.GetAssetTypeById, { Id: this.resAssetMasterObj.AssetTypeId }).subscribe(
                   (response: AssetTypeObj) => {
 
-                    let AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
+                    let AssetTypeCode = { Code: response.AssetTypeCode };
                     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
                       (response: GenericListObj) => {
                         while (this.items.length) {
@@ -750,8 +745,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       this.typePage = "edit";
     }
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
-      this.toastr.warningMessage("Calculate First");
-      return;
     } else {
       this.CheckSubmitForCFNA();
       if (!this.isAbleToSubmit) return;
