@@ -10,6 +10,13 @@ import { ReportPlafondMouDetailComponent } from "./report-mou/report-plafond-mou
 import { ReportCollateralMouComponent } from "./report-mou/report-collateral-mou/report-collateral-mou.component";
 import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-daily-incoming-app/report-daily-incoming-app.component";
 import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
+import { ReportDailyIncomingLeadComponent } from "./report-daily-incoming/report-daily-incoming-lead/report-daily-incoming-lead.component";
+import { ReportDailyPreGoLiveByProductComponent } from "./report-daily-pre-go-live/report-daily-pre-go-live-by-product/report-daily-pre-go-live-by-product.component";
+import { ReportDailyPreGoLiveByCmoComponent } from "./report-daily-pre-go-live/report-daily-pre-go-live-by-cmo/report-daily-pre-go-live-by-cmo.component";
+import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-monthly-inprocess-app/report-monthly-inprocess-app.component";
+import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
+import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
+import { ReportMonthlyPreGoLiveByCmoComponent } from "./report-monthly/report-monthly-pre-go-live/report-monthly-pre-go-live-by-cmo/report-monthly-pre-go-live-by-cmo.component";
 
 const routes: Routes = [
   {
@@ -24,6 +31,13 @@ const routes: Routes = [
       { path: PathConstant.REPORT_COLLATERAL_MOU, component: ReportCollateralMouComponent, data: { title: 'Report Collateral Mou' } },
       { path: PathConstant.REPORT_DAILY_INCOMING_APP, component: ReportDailyIncomingAppComponent, data: { title: 'Report Daily Incoming App' } },  
       { path: PathConstant.REPORT_CANCEL_LEAD, component: ReportLeadCancelComponent, data: { title: 'Report Cancel Lead' } },
+      { path: PathConstant.REPORT_DAILY_INCOMING_LEAD, component: ReportDailyIncomingLeadComponent, data: { title: 'Report Daily Incoming Lead' } },
+      { path: PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT, component: ReportDailyPreGoLiveByProductComponent, data: { title: 'Report Daily Pre Go Live By Product' } },
+      { path: PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_CMO, component: ReportDailyPreGoLiveByCmoComponent, data: { title: 'Report Daily Pre Go Live By CMO' } },
+      { path: PathConstant.REPORT_MONTHLY_INPROCESS_APP, component: ReportMonthlyInprocessAppComponent, data: { title: 'Report Monthly Inprocess Application' } },
+      { path: PathConstant.REPORT_DAILY_PENDING_APP_AFT_APV, component: ReportDailyPendingAppAftApvComponent, data: { title: 'Report Daily Pending App After Approval' } },
+      { path: PathConstant.REPORT_MONTHLY_PENDING_LEAD, component: ReportMonthlyPendingLeadComponent, data: { title: 'Report Monthly Pending Lead' } },
+      { path: PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO, component: ReportMonthlyPreGoLiveByCmoComponent, data: { title: 'Report Monthly Pre Go Live By CMO' } },
     ]
   }
 ]

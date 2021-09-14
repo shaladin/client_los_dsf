@@ -33,6 +33,7 @@ export class URLConstant {
 
   // APP Application
   public static AddAppFromCopyCancledApp = environment.losUrl + "/v1" + "/Application/AddAppFromCopyCancledApp";
+  public static AddAppFromCopyCancledAppV2 = environment.losUrl + "/v2" + "/Application/AddAppFromCopyCancledApp";
   public static AddAppMaindata = environment.losUrl + "/v1" + "/Application/AddAppMainData";
   public static GetPurchaseOrderExpDt = environment.losUrl + "/v1" + "/Application/GetPurchaseOrderExpDt";
   public static GetAppById = environment.losUrl + "/v1" + "/Application/GetAppById";
@@ -41,6 +42,7 @@ export class URLConstant {
   public static GetAppDetailForAppTabById = environment.losUrl + "/v1" + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/v1" + "/Application/AddAppFromLead";
   public static AddAppFromSimpleLead = environment.losUrl + "/v1" + "/Application/AddAppFromSimpleLead";
+  public static AddAppFromSimpleLeadV2 = environment.losUrl + "/v2" + "/Application/AddAppFromSimpleLead";
   public static DataTableNAP = environment.losUrl + "/v1" + "/Application/DataTableNAP";
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/v1" + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/v1" + "/Application/GetAppAndAppCustDetailByAgrmntId";
@@ -53,7 +55,9 @@ export class URLConstant {
   public static DataTableFeeAndInsNAP = environment.losUrl + "/v1" + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl + "/v1" + "/Application/UpdateAppStepByAppId";
   public static CopyCancelledApp = environment.losUrl + "/v1" + "/Application/CopyCancelledApp";
+  public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledApp";
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainData";
+  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
   public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
@@ -493,6 +497,7 @@ export class URLConstant {
   
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
+  public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
   public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
 
   // SERVICE TASK
@@ -736,7 +741,8 @@ export class URLConstant {
   public static GetMouCustCollateralDataExistingByCollateralNo = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralDataExistingByCollateralNo";
 
   public static CheckMouCustCollateralIntegrator = environment.losUrl + "/v1" + "/MouCustCollateral/CheckMouCustCollateralIntegrator";
-  public static ValidateAddExistingByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateral/ValidateAddExistingByMouCustId";
+  public static ValidateAddExistingByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateral/ValidateAddExistingByMouCustId"
+  public static GetListMouCustCollateralActiveByCustNo = environment.losUrl + "/v1" + "/MouCustCollateral/GetListMouCustCollateralActiveByCustNo";
   // MOU CUST COLLATERAL DOC
 
   // MOU CUST RVW H
@@ -759,7 +765,11 @@ export class URLConstant {
   public static AddMouCustSignerV2 = environment.losUrl + "/v2" + "/MouCustSigner/AddMouCustSigner";
   public static GetMouCustSignerByMouCustId = environment.losUrl + "/v1" + "/MouCustSigner/GetMouCustSignerByMouCustId";
 
+  // MOU CUST DOC
+  public static GetListMouCustDocByMouCustId = environment.losUrl + "/v1" + "/MouCustDoc/GetListMouCustDocByMouCustId";
+
   // MOU CUST DOC PRINT
+  public static AddMouCustDocPrint = environment.losUrl + "/v1" + "/MouCustDocPrint/AddMouCustDocPrint";
   public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/v1" + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
   public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/v1" + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
 
@@ -1021,7 +1031,9 @@ export class URLConstant {
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/SubmitAgrmntSignerData";
+  public static SubmitAgrmntSignerDataV2 = environment.losUrl + "/v2" + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/EditAgrmntSignerData";
+  public static EditAgrmntSignerDataV2 = environment.losUrl + "/v2" + "/AgrmntSigner/EditAgrmntSignerData";
   public static GetAgrmntSignerByAgrmntId = environment.losUrl + "/v1" + "/AgrmntSigner/GetAgrmntSignerByAgrmntId";
 
   //AGRMNT FIN DATA
@@ -1641,8 +1653,10 @@ export class URLConstant {
   //Task Reassignment
   public static GetTaskReassignmentDetail = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetail";
   public static SubmitTaskReassignment = environment.losUrl + "/v1" + "/TaskReassignment/SubmitTaskReassignment";
+  public static SubmitTaskReassignmentV2 = environment.losUrl + "/v2" + "/TaskReassignment/SubmitTaskReassignment";
   public static GetUserRoleByUsernameForReassignment = environment.FoundationR3Url + "/v1" + "/RefUserRole/GetUserRoleByUsernameForReassignment";
   public static GetTaskReassignmentDetailForApproval = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetailForApproval";
+  public static GetTaskReassignmentDetailForApprovalV2 = environment.losUrl + "/v2" + "/TaskReassignment/GetTaskReassignmentDetailForApproval";
 
   //APP CUST BANK ACC
   public static GetListAppCustBankAccByAppCustId = environment.losUrl + "/v1" + "/AppCustBankAcc/GetListAppCustBankAccByAppCustId";
