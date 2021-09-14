@@ -38,6 +38,7 @@ import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResul
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
 import { CustAddrObj } from 'app/shared/model/CustAddrObj.Model';
+import {MouCustCompanyFinDataObj} from 'app/shared/model/MouCustCompanyFinDataObj.Model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -1317,27 +1318,40 @@ export class MouCustTabComponent implements OnInit {
 
     if (event["CustCompanyContactPersonObjs"] != undefined) {
       this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
+    }else{
+      this.listContactPersonCompany = [];
     }
 
     if (event["CustCompanyMgmntShrholderObjs"] != undefined) {
       this.listShareholder = event["CustCompanyMgmntShrholderObjs"];
+    }else{
+      this.listShareholder = []
     }
 
     if (event["CustCompanyLegalDocObjs"] != undefined) {
       this.listLegalDoc = event["CustCompanyLegalDocObjs"];
+    }else{
+      this.listLegalDoc = []
     }
 
     if (event["CustCompanyFinDataObj"] != undefined) {
       this.custDataCompanyObj.MouCustCompanyFinDataObj = event["CustCompanyFinDataObj"];
       this.custDataCompanyObj.MouCustCompanyFinDataObj.DateAsOf = formatDate(event["CustCompanyFinDataObj"].DateAsOf, 'yyyy-MM-dd', 'en-US');
+    }else{
+      this.custDataCompanyObj.MouCustCompanyFinDataObj = new MouCustCompanyFinDataObj();
     }
 
     if (event["CustBankAccObjs"] != undefined) {
       this.listMouCustBankAccCompany = event["CustBankAccObjs"];
+    }else{
+      this.listMouCustBankAccCompany = []
     }
 
     if (event["CustGrpObjs"] != undefined) {
       this.custGrpMemberComponent.MouCustGrpObjs = event["CustGrpObjs"];
+      this.custGrpMemberComponent.copyAppGrp();
+    }else{
+      this.custGrpMemberComponent.MouCustGrpObjs = [];
       this.custGrpMemberComponent.copyAppGrp();
     }
 
