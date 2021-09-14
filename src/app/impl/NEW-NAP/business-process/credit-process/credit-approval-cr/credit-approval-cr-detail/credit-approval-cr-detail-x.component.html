@@ -10,8 +10,8 @@
         <app-crd-rvw-legal-doc *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany"
           [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
 
-        <app-crd-rvw-third-party-checking *ngIf="AppObj.AppNo != ''" [AppNo]="AppObj.AppNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
-        </app-crd-rvw-third-party-checking>
+        <app-crd-rvw-third-party-checking-x *ngIf="AppObj.AppNo != ''" [AppNo]="AppObj.AppNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
+        </app-crd-rvw-third-party-checking-x>
         <app-crd-rvw-app-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
         </app-crd-rvw-app-info>
         <app-crd-rvw-asset [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>

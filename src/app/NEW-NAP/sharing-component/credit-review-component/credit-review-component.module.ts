@@ -33,6 +33,7 @@ import { CrdRvwCustInfoXComponent } from "app/impl/NEW-NAP/sharing-component/cre
 import { CrdRvwCustHistDataXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-cust-hist-data-x/crd-rvw-cust-hist-data-x.component";
 import { ViewMainInfoComponentModule } from "../view-main-info-component/view-main-info-component.module";
 import { CrdRvwSurveyDataXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-survey-data-x/crd-rvw-survey-data-x.component";
+import { CrdRvwThirdPartyCheckingXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-third-party-checking-x/crd-rvw-third-party-checking-x.component";
 
 @NgModule({
     exports: [
@@ -55,7 +56,8 @@ import { CrdRvwSurveyDataXComponent } from "app/impl/NEW-NAP/sharing-component/c
         CrdRvwAppInfoXComponent,
         CrdRvwCustInfoXComponent,
         CrdRvwCustHistDataXComponent,
-        CrdRvwSurveyDataXComponent
+        CrdRvwSurveyDataXComponent,
+        CrdRvwThirdPartyCheckingXComponent
     ],
     imports: [
         CommonModule,
@@ -92,7 +94,8 @@ import { CrdRvwSurveyDataXComponent } from "app/impl/NEW-NAP/sharing-component/c
         CrdRvwCustCompanyInfoXComponent,
         CrdRvwCustInfoXComponent,
         CrdRvwCustHistDataXComponent,
-        CrdRvwSurveyDataXComponent
+        CrdRvwSurveyDataXComponent,
+        CrdRvwThirdPartyCheckingXComponent
     ],
     providers: [
         NGXToastrService

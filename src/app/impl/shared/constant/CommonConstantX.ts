@@ -17,6 +17,7 @@ export class CommonConstantX {
     //General Setting Code
     public static GSVendorSlbCode = "VENDOR_SLB_CODE";
     public static RefMasterTypeCodeMouFctrType = 'MOU_FCTR_TYPE';
+    public static GSCodePefindoBasicRole = "PEFINDO_BASIC_ROLE";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
