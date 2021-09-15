@@ -32,6 +32,7 @@ import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-mont
 import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
 import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
 import { ReportMonthlyPreGoLiveByCmoComponent } from './report-monthly/report-monthly-pre-go-live/report-monthly-pre-go-live-by-cmo/report-monthly-pre-go-live-by-cmo.component';
+import { ReportMonthlyPendingPreGoLiveAftApvComponent } from "./report-monthly/report-monthly-pending-pre-go-live-aft-apv/report-monthly-pending-pre-go-live-aft-apv.component";
 
 @NgModule({
     declarations: [
@@ -59,7 +60,8 @@ import { ReportMonthlyPreGoLiveByCmoComponent } from './report-monthly/report-mo
     ReportMonthlyInprocessAppComponent,
     ReportDailyPendingAppAftApvComponent,
     ReportMonthlyPendingLeadComponent,
-    ReportMonthlyPreGoLiveByCmoComponent
+    ReportMonthlyPreGoLiveByCmoComponent,
+    ReportMonthlyPendingPreGoLiveAftApvComponent
     ],
     imports: [
         ReportRoutingModule,
