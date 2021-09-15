@@ -18,6 +18,7 @@ import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import {MouCustListedCustFctrXComponent} from 'app/impl/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr-x.component';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-mou-detail-factoring-x',
@@ -230,8 +231,8 @@ export class MouDetailFactoringXComponent implements OnInit {
   }
 
   Save(){
-    var formData = this.MouDetailFactoringForm.getRawValue();
-    var url;
+    const formData = this.MouDetailFactoringForm.getRawValue();
+    let url;
 
     if (this.isRecourse) {
       formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
@@ -272,10 +273,10 @@ export class MouDetailFactoringXComponent implements OnInit {
     }
 
     if(this.mode == "add"){
-      url = URLConstant.AddMouCustFctr;
+      url = URLConstantX.AddMouCustFctrX;
     }
     else{
-      url = URLConstant.EditMouCustFctr;
+      url = URLConstantX.EditMouCustFctrX;
     }
 
     this.httpClient.post(url, formData).subscribe(

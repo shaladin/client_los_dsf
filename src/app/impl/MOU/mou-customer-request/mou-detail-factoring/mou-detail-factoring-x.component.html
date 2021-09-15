@@ -151,7 +151,7 @@
         <label class="col-md-3 adins-required-label" for="LinkSupplier" translate>Link Supplier </label>
         <div class="col-md-3">
           <lib-uclookupgeneric *ngIf="inputLookupObj?.isReady" [lookupInput]="inputLookupObj"
-            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupSupp'" 
+            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupSupp'"
             (lookup)="SetSupplier($event)">
           </lib-uclookupgeneric>
         </div>
@@ -161,7 +161,7 @@
           Factoring</label>
         <div class="col-md-3">
           <lib-uclookupgeneric [lookupInput]="inputLookupCustObj"
-            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupCust'" 
+            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupCust'"
             (lookup)="SetCustomer($event)">
           </lib-uclookupgeneric>
         </div>
@@ -181,14 +181,14 @@
     (OutputData)="GetDataListCustFctr($event)">
     </app-mou-cust-listed-cust-fctr-x>
   </div>
-  
+
   <div class="col-md-12" style="padding: 0; text-align: right;">
     <div class="form-actions right">
       <!-- <button type="button" class="btn btn-raised btn-primary" translate (click)="findInvalidControls()">
-        <i class="far fa-check-square"></i> Test
+        <i class="far fa-check-square"></i>Test
       </button> -->
       <button type="submit" class="btn btn-raised btn-primary" translate>
-        <i class="far fa-check-square"></i> Save
+        <i class="far fa-check-square"></i>Save
       </button>
     </div>
   </div>
