@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "A.CessieNo",
+            "name": "A.CESSIE_NO",
             "id": "CessieNoId",
             "value": "",
             "label": "Cessie Number",
@@ -12,7 +12,7 @@
         },
         {
             "type": "currency",
-            "name": "A.PaymentAmount",
+            "name": "A.TOTAL_PURCHASE_AMT",
             "id": "PaymentValueAmtId",
             "value": "0",
             "label": "Payment Amount >=",
@@ -21,7 +21,7 @@
           },
           {
             "type": "datepicker",
-            "name": "A.CessieDate",
+            "name": "A.CESSIE_DT",
             "id": "CessieDateId",
             "value": "",
             "label": "Cessie Date",
@@ -29,7 +29,7 @@
           },
           {
             "type": "currency",
-            "name": "A.PaymentAmount",
+            "name": "A.TOTAL_PURCHASE_AMT",
             "id": "PaymentValueAmtId",
             "value": "9999999999",
             "label": "Payment Amount <=",
@@ -38,7 +38,7 @@
           },
           {
             "type": "textbox",
-            "name": "A.ClientName",
+            "name": "B.CUST_NAME",
             "id": "ClientNameId",
             "value": "",
             "label": "Client Name",
@@ -46,7 +46,7 @@
           },
           {
             "type": "datepicker",
-            "name": "A.PaymentDueDate",
+            "name": "E.FACT_DSB_DT",
             "id": "PaymentDueDateId",
             "value": "",
             "label": "Payment Date",
@@ -54,7 +54,7 @@
           },
           {
             "type": "textbox",
-            "name": "A.ClientName",
+            "name": "B.CUST_NAME",
             "id": "ClientNameId",
             "value": "",
             "label": "Product Type",
@@ -69,37 +69,37 @@
             "type": "sort",
             "position": "center",
             "label": "Cessie Number",
-            "name": "A.CessieNo"
+            "name": "CESSIE_NO"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Cessie Date",
-            "name": "A.CessieDate"
+            "name": "CESSIE_DT"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Client Name",
-            "name": "A.ClientName"
+            "name": "CUST_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Payment Due Date",
-            "name": "A.PaymentDueDate"
+            "name": "FACT_DSB_DT"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Payment Amount",
-            "name": "A.PaymentAmount"
+            "name": "TOTAL_PURCHASE_AMT"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Bank Name",
-            "name": "A.BankName"
+            "name": "BANK_ACCOUNT_NO"
         },
         {
             "type": "label",
@@ -116,32 +116,32 @@
         {
             "type": "text",
             "position": "center",
-            "property": "CessieNo"
+            "property": "CESSIE_NO"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "CessieDate"
+            "property": "CESSIE_DT"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "ClientName"
+            "property": "CUST_NAME"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "PaymentDueDate"
+            "property": "FACT_DSB_DT"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "PaymentAmount"
+            "property": "TOTAL_PURCHASE_AMT"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "BankName"
+            "property": "BANK_ACCOUNT_NO"
         },
         {
             "type": "action",
@@ -165,11 +165,11 @@
                                 "param": [
                                     {
                                         "type": "CessieID",
-                                        "property": "CessieID"
+                                        "property": "CESSIE_H_X_ID"
                                     },
                                     {
                                         "type": "CessieNo",
-                                        "property": "CessieNo"
+                                        "property": "CESSIE_NO"
                                     },
                                     {
                                         "type": "mode",
@@ -194,11 +194,11 @@
                                 "param": [
                                     {
                                         "type": "CessieID",
-                                        "property": "CessieID"
+                                        "property": "CESSIE_H_X_ID"
                                     },
                                     {
                                         "type": "CessieNo",
-                                        "property": "CessieNo"
+                                        "property": "CESSIE_NO"
                                     },
                                     {
                                         "type": "mode",

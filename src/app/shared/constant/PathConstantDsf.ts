@@ -106,4 +106,7 @@ export class PathConstantDsf {
     public static PRINT_REPORT_DISBURSEMENT_ORDER_PAGING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_DISB_ORDER_PAGING;
     public static PRINT_REPORT_DISBURSEMENT_ORDER_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_DISB_ORDER_DETAIL;
 
+    public static NAP_SIMPLE_LEAD = "NapFromSimpleLeadDsf";
+    public static NAP_SIMPLE_LEAD_PAGING = PathConstantDsf.NAP_SIMPLE_LEAD + "/" + PathConstant.PAGING;
+    public static NAP_SIMPLE_LEAD_DETAIL = PathConstantDsf.NAP_SIMPLE_LEAD + "/" + PathConstant.DETAIL;
 }
