@@ -347,6 +347,7 @@ export class CommissionV2XComponent implements OnInit {
       (response) => {
         var ResponseObj = response[CommonConstant.ReturnObj];
         // override hide suppl & suppl emp jika CFRFN4W ignore rule
+        console.log("meow meow");
         if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.LobCode == CommonConstantX.SLB)
         {
           ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
@@ -494,7 +495,6 @@ export class CommissionV2XComponent implements OnInit {
     if (this.AllocateDataWithPriority(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
     
 
-    if (listVendorCode.length > 0) {
       let obj: ReqTaxObj = {
         AppId: this.AppId,
         VendorCode: listVendorCode,
@@ -524,7 +524,7 @@ export class CommissionV2XComponent implements OnInit {
           this.IsCalculated = false;
         }
       );
-    }
+    
   }
 
   mapTaxData(identifier: string, TaxDetailData: ResponseTaxDetailObj, idxStart: number, idxEnd: number)
@@ -605,7 +605,7 @@ export class CommissionV2XComponent implements OnInit {
   }
 
   SaveForm() {
-    if (!this.IsCalculated || this.ListAppCommHObj.length == 0) return this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
+    if (!this.IsCalculated) return this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
     if (this.Summary.TotalCommisionAmount > this.maxAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Max Allocated Amount");
     if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
 
@@ -651,72 +651,74 @@ export class CommissionV2XComponent implements OnInit {
   AllocateDataWithPriority(identifier:string, listVendorCode: Array<string>, listVendorEmpNo: Array<string>, listTrxAmt: Array<Array<number>>)
   {
     const tempDataList = this.CommissionForm.get(identifier) as FormArray;
-    for (var i = 0; i < tempDataList.length; i++) {
-      const tempData = tempDataList.get(i.toString()) as FormGroup;
-      var tempAppComm = new AppCommissionHObjX();
-
-      const ContentName = tempData.get("ContentName").value;
-      if (ContentName != "") {
-        //MAP H DATA
-        tempAppComm = this.MapFormDataToAppCommHList(tempData, identifier);
-        
-        //MAP D DATA
-        var totalCommAmt: number = 0;
-        const tempListAllocated = tempData.get("ListAllocated") as FormArray;
-        var idx=0;
-          const tempListAllocIdxAt = tempListAllocated.get(idx.toString()) as FormGroup;
-          const AllocAmt = tempListAllocIdxAt.get("AllocationAmount").value;
-
-          var tempListTrxAmt: Array<number> = this.allocateValue(AllocAmt, tempAppComm.ListappCommissionDObj, identifier);
-          totalCommAmt = AllocAmt;      
-        
-        if (totalCommAmt == 0) {
+    if(tempDataList != null){
+      for (var i = 0; i < tempDataList.length; i++) {
+        const tempData = tempDataList.get(i.toString()) as FormGroup;
+        var tempAppComm = new AppCommissionHObjX();
+  
+        const ContentName = tempData.get("ContentName").value;
+        if (ContentName != "") {
+          //MAP H DATA
+          tempAppComm = this.MapFormDataToAppCommHList(tempData, identifier);
+          
+          //MAP D DATA
+          var totalCommAmt: number = 0;
+          const tempListAllocated = tempData.get("ListAllocated") as FormArray;
+          var idx=0;
+            const tempListAllocIdxAt = tempListAllocated.get(idx.toString()) as FormGroup;
+            const AllocAmt = tempListAllocIdxAt.get("AllocationAmount").value;
+  
+            var tempListTrxAmt: Array<number> = this.allocateValue(AllocAmt, tempAppComm.ListappCommissionDObj, identifier);
+            totalCommAmt = AllocAmt;      
+          
+          if (totalCommAmt == 0) {
+            this.IsCalculated = false;
+            this.toastr.warningMessage("Please Allocate Commission Amount for " + ContentName);
+            return true;
+          }
+          listTrxAmt.push(tempListTrxAmt);
+  
+          if (identifier == this.identifierSupplierEmp) {
+            const SupplCode = tempData.get("SupplCode").value;
+            listVendorCode.push(SupplCode);
+            listVendorEmpNo.push(ContentName);
+  
+          } else {
+            listVendorCode.push(ContentName);
+            listVendorEmpNo.push("-");
+          }
+  
+          if (identifier == this.identifierSupplier) this.totalSupplier += 1;
+          if (identifier == this.identifierReferantor) this.totalReferantor += 1;
+          if (identifier == this.identifierSupplierEmp) 
+          {
+            const tempListSupplEmp = tempData.get("ListEmpPosition") as FormArray;
+            for(let z=0;z<tempListSupplEmp.length;z++)
+            {
+              const tempListSupplEmpIdx = tempListSupplEmp.get(z.toString()) as FormGroup;
+              if(tempListSupplEmpIdx.get("PositionSelect").value)
+              {
+                var tempEmp = new AppCommSupplEmpObjX();
+                // tempEmp.SeqNo = tempListSupplEmpIdx.get("SeqNo").value;
+                tempEmp.SeqNo = tempAppComm.ListAppCommSupplEmpObj.length+1;
+                tempEmp.MrSbePositionMnl = tempListSupplEmpIdx.get("MasterCode").value;
+                tempAppComm.ListAppCommSupplEmpObj.push(tempEmp);
+              }
+  
+            }
+            this.totalSupplierEmp += 1;
+          }
+          this.ListAppCommHObj.push(tempAppComm);
+          
+        } else {
           this.IsCalculated = false;
-          this.toastr.warningMessage("Please Allocate Commission Amount for " + ContentName);
+          var Label = "";
+          if (identifier == this.identifierSupplier) Label = CommonConstant.LabelSupplier;
+          if (identifier == this.identifierSupplierEmp) Label = CommonConstant.LabelSupplierEmp;
+          if (identifier == this.identifierReferantor) Label = CommonConstant.LabelReferantor;
+          this.toastr.warningMessage("Please Choose " + Label + " Name at Data " + (i + 1));
           return true;
         }
-        listTrxAmt.push(tempListTrxAmt);
-
-        if (identifier == this.identifierSupplierEmp) {
-          const SupplCode = tempData.get("SupplCode").value;
-          listVendorCode.push(SupplCode);
-          listVendorEmpNo.push(ContentName);
-
-        } else {
-          listVendorCode.push(ContentName);
-          listVendorEmpNo.push("-");
-        }
-
-        if (identifier == this.identifierSupplier) this.totalSupplier += 1;
-        if (identifier == this.identifierReferantor) this.totalReferantor += 1;
-        if (identifier == this.identifierSupplierEmp) 
-        {
-          const tempListSupplEmp = tempData.get("ListEmpPosition") as FormArray;
-          for(let z=0;z<tempListSupplEmp.length;z++)
-          {
-            const tempListSupplEmpIdx = tempListSupplEmp.get(z.toString()) as FormGroup;
-            if(tempListSupplEmpIdx.get("PositionSelect").value)
-            {
-              var tempEmp = new AppCommSupplEmpObjX();
-              // tempEmp.SeqNo = tempListSupplEmpIdx.get("SeqNo").value;
-              tempEmp.SeqNo = tempAppComm.ListAppCommSupplEmpObj.length+1;
-              tempEmp.MrSbePositionMnl = tempListSupplEmpIdx.get("MasterCode").value;
-              tempAppComm.ListAppCommSupplEmpObj.push(tempEmp);
-            }
-
-          }
-          this.totalSupplierEmp += 1;
-        }
-        this.ListAppCommHObj.push(tempAppComm);
-        
-      } else {
-        this.IsCalculated = false;
-        var Label = "";
-        if (identifier == this.identifierSupplier) Label = CommonConstant.LabelSupplier;
-        if (identifier == this.identifierSupplierEmp) Label = CommonConstant.LabelSupplierEmp;
-        if (identifier == this.identifierReferantor) Label = CommonConstant.LabelReferantor;
-        this.toastr.warningMessage("Please Choose " + Label + " Name at Data " + (i + 1));
-        return true;
       }
     }
     return false;
