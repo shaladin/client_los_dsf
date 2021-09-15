@@ -371,7 +371,7 @@ export class AssetDataPagingXComponent implements OnInit {
         }
       }
     }
-    if (this.checkValidityAssetUsed()) return;
+    // if (this.checkValidityAssetUsed()) return;
       
     if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
 
