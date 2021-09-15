@@ -42,6 +42,14 @@
           </div>
           <div class="row">
             <div class="col-md-6">
+              <label class="label-control" translate> Trusting Social </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="trustingSocialHandler(TrustingSocialView)"> Click Here to View </a></label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
               <label class="label-control" translate> SLIK </label>
             </div>
             <div class="col-md-6 ">
@@ -54,3 +62,14 @@
     </div>
   </div>
 </div>
+<ng-template #TrustingSocialView let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <iframe [src]="urlLink | safe" style="width: inherit; height: 800px;" title="'Trusting Social'"></iframe>
+  <div class="modal-body" id="TrustingSocialViewId">
+  </div>
+</ng-template>
