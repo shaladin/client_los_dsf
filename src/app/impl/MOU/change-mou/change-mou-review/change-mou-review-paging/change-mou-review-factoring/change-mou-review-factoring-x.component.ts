@@ -39,7 +39,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: Array<ReqGetByTypeCodeObj>;
   ScoreResult: number = 0;
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   ChangeMouCustId: number;
   TrxType: string;
@@ -207,16 +207,10 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
-
     var Attributes = [
       {
         "AttributeName": "Plafond Amount",
         "AttributeValue": this.PlafondAmt
-      },
-      {
-        "AttributeName": "Scoring",
-        "AttributeValue": this.ScoreResult
       }
     ];
 

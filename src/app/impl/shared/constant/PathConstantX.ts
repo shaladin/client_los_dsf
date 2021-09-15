@@ -117,6 +117,8 @@ export class PathConstantX {
   public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X = PathConstant.CHANGE_MOU_REQ + '/' + PathConstant.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X + '/:MOUType';
   public static CHANGE_MOU_INQUIRY_X = PathConstant.CHANGE_MOU_INQUIRY + "X";
   public static CHANGE_MOU_RVW_PAGING_X = PathConstant.CHANGE_MOU + '/ReviewPagingX';
+  public static CHANGE_MOU_DETAIL_DLFN_X = PathConstant.CHANGE_MOU_DETAIL + "/DealerfinancingX";
+  public static CHANGE_MOU_DETAIL_FCTR_X = PathConstant.CHANGE_MOU_DETAIL + "/FactoringX";
   //#endregion
 
   //region New Approval

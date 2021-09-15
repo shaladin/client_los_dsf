@@ -17,11 +17,11 @@ import { RefPayFreqObj } from "app/shared/model/RefPayFreqObj.model";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
-  selector: "app-change-mou-detail-factoring",
-  templateUrl: "./change-mou-detail-factoring.component.html",
+  selector: "app-change-mou-detail-factoring-x",
+  templateUrl: "./change-mou-detail-factoring-x.component.html",
 })
 
-export class ChangeMouDetailFactoringComponent implements OnInit {
+export class ChangeMouDetailFactoringXComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() ChangeMouTrxId: number = 0;
   @Output() ResponseMouCustFactoring: EventEmitter<MouCustFctrObj> = new EventEmitter();

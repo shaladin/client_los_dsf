@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from "@angular/core";
-import {FormBuilder, Validators, FormArray, FormGroup, AbstractControl} from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
@@ -30,8 +30,8 @@ import { GenericListObj } from "app/shared/model/Generic/GenericListObj.Model";
 import { MouCustAddrObj } from "app/shared/model/MouCustAddrObj.Model";
 import { RegexService } from 'app/shared/services/regex.services';
 import { CustomPatternObj } from "app/shared/model/CustomPatternObj.model";
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {ChangeMouCustCollateralStatXObj} from 'app/impl/shared/model/ChangeMouCustCollateralStatXObjModel';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ChangeMouCustCollateralStatXObj } from 'app/impl/shared/model/ChangeMouCustCollateralStatXObjModel';
 import { RefAttrGenerateObj } from "app/shared/model/RefAttrGenerate.Model";
 import { RefAttrGenerate } from "app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service";
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from "app/shared/model/MouCustCollateralAttrObj.Model";
@@ -85,7 +85,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     },
   ];
 
-  CollateralStatusObj: Array<KeyValueObj> =[
+  CollateralStatusObj: Array<KeyValueObj> = [
     {
       Key: "RECEIVED",
       Value: "Received"
@@ -98,6 +98,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
   controlNameIdNo: string = 'OwnerIdNo'
   CollTypeList: Array<KeyValueObj>;
+  CollateralPortionTypeObj: Array<KeyValueObj> = new Array();
   IdTypeList: Array<KeyValueObj>;
   type: string;
   SerialNoList: Array<AssetTypeSerialNoLabelObj>;
@@ -143,6 +144,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     items: this.fb.array([]),
     MrCollateralConditionCode: [""],
     ManufacturingYear: ["", [Validators.pattern("^[0-9]+$")]],
+    CollateralPortionAmt: [0, Validators.required],
+    CollateralPortionType: [''],
     CopyToOwnerLocation: [''],
     SelfOwner: [false],
     AttrContentObjs: this.fb.array([]),
@@ -171,11 +174,11 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.customPattern = new Array<CustomPatternObj>();
     this.inputAddressObjForLegalAddr = new InputAddressObj();
     this.inputAddressObjForLegalAddr.showSubsection = false;
-    this.inputAddressObjForLegalAddr.showPhn3 = false;
+    this.inputAddressObjForLegalAddr.showAllPhn = false;
 
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
-    this.inputAddressObjForLocAddr.showPhn3 = false;
+    this.inputAddressObjForLocAddr.showAllPhn = false;
     this.inputAddressObjForLocAddr.isRequired = false;
     this.inputAddressObjForLocAddr.inputField.inputLookupObj.isRequired = false;
 
@@ -220,6 +223,15 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
         }
       });
 
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodePaymentType }).subscribe(
+      (response) => {
+        this.CollateralPortionTypeObj = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({
+          CollateralPortionType: this.CollateralPortionTypeObj[0].Key
+        });
+        this.CollateralPortionTypeChange();
+      })
+
     this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, { Id: this.ChangeMouCustId }).subscribe(
       (response: GenericListObj) => {
         if (response["ReturnObject"] != null || response["ReturnObject"].length > 0) {
@@ -247,6 +259,38 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
         });
         this.setValidatorPattern(this.IdTypeList[0].Key);
       });
+  }
+
+  UpdateValueCollateralPortionAmt() {
+    let CollateralPortionAmt = this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value / 100;
+    if (this.AddCollForm.controls.CollateralPrcnt.value > 100) {
+      this.toastr.warningMessage("Collateral Percentage exceeded 100 !");
+      this.AddCollForm.patchValue({
+        CollateralPortionAmt: 0,
+        CollateralPrcnt: 0
+      });
+    }
+    else {
+      this.AddCollForm.patchValue({
+        CollateralPortionAmt: CollateralPortionAmt
+      });
+    }
+  }
+
+  UpdateValueCollateralPrcnt() {
+    let CollateralPrcnt = this.AddCollForm.controls.CollateralPortionAmt.value / this.AddCollForm.controls.CollateralValueAmt.value * 100;
+    if (this.AddCollForm.controls.CollateralPortionAmt.value > this.AddCollForm.controls.CollateralValueAmt.value) {
+      this.toastr.warningMessage("Collateral Portion Amount exceeded Collateral Value Amount !");
+      this.AddCollForm.patchValue({
+        CollateralPortionAmt: 0,
+        CollateralPrcnt: 0
+      });
+    }
+    else {
+      this.AddCollForm.patchValue({
+        CollateralPrcnt: CollateralPrcnt
+      });
+    }
   }
 
   bindUcLookup() {
@@ -337,16 +381,11 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
   ResetForm() {
     this.inputAddressObjForLegalAddr = new InputAddressObj();
-    this.inputAddressObjForLegalAddr.showPhn1 = false;
-    this.inputAddressObjForLegalAddr.showPhn2 = false;
-    this.inputAddressObjForLegalAddr.showPhn3 = false;
-    this.inputAddressObjForLegalAddr.showFax = false;
+    this.inputAddressObjForLegalAddr.showSubsection = false;
+    this.inputAddressObjForLegalAddr.showAllPhn = false;
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
-    this.inputAddressObjForLocAddr.showPhn1 = false;
-    this.inputAddressObjForLocAddr.showPhn2 = false;
-    this.inputAddressObjForLocAddr.showPhn3 = false;
-    this.inputAddressObjForLocAddr.showFax = false;
+    this.inputAddressObjForLegalAddr.showAllPhn = false;
     this.inputAddressObjForLocAddr.isRequired = false;
     this.inputAddressObjForLocAddr.inputField.inputLookupObj.isRequired = false;
 
@@ -368,7 +407,9 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       RowVersionCollateral: '',
       RowVersionCollateralRegistration: '',
       MrCollateralConditionCode: '',
-      ManufacturingYear: ''
+      ManufacturingYear: '',
+      CollateralPortionAmt: 0,
+      CollateralPortionType: this.CollateralPortionTypeObj[0].Key,
     });
   }
 
@@ -379,6 +420,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.type = pageType;
     this.ChgMouCustCollateralId = 0;
     this.GenerateCollateralAttr(false, 0);
+    this.AddCollForm.controls.CollateralReleasedDt.disable();
+    this.AddCollForm.controls.CollateralReceivedDt.disable();
     if (pageType == "AddExisting") {
       let listDocExisting = this.AddCollForm.get("ListDoc") as FormArray;
       listDocExisting.reset();
@@ -420,19 +463,19 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.getDealerGrading();
     this.AddCollForm.updateValueAndValidity();
   }
-  
-    async getDealerGrading() {
-	    var changeMouTrxId;
-	    await this.http.post(URLConstantX.GetChangeMouTrxbyTrxNo, { ChangeMouTrxNo: this.ChangeMouTrxNo }).toPromise().then(
-	      (response) => {
-	        changeMouTrxId = response['ChangeMouTrxId'];
-	      }); 
-	    await this.http.post(URLConstantX.GetChangeMouDealerGradingX, { Id: changeMouTrxId }).toPromise().then(
-	      (response) => {
-	        this.dealerGrading = response['DealerGrading'];
-	        this.dealerRating = response['DealerRating'];
-	      });
-	}
+
+  async getDealerGrading() {
+    var changeMouTrxId;
+    await this.http.post(URLConstantX.GetChangeMouTrxbyTrxNo, { ChangeMouTrxNo: this.ChangeMouTrxNo }).toPromise().then(
+      (response) => {
+        changeMouTrxId = response['ChangeMouTrxId'];
+      });
+    await this.http.post(URLConstantX.GetChangeMouDealerGradingX, { Id: changeMouTrxId }).toPromise().then(
+      (response) => {
+        this.dealerGrading = response['DealerGrading'];
+        this.dealerRating = response['DealerRating'];
+      });
+  }
 
   ChgMouCustCollateralId: number = 0;
   isAttrReady: boolean = false;
@@ -448,7 +491,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       ChangeMouCustCollateralId: ChgMouCustCollId,
       AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
       IsRefresh: isRefresh
-    } : {      
+    } : {
       MouCustCollateralId: ChgMouCustCollId,
       AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
       IsRefresh: isRefresh
@@ -485,7 +528,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           };
           this.ListAttrObjs.push(tempObj);
         }
-        if(isCopy) this.IsDisable = true;
+        if (isCopy) this.IsDisable = true;
         this.isAttrReady = true;
       });
   }
@@ -597,10 +640,10 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
             CollateralStat: this.collateralObj.CollateralStat,
             CollateralValueAmt: this.collateralObj.CollateralValueAmt,
             CollateralPrcnt: this.maxPrcnt,
+            CollateralPortionAmt: this.collateralObj.CollateralPortionAmt,
             CollateralNotes: this.collateralObj.CollateralNotes,
             ManufacturingYear: this.collateralObj.ManufacturingYear,
             RowVersionCollateral: this.collateralObj.RowVersion,
-
             MouCustCollateralRegistrationId: this.collateralRegistrationObj.MouCustCollateralRegistrationId,
             SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer,
             OwnerName: this.collateralRegistrationObj.OwnerName,
@@ -660,6 +703,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           this.inputAddressObjForLocAddr.default = this.locationAddrObj;
           this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
 
+          this.UpdateValueCollateralPortionAmt();
           this.onItemChange(this.collateralObj.AssetTypeCode, true, true, true);
         });
     }
@@ -701,7 +745,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     if (!isFromLookupEventCallback) {
       this.updateUcLookup(value, false, this.type);
     }
-    if(!isCopy) this.GenerateCollateralAttr(false, this.ChgMouCustCollateralId);
+    if (!isCopy) this.GenerateCollateralAttr(false, this.ChgMouCustCollateralId);
   }
 
   SaveAddEdit() {
@@ -730,8 +774,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       ChangeMouCustCollateralRegistration: this.changeMouCustCollateralRegistrationObj,
       ListChangeMouCustCollateralDoc: this.listMouCustCollateralDocObj.MouCustCollateralDocObj,
       ListChangeMouCustCollaterals: this.SetCollateralAttr(),
-      CollateralReceivedDt : this.AddCollForm.controls.CollateralReceivedDt.value,
-      CollateralReleasedDt : this.AddCollForm.controls.CollateralReleasedDt.value
+      CollateralReceivedDt: this.AddCollForm.controls.CollateralReceivedDt.value,
+      CollateralReleasedDt: this.AddCollForm.controls.CollateralReleasedDt.value
     };
 
     this.http.post(URLConstantX.AddEditChangeMouCustCollateralDataX, custCollObj).subscribe(
@@ -862,6 +906,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.changeMouCustCollateralObj.ChangeMouCustCollateralId = ChangeMouCustCollId;
     this.isAdd = false;
     this.type = "AddEdit";
+    this.AddCollForm.controls.CollateralReleasedDt.disable();
+    this.AddCollForm.controls.CollateralReceivedDt.disable();
     const collObj = { Id: ChangeMouCustCollId };
     this.http.post(URLConstant.GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId, collObj).subscribe(
       (response) => {
@@ -870,6 +916,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
         this.rowVersionChangeMouCustCollateral = this.collateralObj.RowVersion;
         this.rowVersionChangeMouCustCollateralRegistration = this.collateralRegistrationObj.RowVersion;
+
+        this.CollateralPortionTypeChange();
 
         this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
         this.inputLookupObj.jsonSelect = this.collateralObj;
@@ -944,6 +992,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           SerialNo5: this.collateralObj.SerialNo5,
           CollateralValueAmt: this.collateralObj.CollateralValueAmt,
           CollateralPrcnt: this.collateralObj.CollateralPrcnt,
+          CollateralPortionAmt: this.collateralObj.CollateralPortionAmt,
           CollateralNotes: this.collateralObj.CollateralNotes,
           ManufacturingYear: this.collateralObj.ManufacturingYear,
           RowVersionCollateral: this.collateralObj.RowVersion,
@@ -956,6 +1005,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
           SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF" ? true : false
         });
+        this.CollateralPortionTypeChange();
         this.GenerateCollateralAttr(false, ChangeMouCustCollId);
         this.checkSelfOwnerColl();
         this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
@@ -1011,18 +1061,18 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
         this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
       });
     this.http.post<ChangeMouCustCollateralStatXObj>(URLConstantX.GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX, collObj).subscribe(
-      (response)=>{
+      (response) => {
         let collRcvDt = "";
         let collRlsDt = "";
-        if(response.CollateralReceivedDt != null){
+        if (response.CollateralReceivedDt != null) {
           collRcvDt = formatDate(response.CollateralReceivedDt, 'yyyy-MM-dd', 'en-US')
         }
-        if(response.CollateralReleasedDt != null){
+        if (response.CollateralReleasedDt != null) {
           collRlsDt = formatDate(response.CollateralReleasedDt, 'yyyy-MM-dd', 'en-US')
         }
         this.AddCollForm.patchValue({
-          CollateralReceivedDt : collRcvDt,
-          CollateralReleasedDt : collRlsDt
+          CollateralReceivedDt: collRcvDt,
+          CollateralReleasedDt: collRlsDt
         });
       }
     );
@@ -1061,9 +1111,11 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       items: this.fb.array([]),
       MrCollateralConditionCode: [""],
       ManufacturingYear: ["", [Validators.pattern("^[0-9]+$")]],
+      CollateralPortionAmt: [0],
+      CollateralPortionType: [''],
       CopyToOwnerLocation: [''],
       SelfOwner: [false],
-	  AttrContentObjs: this.fb.array([]),
+      AttrContentObjs: this.fb.array([]),
       CollateralStatus: [''],
       IsRequiredStatus: [''],
       CollateralReceivedDt: [''],
@@ -1089,10 +1141,10 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
         CollateralNo: this.collateralObj.CollateralNo,
         ChangeMouCustId: this.ChangeMouCustId,
         CollateralPrcnt: this.AddCollForm.controls.CollateralPrcnt.value,
-        CollateralPortionAmt: collateralPortionAmt
+        CollateralPortionAmt: this.AddCollForm.controls.CollateralPortionAmt.value
       },
-      CollateralReceivedDt : this.AddCollForm.controls.CollateralReceivedDt.value,
-      CollateralReleasedDt : this.AddCollForm.controls.CollateralReleasedDt.value
+      CollateralReceivedDt: this.AddCollForm.controls.CollateralReceivedDt.value,
+      CollateralReleasedDt: this.AddCollForm.controls.CollateralReleasedDt.value
     }
 
     this.http.post(URLConstantX.AddExistingChangeMouCustCollateralDataX, existingChangeMouCustCollateralObj).subscribe(
@@ -1345,14 +1397,14 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     }
   }
 
-  ChangeCollStat(){
-    if(this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED') {
+  ChangeCollStat() {
+    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED') {
       this.AddCollForm.controls.CollateralReceivedDt.enable();
 
       this.AddCollForm.controls.CollateralReleasedDt.disable();
       this.AddCollForm.controls.CollateralReleasedDt.clearValidators();
       this.AddCollForm.controls.CollateralReleasedDt.updateValueAndValidity();
-    }else{
+    } else {
       this.AddCollForm.controls.CollateralReleasedDt.enable();
 
       this.AddCollForm.controls.CollateralReceivedDt.disable();
@@ -1361,20 +1413,37 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     }
   }
 
-  CollateralReceive(){
-    let temp:AbstractControl;
+  CollateralReceive() {
+    let temp: AbstractControl;
 
-    if(this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED') {
+    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED') {
       temp = this.AddCollForm.controls.CollateralReceivedDt;
-    }else{
+    } else {
       temp = this.AddCollForm.controls.CollateralReleasedDt;
     }
 
-    if(this.AddCollForm.controls.IsRequiredStatus.value){
+    if (this.AddCollForm.controls.IsRequiredStatus.value) {
       temp.setValidators([Validators.required]);
-    }else{
+    } else {
       temp.clearValidators();
     }
     temp.updateValueAndValidity();
+  }
+
+  CollateralPortionTypeChange() {
+    if (this.AddCollForm.controls.CollateralPortionType.value == CommonConstant.PaymentTypeAmt) {
+      this.AddCollForm.controls["CollateralPortionAmt"].enable();
+      this.AddCollForm.controls["CollateralPrcnt"].disable();
+      let collPriceAmt: number = this.AddCollForm.get("CollateralValueAmt").value;
+      let maxCollPriceAmt: number = collPriceAmt * this.maxPrcnt / 100;
+      this.AddCollForm.controls["CollateralPortionAmt"].setValidators([Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(maxCollPriceAmt)]);
+      this.AddCollForm.controls["CollateralPortionAmt"].updateValueAndValidity();
+    }
+    else {
+      this.AddCollForm.controls["CollateralPrcnt"].enable();
+      this.AddCollForm.controls["CollateralPortionAmt"].disable();
+      this.AddCollForm.controls["CollateralPrcnt"].setValidators([Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]);
+      this.AddCollForm.controls["CollateralPrcnt"].updateValueAndValidity();
+    }
   }
 }

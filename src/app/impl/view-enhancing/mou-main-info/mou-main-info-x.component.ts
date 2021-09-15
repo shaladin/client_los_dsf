@@ -19,6 +19,7 @@ import {Router} from '@angular/router';
 })
 export class MouMainInfoXComponent implements OnInit {
   @Input() MouCustId: number;
+  @Input() ChangeMouTrxId: number = 0;
   MouCustObj: MouCustObj = new MouCustObj();
   CustNoObj: GenericObj = new GenericObj();
   MouMainInfo: ResMouMainInfoObjX;
@@ -32,16 +33,31 @@ export class MouMainInfoXComponent implements OnInit {
   }
 
   ReloadUcViewGeneric() {
-    this.http.post<ResMouMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, {Id: this.MouCustId}).subscribe(
-      (response) => {
-        this.MouMainInfo = response;
-        if(this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
-          this.MouMainInfo.PlafondType = 'Base On Amount'
-        }else{
-          this.MouMainInfo.PlafondType = 'Base On Collateral'
-        }
-        console.log(response);
-      });
+
+    if (this.ChangeMouTrxId == 0) {
+      this.http.post<ResMouMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, {Id: this.MouCustId}).subscribe(
+        (response) => {
+          this.MouMainInfo = response;
+          if(this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+            this.MouMainInfo.PlafondType = 'Base On Amount'
+          }else{
+            this.MouMainInfo.PlafondType = 'Base On Collateral'
+          }
+          console.log(response);
+        });
+    } else {
+      this.http.post<ResMouMainInfoObjX>(URLConstantX.GetChangeMouMainInfoByIdX, {Id: this.ChangeMouTrxId}).subscribe(
+        (response) => {
+          this.MouMainInfo = response;
+          if(this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+            this.MouMainInfo.PlafondType = 'Base On Amount'
+          }else{
+            this.MouMainInfo.PlafondType = 'Base On Collateral'
+          }
+          console.log(response);
+        });
+    }
+    
   }
 
   ViewMou(){

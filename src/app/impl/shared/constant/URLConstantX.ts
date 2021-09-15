@@ -96,6 +96,9 @@ export class URLConstantX {
   public static GetDealerGradingX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetDealerGrading';
   public static GetMouCustCollateralDataForUpdateByMouCustCollateralIdX = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
   
+  // CHANGE MOU
+  public static GetChangeMouMainInfoByIdX = environment.losUrl +'/v1' + "/ChangeMouX/GetChangeMouMainInfoById";
+
   //CHANGE MOU CUST COLLATERAL X
   public static GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralStatByChangeMouCustCollateralId";
   public static GetChangeMouCustCollateralXForChangeMouViewByMouCustId = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralXForChangeMouViewByMouCustId"
@@ -104,7 +107,7 @@ export class URLConstantX {
   public static DeleteChangeMouCustCollateralX = environment.losUrl + '/v1' + "/ChangeMouCustCollateralX/DeleteChangeMouCustCollateral";
   public static GetChangeMouDealerGradingX = environment.losUrl + '/v1' + '/ChangeMouCustCollateralX/GetChangeMouDealerGrading';
   public static GetChangeMouTrxbyTrxNo = environment.losUrl + '/v1' + "/ChangeMou/GetChangeMouTrxbyTrxNo";
-
+  public static GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralIdX = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId";
   //Approval
   public static NewApproval = environment.losUrl + "/v1" + "/ApprovalX/Approval";
   public static EndDateGoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/EndDateGoLiveApproval";

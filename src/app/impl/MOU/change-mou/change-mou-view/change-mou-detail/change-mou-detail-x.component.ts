@@ -76,7 +76,8 @@ export class ChangeMouDetailXComponent implements OnInit {
   LcRate:number;
   MaxMonths:number;
   MaxExtendTimes:number;
-
+  LinkSupplier:any = "-";
+  
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
 
   }
@@ -172,6 +173,14 @@ export class ChangeMouDetailXComponent implements OnInit {
         this.MrRecourseTypeCode = this.mouCustFctr.MrRecourseTypeCode;
         this.Notes = this.mouCustFctr.Notes;
         this.RevolvingType = this.mouCustFctr.RevolvingType;
+
+        var objVendor={
+          Code:this.mouCustFctr.VendorCode
+        }
+        this.http.post(URLConstant.GetVendorByVendorCode, objVendor).subscribe(
+          (responseLink)=>{
+            this.LinkSupplier = responseLink["VendorName"]
+          });
       });
     }
     else if(this.MouType == "FINANCING"){
