@@ -130,9 +130,9 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   listCustNoToExclude: Array<string> = new Array();
   async loadMgmntShrholderListData() {
     await this.http.post(URLConstant.GetAppCustCompanyMainDataByAppId, { Id: this.appId }).toPromise().then(
-      (response: AppCustCompanyObj) => {
+      async (response: AppCustCompanyObj) => {
         this.ParentAppCustCompanyId = response.AppCustCompanyId;
-        this.http.post(URLConstant.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).subscribe(
+        await this.http.post(URLConstant.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).toPromise().then(
           (response2: GenericListObj) => {
             this.inputGridObj.resultData = {
               Data: ""
