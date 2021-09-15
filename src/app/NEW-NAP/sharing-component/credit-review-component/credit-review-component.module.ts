@@ -26,6 +26,7 @@ import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.c
 import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/crd-rvw-table-cust.component';
 import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
 import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.component';
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
     exports: [
@@ -49,6 +50,7 @@ import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.c
     imports: [
         CommonModule,
         AdInsModule,
+        SharedModule,
         MatRadioModule
     ],
     declarations: [
