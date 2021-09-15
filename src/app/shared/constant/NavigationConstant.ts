@@ -457,6 +457,7 @@ export class NavigationConstant {
   public static REPORT_MONTHLY_PENDING_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PENDING_LEAD; //'/Report/RptMonthlyPendingLead'
   public static REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO; //'/Report/RptMonthlyPendingLead'
   public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV; //'/Report/RptMonthlyPendingLead'
+  public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER; //'/Report/RptMonthlyPreGoLiveBySupplier'
   //#endregion
   
 }
