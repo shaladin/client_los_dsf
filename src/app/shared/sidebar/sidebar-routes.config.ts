@@ -539,6 +539,8 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.REPORT_MONTHLY_INPROCESS_APP, Title: 'Report Monthly InProcess App', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_PENDING_APP_AFT_APV, Title: 'Report Daily Pending App Aft Apv', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_MONTHLY_PENDING_LEAD, Title: 'Report Monthly Pending Lead', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO, Title: 'Report Monthly Pre Go Live By CMO', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV, Title: 'Report Monthly Pending Pre Go Live Aft Apv', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: [] 
   },
   {
