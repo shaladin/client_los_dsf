@@ -59,9 +59,9 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   serial4Mandatory: boolean = false;
   serial5Mandatory: boolean = false;
   reqLeadAssetObj: LeadAssetObj;
-  resLeadAssetObj: LeadAssetObj;
+  resLeadAssetObj: LeadAssetObj = new LeadAssetObj();
   reqLeadAppObj: LeadAppObj;
-  resLeadAppObj: LeadAppObj;
+  resLeadAppObj: LeadAppObj = new LeadAppObj();
   reqAssetMasterObj: AssetMasterObj;
   resAssetMasterObj: AssetMasterObj;
   isUsed: boolean;
@@ -799,6 +799,11 @@ export class NewLeadInputLeadDataComponent implements OnInit {
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.setLeadAsset();
         this.setLeadApp();
+        if(this.leadInputLeadDataObj.LeadAssetObj.FullAssetCode == ''){
+          this.SaveForm();
+          return;
+        }
+
         if (this.confirmFraudCheck()) {
           this.postLeadData(URLConstant.AddLeadData);
         }
