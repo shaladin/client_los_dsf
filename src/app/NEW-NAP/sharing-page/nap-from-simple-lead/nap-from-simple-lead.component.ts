@@ -56,6 +56,11 @@ export class NapFromSimpleLeadComponent implements OnInit {
     ];
 
     this.inputPagingObj.addCritInput = this.arrCrit;
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+    }
   }
 
   makeCriteria(){
