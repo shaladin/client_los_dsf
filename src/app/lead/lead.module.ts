@@ -62,6 +62,7 @@ import { NewLeadInputPageComponent } from './new-lead-input/new-lead-input-page/
 import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-lead-monitoring.component';
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
+import { UcDirectiveUpperCaseModule } from "@adins/uc-directive-upper-case";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -101,7 +102,8 @@ export const customCurrencyMaskConfig = {
     UcuploadModule,
     UcaddtotempModule,
     UcgridviewModule,
-    SharedModule
+    SharedModule,
+    UcDirectiveUpperCaseModule
   ],
   declarations: [
     LeadVerifComponent,
