@@ -247,6 +247,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
               DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt == null ? '' : this.resLeadAssetObj.DownPaymentPrcnt
             });
           }
+          this.DownPaymentChange();
 
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
@@ -456,22 +457,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
                 });
               });
           }
-          else
-            this.reqLeadAppObj = new LeadAppObj();
-          this.reqLeadAppObj.LeadId = this.LeadId;
-          let obj = {
-            Id: this.reqLeadAppObj.LeadId
-          }
-          this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
-            (response: LeadAppObj) => {
-              this.resLeadAppObj = response;
-              this.LeadDataForm.patchValue({
-                Tenor: this.resLeadAppObj.Tenor,
-                MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
-                NTFAmt: this.resLeadAppObj.NtfAmt,
-                InstallmentAmt: this.resLeadAppObj.InstAmt,
-              });
-            });
         });
 
   }
