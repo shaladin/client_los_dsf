@@ -489,6 +489,7 @@ export class PathConstant {
     public static REPORT_MONTHLY_PENDING_LEAD = "RptMonthlyPendingLead";
     public static REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO = "RptMonthlyPreGoLiveByCMO";
     public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "RptMonthlyPendingPreGoLiveAftApv";
+    public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "RptMonthlyPreGoLiveBySupplier";
     //#endregion
 
     //#region Inquiry-Module
