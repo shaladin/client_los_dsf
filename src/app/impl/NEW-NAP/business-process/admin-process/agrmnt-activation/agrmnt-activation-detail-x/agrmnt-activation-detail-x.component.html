@@ -15,7 +15,7 @@
                 <div class="row">
                   <label [ngClass]=" isOverwrite ? 'col-md-6 adins-required-label' : 'col-md-6'" translate>Agreement
                     No</label>
-                  <div class="col-md-6" translate>
+                  <div class="col-md-6 d-flex flex-column" translate>
                     <input type="text" formControlName="AgrmntNo" [(ngModel)]="AgrmntNo">
                     <span class="text-danger"
                       *ngIf="AgrmntActForm.controls['AgrmntNo'].hasError('required') && (AgrmntActForm.controls['AgrmntNo'].dirty || AgrmntActForm.controls['AgrmntNo'].touched)">This
@@ -29,7 +29,7 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6 adins-required-label" translate>Agreement Date</label>
-                  <div class="col-md-6">
+                  <div class="col-md-6 d-flex flex-column">
                     <input type="date" formControlName="CreateDt" [(ngModel)]="CreateDt" required>
                     <span class="text-danger"
                       *ngIf="AgrmntActForm.controls['CreateDt'].hasError('required') && (AgrmntActForm.controls['CreateDt'].dirty || AgrmntActForm.controls['CreateDt'].touched)">This
