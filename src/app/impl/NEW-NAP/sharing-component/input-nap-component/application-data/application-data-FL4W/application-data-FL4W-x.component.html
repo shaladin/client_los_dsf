@@ -191,8 +191,10 @@
 
               <div class="form-group row">
               <!-- DP Source Payment -->
-                <label class="col-md-2 adInsLabel" translate>DP Source Payment
-                    Type</label>
+              <div class="form-group col-md-2 adins-required">
+                <label class="adInsLabel" translate>DP Source Payment
+                  Type</label>
+              </div>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="DpSrcPaymentCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.DpSrcPaymentCode.invalid }">
@@ -204,8 +206,10 @@
                   </lib-uc-show-errors>
                   </div>
                 <!-- Installment Source Payment -->
-                <label class="col-md-2 adInsLabel" translate>Installment Source Payment
-                  Type</label>
+                <div class="form-group col-md-2 adins-required">
+                  <label class="adInsLabel" translate>Installment Source Payment
+                    Type</label>
+                </div>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="InstSrcPaymentCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">

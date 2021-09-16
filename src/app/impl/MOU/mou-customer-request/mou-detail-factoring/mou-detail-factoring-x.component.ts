@@ -430,6 +430,11 @@ export class MouDetailFactoringXComponent implements OnInit {
       obj.CustName = response["CustName"]
       obj.MrCustTypeCode = response["MrCustTypeCode"]
 
+      if(!this.isRecourse && this.listedCusts.length > 0)
+      {
+        this.listedCusts = new Array<MouCustListedCustFctrObj>();
+      }
+      
       this.listedCusts.push(obj)
     });
   }
