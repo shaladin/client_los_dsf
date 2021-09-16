@@ -647,6 +647,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
 
           this.SetProfessionName(this.collateralRegistrationObj.OwnerProfessionCode);
+          this.checkSelfOwnerColl();
           this.InputLookupProfessionObj.isDisable = true;
           this.InputLookupProfessionObj.isReady = true;
           this.onItemChange(this.collateralObj.AssetTypeCode, true, true, true);
