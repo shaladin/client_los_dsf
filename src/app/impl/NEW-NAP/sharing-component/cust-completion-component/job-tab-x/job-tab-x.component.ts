@@ -527,13 +527,12 @@ export class JobTabXComponent implements OnInit {
     this.InputLookupCompanyObj.addCritInput = this.ArrAddCritCoy;
     this.InputLookupCompanyObj.isRequired = true;
     this.InputLookupCompanyObj.isReady = true;
+    this.InputLookupEconomicSectorSlikObj.isRequired = true;
 
     if (CustModelCode == CommonConstant.CustModelNonProfessional || CustModelCode == CommonConstant.CustModelProfessional) {
-      this.InputLookupEconomicSectorSlikObj.isRequired = false;
       this.JobDataForm.controls.CoyName.clearValidators();
     }
     else {
-      this.InputLookupEconomicSectorSlikObj.isRequired = true;
       this.JobDataForm.controls.CoyName.setValidators(Validators.required);
     }
     this.JobDataForm.updateValueAndValidity();
