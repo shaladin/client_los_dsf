@@ -595,7 +595,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
                 this.parentForm.controls[this.identifier]["controls"][i].controls.ListAllocated["controls"][j].controls.AllocationAmount.disable();
                 this.parentForm.controls[this.identifier]["controls"][i].controls.ListAllocated["controls"][j].controls.AllocationPercentage.enable();
             }
-          }
+          } 
         }
       }
     }
