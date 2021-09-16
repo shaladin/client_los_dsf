@@ -1055,13 +1055,9 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       if (this.resultCrossApp[idx].AppCrossId != null) {
         let obj = new NapAppCrossObj();
         obj = this.resultCrossApp[idx];
-        this.http.post(URLConstant.DeleteAppCross, obj).subscribe(
-          (response) => {
-          }
-        )
+        this.resultCrossApp.splice(idx, 1);
+        this.ListCrossAppObj["result"].splice(idx, 1);
       }
-      this.resultCrossApp.splice(idx, 1);
-      this.ListCrossAppObj['result'].splice(idx, 1);
     }
   }
   async initMailingAddress() {

@@ -77,6 +77,12 @@
     },
     "headerList": [
         {
+            "type": "sort",
+            "position": "center",
+            "label": "SLA",
+            "name": "IndicatorSLA"
+        },
+        {
             "type": "label",
             "position": "left",
             "label": "Claim By",
@@ -119,6 +125,11 @@
         }
     ],
     "bodyList": [
+        {
+            "type": "sla",
+            "position": "center",
+            "property": "IndicatorSLA"
+        },
         {
             "type": "text",
             "position": "left",
