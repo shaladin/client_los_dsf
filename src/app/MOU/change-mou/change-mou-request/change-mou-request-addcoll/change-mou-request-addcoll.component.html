@@ -203,13 +203,13 @@
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
     <div id="AddCollOwner">
-        <div class="form-group row">
-          <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
-          <div class="col-md-8">
-            <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()">
-            </mat-checkbox>
-          </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
+        <div class="col-md-8">
+          <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()">
+          </mat-checkbox>
         </div>
+      </div>
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Name</label>
         <div class="col-md-3">
@@ -246,6 +246,15 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
             <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern"[submit]="enjiForm.submitted">
             </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Owner Profession</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+            [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
+            [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+          </lib-uclookupgeneric>
         </div>
       </div>
       <div class="form-group row" *ngIf="!isSelfCust">
@@ -486,6 +495,15 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
             <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern"[submit]="enjiForm.submitted">
             </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Owner Profession</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+            [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
+            [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+          </lib-uclookupgeneric>
         </div>
       </div>
       <div class="form-group row" *ngIf="!isSelfCust">
