@@ -576,14 +576,44 @@ export class FormCommissionGenerateXComponent implements OnInit {
     this.DataEmit.emit();
   }
 
+  UpdateInputType(){
+    const AllocType: string = this.parentForm.get("AllocType").value;
+    let index = this.parentForm.controls[this.identifier]["controls"].length;
+    if(index > 0)
+    {
+      for(let i=0;i<index;i++)
+      {
+        let CountAllocated = this.parentForm.controls[this.identifier]["controls"][i].controls.ListAllocated["controls"].length;
+        for(let j=0;j<CountAllocated;j++)
+        {
+          var AllocationBehaviour = this.parentForm.controls[this.identifier]["controls"][i].controls.ListAllocated["controls"][j].controls.AllocationBehaviour.value;
+          if (AllocationBehaviour != "LOCK") {
+            if (AllocType == this.AllocTypeAmt) {
+                this.parentForm.controls[this.identifier]["controls"][i].controls.ListAllocated["controls"][j].controls.AllocationAmount.enable();
+                this.parentForm.controls[this.identifier]["controls"][i].controls.ListAllocated["controls"][j].controls.AllocationPercentage.disable();
+            } else {
+                this.parentForm.controls[this.identifier]["controls"][i].controls.ListAllocated["controls"][j].controls.AllocationAmount.disable();
+                this.parentForm.controls[this.identifier]["controls"][i].controls.ListAllocated["controls"][j].controls.AllocationPercentage.enable();
+            }
+          } 
+        }
+      }
+    }
+
+  }
+
+  /*
   UpdateInputType() {
     const AllocType: string = this.parentForm.get("AllocType").value;
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
     if (indexFormObj > -1) {
       let MaxIdxComponent = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"].length;
+      console.log(MaxIdxComponent)
       for (var i = 0; i < MaxIdxComponent; i++) {
         var AllocationBehaviour = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][i].controls.AllocationBehaviour.value;
+        console.log(AllocationBehaviour)
         var index = this.parentForm.controls[this.identifier]["controls"].length;
+        console.log(index)
         if (AllocationBehaviour != "LOCK") {
           if (AllocType == this.AllocTypeAmt) {
             if (index > 0) {
@@ -604,6 +634,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       }
     }
   }
+  */
 
   ChangeSupplEmp(i:number)
   {
