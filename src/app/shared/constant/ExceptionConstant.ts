@@ -49,7 +49,7 @@ export class ExceptionConstant {
 
     public static EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be less than Sell Supplier Rate ({0}).";
     public static EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be greater than Sell Supplier Rate ({0}).";
-    public static EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE = "Effective Rate cannot be less than Supplier Rate.";
+    public static EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE = "Effective Rate is less than Supplier Rate.";
 
     public static CLICK_GENERATE_INSURANCE = "Please click Generate Insurance.";
     public static CLICK_CALCULATE_INSURANCE = "Please click Calculate Insurance.";

@@ -1,0 +1,156 @@
+{
+    "title": "Task Reassignment Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "TRT.WF_ACTIVITY_CODE",
+            "id": "WfCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "environment": "LOSV2",
+            "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
+            "label": "Activity Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "TRT.[CURRENT_USER]",
+            "id": "UsernameId",
+            "value": "",
+            "label": "Username",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "TRT.OFFICE_CODE",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "TRT.WF_NAME",
+            "id": "WfNameid",
+            "value": "",
+            "label": "Workflow Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "TRT.WF_REF_NO",
+            "id": "TrxCode",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchTaskReassignmentInquiryV2"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Task ReAssignment Transaction No",
+            "name": "TRT.TASK_REASSIGNMENT_TRX_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Workflow Name",
+            "name": "TRT.WF_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Activity Name",
+            "name": "WfActName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Transaction No",
+            "name": "T.TRANSACTION_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office",
+            "name": "TRT.OFFICE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Username",
+            "name": "TRT.[CURRENT_USER]"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Status",
+            "name": "TRT.TASK_REASSIGNMENT_STAT"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "TaskReAssginmentTrxNo",
+            "path": "/TaskReassignment/View",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "TaskReassignmentTrxId",
+                    "property": "TaskReassignmentTrxId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "WfName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "WfActName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TransactionCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CurrUser"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Status"
+        }
+    ]
+}

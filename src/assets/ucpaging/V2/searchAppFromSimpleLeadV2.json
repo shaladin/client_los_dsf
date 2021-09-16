@@ -114,7 +114,7 @@
             "type": "sort",
             "position": "center",
             "label": "Lead Source",
-            "name": "VRAS.APP_SRC_NAME"
+            "name": "RAS.APP_SRC_NAME"
         },
         {
             "type": "label",

@@ -1035,4 +1035,6 @@ export class CommonConstant {
   
   public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
   public static PrcntMinValue: number = 0.000001;
+
+  public static STAT_CODE_ACT = "ACT";
 }
