@@ -60,13 +60,13 @@ export class PathConstantX {
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
   public static CUST_CONFIRM_DETAIL_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
 
-  public static COPY_CANCEL_APP = "CopyCancelledApplicationX";
   //#endregion
 
   //#region Nap-Admin-Prcs
   public static INVOICE_VERIF_INV_DSF_X = PathConstant.INVOICE_VERIF + "/InvoiceDetailDFX";
   public static INSURANCE_ORDER_PAGING_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.PAGING;
   public static INSURANCE_ORDER_DETAIL_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.DETAIL_X;
+  public static COPY_CANCEL_APP = "CopyCancelledApplicationX";
   //#endregion
 
   //#region Nap-Cust-Compl
@@ -117,6 +117,8 @@ export class PathConstantX {
   public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X = PathConstant.CHANGE_MOU_REQ + '/' + PathConstant.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X + '/:MOUType';
   public static CHANGE_MOU_INQUIRY_X = PathConstant.CHANGE_MOU_INQUIRY + "X";
   public static CHANGE_MOU_RVW_PAGING_X = PathConstant.CHANGE_MOU + '/ReviewPagingX';
+  public static CHANGE_MOU_DETAIL_DLFN_X = PathConstant.CHANGE_MOU_DETAIL + "/DealerfinancingX";
+  public static CHANGE_MOU_DETAIL_FCTR_X = PathConstant.CHANGE_MOU_DETAIL + "/FactoringX";
   //#endregion
 
   //region New Approval

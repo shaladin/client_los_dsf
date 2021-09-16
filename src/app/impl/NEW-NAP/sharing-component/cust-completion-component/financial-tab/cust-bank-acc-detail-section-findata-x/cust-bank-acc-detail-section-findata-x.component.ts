@@ -128,6 +128,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
       this.BankAccObj.AppCustBankAccId = this.BankAccAndStmntObjX.AppCustBankAccId;
       this.BankAccObj.BankCode = this.BankAccAndStmntObjX.BankCode;
       this.BankAccObj.RowVersion = this.BankAccAndStmntObjX.RowVersion;
+      this.ListBankStmntObj = this.BankAccAndStmntObjX.ListAppCustBankAccStmntObjX;
       this.CheckDefault();
     }
     else if (this.pageType == "editStmnt") {
@@ -162,6 +163,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
       this.BankAccObj.AppCustBankAccId = this.BankAccAndStmntObjX.AppCustBankAccId;
       this.BankAccObj.BankCode = this.BankAccAndStmntObjX.BankCode;
       this.BankAccObj.RowVersion = this.BankAccAndStmntObjX.RowVersion;
+      this.ListBankStmntObj = this.BankAccAndStmntObjX.ListAppCustBankAccStmntObjX;
 
       //tidak dipakai
       var formArray = this.CustBankAccForm.get('CustBankStmnts') as FormArray;
@@ -303,7 +305,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
     custBankAccObjX.BalanceAmt = parseFloat(formData.BalanceAmt);
     custBankAccObjX.IsDefault = formData.IsDefault;
     custBankAccObjX.RowVersion = formData.RowVersion;
-    custBankAccObjX.IsActive = this.IsActive;
+    custBankAccObjX.IsActive = formData.IsActive;
     // this.appCustBankAccObjX = new AppCustBankAccObjX();
     custBankAccObjX.BegBalanceAmt = formData.BegBalanceAmt;
     // this.appCustBankAccObjX.AppCustBankAccObj = custBankAccObj;
@@ -321,6 +323,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
     // }
 
     if (this.pageType == "add") {
+      this.CheckDefault();
       this.httpClient.post(URLConstantX.AddAppCustBankAccAndStmnt, reqObjX).subscribe(
         (response) => {
           this.activeModal.close(response);
@@ -329,7 +332,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
     }
     else {
       if (this.pageType == "edit") {
-      this.CheckDefault();
+        this.CheckDefault();
         this.httpClient.post(URLConstantX.EditAppCustBankAccAndStmnt, reqObjX).subscribe(
           (response) => {
             this.activeModal.close(response);
@@ -394,12 +397,11 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
       this.CustBankAccForm.patchValue({
         IsActive: true
       });
-      this.IsActive = true;
       this.CustBankAccForm.controls.IsActive.disable();
     }
     else {
-      this.IsActive = false;
       this.CustBankAccForm.controls.IsActive.enable();
     }
   }
+
 }

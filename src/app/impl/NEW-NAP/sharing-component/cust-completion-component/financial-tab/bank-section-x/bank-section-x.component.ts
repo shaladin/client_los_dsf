@@ -66,6 +66,8 @@ export class BankSectionXComponent implements OnInit {
       (response) => {
         this.AppCustBankAccList = response["AppCustBankAccList"]
       });
+    console.log('jalan');
+    console.log(this.AppCustBankAccList)
     this.OutputObj.emit({ Key: 'IsDetail', Value: false });
   }
 
@@ -73,7 +75,7 @@ export class BankSectionXComponent implements OnInit {
     this.BankAccObj.BankCode = event.BankCode;
   }
 
-  custBankHandler(type: string, BankAccAndStmntObjX: AppCustBankAccObjX = undefined) {
+  custBankHandler(type: string, BankAccAndStmntObjX: AppCustBankAccObjX) {
     if (type === 'delete') {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.spinner.show();
@@ -91,8 +93,6 @@ export class BankSectionXComponent implements OnInit {
     const modalCustBank = this.modalService.open(CustBankAccDetailSectionFindataXComponent);
     modalCustBank.componentInstance.AppCustId = this.AppCustId;
     modalCustBank.componentInstance.pageType = type;
-    modalCustBank.componentInstance.AppCustBankAccId = BankAccAndStmntObjX.AppCustBankAccId;
-    modalCustBank.componentInstance.BankAccAndStmntObjX = BankAccAndStmntObjX;
     modalCustBank.componentInstance.isAddBankStatement = type == "editStmnt" ? true : false;
     switch (type) {
       case "add":
@@ -101,10 +101,14 @@ export class BankSectionXComponent implements OnInit {
 
       case "editStmnt":
         modalCustBank.componentInstance.modalTitle = "Add New Customer Bank Statement";
+        modalCustBank.componentInstance.AppCustBankAccId = BankAccAndStmntObjX.AppCustBankAccId;
+        modalCustBank.componentInstance.BankAccAndStmntObjX = BankAccAndStmntObjX;
         break;
 
       case "edit":
         modalCustBank.componentInstance.modalTitle = "Edit Customer Bank Account";
+        modalCustBank.componentInstance.AppCustBankAccId = BankAccAndStmntObjX.AppCustBankAccId;
+        modalCustBank.componentInstance.BankAccAndStmntObjX = BankAccAndStmntObjX;
         break;
 
       default:

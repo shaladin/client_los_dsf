@@ -242,7 +242,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
       }
       this.MouDetailFactoringForm.updateValueAndValidity();
 
-      this.instTypeHandler();
+      // this.instTypeHandler();
       this.shouldComponentLoad = true;
       if (this.paidByList != null) {
         if (this.paidByList != null) {

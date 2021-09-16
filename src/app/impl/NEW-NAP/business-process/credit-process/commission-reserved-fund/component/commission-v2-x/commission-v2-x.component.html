@@ -73,7 +73,10 @@
               </div>
             </div>
           </div>
-          <div class="form-actions right">
+          <div *ngIf="!isReturnOn" class="form-actions right">
+            <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+              <i  class="ft-x"></i> Return 
+            </button>
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
               (click)="Cancel()" translate>
               <i class="ft-x"></i> Cancel

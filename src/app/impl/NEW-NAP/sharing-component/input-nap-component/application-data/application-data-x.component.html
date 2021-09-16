@@ -52,7 +52,7 @@
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && resCalculatePlafondAgrmntXObj == null }"
                             (change)="copyAgrmntParentEvent($event.target.value)">
                       <option [value]="">Select One</option>
-                      <option *ngFor="let item of agrParentList; let i = index" [value]="i">{{item.AgrmntNo}}</option>
+                      <option *ngFor="let item of agrParentList; let i = index" [value]="i" [selected]="agrmntParentNo == item.AgrmntNo ? true : false">{{item.AgrmntNo}}</option>
                     </select>
                   </div>
                 </div>
@@ -165,8 +165,10 @@
 
                 <div class="form-group row">
                   <!-- DP Source Payment -->
-                  <label class="col-md-4 adInsLabel" translate>DP Source Payment
-                    Type</label>
+                  <div class="form-group col-md-4 adins-required">
+                    <label class="adInsLabel" translate>DP Source Payment
+                      Type</label>
+                  </div>
                   <div class="col-md-8">
                     <select class="form-control adInsInput" style="width: auto" formControlName="DpSrcPaymentCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.DpSrcPaymentCode.invalid }">
@@ -304,6 +306,23 @@
                         {{it.Value}} </option>
                     </select>
                     <lib-uc-show-errors [control]="NapAppModelForm.controls.OrdStatCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <!-- Installment Source Payment -->
+                  <div class="form-group col-md-4 adins-required">
+                    <label class="adInsLabel" translate>Installment Source Payment
+                      Type</label>
+                  </div>
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="InstSrcPaymentCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of applicationDDLitems['CSP_USL_AML']" value="{{it.Key}}">
+                        {{it.Value}} </option>
+                    </select>
+                    <lib-uc-show-errors [control]="NapAppModelForm.controls.InstSrcPaymentCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
@@ -457,7 +476,7 @@
                     <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
                     <td style="text-align: left;">{{item.CustName}}</td>
-                    <td *ngIf="agrmntParentNo != item.CrossAgrmntNo || BizTemplateCode != 'CFNA'">
+                    <td *ngIf="agrmntParentNo != item.CrossAgrmntNo && BizTemplateCode != 'CFNA'">
                       <a class="warning p-0" (click)="DeleteCrossApp(i)">
                         <i class="ft-trash-2 font-medium-3 mr-2"></i>
                       </a>

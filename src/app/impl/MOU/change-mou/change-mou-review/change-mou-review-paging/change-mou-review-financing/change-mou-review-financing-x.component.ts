@@ -209,10 +209,6 @@ export class ChangeMouReviewFinancingXComponent implements OnInit {
       {
         "AttributeName": "Plafond Amount",
         "AttributeValue": this.PlafondAmt
-      },
-      {
-        "AttributeName": "Scoring",
-        "AttributeValue": this.ScoreResult
       }
     ];
 

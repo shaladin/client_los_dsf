@@ -84,6 +84,8 @@ import { ChangeMouInquiryXComponent } from 'app/impl/MOU/change-mou/change-mou-i
 import { ChangeMouReviewPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component';
 import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-execution-paging/mou-execution-paging-x.component';
 import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-review-detail/legal-review-detail-x.component';
+import { ChangeMouDetailDealerFinancingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing-x.component';
+import { ChangeMouDetailFactoringXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring-x.component';
 
 const routes: Routes = [
   {
@@ -420,10 +422,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_DETAIL_FCTR_X,
+        component: ChangeMouDetailFactoringXComponent,
+        data: {
+          title: "Change MOU Detail Factoring X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_DETAIL_DLFN,
         component: ChangeMouDetailDealerFinancingComponent,
         data: {
           title: "Change MOU Detail Dealer Financing"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_DETAIL_DLFN_X,
+        component: ChangeMouDetailDealerFinancingXComponent,
+        data: {
+          title: "Change MOU Detail Dealer Financing X"
         }
       },
       {

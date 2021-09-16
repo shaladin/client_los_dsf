@@ -127,7 +127,7 @@ export class CustCompletionDetailPersonalXComponent implements OnInit {
         break;
       case "CustAsset":
         this.stepIndex = this.CustStep["CustAsset"];
-      break;
+        break;
       case "Other":
         this.stepIndex = this.CustStep["Other"];
         break;

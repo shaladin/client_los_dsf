@@ -60,7 +60,7 @@
         <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
         <label class="col-md-4 adInsLabel" translate>{{PayFreqCode}}</label>
 
-        <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
+        <label class="col-md-2 adInsLabel" translate>Interest Rate (%) (in Years)</label>
         <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt}}%</label>
       </div>
 
@@ -80,6 +80,11 @@
 
         <label class="col-md-2 adInsLabel" translate>Dealer Grading</label>
         <label class="col-md-4 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate>Link Supplier</label>
+        <label class="col-md-4 adInsLabel" translate>{{LinkSupplier}}</label>
       </div>
     </div>
   </div>
@@ -115,7 +120,7 @@
         <label class="col-md-3 adInsLabel" translate>Term Of Payment (in Days)</label>
         <label class="col-md-3 adInsLabel" translate>{{TopDays}} days </label>
 
-        <label class="col-md-3 adInsLabel" translate>Term Of Payment Interest Rate Percent (%)</label>
+        <label class="col-md-3 adInsLabel" translate>Term Of Payment Interest Rate Percent (%) (in Days)</label>
         <label style="align-items: left;" class="col-md-3 adInsLabel" translate>{{TopDaysRatePercent}}% </label>
       </div>
 
@@ -123,12 +128,12 @@
         <label class="col-md-3 adInsLabel" translate>Payment Frequency </label>
         <label class="col-md-3 adInsLabel" translate>{{PayFreqCode}}</label>
 
-        <label class="col-md-3 adInsLabel" translate>Interest Rate (%)</label>
+        <label class="col-md-3 adInsLabel" translate>Interest Rate (%) (in Years)</label>
         <label class="col-md-3 adInsLabel" translate>{{InterestRatePrcnt}}%</label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Extend Rate Percent (%)</label>
+        <label class="col-md-3 adInsLabel" translate>Extend Rate Percent (%) (in Years)</label>
         <label class="col-md-3 adInsLabel" translate>{{ExtendRate}}</label>
 
         <label class="col-md-3 adInsLabel" translate>Maximum Months For Extend</label>
@@ -163,7 +168,7 @@
       </div>
       
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Link Supplier Grading</label>
+        <label class="col-md-3 adInsLabel" translate>Link Supplier</label>
         <label class="col-md-3 adInsLabel" *ngIf="LinkSupplGrading.VendorCode == null" translate>-</label>
         <label class="col-md-3 adInsLabel" *ngIf="LinkSupplGrading.VendorCode != null" translate>          
           <a class="link" (click)="ClickLinkManufacturer(LinkSupplGrading.VendorCode)"> {{LinkSupplGrading.VendorName}} </a>
@@ -174,7 +179,7 @@
       </div>
       
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>LC Rate (%)</label>
+        <label class="col-md-3 adInsLabel" translate>LC Rate (%) (in Days)</label>
         <label class="col-md-3 adInsLabel" translate>{{LcRate}}</label>
 
         <label class="col-md-3 adInsLabel" translate>Notes</label>

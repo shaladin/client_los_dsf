@@ -28,6 +28,10 @@ export class URLConstantX {
   public static GetMinDeliveryDtDeliveryOrderHByAgrmntId = environment.losUrl + "/v1" + '/DeliveryOrderX/GetMinDeliveryDtDeliveryOrderHByAgrmntId';
   public static SubmitInsuranceOrder = environment.losUrl + "/v1" + '/InsuranceOrderX/SubmitInsuranceOrder';
   public static GetSppaNoByAppAssetId = environment.losUrl + "/v1" + '/InsuranceOrderX/GetSppaNoByAppAssetId';
+  public static CopyCancelledApp = environment.losUrl + "/v1" + "/AppX/CopyCancelledApp";
+  public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/AppX/CopyCancelledAppForMainData";
+  public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/AppX/CopyCancelledApp";
+  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/AppX/CopyCancelledAppForMainData";
 
   // App Invoice
   public static UpdateAppInvoiceDlfnX = environment.losUrl + '/v1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
@@ -60,6 +64,7 @@ export class URLConstantX {
   public static SubmitPreGoLiveCessie = environment.losUrl + "/v1" + "/Cessie/SubmitPreGoLive";
   public static SubmitPreGoLiveCessieV2 = environment.losUrl + "/v2" + "/Cessie/SubmitPreGoLive";
   public static SubmitCancel = environment.losUrl + "/v1" + "/Cessie/SubmitCancel";
+  public static SubmitCancelV2 = environment.losUrl + "/v2" + "/Cessie/SubmitCancelV2";
 
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
@@ -73,6 +78,8 @@ export class URLConstantX {
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";
   public static GetMouFctrOsPlafondById = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouFctrOsPlafondById";
+  public static AddMouCustFctrX = environment.losUrl + "/v1" + "/MouCustFctrX/AddMouCustFctr";
+  public static EditMouCustFctrX = environment.losUrl + "/v1" + "/MouCustFctrX/EditMouCustFctr";
 
   // MOU CUST DLFN X
   public static GetMouDfOsPlafondByIdX = environment.losUrl + '/v1' + "/MouCustDlrFncngX/GetMouDfOsPlafondById";
@@ -90,7 +97,11 @@ export class URLConstantX {
   public static DeleteMouCustCollateralX = environment.losUrl + '/v1' + '/MouCustCollateralX/DeleteMouCustCollateral';
   public static GetDealerGradingX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetDealerGrading';
   public static GetMouCustCollateralDataForUpdateByMouCustCollateralIdX = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
-  
+
+  // CHANGE MOU
+  public static GetChangeMouMainInfoByIdX = environment.losUrl +'/v1' + "/ChangeMouX/GetChangeMouMainInfoById";
+  public static GetListChangeMouTrxByMouCustId = environment.losUrl + "/v1" + "/ChangeMOUX/GetListChangeMouTrxByMouCustId";
+
   //CHANGE MOU CUST COLLATERAL X
   public static GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralStatByChangeMouCustCollateralId";
   public static GetChangeMouCustCollateralXForChangeMouViewByMouCustId = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralXForChangeMouViewByMouCustId"
@@ -99,7 +110,7 @@ export class URLConstantX {
   public static DeleteChangeMouCustCollateralX = environment.losUrl + '/v1' + "/ChangeMouCustCollateralX/DeleteChangeMouCustCollateral";
   public static GetChangeMouDealerGradingX = environment.losUrl + '/v1' + '/ChangeMouCustCollateralX/GetChangeMouDealerGrading';
   public static GetChangeMouTrxbyTrxNo = environment.losUrl + '/v1' + "/ChangeMou/GetChangeMouTrxbyTrxNo";
-
+  public static GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralIdX = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId";
   //Approval
   public static NewApproval = environment.losUrl + "/v1" + "/ApprovalX/Approval";
   public static EndDateGoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/EndDateGoLiveApproval";
@@ -109,7 +120,7 @@ export class URLConstantX {
   public static EditAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/EditAppCustBankAccAndStmntX";
   public static DeleteAppCustBankAccAndStmnt = environment.losUrl +  '/v1' +"/AppCustBankAccX/DeleteAppCustBankAccAndStmntX";
   public static GetAppCustBankAccAndStatementForView = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccAndStatementForViewX";
-  
+
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
   public static SubmitNAPXV2 = environment.losUrl + '/v2' + "/AppX/SubmitNAP";

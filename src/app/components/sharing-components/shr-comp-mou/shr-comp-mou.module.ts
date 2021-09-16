@@ -7,7 +7,8 @@ import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
 import { MouViewAddcollDetailComponent } from './mou-view-addcoll-detail/mou-view-addcoll-detail.component';
 import { RefAttrModule } from '../ref-attr/ref-attr.module';
 import { ChangeMouViewAddcollDetailComponent } from './change-mou-view-addcoll-detail/change-mou-view-addcoll-detail.component';
-import { MouViewAddcollDetailXComponent } from 'app/impl/components/sharing-components/shr-comp-mou/mou-view-addcoll-detail/mou-view-addcoll-detail-x/mou-view-addcoll-detail-x.component';
+import { MouViewAddcollDetailXComponent } from 'app/impl/components/sharing-components/shr-comp-mou/mou-view-addcoll-detail/mou-view-addcoll-detail-x.component';
+import { ChangeMouViewAddcollDetailXComponent } from 'app/impl/components/sharing-components/shr-comp-mou/change-mou-view-addcoll-detail/change-mou-view-addcoll-detail-x.component';
 
 @NgModule({
     imports: [
@@ -21,12 +22,14 @@ import { MouViewAddcollDetailXComponent } from 'app/impl/components/sharing-comp
     declarations: [
         MouViewAddcollDetailComponent,
         ChangeMouViewAddcollDetailComponent,
-        MouViewAddcollDetailXComponent
+        MouViewAddcollDetailXComponent,
+        ChangeMouViewAddcollDetailXComponent
     ],
     exports: [
         MouViewAddcollDetailComponent,
         ChangeMouViewAddcollDetailComponent,
-        MouViewAddcollDetailXComponent
+        MouViewAddcollDetailXComponent,
+        ChangeMouViewAddcollDetailXComponent
     ]
 })
 export class ShrCompMouModule { }

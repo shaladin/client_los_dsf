@@ -23,10 +23,7 @@
                   </div>
               </div>
 
-              <div class="row" *ngIf="viewGenericObj.viewInput != ''">
-                  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)" #viewGeneric>
-                  </lib-ucviewgeneric>
-              </div>
+              <app-mou-main-info-x [MouCustId]="mouCustId" [ChangeMouTrxId]= "ChangeMouTrxId"></app-mou-main-info-x>
 
               <div class="row">
                   <div class="col-md-12">
@@ -101,9 +98,9 @@
 
                           <div id="mou-detail-tab" class="content" role="tabpanel"
                               aria-labelledby="mou-detail-tab-trigger">
-                              <app-change-mou-detail-factoring *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId" [ChangeMouTrxId]="ChangeMouTrxId"
+                              <app-change-mou-detail-factoring-x *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId" [ChangeMouTrxId]="ChangeMouTrxId"
                                   (ResponseMouCustFactoring)="stepHandlerFactoring($event)">
-                              </app-change-mou-detail-factoring>
+                              </app-change-mou-detail-factoring-x>
                           </div>
                           <div id="collateral-data-tab" class="content" role="tabpanel"
                               aria-labelledby="collateral-data-tab-trigger">
@@ -141,10 +138,10 @@
 
                           <div id="mou-detail-tab" class="content" role="tabpanel"
                               aria-labelledby="mou-detail-tab-trigger">
-                              <app-change-mou-detail-dealerfinancing *ngIf="currentStepIndex == 1"
+                              <app-change-mou-detail-dealerfinancing-x *ngIf="currentStepIndex == 1"
                                   [MouCustId]="mouCustId" [ChangeMouTrxId]="ChangeMouTrxId" [ChangeMouCustId]="ChangeMouCustId"
                                   (ResponseMouCustDealerfinancing)="stepHandlerDealerfinancing($event)">
-                              </app-change-mou-detail-dealerfinancing>
+                              </app-change-mou-detail-dealerfinancing-x>
                           </div>
                           <div id="collateral-data-tab" class="content" role="tabpanel"
                               aria-labelledby="collateral-data-tab-trigger">
