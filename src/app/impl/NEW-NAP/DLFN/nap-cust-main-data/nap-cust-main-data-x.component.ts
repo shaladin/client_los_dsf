@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -218,7 +219,7 @@ export class NapCustMainDataXComponent implements OnInit {
   LastStep() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
 
-    let SubmitNapCustMainDataUrl = environment.isCore ? URLConstant.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
+    let SubmitNapCustMainDataUrl = environment.isCore ? URLConstantX.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
     this.http.post(SubmitNapCustMainDataUrl, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
