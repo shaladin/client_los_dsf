@@ -16,6 +16,7 @@ export class URLConstantX {
   public static EditCustMainDataPersonalX = environment.losUrl + "/v1" + "/AppCustX/EditCustMainDataPersonal";
   public static GetAppCustMainDataByAppCustIdX = environment.losUrl + "/v1" + "/AppCustX/GetAppCustMainDataByAppCustId";
 
+  
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
 
