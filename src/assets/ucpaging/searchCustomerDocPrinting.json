@@ -58,6 +58,27 @@
         }
       ],
       "itemsUrl": []
+    },
+    {
+      "type": "dropdown",
+      "name": "(CASE WHEN NEED_TO_PRINT_DOC <> DOC.PRINTED_DOC THEN 'Incomplete' ELSE 'Complete' END)",
+      "id": "StatusOfNeedPrinted",
+      "label": "Status Of Need Doc Printing",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "ddlType": "all",
+      "items": [
+          {
+              "key": "Incomplete",
+              "value": "Incomplete"
+          },
+          {
+              "key": "Complete",
+              "value": "Complete"
+          }
+      ],
+      "itemsUrl": []
     }
   ],
   "headerList": [
@@ -102,6 +123,12 @@
       "position": "left",
       "label": "MOU TYPE",
       "name": "RM.DESCR"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Status Of Need Doc Printing",
+      "name": "StatusOfNeedPrinted"
     },
     {
       "type": "label",
@@ -156,6 +183,11 @@
       "type": "text",
       "position": "left",
       "property": "MouType"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "StatusOfNeedPrinted"
     },
     {
       "type": "action",
