@@ -129,7 +129,7 @@
             </div>
 
             <div class="form-group row">
-              <label class="col-md-2 adins-required-label" *ngIf="CustModelCode != 'NONPROF'" translate>
+              <label class="col-md-2" [ngClass]="{'adins-required-label': InputLookupIndustryTypeObj.isRequired}" *ngIf="CustModelCode != 'NONPROF'" translate>
                 Industry Type
               </label>
               <div class="col-md-4" *ngIf="CustModelCode != 'NONPROF'">
