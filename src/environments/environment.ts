@@ -23,6 +23,7 @@ export const environment = {
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
   dmsURL: 'http://kfx-svr/LITEDMS_OPL/LiteDMS/pageconfins.aspx',
   WfR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL/',
+  R2Url: 'http://r3impl-appsvr.ad-ins.com/DIPODEVR2/CONFINS_DSF_IMPL',
   ChipperKeyLocalStorage: 'AdInsFOU2020OKOK', // 256 bit atau 16 karakter
   ChipperKeyCookie: 'AdInsFOU12345678', // 256 bit atau 16 karakter & harus sama dengan BE
   Module: 'LOS',
