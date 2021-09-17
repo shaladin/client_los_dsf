@@ -1640,6 +1640,8 @@ export class URLConstant {
   public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset";
   public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
   public static DigitalizationAddTrxSrcDataForFraudCheckingNAPCust = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingNAPCust";
+  public static GetRuleIntegratorPackageMapAsset = environment.losUrl + "/v1" + "/Digitalization/GetRuleIntegratorPackageMapAsset";
+  public static GetRuleIntegratorPackageMapCust = environment.losUrl + "/v1" + "/Digitalization/GetRuleIntegratorPackageMapCust";
 
   //ThirdPartyRsltH
   public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/v1" + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";

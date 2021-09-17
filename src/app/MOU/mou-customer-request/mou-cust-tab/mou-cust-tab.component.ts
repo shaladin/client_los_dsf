@@ -38,6 +38,7 @@ import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResul
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
 import { CustAddrObj } from 'app/shared/model/CustAddrObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -51,6 +52,8 @@ export class MouCustTabComponent implements OnInit {
 
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   ListLegalDocCantDuplicate: Array<string> = new Array<string>();
   generalSettingObj: GenericListByCodeObj;
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
@@ -1657,7 +1660,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   checkIntegrator() {
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
       this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
       this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
@@ -1756,6 +1759,7 @@ export class MouCustTabComponent implements OnInit {
             this.thirdPartyObj.TrxNo = this.returnMouObj["MouCustNo"];
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+              this.getDigitalizationSvcType();
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response: ResThirdPartyRsltHObj) => {
                   if (response != null) {
@@ -1822,7 +1826,7 @@ export class MouCustTabComponent implements OnInit {
       let inputLeadString = JSON.stringify(inputCustObj);
       let latestCustDataString = JSON.stringify(this.latestCustDataObj);
 
-      if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
+      if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist && inputLeadString != latestCustDataString) {
         if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
         }
@@ -1834,7 +1838,7 @@ export class MouCustTabComponent implements OnInit {
     else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       inputCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
       inputCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      if ((this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0")
+      if ((this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist)
         && (this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value
           || this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value)) {
         if (confirm("Recent Customer Main Data different with previous data. Are you sure want to submit without fraud check ?")) {
@@ -1848,6 +1852,27 @@ export class MouCustTabComponent implements OnInit {
 
     else {
       return true;
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapCust, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+        var svcType = listSvcType.find(x => x == refSvcType);
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
     }
   }
 }
