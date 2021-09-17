@@ -496,6 +496,13 @@ export class MouRequestAddcollXComponent implements OnInit {
       addCritCustNo.restriction = AdInsConstant.RestrictionEq;
       addCritCustNo.value = this.custNo;
       this.criteriaList.push(addCritCustNo);
+
+      const addMouActive = new CriteriaObj();
+      addMouActive.DataType = 'text';
+      addMouActive.propName = 'MC.MOU_STAT';
+      addMouActive.restriction = AdInsConstant.RestrictionEq;
+      addMouActive.value = CommonConstant.STAT_CODE_ACT;
+      this.criteriaList.push(addMouActive);
     }
 
     this.inputLookupObj.nameSelect = "";
@@ -585,8 +592,24 @@ export class MouRequestAddcollXComponent implements OnInit {
   }
 
   MouCustCollateralId: number = 0;
-  open(pageType) {
-    if (pageType == 'AddExisting' && this.listCollateralData.length < 1) {
+  isAddExistingOK: boolean = true;
+  async open(pageType) {
+    this.isAddExistingOK = true;
+    if (pageType == 'AddExisting') {
+      await this.http.post(URLConstant.GetListMouCustCollateralActiveByCustNo, { TrxNo: this.custNo }).toPromise().then(
+        (response) => {
+          console.log(response);
+          if(response["ReturnObject"].length < 1){
+            this.isAddExistingOK = false;
+          }
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    if(!this.isAddExistingOK){
       this.toastr.warningMessage(ExceptionConstant.NO_EXISTING_COLL);
       return;
     }

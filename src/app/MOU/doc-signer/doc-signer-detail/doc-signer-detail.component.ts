@@ -18,6 +18,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -62,6 +64,7 @@ export class DocSignerDetailComponent implements OnInit {
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
   custNo: string;
+  mouTypeDesc: string;
   
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
@@ -182,6 +185,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;
+        this.GetMouTypeDesc(this.returnMouCust.MrMouTypeCode);
         this.MrCustTypeCode = this.returnMouCust["MrCustTypeCode"];
         this.custNo = this.returnMouCust["CustNo"];
         if (this.MrCustTypeCode == "COMPANY") {
@@ -232,6 +236,16 @@ export class DocSignerDetailComponent implements OnInit {
         this.mouCustSignerObj.CustSignerName1 = this.tempCustomer1;
         this.mouCustSignerObj.CustSignerJobPosition1 = this.tempCustomerPosition1;
       }
+  }
+
+  GetMouTypeDesc(code: string){
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = code;
+    this.http.post(URLConstant.GetRefMasterByMasterCode, reqByCode).subscribe(
+      (response: RefMasterObj) => {
+        this.mouTypeDesc = response.Descr;
+      }
+    )
   }
 
   SaveForm() {

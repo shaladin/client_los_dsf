@@ -13,9 +13,9 @@ import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { ReqCopyAssetObj } from 'app/shared/model/Request/AppAsset/ReqCopyAssetObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 
 @Component({
@@ -72,7 +72,7 @@ export class AssetDataPagingXComponent implements OnInit {
             this.mouCustId = response['MouCustId'];
           }
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
-            (response : ResThirdPartyRsltHObj) => {
+            (response: ResThirdPartyRsltHObj) => {
               if (response.ThirdPartyRsltHId != null) {
                 this.LastRequestedDate = response.ReqDt;
                 this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
@@ -125,8 +125,8 @@ export class AssetDataPagingXComponent implements OnInit {
 
         var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined){
+
+        if (gsNeedCheckBySystem != undefined) {
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
@@ -212,7 +212,7 @@ export class AssetDataPagingXComponent implements OnInit {
     else {
       let splitted = this.selectedAsset.split(";");
 
-      if(splitted.length == 1){
+      if (splitted.length == 1) {
         this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
         return;
       }
@@ -265,22 +265,6 @@ export class AssetDataPagingXComponent implements OnInit {
     );
   }
 
-  SerialNoList: Array<SerialNoObj> = new Array();
-  GetListAssetSerialNo() {
-    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-      (response: AppObj) => {
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion }).toPromise().then(
-          (response2: ProdOfferingDObj) => {
-            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response2.CompntValue }).subscribe(
-              (response3: GenericListObj) => {
-                this.SerialNoList = response3[CommonConstant.ReturnObj];
-              })
-          }
-        )
-      }
-    );
-  }
-  
   ngOnInit() {
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
@@ -312,6 +296,22 @@ export class AssetDataPagingXComponent implements OnInit {
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       });
     this.GetGS();
+  }
+
+  SerialNoList: Array<SerialNoObj> = new Array();
+  GetListAssetSerialNo() {
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response: AppObj) => {
+        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion }).toPromise().then(
+          (response2: ProdOfferingDObj) => {
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response2.CompntValue }).subscribe(
+              (response3: GenericListObj) => {
+                this.SerialNoList = response3[CommonConstant.ReturnObj];
+              })
+          }
+        )
+      }
+    );
   }
 
   getGridCollateral() {
@@ -364,9 +364,9 @@ export class AssetDataPagingXComponent implements OnInit {
       return;
     }
     else {
-      for(let i=0;i< this.gridAssetDataObj.resultData.Data.length ;i++){
-        if(this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == ""  || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null){
-          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i+1) + ')');
+      for (let i = 0; i < this.gridAssetDataObj.resultData.Data.length; i++) {
+        if (this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == "" || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null) {
+          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i + 1) + ')');
           return;
         }
       }

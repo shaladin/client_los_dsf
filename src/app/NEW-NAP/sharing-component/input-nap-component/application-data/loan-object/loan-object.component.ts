@@ -160,7 +160,7 @@ export class LoanObjectComponent implements OnInit {
       (response: AppObj) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
-        if (this.AppObj.LobCode == CommonConstant.CFNA) {
+        if (this.AppObj.BizTemplateCode == CommonConstant.CFNA) {
           this.isCFNA = true;
 
           var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();

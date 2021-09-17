@@ -3,6 +3,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 
 @Component({
   selector: 'app-mgmnt-shrholder',
@@ -11,6 +12,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 })
 export class MgmntShrholderComponent implements OnInit {
   @Input() AppId: number;
+  @Input() AppCustId: number;
   @Output() OutputTab: EventEmitter<any> = new EventEmitter();
   @Output() OutputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -29,14 +31,18 @@ export class MgmntShrholderComponent implements OnInit {
   }
 
   loadShareholderListData() {
-    this.http.post(URLConstant.GetAppCustAndListShareholderByAppId, { Id: this.AppId }).subscribe(
+    this.http.post<AppCustCompanyObj>(URLConstant.GetAppCustCompanyByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
-        this.inputGridObj.resultData = {
-          Data: ""
-        }
-        this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
-        this.ListShareholder = this.inputGridObj.resultData.Data;
+        this.http.post(URLConstant.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).subscribe(
+          (response) => {
+            this.inputGridObj.resultData = {
+              Data: ""
+            }
+            this.inputGridObj.resultData["Data"] = new Array();
+            this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
+            this.ListShareholder = this.inputGridObj.resultData.Data;
+          }
+        );
       }
     );
   }

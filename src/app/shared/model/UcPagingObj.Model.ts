@@ -36,6 +36,7 @@ export class UcPagingObj {
         this.listEnvironments = new Array<EnvisObj>();
         this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url  + "/v1"});
         this.listEnvironments.push({ environment: "LOS", url: environment.losUrl  + "/v1"});
+        this.listEnvironments.push({ environment: "LOSV2", url: environment.losUrl  + "/v2"});
         this.whereValue = new Array<WhereValueObj>();
         this.isHideSearch = false;
         this.delay = 0;
