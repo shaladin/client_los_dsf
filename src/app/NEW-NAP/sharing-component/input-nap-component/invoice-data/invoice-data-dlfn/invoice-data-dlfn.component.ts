@@ -140,13 +140,15 @@ export class InvoiceDataDlfnComponent implements OnInit {
     let objectReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
     objectReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDisbToDlrFncng
 
+    
     await this.httpClient.post(URLConstant.GetListActiveRefMaster, objectReq).subscribe(
       (response) => {
         this.disburseTos = response[CommonConstant.ReturnObj];
-        this.InvoiceForm.patchValue({
-          DisburseTo: this.disburseTos[0].MasterCode
-        })
+        //this.InvoiceForm.patchValue({
+        //  DisburseTo: this.disburseTos[0].MasterCode
+        //})
       })
+    
   }
 
   ChangeDisburseTo(event) {
