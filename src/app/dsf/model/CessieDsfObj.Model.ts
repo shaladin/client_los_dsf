@@ -1,12 +1,12 @@
 export class CessieDsfObj {
-    CessieId: number;
-    CessieNo: string;
-    CessieDate: string;
-    ClientName: string;
-    PaymentAmount: string;
-    BankName: string;
+    CessieId: any;
+    CessieNo: any;
+    CessieDate: any;
+    ClientName: any;
+    PaymentAmount: any;
+    BankName: any;
     PaymentDueDate: any;
-    AccountName: string;
+    AccountName: any;
     RowVersion: any;
 
     constructor()

@@ -113,24 +113,24 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     this.refLobObj = new RefLobObj();
     this.refLobObj.RefLobId = "-"
 
-    // this.leadSource = new RefMasterObj();
-    // this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
-    // this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.leadSource).subscribe(
-    //   (response) => {
-    //     this.listLeadSource = response[CommonConstant.ReturnObj];
-    //     this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
-    //   });
+    this.leadSource = new RefMasterObj();
+    this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.leadSource).subscribe(
+      (response) => {
+        this.listLeadSource = response[CommonConstant.ReturnObj];
+        this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
+      });
     let userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let objectLead = {
       Code: userContext.OfficeCode,
       RowVersion: ""
     };
     console.log(userContext);
-    this.http.post(URLConstant.GetListKvpRefAppSrcForAppOrLead, objectLead).subscribe(
-      (response) => {
-        this.listLeadSource = response[CommonConstant.ReturnObj];
-        this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
-      });
+    // this.http.post(URLConstant.GetListKvpRefAppSrcForAppOrLead, objectLead).subscribe(
+    //   (response) => {
+    //     this.listLeadSource = response[CommonConstant.ReturnObj];
+    //     this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
+    //   });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "LOB" }).subscribe(
       (response) => {

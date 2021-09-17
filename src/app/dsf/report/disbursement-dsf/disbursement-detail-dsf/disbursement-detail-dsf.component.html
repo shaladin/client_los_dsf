@@ -38,7 +38,7 @@
                     <label class="col-md-3 adInsLabel adins-required" translate>Payment Amount</label>
                     <div class="col-md-4">
                      <input type="text" class="form-control adInsInput" formControlName="PaymentAmount"
-                     [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.PaymentAmount.invalid }" >
+                     [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.PaymentAmount.invalid }" disabled>
                   <lib-uc-show-errors  [control]="DetailInformationForm.controls.PaymentAmount" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                     </div>
                  </div>
@@ -46,7 +46,7 @@
                     <label class="col-md-3 adInsLabel adins-required" translate>Bank Name Account</label>
                     <div class="col-md-4">
                        <input type="date" class="form-control adInsInput" formControlName="BankName"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.BankName.invalid }" >
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.BankName.invalid }" disabled>
                        <lib-uc-show-errors  [control]="DetailInformationForm.controls.BankName" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                     </div>
                  </div>

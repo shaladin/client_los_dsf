@@ -9,6 +9,9 @@ import { Nap1FromLeadDetailComponent } from './nap1-from-lead/nap1-from-lead-det
 import { NapFromSimpleLeadComponent } from './nap-from-simple-lead/nap-from-simple-lead.component';
 import { NapFromSimpleLeadDetailComponent } from './nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { NapFromSimpleLeadDsfComponent } from '../DSF/sharing-page-dsf/nap-from-simple-lead-dsf/nap-from-simple-lead-dsf.component';
+import { NapFromSimpleLeadDetailDsfComponent } from '../DSF/sharing-page-dsf/nap-from-simple-lead-detail-dsf/nap-from-simple-lead-detail-dsf.component';
 
 const routes: Routes = [
     {
@@ -70,6 +73,20 @@ const routes: Routes = [
                     title: 'Detail'
                 }
             },
+            {
+                path: PathConstantDsf.NAP_SIMPLE_LEAD_PAGING,
+                component: NapFromSimpleLeadDsfComponent,
+                data: {
+                    title: 'Paging Dsf'
+                }
+            },
+            {
+                path: PathConstantDsf.NAP_SIMPLE_LEAD_DETAIL,
+                component: NapFromSimpleLeadDetailDsfComponent,
+                data: {
+                    title: 'Detail Dsf'
+                }
+            }
         ]
     }
 ];

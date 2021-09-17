@@ -27,6 +27,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
 import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 
 @Component({
   selector: 'app-credit-review-cfna-detail-dsf',
@@ -438,7 +439,7 @@ export class CreditReviewCfnaDetailDsfComponent implements OnInit {
 
     var listTypeCode: Array<TypeResultObj> = new Array();
     var TypeCode: TypeResultObj = {
-      TypeCode: "CRD_APV_CF_TYPE",
+      TypeCode: "CRD_APV_MPF_TYPE",
       Attributes: Attributes,
     };
     listTypeCode.push(TypeCode);
@@ -461,8 +462,8 @@ export class CreditReviewCfnaDetailDsfComponent implements OnInit {
     this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
     this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
     this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
-    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
+    this.InputObj.CategoryCode = CommonConstantDsf.CAT_CODE_CRD_APV;
+    this.InputObj.SchemeCode = CommonConstantDsf.SCHM_CODE_CRD_APV_MPF;
     this.InputObj.Reason = this.DDLRecommendation;
     this.InputObj.TrxNo = this.AppNo
     this.IsReady = true;

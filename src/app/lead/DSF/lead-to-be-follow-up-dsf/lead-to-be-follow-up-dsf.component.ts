@@ -26,29 +26,32 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "Edit") {
-      var reqObj = { TrxNo: ev.RowObj.LeadNo };
-      this.http.post(URLConstantDsf.UpdateNotify, reqObj).subscribe(
-        (response) => {
+      // var reqObj = { TrxNo: ev.RowObj.LeadNo };
+      // this.http.post(URLConstantDsf.UpdateNotify, reqObj).subscribe(
+      //   (response) => {
         
-        }
-      )
+      //   }
+      // )
 
       this.ReqByIdObj.CustNo = ev.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.ReqByIdObj).subscribe(
         response => {
           this.CustId = response["CustId"];
+
+          if (ev.RowObj.CustType == "PERSONAL")
+          {
+          AdInsHelper.EditCustomerMainDataPersonalByCustId(this.CustId, "EditMainData");
+          // AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          }
+          else
+          {
+            AdInsHelper.EditCustomerMainDataCompanyByCustId(this.CustId, "EditMainData");
+          }
+
         }
       );
 
-      if (ev.RowObj.CustType == "PERSONAL")
-      {
-      AdInsHelper.EditCustomerMainDataPersonalByCustId(this.CustId, "EditMainData");
-      // AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
-      }
-      else
-      {
-        AdInsHelper.EditCustomerMainDataCompanyByCustId(this.CustId, "EditMainData");
-      }
+      
     }
   }
 

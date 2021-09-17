@@ -5,41 +5,17 @@
     "component": [ 
         {
             "type" : "dropdown",
-            "label" : "Client Name",
-            "name" : "CrtClientName",
-            "datatype" : "text",
-            "isSelectOne" : true,
-            "items" : [
-                {
-                "key": "PT KRAMA YUDHA TIGA BERLIAN",
-                "value": "PT KRAMA YUDHA TIGA BERLIAN"
-            },
-            {
-                "key": "PT MITSUBISHI MOTOR",
-                "value": "PT MITSUBISHI MOTOR"
-            }
-            ],
-            "isFromURL" : false,
-            "url" : "", 
-            "path": "", 
-            "criteriaPropName": "", 
-            "criteriaPropValue": "", 
-            "itemsUrl" : [],
-            "paramAssignment": 1 
-        },
-        {
-            "type" : "dropdown",
             "label" : "Product Type",
-            "name" : "CrtProductType",
+            "name" : "ProductType",
             "datatype" : "text",
             "isSelectOne" : true,
             "items" : [
                 {
-                "key": "MMC",
+                "key": "UN",
                 "value": "Unit"
             },
             {
-                "key": "MFTBC",
+                "key": "SP",
                 "value": "Sparepart"
             }
             ],
@@ -52,14 +28,21 @@
             "paramAssignment": 1 
         },
         {
-            "type" : "datepicker",
-            "label" : "Date As Of",
-            "name" : "LeadDtGte",
-            "value" : "BD",
-            "restriction" : "gte",
-            "datatype" : "date",
-            "paramAssignment": 1 
-        }    
+            "type": "dropdown",
+            "label": "Branch Name",
+            "name": "BranchCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "environment": "FOU",
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOffice",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "paramAssignment": 1
+        }  
     ],
     "exportTypeList": [
         {
