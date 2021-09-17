@@ -86,7 +86,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(4)]],
     OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
-    OwnerIdNo: ['', Validators.maxLength(50)],
+    OwnerIdNo: ['', [Validators.required, Validators.maxLength(50)]],
     MrOwnerRelationshipCode: ['', Validators.maxLength(50)],
     OwnerAddr: [''],
     OwnerAreaCode1: ['', Validators.maxLength(50)],
