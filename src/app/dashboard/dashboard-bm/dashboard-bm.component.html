@@ -1,29 +1,29 @@
-<div class="card" style="background-color: #FFFFFF; width: 600px; height: auto;">
-  <div>
-    <h4 style="margin-left: 30%;color: #0152CC;">Application In Process </h4>
+<div class="card" style="background-color: #FFFFFF; width: 600px; height: auto; margin-top: 10px; margin-bottom: 10px;">
+  <div class="card-block">
+    <h4 class="card-title" style="margin-left: 30%;color: #0152CC;">Application In Process </h4>
   </div>
   <div class="col-md-12">
     <div class="row">
-      <!-- <div class="col-md-4"  *ngIf="done">
+      <!-- <div class="col-md-1">
         <h5>Total App: {{TotalApp}}</h5>
       </div> -->
-      <div class ="col-md-1" style="margin-top: 7px;">
+      <div class ="col-md-1" style="margin-top: 7px; margin-left :90px">
         <label style="color: #0152CC; font-size: 11px !important;" for="lobSelect">Lob</label>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-5" style="padding-left: 3px">
         <select style="color: #0152CC;" class="form-control adInsInput" id="lobSelect" style="width: auto" (change)="radioChange($event)">
           <option>All</option>
-          <option *ngFor="let it of DropDownList" [value]="it.BlCode">
-            {{it.BlCode}}
+          <option *ngFor="let it of DropDownList" [value]="it.LobCode">
+            {{it.LobName}}
           </option>
         </select>
       </div>
-      <div class="col-md-3"  *ngIf="done">
-        <button style="border:0px;font-size: 10px; background-color: transparent; color: #0152CC;" id="refresh-button" (click)="Refresh()"> REFRESH</button>
+      <div class="col-md-1" style="margin-top: 7px" *ngIf="done">
+        <button style="border:0px;font-size: 15px; background-color: transparent; color: #0152CC;" id="refresh-button" (click)="Refresh()"><span>&#x27f3;</span></button>
       </div>
     </div>
   </div>
-  <div> 
+  <div style="margin-bottom: 10px;"> 
     <ngx-charts-bar-horizontal *ngIf="done"
     [view]="view"
     [scheme]="colorScheme"
@@ -33,21 +33,22 @@
     [showDataLabel]="showDataLabel"
     style="fill: #0152CC"
     >
-    <ng-template #tooltipTemplate let-model="model" style="width: 90px; background: red;">
-      <h5>
-        {{model.name}}
-      </h5>
+    <ng-template #tooltipTemplate let-model="model">
       <h6>
-        <div class="row">
+        {{model.name}}
+      </h6>
+      <h6>
+        <!-- matiin dlu karna blm ada SLA -->
+        <!-- <div class="row">
           <div class="col-md-6">
             SLA Indicator
-          </div>
-          <div class="col-md-6">
+          </div> -->
+          <div>
             Total : {{model.value}}
           </div>
-      </div>
+      <!-- </div> -->
       </h6>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-1">
             <div style = "width: 8px; height: 8px; background: #FF6A64;"></div>
           </div>
@@ -78,7 +79,7 @@
           <div class="col-md-0.5">
             <h6>{{TotalApp}}</h6>
           </div>
-        </div>
+        </div> -->
     </ng-template>
     </ngx-charts-bar-horizontal>
   </div>
