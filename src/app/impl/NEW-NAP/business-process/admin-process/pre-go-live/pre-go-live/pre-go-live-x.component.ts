@@ -33,6 +33,7 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-x',
@@ -202,6 +203,7 @@ export class PreGoLiveXComponent implements OnInit {
     await this.LoadRefReason();
     if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.DF) {
       this.IsNeedApv = true;
+      await this.BindAppvAmt();
       await this.initInputApprovalObj();
     }
   }
@@ -502,7 +504,12 @@ export class PreGoLiveXComponent implements OnInit {
             if (NowDt <= LastDt) {
               this.isNeedEndDateApv = false;
             } else {
-              let AttributesEndDateEmpty = [{}]
+              let AttributesEndDateEmpty : Array<ResultAttrObj> = new Array();
+              var attribute1: ResultAttrObj = {
+                AttributeName: "Approval Amount",
+                AttributeValue: this.ApvAmt.toString()
+              };
+              AttributesEndDateEmpty.push(attribute1);
               let TypeEndDateCode = {
                 'TypeCode': 'END_DATE_GO_LIVE_APV_TYPE',
                 'Attributes': AttributesEndDateEmpty,
@@ -581,5 +588,13 @@ export class PreGoLiveXComponent implements OnInit {
 
   consoleLog() {
     console.log(this.MainInfoForm);
+  }
+
+  ApvAmt: number = 0;
+  async BindAppvAmt() {
+    await this.http.post(URLConstantX.GetApprovalAmountForCreditReviewByAppIdX, { Id: this.AppId }).toPromise().then(
+      (response) => {
+        this.ApvAmt = response["Result"];
+      });
   }
 }
