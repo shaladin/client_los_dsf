@@ -213,9 +213,6 @@ export class MouDetailFactoringXComponent implements OnInit {
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].enable();
       this.MouDetailFactoringForm.controls["TopDays"].setValidators([Validators.required, Validators.min(1)]);
-      this.MouDetailFactoringForm.patchValue({
-        SingleInstCalcMthd: this.singleInstCalcMthdList[0].Key
-      });
     }
     else if(value == CommonConstant.MULTIPLE_INST_TYPE){
       this.IsSingleIns = false;
