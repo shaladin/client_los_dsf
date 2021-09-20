@@ -31,6 +31,8 @@
         "itemsUrl": [],
         "criteriaPropName": "",
         "criteriaPropValue": "",
+        "isEvent": "true",
+        "affectedFilter": ["Month"],
         "paramAssignment": 0
       },
       {
