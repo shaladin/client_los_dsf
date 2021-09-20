@@ -541,7 +541,7 @@ export const ROUTES: RouteInfo[] = [
         Submenu: [
           { Path: NavigationConstant.CESSIE_FACTORING_REVIEW_PAGING, Title: 'Factoring Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
           { Path: NavigationConstant.CESSIE_PGL_PAGING, Title: 'PreGoLive', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-          { Path: NavigationConstant.CESSIE_PGL_APPRVL_PAGING, Title: 'PreGoLive Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+          { Path: NavigationConstant.CESSIE_PGL_APPRVL_PAGING, Title: 'GoLive Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
         ], Params: []
       },
       { Path: NavigationConstant.CESSIE_CANCEL_PAGING, Title: 'Cessie Cancellation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
