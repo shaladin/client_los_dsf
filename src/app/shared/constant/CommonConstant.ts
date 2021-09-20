@@ -990,6 +990,7 @@ export class CommonConstant {
   public static LTKM_RTN = "LTKM_VERIFY";
   public static RTN_ADD_TC = "RTN_ADD_TC_";
   public static ADD_COLTR_ = "ADD_COLTR_";
+  public static ADD_TC = "ADD_TC_";
 
 
 
