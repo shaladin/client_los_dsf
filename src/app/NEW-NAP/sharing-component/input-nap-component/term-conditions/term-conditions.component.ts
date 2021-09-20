@@ -57,6 +57,7 @@ export class TermConditionsComponent implements OnInit {
         this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
           (response) => {
             this.AppTcList = response["AppTcs"];
+            console.log(this.AppTcList);
             if (this.AppTcList != null && this.AppTcList["length"] != 0) {
               for (let i = 0; i < this.AppTcList["length"]; i++) {
                 var TCDetail = this.fb.group({
@@ -74,7 +75,7 @@ export class TermConditionsComponent implements OnInit {
                   IsAdditional: this.AppTcList[i].IsAdditional,
                   IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
                   IsWaivable: this.AppTcList[i].IsWaivable,
-                  IsWaived: [{value: this.AppTcList[i].IsWaived, disabled: this.AppTcList[i].IsWaivable}],
+                  IsWaived: this.AppTcList[i].IsWaived,
                   RowVersion: this.AppTcList[i].RowVersion
                 }) as FormGroup;
     
@@ -85,6 +86,7 @@ export class TermConditionsComponent implements OnInit {
                     }
                   }
                 }
+                if (!this.AppTcList[i].IsWaivable) TCDetail.get("IsWaived").disable();
 
                 if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
                   this.IsCheckedAll = false;
@@ -128,7 +130,7 @@ export class TermConditionsComponent implements OnInit {
                       IsAdditional: this.AppTcList[i].IsAdditional,
                       IsExpDtMandatory: this.AppTcList[i].IsExpDtMandatory,
                       IsWaivable: this.AppTcList[i].IsWaivable,
-                      IsWaived: [{value: this.AppTcList[i].IsWaived, disabled: this.AppTcList[i].IsWaivable}],
+                      IsWaived: this.AppTcList[i].IsWaived,
                       RowVersion: this.AppTcList[i].RowVersion
                     }) as FormGroup;
     
@@ -139,6 +141,7 @@ export class TermConditionsComponent implements OnInit {
                         }
                       }
                     }
+                    if (!this.AppTcList[i].IsWaivable) TCDetail.get("IsWaived").disable();
 
                     if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
                       this.IsCheckedAll = false;
@@ -221,12 +224,11 @@ export class TermConditionsComponent implements OnInit {
             item.get("PromisedDt").enable();
             item.get("PromisedDt").setValidators([Validators.required]);
             item.get("PromisedDt").updateValueAndValidity();
+            this.IsCheckedAll = false;
           }
           item.get("ExpiredDt").disable();
           item.get("ExpiredDt").clearValidators();
           item.get("ExpiredDt").updateValueAndValidity();
-          
-          this.IsCheckedAll = false;
         }
       } 
       else {
