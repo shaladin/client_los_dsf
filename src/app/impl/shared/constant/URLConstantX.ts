@@ -208,4 +208,7 @@ export class URLConstantX {
   public static EditAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/EditAppCustPersonalJobData";
   public static GetAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/GetAppCustPersonalJobData";
 
+  //Dealer Financing
+  public static CalcGrossYieldSingleInstDF = environment.losUrl + "/v1" + "/AppFinDataX/CalcGrossYieldSingleInstDF";
+
 }

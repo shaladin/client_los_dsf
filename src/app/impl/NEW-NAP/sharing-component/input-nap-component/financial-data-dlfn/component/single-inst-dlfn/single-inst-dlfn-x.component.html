@@ -123,7 +123,7 @@
           {{MouOsPlafond| number:'.2':'en-US'}}
         </label>
       </div>
-      <br/>
+      <br />
       <div class="row">
         <div class="col-md-12">
           <div class="row">
@@ -150,7 +150,7 @@
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="InterestType" class="form-control full-width"
-                (change)="SetNeedReCalculate(true)">
+                (change)="onChangeInterestType($event)">
                 <option *ngFor="let m of InterestTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.InterestType" [submit]="enjiForm.submitted">
@@ -169,32 +169,15 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div *ngIf="ParentForm.controls.InterestType.value == 'AMT'" class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline">
               <label>Interest Amount</label>
             </div>
-            <div *ngIf="ParentForm.controls.InterestType.value == 'AMT'" class="col-md-3 form-inline form-inline-right">
+            <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="TotalInterestAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TotalInterestAmt.invalid}"
                 (keyup)="SetNeedReCalculate(true)" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.TotalInterestAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
-            </div>
-            <div *ngIf="ParentForm.controls.InterestType.value == 'PRCNT'" class="col-md-3 form-inline">
-              <label>Interest Rate Percentage</label>
-            </div>
-            <div *ngIf="ParentForm.controls.InterestType.value == 'PRCNT'"
-              class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt" [options]="CurrencyMaskPrct"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
-                (keyup)="SetNeedReCalculate(true)" currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-            <div class="col-md-3 form-inline">
-              <label>Installment Amount</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.InstAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>
         </div>
@@ -204,10 +187,63 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
+              <label>Interest Rate Percentage</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
+                [options]="CurrencyMaskPrct"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
+                (keyup)="SetNeedReCalculate(true)" currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
               <label>Total Disburse</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalDisbAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Installment Amount</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.InstAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label translate>Total AR</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label translate>Gross Yield</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number:'.6':'en-US'}} %</label>
             </div>
           </div>
         </div>
