@@ -102,9 +102,16 @@ export class CessiePreGoLiveComponent implements OnInit {
       };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         (response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          if(response['MrCustTypeCode'] == CommonConstant.CustTypePersonal) {
+            AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          } else if(response['MrCustTypeCode'] == CommonConstant.CustTypeCompany) {
+            AdInsHelper.OpenCustomerCoyViewByCustId(response['CustId']);
+          }
         }
       )
+    }
+    else if (ev.Key == "mou") {
+      AdInsHelper.OpenMOUCustViewByMouCustId(ev.ViewObj.MouCustId);
     }
   }
 
