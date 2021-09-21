@@ -82,6 +82,8 @@ import { PurchaseOrderXComponent } from "app/impl/NEW-NAP/business-process/admin
 import { AgrmntActivationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component";
 import { InsuranceOrderPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-paging/insurance-order-paging-x/insurance-order-paging-x.component";
 import { InsuranceOrderDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component";
+import { DocumentViewXComponent } from "app/impl/NEW-NAP/business-process/admin-process/document-printing/document-view/document-view-x.component";
+import { AgrViewModule } from "app/view-enhancing/agr-view/agr-view.module";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -110,7 +112,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
-    SharedModule
+    SharedModule,
+    AgrViewModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
@@ -176,7 +179,8 @@ export const customCurrencyMaskConfig = {
     PurchaseOrderPagingXComponent,
     PurchaseOrderXComponent,
     PurchaseOrderDetailXComponent,
-    AgrmntActivationDetailXComponent
+    AgrmntActivationDetailXComponent,
+    DocumentViewXComponent
   ],
   providers: [
     NGXToastrService,

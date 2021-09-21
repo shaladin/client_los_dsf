@@ -6,7 +6,7 @@
       "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [{
           "type": "text",
-          "label": "Sales Name",
+          "label": "MO Name",
           "property": "SalesOfficer"
         },
         {

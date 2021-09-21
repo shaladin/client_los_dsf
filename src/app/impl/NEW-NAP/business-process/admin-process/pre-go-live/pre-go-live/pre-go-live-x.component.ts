@@ -64,7 +64,7 @@ export class PreGoLiveXComponent implements OnInit {
     ApprovalStatus: [''],
     AdditionalInterestPaidBy: ['', Validators.required],
     AddIntrstAmt: [0],
-    GoLiveEstimated: [''],
+    GoLiveEstimated: ['']
   })
 
   GoLiveApvForm = this.fb.group({})
@@ -94,6 +94,7 @@ export class PreGoLiveXComponent implements OnInit {
   MaxEffDt: Date;
   AppObj: AppObj;
   IsNeedApv: boolean = false;
+  ApvAmt: number = 0;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
@@ -376,7 +377,6 @@ export class PreGoLiveXComponent implements OnInit {
       }
 
     }
-    console.log("xxxxxx");
     this.AgrmntObj = new AgrmntObj();
     this.AgrmntObj.AgrmntId = this.AgrmntId;
     this.AgrmntObj.AppId = this.AppId;
@@ -543,15 +543,23 @@ export class PreGoLiveXComponent implements OnInit {
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
       (response) => {
         if (response && response['StatusCode'] == '200') {
-          let AttributesGoLive = [{}]
-          let TypeEnGoLiveDate = {
-            'TypeCode': 'GO_LIVE_APV_TYPE',
-            'Attributes': AttributesGoLive,
+
+          let Attributes = [
+            {
+              "AttributeName": "Approval Amount",
+              "AttributeValue": this.ApvAmt
+            }
+          ];
+
+          let TypeCode = {
+            TypeCode: CommonConstantX.GO_LIVE_APV_TYPE_APV_TYPE,
+            Attributes: Attributes,
           };
+
           this.InputGoLiveObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
           this.InputGoLiveObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
-          this.InputGoLiveObj.ApvTypecodes = [TypeEnGoLiveDate];
-          this.InputGoLiveObj.CategoryCode = 'GO_LIVE_APV';
+          this.InputGoLiveObj.ApvTypecodes = [TypeCode];
+          this.InputGoLiveObj.CategoryCode = CommonConstantX.CAT_CODE_GO_LIVE_APV; 
           this.InputGoLiveObj.SchemeCode = response['CompntValue'];
           this.InputGoLiveObj.Reason = this.itemReasonGoLive;
           this.InputGoLiveObj.TrxNo = this.AgrmntNo
@@ -590,7 +598,6 @@ export class PreGoLiveXComponent implements OnInit {
     console.log(this.MainInfoForm);
   }
 
-  ApvAmt: number = 0;
   async BindAppvAmt() {
     await this.http.post(URLConstantX.GetApprovalAmountForCreditReviewByAppIdX, { Id: this.AppId }).toPromise().then(
       (response) => {
