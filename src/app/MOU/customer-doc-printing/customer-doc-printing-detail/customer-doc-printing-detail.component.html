@@ -1,41 +1,56 @@
-<app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
-<lib-ucSubsection *ngIf="responseObj.length > 0" [id]="'Hierarchy'" [title]="'List Document'" [panel]="'ListDocId'">
-</lib-ucSubsection>
-<div id="ListDocId">
-  <table class="table table-responsive-md text-center table-hover" *ngIf="responseObj.length > 0">
-    <thead>
-      <tr class="table-header">
-        <th><span translate class="thead-header" name='SeqNo'>No</span></th>
-        <th class="text-left"><span translate class="thead-header" name='DocName'>Document Name</span></th>
-        <th><span translate class="thead-header" name='IsNeedToBePrinted'>Need To Print</span>
-        </th>
-        <th class="text-center"><span translate class="thead-header" name='LastPrintDt'>Last Printed</span></th>
-        <th class="text-left"><span translate class="thead-header" name='EmpName'>Last Printed By</span></th>
-        <th><span translate class="thead-header" name='NumOfDocPrinted'>Number Of Printed</span>
-        </th>
-        <th class="text-center"><span translate class="thead-header" name='Print'>Print</span></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of responseObj">
-        <td>{{item.SeqNo}}</td>
-        <td class="text-left">{{item.DocName}}</td>
-        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
-        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
-        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
-        <td class="text-left">{{item.EmpName}}</td>
-        <td>{{item.NumOfDocPrinted}}</td>
-        <td>
-          <a class="primary p-0" (click)="Print(item)">
-            <i class="font-medium-3 fa fa-print"></i>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="float-right">
-  <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
-    <i class="ft-x"></i> Cancel
-  </button>
+<div class="col-md-12 text-left">
+  <div class="card">
+    <div class="px-3">
+      <div class="col-md-8" style="padding-left: 0px;">
+        <h4 class="form-section card-title" translate>Mou Document Printing</h4>
+      </div>
+    </div>
+    <div class="ucSearch-Button-Right">
+      <span class="mr-1">
+        <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+      </span>
+    </div>
+    <div class="card-body">
+      <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
+      <div class="px-3">
+        <lib-ucSubsection *ngIf="responseObj.length > 0" [id]="'Hierarchy'" [title]="'List Document'" [panel]="'ListDocId'">
+        </lib-ucSubsection>
+        <div id="ListDocId">
+          <table class="table table-responsive-md text-center table-hover" *ngIf="responseObj.length > 0">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header" name='SeqNo'>No</span></th>
+                <th class="text-left"><span translate class="thead-header" name='DocName'>Document Name</span></th>
+                <th><span translate class="thead-header" name='IsNeedToBePrinted'>Need To Print</span>
+                </th>
+                <th class="text-center"><span translate class="thead-header" name='LastPrintDt'>Last Printed</span></th>
+                <th class="text-left"><span translate class="thead-header" name='EmpName'>Last Printed By</span></th>
+                <th><span translate class="thead-header" name='NumOfDocPrinted'>Number Of Printed</span>
+                </th>
+                <th class="text-center"><span translate class="thead-header" name='Print'>Print</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of responseObj">
+                <td>{{item.SeqNo}}</td>
+                <td class="text-left">{{item.DocName}}</td>
+                <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
+                <td *ngIf="item.IsNeedToBePrinted == false">No</td>
+                <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
+                <td class="text-left">{{item.EmpName}}</td>
+                <td>{{item.NumOfDocPrinted}}</td>
+                <td>
+                  <a class="primary p-0" (click)="Print(item)">
+                    <i class="font-medium-3 fa fa-print"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

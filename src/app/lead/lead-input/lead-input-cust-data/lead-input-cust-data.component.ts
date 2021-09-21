@@ -40,6 +40,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 import { RegexService } from 'app/shared/services/regex.services';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -120,6 +121,8 @@ export class LeadInputCustDataComponent implements OnInit {
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   leadObj: LeadObj;
   returnLeadObj: Object;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
@@ -192,7 +195,7 @@ export class LeadInputCustDataComponent implements OnInit {
     }
   }
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
     this.customPattern = new Array<CustomPatternObj>();
     this.inputAddressObjForLegalAddr = new InputAddressObj();
     this.inputAddressObjForLegalAddr.showSubsection = false;
@@ -260,6 +263,7 @@ export class LeadInputCustDataComponent implements OnInit {
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+              this.getDigitalizationSvcType();
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response: ResThirdPartyRsltHObj) => {
                   this.latestReqDtCheckIntegrator = response.ReqDt;
@@ -1046,7 +1050,7 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   checkIntegrator() {
-    if (this.isUseDigitalization == '1' && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == '1' && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       this.leadInputObj = new ReqInputLeadCustPersonalObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
@@ -1112,7 +1116,7 @@ export class LeadInputCustDataComponent implements OnInit {
     let inputLeadString = JSON.stringify(inputLeadCustObj);
     let latestCustDataString = JSON.stringify(this.latestCustDataObj);
 
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist && inputLeadString != latestCustDataString) {
       if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check again?")) {
         return true;
       }
@@ -1189,4 +1193,25 @@ export class LeadInputCustDataComponent implements OnInit {
     }
   }
   //END OF URS-LOS-041
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapCust, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+        var svcType = listSvcType.find(x => x == refSvcType);
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+    }
+  }
 }

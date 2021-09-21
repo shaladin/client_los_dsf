@@ -45,6 +45,7 @@ import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPers
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-asset-data',
@@ -315,6 +316,8 @@ export class AssetDataComponent implements OnInit {
   generalSettingObj: GenericListByCodeObj = new GenericListByCodeObj();
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsSvcExist: boolean = false;
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   LastRequestedDate: any = "";
@@ -668,6 +671,7 @@ export class AssetDataComponent implements OnInit {
         }
 
         if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+          this.getDigitalizationSvcType();
           this.GetThirdPartyResultH();
         }
       }
@@ -786,7 +790,7 @@ export class AssetDataComponent implements OnInit {
         if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
         if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
       }
-      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
         if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
           if (confirm("Chassis No not filled, submit data without Integrator ?")) {
             this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
@@ -2762,6 +2766,28 @@ export class AssetDataComponent implements OnInit {
       }else{
         let DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+      }
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.BizTemplateCode}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+      var svcType = listSvcType.find(x => x == refSvcType);
+
+      if(svcType != null){
+        this.IsSvcExist = true;
       }
     }
   }

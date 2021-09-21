@@ -5,6 +5,7 @@
         <div class="row">
         </div>
       </div>
+      <app-app-main-info [AppId]="AppId"></app-app-main-info>
       <div class="card-body">
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"

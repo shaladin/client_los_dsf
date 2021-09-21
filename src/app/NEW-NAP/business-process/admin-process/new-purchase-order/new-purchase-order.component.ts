@@ -24,7 +24,7 @@ export class NewPurchaseOrderComponent implements OnInit {
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
 
-  constructor(private route: ActivatedRoute,private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
@@ -38,9 +38,11 @@ export class NewPurchaseOrderComponent implements OnInit {
 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
     this.inputPagingObj._url = "./assets/ucpaging/searchNewPurchaseOrder.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewPurchaseOrder.json";
     this.arrCrit = new Array();
+
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchNewPurchaseOrderV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchNewPurchaseOrderV2.json";
@@ -57,12 +59,14 @@ export class NewPurchaseOrderComponent implements OnInit {
       this.IntegrationObj.leftColumnToJoin = "AgrmntNo";
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
-    }else{
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WF.ACT_CODE';
-    critObj.value = "PO_" + this.bizTemplateCode;
-    this.arrCrit.push(critObj);
+    }
+    else{
+      var critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionLike;
+      critObj.propName = 'WF.ACT_CODE';
+      critObj.value = "PO_" + this.bizTemplateCode;
+      this.arrCrit.push(critObj);
+    }
 
     critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -70,7 +74,6 @@ export class NewPurchaseOrderComponent implements OnInit {
     critObj.value = this.bizTemplateCode;
     this.arrCrit.push(critObj);
     this.inputPagingObj.addCritInput = this.arrCrit;
-    }
   }
 
   GetCallBack(ev) {
