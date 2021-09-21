@@ -95,13 +95,20 @@ export class CessiePreGoLiveApprovalDetailComponent implements OnInit {
     }
     else if (ev.Key == "customer") {
       var custObj = {
-        CustNo : ev.ViewObj.CustNo
+        CustNo: ev.ViewObj.CustNo
       };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         (response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          if(response['MrCustTypeCode'] == CommonConstant.CustTypePersonal) {
+            AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          } else if(response['MrCustTypeCode'] == CommonConstant.CustTypeCompany) {
+            AdInsHelper.OpenCustomerCoyViewByCustId(response['CustId']);
+          }
         }
       )
+    }
+    else if (ev.Key == "mou") {
+      AdInsHelper.OpenMOUCustViewByMouCustId(ev.ViewObj.MouCustId);
     }
   }
 }
