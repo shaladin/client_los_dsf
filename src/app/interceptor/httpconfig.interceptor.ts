@@ -141,8 +141,11 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                                     reason: event.body.HeaderObj.Message ? event.body.HeaderObj.Message : '',
                                     status: event.body.HeaderObj.StatusCode
                                 };
-                                this.toastr.warning(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
-                                console.log(event.body);
+                                
+                                if (data['status'] != '999' && data['reason'] != 'SUCCESS'){
+                                    this.toastr.warning(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
+                                    console.log(data['status']);
+                                }
                             }
 
                             return;
@@ -159,13 +162,14 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                         for (var i = 0; i < error.error.ErrorMessages.length; i++) {
                             this.toastr.error(error.error.ErrorMessages[i].Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
                         }
-                    } else {
+                    } else if (error.error.Message != null) {
                         this.toastr.error(error.error.Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
+                    }else {
+                        this.toastr.error(error.url, 'Status: ' + error.status, { "tapToDismiss": true });
                     }
-                } else if (error.error.Message != null) {
-                    this.toastr.error(error.error.Message, 'Status: ' + error.error.StatusCode, { "tapToDismiss": true });
-                }else {
-                    this.toastr.error(error.url, 'Status: ' + error.status, { "tapToDismiss": true });
+                }
+                else {
+                    this.toastr.error(error.message, 'Status: ' + error.status, { "tapToDismiss": true });
                 }
 
                 console.log(JSON.stringify(request.body));

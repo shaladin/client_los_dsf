@@ -2,40 +2,40 @@
   "isSeq": true,
   "headerList": [
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
       "label": "Shareholder Name",
       "name": "ShareholderName"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
       "label": "Shareholder Type",
       "name": "ShareholderTypeDesc"
     },
     {
-      "type": "sort",
-      "position": "center",
-      "label": "Is Signer",
-      "name": "IsSigner"
+      "type": "label",
+      "position": "right",
+      "label": "Share(%)",
+      "name": "SharePrcnt"
     },
     {
-      "type": "sort",
-      "position": "center",
-      "label": "Is Owner",
-      "name": "IsOwner"
-    },
-    {
-      "type": "sort",
+      "type": "label",
       "position": "center",
       "label": "Is Active",
       "name": "IsActive"
     },
     {
-      "type": "sort",
-      "position": "right",
-      "label": "Share(%)",
-      "name": "SharePrcnt"
+      "type": "label",
+      "position": "center",
+      "label": "Is Owner",
+      "name": "IsOwner"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Is Signer",
+      "name": "IsSigner"
     },
     {
       "type": "label",
@@ -55,9 +55,16 @@
       "property": "ShareholderTypeDesc"
     },
     {
+      "type": "decimal",
+      "position": "right",
+      "property": "SharePrcnt",
+      "precision": "0.6",
+      "IsPrcnt": true
+    },
+    {
       "type": "boolean",
       "position": "center",
-      "property": "IsSigner"
+      "property": "IsActive"
     },
     {
       "type": "boolean",
@@ -67,14 +74,7 @@
     {
       "type": "boolean",
       "position": "center",
-      "property": "IsActive"
-    },
-    {
-      "type": "decimal",
-      "position": "right",
-      "property": "SharePrcnt",
-      "precision": "0.6",
-      "IsPrcnt": true
+      "property": "IsSigner"
     },
     {
       "type": "action",

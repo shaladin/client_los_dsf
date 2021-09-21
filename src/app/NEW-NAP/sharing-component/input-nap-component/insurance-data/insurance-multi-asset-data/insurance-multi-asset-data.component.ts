@@ -55,6 +55,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   AppCollateralId: number = 0;
   appInsObjId: number = 0;
   totalAssetPriceAmt: number;
+  totalAssetInclAccessoryPriceAmt: number = 0;
   InsSeqNo: number = 0;
   defaultInsAssetRegion: string;
   IsMultiAsset: string = "false";
@@ -953,7 +954,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.AssetCategory = this.appCollateralObj.AssetCategoryCode;
     reqObj.AssetCondition = this.appCollateralObj.MrCollateralConditionCode;
-    reqObj.AssetPriceAmount = this.totalAssetPriceAmt;
+    reqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
     reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
@@ -1775,7 +1776,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     if (insuredBy == CommonConstant.InsuredByCustomer) {
       if(isNotFromDB){
         this.InsuranceDataForm.patchValue({
-          CustCvgAmt: this.totalAssetPriceAmt
+          CustCvgAmt: this.totalAssetInclAccessoryPriceAmt
         });
       }
       this.InsuranceDataForm.controls.CustInscoBranchName.setValidators([Validators.required, Validators.maxLength(100)]);
@@ -1812,7 +1813,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     if (insuredBy == CommonConstant.InsuredByCompany) {
       if(isNotFromDB){
         this.InsuranceDataForm.patchValue({
-          CvgAmt: this.totalAssetPriceAmt
+          CvgAmt: this.totalAssetInclAccessoryPriceAmt
         });
       }
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1846,8 +1847,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     if (insuredBy == CommonConstant.InsuredByCustomerCompany) {
       if(isNotFromDB){
         this.InsuranceDataForm.patchValue({
-          CvgAmt: this.totalAssetPriceAmt,
-          CustCvgAmt: this.totalAssetPriceAmt
+          CvgAmt: this.totalAssetInclAccessoryPriceAmt,
+          CustCvgAmt: this.totalAssetInclAccessoryPriceAmt
         });
       }
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1893,29 +1894,20 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.appCollateralAccessoryObjs = response["AppCollateralAccessoryObjs"];
         this.defaultInsAssetRegion = response["DefaultInsAssetRegion"];
 
+        this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
+        this.totalAssetInclAccessoryPriceAmt = this.totalAssetPriceAmt
         if (this.appCollateralAccessoryObjs.length > 0) {
-          var totalAccessoryPriceAmt = 0;
-
           for (let i = 0; i < this.appCollateralAccessoryObjs.length; i++) {
-            totalAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
+            this.totalAssetInclAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
           }
 
-          this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt + totalAccessoryPriceAmt;
-        } else {
-          this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
         }
-          this.InsuranceDataForm.patchValue({
-            CvgAmt: this.totalAssetPriceAmt,
-            CustCvgAmt: this.totalAssetPriceAmt
-          });
-        
 
-        // if (this.appFinDataObj != undefined) {
-        //   this.InsuranceDataForm.patchValue({
-        //     CvgAmt: this.totalAssetPriceAmt,
-        //     CustCvgAmt: this.totalAssetPriceAmt
-        //   });
-        // }
+        this.InsuranceDataForm.patchValue({
+          CvgAmt: this.totalAssetInclAccessoryPriceAmt,
+          CustCvgAmt: this.totalAssetInclAccessoryPriceAmt
+        });
+
         if (this.appAssetObj != undefined) {
           this.AppAssetId = this.appCollateralObj.AppAssetId;
         }

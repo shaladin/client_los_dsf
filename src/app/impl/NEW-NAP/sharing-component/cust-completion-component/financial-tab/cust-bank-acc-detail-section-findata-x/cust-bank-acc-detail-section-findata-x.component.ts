@@ -128,6 +128,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
       this.BankAccObj.AppCustBankAccId = this.BankAccAndStmntObjX.AppCustBankAccId;
       this.BankAccObj.BankCode = this.BankAccAndStmntObjX.BankCode;
       this.BankAccObj.RowVersion = this.BankAccAndStmntObjX.RowVersion;
+      this.ListBankStmntObj = this.BankAccAndStmntObjX.ListAppCustBankAccStmntObjX;
       this.CheckDefault();
     }
     else if (this.pageType == "editStmnt") {
@@ -162,6 +163,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
       this.BankAccObj.AppCustBankAccId = this.BankAccAndStmntObjX.AppCustBankAccId;
       this.BankAccObj.BankCode = this.BankAccAndStmntObjX.BankCode;
       this.BankAccObj.RowVersion = this.BankAccAndStmntObjX.RowVersion;
+      this.ListBankStmntObj = this.BankAccAndStmntObjX.ListAppCustBankAccStmntObjX;
 
       //tidak dipakai
       var formArray = this.CustBankAccForm.get('CustBankStmnts') as FormArray;

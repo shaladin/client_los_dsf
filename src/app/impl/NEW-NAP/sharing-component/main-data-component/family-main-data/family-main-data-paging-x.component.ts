@@ -8,6 +8,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 @Component({
   selector: 'app-family-main-data-paging-x',
   templateUrl: './family-main-data-paging-x.component.html',
@@ -93,18 +94,17 @@ export class FamilyMainDataPagingXComponent implements OnInit {
   }
 
   loadGuarantorListData() {
-    this.custDataObj = new CustDataObj();
-    this.custDataObj.AppId = this.appId;
-    this.custDataObj.IsFamily = true;
-    this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
-      (response : ResListCustMainDataObj) => {
+    let reqByIdObj: GenericObj = new GenericObj();
+    reqByIdObj.Id = this.appId;
+    this.http.post(URLConstant.GetAppCustAndListFamilyByAppId, reqByIdObj).subscribe(
+      (response) => {
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response['ListAppCustObj'];
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.listFamily = this.inputGridObj.resultData.Data;
-        this.critCust = response.ListAppCustObj.map(x => x.CustNo);
+        this.critCust = response[CommonConstant.ReturnObj].map(x => x.CustNo);
       }
     );
   }

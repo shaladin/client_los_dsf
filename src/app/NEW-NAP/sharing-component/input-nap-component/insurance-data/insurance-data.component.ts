@@ -49,6 +49,7 @@ export class InsuranceDataComponent implements OnInit {
   appAssetId: number = 0;
   appCollateralId: number = 0;
   totalAssetPriceAmt: number;
+  totalAssetInclAccessoryPriceAmt: number = 0;
   defaultInsAssetRegion: string;
   IsMultiAsset: string = "false";
 
@@ -657,7 +658,7 @@ export class InsuranceDataComponent implements OnInit {
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.AssetCategory = this.appCollateralObj.AssetCategoryCode;
     reqObj.AssetCondition = this.appCollateralObj.MrCollateralConditionCode;
-    reqObj.AssetPriceAmount = this.totalAssetPriceAmt;
+    reqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
     reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
@@ -1536,22 +1537,18 @@ export class InsuranceDataComponent implements OnInit {
         this.appCollateralAccessoryObjs = response["AppCollateralAccessoryObjs"];
         this.defaultInsAssetRegion = response["DefaultInsAssetRegion"];
 
+        this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
+        this.totalAssetInclAccessoryPriceAmt = this.totalAssetPriceAmt;
         if (this.appCollateralAccessoryObjs.length > 0) {
-          var totalAccessoryPriceAmt = 0;
-
           for (let i = 0; i < this.appCollateralAccessoryObjs.length; i++) {
-            totalAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
+            this.totalAssetInclAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
           }
-
-          this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt + totalAccessoryPriceAmt;
-        } else {
-          this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
         }
 
         if (this.appFinDataObj != undefined) {
           this.InsuranceDataForm.patchValue({
-            CvgAmt: this.totalAssetPriceAmt,
-            CustCvgAmt: this.totalAssetPriceAmt
+            CvgAmt: this.totalAssetInclAccessoryPriceAmt,
+            CustCvgAmt: this.totalAssetInclAccessoryPriceAmt
           });
         }
         if (this.appAssetObj != undefined) {

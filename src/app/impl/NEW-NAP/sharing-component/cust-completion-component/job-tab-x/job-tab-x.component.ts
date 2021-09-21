@@ -29,6 +29,7 @@ import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model
 import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/model/Request/NAP/ThirdParty/ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
@@ -75,6 +76,8 @@ export class JobTabXComponent implements OnInit {
   MrCustModelDescr: string = "Employee";
   IsIntegratorCheckBySystem: string = "0";
   IsUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   IsCustomer: boolean = false;
   IsWellknownCoy: boolean = false;
   BusinessDt: Date;
@@ -333,7 +336,7 @@ export class JobTabXComponent implements OnInit {
       this.toastr.errorMessage(String.Format(ExceptionConstant.EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN + businessDtStr));
       return false;
     }
-    if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
+    if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.IsSvcExist && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
       if (this.IsCustomer) {
         if (!this.IsNeedIntegrator) {
           if (confirm("Do you want to submit this data without Integrator ?")) {
@@ -527,13 +530,12 @@ export class JobTabXComponent implements OnInit {
     this.InputLookupCompanyObj.addCritInput = this.ArrAddCritCoy;
     this.InputLookupCompanyObj.isRequired = true;
     this.InputLookupCompanyObj.isReady = true;
+    this.InputLookupEconomicSectorSlikObj.isRequired = true;
 
     if (CustModelCode == CommonConstant.CustModelNonProfessional || CustModelCode == CommonConstant.CustModelProfessional) {
-      this.InputLookupEconomicSectorSlikObj.isRequired = false;
       this.JobDataForm.controls.CoyName.clearValidators();
     }
     else {
-      this.InputLookupEconomicSectorSlikObj.isRequired = true;
       this.JobDataForm.controls.CoyName.setValidators(Validators.required);
     }
     this.JobDataForm.updateValueAndValidity();
@@ -608,6 +610,7 @@ export class JobTabXComponent implements OnInit {
         }
         this.bizTemplateCode = response["BizTemplateCode"];
         if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0") {
+          this.getDigitalizationSvcType();
           let ReqGetThirdPartyResultHObj = new ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj();
           ReqGetThirdPartyResultHObj.TrxTypeCode = CommonConstant.APP_TRX_TYPE_CODE;
           ReqGetThirdPartyResultHObj.TrxNo = response["AppNo"];
@@ -761,5 +764,26 @@ export class JobTabXComponent implements OnInit {
       MrWellknownCoyCode: event.MasterCode,
       CoyName: event.Descr
     });
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapCust, { TrxNo: this.bizTemplateCode}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+        var svcType = listSvcType.find(x => x == refSvcType);
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+    }
   }
 }

@@ -18,6 +18,7 @@ import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import {MouCustListedCustFctrXComponent} from 'app/impl/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr-x.component';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-mou-detail-factoring-x',
@@ -212,9 +213,6 @@ export class MouDetailFactoringXComponent implements OnInit {
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].enable();
       this.MouDetailFactoringForm.controls["TopDays"].setValidators([Validators.required, Validators.min(1)]);
-      this.MouDetailFactoringForm.patchValue({
-        SingleInstCalcMthd: this.singleInstCalcMthdList[0].Key
-      });
     }
     else if(value == CommonConstant.MULTIPLE_INST_TYPE){
       this.IsSingleIns = false;
@@ -230,8 +228,8 @@ export class MouDetailFactoringXComponent implements OnInit {
   }
 
   Save(){
-    var formData = this.MouDetailFactoringForm.getRawValue();
-    var url;
+    const formData = this.MouDetailFactoringForm.getRawValue();
+    let url;
 
     if (this.isRecourse) {
       formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
@@ -272,10 +270,10 @@ export class MouDetailFactoringXComponent implements OnInit {
     }
 
     if(this.mode == "add"){
-      url = URLConstant.AddMouCustFctr;
+      url = URLConstantX.AddMouCustFctrX;
     }
     else{
-      url = URLConstant.EditMouCustFctr;
+      url = URLConstantX.EditMouCustFctrX;
     }
 
     this.httpClient.post(url, formData).subscribe(
@@ -429,6 +427,11 @@ export class MouDetailFactoringXComponent implements OnInit {
       obj.CustName = response["CustName"]
       obj.MrCustTypeCode = response["MrCustTypeCode"]
 
+      if(!this.isRecourse && this.listedCusts.length > 0)
+      {
+        this.listedCusts = new Array<MouCustListedCustFctrObj>();
+      }
+      
       this.listedCusts.push(obj)
     });
   }

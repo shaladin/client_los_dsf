@@ -78,7 +78,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService, 
+    private spinner: NgxSpinnerService,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService,
     private http: HttpClient
@@ -87,13 +87,11 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     this.doAssetList = new Array();
     this.isFinal = false;
     this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null) {
-        this.appId = params['AppId'];
-      }
-      if (params['AgrmntId'] != null) {
-        this.agrmntId = params['AgrmntId'];
-      }
-      if (params['TaskListId'] != null) {
+      this.appId = params['AppId'];
+      this.agrmntId = params['AgrmntId'];
+      if (params['WfTaskListId'] != null) {
+        this.wfTaskListId = params['WfTaskListId'];
+      }else{
         this.wfTaskListId = params['TaskListId'];
       }
     });
@@ -181,14 +179,14 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
-  
+
       this.dmsAppObj.User = currentUserContext.UserName;
       this.dmsAppObj.Role = currentUserContext.RoleCode;
       this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
-  
+
       var agrObj = { Id: this.agrmntId };
       var appObj = { Id: this.appId };
-  
+
       let getAgr = await this.httpClient.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
       let getAppCust = await this.httpClient.post(URLConstant.GetAppCustByAppId, appObj)
       let getApp = await this.httpClient.post(URLConstant.GetAppById, appObj)
@@ -198,7 +196,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           this.custNo = response[1]['CustNo'];
           this.appNo = response[2]['AppNo'];
           let mouId = response[2]['MouCustId'];
-  
+
           if (this.custNo != null && this.custNo != '') {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
             this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
@@ -208,9 +206,9 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           }
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
-  
+
           this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-  
+
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           if (mouId != null && mouId != "") {
             this.httpClient.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
@@ -387,7 +385,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       // var tcFormData = this.AppTcForm.value.TCList;
       var tcFormData = { "ListAppTcObj": [...this.AppTcForm.getRawValue().TCList] };
       var agrmntObj = {
-        AgrmntId: this.agrmntId, 
+        AgrmntId: this.agrmntId,
         AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
         EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
       };
@@ -428,7 +426,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         // var tcFormData = this.AppTcForm.value.TCList;
         var tcFormData = { "ListAppTcObj": [...this.AppTcForm.getRawValue().TCList] };
         var agrmntObj = {
-          AgrmntId: this.agrmntId, 
+          AgrmntId: this.agrmntId,
           AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
           EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
         };

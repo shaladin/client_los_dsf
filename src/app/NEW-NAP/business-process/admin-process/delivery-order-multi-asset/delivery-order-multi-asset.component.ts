@@ -57,7 +57,7 @@ export class DeliveryOrderMultiAssetComponent implements OnInit {
     else{
       var critObj = new CriteriaObj();
       critObj.restriction = AdInsConstant.RestrictionEq;
-      critObj.propName = 'WF.ACT_CODE';
+      critObj.propName = 'DOD.ACT_CODE';
       critObj.value = "DO_" + this.bizTemplateCode;
   
       this.inputPagingObj.addCritInput.push(critObj);
@@ -65,7 +65,7 @@ export class DeliveryOrderMultiAssetComponent implements OnInit {
 
     var critBizTemplate = new CriteriaObj();
     critBizTemplate.restriction = AdInsConstant.RestrictionEq;
-    critBizTemplate.propName = 'AP.BIZ_TEMPLATE_CODE';
+    critBizTemplate.propName = 'DOD.BIZ_TEMPLATE_CODE';
     critBizTemplate.value = this.bizTemplateCode;
 
     this.inputPagingObj.addCritInput.push(critBizTemplate);

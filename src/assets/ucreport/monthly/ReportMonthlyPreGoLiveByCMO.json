@@ -1,0 +1,75 @@
+{
+  "title": "Report Monthly Pre Go Live By CMO",
+  "reportName": "Report Monthly Pre Go Live By CMO",
+  "reportTemplateCode": "MONTHLY_PRE_GO_LIVE_BY_CMO",
+  "component": [
+    {
+      "type": "dropdown",
+      "label": "Office Name",
+      "name": "OfficeCode",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "items": [],
+      "itemsUrl": [],
+      "isEvent": "true",
+      "affectedFilter": [
+        "ProdOfferingCode",
+        "EmpNo"
+      ],
+      "paramAssignment": 1
+    },
+    {
+      "type": "dropdown",
+      "label": "Year",
+      "name": "Year",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "one",
+      "url": "",
+      "environment": "FOU",
+      "path": "/ReportPeriod/GetListYearByGeneralSetting",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "paramAssignment": 0
+    },
+    {
+      "type": "dropdown",
+      "label": "Marketing Name",
+      "name": "EmpNo",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment":"FOU",
+      "path": "/RefEmp/GetRefEmpForPaging",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "paramAssignment": 1
+    },
+    {
+      "type": "dropdown",
+      "label": "Month",
+      "name": "Month",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "one",
+      "url": "",
+      "environment": "FOU",
+      "path": "/ReportPeriod/GetListMonthByGeneralSetting",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "paramAssignment": 0
+    }
+  ],
+  "exportTypeList": []
+}

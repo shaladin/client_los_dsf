@@ -13,10 +13,11 @@ import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { ReqCopyAssetObj } from 'app/shared/model/Request/AppAsset/ReqCopyAssetObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-asset-data-paging-x',
@@ -24,8 +25,8 @@ import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 })
 export class AssetDataPagingXComponent implements OnInit {
   @Input() AppId: number;
+  @Input() BizTemplateCode: string = "-";
   @Input() showCancel: boolean = true;
-  @Input() BizTemplateCode: string;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -47,6 +48,8 @@ export class AssetDataPagingXComponent implements OnInit {
   generalSettingObj: GenericListByCodeObj;
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsSvcExist: boolean = false;
   LastRequestedDate: any;
   IsCalledIntegrator: boolean = false;
   thirdPartyRsltHId: any;
@@ -64,7 +67,7 @@ export class AssetDataPagingXComponent implements OnInit {
   }
 
   async GetThirdPartyResultH() {
-    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
       this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {
           this.appObj = response;
@@ -72,7 +75,7 @@ export class AssetDataPagingXComponent implements OnInit {
             this.mouCustId = response['MouCustId'];
           }
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
-            (response : ResThirdPartyRsltHObj) => {
+            (response: ResThirdPartyRsltHObj) => {
               if (response.ThirdPartyRsltHId != null) {
                 this.LastRequestedDate = response.ReqDt;
                 this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
@@ -125,8 +128,8 @@ export class AssetDataPagingXComponent implements OnInit {
 
         var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined){
+
+        if (gsNeedCheckBySystem != undefined) {
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
@@ -134,11 +137,10 @@ export class AssetDataPagingXComponent implements OnInit {
 
         if (gsUseDigitalization != undefined) {
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
+          this.getDigitalizationSvcType();
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
-
-        this.GetThirdPartyResultH();
       }
     );
   }
@@ -212,7 +214,7 @@ export class AssetDataPagingXComponent implements OnInit {
     else {
       let splitted = this.selectedAsset.split(";");
 
-      if(splitted.length == 1){
+      if (splitted.length == 1) {
         this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
         return;
       }
@@ -265,22 +267,6 @@ export class AssetDataPagingXComponent implements OnInit {
     );
   }
 
-  SerialNoList: Array<SerialNoObj> = new Array();
-  GetListAssetSerialNo() {
-    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-      (response: AppObj) => {
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion }).toPromise().then(
-          (response2: ProdOfferingDObj) => {
-            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response2.CompntValue }).subscribe(
-              (response3: GenericListObj) => {
-                this.SerialNoList = response3[CommonConstant.ReturnObj];
-              })
-          }
-        )
-      }
-    );
-  }
-  
   ngOnInit() {
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
@@ -312,6 +298,22 @@ export class AssetDataPagingXComponent implements OnInit {
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       });
     this.GetGS();
+  }
+
+  SerialNoList: Array<SerialNoObj> = new Array();
+  GetListAssetSerialNo() {
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response: AppObj) => {
+        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion }).toPromise().then(
+          (response2: ProdOfferingDObj) => {
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response2.CompntValue }).subscribe(
+              (response3: GenericListObj) => {
+                this.SerialNoList = response3[CommonConstant.ReturnObj];
+              })
+          }
+        )
+      }
+    );
   }
 
   getGridCollateral() {
@@ -364,16 +366,16 @@ export class AssetDataPagingXComponent implements OnInit {
       return;
     }
     else {
-      for(let i=0;i< this.gridAssetDataObj.resultData.Data.length ;i++){
-        if(this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == ""  || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null){
-          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i+1) + ')');
+      for (let i = 0; i < this.gridAssetDataObj.resultData.Data.length; i++) {
+        if (this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == "" || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null) {
+          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i + 1) + ')');
           return;
         }
       }
     }
-    if (this.checkValidityAssetUsed()) return;
-      
-    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+    // if (this.checkValidityAssetUsed()) return;
+
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
 
       if (!this.IsCalledIntegrator) {
         if (confirm("Submit without Integrator ? ")) {
@@ -391,6 +393,29 @@ export class AssetDataPagingXComponent implements OnInit {
     }
     else {
       this.outputValue.emit({ mode: 'submit' });
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.BizTemplateCode}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+      var svcType = listSvcType.find(x => x == refSvcType);
+
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+      this.GetThirdPartyResultH();
     }
   }
 }

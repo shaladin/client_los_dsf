@@ -61,6 +61,8 @@ import { PurchaseOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process
 import { AgrmntActivationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component';
 import { InsuranceOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-paging/insurance-order-paging-x/insurance-order-paging-x.component';
 import { InsuranceOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component';
+import { DocumentViewXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/document-printing/document-view/document-view-x.component';
+
 
 const routes: Routes = [
   {
@@ -288,6 +290,13 @@ const routes: Routes = [
         component: DocumentViewComponent,
         data: {
           title: 'Document Printing View'
+        }
+      },
+      {
+        path: PathConstantX.NAP_DOC_PRINT_VIEW_X,
+        component: DocumentViewXComponent,
+        data: {
+          title: 'Document Printing View X'
         }
       },
       {

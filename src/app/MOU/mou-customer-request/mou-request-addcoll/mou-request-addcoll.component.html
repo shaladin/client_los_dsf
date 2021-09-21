@@ -64,7 +64,7 @@
       </tbody>
     </table>
   </div>
-  <div *ngIf="isUseDigitalization == '1' && isNeedCheckBySystem == '0' && type == 'Paging'">
+  <div *ngIf="isUseDigitalization == '1' && isNeedCheckBySystem == '0' && IsSvcExist && type == 'Paging'">
     <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
     </lib-ucSubsection>
     <div [id]="fraudChecking">

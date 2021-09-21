@@ -13,6 +13,12 @@
           },
           {
             "type": "callback",
+            "label": "Mou No",
+            "key": "mou",
+            "property": "MouCustNo"
+          },
+          {
+            "type": "callback",
             "label": "Customer No",
             "key": "customer",
             "property": "CustNo"
@@ -32,6 +38,11 @@
             "type": "text",
             "label": "Office Name",
             "property": "OfficeName"
+          },
+          {
+            "type": "text",
+            "label": "Cessie Status",
+            "property": "CessieStatus"
           }
         ],
         "querystring": {

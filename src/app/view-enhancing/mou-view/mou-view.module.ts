@@ -38,6 +38,7 @@ import { MouViewXComponent } from 'app/impl/view-enhancing/mou-view/mou-view-x.c
 import { MouViewAddcollXComponent } from 'app/impl/view-enhancing/mou-view/mou-view-addcoll/mou-view-addcoll-x.component';
 import { MouViewDetailXComponent } from "app/impl/view-enhancing/mou-view/mou-view-detail/mou-view-detail-x.component";
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
+import { MouViewChangeMouHistoryXComponent } from "app/impl/view-enhancing/mou-view/mou-view-change-mou-history/mou-view-change-mou-history-x/mou-view-change-mou-history-x.component";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -76,6 +77,7 @@ import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou
         MouViewTcComponent,
         MouViewSrvyTaskComponent,
         MouViewChangeMouHistoryComponent,
+        MouViewChangeMouHistoryXComponent,
         MouViewFreezeUnfreezeHistoryComponent,
         MouViewApprovalRecommendationComponent,
         MouViewXComponent,

@@ -1,0 +1,59 @@
+{
+    "title": "",
+    "subsection": [{
+        "subSectionId": "AgrDataId",
+        "subSectionTitle": "Agreement",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [{
+            "type": "text",
+            "label": "MO Name",
+            "property": "SalesOfficer"
+          },
+          {
+            "type": "date",
+            "label": "Agreement Date",
+            "property": "AgrmntDt"
+          },
+          {
+            "type": "text",
+            "label": "Payment Frequency",
+            "property": "PayFreq"
+          },
+          {
+            "type": "date",
+            "label": "Effective Date",
+            "property": "EffectiveDt"
+          },
+          {
+            "type": "text",
+            "label": "Installment Type",
+            "property": "InstallmentType"
+          },
+          {
+            "type": "date",
+            "label": "Pre Go Live Date",
+            "property": "PreGoLiveDt"
+          },
+          {
+            "type": "text",
+            "label": "Way of Payment",
+            "property": "Wop"
+          },
+          {
+            "type": "text",
+            "label": "Pre Go Live Notes",
+            "property": "PreGoLiveNotes"
+          },
+          {
+            "type": "text",
+            "label": "End Date For Golive",
+            "property": "EndDateGoLive"
+          }
+        ],
+        "querystring": {
+          "name": "viewAgrmntDataAfterPreGoLiveDlfnX"
+        }
+      }
+    ]
+  }
+  

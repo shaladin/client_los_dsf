@@ -9,6 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ResAppCustAddrForViewObj, ResAppCustCompanyLegalDocForViewObj, ResAppCustCompanyMgmntShrholderForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataCompanyForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
 import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
 import { DatePipe } from '@angular/common';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-company',
@@ -51,6 +52,7 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustCompanyMgmntShrholderObjs: Array<ResAppCustCompanyMgmntShrholderForViewObj> = new Array<ResAppCustCompanyMgmntShrholderForViewObj>();
   appCustCompanyLegalDocObjs: Array<ResAppCustCompanyLegalDocForViewObj> = new Array<ResAppCustCompanyLegalDocForViewObj>();
+  readonly ShrTypePublic: string = CommonConstant.CustTypePublic;
 
   constructor(private http: HttpClient, private modalService: NgbModal) { }
 
@@ -96,6 +98,8 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
         this.ListCustCoyFinData = response.ListAppCustCompanyFinData;
         this.responseCustAttr = response.ListCustFinDataAttrContent;
 
+        this.loadShareholderListData(this.appCustObj.AppCustId);
+
         if(this.appCustObj.IsFamily) this.customerTitle = 'Family';
         else if(this.appCustObj.IsShareholder) this.customerTitle = 'Shareholder';
         else if(this.appCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
@@ -107,6 +111,18 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
         }
     });
 
+  }
+
+  loadShareholderListData(AppCustId) {
+    this.http.post<AppCustCompanyObj>(URLConstant.GetAppCustCompanyByAppCustId, { Id: AppCustId }).subscribe(
+      (response) => {
+        this.http.post(URLConstant.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).subscribe(
+          (response) => {
+            this.appCustCompanyMgmntShrholderObjs = response[CommonConstant.ReturnObj];
+          }
+        );
+      }
+    );
   }
 
   viewDetailShareholderHandler(AppCustId, MrCustTypeCode) {

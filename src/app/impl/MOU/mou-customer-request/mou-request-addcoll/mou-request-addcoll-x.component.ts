@@ -40,6 +40,7 @@ import { MouCustCollateralStatXObj } from 'app/impl/shared/model/MouCustCollater
 import { RefAttrGenerateObj } from 'app/shared/model/RefAttrGenerate.Model';
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from 'app/shared/model/MouCustCollateralAttrObj.Model';
 import { RefAttrGenerate } from 'app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll-x',
@@ -62,6 +63,8 @@ export class MouRequestAddcollXComponent implements OnInit {
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   thirdPartyRsltHId: number = 0;
   controlNameIdNo: string = 'OwnerIdNo';
   resultPattern: Array<KeyValueObj>;
@@ -496,6 +499,13 @@ export class MouRequestAddcollXComponent implements OnInit {
       addCritCustNo.restriction = AdInsConstant.RestrictionEq;
       addCritCustNo.value = this.custNo;
       this.criteriaList.push(addCritCustNo);
+
+      const addMouActive = new CriteriaObj();
+      addMouActive.DataType = 'text';
+      addMouActive.propName = 'MC.MOU_STAT';
+      addMouActive.restriction = AdInsConstant.RestrictionEq;
+      addMouActive.value = CommonConstant.STAT_CODE_ACT;
+      this.criteriaList.push(addMouActive);
     }
 
     this.inputLookupObj.nameSelect = "";
@@ -585,8 +595,24 @@ export class MouRequestAddcollXComponent implements OnInit {
   }
 
   MouCustCollateralId: number = 0;
-  open(pageType) {
-    if (pageType == 'AddExisting' && this.listCollateralData.length < 1) {
+  isAddExistingOK: boolean = true;
+  async open(pageType) {
+    this.isAddExistingOK = true;
+    if (pageType == 'AddExisting') {
+      await this.http.post(URLConstant.GetListMouCustCollateralActiveByCustNo, { TrxNo: this.custNo }).toPromise().then(
+        (response) => {
+          console.log(response);
+          if(response["ReturnObject"].length < 1){
+            this.isAddExistingOK = false;
+          }
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    if(!this.isAddExistingOK){
       this.toastr.warningMessage(ExceptionConstant.NO_EXISTING_COLL);
       return;
     }
@@ -1456,7 +1482,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       }
     }
 
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       if (!this.IsCalledIntegrator) {
         if (confirm("Continue without integrator ?")) {
           this.UpdatePlafondAmt(sumCollateralValue);
@@ -1518,6 +1544,7 @@ export class MouRequestAddcollXComponent implements OnInit {
         }
 
         if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+          this.getDigitalizationSvcType();
           this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
           this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
           this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
@@ -1575,15 +1602,28 @@ export class MouRequestAddcollXComponent implements OnInit {
         let MouCustCollateralDocs = new Array();
         MouCustCollateralDocs = response["MouCustCollateralDocs"];
         if (MouCustCollateralDocs["length"] > 0) {
-
-          for (let i = 0; i < MouCustCollateralDocs.length; i++) {
-            this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
-              DocNo: MouCustCollateralDocs[i].DocNo,
-              DocNotes: MouCustCollateralDocs[i].DocNotes,
-              ACDExpiredDt: formatDate(MouCustCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: MouCustCollateralDocs[i].IsReceived
-            })
+          console.log("meow meow")
+          //region sementara gini dulu, kalo core ada perubahan, ambil core
+          for (let i = 0; i < this.AddCollForm.controls.ListDoc["controls"].length; i++) {
+            let tempDoc = MouCustCollateralDocs.find(x=>x.DocCode === this.AddCollForm.controls.ListDoc["controls"][i]["controls"]["DocCode"].value)
+            if(tempDoc != null){
+              this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
+                DocNo: tempDoc.DocNo,
+                DocNotes: tempDoc.DocNotes,
+                ACDExpiredDt: formatDate(tempDoc.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+                IsReceived: tempDoc.IsReceived
+              })
+            }
           }
+          //end region
+          // for (let i = 0; i < MouCustCollateralDocs.length; i++) {
+          //   this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
+          //     DocNo: MouCustCollateralDocs[i].DocNo,
+          //     DocNotes: MouCustCollateralDocs[i].DocNotes,
+          //     ACDExpiredDt: formatDate(MouCustCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+          //     IsReceived: MouCustCollateralDocs[i].IsReceived
+          //   })
+          // }
         } else {
           if (this.type == 'AddExisting') {
             let listDocExisting = this.AddCollForm.get('ListDoc') as FormArray;
@@ -1620,6 +1660,26 @@ export class MouRequestAddcollXComponent implements OnInit {
     }
   }
 
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+        var svcType = listSvcType.find(x => x == refSvcType);
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+    }
+  }
   ChangeCollStat() {
     if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       this.AddCollForm.controls.CollateralReceivedDt.enable();
@@ -1655,4 +1715,6 @@ export class MouRequestAddcollXComponent implements OnInit {
     }
     temp.updateValueAndValidity();
   }
+  
+  
 }

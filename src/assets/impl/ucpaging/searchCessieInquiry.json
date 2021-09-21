@@ -94,7 +94,8 @@
             "property": "CustName"
         },
         {
-            "type": "text",
+            "type": "callback",
+            "key": "ViewProdOffering",
             "position": "left",
             "property": "ProdOfferingName"
         },

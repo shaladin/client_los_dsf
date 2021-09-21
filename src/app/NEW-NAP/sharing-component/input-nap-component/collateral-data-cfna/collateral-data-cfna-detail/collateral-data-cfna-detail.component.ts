@@ -33,6 +33,7 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
@@ -130,6 +131,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   generalSettingObj: GenericListByCodeObj;
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsSvcExist: boolean = false;
   currentChassisNo: string = "";
   LastRequestedDate: string = "";
   indexChassis: number = 0  ;
@@ -154,13 +157,13 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
     this.GetLegalAddr();
     this.initUcLookup();
+    await this.GetGS();
     await this.initDropdownList();
     await this.getAppData();
 
     if (this.mode == "edit") {
       await this.getAppCollData(0, this.AppCollateralId, false, false, new Object());
     }
-    await this.GetGS();
 
     // if (this.isSingleAsset) {
     //   this.getAppCollData(this.AppId, 0);
@@ -813,7 +816,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             }
           }
         }
-        if (this.IntegratorCheckBySystemGsValue == "0") {
+        if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
           this.GetThirdPartyResultH();
         }
         this.AssetTypeCode = AssetTypeCode;
@@ -871,6 +874,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
         if(gsUseDigitalization != undefined){
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
+          this.getDigitalizationSvcType();
         }else{
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
@@ -1101,7 +1105,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
-    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
       if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {  
         if (confirm("Chassis No not filled, submit data without Integrator ?")) {
             this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
@@ -1229,6 +1233,28 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   setCollateralPercentage() {
     this.appCollateralDataObj.AppCollateralObj.CollateralPrcnt = this.AddCollForm.controls["CollateralPrcnt"].value;
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: CommonConstant.CFNA}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+      var svcType = listSvcType.find(x => x == refSvcType);
+
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+    }
   }
 
 }

@@ -172,6 +172,20 @@ export class AgrmntActivationDetailXComponent implements OnInit {
       return;
     }
     if (this.AgrmntActForm.valid) {
+      if(this.isOverwrite){
+        let checkAgrmntNo = this.AgrmntNo.split("/");
+        if(checkAgrmntNo.length < 3){
+          this.toastr.warningMessage("Format for Agreement No at Least has 2 Separators ' / '");
+          return;
+        }
+        else{
+          let checkEmptySeparators = checkAgrmntNo.find(x => x == "");
+          if(checkEmptySeparators != null){
+            this.toastr.warningMessage("Format for Agreement No can't have An Empty String Between Separators");
+            return;
+          }
+        }
+      }
       let Obj = {
         CreateDt: this.CreateDt,
         ListAppAssetId: this.listSelectedId,

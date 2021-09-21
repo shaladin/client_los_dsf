@@ -12,6 +12,8 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { ShareholderListingObj } from 'app/shared/model/AppCust/Shareholder/ShareholderListingObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 
 @Component({
   selector: 'app-mngmnt-shrhldr-main-data-paging-x',
@@ -32,6 +34,8 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
   inputMode: string = "ADD";
   custDataObj: CustDataObj;
   custMainDataMode: string;
+  critCustCompany: Array<string> = new Array<string>();
+  critCust: Array<string> = new Array<string>();
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -41,6 +45,7 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridMgmntShrholderMainData.json";
     this.custMainDataMode = CommonConstant.CustMainDataModeMgmntShrholder;
     await this.loadMgmntShrholderListData();
+    await this.getCustMainData();
   }
 
   add() {
@@ -108,6 +113,13 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
       this.MrCustTypeCode = ev.RowObj.ShareholderType;
       this.AppCustCompanyMgmntShrholderId = ev.RowObj.AppCustCompanyMgmntShrholderId;
 
+      if(ev.RowObj.ShareholderType == CommonConstant.CustTypeCompany){
+        this.critCustCompany = this.critCustCompany.filter((value) => value != ev.RowObj.CustNo);
+      }
+
+      if(ev.RowObj.ShareholderType == CommonConstant.CustTypePersonal){
+        this.critCust = this.critCust.filter((value) => value != ev.RowObj.CustNo);
+      }
       if(ev.RowObj.IsActive)
       {
         this.tempTotalSharePrct -= ev.RowObj.SharePrcnt;
@@ -143,9 +155,9 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
   listCustNoToExclude: Array<string> = new Array();
   async loadMgmntShrholderListData() {
     await this.http.post(URLConstant.GetAppCustCompanyMainDataByAppId, { Id: this.appId }).toPromise().then(
-      (response: AppCustCompanyObj) => {
+      async (response: AppCustCompanyObj) => {
         this.ParentAppCustCompanyId = response.AppCustCompanyId;
-        this.http.post(URLConstant.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).subscribe(
+        await this.http.post(URLConstant.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).toPromise().then(
           (response2: GenericListObj) => {
             this.inputGridObj.resultData = {
               Data: ""
@@ -175,16 +187,31 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
             this.tempIsSigner = tempIsSigner;
             this.inputGridObj.resultData["Data"] = new Array();
             this.inputGridObj.resultData.Data = response2.ReturnObject;
+            this.critCustCompany = response2.ReturnObject.filter(x => x.ShareholderType == CommonConstant.CustTypeCompany).map(x => x.CustNo);
+            this.critCust = response2.ReturnObject.filter(x => x.ShareholderType == CommonConstant.CustTypePersonal).map(x => x.CustNo);
           }
         )
       }
     );
   }
 
-  close() {
-    this.loadMgmntShrholderListData();
-    this.isDetail = false;
+  async getCustMainData() {
+    let reqByIdObj: GenericObj = new GenericObj();
+    reqByIdObj.Id = this.appId;
+    await this.http.post(URLConstant.GetAppCustMainDataByAppId, reqByIdObj).toPromise().then(
+      (response: ResponseAppCustMainDataObj) => {
+        this.critCustCompany.push(response.AppCustObj.CustNo);
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-
+  async close() {
+    await this.loadMgmntShrholderListData();
+    await this.getCustMainData();
+    this.isDetail = false;
+  }
 }

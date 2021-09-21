@@ -86,7 +86,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(4)]],
     OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
-    OwnerIdNo: ['', Validators.maxLength(50)],
+    OwnerIdNo: ['', [Validators.required, Validators.maxLength(50)]],
     MrOwnerRelationshipCode: ['', Validators.maxLength(50)],
     OwnerAddr: [''],
     OwnerAreaCode1: ['', Validators.maxLength(50)],
@@ -480,7 +480,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   async getAllCollateralData(isInit: boolean = false) {
     if (this.AppCollateralId != 0) {
       await this.http.post(URLConstant.GetAppCollateralByAppCollateralId, { Id: this.AppCollateralId }).toPromise().then(
-        (response: AppCollateralObj) => {
+        async (response: AppCollateralObj) => {
           this.appCollateral = response;
           if (this.appCollateral != undefined && this.appCollateral != null) {
             this.CollateralDataForm.patchValue({
@@ -513,7 +513,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
             this.AgrmntId = this.appCollateral.AgrmntId;
             this.assetMasterObj.FullAssetCode = this.appCollateral.FullAssetCode;
             this.GetAssetMaster(this.assetMasterObj);
-            this.AssetTypeChanged(this.appCollateral.AssetTypeCode, isInit);
+            await this.AssetTypeChanged(this.appCollateral.AssetTypeCode, isInit);
           }
 
         });
@@ -626,13 +626,13 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
   async bindAssetTypeObj() {
     await this.http.post(URLConstant.GetAssetTypeKeyValueCode, {}).toPromise().then(
-      (response) => {
+      async (response) => {
         this.AssetTypeDllObj = response[CommonConstant.ReturnObj];
         if (this.AssetTypeDllObj.length > 0) {
           this.CollateralDataForm.patchValue({
             AssetTypeCode: this.AssetTypeDllObj[0].Key
           });
-          this.AssetTypeChanged(this.AssetTypeDllObj[0].Key);
+          await this.AssetTypeChanged(this.AssetTypeDllObj[0].Key);
         }
       }
     ).catch(
@@ -740,17 +740,17 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.getRefAssetDocList(isInit);
 
     if (this.AssetTypeObj.SerialNo1Label != "" && this.AssetTypeObj.SerialNo1Label != null) {
-      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == "USED") {
+      if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == CommonConstant.AssetConditionUsed) {
         this.CollateralDataForm.controls.SerialNo1.setValidators([Validators.required, Validators.maxLength(50)]);
         this.CollateralDataForm.controls.SerialNo1.updateValueAndValidity();
       }
       else {
-        this.CollateralDataForm.controls.SerialNo1.clearValidators;
+        this.CollateralDataForm.controls.SerialNo1.clearValidators();
         this.CollateralDataForm.controls.SerialNo1.updateValueAndValidity();
       }
     }
     else {
-      this.CollateralDataForm.controls.SerialNo1.clearValidators;
+      this.CollateralDataForm.controls.SerialNo1.clearValidators();
       this.CollateralDataForm.controls.SerialNo1.updateValueAndValidity();
     }
 
@@ -766,7 +766,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     }
     else {
       this.CollateralDataForm.controls.SerialNo2.clearValidators();
-      this.CollateralDataForm.controls.SerialNo3.updateValueAndValidity();
+      this.CollateralDataForm.controls.SerialNo2.updateValueAndValidity();
     }
     if (this.AssetTypeObj.SerialNo3Label != "" && this.AssetTypeObj.SerialNo3Label != null) {
       if (this.CollateralDataForm.controls.MrCollateralConditionCode.value == CommonConstant.AssetConditionUsed) {

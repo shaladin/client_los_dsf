@@ -187,8 +187,8 @@ export class ApplicationDataXComponent implements OnInit {
     ApplicationNotes: [''],
     CopyFromMailing: [''],
     CustBankAcc: [''],
-    DpSrcPaymentCode: [''],
-    InstSrcPaymentCode: [''],
+    DpSrcPaymentCode: ['', Validators.required],
+    InstSrcPaymentCode: ['', Validators.required],
     AppAttrContentObjs: this.fb.array([]),
     BpkbStatCode: ['', Validators.required],
     OrdStatCode: [''],
@@ -232,7 +232,7 @@ export class ApplicationDataXComponent implements OnInit {
       this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
     }
 
-    this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
+    this.defaultSlikSecEcoCode = CommonConstantX.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
 
@@ -813,7 +813,7 @@ export class ApplicationDataXComponent implements OnInit {
 
   setLookupCommodityData(ev) {
     this.NapAppModelForm.patchValue({
-      CommodityCode: ev.MasterCode
+      CommodityCode: ev.RefSectorEconomySlikCode
     });
   }
 
@@ -829,10 +829,10 @@ export class ApplicationDataXComponent implements OnInit {
     this.inputLookupObj.addCritInput = this.arrAddCrit;
 
     this.inputLookupEconomicSectorObj = new InputLookupObj();
-    this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    this.inputLookupEconomicSectorObj.urlJson = './assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json';
+    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
+    this.inputLookupEconomicSectorObj.pagingJson = './assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json';
+    this.inputLookupEconomicSectorObj.genericJson = './assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json';
 
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       //lookup Agreement Parent
@@ -853,19 +853,13 @@ export class ApplicationDataXComponent implements OnInit {
 
     if (this.resultResponse["MrSlikSecEcoDescr"] != null && this.resultResponse["MrSlikSecEcoDescr"] != "") {
       this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
-      this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
+      this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: this.resultResponse["MrSlikSecEcoDescr"] };
     } else {
-      let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
-      reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
-      reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
-      this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
-        (response: KeyValueObj) => {
-          this.slikSecDescr = response.Value;
-          this.inputLookupEconomicSectorObj.nameSelect = response.Value;
-          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
-          this.NapAppModelForm.patchValue({
-            MrSlikSecEcoCode: this.defaultSlikSecEcoCode
-          });
+      this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, { Code: this.defaultSlikSecEcoCode }).subscribe(
+        (response) => {
+          this.slikSecDescr = response['SectorEconomySlikName'];
+          this.inputLookupEconomicSectorObj.nameSelect = response['SectorEconomySlikName'];
+          this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: response['SectorEconomySlikName'] };
         });
     }
 

@@ -56,11 +56,11 @@ export class NapDetailFormXComponent implements OnInit {
     "REF": 1,
     "APP": 2,
     "COLL": 3,
-    "INS": 4,
-    "LFI": 5,
-    "FIN": 6,
-    "TC": 7,
-    "UPL_DOC": 8,
+    // "INS": 4,
+    "LFI": 4,
+    "FIN": 5,
+    "TC": 6,
+    "UPL_DOC": 7,
   };
 
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
@@ -82,7 +82,7 @@ export class NapDetailFormXComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService,
     private spinner: NgxSpinnerService,
-    private componentFactoryResolver: ComponentFactoryResolver, 
+    private componentFactoryResolver: ComponentFactoryResolver,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
@@ -132,6 +132,10 @@ export class NapDetailFormXComponent implements OnInit {
         await this.initDms();
       }
       this.ChangeStepper();
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepNapd) {
+        this.NapObj.AppCurrStep = CommonConstant.AppStepRef;
+        this.UpdateAppStep(this.NapObj.AppCurrStep);
+      }
       this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
       this.ChooseStep(this.AppStepIndex);
     }
@@ -163,7 +167,7 @@ export class NapDetailFormXComponent implements OnInit {
             trxNo = response['ApplicantNo'];
           }
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
-  
+
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
@@ -201,11 +205,11 @@ export class NapDetailFormXComponent implements OnInit {
         "REF": 1,
         "APP": 2,
         "COLL": 3,
-        "INS": 4,
-        "LFI": 5,
-        "FIN": 6,
-        "TC": 7,
-        "UPL_DOC": 8,
+        // "INS": 4,
+        "LFI": 4,
+        "FIN": 5,
+        "TC": 6,
+        "UPL_DOC": 7,
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -220,11 +224,11 @@ export class NapDetailFormXComponent implements OnInit {
         "REF": 1,
         "APP": 2,
         "COLL": 3,
-        "INS": 4,
-        "LFI": 5,
-        "FIN": 5,
-        "TC": 6,
-        "UPL_DOC": 7,
+        // "INS": 4,
+        "LFI": 4,
+        "FIN": 4,
+        "TC": 5,
+        "UPL_DOC": 6,
       };
     }
   }
@@ -271,34 +275,14 @@ export class NapDetailFormXComponent implements OnInit {
 
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
-    switch (AppStep) {
-      case CommonConstant.AppStepRef:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
-        break;
-      case CommonConstant.AppStepApp:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
-        break;
-      case CommonConstant.AppStepColl:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
-        break;
-      case CommonConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
-        break;
-      case CommonConstant.AppStepLIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
-        break;
-      case CommonConstant.AppStepFin:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
-        break;
-      case CommonConstant.AppStepTC:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
-        break;
-      case CommonConstant.AppStepUplDoc:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
-        break;
-      default:
-        break;
+    if (this.ReturnHandlingHId == 0) {
+      this.UpdateAppStep(AppStep);
     }
+    const step = this.AppStep[AppStep];
+    if(step!=undefined){
+      this.AppStepIndex = step;
+    }
+
     if (AppStep == CommonConstant.AppStepUplDoc)
       this.IsLastStep = true;
     else
@@ -306,11 +290,6 @@ export class NapDetailFormXComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId > 0) {
-
-    } else {
-      this.UpdateAppStep(Step);
-    }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }

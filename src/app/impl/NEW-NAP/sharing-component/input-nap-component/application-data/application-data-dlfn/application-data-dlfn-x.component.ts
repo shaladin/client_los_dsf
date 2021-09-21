@@ -331,6 +331,24 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     );
   }
 
+  async getDropDown() {
+    await this.http.post(URLConstant.GetListMouByAppIdAndMouTypeDF, {
+      AppId: this.resultData.AppId,
+      MouType: CommonConstant.FINANCING
+    }).toPromise().then(
+      async (response: any) => {
+        this.allMouCust = response[CommonConstant.ReturnObj];
+        let MouCustId = this.mode == 'edit' ? this.resultData.MouCustId : this.allMouCust[0].MouCustId;
+
+        this.SalesAppInfoForm.patchValue({
+          MouCustId: MouCustId
+        });
+
+        await this.SetPayFreq(MouCustId, true);
+        this.makeNewLookupCriteria();
+      });
+  }
+
   async setDropdown() {
     this.GetListAppCustBankAcc();
     this.refMasterInterestType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestTypeFactoring;
@@ -347,26 +365,10 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.refMasterCharacteristicCredit.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCharacteristicCredit
     this.refMasterWayOfRestructure.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWayOfRestructure;
 
-    await this.http.post(URLConstant.GetListMouByAppIdAndMouTypeDF, {
-      AppId: this.resultData.AppId,
-      MouType: CommonConstant.FINANCING
-    }).toPromise().then(
-      async (response: any) => {
-        this.allMouCust = response[CommonConstant.ReturnObj];
-        let MouCustId = this.mode == 'edit' ? this.resultData.MouCustId : this.allMouCust[0].MouCustId;
-
-        this.SalesAppInfoForm.patchValue({
-          MouCustId: MouCustId
-        });
-
-        await this.SetPayFreq(MouCustId, true);
-        this.makeNewLookupCriteria();
-      });
-
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
       (response) => {
         this.allTopBased = response[CommonConstant.ReturnObj];
-        if (this.mode == 'edit') {
+        if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
             TopBased: this.allTopBased[0].Key
           });
@@ -394,19 +396,31 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).subscribe(
       (response) => {
         this.allInType = response[CommonConstant.ReturnObj];
-        if (this.mode != 'edit') {
-          this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
+        // to be comment, 17 september 2021 richard, utk wop sifatnya mandatory pada mou, nilainya akan di set pada SetPayFreq(on init true/false), jika tdk ada mou sama skali, baru set default
+        if(!this.SalesAppInfoForm.controls.MouCustId.value)
+        {
+           this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
         }
+        // if (this.mode != 'edit') {
+        //   this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
+        // }
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterWOP).subscribe(
       (response) => {
         this.allWOP = response[CommonConstant.ReturnObj];
-        if (this.mode != 'edit') {
-          this.SalesAppInfoForm.patchValue({
-            MrWopCode: this.allWOP[0].Key
-          });
+        // to be comment, 17 september 2021 richard, utk wop sifatnya mandatory pada mou, nilainya akan di set pada SetPayFreq(on init true/false), jika tdk ada mou sama skali, baru set default
+        if(!this.SalesAppInfoForm.controls.MouCustId.value)
+        {
+            this.SalesAppInfoForm.patchValue({
+              MrWopCode: this.allWOP[0].Key
+            });
         }
+        // if (this.mode != 'edit') {
+        //   this.SalesAppInfoForm.patchValue({
+        //     MrWopCode: this.allWOP[0].Key
+        //   });
+        // }
       });
 
     this.http.post(URLConstant.GetListKvpActiveRefAppSrc, null).subscribe(
@@ -503,7 +517,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.SalesAppInfoForm.patchValue({
       TopDays: this.mouCustDlrFinObj.TopDays,
       PayFreqCode: payFreqCode,
-      MrInstSchemeCode: CommonConstant.InstSchmRegularFix,
+      MrInstSchemeCode: CommonConstant.InstSchmEvenPrincipal,
       MrInstTypeCode: this.mouCustDlrFinObj.MrInstTypeCode,
       MrWopCode: this.mouCustDlrFinObj.WopCode,
       IntrstRatePrcnt: this.mouCustDlrFinObj.InterestRatePrcnt,
@@ -724,6 +738,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         this.setBankAcc(this.resultData.MrWopCode)
       }
     }
+    await this.getDropDown();
     await this.setDropdown();
   }
 
@@ -768,7 +783,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
       this.isSingle = true;
     } else {
-      this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
       this.isSingle = false;
     }
@@ -950,19 +965,19 @@ export class ApplicationDataDlfnXComponent implements OnInit {
           BankAccNo: responseAoi['BankAccNo'],
           AppCustId: this.appCustId
         }
-        this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
-          (response: any) => {
-            this.SalesAppInfoForm.patchValue({
-              CustBankAcc: response['AppCustBankAccId']
-            });
-            this.GetBankInfo = {
-              BankCode: response['BankCode'],
-              BankBranch: response['BankBranch'],
-              AppId: this.AppId,
-              BankAccNo: response['BankAccNo'],
-              BankAccName: response['BankAccName']
-            };
-          });
+        // this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
+        //   (response: any) => {
+        //     this.SalesAppInfoForm.patchValue({
+        //       CustBankAcc: response['AppCustBankAccId']
+        //     });
+        //     this.GetBankInfo = {
+        //       BankCode: response['BankCode'],
+        //       BankBranch: response['BankBranch'],
+        //       AppId: this.AppId,
+        //       BankAccNo: response['BankAccNo'],
+        //       BankAccName: response['BankAccName']
+        //     };
+        //   });
       });
   }
 

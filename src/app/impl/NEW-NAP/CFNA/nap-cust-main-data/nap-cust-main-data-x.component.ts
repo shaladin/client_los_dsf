@@ -17,6 +17,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-nap-cust-main-data-x',
@@ -177,7 +178,7 @@ export class NapCustMainDataXComponent implements OnInit {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-    let submitNapCustMainDataUrl = environment.isCore? URLConstant.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
+    let submitNapCustMainDataUrl = environment.isCore? URLConstantX.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
     this.http.post(submitNapCustMainDataUrl, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

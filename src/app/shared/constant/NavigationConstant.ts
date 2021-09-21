@@ -115,7 +115,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_CFNA_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/NewDocumentSigner/Paging'  => '/Nap/AdminProcess/CfnaDocumentSigner/Paging'
   public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_CFNA_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/NewDocumentSigner/Detail'  => '/Nap/AdminProcess/CfnaDocumentSigner/Detail'
   public static NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_PRINT_PAGING; //'/Nap/AdminProcess/DocPrint/Paging/'
-  public static NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_PRINT_VIEW; //'/Nap/AdminProcess/DocPrint/View/'
+  public static NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NAP_DOC_PRINT_VIEW_X; //'/Nap/AdminProcess/DocPrint/ViewX/'
   public static NAP_ADM_PRCS_INVOICE_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.INVOICE_DETAIL; //"/Nap/AdminProcess/Invoice/Detail"
   public static NAP_ADM_PRCS_INVOICE_VERIF_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.INVOICE_VERIF_PAGING; //"/Nap/AdminProcess/InvoiceVerif/Paging"
   public static NAP_ADM_PRCS_INVOICE_VERIF_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.INVOICE_VERIF_DETAIL_X; //"/Nap/AdminProcess/InvoiceVerif/DetailX"
@@ -262,7 +262,7 @@ export class NavigationConstant {
 
   //#region NAP-VIEW
   public static VIEW_APP = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP + "/" + PathConstantX.X; //'/View/AppView/X'
-  public static BACK_VIEW_APP = '../../' + NavigationConstant.VIEW_APP; //'../../View/AppView/X'
+  public static BACK_VIEW_APP = NavigationConstant.VIEW_APP; //'/View/AppView/X'
   public static VIEW_APP_ASSET = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP_ASSET; //'/View/AppAsset'
   public static VIEW_AGRMNT = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_AGRMNT; //"/View/AgrmntView"
   public static VIEW_CUST_EXPSR = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CUST_EXPSR; //"/View/CustExposureView"
@@ -276,6 +276,7 @@ export class NavigationConstant {
   //#region FOU-VIEW
   public static VIEW_FOU_CUST_PERSONAL_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_PERSONAL_DETAIL; //'/View/Customer/PersonalDetail'
   public static VIEW_FOU_CUST_COY_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_COY_DETAIL; //'/View/Customer/CoyDetail'
+  public static VIEW_FOU_CUST_TRUST_SOC = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_TRUST_SOC; //'/View/Customer/CustTrustSoc'
   public static VIEW_FOU_SRVY_ORDER = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_ORDER; //'/View/Survey/SurveyOrder'
   public static VIEW_FOU_SRVY_TASK = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_TASK; //'/View/Survey/SurveyTask'
   public static VIEW_FOU_VENDOR_BRANCH = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_VENDOR_BRANCH; //'/View/Vendor/VendorBranch'
@@ -474,6 +475,16 @@ export class NavigationConstant {
   public static REPORT_COLLATERAL_MOU = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_COLLATERAL_MOU; //'/Report/RptCollateralMou'
   public static REPORT_DAILY_INCOMING_APP = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_INCOMING_APP; //'/Report/RptDailyIncomingApp'
   public static REPORT_CANCEL_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_CANCEL_LEAD; //'/Report/RptCancelLead'
+  public static REPORT_DAILY_INCOMING_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_INCOMING_LEAD; //'/Report/RptDailyIncomingLead'
+  public static REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT; //'/Report/RptDailyPreGoLiveByProduct'
+  public static REPORT_DAILY_PRE_GO_LIVE_BY_CMO = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_PRE_GO_LIVE_BY_CMO; //'/Report/RptDailyPreGoLiveByCMO'
+  public static REPORT_MONTHLY_INPROCESS_APP = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_INPROCESS_APP; //'/Report/RptMonthlyInProcessApp'
+  public static REPORT_DAILY_PENDING_APP_AFT_APV = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_DAILY_PENDING_APP_AFT_APV; //'/Report/RptDailyPendingAppAftApv'
+  public static REPORT_MONTHLY_PENDING_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PENDING_LEAD; //'/Report/RptMonthlyPendingLead'
+  public static REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO; //'/Report/RptMonthlyPendingLead'
+  public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV; //'/Report/RptMonthlyPendingLead'
+  public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER; //'/Report/RptMonthlyPreGoLiveBySupplier'
+  public static REPORT_MONTHLY_TOP_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_TOP_SUPPLIER; //'/Report/RptMonthlyTopSupplier'
   //#endregion
   
   //EndCessie

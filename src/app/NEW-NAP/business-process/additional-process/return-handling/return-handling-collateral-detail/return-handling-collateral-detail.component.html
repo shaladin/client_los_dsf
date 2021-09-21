@@ -237,6 +237,7 @@
                 <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Id No </label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OwnerIdNo">
+                  <lib-uc-show-errors [control]="CollateralDataForm.controls.OwnerIdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
@@ -250,6 +251,7 @@
                 <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Mobile Phone No</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
+                  <lib-uc-show-errors [control]="CollateralDataForm.controls.OwnerMobilePhnNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
