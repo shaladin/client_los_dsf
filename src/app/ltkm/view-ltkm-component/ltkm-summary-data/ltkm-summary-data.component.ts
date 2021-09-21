@@ -53,13 +53,13 @@ export class ViewLtkmSummaryDataComponent implements OnInit {
 
         function calculateAge(sqlString){
             let string = sqlString
-            let string2 = string.slice(0,10);
+            let slicedString = string.slice(0,10);
             var pattern = /(\d{4})\.(\d{2})\.(\d{2})/;
-            var dt = new Date(string2.replace(pattern,'$2-$1-$3'));                
+            var dt = new Date(slicedString.replace(pattern,'$2-$1-$3'));                
             let now = new Date()                
             let dif = now.getTime() - dt.getTime()
-            let k = new Date(dif)                
-            let year = k.getUTCFullYear()
+            let month = new Date(dif)                
+            let year = month.getUTCFullYear()
             let finalresult =  Math.abs(year - 1970);  
             return finalresult;
         }
