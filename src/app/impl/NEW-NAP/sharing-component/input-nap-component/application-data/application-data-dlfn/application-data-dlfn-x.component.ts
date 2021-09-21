@@ -768,7 +768,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
       this.isSingle = true;
     } else {
-      this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
       this.isSingle = false;
     }
