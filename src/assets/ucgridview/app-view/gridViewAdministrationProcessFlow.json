@@ -1,0 +1,61 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Activity",
+            "name": "Name"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Username",
+            "name": "Assignee"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Start Date",
+            "name": "StartTime"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "End Date",
+            "name": "EndTime"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "SLA",
+            "name": "IndicatorSLA"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Name"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Assignee"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "StartTime"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "EndTime"
+        },
+        {
+            "type" : "sla",
+            "position" : "center",
+            "property" : "IndicatorSLA"
+        }
+    ]
+}

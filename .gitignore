@@ -42,3 +42,6 @@ testem.log
 Thumbs.db
 /.vs/LOSR3FrontEnd/v16
 /.vs
+
+# Environment
+/src/environments
