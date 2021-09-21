@@ -19,7 +19,7 @@
           </div>
           <div class="col-md-6">
             <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">
-              {{SummaryLtkmObj?.Age ? SummaryLtkmObj : Age}} </label>
+              {{SummaryLtkmObj?.Age ? SummaryLtkmObj?.Age : Age}} </label>
             <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel">
               {{SummaryLtkmObj?.TaxIdNo}} </label>
           </div>
