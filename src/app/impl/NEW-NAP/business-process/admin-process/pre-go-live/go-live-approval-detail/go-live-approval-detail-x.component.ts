@@ -76,7 +76,12 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewAgrmnt.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntDataAfterPreGoLiveX.json";
+    if (this.bizTemplateCode != CommonConstant.DF) {
+      this.viewAgrmnt.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntDataAfterPreGoLiveX.json";
+    } else {
+      this.viewAgrmnt.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntDataAfterPreGoLiveDlfnX.json";
+    }
+    
     this.arrValue.push(this.AgrmntId);
     let reqGetRfaLogByTrxNoAndApvCategoryObj = new ReqGetRfaLogByTrxNoAndApvCategoryObj();
     reqGetRfaLogByTrxNoAndApvCategoryObj.TrxNo = this.TrxNo;

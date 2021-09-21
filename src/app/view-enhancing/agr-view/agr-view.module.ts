@@ -41,6 +41,7 @@ import { ViewInsuranceDetailComponent } from "./view-insurance-detail/view-insur
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { ViewInsuranceDataXComponent } from "app/impl/view-enhancing/agr-view/view-insurance-data/view-insurance-data-x.component";
 import { ViewInsuranceDataDetailXComponent } from "app/impl/view-enhancing/agr-view/view-insurance-data/view-insurance-data-detail-x/view-insurance-data-detail-x.component";
+import { AgrMainInfoXComponent } from "app/impl/view-enhancing/agr-main-info/agr-main-info-x.component";
 
 @NgModule({
     imports: [
@@ -84,6 +85,7 @@ import { ViewInsuranceDataDetailXComponent } from "app/impl/view-enhancing/agr-v
         ViewAgrmntSummaryComponent,
         ViewAgrmntDocumentComponent,
         AgrMainInfoComponent,
+        AgrMainInfoXComponent,
         ViewAssetCollateralDetailComponent, 
         ViewInsuranceDetailComponent,
         ViewInsuranceDataXComponent,
@@ -96,6 +98,9 @@ import { ViewInsuranceDataDetailXComponent } from "app/impl/view-enhancing/agr-v
         UcapprovalhistComponent,
         ViewAssetCollateralDetailComponent,
         ViewInsuranceDataDetailXComponent
+    ],
+    exports: [
+        AgrMainInfoXComponent
     ]
 
 })

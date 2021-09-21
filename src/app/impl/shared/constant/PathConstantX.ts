@@ -21,6 +21,7 @@ export class PathConstantX {
   public static REVIEW_FACTORING_X = "ReviewFactoringX";
   public static APPROVAL_FACTORING_X ="ApprovalFactoringX";
   public static NAP1_X = 'NAP1X';
+  public static VIEW = 'ViewX';
   //#endregion
 
   public static NAP2 = "NAP2X";
@@ -38,7 +39,7 @@ export class PathConstantX {
   public static SUBJECT = 'SubjectX';
   public static SURVEY_VERIF_X = "SurveyVerif";
   public static VERIF = 'VerifX';
-  public static VIEW = 'ViewX';
+
   public static COMM_RSV_FUND_PAGING = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.PAGING;
   public static COMM_RSV_FUND_DETAIL = PathConstant.COMM_RSV_FUND + '/' + PathConstantX.DETAIL_X;
 
@@ -67,6 +68,7 @@ export class PathConstantX {
   public static INSURANCE_ORDER_PAGING_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.PAGING;
   public static INSURANCE_ORDER_DETAIL_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.DETAIL_X;
   public static COPY_CANCEL_APP = "CopyCancelledApplicationX";
+  public static NAP_DOC_PRINT_VIEW_X = PathConstant.NAP_DOC_PRINT + "/" + PathConstantX.VIEW;
   //#endregion
 
   //#region Nap-Cust-Compl

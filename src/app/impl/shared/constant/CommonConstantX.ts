@@ -32,10 +32,12 @@ export class CommonConstantX {
 
     //Approval Type
     public static CESSIE_PRE_GLV_APV_TYPE = "CESSIE_PRE_GLV_APV_TYPE";
+    public static GO_LIVE_APV_TYPE_APV_TYPE = "GO_LIVE_APV_TYPE";
 
     //Approval Category
     public static CESSIE_PRE_GPV_APV_CATEGORY = "CESSIE_PGLV_APV";
-
+    public static CAT_CODE_GO_LIVE_APV = "GO_LIVE_APV";
+    
     //Add Interest Paid By
     public static AdditionalInterestPaidByCustomer = "CU";
 
@@ -62,9 +64,9 @@ export class CommonConstantX {
 
     //Survey Verification
     public static ACT_CODE_SURVEY_VERIF = "SURVEY_"
-  public static APP_STEP_SURVEY_VERIF = "SRVY_VRF"
-  public static RETURN_HANDLING_ADD_SURVEY = "RTN_ADD_SRVY_";
-  public static APP_STEP_RETURN_SURVEY_VERIF = "ADD_SRVY_"
+    public static APP_STEP_SURVEY_VERIF = "SRVY_VRF"
+    public static RETURN_HANDLING_ADD_SURVEY = "RTN_ADD_SRVY_";
+    public static APP_STEP_RETURN_SURVEY_VERIF = "ADD_SRVY_"
 
     //LOB CODE
     public static CFNA_LOB_CODE_FD = "FD";
