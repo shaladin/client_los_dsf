@@ -3,7 +3,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "AP.APP_NO",
+            "name": "DOD.APP_NO",
             "id": "AppNoId",
             "value": "",
             "label": "Application No",
@@ -11,7 +11,7 @@
         },
         {
             "type": "textbox",
-            "name": "AG.AGRMNT_NO",
+            "name": "DOD.AGRMNT_NO",
             "id": "AgreementNoId",
             "value": "",
             "label": "Agreement No",
@@ -19,7 +19,7 @@
         },
         {
             "type": "textbox",
-            "name": "PO.PURCHASE_ORDER_NO",
+            "name": "DOD.PURCHASE_ORDER_NO",
             "id": "PurchaseNoId",
             "value": "",
             "label": "Purchase Order No",
@@ -27,7 +27,7 @@
         },
         {
             "type": "textbox",
-            "name": "AG.CUST_NAME",
+            "name": "DOD.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -35,7 +35,7 @@
         },
         {
             "type": "textbox",
-            "name": "AP.PROD_OFFERING_NAME",
+            "name": "DOD.PROD_OFFERING_NAME",
             "id": "ProdOfferingNameId",
             "value": "",
             "label": "Product Offering Name",
@@ -44,7 +44,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "AP.ORI_OFFICE_CODE",
+            "name": "DOD.ORI_OFFICE_CODE",
             "id": "OfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
@@ -60,7 +60,7 @@
         },
         {
             "type": "dropdown",
-            "name": "WF.CLAIM_STAT",
+            "name": "DOD.CLAIM_STAT",
             "id": "ActiveStatusId",
             "label": "Task Claim Status",
             "value": "",
@@ -81,7 +81,7 @@
         },
         {
             "type": "textbox",
-            "name": "WF.USERNAME",
+            "name": "DOD.USERNAME",
             "id": "TaskClaimById",
             "value": "",
             "label": "Task Claim By",
@@ -102,43 +102,43 @@
             "type": "sort",
             "position": "left",
             "label": "Claim By",
-            "name": "WF.USERNAME"
+            "name": "DOD.USERNAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "OFFICE",
-            "name": "AP.ORI_OFFICE_NAME"
+            "name": "DOD.ORI_OFFICE_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "APPLICATION NO",
-            "name": "AP.APP_NO"
+            "name": "DOD.APP_NO"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "AGREEMENT NO",
-            "name": "AG.AGRMNT_NO"
+            "name": "DOD.AGRMNT_NO"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "PURCHASE ORDER NO",
-            "name": "PO.PURCHASE_ORDER_NO"
+            "name": "DOD.PURCHASE_ORDER_NO"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "CUSTOMER NAME",
-            "name": "AG.CUST_NAME"
+            "name": "DOD.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "PRODUCT OFFERING NAME",
-            "name": "AG.PROD_OFFERING_NAME"
+            "name": "DOD.PROD_OFFERING_NAME"
         },
         {
             "type": "label",

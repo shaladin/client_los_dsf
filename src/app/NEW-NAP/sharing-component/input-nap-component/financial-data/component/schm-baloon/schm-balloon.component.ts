@@ -144,7 +144,6 @@ export class SchmBalloonComponent implements OnInit {
       && this.ParentForm.controls.IsSubsidyRateExist.value == false
       && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
       this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
-      return;
     }
 
     if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
@@ -223,7 +222,6 @@ export class SchmBalloonComponent implements OnInit {
             && this.ParentForm.controls.IsSubsidyRateExist.value == false
             && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
             this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
-            return;
           }
 
           if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective

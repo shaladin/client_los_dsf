@@ -159,6 +159,21 @@ export class NewFraudVerifDetailComponent implements OnInit {
       });
   }
 
+  SkipVerify(): void {
+    this.leadFraudVerfObj = new LeadFraudVerfObj();
+    this.leadFraudVerfObj.LeadId = this.LeadId;
+    this.leadFraudVerfObj.VerifyStat = CommonConstant.Verify;
+    this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
+    this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
+    this.leadFraudVerfObj.IsCustPicked = false;
+    this.leadFraudVerfObj.HasDuplicateCust = false;
+    this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_FRAUD_VERIF_PAGING], {});
+      });
+  }
+
   verify(): void {
     if (this.HasDuplicateCust) {
       if (!this.IsCustPicked) {

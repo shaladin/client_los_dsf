@@ -2,8 +2,10 @@ import { AppFeeObj } from "../AppFeeObj.Model";
 
 export class CalcRegularFixObj {
     AppId : number ;
-    TotalAssetPrice : number ;
-    DownPaymentGrossAmt : number ;
+    TotalAssetPriceAmt : number ;
+    TotalAccessoryPriceAmt : number ;
+    TotalDpAmt : number ;
+    TotalAccessoryDownPaymentAmt : number ;
     InsCapitalizedAmt : number ;
     LifeInsCapitalizedAmt: number ;
     GracePeriod : number ;

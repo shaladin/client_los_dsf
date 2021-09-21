@@ -34,6 +34,7 @@ export class ViewCommissionComponent implements OnInit {
       totalCommAmt: 0,
       totalTaxAmt: 0,
       totalVatAmt: 0,
+      totalExpenseAmt: 0
     };
   }
 
@@ -63,6 +64,7 @@ export class ViewCommissionComponent implements OnInit {
           this.SummaryData.totalCommAmt += tempObj.TotalCommissionAmt;
           this.SummaryData.totalTaxAmt += tempObj.TaxAmt;
           this.SummaryData.totalVatAmt += tempObj.VatAmt;
+          this.SummaryData.totalExpenseAmt += tempObj.TotalExpenseAmt;
         }
 
         this.SupplData["title"] = CommonConstant.TitleSupplier;

@@ -1641,6 +1641,8 @@ export class URLConstant {
   public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset";
   public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
   public static DigitalizationAddTrxSrcDataForFraudCheckingNAPCust = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingNAPCust";
+  public static GetRuleIntegratorPackageMapAsset = environment.losUrl + "/v1" + "/Digitalization/GetRuleIntegratorPackageMapAsset";
+  public static GetRuleIntegratorPackageMapCust = environment.losUrl + "/v1" + "/Digitalization/GetRuleIntegratorPackageMapCust";
 
   //ThirdPartyRsltH
   public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/v1" + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
@@ -1653,6 +1655,7 @@ export class URLConstant {
 
   //Task Reassignment
   public static GetTaskReassignmentDetail = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetail";
+  public static GetTaskReassignmentDetailV2 = environment.losUrl + "/v2" + "/TaskReassignment/GetTaskReassignmentDetail";
   public static SubmitTaskReassignment = environment.losUrl + "/v1" + "/TaskReassignment/SubmitTaskReassignment";
   public static SubmitTaskReassignmentV2 = environment.losUrl + "/v2" + "/TaskReassignment/SubmitTaskReassignment";
   public static GetUserRoleByUsernameForReassignment = environment.FoundationR3Url + "/v1" + "/RefUserRole/GetUserRoleByUsernameForReassignment";

@@ -90,6 +90,7 @@ export class CustMainDataComponent implements OnInit {
   @Input() from: string;
   @Input() tempTotalSharePrct: number = 0;
   @Input() critCust: Array<string> = new Array<string>();
+  @Input() critCustCompany: Array<string> = new Array<string>();
 
   LeadId: number;
   LeadNo: string;
@@ -477,11 +478,18 @@ export class CustMainDataComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = custType;
 
-    if(this.critCust.length > 0){
+    if(this.critCust.length > 0 && custType == CommonConstant.CustTypePersonal){
       critObj.DataType = "text";
       critObj.propName = 'C.CUST_NO';
       critObj.restriction = AdInsConstant.RestrictionNotIn;
       critObj.listValue = this.critCust;
+    }
+
+    if(this.critCustCompany.length > 0 && custType == CommonConstant.CustTypeCompany){
+      critObj.DataType = "text";
+      critObj.propName = 'C.CUST_NO';
+      critObj.restriction = AdInsConstant.RestrictionNotIn;
+      critObj.listValue = this.critCustCompany;
     }
 
     this.ArrAddCrit.push(critObj);

@@ -23,7 +23,7 @@
             "name" : "PROD_OFFERING_NAME",
             "id" : "ProdOfferingNameId",
             "value" : "",
-            "label" : "Prod Offering Name",
+            "label" : "Product Offering Name",
             "placeholder": "Placeholder"
         },
         {
@@ -68,7 +68,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Prod Offering Name",
+            "label": "Product Offering Name",
             "name": "A.PROD_OFFERING_NAME"
         },
         {

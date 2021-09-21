@@ -138,7 +138,6 @@ export class SchmRegulerFixComponent implements OnInit {
       && this.ParentForm.controls.IsSubsidyRateExist.value == false
       && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
       this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE, this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt));
-      return;
     }
 
     if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
@@ -207,7 +206,6 @@ export class SchmRegulerFixComponent implements OnInit {
             && this.ParentForm.controls.IsSubsidyRateExist.value == false
             && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
             this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE, this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt));
-            return;
           }
 
           if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate

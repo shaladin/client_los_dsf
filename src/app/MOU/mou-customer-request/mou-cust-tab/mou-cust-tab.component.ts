@@ -38,6 +38,7 @@ import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResul
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
 import { CustAddrObj } from 'app/shared/model/CustAddrObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -51,6 +52,8 @@ export class MouCustTabComponent implements OnInit {
 
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   ListLegalDocCantDuplicate: Array<string> = new Array<string>();
   generalSettingObj: GenericListByCodeObj;
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
@@ -1268,9 +1271,16 @@ export class MouCustTabComponent implements OnInit {
         this.isMarried = false;
       }
     }
+    else{
+      this.isMarried = false;
+    }
 
     if (event["CustPersonalContactPersonObjs"] != undefined) {
       this.listMouCustPersonalContactInformation = event["CustPersonalContactPersonObjs"];
+      this.CheckSpouseExist();
+    }
+    else{
+      this.listMouCustPersonalContactInformation = new Array<MouCustPersonalContactPersonObj>();
       this.CheckSpouseExist();
     }
 
@@ -1298,6 +1308,9 @@ export class MouCustTabComponent implements OnInit {
     if (event["CustBankAccObjs"] != undefined) {
       this.listMouCustBankAcc = event["CustBankAccObjs"];
     }
+    else{
+      this.listMouCustBankAcc = new Array<MouCustBankAccObj>();
+    }
 
     if (event["CustPersonalJobDataObj"] != undefined) {
       this.custJobDataComponent.custModelCode = event["CustObj"].MrCustModelCode;
@@ -1309,6 +1322,10 @@ export class MouCustTabComponent implements OnInit {
       this.custGrpMemberComponent.MouCustGrpObjs = event["CustGrpObjs"];
       this.custGrpMemberComponent.copyAppGrp();
     }
+    else{
+      this.custGrpMemberComponent.MouCustGrpObjs = new Array<MouCustGrpObj>();
+      this.custGrpMemberComponent.copyAppGrp();
+    }
 
   }
 
@@ -1318,13 +1335,22 @@ export class MouCustTabComponent implements OnInit {
     if (event["CustCompanyContactPersonObjs"] != undefined) {
       this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
     }
+    else{
+      this.listContactPersonCompany = new Array<MouCustPersonalContactPersonObj>();
+    }
 
     if (event["CustCompanyMgmntShrholderObjs"] != undefined) {
       this.listShareholder = event["CustCompanyMgmntShrholderObjs"];
     }
+    else{
+      this.listShareholder = new Array<MouCustCompanyMgmntShrholderObj>();
+    }
 
     if (event["CustCompanyLegalDocObjs"] != undefined) {
       this.listLegalDoc = event["CustCompanyLegalDocObjs"];
+    }
+    else{
+      this.listLegalDoc = new Array<MouCustCompanyLegalDocObj>();
     }
 
     if (event["CustCompanyFinDataObj"] != undefined) {
@@ -1335,9 +1361,16 @@ export class MouCustTabComponent implements OnInit {
     if (event["CustBankAccObjs"] != undefined) {
       this.listMouCustBankAccCompany = event["CustBankAccObjs"];
     }
+    else{
+      this.listMouCustBankAccCompany = new Array<MouCustBankAccObj>();
+    }
 
     if (event["CustGrpObjs"] != undefined) {
       this.custGrpMemberComponent.MouCustGrpObjs = event["CustGrpObjs"];
+      this.custGrpMemberComponent.copyAppGrp();
+    }
+    else{
+      this.custGrpMemberComponent.MouCustGrpObjs = new Array<MouCustGrpObj>();
       this.custGrpMemberComponent.copyAppGrp();
     }
 
@@ -1348,7 +1381,7 @@ export class MouCustTabComponent implements OnInit {
     var custAddrLegalObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
     var custAddrResidenceObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeResidence);
     var custAddrMailingObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeMailing);
-
+    console.log("personal addr");
     if (custAddrLegalObj != undefined && custAddrLegalObj != null) {
       this.legalAddrObj.Addr = custAddrLegalObj.Addr;
       this.legalAddrObj.AreaCode1 = custAddrLegalObj.AreaCode1;
@@ -1371,6 +1404,29 @@ export class MouCustTabComponent implements OnInit {
 
       this.inputAddrLegalPersonalObj.default = this.legalAddrObj;
       this.inputAddrLegalPersonalObj.inputField = this.inputFieldLegalObj;
+    }
+    else{
+      this.legalAddrObj.Addr = "";
+      this.legalAddrObj.AreaCode1 = "";
+      this.legalAddrObj.AreaCode2 = "";
+      this.legalAddrObj.AreaCode3 = "";
+      this.legalAddrObj.AreaCode4 = "";
+      this.legalAddrObj.City = "";
+      this.legalAddrObj.Fax = "";
+      this.legalAddrObj.FaxArea = "";
+      this.legalAddrObj.Phn1 = "";
+      this.legalAddrObj.Phn2 = "";
+      this.legalAddrObj.PhnArea1 = "";
+      this.legalAddrObj.PhnArea2 = "";
+      this.legalAddrObj.PhnExt1 = "";
+      this.legalAddrObj.PhnExt2 = "";
+      this.legalAddrObj.SubZipcode = "";
+
+      this.inputFieldLegalObj.inputLookupObj.nameSelect = "";
+      this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: "" };
+
+      this.inputAddrLegalPersonalObj.default = new AddrObj();
+      this.inputAddrLegalPersonalObj.inputField = new InputFieldObj();
     }
 
     if (custAddrResidenceObj != undefined && custAddrResidenceObj != null) {
@@ -1395,6 +1451,29 @@ export class MouCustTabComponent implements OnInit {
       this.inputAddrResidenceObj.default = this.residenceAddrObj;
       this.inputAddrResidenceObj.inputField = this.inputFieldResidenceObj;
     }
+    else{
+      this.residenceAddrObj.Addr = "";
+      this.residenceAddrObj.AreaCode1 = "";
+      this.residenceAddrObj.AreaCode2 = "";
+      this.residenceAddrObj.AreaCode3 = "";
+      this.residenceAddrObj.AreaCode4 = "";
+      this.residenceAddrObj.City = "";
+      this.residenceAddrObj.Fax = "";
+      this.residenceAddrObj.FaxArea = "";
+      this.residenceAddrObj.Phn1 = "";
+      this.residenceAddrObj.Phn2 = "";
+      this.residenceAddrObj.PhnArea1 = "";
+      this.residenceAddrObj.PhnArea2 = "";
+      this.residenceAddrObj.PhnExt1 = "";
+      this.residenceAddrObj.PhnExt2 = "";
+      this.residenceAddrObj.SubZipcode = "";
+
+      this.inputFieldResidenceObj.inputLookupObj.nameSelect = "";
+      this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: "" };
+
+      this.inputAddrResidenceObj.default = new AddrObj();
+      this.inputAddrResidenceObj.inputField = new InputFieldObj();
+    }
 
     if (custAddrMailingObj != undefined && custAddrMailingObj != null) {
       this.mailingAddrObj.Addr = custAddrMailingObj.Addr;
@@ -1417,6 +1496,29 @@ export class MouCustTabComponent implements OnInit {
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: custAddrMailingObj.Zipcode };
       this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
       this.inputAddressObjForMailing.default = this.mailingAddrObj;
+    }
+    else{
+      this.mailingAddrObj.Addr = "";
+      this.mailingAddrObj.AreaCode1 = "";
+      this.mailingAddrObj.AreaCode2 = "";
+      this.mailingAddrObj.AreaCode3 = "";
+      this.mailingAddrObj.AreaCode4 = "";
+      this.mailingAddrObj.City = "";
+      this.mailingAddrObj.Fax = "";
+      this.mailingAddrObj.FaxArea = "";
+      this.mailingAddrObj.Phn1 = "";
+      this.mailingAddrObj.Phn2 = "";
+      this.mailingAddrObj.PhnArea1 = "";
+      this.mailingAddrObj.PhnArea2 = "";
+      this.mailingAddrObj.PhnExt1 = "";
+      this.mailingAddrObj.PhnExt2 = "";
+      this.mailingAddrObj.SubZipcode = "";
+
+      this.inputFieldMailingObj.inputLookupObj.nameSelect = "";
+      this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: "" };
+
+      this.inputAddressObjForMailing.default = new AddrObj();
+      this.inputAddressObjForMailing.inputField = new InputFieldObj();
     }
   }
 
@@ -1449,6 +1551,30 @@ export class MouCustTabComponent implements OnInit {
       this.inputAddrLegalCompanyObj.inputField = this.inputFieldLegalCompanyObj;
       this.inputAddrLegalCompanyObj.default = this.legalAddrCompanyObj;
     }
+    else{
+      this.legalAddrCompanyObj.Addr = "";
+      this.legalAddrCompanyObj.AreaCode1 = "";
+      this.legalAddrCompanyObj.AreaCode2 = "";
+      this.legalAddrCompanyObj.AreaCode3 = "";
+      this.legalAddrCompanyObj.AreaCode4 = "";
+      this.legalAddrCompanyObj.City = "";
+      this.legalAddrCompanyObj.Fax = "";
+      this.legalAddrCompanyObj.FaxArea = "";
+      this.legalAddrCompanyObj.Phn1 = "";
+      this.legalAddrCompanyObj.Phn2 = "";
+      this.legalAddrCompanyObj.PhnArea1 = "";
+      this.legalAddrCompanyObj.PhnArea2 = "";
+      this.legalAddrCompanyObj.PhnExt1 = "";
+      this.legalAddrCompanyObj.PhnExt2 = "";
+      this.legalAddrCompanyObj.SubZipcode = "";
+
+      this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = "";
+      this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: "" };
+
+
+      this.inputAddrLegalCompanyObj.inputField = new InputFieldObj();
+      this.inputAddrLegalCompanyObj.default = new AddrObj();
+    }
 
     if (custAddrMailingObj != undefined && custAddrMailingObj != null) {
       this.mailingAddrCompanyObj.Addr = custAddrMailingObj.Addr;
@@ -1471,6 +1597,28 @@ export class MouCustTabComponent implements OnInit {
       this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: custAddrMailingObj.Zipcode };
       this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
       this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
+    }
+    else{
+      this.mailingAddrCompanyObj.Addr = "";
+      this.mailingAddrCompanyObj.AreaCode1 = "";
+      this.mailingAddrCompanyObj.AreaCode2 = "";
+      this.mailingAddrCompanyObj.AreaCode3 = "";
+      this.mailingAddrCompanyObj.AreaCode4 = "";
+      this.mailingAddrCompanyObj.City = "";
+      this.mailingAddrCompanyObj.Fax = "";
+      this.mailingAddrCompanyObj.FaxArea = "";
+      this.mailingAddrCompanyObj.Phn1 = "";
+      this.mailingAddrCompanyObj.Phn2 = "";
+      this.mailingAddrCompanyObj.PhnArea1 = "";
+      this.mailingAddrCompanyObj.PhnArea2 = "";
+      this.mailingAddrCompanyObj.PhnExt1 = "";
+      this.mailingAddrCompanyObj.PhnExt2 = "";
+      this.mailingAddrCompanyObj.SubZipcode = "";
+
+      this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = "";
+      this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: "" };
+      this.inputAddrMailingCompanyObj.inputField = new InputFieldObj();
+      this.inputAddrMailingCompanyObj.default = new AddrObj();
     }
   }
 
@@ -1512,7 +1660,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   checkIntegrator() {
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
       this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
       this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
@@ -1611,6 +1759,7 @@ export class MouCustTabComponent implements OnInit {
             this.thirdPartyObj.TrxNo = this.returnMouObj["MouCustNo"];
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+              this.getDigitalizationSvcType();
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response: ResThirdPartyRsltHObj) => {
                   if (response != null) {
@@ -1677,7 +1826,7 @@ export class MouCustTabComponent implements OnInit {
       let inputLeadString = JSON.stringify(inputCustObj);
       let latestCustDataString = JSON.stringify(this.latestCustDataObj);
 
-      if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
+      if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist && inputLeadString != latestCustDataString) {
         if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
         }
@@ -1689,7 +1838,7 @@ export class MouCustTabComponent implements OnInit {
     else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       inputCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
       inputCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      if ((this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0")
+      if ((this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist)
         && (this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value
           || this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value)) {
         if (confirm("Recent Customer Main Data different with previous data. Are you sure want to submit without fraud check ?")) {
@@ -1703,6 +1852,27 @@ export class MouCustTabComponent implements OnInit {
 
     else {
       return true;
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapCust, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+        var svcType = listSvcType.find(x => x == refSvcType);
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
     }
   }
 }

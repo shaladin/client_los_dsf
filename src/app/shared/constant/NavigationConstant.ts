@@ -264,6 +264,7 @@ export class NavigationConstant {
   //#region FOU-VIEW
   public static VIEW_FOU_CUST_PERSONAL_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_PERSONAL_DETAIL; //'/View/Customer/PersonalDetail'
   public static VIEW_FOU_CUST_COY_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_COY_DETAIL; //'/View/Customer/CoyDetail'
+  public static VIEW_FOU_CUST_TRUST_SOC = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_TRUST_SOC; //'/View/Customer/CustTrustSoc'
   public static VIEW_FOU_SRVY_ORDER = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_ORDER; //'/View/Survey/SurveyOrder'
   public static VIEW_FOU_SRVY_TASK = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_TASK; //'/View/Survey/SurveyTask'
   public static VIEW_FOU_VENDOR_BRANCH = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_VENDOR_BRANCH; //'/View/Vendor/VendorBranch'
@@ -456,6 +457,9 @@ export class NavigationConstant {
   public static REPORT_MONTHLY_PENDING_LEAD = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PENDING_LEAD; //'/Report/RptMonthlyPendingLead'
   public static REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO; //'/Report/RptMonthlyPreGoLiveByCMO'
   public static REPORT_MONTHLY_PRE_GO_LIVE_BY_PRODUCT = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_PRODUCT; //'/Report/RptMonthlyPreGoLiveByProduct'
+  public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV; //'/Report/RptMonthlyPendingLead'
+  public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER; //'/Report/RptMonthlyPreGoLiveBySupplier'
+  public static REPORT_MONTHLY_TOP_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_TOP_SUPPLIER; //'/Report/RptMonthlyTopSupplier'
   //#endregion
   
 }
