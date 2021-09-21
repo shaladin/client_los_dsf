@@ -965,19 +965,19 @@ export class ApplicationDataDlfnXComponent implements OnInit {
           BankAccNo: responseAoi['BankAccNo'],
           AppCustId: this.appCustId
         }
-        this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
-          (response: any) => {
-            this.SalesAppInfoForm.patchValue({
-              CustBankAcc: response['AppCustBankAccId']
-            });
-            this.GetBankInfo = {
-              BankCode: response['BankCode'],
-              BankBranch: response['BankBranch'],
-              AppId: this.AppId,
-              BankAccNo: response['BankAccNo'],
-              BankAccName: response['BankAccName']
-            };
-          });
+        // this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
+        //   (response: any) => {
+        //     this.SalesAppInfoForm.patchValue({
+        //       CustBankAcc: response['AppCustBankAccId']
+        //     });
+        //     this.GetBankInfo = {
+        //       BankCode: response['BankCode'],
+        //       BankBranch: response['BankBranch'],
+        //       AppId: this.AppId,
+        //       BankAccNo: response['BankAccNo'],
+        //       BankAccName: response['BankAccName']
+        //     };
+        //   });
       });
   }
 

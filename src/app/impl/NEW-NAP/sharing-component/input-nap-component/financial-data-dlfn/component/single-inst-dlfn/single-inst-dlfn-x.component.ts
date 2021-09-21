@@ -29,7 +29,7 @@ export class SingleInstDlfnXComponent implements OnInit {
   IsAppFeePrcntValid: boolean = true;
   TempTotalDisbAmt = 0;
   MouOsPlafond: number;
-
+  calcGrossYieldObj: any;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
@@ -58,6 +58,16 @@ export class SingleInstDlfnXComponent implements OnInit {
           this.ParentForm.patchValue({
             InterestType: this.InterestTypeOptions[0].Key
           });
+          if(this.InterestTypeOptions[0].Key == CommonConstant.InputTypePrcnt)
+          {
+            this.ParentForm.get("TotalInterestAmt").disable();
+            this.ParentForm.get("EffectiveRatePrcnt").enable();
+          }
+          else if(this.InterestTypeOptions[0].Key == CommonConstant.InputTypeAmt)
+          {
+            this.ParentForm.get("TotalInterestAmt").enable();
+            this.ParentForm.get("EffectiveRatePrcnt").disable();
+          }
         }
       }
     );
@@ -162,6 +172,20 @@ export class SingleInstDlfnXComponent implements OnInit {
     });
   }
 
+  onChangeInterestType(event: any) {
+    this.SetNeedReCalculate(true);
+    if(event.target.value == CommonConstant.InputTypePrcnt)
+    {
+      this.ParentForm.get("TotalInterestAmt").disable();
+      this.ParentForm.get("EffectiveRatePrcnt").enable();
+    }
+    else if(event.target.value == CommonConstant.InputTypeAmt)
+    {
+      this.ParentForm.get("TotalInterestAmt").enable();
+      this.ParentForm.get("EffectiveRatePrcnt").disable();
+    }
+  }
+
   EstEffDtFocusOut(event) {
     var topBased = this.ParentForm.get("TopBased").value;
     var maturityDate: Date;
@@ -233,8 +257,23 @@ export class SingleInstDlfnXComponent implements OnInit {
                   TotalDisbAmt: this.TempTotalDisbAmt - ((responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount),
                   EffectiveRatePrcnt: interestPrcnt,
                   InstAmt: NtfAmount + interestAmt,
-                  TotalInterestAmt: interestAmt
+                  TotalInterestAmt: interestAmt,
+                  TotalAR: NtfAmount + interestAmt,
                 });
+
+                var grossyieldObj = {
+                  InstAmt: this.ParentForm.get("InstAmt").value,
+                  TotalDisbAmt : this.ParentForm.get("TotalDisbAmt").value,
+                  AppFee : this.ParentForm.get("AppFee").value
+                };
+                this.http.post(URLConstantX.CalcGrossYieldSingleInstDF, grossyieldObj).subscribe(
+                  (response) => {
+                    this.calcGrossYieldObj = response;
+                    this.ParentForm.patchValue({
+                      GrossYieldPrcnt: response["Result"]
+                    });
+                  }
+                );
 
                 var ctrInstallment = this.ParentForm.get("InstallmentTable");
                 if (!ctrInstallment) {
