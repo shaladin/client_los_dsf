@@ -265,7 +265,8 @@ export class ApplicationDataFL4WXComponent implements OnInit {
 
 
   checkIdNoType() {
-    if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+    if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit && this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) 
+    {
       this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
       this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
     }
@@ -419,7 +420,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   async getAppModelInfo() {
     await this.getAppXData();
 
-    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).toPromise().then(
+    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).toPromise().then(
       async (response: AppObj) => {
         this.resultResponse = response;
 
@@ -507,6 +508,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       const total = this.NapAppModelForm.controls.Tenor.value
       this.PatchNumOfInstallment(total)
     }
+    this.checkIdNoType();
   }
 
   GenerateAppAttrContent() {
@@ -694,13 +696,13 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   }
   getLookupEconomicSector(ev) {
     this.NapAppModelForm.patchValue({
-      MrSlikSecEcoCode: ev.MasterCode
+      MrSlikSecEcoCode: ev.RefSectorEconomySlikCode
     });
   }
-
+  
   setLookupCommodityData(ev) {
     this.NapAppModelForm.patchValue({
-      CommodityCode: ev.RefSectorEconomySlikCode
+      CommodityCode: ev.MasterCode
     });
   }
 
@@ -1129,11 +1131,19 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   setBankAcc(WOP: string) {
     if (WOP == this.WopAutoDebit) {
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+
+      if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
+      }
       this.isShowAppCustBankAcc = true;
     } else {
       this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].clearValidators();
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].updateValueAndValidity();
       this.isShowAppCustBankAcc = false;
     }
     this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
@@ -1143,10 +1153,19 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     if (event.selectedValue == this.WopAutoDebit) {
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+
+      if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
+      }
+
       this.isShowAppCustBankAcc = true;
     } else {
       this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].clearValidators();
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].updateValueAndValidity();
       this.isShowAppCustBankAcc = false;
     }
     this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
@@ -1309,7 +1328,6 @@ export class ApplicationDataFL4WXComponent implements OnInit {
           this.tempCommodityName = response['CommodityName'];
         }
         this.isCustomerTypeCompany();
-        this.checkIdNoType();
       }
     );
   }
