@@ -25,11 +25,9 @@
                 </ng-template>
               </mat-tab>
               <mat-tab label="Term Condition">
-                <ng-template matTabContent>
-                  <div class="px-3">
-                    <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc>
-                  </div>
-                </ng-template>
+                <div class="px-3">
+                  <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc>
+                </div>
               </mat-tab>
               <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
                 <ng-template matTabContent>
