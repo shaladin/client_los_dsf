@@ -57,7 +57,7 @@
             "label": "LTKM Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "LTKM"
         }
     ],
@@ -98,7 +98,7 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "LTKM STAT",
+            "label": "LTKM STATUS",
             "name": "LtkmStep"
         }
     ],
