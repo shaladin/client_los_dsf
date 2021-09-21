@@ -185,6 +185,7 @@ export class URLConstantX {
   public static CheckAppCustShareholderMandatoryDataX = environment.losUrl + "/v1" + "/AppCustX/CheckAppCustShareholderMandatoryData";
   //AGRMNT
   public static GetAgrmntHistByListCustNo = environment.losUrl + "/v1" +"/AgrmntX/GetAgrmntHistByListCustNo";
+  public static GetAgrmntFinDataNtfAmtByAgrmntId = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntFinDataNtfAmtByAgrmntId";
 
   //ASSET
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocListX/GetListAssetDocListByAssetTypeCode";

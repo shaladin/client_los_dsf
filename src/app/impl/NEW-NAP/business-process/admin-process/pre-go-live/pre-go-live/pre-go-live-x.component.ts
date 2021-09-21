@@ -95,6 +95,7 @@ export class PreGoLiveXComponent implements OnInit {
   AppObj: AppObj;
   IsNeedApv: boolean = false;
   ApvAmt: number = 0;
+  DiffDay: number = 0;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
@@ -504,10 +505,16 @@ export class PreGoLiveXComponent implements OnInit {
             if (NowDt <= LastDt) {
               this.isNeedEndDateApv = false;
             } else {
+              var diffTimes = NowDt.getTime()- LastDt.getTime();
+              let Days = diffTimes / (1000*3600*24)
+              if(Days>0){
+                this.DiffDay = Days;
+              }
+              
               let AttributesEndDateEmpty : Array<ResultAttrObj> = new Array();
               var attribute1: ResultAttrObj = {
                 AttributeName: "Approval Amount",
-                AttributeValue: this.ApvAmt.toString()
+                AttributeValue: this.DiffDay.toString()
               };
               AttributesEndDateEmpty.push(attribute1);
               let TypeEndDateCode = {
@@ -599,7 +606,7 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    await this.http.post(URLConstantX.GetApprovalAmountForCreditReviewByAppIdX, { Id: this.AppId }).toPromise().then(
+    await this.http.post(URLConstantX.GetAgrmntFinDataNtfAmtByAgrmntId, { Id: this.AgrmntId }).toPromise().then(
       (response) => {
         this.ApvAmt = response["Result"];
       });
