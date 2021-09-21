@@ -122,7 +122,7 @@ export function createTranslateLoader(http: HttpClient) {
         AppCustDataPersonalOplComponent,
         AppCustDataCompanyOplComponent,
         AppViewInsuranceDetailComponent,
-        ViewSrvyTaskComponent
+        ViewSrvyTaskComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

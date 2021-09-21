@@ -17,6 +17,7 @@ import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-mont
 import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
 import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
 import { ReportMonthlyPreGoLiveByCmoComponent } from "./report-monthly/report-monthly-pre-go-live/report-monthly-pre-go-live-by-cmo/report-monthly-pre-go-live-by-cmo.component";
+import { ReportMonthlyPreGoLiveByProductComponent } from "./report-monthly/report-monthly-pre-go-live/report-monthly-pre-go-live-by-product/report-monthly-pre-go-live-by-product.component";
 import { ReportMonthlyPendingPreGoLiveAftApvComponent } from "./report-monthly/report-monthly-pending-pre-go-live-aft-apv/report-monthly-pending-pre-go-live-aft-apv.component";
 import { ReportMonthlyPreGoLiveBySupplierComponent } from "./report-monthly/report-monthly-pre-go-live-by-supplier/report-monthly-pre-go-live-by-supplier.component";
 import { ReportMonthlyTopSupplierComponent } from "./report-monthly/report-monthly-top-supplier/report-monthly-top-supplier.component";
@@ -41,6 +42,7 @@ const routes: Routes = [
       { path: PathConstant.REPORT_DAILY_PENDING_APP_AFT_APV, component: ReportDailyPendingAppAftApvComponent, data: { title: 'Report Daily Pending App After Approval' } },
       { path: PathConstant.REPORT_MONTHLY_PENDING_LEAD, component: ReportMonthlyPendingLeadComponent, data: { title: 'Report Monthly Pending Lead' } },
       { path: PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO, component: ReportMonthlyPreGoLiveByCmoComponent, data: { title: 'Report Monthly Pre Go Live By CMO' } },
+      { path: PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_PRODUCT, component: ReportMonthlyPreGoLiveByProductComponent, data: { title: 'Report Monthly Pre Go Live By Product' } },
       { path: PathConstant.REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV, component: ReportMonthlyPendingPreGoLiveAftApvComponent, data: { title: 'Report Monthly Pending Pre Go Live After Approval' } },
       { path: PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER, component: ReportMonthlyPreGoLiveBySupplierComponent, data: { title: 'Report Monthly Pre Go Live By Supplier' } },
       { path: PathConstant.REPORT_MONTHLY_TOP_SUPPLIER, component: ReportMonthlyTopSupplierComponent, data: { title: 'Report Monthly Top Supplier' } },
