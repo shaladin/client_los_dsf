@@ -1,5 +1,5 @@
 {
-    "title": "Pre Go Live Approval",
+    "title": "Go Live Approval",
     "exportExcel": false,
     "component": [
         {
@@ -12,7 +12,7 @@
         },
         {
             "type": "textbox",
-            "name": "AC.CUST_NAME",
+            "name": "APP_INFO.CustName",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -20,7 +20,7 @@
         },
         {
             "type": "textbox",
-            "name": "A.PROD_OFFERING_NAME",
+            "name": "APP_INFO.ProdOfferingName",
             "id": "ProdOfferingName",
             "value": "",
             "label": "Product Offering Name",

@@ -26,6 +26,7 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsCompletion: boolean = false;
   isCompletionCheck = true;
+  IsCustomer: boolean = false;
   isCompleteCustStep:object = {};
   completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
   
@@ -71,7 +72,7 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionCompanyData.json";
     
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
@@ -79,10 +80,11 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
       animation: true
     })
 
-    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).subscribe(
+    await this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         this.AppCustCompanyId = response.AppCustCompanyObj.AppCustCompanyId;
         this.IsCompletion = response.AppCustObj.IsCompletion;
+        this.IsCustomer = response.AppCustObj.IsCustomer;
       }
     );
 
@@ -147,6 +149,9 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
     }
     else
     {
+      if(!this.IsCustomer && Step == 'Shrholder'){
+        Step = 'Contact';
+      }
       this.EnterTab(Step);
       this.ucViewMainProd.initiateForm();
     }    
