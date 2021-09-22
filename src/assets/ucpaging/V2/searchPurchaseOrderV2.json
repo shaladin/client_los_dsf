@@ -77,7 +77,7 @@
     },
     "headerList": [
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "SLA",
             "name": "IndicatorSLA"

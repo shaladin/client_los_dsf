@@ -59,6 +59,7 @@ export class URLConstant {
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
+  public static CopyCancelledAppForMainDataMultiBLV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
   public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
   public static AddAppFromMou = environment.losUrl + "/v1" + "/Application/AddAppFromMou";
@@ -698,7 +699,7 @@ export class URLConstant {
   public static GetMouShareholderDuplicateCheck = environment.losUrl + "/v1" + "/MouCustDupCheck/GetMouShareholderDuplicateCheck";
   public static EditCustNoMouCust = environment.losUrl + "/v1" + "/MouCustDupCheck/EditCustNoMouCust";
   public static SubmitMouDupCheck = environment.losUrl + "/v1" + "/MouCustDupCheck/SubmitMouDupCheck";
-
+ 
   // MOU Freeze Unfreeze
   public static SubmitMouFreezeUnfreeze = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
   public static SubmitMouFreezeUnfreezeV2 = environment.losUrl + "/v2" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
@@ -1383,6 +1384,7 @@ export class URLConstant {
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerifEdit = environment.FoundationR3Url + "/v1" + "/VerfResultH/AddEditVerfResultHeaderAndVerfResultDetailForSurveyVerif";
   public static GetVerfQuestionListByAppIdAndSubjectForSurveyVerifEdit = environment.FoundationR3Url + "/v1" + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfResultH";
   public static CompleteAppSurveyVerif = environment.losUrl + "/v1" + "/SurveyVerif/CompleteAppSurveyVerif";
+  public static CompleteAppSurveyVerifV2 = environment.losUrl + "/v2" + "/SurveyVerif/CompleteAppSurveyVerif";
 
   // App Cust
   public static GetAppCustByAppId = environment.losUrl + "/v1" + "/AppCust/GetAppCustByAppId";
