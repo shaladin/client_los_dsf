@@ -26,6 +26,7 @@ import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResul
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-lead-input-lead-data',
@@ -48,6 +49,8 @@ export class LeadInputLeadDataComponent implements OnInit {
   returnFirstInstObj: Array<KeyValueObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   latestReqDtCheckRapindo: Date;
   leadNo: string;
   reqLatestJson: any;
@@ -236,6 +239,7 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
             if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+              this.getDigitalizationSvcType();
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response: ResThirdPartyRsltHObj) => {
                   this.latestReqDtCheckRapindo = response.ReqDt;
@@ -839,7 +843,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   confirmFraudCheck() {
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       if (!this.isAlreadySubmittedByIntegrator && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == "" && confirm("Submit without integrator?")) {
         return true;
       }
@@ -1031,7 +1035,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
   }
   checkRapindo() {
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
@@ -1073,6 +1077,26 @@ export class LeadInputLeadDataComponent implements OnInit {
       return;
     } else {
       this.isAbleToSubmit = true;
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+            var svcType = listSvcType.find(x => x == refSvcType);
+            if(svcType != null){
+              this.IsSvcExist = true;
+            }
+        });
     }
   }
 }

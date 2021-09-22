@@ -22,7 +22,7 @@ export class CrdRvwCmoInfoComponent implements OnInit {
   }
 
   async GetCrdRvwCollateralByCrdRvwCustInfoId() {
-    await this.http.post<CrdRvwCmoObj>(URLConstant.GetCrdRvwCmoBycrdRvwExposureId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<CrdRvwCmoObj>(URLConstant.GetCrdRvwCmoBycrdRvwExposureId, { Id: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.crdRvwCmoObj = response;
       }

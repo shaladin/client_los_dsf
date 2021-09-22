@@ -127,13 +127,13 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
 
     this.http.post(URLConstantX.GoLiveApprovalX, ReqPreGoLiveApvCustomObj).subscribe(
       () => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.GO_LIVE_APV_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.GO_LIVE_APV_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   initInputApprovalObj() {

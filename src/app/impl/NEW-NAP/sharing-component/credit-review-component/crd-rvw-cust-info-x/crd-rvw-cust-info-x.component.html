@@ -41,8 +41,11 @@
       <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-12">
-            <label class="label-control"> 
+            <label class="label-control" *ngIf="isCustCrdRvwExposureObj"> 
               <a class="font-weight-bold" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
+             </label>
+             <label class="label-control" *ngIf="!isCustCrdRvwExposureObj"> 
+                Exposure .000 (#Active / OS Principal / OS AR)
              </label>
           </div>
         </div>

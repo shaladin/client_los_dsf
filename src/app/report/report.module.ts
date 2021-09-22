@@ -31,6 +31,10 @@ import { ReportDailyPreGoLiveByCmoComponent } from "./report-daily-pre-go-live/r
 import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-monthly-inprocess-app/report-monthly-inprocess-app.component";
 import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
 import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
+import { ReportMonthlyPreGoLiveByCmoComponent } from './report-monthly/report-monthly-pre-go-live/report-monthly-pre-go-live-by-cmo/report-monthly-pre-go-live-by-cmo.component';
+import { ReportMonthlyPendingPreGoLiveAftApvComponent } from "./report-monthly/report-monthly-pending-pre-go-live-aft-apv/report-monthly-pending-pre-go-live-aft-apv.component";
+import { ReportMonthlyPreGoLiveBySupplierComponent } from "./report-monthly/report-monthly-pre-go-live-by-supplier/report-monthly-pre-go-live-by-supplier.component";
+import { ReportMonthlyTopSupplierComponent } from "./report-monthly/report-monthly-top-supplier/report-monthly-top-supplier.component";
 
 @NgModule({
     declarations: [
@@ -57,7 +61,11 @@ import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-month
     ReportDailyPreGoLiveByCmoComponent,
     ReportMonthlyInprocessAppComponent,
     ReportDailyPendingAppAftApvComponent,
-    ReportMonthlyPendingLeadComponent
+    ReportMonthlyPendingLeadComponent,
+    ReportMonthlyPreGoLiveByCmoComponent,
+    ReportMonthlyPendingPreGoLiveAftApvComponent,
+    ReportMonthlyPreGoLiveBySupplierComponent,
+    ReportMonthlyTopSupplierComponent
     ],
     imports: [
         ReportRoutingModule,

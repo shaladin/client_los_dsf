@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ResponseTaskReassignmentDetailPageObj } from 'app/shared/model/TaskReassignment/ResponseTaskReassignmentDetailPageObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-task-reassigmnet-view',
@@ -11,12 +11,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TaskReassigmnetViewComponent implements OnInit {
   TaskReassignmentTrxId: number;
-  TaskReassignmentObj: ResponseTaskReassignmentDetailPageObj;
+  TaskReassignmentObj: ResponseTaskReassignmentDetailPageObj = new ResponseTaskReassignmentDetailPageObj();
 
   constructor(
-    private router: Router,
     private http: HttpClient,
-    private toastr: NGXToastrService,
     private route: ActivatedRoute
   ) { 
 
@@ -30,7 +28,8 @@ export class TaskReassigmnetViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post(URLConstant.GetTaskReassignmentDetailForApproval, { TaskReassignmentTrxId: this.TaskReassignmentTrxId }).toPromise().then(
+    let urlApi: string = environment.isCore ? URLConstant.GetTaskReassignmentDetailForApprovalV2 : URLConstant.GetTaskReassignmentDetailForApproval;
+    this.http.post(urlApi, { TaskReassignmentTrxId: this.TaskReassignmentTrxId }).toPromise().then(
       (response: ResponseTaskReassignmentDetailPageObj) => {
         this.TaskReassignmentObj = response;
       }

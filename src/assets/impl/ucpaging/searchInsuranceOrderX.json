@@ -29,7 +29,7 @@
           "url": "",
           "environment": "LOS",
           "path":"/InsuranceOrderX/GetInscoBranch",
-          "label": "Insco Branch",
+          "label": "Insurance Company Branch",
           "items": [],
           "itemsUrl": []
         }
@@ -53,13 +53,13 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "INSCO BRANCH NAME",
+            "label": "INSURANCE COMPANY BRANCH NAME",
             "name": "AIO.INSCO_BRANCH_NAME"
         },
         {
             "type": "sort",
             "position": "center",
-            "label": "NUM OF ASSET",
+            "label": "NUMBER OF ASSET",
             "name": "AG.NUM_OF_ASSET"
         },
         {

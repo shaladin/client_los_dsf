@@ -40,6 +40,7 @@ import { MouCustCollateralStatXObj } from 'app/impl/shared/model/MouCustCollater
 import { RefAttrGenerateObj } from 'app/shared/model/RefAttrGenerate.Model';
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from 'app/shared/model/MouCustCollateralAttrObj.Model';
 import { RefAttrGenerate } from 'app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll-x',
@@ -62,6 +63,8 @@ export class MouRequestAddcollXComponent implements OnInit {
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   thirdPartyRsltHId: number = 0;
   controlNameIdNo: string = 'OwnerIdNo';
   resultPattern: Array<KeyValueObj>;
@@ -1479,7 +1482,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       }
     }
 
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       if (!this.IsCalledIntegrator) {
         if (confirm("Continue without integrator ?")) {
           this.UpdatePlafondAmt(sumCollateralValue);
@@ -1541,6 +1544,7 @@ export class MouRequestAddcollXComponent implements OnInit {
         }
 
         if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+          this.getDigitalizationSvcType();
           this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
           this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
           this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
@@ -1656,6 +1660,26 @@ export class MouRequestAddcollXComponent implements OnInit {
     }
   }
 
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+        var svcType = listSvcType.find(x => x == refSvcType);
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+    }
+  }
   ChangeCollStat() {
     if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       this.AddCollForm.controls.CollateralReceivedDt.enable();
@@ -1691,4 +1715,6 @@ export class MouRequestAddcollXComponent implements OnInit {
     }
     temp.updateValueAndValidity();
   }
+  
+  
 }

@@ -132,6 +132,10 @@ export class NapDetailFormXComponent implements OnInit {
         await this.initDms();
       }
       this.ChangeStepper();
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepNapd) {
+        this.NapObj.AppCurrStep = CommonConstant.AppStepRef;
+        this.UpdateAppStep(this.NapObj.AppCurrStep);
+      }
       this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
       this.ChooseStep(this.AppStepIndex);
     }
@@ -271,6 +275,9 @@ export class NapDetailFormXComponent implements OnInit {
 
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
+    if (this.ReturnHandlingHId == 0) {
+      this.UpdateAppStep(AppStep);
+    }
     const step = this.AppStep[AppStep];
     if(step!=undefined){
       this.AppStepIndex = step;
@@ -283,11 +290,6 @@ export class NapDetailFormXComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId > 0) {
-
-    } else {
-      this.UpdateAppStep(Step);
-    }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
