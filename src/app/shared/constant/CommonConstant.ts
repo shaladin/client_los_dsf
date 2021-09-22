@@ -1047,4 +1047,21 @@ export class CommonConstant {
   public static DigitalizationSvcTypeRapindo = "RAPINDO";
   public static DigitalizationSvcTypeProfind = "PROFIND";
   public static DigitalizationSvcTypeSlik = "SLIK";
+
+  //LIST APP STEP
+  public static AppCurrStepNap2 = {
+    "NAPD": CommonConstant.AppStepNapd,
+    "REF": CommonConstant.AppStepRef,
+    "APP": CommonConstant.AppStepApp,
+    "ASSET": CommonConstant.AppStepAsset,
+    "COLL": CommonConstant.AppStepColl,
+    "INS": CommonConstant.AppStepIns,
+    "LFI": CommonConstant.AppStepLIns,
+    "FIN": CommonConstant.AppStepFin,
+    "TC": CommonConstant.AppStepTC,
+    "UPL_DOC": CommonConstant.AppStepUplDoc,
+    "INVOICE": CommonConstant.AppStepInvoice,
+    "CMPLTN": CommonConstant.AppStepCustCmpltn,
+    "AEX": CommonConstant.AppStepAssetExpense
+  }
 }
