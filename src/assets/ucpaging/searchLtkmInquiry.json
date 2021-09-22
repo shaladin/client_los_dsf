@@ -15,7 +15,7 @@
             "name": "APP.APP_NO",
             "id": "AppNoId",
             "value": "",
-            "label": "App No",
+            "label": "Application No",
             "placeholder": "Placeholder"
         },
         {
@@ -74,7 +74,7 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "APP NO",
+            "label": "Application No",
             "name": "AppNo"
         },
         {
