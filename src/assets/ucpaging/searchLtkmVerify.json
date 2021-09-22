@@ -85,7 +85,7 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "CUSTOMER NAME",
       "name": "LC.CUST_NAME"
     },
@@ -97,7 +97,7 @@
     },
     {
       "type": "sort",
-      "position": "center",
+      "position": "left",
       "label": "TYPE",
       "name": "LC.MR_CUST_TYPE_CODE"
     },
@@ -128,8 +128,9 @@
       "property": "ClaimBy"
     },
     {
-      "type": "text",
-      "position": "left",
+      "type": "callback",
+      "key": "customer",
+      "position": "center",
       "property": "CustNo"
     },
     {
@@ -140,7 +141,7 @@
     {
       "type": "callback",
       "key": "ltkmno",
-      "position": "left",
+      "position": "center",
       "property": "LtkmNo"
     },
     {
