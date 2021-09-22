@@ -43,6 +43,11 @@
             "type": "text",
             "label": "Cessie Status",
             "property": "CessieStatus"
+          },
+          {
+            "type": "text",
+            "label": "Virtual Account",
+            "property": "VirtualAccount"
           }
         ],
         "querystring": {
