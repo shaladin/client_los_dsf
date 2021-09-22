@@ -95,7 +95,7 @@ export class EndDateForGoLiveApprovalDetailXComponent implements OnInit {
       () => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.END_DT_GO_LIVE_APV_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
@@ -118,7 +118,7 @@ export class EndDateForGoLiveApprovalDetailXComponent implements OnInit {
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.END_DT_GO_LIVE_APV_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   initInputApprovalObj() {
