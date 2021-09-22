@@ -224,7 +224,7 @@
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Status BPKB</label>
                 <div class="col-md-4">
-                <select class="form-control adInsInput" style="width: auto" formControlName="BpkbStatCode"
+                <select class="form-control adInsInput" style="width: 100%" formControlName="BpkbStatCode"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.BpkbStatCode.invalid }">
                   <option *ngFor="let it of applicationDDLitems['STATUS_BPKB']" value="{{it.Key}}">
                     {{it.Value}} </option>
