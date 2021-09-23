@@ -137,7 +137,7 @@ export class PathConstantX {
   public static CUST_COMPL_PRSNL = PathConstant.DETAIL + "/" + PathConstantX.PERSONAL;
   public static CUST_COMPL_COY = PathConstant.DETAIL + "/" + PathConstantX.COY;
   //endregion
-	
+
   //#region Nap-Additional-Prcs
   public static RETURN_HANDLING_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstantX.PAGING;
   public static RETURN_HANDLING_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
@@ -153,6 +153,7 @@ export class PathConstantX {
 
   //#region Nap-Admin-Prcs
   public static AGRMNT_ACT_DETAIL = PathConstant.AGRMNT_ACT + "/" + PathConstantX.DETAIL_X;
+  public static INVOICE_VERIF_DETAIL_LIST_INV_X = PathConstant.INVOICE_VERIF + "/" + PathConstant.DETAIL + "/listOfInvoiceX";
   //endregion
 
   //#region View-Enhancing-Module

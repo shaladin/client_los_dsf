@@ -61,6 +61,7 @@ import { PurchaseOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process
 import { AgrmntActivationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component';
 import { InsuranceOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-paging/insurance-order-paging-x/insurance-order-paging-x.component';
 import { InsuranceOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component';
+import {InvoiceVerifDetailListOfInvoiceXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
 import { DocumentViewXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/document-printing/document-view/document-view-x.component';
 
 
@@ -388,6 +389,13 @@ const routes: Routes = [
         component: InvoiceVerifDetailListOfInvoiceComponent,
         data: {
           title: 'Invoice Detail List Of Invoice'
+        }
+      },
+      {
+        path: PathConstantX.INVOICE_VERIF_DETAIL_LIST_INV_X,
+        component: InvoiceVerifDetailListOfInvoiceXComponent,
+        data: {
+          title: 'Invoice Detail List Of Invoice X'
         }
       },
       {
