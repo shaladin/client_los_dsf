@@ -50,6 +50,7 @@ export class NapDetailFormComponent implements OnInit {
   IsDataReady: boolean = false;
   BizTemplateCode: string = CommonConstant.FL4W;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -123,6 +124,10 @@ export class NapDetailFormComponent implements OnInit {
         await this.initDms();
       }
       this.ChangeStepper();
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepNapd) {
+        this.NapObj.AppCurrStep = CommonConstant.AppStepRef;
+        this.UpdateAppStep(this.NapObj.AppCurrStep);
+      }
       this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
       this.ChooseStep(this.AppStepIndex);
     }
@@ -248,9 +253,6 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId == 0) {
-      this.UpdateAppStep(Step);
-    }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
@@ -301,6 +303,9 @@ export class NapDetailFormComponent implements OnInit {
 
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
+    if (this.ReturnHandlingHId == 0) {
+      this.UpdateAppStep(AppStep);
+    }
     switch (AppStep) {
       case CommonConstant.AppStepRef:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];

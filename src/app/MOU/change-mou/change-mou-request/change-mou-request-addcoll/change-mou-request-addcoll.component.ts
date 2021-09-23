@@ -69,6 +69,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   listMouCustAddrObj: Array<MouCustAddrObj> = new Array();
   locationAddrObj: AddrObj;
   inputFieldLocationObj: InputFieldObj;
+  InputLookupProfessionObj: InputLookupObj;
 
   collateralObj: ChangeMouCustCollateralObj;
   collateralRegistrationObj: any;
@@ -117,6 +118,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     ],
     FullAssetCode: [""],
     AssetCategoryCode: [""],
+    OwnerProfessionCode: [''],
     OwnerName: ["", [Validators.required]],
     OwnerRelationship: ["", [Validators.required]],
     OwnerIdNo: ["", [Validators.required]],
@@ -150,11 +152,11 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.customPattern = new Array<CustomPatternObj>();
     this.inputAddressObjForLegalAddr = new InputAddressObj();
     this.inputAddressObjForLegalAddr.showSubsection = false;
-    this.inputAddressObjForLegalAddr.showPhn3 = false;
+    this.inputAddressObjForLegalAddr.showAllPhn = false;
 
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
-    this.inputAddressObjForLocAddr.showPhn3 = false;
+    this.inputAddressObjForLocAddr.showAllPhn = false;
 
     this.items = this.AddCollForm.get("items") as FormArray;
     this.bindUcLookup();
@@ -164,6 +166,12 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.bindMouData();
     this.bindUcAddToTempData();
     this.tempPagingObj.isReady = true;
+    this.InputLookupProfessionObj = new InputLookupObj();
+    this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.isRequired = false;
+    this.InputLookupProfessionObj.isReady = true;
   }
 
   bindUcAddToTempData() {
@@ -321,16 +329,11 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
 
   ResetForm() {
     this.inputAddressObjForLegalAddr = new InputAddressObj();
-    this.inputAddressObjForLegalAddr.showPhn1 = false;
-    this.inputAddressObjForLegalAddr.showPhn2 = false;
-    this.inputAddressObjForLegalAddr.showPhn3 = false;
-    this.inputAddressObjForLegalAddr.showFax = false;
+    this.inputAddressObjForLegalAddr.showSubsection = false;
+    this.inputAddressObjForLegalAddr.showAllPhn = false;
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
-    this.inputAddressObjForLocAddr.showPhn1 = false;
-    this.inputAddressObjForLocAddr.showPhn2 = false;
-    this.inputAddressObjForLocAddr.showPhn3 = false;
-    this.inputAddressObjForLocAddr.showFax = false;
+    this.inputAddressObjForLocAddr.showAllPhn = false;
 
     this.AddCollForm.patchValue({
       MouCustCollateralId: 0,
@@ -585,6 +588,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
 
             MouCustCollateralRegistrationId: this.collateralRegistrationObj.MouCustCollateralRegistrationId,
             SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer,
+            OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode,
             OwnerName: this.collateralRegistrationObj.OwnerName,
             OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
             MrIdTypeCode: this.collateralRegistrationObj.MrIdType,
@@ -642,9 +646,26 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           this.inputAddressObjForLocAddr.default = this.locationAddrObj;
           this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
 
+          this.SetProfessionName(this.collateralRegistrationObj.OwnerProfessionCode);
+          this.checkSelfOwnerColl();
+          this.InputLookupProfessionObj.isDisable = true;
+          this.InputLookupProfessionObj.isReady = true;
           this.onItemChange(this.collateralObj.AssetTypeCode, true, true, true);
         });
     }
+  }
+
+  async SetProfessionName(professionCode: string) {
+    await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
+      (response) => {
+        this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+        this.InputLookupProfessionObj.jsonSelect = response;
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   onItemChange(
@@ -790,6 +811,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.changeMouCustCollateralRegistrationObj.MrIdTypeCode = this.AddCollForm.controls.MrIdType.value;
     this.changeMouCustCollateralRegistrationObj.MrOwnerRelationshipCode = this.AddCollForm.controls.OwnerRelationship.value;
     this.changeMouCustCollateralRegistrationObj.MrUserRelationshipCode = this.AddCollForm.controls.OwnerRelationship.value;
+    this.changeMouCustCollateralRegistrationObj.OwnerProfessionCode = this.AddCollForm.controls.OwnerProfessionCode.value;
     this.changeMouCustCollateralRegistrationObj.Notes = this.AddCollForm.controls.Notes.value;
 
     this.changeMouCustCollateralRegistrationObj.OwnerAddr = this.AddCollForm.controls["legalAddr"]["controls"].Addr.value;
@@ -933,6 +955,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           OwnerRelationship: this.collateralRegistrationObj.MrOwnerRelationshipCode,
           Notes: this.collateralRegistrationObj.Notes,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
+          OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode,
           SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF" ? true : false
         });
         this.GenerateCollateralAttr(false, ChangeMouCustCollId);
@@ -943,6 +966,8 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
         this.AddCollForm.controls.MrCollateralConditionCode.disable();
         this.AddCollForm.updateValueAndValidity();
 
+        this.SetProfessionName(this.collateralRegistrationObj.OwnerProfessionCode);
+        
         this.legalAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
         this.legalAddrObj.City = this.collateralRegistrationObj.OwnerCity;
         this.legalAddrObj.AreaCode1 = this.collateralRegistrationObj.OwnerAreaCode1;
@@ -1024,6 +1049,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       MrCollateralConditionCode: [""],
       ManufacturingYear: ["", [Validators.pattern("^[0-9]+$")]],
       CopyToOwnerLocation: [''],
+      OwnerProfessionCode: [''],
       SelfOwner: [false],
       AttrContentObjs: this.fb.array([])
     });
@@ -1035,6 +1061,9 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: "" };
 
     this.items = this.AddCollForm.get("items") as FormArray;
+    this.InputLookupProfessionObj.nameSelect = '';
+    this.InputLookupProfessionObj.jsonSelect = { ProfessionName: '' };
+    this.InputLookupProfessionObj.isDisable = false;
     this.bindUcLookup();
     this.initAddrObj();
     this.bindMouData();
@@ -1180,15 +1209,17 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   async CopyUserForSelfOwner() {
     if (this.AddCollForm.controls.SelfOwner.value) {
       await this.http.post(URLConstant.GetMouCustByMouCustId, { Id: this.MouCustId }).toPromise().then(
-        (response) => {
+        async (response) => {
           let CustObj = response["MouCustObj"];
           let CustAddrObj = response["MouCustAddrLegalObj"];
+          this.CustPersonalJobDataObj = response["MouCustPersonalJobDataObj"];
 
           this.AddCollForm.patchValue({
             OwnerName: CustObj.CustName,
             OwnerRelationship: "SELF",
             MrIdType: CustObj.MrIdTypeCode,
             OwnerIdNo: CustObj.IdNo,
+            OwnerProfessionCode: typeof(response['MouCustPersonalJobDataObj']) != 'undefined' ? this.CustPersonalJobDataObj.MrProfessionCode : '',
             // OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
           })
           // let OwnerAddrObj = CustAddrObj;
@@ -1196,11 +1227,38 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: CustAddrObj.Zipcode };
           this.inputAddressObjForLegalAddr.default = CustAddrObj;
           this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
+          this.InputLookupProfessionObj.nameSelect = "";
+          this.InputLookupProfessionObj.jsonSelect = "";
+
+          if(typeof(response['MouCustPersonalJobDataObj']) != 'undefined'){
+            await this.GetProfessionName(this.CustPersonalJobDataObj.MrProfessionCode);
+            this.InputLookupProfessionObj.nameSelect = this.CustPersonalJobDataObj.MrProfessionName;
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.CustPersonalJobDataObj.MrProfessionName };
+          }
         }
       )
     }
     this.checkSelfOwnerColl();
   }
+  GetProfession(event) {
+    this.AddCollForm.patchValue({
+      OwnerProfessionCode: event.ProfessionCode
+    });
+  }
+
+  CustPersonalJobDataObj: any;
+  async GetProfessionName(professionCode: string) {
+    await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
+      (response) => {
+        this.CustPersonalJobDataObj.MrProfessionName = response['ProfessionName'];
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   isSelfCust: boolean = false;
   checkSelfOwnerColl() {
     if (this.AddCollForm.controls.SelfOwner.value) {
@@ -1211,8 +1269,10 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.OwnerIdNo.disable();
       this.AddCollForm.controls.legalAddr.disable();
       this.isSelfCust = true
+      this.InputLookupProfessionObj.isDisable = true;
       return;
     }
+    this.InputLookupProfessionObj.isDisable = false;
     this.AddCollForm.controls.OwnerName.enable();
     this.AddCollForm.controls.OwnerRelationship.enable();
     // this.AddCollForm.controls.OwnerMobilePhnNo.enable();

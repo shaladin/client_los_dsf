@@ -56,5 +56,4 @@ export class ViewCreditProcessFlowComponent implements OnInit {
       }
     );
   }
-
 }

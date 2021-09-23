@@ -17,6 +17,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -24,6 +25,7 @@ import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 })
 export class AssetDataPagingComponent implements OnInit {
   @Input() AppId: number;
+  @Input() BizTemplateCode: string = "-";
   @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
@@ -46,6 +48,8 @@ export class AssetDataPagingComponent implements OnInit {
   generalSettingObj: GenericListByCodeObj;
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsSvcExist: boolean = false;
   LastRequestedDate: any;
   IsCalledIntegrator: boolean = false;
   thirdPartyRsltHId: any;
@@ -63,7 +67,7 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   async GetThirdPartyResultH() {
-    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
       this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {
           this.appObj = response;
@@ -134,11 +138,10 @@ export class AssetDataPagingComponent implements OnInit {
 
         if (gsUseDigitalization != undefined) {
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
+          this.getDigitalizationSvcType();
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
-
-        this.GetThirdPartyResultH();
       }
     );
   }
@@ -373,7 +376,7 @@ export class AssetDataPagingComponent implements OnInit {
     }
     if (this.checkValidityAssetUsed()) return;
 
-    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
 
       if (!this.IsCalledIntegrator) {
         if (confirm("Submit without Integrator ? ")) {
@@ -391,6 +394,29 @@ export class AssetDataPagingComponent implements OnInit {
     }
     else {
       this.outputValue.emit({ mode: 'submit' });
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.BizTemplateCode}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+      var svcType = listSvcType.find(x => x == refSvcType);
+
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+      this.GetThirdPartyResultH();
     }
   }
 }

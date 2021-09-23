@@ -4,13 +4,14 @@ export class RequestTaskModelObj {
     TaskDefinitionKey: string;
     TaskDefinitionKeys: Array<string>;
     TransactionNo: string;
+    TransactionNumbers: Array<string>;
     UserName: string;
+    Finished: boolean;
+    Unfinished: boolean;
     RoleCode: string;
     OfficeCode: string;
     IncludeAssignedTasks: boolean;
     OfficeRoleCodes: Array<string>;
-    Finished: boolean;
-    Unfinished: boolean;
  
     constructor() {
         this.ProcessKey = "";
@@ -18,6 +19,7 @@ export class RequestTaskModelObj {
         this.TaskDefinitionKey = "";
         this.TaskDefinitionKeys= new Array<string>();
         this.TransactionNo = "";
+        this.TransactionNumbers= new Array<string>();
         this.UserName = "";
         this.RoleCode = "";
         this.OfficeCode = "";

@@ -70,31 +70,9 @@ export class TaskReassignmentDetailComponent implements OnInit {
     private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
-      //#region v2 sementara
-      if (params["Assignee"]) {
-        this.TaskReassignmentForm.get("OldCurrentUser").patchValue(params["Assignee"]);
-      }
-      if (params["WfActivityCode"]) {
-        this.TaskReassignmentForm.get("WfActivityCode").patchValue(params["WfActivityCode"]);
-      }
-      if (params["WfRefNo"]) {
-        this.TaskReassignmentForm.get("WfRefNo").patchValue(params["WfRefNo"]);
-      }
-      if (params["WfName"]) {
-        let WfRefNoSplit: Array<string> = params["WfName"].split(":");
-        this.TaskReassignmentForm.get("WfCode").patchValue(WfRefNoSplit[0]);
-        this.TaskReassignmentForm.get("WfName").patchValue(WfRefNoSplit[0]);
-      }
-      if (params["WfActivityName"]) {
-        this.WfActivityName = params["WfActivityName"];
-        this.TaskReassignmentForm.get("WfActivityName").patchValue(params["WfActivityName"]);
-      }
-      //#endregion
       if (params["WfTaskListId"]) {
         this.WfTaskListId = params["WfTaskListId"];
-        this.TaskReassignmentForm.patchValue({
-          WfTaskListId: this.WfTaskListId
-        });
+        if (!environment.isCore) this.TaskReassignmentForm.patchValue({ WfTaskListId: this.WfTaskListId });
       }
     });
     this.InputLookupObj = new InputLookupObj();
@@ -105,96 +83,64 @@ export class TaskReassignmentDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (!environment.isCore) {
-      this.http.post(URLConstant.GetTaskReassignmentDetail, { WfTaskListId: this.WfTaskListId }).pipe(
-        map((response) => {
-          this.TaskReassignmentForm.patchValue({
-            WfRefNo: response["WfRefNo"],
-            WfName: response["WfName"],
-            WfActivityCode: response["WfActivityCode"],
-            WfActivityName: response["WfActivityName"],
-            OldCurrentUser: response["CurrentUser"],
-            OfficeCode: response["OfficeCode"]
-          });
-          this.WfActivityName = response["WfActivityName"];
-          this.WfRoleCode = response["RoleCode"];
-          this.WfOfficeCode = response["OfficeCode"];
-          return response;
-        }),
-        mergeMap((response) => {
-          let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
-          let getDDLRec = this.http.post(URLConstant.GetListActiveRefReason, Obj);
-          let getUserRole = this.http.post(URLConstant.GetUserRoleByUsernameForReassignment, { Username: response["CurrentUser"] });
-          return forkJoin([getUserRole, getDDLRec]);
-        })
-      ).toPromise().then(
-        (response) => {
+    let urlApi: string = environment.isCore ? URLConstant.GetTaskReassignmentDetailV2 : URLConstant.GetTaskReassignmentDetail;
+    this.http.post(urlApi, { WfTaskListId: this.WfTaskListId }).pipe(
+      map((response) => {
+        this.TaskReassignmentForm.patchValue({
+          WfRefNo: response["WfRefNo"],
+          WfCode: response["WfCode"],
+          WfName: response["WfName"],
+          WfActivityCode: response["WfActivityCode"],
+          WfActivityName: response["WfActivityName"],
+          OldCurrentUser: response["CurrentUser"],
+          OfficeCode: response["OfficeCode"]
+        });
+        this.WfActivityName = response["WfActivityName"];
+        this.WfRoleCode = response["RoleCode"];
+        this.WfOfficeCode = response["OfficeCode"];
+        return response;
+      }),
+      mergeMap((response) => {
+        let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+        let getDDLRec = this.http.post(URLConstant.GetListActiveRefReason, Obj);
+        let getUserRole = this.http.post(URLConstant.GetUserRoleByUsernameForReassignment, { Username: response["CurrentUser"] });
+        return forkJoin([getUserRole, getDDLRec]);
+      })
+    ).toPromise().then(
+      (response) => {
 
-          this.DDLRecomendation = response[1][CommonConstant.ReturnObj];
+        this.DDLRecomendation = response[1][CommonConstant.ReturnObj];
 
-          let criteriaList = new Array<CriteriaObj>();
-          let criteriaObj = new CriteriaObj();
-          criteriaObj.restriction = AdInsConstant.RestrictionEq;
-          criteriaObj.propName = 'OO.ROLE_CODE'//'UR.REF_ROLE_ID';
-          criteriaObj.value = this.WfRoleCode;//response[0]["RefRoleId"];
-          criteriaList.push(criteriaObj);
+        let criteriaList = new Array<CriteriaObj>();
+        let criteriaObj = new CriteriaObj();
+        criteriaObj.restriction = AdInsConstant.RestrictionEq;
+        criteriaObj.propName = 'OO.ROLE_CODE'//'UR.REF_ROLE_ID';
+        criteriaObj.value = this.WfRoleCode;//response[0]["RefRoleId"];
+        criteriaList.push(criteriaObj);
 
-          criteriaObj = new CriteriaObj();
-          criteriaObj.restriction = AdInsConstant.RestrictionEq;
-          criteriaObj.propName = 'OO.OFFICE_CODE';
-          criteriaObj.value = this.WfOfficeCode;//response[0]["RefOfficeId"];
-          criteriaList.push(criteriaObj);
-          this.InputLookupObj.addCritInput = criteriaList;
+        criteriaObj = new CriteriaObj();
+        criteriaObj.restriction = AdInsConstant.RestrictionEq;
+        criteriaObj.propName = 'OO.OFFICE_CODE';
+        criteriaObj.value = this.WfOfficeCode;//response[0]["RefOfficeId"];
+        criteriaList.push(criteriaObj);
+        this.InputLookupObj.addCritInput = criteriaList;
 
-          criteriaObj = new CriteriaObj();
-          criteriaObj.restriction = AdInsConstant.RestrictionNeq;
-          criteriaObj.propName = 'U.USERNAME';
-          criteriaObj.value = this.TaskReassignmentForm.controls.OldCurrentUser.value;
-          criteriaList.push(criteriaObj);
-          this.InputLookupObj.addCritInput = criteriaList;
+        criteriaObj = new CriteriaObj();
+        criteriaObj.restriction = AdInsConstant.RestrictionNeq;
+        criteriaObj.propName = 'U.USERNAME';
+        criteriaObj.value = this.TaskReassignmentForm.controls.OldCurrentUser.value;
+        criteriaList.push(criteriaObj);
+        this.InputLookupObj.addCritInput = criteriaList;
 
-          this.initInputApprovalObj();
-        }
-      ).catch(
-        (error) => {
-          console.log(error);
-        }
-      );
-      return;
-    }
-
-    let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
-    await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
-      (response: GenericListObj) => {
-        this.DDLRecomendation = response[CommonConstant.ReturnObj];
+        this.initInputApprovalObj();
       }
-    )
-    let userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let criteriaList = new Array<CriteriaObj>();
-    let criteriaObj = new CriteriaObj();
-    criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    criteriaObj.propName = 'OO.ROLE_CODE'//'UR.REF_ROLE_ID';
-    criteriaObj.value = userAccess[CommonConstant.ROLE_CODE];
-    this.WfRoleCode = userAccess[CommonConstant.ROLE_CODE];
-    criteriaList.push(criteriaObj);
-
-    criteriaObj = new CriteriaObj();
-    criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    criteriaObj.propName = 'OO.OFFICE_CODE';
-    this.WfOfficeCode = userAccess[CommonConstant.OFFICE_CODE];
-    criteriaObj.value = this.WfOfficeCode;//response[0]["RefOfficeId"];
-    this.TaskReassignmentForm.get("OfficeCode").patchValue(this.WfOfficeCode);
-    criteriaList.push(criteriaObj);
-
-    criteriaObj = new CriteriaObj();
-    criteriaObj.restriction = AdInsConstant.RestrictionNeq;
-    criteriaObj.propName = 'U.USERNAME';
-    criteriaObj.value = this.TaskReassignmentForm.get("OldCurrentUser").value;
-    criteriaList.push(criteriaObj);
-    this.InputLookupObj.addCritInput = criteriaList;
-
-    this.initInputApprovalObj();
-
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
+    return;
+    
   }
 
   GetTargetUser(e) {

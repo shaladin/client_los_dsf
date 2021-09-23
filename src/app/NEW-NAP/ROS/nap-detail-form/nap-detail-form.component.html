@@ -44,7 +44,7 @@
             <!-- your steps here -->
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
-                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('APP')">
+                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab(AppCurrStepNap2.APP)">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Application Data</span>
               </button>
@@ -52,7 +52,7 @@
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('ASSET')">
+                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab(AppCurrStepNap2.ASSET)">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Asset Data</span>
               </button>
@@ -60,7 +60,7 @@
             <div class="line"></div>
             <div class="step" data-target="#expense-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="expense-tab" id="expense-tab-trigger"
-                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('AEX')">
+                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab(AppCurrStepNap2.AEX)">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Asset Expense</span>
               </button>
@@ -68,7 +68,7 @@
             <div class="line"></div>
             <div class="step" data-target="#financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
-                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('FIN')">
+                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab(AppCurrStepNap2.FIN)">
                 <span class="bs-stepper-circle">4</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
@@ -76,7 +76,7 @@
             <div class="line"></div>
             <div class="step" data-target="#TC-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
-                [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('TC')">
+                [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab(AppCurrStepNap2.TC)">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
@@ -84,7 +84,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab('UPL_DOC')">
+                [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab(AppCurrStepNap2.UPL_DOC)">
                 <span class="bs-stepper-circle">6</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -128,7 +128,7 @@
             <!-- your steps here -->
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
-                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('APP')">
+                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab(AppCurrStepNap2.APP)">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Application Data</span>
               </button>
@@ -136,7 +136,7 @@
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('ASSET')">
+                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab(AppCurrStepNap2.ASSET)">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Asset Data</span>
               </button>
@@ -144,7 +144,7 @@
             <div class="line"></div>
             <div class="step" data-target="#expense-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="expense-tab" id="expense-tab-trigger"
-                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('AEX')">
+                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab(AppCurrStepNap2.AEX)">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Asset Expense</span>
               </button>
@@ -152,7 +152,7 @@
             <div class="line"></div>
             <div class="step" data-target="#financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
-                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('FIN')">
+                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab(AppCurrStepNap2.FIN)">
                 <span class="bs-stepper-circle">4</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
@@ -160,7 +160,7 @@
             <div class="line"></div>
             <div class="step" data-target="#TC-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
-                [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('TC')">
+                [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab(AppCurrStepNap2.TC)">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
@@ -168,7 +168,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab('UPL_DOC')">
+                [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab(AppCurrStepNap2.UPL_DOC)">
                 <span class="bs-stepper-circle">6</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
