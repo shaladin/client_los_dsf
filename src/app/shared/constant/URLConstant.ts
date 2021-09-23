@@ -1854,5 +1854,6 @@ export class URLConstant {
 
   //Dashboard
   public static GetAppCountAndMappingStep = environment.losUrl + "/v1" + "/Dashboard/GetAppCountAndMappingStep";
+  public static HitSuperset = environment.Superset + "api/v1" + "/security/login";
 
 }
