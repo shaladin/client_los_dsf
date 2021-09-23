@@ -11,6 +11,9 @@ export class URLConstantX {
   public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
   public static AddPreGoLiveXV2 = environment.losUrl+ "/v2" + "/PreGoLiveX/AddPreGoLive";
 
+  public static AddAppFromCopyCancledApp = environment.losUrl + "/v1" + "/AppX/AddAppFromCopyCancledApp";
+  public static AddAppFromCopyCancledAppV2 = environment.losUrl + "/v2" + "/AppX/AddAppFromCopyCancledApp";
+
   //App CustX
   public static AddCustMainDataPersonalX = environment.losUrl + "/v1" + "/AppCustX/AddCustMainDataPersonal";
   public static EditCustMainDataPersonalX = environment.losUrl + "/v1" + "/AppCustX/EditCustMainDataPersonal";

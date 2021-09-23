@@ -65,6 +65,7 @@ import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ReturnHandlingSurveyVerifXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-survey-verif-x/return-handling-survey-verif-x.component";
 import { CopyCancelledApplicationXComponent } from "app/impl/NEW-NAP/business-process/additional-process/copy-cancelled-application-x/copy-cancelled-application-x.component";
+import { CopyCanAppMultiBlDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/copy-can-app-multi-bl-detail/copy-can-app-multi-bl-detail-x.component";
 
 
 
@@ -150,7 +151,8 @@ export const customCurrencyMaskConfig = {
     EditAppAfterApprovalInquiryComponent,
     EditAppAfterApprovalViewComponent,
     ReturnHandlingSurveyVerifXComponent,
-    CopyCancelledApplicationXComponent
+    CopyCancelledApplicationXComponent,
+    CopyCanAppMultiBlDetailXComponent
   ],
   providers: [
     NGXToastrService

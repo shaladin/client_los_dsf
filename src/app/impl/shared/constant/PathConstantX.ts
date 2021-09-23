@@ -162,6 +162,10 @@ export class PathConstantX {
   //#region Inquiry-Module
   public static APP_INQUIRY = "AppInquiryX";
   //#endregion
+
+  //region copy app cross bl
+  public static COPY_CANCEL_APP_CROSS_BL_DETAIL_X = PathConstant.COPY_CANCEL_APP_CROSS_BL + "/" + PathConstantX.DETAIL_X;
+  //endregion
 }
 
 
