@@ -15,6 +15,7 @@ import { String } from 'typescript-string-operations';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-credit-approval-result-extension-approval-paging',
@@ -98,6 +99,9 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
           }
         )
       }
+    }
+    else if(ev.Key == "application"){
+      AdInsHelper.OpenAppViewByAppId(ev.RowObj.AppId);
     }
     else {
       this.toastr.warningMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
