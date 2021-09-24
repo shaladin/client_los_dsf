@@ -1341,7 +1341,13 @@ export class AssetDataComponent implements OnInit {
 
   updateValueDownPaymentPrctg() {
     let DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
-    if (DownPaymentPrctg > 100) {
+    if(isNaN(DownPaymentPrctg)){
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: 0,
+        DownPaymentPrctg: 0
+      });
+    }
+    else if (DownPaymentPrctg > 100) {
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount!");
       this.AssetDataForm.patchValue({
         DownPaymentAmt: 0,
