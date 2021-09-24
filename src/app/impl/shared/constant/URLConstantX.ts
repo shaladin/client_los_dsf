@@ -144,6 +144,8 @@ export class URLConstantX {
   //PO
   public static GetAppCustBankAccsByAppIdX = environment.losUrl  + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";
   public static GetPurchaseOrderHByAgrmntIdAndSupplCodeX = environment.losUrl  + '/v1' + "/PurchaseOrderHX/GetPurchaseOrderHByAgrmntIdAndSupplCode";
+  public static GetPurchaseOrderListForNewPOByAppId = environment.losUrl + "/v1" + "/PurchaseOrderHX/GetPurchaseOrderListForNewPOByAppId";
+  public static ResumeWorkflowNewPurchaseOrderV2 = environment.losUrl + "/v2" + "/PurchaseOrderHX/ResumeWorkflowNewPurchaseOrder";
 
   //SURVEY VERIF X
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/AddVerfResultHeaderAndVerfResultDetailForSurveyVerifX";

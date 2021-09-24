@@ -133,7 +133,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_PO_PO_EXT_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PO_EXT_DETAIL_X; //"/Nap/AdminProcess/PurchaseOrder/PO/Detail"
   public static NAP_ADM_PRCS_PO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PAGING_X; //"/Nap/AdminProcess/PurchaseOrder/Paging"
   public static NAP_ADM_PRCS_NEW_PO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NEW_PO_PAGING; //'/Nap/AdminProcess/NewPurchaseOrder/Paging'
-  public static NAP_ADM_PRCS_NEW_PO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NEW_PO_DETAIL; //'/Nap/AdminProcess/NewPurchaseOrder/Detail'
+  public static NAP_ADM_PRCS_NEW_PO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NEW_PO_DETAIL; //'/Nap/AdminProcess/NewPurchaseOrder/Detail'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_REQ_APPRV = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_REQ_APPRV; //'/Nap/AdminProcess/DocChecklist/RequestApproval'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_PAGING; //'/Nap/AdminProcess/DocChecklist/Paging'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_DETAIL; //'/Nap/AdminProcess/DocChecklist/Detail'

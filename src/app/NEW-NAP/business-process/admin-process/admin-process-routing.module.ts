@@ -63,6 +63,7 @@ import { InsuranceOrderPagingXComponent } from 'app/impl/NEW-NAP/business-proces
 import { InsuranceOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component';
 import {InvoiceVerifDetailListOfInvoiceXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
 import { DocumentViewXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/document-printing/document-view/document-view-x.component';
+import { NewPurchaseOrderDetailXComponent } from 'app/impl/NEW-NAP/admin-process/new-purchase-order/new-purchase-order-detail-x/new-purchase-order-detail-x.component';
 
 
 const routes: Routes = [
@@ -487,6 +488,13 @@ const routes: Routes = [
         component: PurchaseOrderDetailXComponent,
         data: {
           title: 'Purchase Order Detail'
+        }
+      },
+      {
+        path: PathConstantX.NEW_PO_DETAIL,
+        component: NewPurchaseOrderDetailXComponent,
+        data: {
+          title: "Purchase Order Detail"
         }
       }
     ]
