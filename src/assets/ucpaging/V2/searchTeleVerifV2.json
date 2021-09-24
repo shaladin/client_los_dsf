@@ -1,0 +1,261 @@
+{
+  "title": "TELE VERIFICATION",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "dropdown",
+      "name": "L.ORI_OFFICE_CODE",
+      "id": "OriOfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "isQueryIn": true,
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type": "dropdown",
+      "name": "L.MR_LEAD_SOURCE_CODE",
+      "id": "LeadSourceCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path":"/RefMaster/GetListKeyValueActiveByCode",
+      "label": "Lead Source",
+      "criteriaPropName": "RefMasterTypeCode",
+      "criteriaPropValue": "LEAD_SOURCE",
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "L.LEAD_NO",
+      "id": "LeadNoId",
+      "value": "",
+      "label": "Lead No.",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
+      "type": "textbox",
+      "name": "L.ORDER_NO",
+      "id": "OrderNoId",
+      "value": "",
+      "label": "Order No.",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
+      "type": "textbox",
+      "name": "LA.FULL_ASSET_NAME",
+      "id": "FullAssetNameId",
+      "value": "",
+      "label": "Full Asset Name",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
+      "type": "textbox",
+      "name": "LC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder",
+      "datatype": "text"
+    },
+    {
+      "type" : "claim",
+      "label": "Task Claim Status",
+      "id": "ClaimStatId",
+      "ddlType" : "all",
+      "isCriteriaDataTable" : true
+    },
+    {
+      "type": "textbox",
+      "name": "Assignee",
+      "id": "ClaimById",
+      "value": "",
+      "label": "Claim By",
+      "placeholder": "Placeholder",
+      "isCriteriaDataTable" : true
+    }
+  ],
+  "headerList": [
+    {
+      "type": "label",
+      "position": "left",
+      "label": "Claim By",
+      "name": "Assignee"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "LEAD NO",
+      "name": "L.LEAD_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "OFFICE NAME",
+      "name": "RO.OFFICE_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "ORDER NO",
+      "name": "L.ORDER_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "CUSTOMER NAME",
+      "name": "LC.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "LEAD SOURCE",
+      "name": "L.MR_LEAD_SOURCE_CODE"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "FULL ASSET NAME",
+      "name": "LA.FULL_ASSET_NAME"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "ACTION"
+    }
+  ],
+  "querystring": {
+    "name": "searchTeleVerifV2"
+  },
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "Assignee"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "LeadNo",
+      "path": "VIEW_LEAD",
+      "target": "_blank",
+      "param": [
+        {
+          "type": "LeadId",
+          "property": "LeadId"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OfficeName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "OrderNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrLeadSourceCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "FullAssetName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "Assignee",
+                  "value": null,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "LEAD_TELE_VERIF_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "LeadId",
+                    "property": "LeadId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "Id"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "edit"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "Assignee",
+                  "value": null,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "LEAD_TELE_VERIF_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "LeadId",
+                    "property": "LeadId"
+                  },
+                  {
+                    "type": "WfTaskListId",
+                    "property": "Id"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "edit"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

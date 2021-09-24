@@ -1,7 +1,7 @@
 export class ResApplicationDataObj {
-    AppId: number; 
-    MouCustId: number; 
-    SrvyOrderNo: string; 
+    AppId: number;
+    MouCustId: number;
+    SrvyOrderNo: string;
     MrSalesRecommendCode: string;
     OriOfficeCode: string;
     OriOfficeName: string;
@@ -36,4 +36,6 @@ export class ResApplicationDataObj {
     MrSlikSecEcoCode: string;
     MrSlikSecEcoDescr: string;
     AppDlrFncngId: number;
+    InterestRatePrcnt: number;
+    TopInterestRatePrcnt: number;
 }

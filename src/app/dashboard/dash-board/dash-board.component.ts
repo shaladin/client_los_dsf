@@ -5,8 +5,11 @@ import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { ThingsToDoIntegrationObj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
-
+import { ThingsToDoIntegrationObj, ThingsToDoIntegrationV2Obj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { HttpClient } from '@angular/common/http';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;
@@ -23,12 +26,16 @@ export interface Chart {
 export class DashBoardComponent implements OnInit {
   Item: UcThingsToDoObj = new UcThingsToDoObj();
 
+  ReqByCodeObj: GenericObj = new GenericObj();
+  ListRole: Array<string> = [];
+
   username: string;
   url: string;
   officeCode: string;
   roleCode: string;
+  checkRole: boolean = false;
 
-  constructor(private cookieService: CookieService) { }
+  constructor(private cookieService: CookieService, private http: HttpClient) { }
 
   ngOnInit() {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -36,13 +43,41 @@ export class DashBoardComponent implements OnInit {
     this.url = environment.DashboardURL;
     this.officeCode = context[CommonConstant.OFFICE_CODE];
     this.roleCode = context[CommonConstant.ROLE_CODE];
-    this.Item.Url = environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole";
+    this.Item.Url = environment.isCore ? AdInsConstant.GetThingsToDoByRoleV2 : AdInsConstant.GetThingsToDoByRole;
     this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
 
-    let integrationObj = new ThingsToDoIntegrationObj();
-    integrationObj.RequestObj.Office = this.officeCode;
-    integrationObj.RequestObj.Role = this.roleCode;
-    integrationObj.RequestObj.UserName = this.username;
+    let integrationObj;
+
+    this.getRoleFromGeneralSetting();
+
+    if(environment.isCore){
+      integrationObj = new ThingsToDoIntegrationV2Obj();
+      integrationObj.BaseUrl = AdInsConstant.GetThingsToDoCamunda;
+      integrationObj.ApiPath = "";
+      integrationObj.RequestObj.OfficeCode = this.officeCode;
+      integrationObj.RequestObj.UserName = this.username;
+      integrationObj.RequestObj.OfficeRoleCodes = [this.roleCode, this.roleCode + "-" + this.officeCode, this.officeCode];
+    }else{
+      integrationObj = new ThingsToDoIntegrationObj();
+      integrationObj.RequestObj.Office = this.officeCode;
+      integrationObj.RequestObj.Role = this.roleCode;
+      integrationObj.RequestObj.UserName = this.username;
+      
+    }
     this.Item.RequestObj.IntegrationObj.push(integrationObj);
+
+
   }
+
+  async getRoleFromGeneralSetting(){
+    this.ReqByCodeObj.Code = CommonConstant.GSCodeRoleDashboardLosOperational;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, this.ReqByCodeObj).toPromise().then(
+      (response) => {
+        if(response["GsValue"] != null){
+          this.ListRole = response["GsValue"].split('|');
+        }
+      });
+    this.checkRole = true;
+  }
+
 }

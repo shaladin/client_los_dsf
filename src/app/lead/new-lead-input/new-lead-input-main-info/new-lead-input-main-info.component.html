@@ -12,7 +12,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 adInsLabel" translate>Lead No. </label>
                                     <div class="col-md-3">
-                                        <a (click)="AddView()"><label class="adInsLabel"
+                                        <a (click)="AddView(this.LeadId)"><label class="adInsLabel"
                                                 style="color: blue; cursor: pointer; font-size: 12px;"
                                                 translate>{{this.returnLead?.LeadNo}}</label></a>
                                     </div>
@@ -26,9 +26,9 @@
                                         </lib-uclookupgeneric>
                                     </div>
                                     <div class="col-md-4" *ngIf="this.pageType == 'edit'">
-                                        <label class="adInsLabel" style="font-size: 12px;"
-                                            translate>{{this.returnLeadExistObj?.CustName == null ? '-' :
-                                            this.returnLeadExistObj?.CustName}}</label>
+                                        <a (click)="AddView(this.returnLeadExistObj.LeadId)"><label class="adInsLabel"
+                                                style="color: blue; cursor: pointer; font-size: 12px;"
+                                                translate>{{this.returnLeadExistObj?.LeadNo}}</label></a>
                                     </div>
                                     <div class="col-md-3" *ngIf="this.pageType == 'add'">
                                         <button type="button" class="btn btn-raised btn-primary" (click)="copyLead()"

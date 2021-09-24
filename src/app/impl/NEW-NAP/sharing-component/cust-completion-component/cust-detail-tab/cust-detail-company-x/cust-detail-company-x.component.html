@@ -1,0 +1,101 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="CustDetailForm" (ngSubmit)="CustDetailForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <lib-ucSubsection [id]="'CustDetailId'" [title]="'Main Data'" [panel]="'CustDetail'">
+          </lib-ucSubsection>
+          <div id="CustDetail">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Establishment Date</label>
+                  <div class="col-md-8">
+                    <input type="date" class="form-control" formControlName="EstablishmentDate" [max]="businessDt | date: 'yyyy-MM-dd'"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustDetailForm.controls.EstablishmentDate.invalid}">
+                    <lib-uc-show-errors [control]="CustDetailForm.controls.EstablishmentDate"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>No Of Employee</label>
+                  <div class="col-md-8">
+                    <input type="number" class="form-control" formControlName="NoOfEmployee"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustDetailForm.controls.NoOfEmployee.invalid}">
+                    <lib-uc-show-errors [control]="CustDetailForm.controls.NoOfEmployee" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Customer Group</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupCustGrpObj"
+                      *ngIf="lookupCustGrpObj.isReady" [parentForm]="CustDetailForm" [identifier]="'CustomerGrp'"
+                      (lookup)="GetCustGrpData($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>VIP</label>
+                  <div class="col-md-8">
+                    <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsVip"
+                      (change)="checkState()" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Economic Sector SLIK</label>
+                  <div class="col-md-8"> 
+                      <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupEconomicSectorSlikObj" 
+                      *ngIf="lookupEconomicSectorSlikObj.isReady" [parentForm]="CustDetailForm" [identifier]="'EconomicSectorCode'" 
+                      (lookup)="GetEconomicSectorSlik($event)"></lib-uclookupgeneric>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Customer Model</label>
+                  <div class="col-md-8">
+                    <lib-ucdropdownlist [dropdownListObj]="ddlCustModelObj" [parentForm]="CustDetailForm" [enjiForm]="enjiForm"
+                      [identifier]="'MrCustModelCode'"></lib-ucdropdownlist>
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="BizTemplateCode === 'OPL'">
+                  <label class="col-md-4" translate>SKT</label>
+                  <div class="col-md-8">
+                    <input type="checkbox" formControlName="IsSkt"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Affiliation with Multifinance</label>
+                  <div class="col-md-8">
+                    <input type="checkbox" formControlName="IsAffiliateWithMF"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel"
+                    [ngClass]="{'adins-required-label' : CustDetailForm.controls.IsVip.value}" translate>VIP
+                    Notes</label>
+                  <div class="col-md-8">
+                    <textarea class="form-control adInsInput width-75-per" formControlName="VipNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && CustDetailForm.controls.VipNotes.invalid }"></textarea>    
+                    <lib-uc-show-errors [control]="CustDetailForm.controls.VipNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustDetailForm)
+              class="btn btn-raised btn-primary" translate>
+              <i class="fa fa-check-square"></i> Save & Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

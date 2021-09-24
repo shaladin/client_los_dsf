@@ -15,6 +15,24 @@
           </div>
         </div>
       </div>
+      <div class="row" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label translate>Total Asset Price</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalAssetPriceAmtOnly.value | number : '1.2-2'}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label translate>Total Asset Accessory Price</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalAccessoryPriceAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="row">
@@ -75,11 +93,11 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset</label>
-                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit Asset</label>
+                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset & Accessory / (%) DP</label>
+                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit Asset & Accessory / (%) DP</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
-                <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
+                <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}} / {{ParentForm.controls.PrcntDp.value | number:'.6':'en-US'}} %</label>
               </div>
               <div class="col-md-3 form-inline">
                 <label *ngIf="BizTemplateCode != 'FL4W'" translate>TDP</label>
@@ -95,11 +113,11 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset - Subsidy DP</label>
-                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit Asset - Security Deposit Subsidy</label>
+                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset & Accessory - Subsidy DP / (%) DP Nett</label>
+                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit Asset & Accessory - Security Deposit Subsidy / (%) DP Nett</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
-                <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
+                <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}} / {{ParentForm.controls.PrcntDpNett.value | number:'.6':'en-US'}} %</label>
               </div>
               <div class="col-md-3 form-inline">
                 <label translate>TDP Paid at MF</label>
@@ -117,6 +135,24 @@
         </div>
         <br />
       </span>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label translate>First Installment Type</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.MrFirstInstTypeName.value}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label translate>Installment Scheme</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.MrInstSchemeName.value}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="row">
@@ -175,7 +211,7 @@
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()"
-                    [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                    [options]="CurrencyMaskPrct"
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -185,7 +221,7 @@
                     (ngModelChange)="SetNeedReCalculate(true)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'FLT'"
-                    [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
+                    [options]="CurrencyMaskPrct"
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -198,7 +234,7 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right"
               *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc">
-              <label>{{ParentForm.controls.AppSupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
+              <label>{{ParentForm.controls.AppSupplEffectiveRatePrcnt.value | number:'.6':'en-US'}} %</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
               <label translate>Effective Rate To Supplier</label>
@@ -284,7 +320,7 @@
               <label translate>Calculate Base</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="CalcBase" class="form-control full-width">
+              <select formControlName="CalcBase" class="form-control full-width" (change)="CalcBaseChanged($event)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
               </select>
@@ -324,7 +360,7 @@
               <label translate>Gross Yield</label>
             </div>
             <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number:'.6':'en-US'}} %</label>
             </div>
           </div>
         </div>
@@ -350,7 +386,7 @@
       <br />
     </div>
     <div class="form-inline-right">
-      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0" (click)="Calculate()"
+      <button class="btn btn-raised btn-primary margin-r-5" translate type="submit" tabindex="0" (click)="Calculate()"
         translate>
         Calculate
       </button>
@@ -359,27 +395,27 @@
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="No" translate>
                 No
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="InstAmt" translate>
                 Installment Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="PrincipalAmt" translate>
                 Principal Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="InterestAmt" translate>
                 Interest Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
+            <th style="text-align: center;"><span class="thead-header" name="OsPrincipalAmt" translate>
                 Os Principal Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
+            <th style="text-align: center;"><span class="thead-header" name="OsInterestAmt" translate>
                 Os Interest Amount
               </span>
             </th>

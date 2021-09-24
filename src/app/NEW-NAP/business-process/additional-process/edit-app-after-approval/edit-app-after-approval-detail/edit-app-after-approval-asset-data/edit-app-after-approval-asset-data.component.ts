@@ -57,6 +57,13 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     AppAssetAttrObjs: this.fb.array([]),
     InscoBranchCode: [''],
     InscoBranchName: [''],
+    ManufacturingYear: ['', Validators.required],
+    AssetColor: [''],
+    SerialNo1: [''],
+    SerialNo2: [''],
+    SerialNo3: [''],
+    SerialNo4: [''],
+    SerialNo5: [''],
   });
 
   AppObj: NapAppModel;
@@ -84,6 +91,10 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   appInsObjObj: AppInsObjObj;
 
   AppAssetRelatedOutput: any;
+  tempColor:boolean = false;
+
+  SerialNoLabelList:Array<string> = new Array();
+  SerialNoLabelMandatory:Array<boolean> = new Array();
 
   constructor(
     private fb: FormBuilder,
@@ -100,6 +111,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.ownerAddrObj = new AddrObj();
     this.AppId = this.AppAssetObj.AppId;
 
+    await this.SetAssetTypeData()
+    await this.SetAssetInformation()
     await this.GetAppData();
     await this.GetRefProdCompt();
     this.bindIdTypeObj();
@@ -115,6 +128,125 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.setFormValidators();
 
     if (this.EditAppAssetForm.controls['SelfOwner'].value) this.SelfOwnerChange({ 'checked': this.EditAppAssetForm.controls['SelfOwner'].value })
+  }
+
+  async SetAssetTypeData()
+  {
+    await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.AppAssetObj.AssetTypeCode}).toPromise().then(
+      (response) => {
+        for(var i=0;i<response[CommonConstant.ReturnObj].length;i++)
+        {
+          this.SerialNoLabelList.push(response[CommonConstant.ReturnObj][i].SerialNoLabel)
+          this.SerialNoLabelMandatory.push(response[CommonConstant.ReturnObj][i].IsMandatory)
+        }
+      }
+    );
+  }
+
+  async SetAssetInformation()
+  {
+    this.EditAppAssetForm.patchValue({
+      ManufacturingYear: this.AppAssetObj.ManufacturingYear,
+      AssetColor: this.AppAssetObj.Color,
+      SerialNo1: this.AppAssetObj.SerialNo1,
+      SerialNo2: this.AppAssetObj.SerialNo2,
+      SerialNo3: this.AppAssetObj.SerialNo3,
+      SerialNo4: this.AppAssetObj.SerialNo4,
+      SerialNo5: this.AppAssetObj.SerialNo5
+    });
+
+    if(this.EditAppAssetForm.controls.AssetColor.value != null && this.EditAppAssetForm.controls.AssetColor.value != "")
+    {
+      this.tempColor = true;
+      this.EditAppAssetForm.controls.AssetColor.setValidators(Validators.required);
+      this.EditAppAssetForm.controls.AssetColor.updateValueAndValidity();
+    }
+    if(this.SerialNoLabelMandatory[0]){
+      this.EditAppAssetForm.controls.SerialNo1.setValidators(Validators.required);
+      this.EditAppAssetForm.controls.SerialNo1.updateValueAndValidity();
+    }
+    if(this.SerialNoLabelMandatory[1]){
+      this.EditAppAssetForm.controls.SerialNo2.setValidators(Validators.required);
+      this.EditAppAssetForm.controls.SerialNo2.updateValueAndValidity();
+    }
+    if(this.SerialNoLabelMandatory[2]){
+      this.EditAppAssetForm.controls.SerialNo3.setValidators(Validators.required);
+      this.EditAppAssetForm.controls.SerialNo3.updateValueAndValidity();
+    }
+    if(this.SerialNoLabelMandatory[3]){
+      this.EditAppAssetForm.controls.SerialNo4.setValidators(Validators.required);
+      this.EditAppAssetForm.controls.SerialNo4.updateValueAndValidity();
+    }
+    if(this.SerialNoLabelMandatory[4]){
+      this.EditAppAssetForm.controls.SerialNo5.setValidators(Validators.required);
+      this.EditAppAssetForm.controls.SerialNo5.updateValueAndValidity();
+    }
+
+    await this.http.post(URLConstant.GetListRefChangeItem, {}).toPromise().then(
+      (response) => {
+        var refChangeItemList = response[CommonConstant.ReturnObj]
+        var changeItemSerial1Exist = false;
+        var changeItemSerial2Exist = false;
+        var changeItemSerial3Exist = false;
+        var changeItemSerial4Exist = false;
+        var changeItemSerial5Exist = false;
+        var changeItemManufacturExist = false;
+        var changeItemColorExist = false;
+        for(var i=0;i<refChangeItemList.length;i++)
+        {
+          if(refChangeItemList[i].ChangeItemCode == CommonConstant.ChangeItemCodeAssetDataSerialNo1)
+          {
+            changeItemSerial1Exist = true;
+            if(refChangeItemList[i].IsActive == false){this.EditAppAssetForm.controls.SerialNo1.disable()}
+          }
+
+          if(refChangeItemList[i].ChangeItemCode == CommonConstant.ChangeItemCodeAssetDataSerialNo2)
+          {
+            changeItemSerial2Exist = true;
+            if(refChangeItemList[i].IsActive == false){this.EditAppAssetForm.controls.SerialNo2.disable()}
+          }
+
+          if(refChangeItemList[i].ChangeItemCode == CommonConstant.ChangeItemCodeAssetDataSerialNo3)
+          {
+            changeItemSerial3Exist = true;
+            if(refChangeItemList[i].IsActive == false){this.EditAppAssetForm.controls.SerialNo3.disable()}
+          }
+
+          if(refChangeItemList[i].ChangeItemCode == CommonConstant.ChangeItemCodeAssetDataSerialNo4)
+          {
+            changeItemSerial4Exist = true;
+            if(refChangeItemList[i].IsActive == false){this.EditAppAssetForm.controls.SerialNo4.disable()}
+          }
+
+          if(refChangeItemList[i].ChangeItemCode == CommonConstant.ChangeItemCodeAssetDataSerialNo5)
+          {
+            changeItemSerial5Exist = true;
+            if(refChangeItemList[i].IsActive == false){this.EditAppAssetForm.controls.SerialNo5.disable()}
+          }
+
+          if(refChangeItemList[i].ChangeItemCode == CommonConstant.ChangeItemCodeAssetDataManufacturYear)
+          {
+            changeItemManufacturExist = true;
+            if(refChangeItemList[i].IsActive == false){this.EditAppAssetForm.controls.ManufacturingYear.disable()}
+          }
+
+          if(refChangeItemList[i].ChangeItemCode == CommonConstant.ChangeItemCodeAssetDataColor)
+          {
+            changeItemColorExist = true;
+            if(refChangeItemList[i].IsActive == false){this.EditAppAssetForm.controls.AssetColor.disable()}
+          }
+        }
+
+        if(changeItemColorExist == false){this.EditAppAssetForm.controls.AssetColor.disable()}
+        if(changeItemManufacturExist == false){this.EditAppAssetForm.controls.ManufacturingYear.disable()}
+        if(changeItemSerial1Exist == false){this.EditAppAssetForm.controls.SerialNo1.disable()}
+        if(changeItemSerial2Exist == false){this.EditAppAssetForm.controls.SerialNo2.disable()}
+        if(changeItemSerial3Exist == false){this.EditAppAssetForm.controls.SerialNo3.disable()}
+        if(changeItemSerial4Exist == false){this.EditAppAssetForm.controls.SerialNo4.disable()}
+        if(changeItemSerial5Exist == false){this.EditAppAssetForm.controls.SerialNo5.disable()}
+      }
+    );
+
   }
 
   async GetAppData() {
@@ -257,9 +389,12 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     var appObj = {
       Id: this.AppId,
     };
-    await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
       (response: AppCustObj) => {
-        this.AppCustObj = response;
+        this.AppCustObj = response['AppCustObj'];
+        if(response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'] != null)  
+          this.AppCustObj.MobilePhnNo1 = response['AppCustPersonalObj']['MobilePhnNo1'];
+
         this.CustType = this.AppCustObj.MrCustTypeCode;
         if (this.CustType == CommonConstant.CustTypePersonal) {
           this.EditAppAssetForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
@@ -497,6 +632,16 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.AppAssetRelatedOutput =
     {
       AppAssetId: this.AppAssetObj.AppAssetId,
+      AppAssetObj:
+      {
+        ManufacturingYear: this.EditAppAssetForm.controls.ManufacturingYear.value,
+        Color:this.EditAppAssetForm.controls.AssetColor.value,
+        SerialNo1: this.EditAppAssetForm.controls.SerialNo1.value,
+        SerialNo2: this.EditAppAssetForm.controls.SerialNo2.value,
+        SerialNo3: this.EditAppAssetForm.controls.SerialNo3.value,
+        SerialNo4: this.EditAppAssetForm.controls.SerialNo4.value,
+        SerialNo5: this.EditAppAssetForm.controls.SerialNo5.value
+      },
       AppCollateralRegistrationObj:
       {
         AppCollateralRegistrationId: this.AppCollateralRegistrationObj.AppCollateralRegistrationId,
@@ -518,7 +663,9 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       AppInsObj:
       {
         InsAssetCoverPeriod: '-',
-        InsAssetCoveredBy: '-',
+        InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy,
+        InscoBranchCode: "",
+        InscoBranchName: "",
       }
     }
 

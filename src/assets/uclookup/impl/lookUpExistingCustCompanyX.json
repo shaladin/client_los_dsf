@@ -1,0 +1,144 @@
+{
+    "sectionTitle": "Customer Company",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "CUST_NO",
+        "id": "custNoId",
+        "value": "",
+        "label": "Customer No",
+        "placeholder": "Customer No"
+      },
+      {
+        "type": "textbox",
+        "name": "CUST_NAME",
+        "id": "custNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Customer Name"
+      },
+      {
+        "type": "textbox",
+        "name": "c.TAX_ID_NO",
+        "id": "NpwpId",
+        "value": "",
+        "label": "NPWP",
+        "placeholder": "NPWP"
+      },
+      {
+        "type": "datepicker",
+        "name": "cc.ESTABLISHMENT_DT",
+        "id": "EstablishmentDtId",
+        "value": "",
+        "label": "Establishment Date",
+        "placeholder": "Establishment Date"
+      },
+      {
+        "type": "textbox",
+        "name": "cc.REGISTRATION_NO",
+        "id": "RegistrationNoId",
+        "value": "",
+        "label": "Registration No",
+        "placeholder": "Registration No"
+      },
+      {
+        "type": "textbox",
+        "name": "cc.LICENSE_NO",
+        "id": "LicenseNoId",
+        "value": "",
+        "label": "License No",
+        "placeholder": "License No"
+      }
+    ],
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer No",
+        "name": "CUST_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer Name",
+        "name": "CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Npwp",
+        "name": "c.TAX_ID_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Establishment Date",
+        "name": "cc.ESTABLISHMENT_DT"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Registration No",
+        "name": "cc.REGISTRATION_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "License No",
+        "name": "cc.LICENSE_NO"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+    "querystring": {
+      "name": "lookUpExistingCustCompany"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CustNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CustName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "TaxIdNo"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "EstablishmentDt"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RegistrationNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "LicenseNo"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "CustId"
+          }
+        ]
+      }
+    ],
+    "propertyId": "CustName",
+    "propertyName": "CustName"
+  }
+  

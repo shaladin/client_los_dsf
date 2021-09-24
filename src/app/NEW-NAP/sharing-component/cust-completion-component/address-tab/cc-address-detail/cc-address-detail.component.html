@@ -7,7 +7,7 @@
       <label class="col-md-2 adins-required-label" translate>Address Type Name</label>
       <div class="col-md-4">
         <lib-ucdropdownlist *ngIf="isDllAddressTypeReady" [dropdownListObj]="dllAddressTypeObj" [parentForm]="AddressForm" [enjiForm]="enjiForm"
-          [identifier]="'MrCustAddrTypeCode'" [genericList]="AddressTypeObj"></lib-ucdropdownlist>
+          [identifier]="'MrCustAddrTypeCode'" [genericList]="AddressTypeObj" (change)="getEvent($event)"></lib-ucdropdownlist>
       </div>
     </div>
     <div class="form-group row">

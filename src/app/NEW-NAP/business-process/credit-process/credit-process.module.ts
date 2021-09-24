@@ -56,10 +56,22 @@ import { CreditApprovalPagingDsfComponent } from "app/NEW-NAP/DSF/business-proce
 import { CreditApprovalCfnaPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-cfna-dsf/credit-approval-cfna-paging-dsf/credit-approval-cfna-paging-dsf.component";
 import { CreditApprovalCfnaDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-cfna-dsf/credit-approval-cfna-detail-dsf/credit-approval-cfna-detail-dsf.component";
 import { TabApplicationDataComponent } from "./shared-component/tab-application-data/tab-application-data.component";
-import { CustHistoryComponent } from "./shared-component/cust-history/cust-history.component";
 import { ViewApplicationDataMultiComponent } from "./shared-component/view-application-data-multi/view-application-data-multi.component";
 import { CreditReviewCfnaDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-detail-dsf/credit-review-cfna-detail-dsf.component";
 
+import { ComissionReservedFundDetailXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-detail-x/comission-reserved-fund-detail-x.component";
+import { CommissionV2XComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/commission-v2-x/commission-v2-x.component";
+import { ReservedFundXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/reserved-fund-x/reserved-fund-x.component";
+import { ComissionReservedFundPagingXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-paging-x/comission-reserved-fund-paging-x.component";
+import { FormCommissionGenerateXComponent } from "app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/commission-v2-x/form-commission-generate-x/form-commission-generate-x.component";
+import { CreditReviewCrPagingXComponent } from "app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-paging/credit-review-cr-paging-x.component";
+import { CreditReviewCrDetailXComponent } from "app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-detail/credit-review-cr-detail-x.component";
+import { CreditApprovalCrDetailXComponent } from "app/impl/NEW-NAP/business-process/credit-process/credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail-x.component";
+import { SurveyPagingXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-paging-x/survey-paging-x.component";
+import { SurveySubjectXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component";
+import { SurveySubjectVerifXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component";
+import { SurveySubjectViewXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component";
+import { CustHistoryComponent } from "app/NEW-NAP/sharing-component/process-component/cust-history/cust-history.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -93,7 +105,7 @@ export const customCurrencyMaskConfig = {
     MatSelectModule,
     UcapprovalModule,
     UcapprovebyModule,
-    UcSubsectionModule ,
+    UcSubsectionModule,
     ViewSharingComponentModule,
     UcviewgenericModule,
     ViewAppComponentModule,
@@ -114,7 +126,7 @@ export const customCurrencyMaskConfig = {
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
     ReservedFundComponent,
-    CreditInquiryComponent, 
+    CreditInquiryComponent,
     CommissionV2Component,
     FormCommissionGenerateComponent,
     CommissionCfnaComponent,
@@ -142,7 +154,19 @@ export const customCurrencyMaskConfig = {
     CreditApprovalDetailDsfComponent,
     CreditApprovalPagingDsfComponent,
     CreditApprovalCfnaPagingDsfComponent,
-    CreditApprovalCfnaDetailDsfComponent
+    CreditApprovalCfnaDetailDsfComponent,
+    ComissionReservedFundPagingXComponent,
+    ComissionReservedFundDetailXComponent,
+    CommissionV2XComponent,
+    ReservedFundXComponent,
+    FormCommissionGenerateXComponent,
+    CreditReviewCrPagingXComponent,
+    CreditReviewCrDetailXComponent,
+    CreditApprovalCrDetailXComponent,
+    SurveyPagingXComponent,
+    SurveySubjectXComponent,
+    SurveySubjectVerifXComponent,
+    SurveySubjectViewXComponent
   ],
   providers: [
     NGXToastrService

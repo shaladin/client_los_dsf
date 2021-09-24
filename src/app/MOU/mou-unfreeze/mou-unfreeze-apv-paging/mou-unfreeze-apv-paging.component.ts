@@ -2,20 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { UcpagingModule } from '@adins/ucpaging';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { environment } from 'environments/environment';
 import { String } from 'typescript-string-operations';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-unfreeze-apv-paging',
@@ -35,9 +33,12 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchMouFeezeUnfreezeApvPaging.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouFeezeUnfreezeApvPaging.json";
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouFeezeUnfreezeApvPagingV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouFeezeUnfreezeApvPagingV2.json";
+    }
 
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();

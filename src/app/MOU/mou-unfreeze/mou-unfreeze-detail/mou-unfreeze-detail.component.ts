@@ -42,6 +42,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
   RFAInfo: any;
   InputObj: UcInputRFAObj;
   IsReady: Boolean = false;
+  MouTypeCode:string ="";
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -74,7 +75,6 @@ export class MouUnfreezeDetailComponent implements OnInit {
     });
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     await this.getApv();
     this.title = "Detail Mou Freeze Unfreeze";
 
@@ -82,15 +82,16 @@ export class MouUnfreezeDetailComponent implements OnInit {
     this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
     this.ReqByUserId = currentUserContext[CommonConstant.USER_NAME];
     this.OfficeCode = currentUserContext["OfficeCode"];
-    this.http
+    await this.http
       .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
-      .subscribe((response: MouCustObj) => {
+      .toPromise().then((response: MouCustObj) => {
         this.result = response;
         this.FreezeUnfreezeForm.patchValue({
           IsFreeze: this.result.IsFreeze,
           MouCustId: this.MouCustId,
         });
         this.IsFreezeOld = this.result.IsFreeze;
+        this.MouTypeCode = this.result.MrMouTypeCode;
       });
     this.initInputApprovalObj();
   }
@@ -131,8 +132,9 @@ export class MouUnfreezeDetailComponent implements OnInit {
         RequestRFAObj: this.RFAInfo
       };
 
+      let SubmitMouFreezeUnfreezeUrl = environment.isCore ? URLConstant.SubmitMouFreezeUnfreezeV2 : URLConstant.SubmitMouFreezeUnfreeze;
       this.http
-        .post(URLConstant.SubmitMouFreezeUnfreeze, sendObj)
+        .post(SubmitMouFreezeUnfreezeUrl, sendObj)
         .subscribe((response) => {
           this.toastr.successMessage(response["message"]);
           this.router.navigate([NavigationConstant.MOU_FREEZE_PAGING]);
@@ -150,18 +152,22 @@ export class MouUnfreezeDetailComponent implements OnInit {
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_FREEZE_UNFREEZE;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_FRZ_UNFRZ;
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = " ";
+
+    if(this.MouTypeCode == CommonConstant.MOU_TYPE_FACTORING)
+    {
+      this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_FRZ_UNFRZ_FCTR;
+    }
+    else if (this.MouTypeCode == CommonConstant.MOU_TYPE_DLFN)
+    {
+      this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_FRZ_UNFRZ_DLFN;
+    }
+    else{
+      this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_FRZ_UNFRZ;
+    }
+
     this.IsReady = true;
   }
   IsFreezeChange() { }

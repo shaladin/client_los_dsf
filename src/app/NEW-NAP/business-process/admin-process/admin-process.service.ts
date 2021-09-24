@@ -4,6 +4,7 @@ import { AdInsConstant } from "app/shared/AdInstConstant";
 import { Observable } from "rxjs";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { ReqGetAppFinDataAndFeeObj } from "app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model";
+import { environment } from "environments/environment";
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +21,8 @@ export class AdminProcessService {
     }
 
     SubmitAgrmntActivationByHuman(Obj: any): Observable<Object> {
-        return this.http.post(URLConstant.SubmitAgrmntActivationByHuman, Obj);
+        let submitHumanAgrmnActivationUrl = environment.isCore? URLConstant.SubmitAgrmntActivationByHumanV2 : URLConstant.SubmitAgrmntActivationByHuman;
+        return this.http.post(submitHumanAgrmnActivationUrl, Obj);
     }
 }
 

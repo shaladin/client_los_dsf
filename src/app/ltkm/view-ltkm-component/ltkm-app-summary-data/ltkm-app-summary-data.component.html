@@ -133,18 +133,7 @@
         <label class="col-md-2  adInsLabel" translate>Way of Payment</label>
         <label class="col-md-4  adinslabel" translate
           *ngIf="SummaryObj?.App">{{this.SummaryObj.App.MrWopCode}}</label>
-        <!-- <label class="col-md-2  adInsLabel" translate>Pre Go Live Date</label>
-        <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.App">{{this.SummaryObj.App.PreGoLiveDt  | date: 'dd-MMMM-yyyy'}}</label> -->
       </div>
-      <!-- <div *ngIf="SummaryObj?.AppCustPersonal">
-        <label class="col-md-2  adInsLabel" translate>Way of Payment</label>
-        <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.App">{{this.SummaryObj.App.MrWopCode}}</label>
-        <label class="col-md-2  adInsLabel" translate>Pre Go Live Notes</label>
-        <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.App">{{this.SummaryObj.App.PreGoLiveNotes}}</label>
-      </div> -->
     </div>
     <lib-ucSubsection [id]="'assetId'" [title]="'Asset'" [panel]="'asset'">
     </lib-ucSubsection>
@@ -163,7 +152,7 @@
           *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetConditionCode}}</label>
         <label class="col-md-2  adInsLabel" translate>DP Amount / Percentage</label>
         <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.DownPaymentAmt | number:'.2':'en-US'}} / {{SummaryObj.AppAsset.DownPaymentPrcnt | number:'.6':'en-US'}}%</label>
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.DownPaymentAmt | number:'.2':'en-US'}} / {{SummaryObj.AppAsset.DownPaymentPrcnt | number:'.6':'en-US'}} %</label>
       </div>
       <div>
         <label class="col-md-2  adInsLabel" translate
@@ -436,18 +425,18 @@
       <div>
         <label class="col-md-4  adInsLabel" translate>Effective Rate to Customer</label>
         <label class="col-md-2  adinslabel" translate
-          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.EffectiveRatePrcnt}} %</label>
+          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.EffectiveRatePrcnt | number:'.6':'en-US'}} %</label>
         <label class="col-md-4  adInsLabel" translate>Effective Rate to Supplier</label>
         <label class="col-md-2  adinslabel" translate
-          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.SupplEffectiveRatePrcnt}} %</label>
+          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.SupplEffectiveRatePrcnt | number:'.6':'en-US'}} %</label>
       </div>
       <div>
         <label class="col-md-4  adInsLabel" translate>Flat Rate to Customer</label>
         <label class="col-md-2  adinslabel" translate
-          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.FlatRatePrcnt}} %</label>
+          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.FlatRatePrcnt | number:'.6':'en-US'}} %</label>
         <label class="col-md-4  adInsLabel" translate>Flat Rate to Supplier</label>
         <label class="col-md-2  adinslabel" translate
-          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.SupplFlatRatePrcnt}} %</label>
+          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.SupplFlatRatePrcnt | number:'.6':'en-US'}} %</label>
       </div>
       <div>
         <label class="col-md-4  adInsLabel" translate>Grace Period</label>
@@ -479,7 +468,7 @@
           *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.TotalAr | number:'.2':'en-US'}}</label>
         <label class="col-md-4  adInsLabel" translate>Gross Yield</label>
         <label class="col-md-2  adinslabel" translate
-          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.GrossYieldPrcnt}}%</label>
+          *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
       </div>
       <table class="table table-responsive-md text-center table-hover">
         <thead>

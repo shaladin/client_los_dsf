@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -29,7 +29,9 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   listInstallment: Array<InstallmentObj>;
   IsAppFeePrcntValid: boolean = true;
+  topDays: number = 0;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -39,6 +41,11 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
+    this.LoadAppDlrFnc();
+    this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
   }
 
   LoadDDLRateType() {
@@ -55,6 +62,14 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
         this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
+  }
+
+  LoadAppDlrFnc()
+  {
+    this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).toPromise().then(
+      (responseAppDlfn) => {
+        this.topDays =  responseAppDlfn["TopDays"];
+      });
   }
 
   CalculateInstallment() {
@@ -79,6 +94,11 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
     }
 
     this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
+    // EffectiveDt Plus Top Days
+    var effDtPlusTopDays: Date = new Date(this.ParentForm.get("EstEffDt").value);
+    effDtPlusTopDays.setDate(effDtPlusTopDays.getDate() + this.topDays);
+    this.calcEvenPrincipleObj['EstEffDt'] = effDtPlusTopDays.toDateString();
+
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipalDlfn, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
@@ -141,6 +161,7 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
 
   EstEffDtFocusOut(event) {
     var maturityDate: Date = new Date(this.ParentForm.get("EstEffDt").value);
+    maturityDate.setDate(maturityDate.getDate() + this.topDays)
     maturityDate.setMonth(maturityDate.getMonth() + this.ParentForm.get("Tenor").value);
 
     this.ParentForm.patchValue({
@@ -164,8 +185,16 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
 
         this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).toPromise().then(
           (responseAppDlfn) => {
+            let TotalTopAmount = responseAppDlfn["TopInterestRatePrcnt"] / 100 * (responseAppDlfn["TopDays"] / DaysInYear) * NtfAmount;
+            let TotalDisbAmount = this.ParentForm.controls.TotalDisbAmt.value;
+            if (TotalTopAmount) {
+              TotalDisbAmount = TotalDisbAmount - TotalTopAmount; 
+              this.ParentForm.patchValue({
+                TotalDisbAmt: TotalDisbAmount
+              });
+            }
             this.ParentForm.patchValue({
-              TotalTopAmount: responseAppDlfn["TopInterestRatePrcnt"] / 100 * (responseAppDlfn["TopDays"] / DaysInYear) * NtfAmount,
+              TotalTopAmount: TotalTopAmount
             });
           });
       });

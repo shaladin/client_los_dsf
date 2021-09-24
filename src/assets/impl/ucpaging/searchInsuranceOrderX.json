@@ -1,0 +1,114 @@
+{
+    "title": "Insurance Order",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+          "type": "dropdown",
+          "name": "AIO.INSCO_BRANCH_CODE",
+          "id": "InscoBranchCode",
+          "value": "InscoBranchName",
+          "placeholder": "Placeholder",
+          "isFromURL": true,
+          "ddlType": "all",
+          "isQueryIn" : true,
+          "url": "",
+          "environment": "LOS",
+          "path":"/InsuranceOrderX/GetInscoBranch",
+          "label": "Insurance Company Branch",
+          "items": [],
+          "itemsUrl": []
+        }
+    ],
+  "querystring": {
+    "name": "searchInsuranceOrder"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AG.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "AG.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "INSURANCE COMPANY BRANCH NAME",
+            "name": "AIO.INSCO_BRANCH_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "NUMBER OF ASSET",
+            "name": "AG.NUM_OF_ASSET"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Entry"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "callback",
+            "key": "ViewAgrmnt",
+            "position": "center",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InscoBranchName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "NumOfAsset"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "NAP_ADM_PRCS_INSURANCE_ORDER_DETAIL",
+                    "param": [
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -2,6 +2,7 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { environment } from "environments/environment";
 import { CriteriaObj } from "../CriteriaObj.model";
+import { IntegrationObj } from "../library/IntegrationObj.model";
 
 export class UcTempPagingObj {
     urlJson: string;
@@ -17,10 +18,12 @@ export class UcTempPagingObj {
     isHideSearch: boolean;
     navigationConst: any;
     listEnvironments: Array<EnvisObj>;
+    isJoinExAPI: boolean;
+    integrationObj: IntegrationObj;
 
     constructor() {
         this.urlJson = "";
-        this.enviromentUrl = environment.losUrl;
+        this.enviromentUrl = environment.isCore ? environment.losUrl + "/v2" : environment.losUrl + "/v1";
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.pagingJson = "";
         this.isReady = false;
@@ -28,12 +31,14 @@ export class UcTempPagingObj {
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
         this.listEnvironments = new Array<EnvisObj>();
-        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
-        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url + "/v1" });
+        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl + "/v1" });
         this.whereValue = new Array<WhereValueObj>();
         this.delay = 0;
         this.isHideSearch = false;
         this.navigationConst = NavigationConstant;
+        this.isJoinExAPI = false;
+        // this.integrationObj = new IntegrationObj();
     }
 }
 

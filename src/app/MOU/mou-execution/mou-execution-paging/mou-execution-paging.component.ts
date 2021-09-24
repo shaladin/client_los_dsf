@@ -5,6 +5,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { environment } from 'environments/environment';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-execution-paging',
@@ -13,11 +17,35 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 })
 export class MouExecutionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  constructor(private http: HttpClient, private router: Router) { }
+  requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouRequestForExec.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouRequestForExec.json";
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouRequestForExecV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouRequestForExecV2.json";
+
+      this.inputPagingObj.isJoinExAPI = true;
+
+      this.requestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
+      this.requestTaskModel.TaskDefinitionKeys = [CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_GENERAL, CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_FACTORING,, CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_DLFN];
+      this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.OFFICE_CODE],
+                                               UserAccess[CommonConstant.OFFICE_CODE], 
+                                               UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.requestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "MouCustNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.IntegrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
   }
 
   getEvent(event) {

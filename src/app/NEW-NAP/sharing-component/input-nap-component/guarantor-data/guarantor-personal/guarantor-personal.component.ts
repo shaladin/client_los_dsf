@@ -319,8 +319,7 @@ export class GuarantorPersonalComponent implements OnInit {
   initLookup() {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.inputLookupObj.isReadonly = false;
@@ -328,8 +327,7 @@ export class GuarantorPersonalComponent implements OnInit {
 
     this.inputLookupObj1 = new InputLookupObj();
     this.inputLookupObj1.urlJson = "./assets/uclookup/lookupCountry.json";
-    this.inputLookupObj1.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupObj1.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupObj1.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj1.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.inputLookupObj1.genericJson = "./assets/uclookup/lookupCountry.json";
     this.inputLookupObj1.isRequired = false;

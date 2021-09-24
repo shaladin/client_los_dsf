@@ -5,19 +5,30 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { ViewSurveyVerifComponent } from "./view-survey-verif/view-survey-verif.component";
 import { ViewHighlightCommentComponent } from "./view-highlight-comment/view-highlight-comment.component";
+import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-x.component";
+import { ViewAssetDataDetailXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-detail/view-asset-data-detail-x.component";
+import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
 
 @NgModule({
     exports: [
         AppCustViewComponentsModule,
-        ViewHighlightCommentComponent
+        ViewHighlightCommentComponent,
+        ViewAssetDataXComponent,
+        ViewAssetDataDetailXComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
-        AppCustViewComponentsModule
+        AppCustViewComponentsModule,
+        AppViewComponentsModule
     ],
     declarations: [
-        ViewHighlightCommentComponent
+        ViewHighlightCommentComponent,
+        ViewAssetDataXComponent,
+        ViewAssetDataDetailXComponent
+    ],
+    entryComponents: [
+        ViewAssetDataDetailXComponent
     ],
     providers: [
         NGXToastrService

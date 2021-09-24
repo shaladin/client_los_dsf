@@ -55,17 +55,17 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
 
   MouDetailFinancingForm = this.fb.group({
     TopDays: ["", [Validators.min(0)]],
-    InterestRatePrcnt: ["", [Validators.min(0), Validators.max(100)]],
+    InterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
     Notes: [""],
     CurrCode: ["", [Validators.required]],
     RowVersion: [""],
-    TopInterestRatePrcnt: [""],
-    ExtendRatePrcnt: [""],
+    TopInterestRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    ExtendRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     MmForExtend: [""],
-    PpForExtendPrcnt: [""],
+    PpForExtendPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     SpareDayToPay: [""],
     AssetCondition: [""],
-    LcRatePrcnt: [""],
+    LcRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     MaximumExtendTimes: [""],
     ManufacturerCode: [""],
     ManufacturerCustNo: [""],
@@ -75,6 +75,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
     WopCode: [""]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
@@ -241,8 +242,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
 
 
     this.InputLookupLinkSupplGradingObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
-    this.InputLookupLinkSupplGradingObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.InputLookupLinkSupplGradingObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupLinkSupplGradingObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupLinkSupplGradingObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.isReadonly = false;
@@ -250,8 +250,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
     this.InputLookupLinkSupplGradingObj.addCritInput = suppCrit;
 
     this.InputLookupLinkManufacturerObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
-    this.InputLookupLinkManufacturerObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.InputLookupLinkManufacturerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupLinkManufacturerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupLinkManufacturerObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkManufacturerObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkManufacturerObj.isReadonly = false;

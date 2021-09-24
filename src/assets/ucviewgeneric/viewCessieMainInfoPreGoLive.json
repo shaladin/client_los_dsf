@@ -1,0 +1,53 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustMainInfoHeaderId",
+        "subSectionTitle": "Main Info",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Cessie No",
+            "property": "CessieNo"
+          },
+          {
+            "type": "callback",
+            "label": "Mou No",
+            "key": "mou",
+            "property": "MouCustNo"
+          },
+          {
+            "type": "callback",
+            "label": "Customer No",
+            "key": "customer",
+            "property": "CustNo"
+          },
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "callback",
+            "label": "Product Offering Name",
+            "key": "ViewProdOffering",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "text",
+            "label": "Office Name",
+            "property": "OfficeName"
+          },
+          {
+            "type": "text",
+            "label": "Cessie Status",
+            "property": "CessieStatus"
+          }
+        ],
+        "querystring": {
+          "name": "viewCessieMainInfoPreGoLive"
+        }
+      }
+    ]
+  }

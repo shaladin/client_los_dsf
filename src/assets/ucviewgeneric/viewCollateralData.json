@@ -57,9 +57,11 @@
             "property": "SerialNo3"
           },
           {
-            "type": "text",
+            "type": "currency",
             "label": "Portion Percentage",
-            "property": "CollPrcnt"
+            "property": "CollPrcnt",
+            "precision": "0.6",
+            "IsPrcnt": true
           },
           {
             "type": "text",

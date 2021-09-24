@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { URLConstant } from "../constant/URLConstant";
@@ -18,52 +17,37 @@ export interface IAuthStatus {
 })
 
 export class UploadService {
-    GetUploadTypeByUploadTypeId: any;
-    GetUploadSettingHIdByUploadTypeId: any;
-    GetListUploadSettingDIdByUploadSettingHId: any;
-    GetListUploadSettingDIdByUploadTypeId: any;
-    AssignRoleToUploadSetting: any;
-    GetListRefRoleByUploadTypeId: any;
-    GetListUploadSettingDByUploadSettingHId: any;
-    foundationUrl: string = environment.FoundationR3Url;
     ReqGenericObj: GenericObj = new GenericObj();
 
     constructor(private http: HttpClient) {
-        this.GetUploadTypeByUploadTypeId = this.foundationUrl + URLConstant.GetUploadTypeByUploadTypeId;
-        this.GetUploadSettingHIdByUploadTypeId = this.foundationUrl + URLConstant.GetUploadSettingHIdByUploadTypeId;
-        this.GetListUploadSettingDIdByUploadSettingHId = this.foundationUrl + URLConstant.GetListUploadSettingDIdByUploadSettingHId;
-        this.GetListUploadSettingDIdByUploadTypeId = this.foundationUrl + URLConstant.GetListUploadSettingDIdByUploadTypeId;
-        this.AssignRoleToUploadSetting = this.foundationUrl + URLConstant.AssignRoleToUploadSetting;
-        this.GetListRefRoleByUploadTypeId = this.foundationUrl + URLConstant.GetListRefRoleByUploadTypeId
-        this.GetListUploadSettingDByUploadSettingHId = this.foundationUrl + URLConstant.GetListUploadSettingDByUploadSettingHId;
     }
 
     getUploadTypeByUploadTypeId(uploadSettingObject: any): Observable<Object> {
-        return this.http.post(this.GetUploadTypeByUploadTypeId, uploadSettingObject);
+        return this.http.post(URLConstant.GetUploadTypeByUploadTypeId, uploadSettingObject);
     }
 
     getUploadSettingHIdByUploadTypeId(uploadSettingObject: any): Observable<Object> {
-        return this.http.post(this.GetUploadSettingHIdByUploadTypeId, uploadSettingObject);
+        return this.http.post(URLConstant.GetUploadSettingHIdByUploadTypeId, uploadSettingObject);
     }
 
     getListUploadSettingDIdByUploadSettingHId(uploadSettingObject: any): Observable<Object> {
-        return this.http.post(this.GetListUploadSettingDIdByUploadSettingHId, uploadSettingObject);
+        return this.http.post(URLConstant.GetListUploadSettingDIdByUploadSettingHId, uploadSettingObject);
     }
 
     getListUploadSettingDIdByUploadTypeId(uploadSettingObject: any): Observable<Object> {
-        return this.http.post(this.GetListUploadSettingDIdByUploadTypeId, uploadSettingObject);
+        return this.http.post(URLConstant.GetListUploadSettingDIdByUploadTypeId, uploadSettingObject);
     }
 
     assignRoleToUploadSetting(uploadSettingObject: any): Observable<Object> {
-        return this.http.post(this.AssignRoleToUploadSetting, uploadSettingObject);
+        return this.http.post(URLConstant.AssignRoleToUploadSetting, uploadSettingObject);
     }
 
     getListRefRoleByUploadTypeId(uploadSettingObject: any): Observable<Object> {
-        return this.http.post(this.GetListRefRoleByUploadTypeId, uploadSettingObject);
+        return this.http.post(URLConstant.GetListRefRoleByUploadTypeId, uploadSettingObject);
     }
 
     getListUploadSettingDByUploadSettingHId(uploadSettingObject: any): Observable<Object> {
         this.ReqGenericObj.Id = uploadSettingObject.UploadSettingHId;
-      return this.http.post(this.GetListUploadSettingDByUploadSettingHId, this.ReqGenericObj);
+      return this.http.post(URLConstant.GetListUploadSettingDByUploadSettingHId, this.ReqGenericObj);
   }
 }

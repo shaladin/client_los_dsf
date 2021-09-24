@@ -84,8 +84,9 @@ export class ProdHoAddComponent implements OnInit {
   }
 
   updateMinDtForEndDt() {
-    if (this.RefProductHOForm.controls.EndDt.value < this.RefProductHOForm.controls.StartDt.value) {
-      this.RefProductHOForm.controls.EndDt.setValue("");
+    this.StartDt = this.RefProductHOForm.get("StartDt").value;
+    if(this.RefProductHOForm.get("EndDt").value < this.StartDt){
+      this.RefProductHOForm.get("EndDt").setValue("");
     }
   }
 

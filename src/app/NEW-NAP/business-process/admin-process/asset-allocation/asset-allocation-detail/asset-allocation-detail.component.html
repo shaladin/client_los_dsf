@@ -55,7 +55,7 @@
                   <tr *ngIf="AssetAllocationForm.controls['ListAsset']['controls'].length == 0">
                     <td align="center" colspan="11">No data available</td>
                   </tr>
-                  <tr *ngFor="let item of AssetAllocationForm.controls['ListAsset'].controls;let i = index">
+                  <tr *ngFor="let item of AssetAllocationForm.controls['ListAsset']['controls'];let i = index">
                     <td [formGroupName]="i" class="text-center">
                       <input type="checkbox" class="border-primary" (change)="ChangeChecked(i)" formControlName="IsChecked">
                     </td>

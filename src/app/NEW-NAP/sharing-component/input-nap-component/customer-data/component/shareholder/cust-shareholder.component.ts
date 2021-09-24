@@ -85,7 +85,7 @@ export class CustShareholderComponent implements OnInit {
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', Validators.maxLength(50)],
-    SharePrcnt: [0, [Validators.min(0), Validators.max(100), Validators.pattern("^[0-9]+$")]],
+    SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
@@ -93,6 +93,7 @@ export class CustShareholderComponent implements OnInit {
     IsGuarantor: [false]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -505,24 +506,21 @@ export class CustShareholderComponent implements OnInit {
   initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
 
     this.InputLookupCustomerCoyObj= new InputLookupObj();
     this.InputLookupCustomerCoyObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
-    this.InputLookupCustomerCoyObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerCoyObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerCoyObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustomerCoyObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustomerCoyObj.isReadonly = false;
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.isRequired = false;

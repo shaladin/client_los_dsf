@@ -1,0 +1,73 @@
+{
+    "title": "Report Monthly InProcess App",
+    "reportName": "Report Monthly InProcess App",
+    "reportTemplateCode": "MONTHLY_INPROCESS_APP",
+    "component": [
+       {
+            "type": "dropdown",
+            "label": "Office Name",
+            "name": "OfficeCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "one",
+            "url": "",
+            "environment":"FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "items": [],
+            "itemsUrl": [],
+            "isEvent": "true",
+            "affectedFilter": ["ProdOfferingCode"],
+            "paramAssignment": 1
+      },
+      {
+        "type": "dropdown",
+        "label": "Year",
+        "name": "Year",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "one",
+        "url": "",
+        "environment": "FOU",
+        "path": "/ReportPeriod/GetListYearByGeneralSetting",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 0
+      },
+      {
+        "type": "dropdown",
+        "label": "Product Offering",
+        "name": "ProdOfferingCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment":"LOS",
+        "path": "/ProductOffering/GetProdOfferingForPaging",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 1
+      },
+      {
+        "type": "dropdown",
+        "label": "Month",
+        "name": "Month",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "one",
+        "url": "",
+        "environment": "FOU",
+        "path": "/ReportPeriod/GetListMonthByGeneralSetting",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 0
+        }
+    ],
+    "exportTypeList": [
+    ]
+  }

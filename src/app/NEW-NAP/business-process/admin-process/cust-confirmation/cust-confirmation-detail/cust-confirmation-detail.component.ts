@@ -28,7 +28,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   arrValue = [];
   AgrmntId: number;
   AppId: number;
-  TaskListId: number;
+  TaskListId: any;
   AgrmntNo: string;
   VerfResultList = new Array<VerfResultHObj>();
   CustNoObj: GenericObj = new GenericObj();
@@ -63,11 +63,10 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTaskService.ClaimTask(this.TaskListId);
+    this.claimTask();
     this.arrValue.push(this.AgrmntId);
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfoCFNA.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
       this.viewGenericObj.whereValue = this.arrValue;
     } else {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
@@ -145,6 +144,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   SaveForm() {
+    let submitAgrmntActivationUrl = environment.isCore? URLConstant.AddCustCnfrmV2 : URLConstant.AddCustCnfrm;
     if (this.CustCnfrmObj.IsSkip == false) {
       for (var i = 0; i < this.VerfResultList.length; i++) {
         if (this.VerfResultList[i].MrVerfResultHStatCode == CommonConstant.VerificationFail || this.VerfResultList[i].MrVerfResultHStatCode == CommonConstant.VerificationNew) {
@@ -156,7 +156,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         RequestCustCnfrmObj: this.CustCnfrmObj,
         wfTaskListId: this.TaskListId
       };
-      this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
+      this.http.post(submitAgrmntActivationUrl, CustCnfrmWFObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
@@ -167,7 +167,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         RequestCustCnfrmObj: this.CustCnfrmObj,
         wfTaskListId: this.TaskListId
       };
-      this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
+      this.http.post(submitAgrmntActivationUrl, CustCnfrmWFObj).subscribe(
         () => {
           this.toastr.successMessage("Success !");
           AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
@@ -187,5 +187,16 @@ export class CustConfirmationDetailComponent implements OnInit {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });
     }
+  }
+
+  claimTask(){
+    if(environment.isCore){
+        if(this.TaskListId != "" && this.TaskListId!= undefined){
+            this.claimTaskService.ClaimTaskV2(this.TaskListId);
+        }
+      }
+      else if (this.TaskListId > 0) {
+         this.claimTaskService.ClaimTask(this.TaskListId);
+      }
   }
 }

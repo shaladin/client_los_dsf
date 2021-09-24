@@ -160,7 +160,7 @@ export class LoanObjectComponent implements OnInit {
       (response: AppObj) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
-        if (this.AppObj.LobCode == CommonConstant.CFNA) {
+        if (this.AppObj.BizTemplateCode == CommonConstant.CFNA) {
           this.isCFNA = true;
 
           var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
@@ -227,12 +227,12 @@ export class LoanObjectComponent implements OnInit {
   setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl;
+    this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
     this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
 
     this.supplierInputLookupObj = new InputLookupObj();
-    this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.supplierInputLookupObj.addCritInput = new Array();
 
 

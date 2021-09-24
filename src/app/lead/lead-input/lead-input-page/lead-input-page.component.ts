@@ -16,6 +16,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -28,7 +29,7 @@ export class LeadInputPageComponent implements OnInit {
   CopyFrom: number;
   isCustData: boolean;
   isLeadData: boolean;
-  TaskListId: number;
+  TaskListId: any;
   titlePageType: string;
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
@@ -81,9 +82,17 @@ export class LeadInputPageComponent implements OnInit {
         }
         console.log('dmsobj = ', JSON.stringify(this.dmsObj));
       });
-    if (this.TaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.TaskListId);
+    
+    if(environment.isCore){   
+      if (this.TaskListId != undefined && this.TaskListId != "") {
+        this.claimTaskService.ClaimTaskV2(this.TaskListId);
+      }
+    }else{
+      if (this.TaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.TaskListId);
+      }
     }
+    
     this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
@@ -195,7 +204,7 @@ export class LeadInputPageComponent implements OnInit {
             if (this.customObj.typePage != "edit" || this.customObj.typePage != "update") {
               if (this.customObj["lobKta"] != undefined) {
                 if (this.customObj.lobKta.includes(this.customObj.returnLobCode) == true) {
-                  urlPost = URLConstant.SubmitWorkflowLeadInputKta;
+                  urlPost = environment.isCore ? URLConstant.SubmitWorkflowLeadInputKtaV2 : URLConstant.SubmitWorkflowLeadInputKta;
                 }
               }
             }

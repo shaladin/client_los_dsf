@@ -7,6 +7,9 @@ import { CommonConstant } from "./constant/CommonConstant";
 import { URLConstant } from "./constant/URLConstant";
 import { AppObj } from "./model/App/App.Model";
 import { ClaimWorkflowObj } from "./model/Workflow/ClaimWorkflowObj.Model";
+import { ClaimTaskModel } from "./model/Workflow/V2/ClaimTaskModelObj.model";
+import { AdInsConstant } from "./AdInstConstant";
+import { ReqSubmitNAPDataObj } from "./model/App/ReqSubmitNAPDataV2Obj.model";
 
 @Injectable()
 export class ClaimTaskService{
@@ -14,7 +17,6 @@ export class ClaimTaskService{
   constructor(
     private http: HttpClient,
     private cookieService: CookieService) { }
-
 
   ClaimTask(WfTaskListId: number){
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -34,6 +36,46 @@ export class ClaimTaskService{
     wfClaimObj.WfTaskListId = WfTaskListId;
 
     this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
+      () => {
+      });
+  }
+  
+  ClaimTaskNapCustMainDataV2(AppId: number, WfTaskListId: string){
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let wfClaimObj = new ReqSubmitNAPDataObj();
+    wfClaimObj.AppId = AppId;
+    wfClaimObj.WfTaskListId = WfTaskListId;
+    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
+
+    this.http.post(URLConstant.ClaimTaskNapCustmainDataV2, wfClaimObj).subscribe(
+      () => {
+      });
+  }  
+
+  ClaimTaskV2(WfTaskListId: string){
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let ClaimTaskObj: ClaimTaskModel = new ClaimTaskModel();
+    ClaimTaskObj.TaskId = WfTaskListId;
+    ClaimTaskObj.UserId = currentUserContext[CommonConstant.USER_NAME];
+    this.http.post(URLConstant.ClaimTaskV2, ClaimTaskObj).subscribe(
+      () => {
+      });
+  }
+
+  ClaimTaskSelfVerifV2(WfTaskListId: string){
+    let ClaimTaskObj: ClaimTaskModel = new ClaimTaskModel();
+    ClaimTaskObj.TaskId = WfTaskListId;
+    ClaimTaskObj.UserId = AdInsConstant.UserCustomer;
+    this.http.post(URLConstant.ClaimTaskV2, ClaimTaskObj).subscribe(
+      () => {
+      });
+  }
+
+  ClaimTaskSelfVerif(WfTaskListId: number){
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = WfTaskListId.toString();
+    wfClaimObj.pUserID = AdInsConstant.UserCustomer;
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });
   }

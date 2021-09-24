@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { BackdoorComponent } from 'app/backdoor/backdoor.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { PathConstant } from '../constant/PathConstant';
 import { PathConstantDsf } from '../constant/PathConstantDsf';
 
@@ -92,5 +93,9 @@ export const Full_ROUTES: Routes = [
   {
     path: PathConstant.SETTING,
     loadChildren: './setting/setting.module#SettingModule'
-  }
+  },
+  {
+    path: PathConstantX.LR_IMPL,
+    loadChildren: './impl/impl.module#ImplModule'
+  },
 ];

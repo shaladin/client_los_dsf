@@ -47,7 +47,7 @@ export class InputAddressObj {
         this.showSubsection = true;
         this.showStayLength = false;
         this.isRequired = true;
-        this.environmentUrl = environment.FoundationR3Url;
+        this.environmentUrl = environment.FoundationR3Url + "/v1";
         this.isReadonly = false;
     }
 }

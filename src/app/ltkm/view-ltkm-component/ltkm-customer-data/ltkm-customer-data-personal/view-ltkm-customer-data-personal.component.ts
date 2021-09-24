@@ -43,31 +43,25 @@ export class ViewLtkmCustDataPersonalDataComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     //jika pake NAP versi baru maka langsung arahkan semua ke view completion tanpa init data di view lama
-    if(this.IsNAPVersionCompletion) return;
+    // if(this.IsNAPVersionCompletion) return;
     await this.getCustData();
     this.arrValue.push(this.ltkmCustObj.LtkmCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalMainData.json";
-    this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
 
     this.viewJobDataProfObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalJobDataProf.json";
-    this.viewJobDataProfObj.viewEnvironment = environment.losUrl;
     this.viewJobDataProfObj.whereValue = this.arrValue;
 
     this.viewJobDataEmpObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalJobDataEmp.json";
-    this.viewJobDataEmpObj.viewEnvironment = environment.losUrl;
     this.viewJobDataEmpObj.whereValue = this.arrValue;
 
     this.viewJobDataSmeObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalJobDataSme.json";
-    this.viewJobDataSmeObj.viewEnvironment = environment.losUrl;
     this.viewJobDataSmeObj.whereValue = this.arrValue;
 
     this.viewJobDataNonProfObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalJobDataNonProf.json";
-    this.viewJobDataNonProfObj.viewEnvironment = environment.losUrl;
     this.viewJobDataNonProfObj.whereValue = this.arrValue;
 
     this.viewFinDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalFinData.json";
-    this.viewFinDataObj.viewEnvironment = environment.losUrl;
     this.viewFinDataObj.whereValue = this.arrValue;
 
     this.isDataAlreadyLoaded = true;
@@ -77,7 +71,7 @@ export class ViewLtkmCustDataPersonalDataComponent implements OnInit {
     await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId }).toPromise().then(
       (response) => {
         this.ltkmCustObj = response["rLtkmCustObj"];
-        this.custModelCode = response["MrCustModelCode"];
+        this.custModelCode = response["MrCustModelCode"];        
         this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
         this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
         this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];

@@ -50,6 +50,11 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchEditAppAfterApprovalApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditAppAfterApprovalApproval.json";
 
+    if(environment.isCore) {
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchEditAppAfterApprovalApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchEditAppAfterApprovalApprovalV2.json";
+    }
+
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';

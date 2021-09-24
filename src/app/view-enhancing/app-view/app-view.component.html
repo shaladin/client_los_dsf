@@ -48,7 +48,7 @@
 
             <mat-tab *ngIf="IsApplication" label="Application">
               <ng-template matTabContent>
-                <app-tab-application [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></app-tab-application>
+                <app-tab-application-x [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></app-tab-application-x>
               </ng-template>
             </mat-tab>
 
@@ -70,9 +70,10 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsMultiAsset" label="Asset & Collateral Data">
+            <mat-tab *ngIf="IsMultiAsset">
+              <ng-template mat-tab-label>{{ bizTemplateCode == 'CF4W' ? 'Asset' : 'Asset & Collateral Data' }}</ng-template>
               <ng-template matTabContent>
-                <app-app-asset-data [AppId]="AppId"></app-app-asset-data>
+                <view-asset-data-x [AppId]="AppId" [BizTemplateCode]="bizTemplateCode"></view-asset-data-x>
               </ng-template>
             </mat-tab>
 
@@ -174,6 +175,12 @@
             <mat-tab *ngIf="IsSurveyResult" label="Survey Result">
               <ng-template matTabContent>
                 <app-view-survey [AppNo]="AppNo"></app-view-survey>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Survey Task Result">
+              <ng-template matTabContent>
+                <app-view-srvy-task [AppNo]="AppNo"></app-view-srvy-task>
               </ng-template>
             </mat-tab>
           </mat-tab-group>

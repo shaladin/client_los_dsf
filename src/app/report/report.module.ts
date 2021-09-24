@@ -20,21 +20,52 @@ import { RentalSummaryProductReportComponent } from "./report-rental-summary/ren
 import { RentalSummarySupplierReportComponent } from "./report-rental-summary/rental-summary-supplier/rental-summary-supplier.component";
 import { RentalDetailSupplierReportComponent } from "./report-rental-detail/rental-detail-supplier/rental-detail-supplier.component";
 import { ReportRoutingModule } from "./report-routing.module";
+import { ReportPlafondMouSummaryComponent } from "./report-mou/report-plafond-mou-summary/report-plafond-mou-summary.component";
+import { ReportPlafondMouDetailComponent } from "./report-mou/report-plafond-mou-detail/report-plafond-mou-detail.component";
+import { ReportCollateralMouComponent } from "./report-mou/report-collateral-mou/report-collateral-mou.component";
+import { ReportDailyIncomingAppComponent } from "./report-daily-incoming/report-daily-incoming-app/report-daily-incoming-app.component";
+import { ReportLeadCancelComponent } from "./report-lead/report-lead-cancel/report-lead-cancel.component";
+import { ReportDailyIncomingLeadComponent } from './report-daily-incoming/report-daily-incoming-lead/report-daily-incoming-lead.component';
+import { ReportDailyPreGoLiveByProductComponent } from './report-daily-pre-go-live/report-daily-pre-go-live-by-product/report-daily-pre-go-live-by-product.component';
+import { ReportDailyPreGoLiveByCmoComponent } from "./report-daily-pre-go-live/report-daily-pre-go-live-by-cmo/report-daily-pre-go-live-by-cmo.component";
+import { ReportMonthlyInprocessAppComponent } from "./report-monthly/report-monthly-inprocess-app/report-monthly-inprocess-app.component";
+import { ReportDailyPendingAppAftApvComponent } from "./report-daily-pending/report-daily-pending-app-aft-apv/report-daily-pending-app-aft-apv.component";
+import { ReportMonthlyPendingLeadComponent } from "./report-monthly/report-monthly-pending-lead/report-monthly-pending-lead.component";
+import { ReportMonthlyPreGoLiveByCmoComponent } from './report-monthly/report-monthly-pre-go-live/report-monthly-pre-go-live-by-cmo/report-monthly-pre-go-live-by-cmo.component';
+import { ReportMonthlyPendingPreGoLiveAftApvComponent } from "./report-monthly/report-monthly-pending-pre-go-live-aft-apv/report-monthly-pending-pre-go-live-aft-apv.component";
+import { ReportMonthlyPreGoLiveBySupplierComponent } from "./report-monthly/report-monthly-pre-go-live-by-supplier/report-monthly-pre-go-live-by-supplier.component";
+import { ReportMonthlyTopSupplierComponent } from "./report-monthly/report-monthly-top-supplier/report-monthly-top-supplier.component";
+
 @NgModule({
     declarations: [
 
-    ReportMarketingComponent,
-    ReportAppPendingComponent,
-    RentalSummaryComponent,
-    RentalDetailComponent,
-    RentalDetailBrandTypeModelReportComponent,
-    RentalDetailMarketingReportComponent,
-    RentalDetailProductReportComponent,
-    RentalDetailSupplierReportComponent,
-    RentalSummaryBrandTypeModelReportComponent,
-    RentalSummaryMarketingReportComponent,
-    RentalSummaryProductReportComponent,
-    RentalSummarySupplierReportComponent
+        ReportMarketingComponent,
+        ReportAppPendingComponent,
+        RentalSummaryComponent,
+        RentalDetailComponent,
+        RentalDetailBrandTypeModelReportComponent,
+        RentalDetailMarketingReportComponent,
+        RentalDetailProductReportComponent,
+        RentalDetailSupplierReportComponent,
+        RentalSummaryBrandTypeModelReportComponent,
+        RentalSummaryMarketingReportComponent,
+        RentalSummaryProductReportComponent,
+        RentalSummarySupplierReportComponent,
+        ReportPlafondMouSummaryComponent,
+        ReportPlafondMouDetailComponent,
+        ReportCollateralMouComponent,
+        ReportDailyIncomingAppComponent,
+        ReportLeadCancelComponent,
+        ReportDailyIncomingLeadComponent,
+        ReportDailyPreGoLiveByProductComponent,
+        ReportDailyPreGoLiveByCmoComponent,
+        ReportMonthlyInprocessAppComponent,
+        ReportDailyPendingAppAftApvComponent,
+        ReportMonthlyPendingLeadComponent,
+        ReportMonthlyPreGoLiveByCmoComponent,
+        ReportMonthlyPendingPreGoLiveAftApvComponent,
+        ReportMonthlyPreGoLiveBySupplierComponent,
+        ReportMonthlyTopSupplierComponent
     ],
     imports: [
         ReportRoutingModule,

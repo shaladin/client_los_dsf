@@ -30,7 +30,7 @@ export class HoSearchOfficeComponent implements OnInit {
 
   ngOnInit() {
     this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
-    this.TempPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.TempPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
 
     if (this.ListOfficeMemberObjInput.length != 0) {

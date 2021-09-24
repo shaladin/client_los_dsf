@@ -51,7 +51,6 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.TaskId;
 
@@ -75,11 +74,12 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    let reqApvCustomObj = {
-      AppId: 0,
+    let reqProdHoApvCustomObj = {
+      Id: this.ProdOfferingHId,
       Tasks: event.Tasks
     }
-    this.http.post(URLConstant.Approval, reqApvCustomObj).subscribe(
+
+    this.http.post(URLConstant.ProdOfferingApproval, reqProdHoApvCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV], {});
       }

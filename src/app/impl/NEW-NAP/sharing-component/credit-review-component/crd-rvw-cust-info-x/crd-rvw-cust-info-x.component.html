@@ -1,0 +1,170 @@
+<lib-ucSubsection [id]="'CustInfoId'" [title]="'Customer Information'" [panel]="'CustInfo'">
+</lib-ucSubsection>
+<div id="CustInfo">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row" style="font-weight: bold;">
+          <div class="col-md-6">
+            <label class="label-control" translate> Capture Status:  </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{captureStat}} </label>
+          </div>
+        </div>
+      </div>      
+      <div class="col-md-6">
+        <div class="row" style="font-weight: bold;">
+          <div class="col-md-6">
+            <label class="label-control" translate> As of Date:  </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCustInfoObj.AsOfDate | date: 'dd/MM/yyyy'}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <app-crd-rvw-cust-personal-info-x *ngIf="crdRvwCustInfoObj.MrCustTypeCode != CustTypeCompany" 
+          (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" 
+          (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" 
+          (ngModelForCustHistDataX)="ClickLinkCustHistData(CustHistDataContent)"
+          (ngModelForSurveyDataX)="ClinkLinkSurveyData(SurveyDataContent)"
+          [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info-x>
+        <app-crd-rvw-cust-company-info-x *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" 
+          (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" 
+          (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" 
+          (ngModelForCustHistDataX)="ClickLinkCustHistData(CustHistDataContent)"
+          [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-company-info-x>
+      </div>
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-12">
+            <label class="label-control" *ngIf="isCustCrdRvwExposureObj"> 
+              <a class="font-weight-bold" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
+             </label>
+             <label class="label-control" *ngIf="!isCustCrdRvwExposureObj"> 
+                Exposure .000 (#Active / OS Principal / OS AR)
+             </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control" translate> Customer </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{CustCrdRvwExposureObj.ActiveAgrmnt}} / {{CustCrdRvwExposureObj.OsPrincipalAmt}} / {{CustCrdRvwExposureObj.OsArBalance}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control" translate> Customer Group </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{CustGroupCrdRvwExposureObj.ActiveAgrmnt}} / {{CustGroupCrdRvwExposureObj.OsPrincipalAmt}} / {{CustGroupCrdRvwExposureObj.OsArBalance}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control" translate> Obligor </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{ObligorCrdRvwExposureObj.ActiveAgrmnt}} / {{ObligorCrdRvwExposureObj.OsPrincipalAmt}} / {{ObligorCrdRvwExposureObj.OsArBalance}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control" translate> #App Submit / Reject / Approved / In Process </label>
+          </div>
+          <div class="col-md-6">
+            <!-- <label class="label-control"> {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} /
+              {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} </label> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control" translate> #Agr Repo / WO / Paid Off </label>
+          </div>
+          <div class="col-md-6">
+            <label class="label-control"> {{CustCrdRvwExposureObj.AgrmntRepossess}} / {{CustCrdRvwExposureObj.AgrmntWrittenOff}} /
+              {{CustCrdRvwExposureObj.AgrmntPaidOff}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-10">
+                <label class="label-control"> #Agr FPD (Last {{CustCrdRvwExposureObj.SpanOfMonth != null ? CustCrdRvwExposureObj.SpanOfMonth : 0}} month / All) </label>
+              </div>
+              <div class="col-md-2">
+                <span id="FpdIndicator" style="float: right;">
+                  <i [ngClass]="CustCrdRvwExposureObj.FpdIndicator == null ? 'far fa-circle' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': CustCrdRvwExposureObj.FpdIndicator == null ? '' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? CustCrdRvwExposureObj.FpdIndicator : ''}" class="font-medium-3 tooltips">
+                    <span class="tooltipstext">
+                      <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr != null && CustCrdRvwExposureObj.FpdIndicatorDescr != ''"> {{CustCrdRvwExposureObj.FpdIndicatorDescr}} </span>
+                      <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr == null || CustCrdRvwExposureObj.FpdIndicatorDescr == ''"> No Data </span>
+                    </span>
+                  </i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="label-control"> {{CustCrdRvwExposureObj.AgrmntFpd}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control" translate> Current Overdue </label>
+          </div>
+          <div class="col-md-6">
+            <label class="label-control"> {{CustCrdRvwExposureObj.TotalAgrmntOverdue}} / {{CustCrdRvwExposureObj.MaxOverdueDays}} / {{CustCrdRvwExposureObj.MaxOverdueAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #BankStatementContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-bank-statement [ListAppCustBankAccObjs]="ListAppCustBankAccObjs"></app-crd-rvw-bank-statement>
+</ng-template>
+<ng-template #NegCheckListContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-neg-check-list [ListNegCust]="ListNegCust"></app-crd-rvw-neg-check-list>
+</ng-template>
+<ng-template #CustHistDataContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-cust-hist-data-x [AppId]="appId"></app-crd-rvw-cust-hist-data-x>
+</ng-template>
+<ng-template #SurveyDataContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-survey-data-x [AppId]="appId"></app-crd-rvw-survey-data-x>
+</ng-template>

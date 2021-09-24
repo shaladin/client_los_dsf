@@ -9,6 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model'; 
 import { CookieService } from 'ngx-cookie';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-customer-self-verification',
@@ -24,17 +25,17 @@ export class CustomerSelfVerificationComponent implements OnInit {
   isLeadData: boolean;
   leadObj: LeadObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  WfTaskListId: number;
+  WfTaskListId: any;
   reason : string;
   AppStepIndex :number =1;
   constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params["LeadId"];
       if (this.LeadId == null || this.LeadId == undefined) this.LeadId = 1;
-
       this.WfTaskListId = params["WfTaskListId"];
-      if (this.WfTaskListId == null || this.WfTaskListId == undefined) this.WfTaskListId = 0;
-
+      if (this.WfTaskListId == undefined && this.WfTaskListId == null){
+        this.WfTaskListId = environment.isCore ? "" : 0;
+      }
       this.LobCode = params["LobCode"];
       if (this.LobCode == null || this.LobCode == undefined) this.LobCode = "KTA";
     })
@@ -52,8 +53,14 @@ export class CustomerSelfVerificationComponent implements OnInit {
          if (this.LeadStep != CommonConstant.LeadStepSelfVerification){
           this.reason = "resubmit"; 
          }else{ 
-          if (this.WfTaskListId > 0) {
-            this.claimTaskService.ClaimTask(this.WfTaskListId);
+          if(environment.isCore){
+            if (this.WfTaskListId != "") {
+              this.claimTaskService.ClaimTaskSelfVerifV2(this.WfTaskListId);
+            }
+          }else{
+            if (this.WfTaskListId > 0) {
+              this.claimTaskService.ClaimTaskSelfVerif(this.WfTaskListId);
+            }
           }
           this.stepper = new Stepper(document.querySelector('#stepper1'), {
             linear: false,
