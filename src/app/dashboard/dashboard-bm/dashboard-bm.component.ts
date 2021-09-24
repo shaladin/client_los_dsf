@@ -41,7 +41,9 @@ export class DashboardBmComponent implements OnInit {
         this.TotalApp = response["TotalApp"];
 
         for(var i=0;i<this.TempList.length ;i++){
-          this.UserList.push({ "name": this.TempList[i].MappingStep, "value": this.TempList[i].AppCount });
+          this.UserList.push({ "name": this.TempList[i].MappingStep, "value": this.TempList[i].AppCount});
+          // nanti pake kayak gini buat SLA
+          // this.UserList.push({ "name": this.TempList[i].MappingStep, "value": this.TempList[i].AppCount, "extra": {"red": this.TempList[i].AppCount, "blue": 1 }});
         }
       });
 

@@ -1,4 +1,4 @@
-<div class="card" style="background-color: #FFFFFF; width: 600px; height: auto; margin-top: 10px; margin-bottom: 10px;">
+<div class="card" style="background-color: #FFFFFF; width: auto; height: auto; margin-top: 10px; margin-bottom: 10px;">
   <div class="card-block">
     <h4 class="card-title" style="margin-left: 30%;color: #0152CC;">Application In Process </h4>
   </div>
@@ -8,7 +8,7 @@
         <h5>Total App: {{TotalApp}}</h5>
       </div> -->
       <div class ="col-md-1" style="margin-top: 7px; margin-left :90px">
-        <label style="color: #0152CC; font-size: 11px !important;" for="lobSelect">Lob</label>
+        <label style="color: #0152CC; font-size: 12px !important;" for="lobSelect">Lob</label>
       </div>
       <div class="col-md-5" style="padding-left: 3px">
         <select style="color: #0152CC;" class="form-control adInsInput" id="lobSelect" style="width: auto" (change)="radioChange($event)">
@@ -39,7 +39,7 @@
       </h6>
       <h6>
         <!-- matiin dlu karna blm ada SLA -->
-        <!-- <div class="row">
+      <!-- <div class="row">
           <div class="col-md-6">
             SLA Indicator
           </div> -->
@@ -48,24 +48,25 @@
           </div>
       <!-- </div> -->
       </h6>
+      <!-- nanti pake model.extra.red / .blue -->
         <!-- <div class="row">
           <div class="col-md-1">
             <div style = "width: 8px; height: 8px; background: #FF6A64;"></div>
           </div>
           <div class="col-md-0.5">
-            <h6>{{TotalApp}}</h6>
+            <h6>{{model.extra.red}}</h6>
           </div>
           <div class="col-md-1">
             <div style = "width: 8px; height: 8px; background: #FFF173;"></div>
           </div>
           <div class="col-md-0.5">
-            <h6>{{TotalApp}}</h6>
+            <h6>{{model.extra.blue}}</h6>
           </div>
           <div class="col-md-1">
             <div style = "width: 8px; height: 8px; background: #FFCC5B;"></div>
           </div>
           <div class="col-md-0.5">
-            <h6>{{TotalApp}}</h6>
+            <h6>{{model.test}}</h6>
           </div>
           <div class="col-md-1">
             <div style = "width: 8px; height: 8px; background: #85F983;"></div>
