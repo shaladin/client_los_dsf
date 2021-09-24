@@ -847,7 +847,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
 
 
         if (this.mode == 'add') {
-          this.http.post(URLConstant.SaveApplicationDataDF, this.salesAppInfoObj).subscribe(
+          this.http.post(URLConstantX.SaveApplicationDataDF, this.salesAppInfoObj).subscribe(
             (response) => {
               if (response['StatusCode'] == 200) {
                 this.toastr.successMessage(response['message']);
