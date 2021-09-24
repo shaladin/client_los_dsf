@@ -96,9 +96,9 @@ export class AssetDataComponent implements OnInit {
     MrAssetConditionCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
     SupplName: ['', Validators.maxLength(500)],
-    AssetPriceAmt: ['', [Validators.required, Validators.min(1.00)]],
-    DownPaymentAmt: ['', [Validators.required, Validators.min(0.00)]],
-    DownPaymentPrctg: [0, Validators.max(100)],
+    AssetPriceAmt: ['', [Validators.required, Validators.min(0.01)]],
+    DownPaymentAmt: ['', [Validators.required, Validators.min(0.01)]],
+    DownPaymentPrctg: [0, [Validators.min(0.000001), Validators.max(100)]],
     AssetNotes: ['', [Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
     TaxCityIssuer: [''],
@@ -1302,15 +1302,12 @@ export class AssetDataComponent implements OnInit {
   DpTypeChange() {
     if (this.AssetDataForm.controls.selectedDpType.value != '') {
       if (this.AssetDataForm.controls.selectedDpType.value == 'AMT' && this.DpTypeBefore == 'PRCTG') {
-        this.AssetDataForm.controls["DownPaymentAmt"].enable()
         this.AssetDataForm.patchValue({
           DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
         });
-        this.AssetDataForm.controls["DownPaymentPrctg"].disable();
         this.AssetDataForm.controls["DownPaymentAmt"].updateValueAndValidity();
       }
       else if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
-        this.AssetDataForm.controls["DownPaymentPrctg"].enable();
         if (this.AssetDataForm.controls.AssetPriceAmt.value == 0) {
           this.AssetDataForm.patchValue({
             DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
@@ -1321,7 +1318,6 @@ export class AssetDataComponent implements OnInit {
             DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
           });
         }
-        this.AssetDataForm.controls["DownPaymentAmt"].disable();
         this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
       };
       this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
