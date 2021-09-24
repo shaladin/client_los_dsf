@@ -8,6 +8,7 @@ export class ReceiptDsfObj {
     AgrmntFacDt: any;
     DocSignCol: string;
     PositionSignCol: string;
+    OfficeCode: string;
     RowVersion: any;
 
     constructor()
@@ -21,6 +22,7 @@ export class ReceiptDsfObj {
         this.AgrmntFacDt = Date.now;
         this.DocSignCol = "";
         this.PositionSignCol = "";
+        this.OfficeCode = "";
         this.RowVersion = "";
     }
 }

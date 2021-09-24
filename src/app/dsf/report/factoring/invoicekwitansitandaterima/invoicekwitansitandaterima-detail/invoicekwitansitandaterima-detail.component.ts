@@ -12,6 +12,8 @@ import { ReceiptDsfObj } from 'app/dsf/model/ReceiptDsfObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { DatePipe } from '@angular/common';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class InvoicekwitansitandaterimaDetailComponent implements OnInit {
   pageType: string = "add";
   CessieNo: string;
   resultData: any;
+  user: CurrentUserContext;
 
   receiptDsfObj: ReceiptDsfObj;
 
@@ -56,17 +59,21 @@ export class InvoicekwitansitandaterimaDetailComponent implements OnInit {
  
   ngOnInit() {
     this.viewCessieDetailObj.viewInput = "./assets/ucviewgeneric/viewCessieDetail.json";
+    let userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var datePipe = new DatePipe("en-US");
     if (this.pageType == "add") {
       this.receiptDsfObj = new ReceiptDsfObj();
       this.receiptDsfObj.CessieNo = this.CessieNo;
+      this.receiptDsfObj.OfficeCode = userContext.OfficeCode;
       this.http.post(URLConstantDsf.GenerateReceiptFormCode, this.receiptDsfObj).subscribe(
         (response) => {
           this.resultData = response;
           this.DetailInformationForm.patchValue({
             NoInvoice: this.resultData.InvoiceNo,
             NoKwitansi: this.resultData.KwitansiNo,
-            NoTandaTerima: this.resultData.TandaTerimaNo
+            NoTandaTerima: this.resultData.TandaTerimaNo,
+            DocumentSigner: this.resultData.DocumentSigner,
+            PositionSigner: this.resultData.PositionSigner
           })
         })
     }
