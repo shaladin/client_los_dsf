@@ -179,7 +179,8 @@ export class URLConstantX {
 
   //Application Data DF
   public static EditApplicationDataDF = environment.losUrl + "/v1" + "/ApplicationDataX/EditApplicationDataDF";
-
+  public static SaveApplicationDataDF = environment.losUrl + "/v1" + "/ApplicationDataX/SaveApplicationDataDF";
+  
   //APP TC
   public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
 
