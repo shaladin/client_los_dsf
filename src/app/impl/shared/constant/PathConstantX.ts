@@ -139,6 +139,8 @@ export class PathConstantX {
   //endregion
 
   //#region Nap-Additional-Prcs
+  public static RETURN_HANDLING_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstantX.PAGING;
+  public static RETURN_HANDLING_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
   public static RETURN_HANDLING_SURVEY_VERIF_PAGING_X = PathConstant.RETURN_HANDLING + "/" + PathConstantX.SURVEY_VERIF_PAGING;
   //#endregion
 
