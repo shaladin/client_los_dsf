@@ -11,6 +11,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-cust-completion-detail-personal-x',
@@ -164,7 +165,7 @@ export class CustCompletionDetailPersonalXComponent implements OnInit {
   }
   completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
   Save() {
-    this.http.post(URLConstant.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
+    this.http.post(URLConstantX.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];

@@ -207,6 +207,7 @@ export class URLConstantX {
   // tslint:disable-next-line:max-line-length
   public static GetAppCustAndAppCustCompanyDataByAppCustId = environment.losUrl + "/v1" + "/AppCustX/GetAppCustAndAppCustCompanyDataByAppCustId";
   public static UpdateAppCustCompletionCompany = environment.losUrl + "/v1" + "/AppCustX/UpdateAppCustCompletionCompany";
+  public static SaveAppCustCompletion = environment.losUrl + "/v1" + "/AppCustX/SaveAppCustCompletion";
 
   //APP CUST PERSONAL JOB DATA X
   public static AddAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/AddAppCustPersonalJobData";

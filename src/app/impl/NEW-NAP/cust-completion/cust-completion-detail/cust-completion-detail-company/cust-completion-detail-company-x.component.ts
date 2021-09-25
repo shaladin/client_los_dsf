@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
@@ -157,7 +158,7 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
     }    
   }
   Save() {
-    this.http.post(URLConstant.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
+    this.http.post(URLConstantX.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
