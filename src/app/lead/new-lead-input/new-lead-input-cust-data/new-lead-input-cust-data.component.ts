@@ -98,7 +98,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     MotherName: [''],
     IdNo: [''],
     MrMaritalStatCode: [''],
-    Npwp: ['',[Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
+    Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     Email: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$"), Validators.required]],
     MobilePhone2: ['', Validators.pattern("^[0-9]+$")],
@@ -167,8 +167,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForLegalAddr.title = "Legal Address";
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showOwnership = false;
-    if(this.typePage != "update"){
-    this.inputAddressObjForLegalAddr.isRequired = false;
+    if (this.typePage != "update") {
+      this.inputAddressObjForLegalAddr.isRequired = false;
     }
     this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isRequired = false;
 
@@ -185,7 +185,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
     this.InitDms();
     this.ClaimTask();
-      
+
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -416,7 +416,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
           this.http.post(URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode, idAndCodeObj).subscribe(
             (response: LeadCustAddrObj) => {
               this.resLeadCustAddrResObj = response;
-              this.residenceAddressObj = new LeadCustAddrObj();
+              this.residenceAddressObj = new LeadCustAddrObj();            
               this.residenceAddressObj.Addr = this.resLeadCustAddrResObj.Addr;
               this.residenceAddressObj.AreaCode3 = this.resLeadCustAddrResObj.AreaCode3;
               this.residenceAddressObj.AreaCode4 = this.resLeadCustAddrResObj.AreaCode4;
@@ -740,10 +740,10 @@ export class NewLeadInputCustDataComponent implements OnInit {
     let pattern: string = "";
     if (idTypeValue != undefined) {
       if (this.resultPattern != undefined) {
-          let result = this.resultPattern.find(x => x.Key == idTypeValue)
-          if (result != undefined) {
-            pattern = result.Value;
-          }
+        let result = this.resultPattern.find(x => x.Key == idTypeValue)
+        if (result != undefined) {
+          pattern = result.Value;
+        }
       }
     }
     this.setValidator(pattern);
@@ -752,29 +752,29 @@ export class NewLeadInputCustDataComponent implements OnInit {
     if (pattern != undefined) {
       if (this.CustomerDataForm.controls.MrIdTypeCode.value == 'EKTP') {
         if (pattern != "") {
-          if(this.typePage == "update"){
+          if (this.typePage == "update") {
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
-          }else{
+          } else {
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
           }
         } else {
-          if(this.typePage == "update"){
+          if (this.typePage == "update") {
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-          }else{
+          } else {
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern("^[0-9]+$")]);
           }
         }
       }
       else {
         this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
-        if(this.typePage == "update"){
+        if (this.typePage == "update") {
           this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
         }
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
     } else {
       this.CustomerDataForm.controls.IdNo.clearValidators();
-      if(this.typePage == "update"){
+      if (this.typePage == "update") {
         this.CustomerDataForm.controls.IdNo.setValidators([Validators.required]);
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
@@ -844,7 +844,6 @@ export class NewLeadInputCustDataComponent implements OnInit {
   }
 
   setLegalAddr() {
-    //this.legalAddressObj = new LeadCustAddrObj();
     this.leadInputObj.LeadCustLegalAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal
     this.leadInputObj.LeadCustLegalAddrObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
     this.leadInputObj.LeadCustLegalAddrObj.AreaCode3 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode3.value;
@@ -866,6 +865,18 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
   setResidenceAddr() {
     //this.residenceAddressObj = new LeadCustAddrObj();
+    if (
+      this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value == null ||
+      this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value == "" ||
+      this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value == "-"
+    ) {
+      this.CustomerDataForm.patchValue({
+        residenceAddress: {
+          Addr: "-"
+        },
+      });
+    }
+    console.log(this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value);
     this.leadInputObj.LeadCustResidenceAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence
     this.leadInputObj.LeadCustResidenceAddrObj.Addr = this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value;
     this.leadInputObj.LeadCustResidenceAddrObj.AreaCode3 = this.CustomerDataForm.controls["residenceAddress"]["controls"].AreaCode3.value;
@@ -995,30 +1006,30 @@ export class NewLeadInputCustDataComponent implements OnInit {
           );
         }
       }
-    }else if(this.typePage =="update"){
+    } else if (this.typePage == "update") {
       this.leadInputObj = new LeadInputObj();
-        this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-        this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
-        this.setLeadCust();
-        this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
-        this.setLeadCustPersonal();
-        // this.setLeadCustSocmed();
-        this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
-        this.setLegalAddr();
-        this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
-        this.setResidenceAddr();
-        this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
-        this.setLeadCustPersonalJobData();
-        this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
-        this.setLeadCustPersonalFinData();
-        if (this.confirmFraudCheck()) {
-          this.http.post(URLConstant.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.outputTab.emit({ stepMode: "next" });
-            }
-          );
-        }
+      this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+      this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
+      this.setLeadCust();
+      this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
+      this.setLeadCustPersonal();
+      // this.setLeadCustSocmed();
+      this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
+      this.setLegalAddr();
+      this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
+      this.setResidenceAddr();
+      this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
+      this.setLeadCustPersonalJobData();
+      this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
+      this.setLeadCustPersonalFinData();
+      if (this.confirmFraudCheck()) {
+        this.http.post(URLConstant.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.outputTab.emit({ stepMode: "next" });
+          }
+        );
+      }
     }
     else {
       this.leadInputObj = new LeadInputObj();
@@ -1040,13 +1051,13 @@ export class NewLeadInputCustDataComponent implements OnInit {
   }
 
   ClaimTask() {
-    if(environment.isCore){	
-        if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
-            this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
-        }	
-    }	
-    else if (this.WfTaskListId> 0) {	
-        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    if (environment.isCore) {
+      if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }
+    else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }
 
@@ -1060,8 +1071,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
       (response: LeadCustObj) => {
         this.resLeadCustObj = response;
         if (this.resLeadCustObj.LeadCustId != 0) {
-          if(this.typePage != 'update'){
-          this.typePage = "edit";
+          if (this.typePage != 'update') {
+            this.typePage = "edit";
           }
           this.CopyFrom = null;
           this.CustomerDataForm.patchValue({
