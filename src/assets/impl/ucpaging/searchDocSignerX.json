@@ -1,0 +1,127 @@
+{
+    "title": "DOCUMENT SIGNER",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AP.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AG.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "searchDocSigner"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AP.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "AG.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "AG.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "PRODUCT OFFERING NAME",
+            "name": "AG.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Entry"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target": "_blank",
+            "path" : "VIEW_APP", 
+            "param" : [ 
+                {
+                    "type" : "AppId", 
+                    "property" : "AppId" 
+                }
+            ]
+        },
+        {
+            "type" : "callback",
+            "position": "center",
+            "property": "AgrmntNo",
+            "key": "agrmnt"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "position": "left",
+            "property": "ProdOfferingName",
+            "key": "prodOff"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "NAP_ADM_PRCS_NAP_FCTR_DOC_SIGNER_DETAIL",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -69,6 +69,8 @@ export class PathConstantX {
   public static INSURANCE_ORDER_DETAIL_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.DETAIL_X;
   public static COPY_CANCEL_APP = "CopyCancelledApplicationX";
   public static NAP_DOC_PRINT_VIEW_X = PathConstant.NAP_DOC_PRINT + "/" + PathConstantX.VIEW;
+  public static NAP_DOC_SIGNER_PAGING_X = PathConstant.NAP_DOC_SIGNER + "/" + PathConstantX.PAGING;
+  public static NAP_DOC_SIGNER_DETAIL_X = PathConstant.NAP_DOC_SIGNER + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Nap-Cust-Compl

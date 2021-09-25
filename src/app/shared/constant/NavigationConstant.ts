@@ -114,6 +114,8 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/DocumentSigner/Detail'
   public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_CFNA_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/NewDocumentSigner/Paging'  => '/Nap/AdminProcess/CfnaDocumentSigner/Paging'
   public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_CFNA_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/NewDocumentSigner/Detail'  => '/Nap/AdminProcess/CfnaDocumentSigner/Detail'
+  public static NAP_ADM_PRCS_NAP_FCTR_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NAP_DOC_SIGNER_PAGING_X; //'/Nap/AdminProcess/DocumentSigner/PagingX'
+  public static NAP_ADM_PRCS_NAP_FCTR_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NAP_DOC_SIGNER_DETAIL_X; //'/Nap/AdminProcess/DocumentSigner/DetailX'
   public static NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_PRINT_PAGING; //'/Nap/AdminProcess/DocPrint/Paging/'
   public static NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NAP_DOC_PRINT_VIEW_X; //'/Nap/AdminProcess/DocPrint/ViewX/'
   public static NAP_ADM_PRCS_INVOICE_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.INVOICE_DETAIL; //"/Nap/AdminProcess/Invoice/Detail"
