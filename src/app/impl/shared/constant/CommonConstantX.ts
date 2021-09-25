@@ -79,4 +79,7 @@ export class CommonConstantX {
     // BOOLEAN CONDITION
     public static TRUE_CONDITION = "1";
     public static FALSE_CONDITION = "0";
+
+    // NAP 4 Tab
+    public static FINANCIAL_TAB = "Financial";
 }

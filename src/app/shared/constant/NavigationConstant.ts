@@ -40,7 +40,7 @@ export class NavigationConstant {
 
   //#region CustCompletion
   public static NAP_CUST_COMPL_PAGING = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.PAGING; //"Nap/CustCompletion/Paging"
-  public static NAP_CUST_COMPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.DETAIL; //"Nap/CustCompletion/Detail"
+  public static NAP_CUST_COMPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstantX.DETAIL_X; //"Nap/CustCompletion/DetailX"
   public static NAP_CUST_COMPL_OPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.OPL_DETAIL_LOWERCASE; //"Nap/CustCompletion/opl/detail"
   //#endregion
 
@@ -133,7 +133,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_PO_PO_EXT_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PO_EXT_DETAIL_X; //"/Nap/AdminProcess/PurchaseOrder/PO/Detail"
   public static NAP_ADM_PRCS_PO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PAGING_X; //"/Nap/AdminProcess/PurchaseOrder/Paging"
   public static NAP_ADM_PRCS_NEW_PO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NEW_PO_PAGING; //'/Nap/AdminProcess/NewPurchaseOrder/Paging'
-  public static NAP_ADM_PRCS_NEW_PO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NEW_PO_DETAIL; //'/Nap/AdminProcess/NewPurchaseOrder/Detail'
+  public static NAP_ADM_PRCS_NEW_PO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NEW_PO_DETAIL; //'/Nap/AdminProcess/NewPurchaseOrder/DetailX'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_REQ_APPRV = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_REQ_APPRV; //'/Nap/AdminProcess/DocChecklist/RequestApproval'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_PAGING; //'/Nap/AdminProcess/DocChecklist/Paging'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_DETAIL; //'/Nap/AdminProcess/DocChecklist/Detail'

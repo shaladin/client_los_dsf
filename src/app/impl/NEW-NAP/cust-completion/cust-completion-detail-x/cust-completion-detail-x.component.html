@@ -1,0 +1,61 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-header header-title" style="margin-bottom: 10px;"> 
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" id="horz-layout-colored-controls" translate> CUSTOMER MAIN DATA
+            </h4>
+          </div>
+        </div>
+      </div> 
+      <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
+      <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:10px">
+        <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()" translate>
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+      </div>
+      <div class="px-3">
+        <div class="card" *ngIf="ReturnHandlingHId > 0">
+          <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
+            <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
+              #enjiForm="ngForm">
+              <div class="form-body">
+                <div class="form-group row">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel" translate>Return Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel" translate>Return Execution Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
+                    <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj"></lib-ucgridview>
+        <div class="text-right py-2">
+          <button *ngIf="ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-primary"
+            (click)="buttonSubmitOnClick()" translate>
+            Submit
+          </button>
+          <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()"
+            class="btn btn-raised btn-primary" translate>
+            <i class="far fa-check-square"></i> Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
