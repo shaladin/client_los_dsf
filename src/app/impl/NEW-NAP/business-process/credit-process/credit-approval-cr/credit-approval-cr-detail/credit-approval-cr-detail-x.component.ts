@@ -40,6 +40,7 @@ export class CreditApprovalCrDetailXComponent implements OnInit {
   IsViewReady: boolean = false;
   getEvent: Array<any> = new Array();
   custHighlightCommentObj: CustHighlightCommentObj = null;
+  IsFD: boolean = false;
 
   private viewHighlightCommentComponent: ViewHighlightCommentComponent;
   @ViewChild(ViewHighlightCommentComponent) set content(
@@ -159,6 +160,10 @@ export class CreditApprovalCrDetailXComponent implements OnInit {
       (response) => {
         this.AppObj = response;
       });
+      
+    if(this.BizTemplateCode == CommonConstant.CFNA && this.AppObj.LobCode == "FD"){
+      this.IsFD = true;
+    }
   }
 
   onApprovalSubmited(event) {

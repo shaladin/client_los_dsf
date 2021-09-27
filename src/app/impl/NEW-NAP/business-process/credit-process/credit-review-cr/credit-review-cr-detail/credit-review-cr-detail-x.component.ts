@@ -71,6 +71,9 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     Notes: ['']
   });
 
+  lobCode: string;
+  IsFD: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private ref: ApplicationRef,
@@ -168,9 +171,14 @@ export class CreditReviewCrDetailXComponent implements OnInit {
       async (response) => {
         if (response != undefined) {
           this.appNo = response.AppNo;
+          this.lobCode = response.LobCode;
           await this.GetCreditScoring(response.AppNo);
         }
       });
+
+    if(this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "FD"){
+      this.IsFD = true;
+    }
   }
 
   async GetCreditScoring(appNo: string) {
