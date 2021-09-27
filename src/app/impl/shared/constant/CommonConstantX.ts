@@ -19,6 +19,7 @@ export class CommonConstantX {
     public static GSVendorMpfFdCode = "VENDOR_MPFFD_CODE";
     public static RefMasterTypeCodeMouFctrType = 'MOU_FCTR_TYPE';
     public static GSCodePefindoBasicRole = "PEFINDO_BASIC_ROLE";
+    public static GsCodePONoNeedToPayBank = "PO_NO_NEED_TO_PAY_BANK_ACC";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
