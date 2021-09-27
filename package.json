@@ -125,6 +125,7 @@
     "typescript-string-operations": "^1.4.1",
     "uc-input": "^2.0.0",
     "ucaddress": "^1.0.5",
+    "update": "^0.7.4",
     "videogular2": "6.3.0",
     "web-animations-js": "2.2.5",
     "xlsx": "^0.14.5",
