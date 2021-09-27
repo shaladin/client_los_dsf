@@ -74,7 +74,6 @@ export class LtkmCustJobDataComponent implements OnInit {
       this.inputAddressObjForJobData.inputField.inputLookupObj.isReadonly = true;
       this.inputAddressObjForJobData.inputField.inputLookupObj.isDisable = true;
     }
-
     this.MaxDate = this.UserAccess.BusinessDt;
     this.parentForm.removeControl(this.identifier);
     if (this.isLockMode) {
@@ -95,22 +94,42 @@ export class LtkmCustJobDataComponent implements OnInit {
         MrProfessionCode: ['']
       }));
     } else {
-      this.parentForm.addControl(this.identifier, this.fb.group({
-        CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
-        ProfessionalNo: ['', Validators.maxLength(50)],
-        EstablishmentDt: [''],
-        JobTitleName: ['', Validators.maxLength(50)],
-        IsMfEmp: [false],
-        CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
-        MrJobPositionCode: ['', Validators.maxLength(50)],
-        MrCompanyScaleCode: ['', Validators.maxLength(50)],
-        NumOfEmployee: [0, Validators.min(0)],
-        MrJobStatCode: ['', Validators.maxLength(50)],
-        MrInvestmentTypeCode: ['', Validators.maxLength(50)],
-        IndustryTypeCode: [Validators.required],
-        RefSectorEconomySlikCode: ['', Validators.required],
-        MrProfessionCode: ['']
-      }));
+      if(this.custModelCode != CommonConstant.CustModelNonProfessional){
+        this.parentForm.addControl(this.identifier, this.fb.group({
+          CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
+          ProfessionalNo: ['', Validators.maxLength(50)],
+          EstablishmentDt: [''],
+          JobTitleName: ['', Validators.maxLength(50)],
+          IsMfEmp: [false],
+          CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
+          MrJobPositionCode: ['', Validators.maxLength(50)],
+          MrCompanyScaleCode: ['', Validators.maxLength(50)],
+          NumOfEmployee: [0, Validators.min(0)],
+          MrJobStatCode: ['', Validators.maxLength(50)],
+          MrInvestmentTypeCode: ['', Validators.maxLength(50)],
+          IndustryTypeCode: [Validators.required],
+          RefSectorEconomySlikCode: ['', Validators.required],
+          MrProfessionCode: ['']
+        }));
+      }
+      else{
+        this.parentForm.addControl(this.identifier, this.fb.group({
+          CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
+          ProfessionalNo: ['', Validators.maxLength(50)],
+          EstablishmentDt: [''],
+          JobTitleName: ['', Validators.maxLength(50)],
+          IsMfEmp: [false],
+          CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
+          MrJobPositionCode: ['', Validators.maxLength(50)],
+          MrCompanyScaleCode: ['', Validators.maxLength(50)],
+          NumOfEmployee: [0, Validators.min(0)],
+          MrJobStatCode: ['', Validators.maxLength(50)],
+          MrInvestmentTypeCode: ['', Validators.maxLength(50)],
+          IndustryTypeCode: [Validators.required],
+          RefSectorEconomySlikCode: [''],
+          MrProfessionCode: ['']
+        }));
+      }
     }
 
     this.inputFieldJobDataObj = new InputFieldObj();
@@ -182,7 +201,7 @@ export class LtkmCustJobDataComponent implements OnInit {
   GetIndustryType(event) {
     this.parentForm.controls[this.identifier].patchValue({
       IndustryTypeCode: event.IndustryTypeCode,
-      RefSectorEconomySlikCode: event.RefSectorEconomySlikCode
+      RefSectorEconomySlikCode: event.MasterCode
     });
   }
 
@@ -235,8 +254,7 @@ export class LtkmCustJobDataComponent implements OnInit {
   initLookup() {
     this.InputLookupProfessionObj = new InputLookupObj();
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.InputLookupProfessionObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     if (this.isLockMode) {
@@ -244,11 +262,10 @@ export class LtkmCustJobDataComponent implements OnInit {
     }
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
-    this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupRefSectorEconomySlik.json";
-    this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
-    this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupRefSectorEconomySlik.json";
-    this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupRefSectorEconomySlik.json";
+    this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+    this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     if (this.isLockMode) {
       this.InputLookupIndustryTypeObj.isDisable = true;
     }

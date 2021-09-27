@@ -110,6 +110,35 @@ import { SchmStepUpStepDownLeasingFL4WComponent } from "app/NEW-NAP/FL4W/input-n
 import { SchmStepUpStepDownCummulativeFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-FL4W.component";
 import { SchmEvenPrincipalFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
 import { SchmBalloonFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
+import { ApplicationDataOplComponent } from "./application-data/application-data-opl/application-data-opl.component";
+import { ApplicationDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-x.component";
+import { ApplicationDataFL4WXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-FL4W/application-data-FL4W-x.component";
+import { FinancialDataFctrXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-fctr/financial-data-fctr-x.component";
+import { FeeFctrXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-fctr/component/fee/fee-fctr-x.component";
+import { FeeDlfnXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/fee-dlfn/fee-dlfn-x.component";
+import { FinancialDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/financial-data-x.component";
+import { FeeXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/fee/fee-x.component";
+import { SchmBalloonXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-baloon/schm-balloon-x.component";
+import { SchmEvenPrincipalXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-even-principal/schm-even-principal-x.component";
+import { SchmIrregularXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-irregular/schm-irregular-x.component";
+import { SchmRegulerFixXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-reguler-fix/schm-reguler-fix-x.component";
+import { SchmStepUpStepDownCummulativeXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-x.component";
+import { SchmStepUpStepDownLeasingXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing-x.component";
+import { SchmStepUpStepDownNormalXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal-x.component";
+import { ViewSubsidyXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data/component/view-subsidy/view-subsidy-x.component";
+import { MultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/multi-asset-data-x.component";
+import { AssetDataAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-add-edit-x/asset-data-add-edit-x.component";
+import { AssetDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging-x.component";
+import { AssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/asset-data/asset-data-x.component";
+import {CollateralDataCfnaPagingXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-paging/collateral-data-cfna-paging-x.component';
+import {CollateralDataCfnaXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-x.component';
+import { InsuranceMultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/insurance-multi-asset-data-x/insurance-multi-asset-data-x.component";
+
+import {ApplicationDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-dlfn/application-data-dlfn-x.component';
+import {FinancialDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/financial-data-dlfn-x.component';
+import {SingleInstDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/single-inst-dlfn/single-inst-dlfn-x.component';
+import {SchmRegularFixDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn-x.component';
+import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -146,6 +175,7 @@ export const customCurrencyMaskConfig = {
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
+    ApplicationDataOplComponent,
     ApplicationDataRefinancingComponent,
     LoanObjectComponent,
     SearchCrossAppComponent,
@@ -168,8 +198,10 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalComponent,
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
+    AssetDataAddEditXComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
+    MultiAssetDataXComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent,
     SchmEvenPrincipalFctrComponent,
@@ -230,6 +262,32 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownCummulativeFL4WComponent,
     SchmEvenPrincipalFL4WComponent,
     SchmBalloonFL4WComponent,
+    ApplicationDataXComponent,
+    ApplicationDataFL4WXComponent,
+    FinancialDataFctrXComponent,
+    FeeFctrXComponent,
+    FeeDlfnXComponent,
+    FinancialDataXComponent,
+    FeeXComponent,
+    SchmBalloonXComponent,
+    SchmEvenPrincipalXComponent,
+    SchmIrregularXComponent,
+    SchmRegulerFixXComponent,
+    SchmStepUpStepDownCummulativeXComponent,
+    SchmStepUpStepDownLeasingXComponent,
+    SchmStepUpStepDownNormalXComponent,
+    ViewSubsidyXComponent,
+    MultiAssetDataXComponent,
+    AssetDataPagingXComponent,
+    AssetDataXComponent,
+    CollateralDataCfnaXComponent,
+    CollateralDataCfnaPagingXComponent,
+    InsuranceMultiAssetDataXComponent,
+    ApplicationDataDlfnXComponent,
+    FinancialDataDlfnXComponent,
+    SingleInstDlfnXComponent,
+    SchmRegularFixDlfnXComponent,
+    SchmEvenPrincipalDlfnXComponent
   ],
   imports: [
     CommonModule,
@@ -262,6 +320,7 @@ export const customCurrencyMaskConfig = {
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
     ApplicationDataComponent,
+    ApplicationDataOplComponent,
     ApplicationDataRefinancingComponent,
     LoanObjectComponent,
     SearchCrossAppComponent,
@@ -283,8 +342,10 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalComponent,
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
+    AssetDataAddEditXComponent,
     CollateralAddEditComponent,
     MultiAssetDataComponent,
+    MultiAssetDataXComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent,
     SchmEvenPrincipalFctrComponent,
@@ -347,6 +408,32 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownCummulativeFL4WComponent,
     SchmEvenPrincipalFL4WComponent,
     SchmBalloonFL4WComponent,
+    ApplicationDataXComponent,
+    ApplicationDataFL4WXComponent,
+    FinancialDataFctrXComponent,
+    FeeFctrXComponent,
+    FeeDlfnXComponent,
+    FinancialDataXComponent,
+    FeeXComponent,
+    SchmBalloonXComponent,
+    SchmEvenPrincipalXComponent,
+    SchmIrregularXComponent,
+    SchmRegulerFixXComponent,
+    SchmStepUpStepDownCummulativeXComponent,
+    SchmStepUpStepDownLeasingXComponent,
+    SchmStepUpStepDownNormalXComponent,
+    ViewSubsidyXComponent,
+    MultiAssetDataXComponent,
+    AssetDataPagingXComponent,
+    AssetDataXComponent,
+    CollateralDataCfnaXComponent,
+    CollateralDataCfnaPagingXComponent,
+    InsuranceMultiAssetDataXComponent,
+    ApplicationDataDlfnXComponent,
+    FinancialDataDlfnXComponent,
+    SingleInstDlfnXComponent,
+    SchmRegularFixDlfnXComponent,
+    SchmEvenPrincipalDlfnXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

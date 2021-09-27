@@ -51,21 +51,21 @@ export class NewNapOtherInfoComponent implements OnInit {
 
     this.InputDebitorGroupLookupObj = new InputLookupObj();
     this.InputDebitorGroupLookupObj.urlJson = "./assets/uclookup/lookupDebitorGroup.json";
-    this.InputDebitorGroupLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputDebitorGroupLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputDebitorGroupLookupObj.pagingJson = "./assets/uclookup/lookupDebitorGroup.json";
     this.InputDebitorGroupLookupObj.genericJson = "./assets/uclookup/lookupDebitorGroup.json";
     this.InputDebitorGroupLookupObj.isReady = true;
 
     this.InputDebitorBusinessScaleLookupObj = new InputLookupObj();
     this.InputDebitorBusinessScaleLookupObj.urlJson = "./assets/uclookup/lookupDebitorBusinessScale.json";
-    this.InputDebitorBusinessScaleLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputDebitorBusinessScaleLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputDebitorBusinessScaleLookupObj.pagingJson = "./assets/uclookup/lookupDebitorBusinessScale.json";
     this.InputDebitorBusinessScaleLookupObj.genericJson = "./assets/uclookup/lookupDebitorBusinessScale.json";
     this.InputDebitorBusinessScaleLookupObj.isReady = true;
 
     this.InputCounterpartCategoryLookupObj = new InputLookupObj();
     this.InputCounterpartCategoryLookupObj.urlJson = "./assets/uclookup/lookupCounterpartCategory.json";
-    this.InputCounterpartCategoryLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputCounterpartCategoryLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputCounterpartCategoryLookupObj.pagingJson = "./assets/uclookup/lookupCounterpartCategory.json";
     this.InputCounterpartCategoryLookupObj.genericJson = "./assets/uclookup/lookupCounterpartCategory.json";
     this.InputCounterpartCategoryLookupObj.isReady = true;

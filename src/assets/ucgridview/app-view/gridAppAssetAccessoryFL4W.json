@@ -1,0 +1,75 @@
+{
+    "isSeq" : true,
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Supplier Name",
+            "name": "SupplName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Accessory Name",
+            "name": "AssetAccessoryName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Accessory Price",
+            "name": "AccessoryPriceAmt"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Security Deposit Percent",
+            "name": "DownPaymentPrcnt"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Security Deposit Amount",
+            "name": "DownPaymentAmt"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Notes",
+            "name": "AccessoryNotes"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SupplName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AssetAccessoryName"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "AccessoryPriceAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "DownPaymentPrcnt",
+            "precision": "0.6",
+            "IsPrcnt": true
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "DownPaymentAmt"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AccessoryNotes"
+        }
+    ]
+}

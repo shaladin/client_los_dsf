@@ -32,6 +32,7 @@ import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegi
 import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -139,9 +140,12 @@ export class CollateralDetailComponent implements OnInit {
   AppCustData: AppCustObj;
   IntegratorCheckBySystemGsValue: string = "0";
   IsUseDigitalization: string;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsSvcExist: boolean = false;
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
     this.inputAddressObjForLegal = new InputAddressObj();
     this.inputAddressObjForLegal.showSubsection = false;
     this.inputAddressObjForLegal.showAllPhn = false;
@@ -182,7 +186,7 @@ export class CollateralDetailComponent implements OnInit {
       }
     }
     this.GenerateAppCollateralAttr(false);
-    this.GetGS();
+    await this.GetGS();
   }
 
   initUcLookup() {
@@ -193,8 +197,7 @@ export class CollateralDetailComponent implements OnInit {
   SetInputLookupCollExisting() {
     this.inputLookupExistColl = new InputLookupObj();
     this.inputLookupExistColl.urlJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
-    this.inputLookupExistColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.isRequired = false;
@@ -239,7 +242,10 @@ export class CollateralDetailComponent implements OnInit {
         }
 
         if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
-          this.GetThirdPartyResultH();
+          this.getDigitalizationSvcType();
+          if(this.IsSvcExist){
+            this.GetThirdPartyResultH();
+          }
         }
       }
     );
@@ -257,8 +263,7 @@ export class CollateralDetailComponent implements OnInit {
   SetInputLookupColl() {
     this.inputLookupColl = new InputLookupObj();
     this.inputLookupColl.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
-    this.inputLookupColl.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupColl.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupColl.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputLookupColl.genericJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
   }
@@ -1089,7 +1094,7 @@ export class CollateralDetailComponent implements OnInit {
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
     if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-      if (this.IsUseDigitalization == "0" || this.IntegratorCheckBySystemGsValue == "1") {
+      if (this.IsUseDigitalization == "0" || this.IntegratorCheckBySystemGsValue == "1" || !this.IsSvcExist) {
         if (this.mode == 'add') {
           this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
             (response) => {
@@ -1106,7 +1111,7 @@ export class CollateralDetailComponent implements OnInit {
             });
         }
       }
-      else if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+      else if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
         if (this.IsIntegrator && this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value != "") {
           if (this.mode == 'add') {
             this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
@@ -1287,5 +1292,27 @@ export class CollateralDetailComponent implements OnInit {
   refreshAttr() {
     this.isAssetAttrReady = false;
     this.GenerateAppCollateralAttr(true);
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.bizTemplateCode}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+      var svcType = listSvcType.find(x => x == refSvcType);
+
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+    }
   }
 }

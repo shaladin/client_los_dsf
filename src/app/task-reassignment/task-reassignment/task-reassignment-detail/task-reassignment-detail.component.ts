@@ -11,6 +11,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcLookupObj } from 'app/shared/model/UcLookupObj.Model';
@@ -25,7 +26,7 @@ import { map, mergeMap } from 'rxjs/operators';
   styles: []
 })
 export class TaskReassignmentDetailComponent implements OnInit {
-  WfTaskListId: number;
+  WfTaskListId: any;
   WfActivityName: string;
   InputLookupObj: InputLookupObj;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -33,6 +34,9 @@ export class TaskReassignmentDetailComponent implements OnInit {
   IsReady: boolean;
   WfRoleCode: string;
   WfOfficeCode: string;
+
+  //#region V2
+  //#endregion
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -45,10 +49,13 @@ export class TaskReassignmentDetailComponent implements OnInit {
     TaskReassignmentTrxId: [0],
     TaskReassignmentTrxNo: [''],
     WfRefNo: [''],
+    WfCode: [''],
     WfName: [''],
     WfActivityCode: [''],
+    WfActivityName: [''],
     CurrentUser: ['', [Validators.required]],
     OldCurrentUser: [''],
+    OfficeCode: [''],
     ApvDt: [null],
     TaskReassignmentStat: [CommonConstant.TaskReassignmentApv],
     WfTaskListId: ['']
@@ -60,32 +67,33 @@ export class TaskReassignmentDetailComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private cookieService: CookieService 
+    private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["WfTaskListId"]) {
         this.WfTaskListId = params["WfTaskListId"];
-        this.TaskReassignmentForm.patchValue({
-          WfTaskListId: this.WfTaskListId
-        });
+        if (!environment.isCore) this.TaskReassignmentForm.patchValue({ WfTaskListId: this.WfTaskListId });
       }
     });
     this.InputLookupObj = new InputLookupObj();
     this.InputLookupObj.urlJson = "./assets/uclookup/lookupUserForReassignment.json";
-    this.InputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupObj.pagingJson = "./assets/uclookup/lookupUserForReassignment.json";
     this.InputLookupObj.genericJson = "./assets/uclookup/lookupUserForReassignment.json";
   }
 
-  ngOnInit() {
-    this.http.post(URLConstant.GetTaskReassignmentDetail, { WfTaskListId: this.WfTaskListId }).pipe(
+  async ngOnInit() {
+    let urlApi: string = environment.isCore ? URLConstant.GetTaskReassignmentDetailV2 : URLConstant.GetTaskReassignmentDetail;
+    this.http.post(urlApi, { WfTaskListId: this.WfTaskListId }).pipe(
       map((response) => {
         this.TaskReassignmentForm.patchValue({
           WfRefNo: response["WfRefNo"],
+          WfCode: response["WfCode"],
           WfName: response["WfName"],
           WfActivityCode: response["WfActivityCode"],
-          OldCurrentUser: response["CurrentUser"]
+          WfActivityName: response["WfActivityName"],
+          OldCurrentUser: response["CurrentUser"],
+          OfficeCode: response["OfficeCode"]
         });
         this.WfActivityName = response["WfActivityName"];
         this.WfRoleCode = response["RoleCode"];
@@ -93,7 +101,7 @@ export class TaskReassignmentDetailComponent implements OnInit {
         return response;
       }),
       mergeMap((response) => {
-        var Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+        let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
         let getDDLRec = this.http.post(URLConstant.GetListActiveRefReason, Obj);
         let getUserRole = this.http.post(URLConstant.GetUserRoleByUsernameForReassignment, { Username: response["CurrentUser"] });
         return forkJoin([getUserRole, getDDLRec]);
@@ -103,8 +111,8 @@ export class TaskReassignmentDetailComponent implements OnInit {
 
         this.DDLRecomendation = response[1][CommonConstant.ReturnObj];
 
-        var criteriaList = new Array<CriteriaObj>();
-        var criteriaObj = new CriteriaObj();
+        let criteriaList = new Array<CriteriaObj>();
+        let criteriaObj = new CriteriaObj();
         criteriaObj.restriction = AdInsConstant.RestrictionEq;
         criteriaObj.propName = 'OO.ROLE_CODE'//'UR.REF_ROLE_ID';
         criteriaObj.value = this.WfRoleCode;//response[0]["RefRoleId"];
@@ -131,8 +139,8 @@ export class TaskReassignmentDetailComponent implements OnInit {
         console.log(error);
       }
     );
-
-
+    return;
+    
   }
 
   GetTargetUser(e) {
@@ -146,10 +154,11 @@ export class TaskReassignmentDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    var obj = this.TaskReassignmentForm.value;
-    obj["RequestRFAObj"] = {RFAInfo: this.TaskReassignmentForm.controls.RFAInfo.value};
+    let obj = this.TaskReassignmentForm.value;
+    obj["RequestRFAObj"] = { RFAInfo: this.TaskReassignmentForm.controls.RFAInfo.value };
     if (obj["RequestRFAObj"] != undefined) {
-      this.http.post(URLConstant.SubmitTaskReassignment, obj).toPromise().then(
+      let urlApi: string = environment.isCore ? URLConstant.SubmitTaskReassignmentV2 : URLConstant.SubmitTaskReassignment;
+      this.http.post(urlApi, obj).toPromise().then(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.router.navigate([NavigationConstant.TASK_REASSIGN_PAGING]);
@@ -163,9 +172,9 @@ export class TaskReassignmentDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    
-    var Attributes = [];
-    var TypeCode = {
+
+    let Attributes = [];
+    let TypeCode = {
       "TypeCode": "RASGN_APV_TYPE",
       "Attributes": Attributes,
     };

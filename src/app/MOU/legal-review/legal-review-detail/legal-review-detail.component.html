@@ -6,10 +6,17 @@
           <div class="px-3">
             <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
             <mat-tab-group>
-              <mat-tab label="Term Condition">
+              <mat-tab label="Collateral">
                 <ng-template matTabContent>
-                  <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc>
+                  <div class="px-3">
+                    <app-mou-tab-view-addcoll [MouCustId]="MouCustId"></app-mou-tab-view-addcoll>
+                  </div>
                 </ng-template>
+              </mat-tab>
+              <mat-tab label="Term Condition">
+                <div class="px-3">
+                  <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc>
+                </div>
               </mat-tab>
               <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
                 <ng-template matTabContent>

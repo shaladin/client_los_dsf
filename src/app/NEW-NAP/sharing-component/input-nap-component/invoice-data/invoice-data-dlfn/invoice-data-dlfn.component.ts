@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppDlrFncng } from 'app/shared/model/AppData/AppDlrFncng.Model';
 import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 import { AppInvoiceDlrFncngHObj } from 'app/shared/model/AppInvoiceDlrFncngHObj.Model';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -51,6 +52,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
   BankAccs: any;
   AppCustId: number;
   CustNo: string;
+  AssetType: AssetTypeObj;
 
   invoiceDuedtMax: Date;
   ToInvoiceDetail: boolean = false;
@@ -68,8 +70,11 @@ export class InvoiceDataDlfnComponent implements OnInit {
     AccNo: ['', Validators.required],
     BankName: [''],
     CollateralPrice: [''],
-    ChassisNo: [''],
-    EngineNo: [''],
+    SerialNo1: [''],
+    SerialNo2: [''],
+    SerialNo3: [''],
+    SerialNo4: [''],
+    SerialNo5: [''],
     AssetTypeCode: [''],
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -92,7 +97,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
     this.CollateralNameLookupObj.ddlEnvironments = [
       {
         name: "ASSET_TYPE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
     ];
     this.InputLookupBankObj = new InputLookupObj();
@@ -135,13 +140,15 @@ export class InvoiceDataDlfnComponent implements OnInit {
     let objectReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
     objectReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDisbToDlrFncng
 
+    
     await this.httpClient.post(URLConstant.GetListActiveRefMaster, objectReq).subscribe(
       (response) => {
         this.disburseTos = response[CommonConstant.ReturnObj];
-        this.InvoiceForm.patchValue({
-          DisburseTo: this.disburseTos[0].MasterCode
-        })
+        //this.InvoiceForm.patchValue({
+        //  DisburseTo: this.disburseTos[0].MasterCode
+        //})
       })
+    
   }
 
   ChangeDisburseTo(event) {
@@ -355,6 +362,12 @@ export class InvoiceDataDlfnComponent implements OnInit {
   }
 
   GetCollateralName(ev) {
+    this.httpClient.post(URLConstant.GetAssetTypeById, { Id: ev.AssetTypeId }).subscribe(
+      (response: AssetTypeObj) => {
+        this.AssetType = response;
+      }
+    );
+
     this.InvoiceForm.patchValue({
       AssetTypeCode: ev.AssetTypeCode,
       FullAssetCode: ev.FullAssetCode,
@@ -481,9 +494,38 @@ export class InvoiceDataDlfnComponent implements OnInit {
       return;
     }
 
+    if(this.AssetType.SerialNo1Label != null && this.AssetType.IsMndtrySerialNo1 && this.InvoiceForm.controls.SerialNo1.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo1Label);
+      return;
+    }
+    if(this.AssetType.SerialNo2Label != null && this.AssetType.IsMndtrySerialNo2 && this.InvoiceForm.controls.SerialNo2.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo2Label);
+      return;
+    }
+    if(this.AssetType.SerialNo3Label != null && this.AssetType.IsMndtrySerialNo3 && this.InvoiceForm.controls.SerialNo3.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo3Label);
+      return;
+    }
+    if(this.AssetType.SerialNo4Label != null && this.AssetType.IsMndtrySerialNo4 && this.InvoiceForm.controls.SerialNo4.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo4Label);
+      return;
+    }
+    if(this.AssetType.SerialNo5Label != null && this.AssetType.IsMndtrySerialNo5 && this.InvoiceForm.controls.SerialNo5.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo5Label);
+      return;
+    }
+
     this.negativeAssetCheckObj.AssetTypeCode = this.InvoiceForm.controls.AssetTypeCode.value;
-    this.negativeAssetCheckObj.SerialNo1 = this.InvoiceForm.controls.ChassisNo.value;
-    this.negativeAssetCheckObj.SerialNo2 = this.InvoiceForm.controls.EngineNo.value;
+    this.negativeAssetCheckObj.SerialNo1 = this.InvoiceForm.controls.SerialNo1.value;
+    this.negativeAssetCheckObj.SerialNo2 = this.InvoiceForm.controls.SerialNo2.value;
+    this.negativeAssetCheckObj.SerialNo3 = this.InvoiceForm.controls.SerialNo3.value;
+    this.negativeAssetCheckObj.SerialNo4 = this.InvoiceForm.controls.SerialNo4.value;
+    this.negativeAssetCheckObj.SerialNo5 = this.InvoiceForm.controls.SerialNo5.value;
 
     this.httpClient.post(URLConstant.GetDoubleFinancingCheckAppAsset, this.negativeAssetCheckObj).subscribe(
       (response) => {
@@ -496,8 +538,11 @@ export class InvoiceDataDlfnComponent implements OnInit {
           var obj = {
             AppInvoiceDlrFncngHId: this.AppInvoiceDlrFncngHId,
             FullAssetName: this.InvoiceForm.controls.FullAssetName.value,
-            SerialNo1: this.InvoiceForm.controls.ChassisNo.value,
-            SerialNo2: this.InvoiceForm.controls.EngineNo.value,
+            SerialNo1: this.InvoiceForm.controls.SerialNo1.value,
+            SerialNo2: this.InvoiceForm.controls.SerialNo2.value,
+            SerialNo3: this.InvoiceForm.controls.SerialNo3.value,
+            SerialNo4: this.InvoiceForm.controls.SerialNo4.value,
+            SerialNo5: this.InvoiceForm.controls.SerialNo5.value,
             CollateralPriceAmt: this.InvoiceForm.controls.CollateralPrice.value
           }
 
@@ -513,8 +558,11 @@ export class InvoiceDataDlfnComponent implements OnInit {
 
   CLearCollateralForm() {
     this.InvoiceForm.controls.CollateralPrice.patchValue(0);
-    this.InvoiceForm.controls.ChassisNo.patchValue("");
-    this.InvoiceForm.controls.EngineNo.patchValue("");
+    this.InvoiceForm.controls.SerialNo1.patchValue("");
+    this.InvoiceForm.controls.SerialNo2.patchValue("");
+    this.InvoiceForm.controls.SerialNo3.patchValue("");
+    this.InvoiceForm.controls.SerialNo4.patchValue("");
+    this.InvoiceForm.controls.SerialNo5.patchValue("");
 
     this.CollateralNameLookupObj.nameSelect = "";
     this.CollateralNameLookupObj.jsonSelect = { FullAssetName: "" };

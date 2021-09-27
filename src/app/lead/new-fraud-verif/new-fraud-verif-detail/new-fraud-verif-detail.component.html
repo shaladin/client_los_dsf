@@ -68,6 +68,13 @@
                 </h4>
             </div>
         </form>
+        <div class="d-flex justify-content-end ">
+            <span class="mr-1 d-flex align-content-center ">
+              <button type="button" *ngIf="DuplicateStatus != 'LOCK'" class="addButton" translate (click)=SkipVerify()>
+                New
+              </button>
+            </span>
+        </div>
     </div>
     <div class="px-3 table-responsive">
         <table class="table table-responsive-md text-center table-hover">

@@ -40,7 +40,7 @@ export class PreGoLiveComponent implements OnInit {
   result: AgrmntObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   appTC: AppTCObj;
-  TaskListId: number;
+  TaskListId: any;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
   AgrmntObj: AgrmntObj = new AgrmntObj();
@@ -111,7 +111,6 @@ export class PreGoLiveComponent implements OnInit {
         this.ListRfaLogObj = response["ListRfaLogObj"];
         this.lengthListRfaLogObj = this.ListRfaLogObj.length - 1;
         this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-        this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
         this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           if (this.ListRfaLogObj[i]["ApvCategory"] == CommonConstant.ApvCategoryPreGoLive) {
@@ -124,7 +123,7 @@ export class PreGoLiveComponent implements OnInit {
         }
         this.IsApvReady = true;
       });
-    this.claimTaskService.ClaimTask(this.TaskListId);
+    this.claimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     
     var agrmntObj = {
@@ -288,7 +287,6 @@ export class PreGoLiveComponent implements OnInit {
 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
-
     if (this.BizTemplateCode != CommonConstant.DF) {
       for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
         this.appTC = new AppTCObj();
@@ -341,7 +339,8 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveObj.TaskListId = this.TaskListId;
     this.PreGoLiveObj.FlagResume = flag;
 
-    this.http.post(URLConstant.AddPreGoLive, this.PreGoLiveObj).subscribe(
+    let addPreGoLiveUrl = environment.isCore? URLConstant.AddPreGoLiveV2 : URLConstant.AddPreGoLive;
+    this.http.post(addPreGoLiveUrl, this.PreGoLiveObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[this.CancelLink],{});
         this.toastr.successMessage(response['message']);
@@ -368,4 +367,14 @@ export class PreGoLiveComponent implements OnInit {
     );
   }
 
+  claimTask(){
+    if(environment.isCore){
+        if(this.TaskListId != "" && this.TaskListId!= undefined){
+            this.claimTaskService.ClaimTaskV2(this.TaskListId);
+        }
+      }
+      else if (this.TaskListId > 0) {
+         this.claimTaskService.ClaimTask(this.TaskListId);
+      }
+  }
 }

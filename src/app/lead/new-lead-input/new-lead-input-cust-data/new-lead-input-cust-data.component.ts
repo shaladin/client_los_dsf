@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -48,7 +49,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
   businessDt: Date = new Date();
   CopyFrom: number;
   typePage: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
   tempProfession: string;
@@ -62,9 +63,9 @@ export class NewLeadInputCustDataComponent implements OnInit {
   custModel: RefMasterObj;
   listCustModel: Array<KeyValueObj>;
   leadInputObj: LeadInputObj = new LeadInputObj();
-  leadCustFacebookObj: LeadCustSocmedObj;
-  leadCustInstagramObj: LeadCustSocmedObj;
-  leadCustTwitterObj: LeadCustSocmedObj;
+  // leadCustFacebookObj: LeadCustSocmedObj;
+  // leadCustInstagramObj: LeadCustSocmedObj;
+  // leadCustTwitterObj: LeadCustSocmedObj;
   genderType: RefMasterObj;
   tempGender: Array<KeyValueObj>;
   reqLeadCustObj: LeadCustObj;
@@ -98,12 +99,12 @@ export class NewLeadInputCustDataComponent implements OnInit {
     IdNo: [''],
     MrMaritalStatCode: [''],
     Npwp: ['',[Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
-    Email: ['', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+    Email: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$"), Validators.required]],
     MobilePhone2: ['', Validators.pattern("^[0-9]+$")],
-    Facebook: [''],
-    Instagram: [''],
-    Twitter: [''],
+    // Facebook: [''],
+    // Instagram: [''],
+    // Twitter: [''],
     CustModel: [''],
     CompanyName: [''],
     MonthlyIncome: [0],
@@ -135,7 +136,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
     private toastr: NGXToastrService,
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
   }
 
@@ -182,9 +184,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
 
     this.InitDms();
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
-    }
+    this.ClaimTask();
+      
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -197,8 +198,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj = new InputLookupObj();
     this.professionLookUpObj.isRequired = false;
     this.professionLookUpObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.professionLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.professionLookUpObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.isRequired = false;
@@ -356,15 +356,15 @@ export class NewLeadInputCustDataComponent implements OnInit {
           let obj = {
             Id: this.reqLeadCustSocmedObj.LeadCustId
           }
-          this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
-            (response) => {
-              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-              this.CustomerDataForm.patchValue({
-                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
-                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
-                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
-              });
-            });
+          // this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
+          //   (response) => {
+          //     this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
+          //     this.CustomerDataForm.patchValue({
+          //       Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
+          //       Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
+          //       Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
+          //     });
+          //   });
 
           this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
           this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
@@ -402,6 +402,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
               this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
               this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+              this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+              this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
             });
 
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
@@ -440,6 +442,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
               this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
               this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+              this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+              this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
             });
 
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -539,15 +543,15 @@ export class NewLeadInputCustDataComponent implements OnInit {
             let obj = {
               Id: this.reqLeadCustSocmedObj.LeadCustId
             }
-            this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
-              (response) => {
-                this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-                this.CustomerDataForm.patchValue({
-                  Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
-                  Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
-                  Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
-                });
-              });
+            // this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
+            //   (response) => {
+            //     this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
+            //     this.CustomerDataForm.patchValue({
+            //       Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
+            //       Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
+            //       Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
+            //     });
+            //   });
 
             this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
             this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
@@ -585,6 +589,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
                 this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
                 this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+                this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+                this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
 
                 // this.inputAddressObjForLegalAddr.isRequired = true;
               });
@@ -627,6 +633,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
                 this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
 
                 this.inputAddressObjForResidenceAddr.isRequired = false;
+                this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+                this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
               });
 
             this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
@@ -831,6 +839,8 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value };
     this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
     this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+
+    this.setEnableZipcodeLookup();
   }
 
   setLegalAddr() {
@@ -897,32 +907,32 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.leadInputObj.LeadCustPersonalObj.MobilePhnNo2 = this.CustomerDataForm.controls["MobilePhone2"].value;
   }
 
-  setLeadCustSocmed() {
-    this.leadCustFacebookObj = new LeadCustSocmedObj();
-    this.leadCustFacebookObj.MrSocmedCode = CommonConstant.FACEBOOK;
-    this.leadCustFacebookObj.MrSocmedName = "Facebook";
-    this.leadCustFacebookObj.SocmedId = this.CustomerDataForm.controls["Facebook"].value;
+  // setLeadCustSocmed() {
+  //   this.leadCustFacebookObj = new LeadCustSocmedObj();
+  //   this.leadCustFacebookObj.MrSocmedCode = CommonConstant.FACEBOOK;
+  //   this.leadCustFacebookObj.MrSocmedName = "Facebook";
+  //   this.leadCustFacebookObj.SocmedId = this.CustomerDataForm.controls["Facebook"].value;
 
-    this.leadCustInstagramObj = new LeadCustSocmedObj();
-    this.leadCustInstagramObj.MrSocmedCode = CommonConstant.INSTAGRAM;
-    this.leadCustInstagramObj.MrSocmedName = "Instagram";
-    this.leadCustInstagramObj.SocmedId = this.CustomerDataForm.controls["Instagram"].value;
+  //   this.leadCustInstagramObj = new LeadCustSocmedObj();
+  //   this.leadCustInstagramObj.MrSocmedCode = CommonConstant.INSTAGRAM;
+  //   this.leadCustInstagramObj.MrSocmedName = "Instagram";
+  //   this.leadCustInstagramObj.SocmedId = this.CustomerDataForm.controls["Instagram"].value;
 
-    this.leadCustTwitterObj = new LeadCustSocmedObj();
-    this.leadCustTwitterObj.MrSocmedCode = CommonConstant.TWITTER;
-    this.leadCustTwitterObj.MrSocmedName = "Twitter";
-    this.leadCustTwitterObj.SocmedId = this.CustomerDataForm.controls["Twitter"].value;
+  //   this.leadCustTwitterObj = new LeadCustSocmedObj();
+  //   this.leadCustTwitterObj.MrSocmedCode = CommonConstant.TWITTER;
+  //   this.leadCustTwitterObj.MrSocmedName = "Twitter";
+  //   this.leadCustTwitterObj.SocmedId = this.CustomerDataForm.controls["Twitter"].value;
 
-    if (this.CustomerDataForm.controls["Facebook"].value != "") {
-      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustFacebookObj);
-    }
-    if (this.CustomerDataForm.controls["Instagram"].value != "") {
-      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustInstagramObj);
-    }
-    if (this.CustomerDataForm.controls["Twitter"].value != "") {
-      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustTwitterObj);
-    }
-  }
+  //   if (this.CustomerDataForm.controls["Facebook"].value != "") {
+  //     this.leadInputObj.LeadCustSocmedObj.push(this.leadCustFacebookObj);
+  //   }
+  //   if (this.CustomerDataForm.controls["Instagram"].value != "") {
+  //     this.leadInputObj.LeadCustSocmedObj.push(this.leadCustInstagramObj);
+  //   }
+  //   if (this.CustomerDataForm.controls["Twitter"].value != "") {
+  //     this.leadInputObj.LeadCustSocmedObj.push(this.leadCustTwitterObj);
+  //   }
+  // }
 
   setLeadCustPersonalJobData() {
     this.leadInputObj.LeadCustPersonalJobDataObj.MrProfessionCode = this.tempProfession;
@@ -950,7 +960,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.setLeadCust();
         this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
         this.setLeadCustPersonal();
-        this.setLeadCustSocmed();
+        // this.setLeadCustSocmed();
         this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
         this.setLegalAddr();
         this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
@@ -971,7 +981,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.leadInputObj = new LeadInputObj();
         this.setLeadCust();
         this.setLeadCustPersonal();
-        this.setLeadCustSocmed();
+        // this.setLeadCustSocmed();
         this.setLegalAddr();
         this.setResidenceAddr();
         this.setLeadCustPersonalJobData();
@@ -992,7 +1002,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.setLeadCust();
         this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
         this.setLeadCustPersonal();
-        this.setLeadCustSocmed();
+        // this.setLeadCustSocmed();
         this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
         this.setLegalAddr();
         this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
@@ -1014,7 +1024,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
-      this.setLeadCustSocmed();
+      // this.setLeadCustSocmed();
       this.setLegalAddr();
       this.setResidenceAddr();
       this.setLeadCustPersonalJobData();
@@ -1027,17 +1037,17 @@ export class NewLeadInputCustDataComponent implements OnInit {
           });
       }
     }
-    console.log('LEEEROOOYY')
-    console.log(this.leadInputObj)
-
   }
 
-  async claimTask() {
-    let currentUserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
+  ClaimTask() {
+    if(environment.isCore){	
+        if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
+            this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+        }	
+    }	
+    else if (this.WfTaskListId> 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }
   }
 
   async getLeadData() {
@@ -1066,15 +1076,15 @@ export class NewLeadInputCustDataComponent implements OnInit {
           let obj = {
             Id: this.reqLeadCustSocmedObj.LeadCustId
           }
-          this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
-            (response) => {
-              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-              this.CustomerDataForm.patchValue({
-                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK).SocmedId,
-                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM).SocmedId,
-                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER).SocmedId,
-              });
-            });
+          // this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
+          //   (response) => {
+          //     this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
+          //     this.CustomerDataForm.patchValue({
+          //       Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK).SocmedId,
+          //       Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM).SocmedId,
+          //       Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER).SocmedId,
+          //     });
+          //   });
 
           this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
           this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
@@ -1310,5 +1320,12 @@ export class NewLeadInputCustDataComponent implements OnInit {
     }
   }
 
+  setEnableZipcodeLookup() {
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
+
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
+  }
 }
 

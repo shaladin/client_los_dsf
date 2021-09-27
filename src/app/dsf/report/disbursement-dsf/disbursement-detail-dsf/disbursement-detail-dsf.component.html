@@ -1,0 +1,75 @@
+<div class="col-md-12">
+  <div class="card">
+  <div class="card-body">
+     <!-- <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info> -->
+     <div class="px-3">
+        <div class="cessieData">
+           <form class="form form-horizontal" [formGroup]="DetailInformationForm" (ngSubmit)="DetailInformationForm.valid && SaveForm()"
+           #enjiForm="ngForm">
+           <div class="form-body">
+              <lib-ucSubsection [id]="'detailInformationId'" [title]="'Payment Due Date Cessie Confirmation'" [panel]="'detailInformation'">
+              </lib-ucSubsection>
+              <div id="detailInformation">
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required-label" translate>Cessie No</label>
+                    <div class="col-md-4">
+                       <input type="text" class="form-control adInsInput" formControlName="CessieNo"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.CessieNo.invalid }" disabled>
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.CessieNo" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required-label" translate>Cessie Date</label>
+                    <div class="col-md-4">
+                       <input type="text" class="form-control adInsInput" formControlName="CessieDate"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.CessieDate.invalid }" disabled>
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.CessieDate" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required-label" translate>Client Name</label>
+                    <div class="col-md-4">
+                       <input type="text" class="form-control adInsInput" formControlName="ClientName"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.ClientName.invalid }" disabled>
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.ClientName" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required" translate>Payment Amount</label>
+                    <div class="col-md-4">
+                     <input type="text" class="form-control adInsInput" formControlName="PaymentAmount"
+                     [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.PaymentAmount.invalid }" disabled>
+                  <lib-uc-show-errors  [control]="DetailInformationForm.controls.PaymentAmount" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required" translate>Bank Name Account</label>
+                    <div class="col-md-4">
+                       <input type="date" class="form-control adInsInput" formControlName="BankName"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.BankName.invalid }" disabled>
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.BankName" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required" translate>Payment Due Date</label>
+                    <div class="col-md-4">
+                       <input type="date" class="form-control adInsInput" formControlName="PaymentDueDate"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.PaymentDueDate.invalid }">
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.PaymentDueDate" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>                    
+                 </div>
+                 <div class="form-actions right" style="text-align: right;">
+                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
+                       translate>
+                    <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary" translate>
+                    <i class="far fa-check-square"></i> Submit
+                    </button>
+                  </div>
+              </div>
+           </div>
+          </form>
+        </div>
+     </div>
+  </div>

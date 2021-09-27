@@ -60,6 +60,32 @@ import { MouUnfreezeInquiryComponent } from './mou-unfreeze/mou-unfreeze-inquiry
 import { MouUnfreezeViewComponent } from './mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component';
 import { MouUnfreezeDetailComponent } from './mou-unfreeze/mou-unfreeze-detail/mou-unfreeze-detail.component';
 import { MouUnfreezePagingComponent } from './mou-unfreeze/mou-unfreeze-paging/mou-unfreeze-paging.component';
+import { MouRequestAddcollXComponent } from 'app/impl/MOU/mou-customer-request/mou-request-addcoll/mou-request-addcoll-x.component';
+import { MouCustomerDetailXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-detail/mou-customer-detail-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { ChangeMouRequestAddcollXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll-x.component';
+import { ChangeMouRequestDetailCustomerXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer-x.component';
+import {MouCustomerRequestDetailXComponent} from 'app/impl/MOU/mou-customer-request/mou-customer-request-detail/mou-customer-request-detail-x.component';
+import {MouReviewFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-factoring/mou-review-factoring-x.component';
+import {MouApprovalFactoringXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-approval-factoring/mou-approval-factoring-x.component';
+import {MouExecutionDetailXComponent} from 'app/impl/MOU/mou-execution/mou-execution-detail/mou-execution-detail-x.component';
+import {ChangeMouRequestDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-detail/change-mou-request-detail-x.component';
+import {ChangeMouReviewFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-factoring/change-mou-review-factoring-x.component';
+import {ChangeMouApprovalFactoringXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-factoring/change-mou-approval-factoring-x.component';
+import {ChangeMouExecutionDetailXComponent} from 'app/impl/MOU/change-mou/change-mou-execution/change-mou-execution-detail/change-mou-execution-detail-x.component';
+import {MouReviewDlfnXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-dlfn/mou-review-dlfn-x.component';
+import {MouApprovalGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-approval-general/mou-approval-general-x.component';
+import {ChangeMouReviewFinancingXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-financing/change-mou-review-financing-x.component';
+import {ChangeMouReviewGeneralXComponent} from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-general/change-mou-review-general-x.component';
+import {ChangeMouApprovalFinancingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-financing/change-mou-approval-financing-x.component';
+import {ChangeMouApprovalGeneralXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-general/change-mou-approval-general-x.component';
+import {MouReviewGeneralXComponent} from 'app/impl/MOU/mou-customer/mou-review/mou-review-general/mou-review-general-x.component';
+import { ChangeMouInquiryXComponent } from 'app/impl/MOU/change-mou/change-mou-inquiry/change-mou-inquiry-x.component';
+import { ChangeMouReviewPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging-x.component';
+import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-execution-paging/mou-execution-paging-x.component';
+import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-review-detail/legal-review-detail-x.component';
+import { ChangeMouDetailDealerFinancingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing-x.component';
+import { ChangeMouDetailFactoringXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring-x.component';
 
 const routes: Routes = [
   {
@@ -94,10 +120,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.MOU_REQ_DETAIL_X,
+        component: MouCustomerRequestDetailXComponent,
+        data: {
+          title: 'MOU Customer Request Detail X'
+        }
+      },
+      {
         path: PathConstant.DETAIL,
         component: MouCustomerDetailComponent,
         data: {
           title: 'MOU Customer Detail'
+        }
+      },
+      {
+        path: PathConstantX.DETAIL_X,
+        component: MouCustomerDetailXComponent,
+        data: {
+          title: 'MOU Customer Detail X'
         }
       },
       {
@@ -129,6 +169,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.MOU_CUST_LEGAL_RVW_DETAIL_X,
+        component: LegalReviewDetailXComponent,
+        data: {
+          title: 'MOU Customer Legal Review Detail'
+        }
+      },
+      {
         path: PathConstant.MOU_CUST_RVW_PAGING,
         component: MouReviewPagingComponent,
         data: {
@@ -140,6 +187,13 @@ const routes: Routes = [
         component: MouReviewGeneralComponent,
         data: {
           title: 'MOU Review General'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_RVW_GENERAL_X,
+        component: MouReviewGeneralXComponent,
+        data: {
+          title: 'MOU Review General X'
         }
       },
       {
@@ -157,10 +211,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.MOU_CUST_RVW_DFLN_X,
+        component: MouReviewDlfnXComponent,
+        data: {
+          title: 'MOU Review Dealer Financing X'
+        }
+      },
+      {
         path: PathConstant.MOU_CUST_RVW_FCTR,
         component: MouReviewFactoringComponent,
         data: {
           title: 'MOU Review Factoring'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_RVW_FCTR_X,
+        component: MouReviewFactoringXComponent,
+        data: {
+          title: 'MOU Review Factoring X'
         }
       },
       {
@@ -185,10 +253,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.MOU_CUST_APPRV_GENERAL_X,
+        component: MouApprovalGeneralXComponent,
+        data: {
+          title: 'MOU Approval General X'
+        }
+      },
+      {
         path: PathConstant.MOU_CUST_APPRV_FCTR,
         component: MouApprovalFactoringComponent,
         data: {
           title: 'MOU Approval Factoring'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_APPRV_FCTR_X,
+        component: MouApprovalFactoringXComponent,
+        data: {
+          title: 'MOU Approval Factoring X'
         }
       },
       {
@@ -238,6 +320,14 @@ const routes: Routes = [
         component: MouExecutionDetailComponent,
         data: {
           title: "Mou Execution Detail"
+        }
+      },
+
+      {
+        path: PathConstantX.MOU_EXECUTION_DETAIL_X,
+        component: MouExecutionDetailXComponent,
+        data: {
+          title: "Mou Execution Detail X"
         }
       },
       {
@@ -332,10 +422,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_DETAIL_FCTR_X,
+        component: ChangeMouDetailFactoringXComponent,
+        data: {
+          title: "Change MOU Detail Factoring X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_DETAIL_DLFN,
         component: ChangeMouDetailDealerFinancingComponent,
         data: {
           title: "Change MOU Detail Dealer Financing"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_DETAIL_DLFN_X,
+        component: ChangeMouDetailDealerFinancingXComponent,
+        data: {
+          title: "Change MOU Detail Dealer Financing X"
         }
       },
       {
@@ -353,10 +457,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_REQ_DETAIL_X,
+        component: ChangeMouRequestDetailXComponent,
+        data: {
+          title: "Change MOU Request Detail X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_REQ_DETAIL_CUST_TYPE,
         component: ChangeMouRequestDetailCustomerComponent,
         data: {
           title: "Change MOU Request Customer Detail"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X,
+        component: ChangeMouRequestDetailCustomerXComponent,
+        data: {
+          title: "Change MOU Request Customer Detail X"
         }
       },
       {
@@ -381,6 +499,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X,
+        component: ChangeMouRequestAddcollXComponent,
+        data: {
+          title: "Change MOU Req Add Collateral X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_INQUIRY,
         component: ChangeMouInquiryComponent,
         data: {
@@ -402,6 +527,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_EXEC_DETAIL_X,
+        component: ChangeMouExecutionDetailXComponent,
+        data: {
+          title: "Change MOU Execution Detail X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_RVW_PAGING,
         component: ChangeMouReviewPagingComponent,
         data: {
@@ -416,6 +548,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_RVW_DETAIL_GEN_X,
+        component: ChangeMouReviewGeneralXComponent,
+        data: {
+          title: "Change MOU Review General X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_RVW_DETAIL_FCTR,
         component: ChangeMouReviewFactoringComponent,
         data: {
@@ -423,10 +562,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_RVW_DETAIL_FCTR_X,
+        component: ChangeMouReviewFactoringXComponent,
+        data: {
+          title: "Change MOU Review Factoring X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_RVW_DETAIL_FIN,
         component: ChangeMouReviewFinancingComponent,
         data: {
           title: "Change MOU Review Financing"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_RVW_DETAIL_FIN_X,
+        component: ChangeMouReviewFinancingXComponent,
+        data: {
+          title: "Change MOU Review Financing X"
         }
       },
       {
@@ -444,10 +597,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.CHANGE_MOU_APV_DETAIL_FCTR_X,
+        component: ChangeMouApprovalFactoringXComponent,
+        data: {
+          title: "Change MOU Approval Factoring X"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_APV_DETAIL_FIN,
         component: ChangeMouApprovalFinancingComponent,
         data: {
-          title: "Change MOU Approval Factoring"
+          title: "Change MOU Approval Financing"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_APV_DETAIL_FIN_X,
+        component: ChangeMouApprovalFinancingXComponent,
+        data: {
+          title: "Change MOU Approval Financing X"
         }
       },
       {
@@ -455,6 +622,13 @@ const routes: Routes = [
         component: ChangeMouApprovalGeneralComponent,
         data: {
           title: "Change MOU Approval General"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_APV_DETAIL_GEN_X,
+        component: ChangeMouApprovalGeneralXComponent,
+        data: {
+          title: "Change MOU Approval General X"
         }
       },
       {
@@ -478,6 +652,62 @@ const routes: Routes = [
           title: "Change MOU Canel"
         }
       },
+      {
+        path: PathConstant.MOU_CUST_REQ_ADD_COLL,
+        component: MouRequestAddcollComponent,
+        data: {
+          title: 'MOU Collateral'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_REQ_ADD_COLL_X,
+        component: MouRequestAddcollXComponent,
+        data: {
+          title: 'MOU Collateral X'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_RVW_FCTR_X,
+        component: MouReviewFactoringXComponent,
+        data: {
+          title: 'MOU Review Factoring X'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_APPRV_FCTR_X,
+        component: MouApprovalFactoringXComponent,
+        data: {
+          title: 'MOU Approval Factoring X'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_RVW_DFLN_X,
+        component: MouReviewDlfnXComponent,
+        data: {
+          title: 'MOU Review Dealer Financing X'
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_INQUIRY_X,
+        component: ChangeMouInquiryXComponent,
+        data: {
+          title: "Change MOU Inquiry X"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_RVW_PAGING_X,
+        component: ChangeMouReviewPagingXComponent,
+        data: {
+          title: "Change MOU Review X"
+        }
+      },
+      {
+        path: PathConstantX.MOU_EXECUTION_PAGING_X,
+        component: MouExecutionPagingXComponent,
+        data: {
+          title: "Mou Execution Paging"
+        }
+      }
     ]
   }
 ];

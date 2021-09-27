@@ -65,6 +65,7 @@ import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-re
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
 import { NewLeadInputPageDsfComponent } from "app/dsf/lead/new-lead-input/new-lead-input-page-dsf/new-lead-input-page-dsf.component";
 import { NewLeadInputCustDataDsfComponent } from "app/dsf/lead/new-lead-input/new-lead-input-cust-data-dsf/new-lead-input-cust-data-dsf.component";
+import { UcDirectiveUpperCaseModule } from "@adins/uc-directive-upper-case";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -76,7 +77,7 @@ export const customCurrencyMaskConfig = {
   suffix: "",
   thousands: ",",
   nullable: false,
-  inputMode: CurrencyMaskInputMode.FINANCIAL
+  inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({
@@ -104,7 +105,8 @@ export const customCurrencyMaskConfig = {
     UcuploadModule,
     UcaddtotempModule,
     UcgridviewModule,
-    SharedModule
+    SharedModule,
+    UcDirectiveUpperCaseModule
   ],
   declarations: [
     LeadVerifComponent,

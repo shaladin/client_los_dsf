@@ -49,7 +49,7 @@
         <tr *ngFor="let item of AppAssetObj.AssetAccessoryObjs;let i=index">
           <td class="text-left">{{i+1}}</td>
           <td class="text-left">{{item.AssetAccessoryName}}</td>
-          <td class="text-left">{{item.AccessoryPriceAmt}}</td>
+          <td class="text-left">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
           <td class="text-left">{{item.AccessoryNotes}}</td>
         </tr>
       </tbody>

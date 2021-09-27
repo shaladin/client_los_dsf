@@ -10,73 +10,90 @@ import { PathConstant } from 'app/shared/constant/PathConstant';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { NapDetailFormDsfComponent } from '../DSF/CF4W-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component';
 import { NapCustMainDataDsfComponent } from '../DSF/CF4W-dsf/nap-cust-main-data-dsf/nap-cust-main-data-dsf.component';
+import { NapDetailFormXComponent } from 'app/impl/NEW-NAP/CF4W/nap-detail-form/nap-detail-form-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/CF4W/nap-cust-main-data/nap-cust-main-data-x.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    children: [
-      {
-          path: PathConstant.PAGING,
-          component: NapPagingComponent,
-          data: {
-              title: 'Paging'
-          }
-      },
-      {
-          path: PathConstant.ADD,
-          component: NapAddComponent,
-          data: {
-              title: 'Add'
-          }
-      },
-      {
-          path: PathConstant.ADD_DETAIL,
-          component: NapAddDetailComponent,
-          data: {
-              title: 'AddDetail'
-          }
-      },
-      {
-          path: PathConstant.TEST_FINANCIAL,
-          component: FinancialDataComponent,
-          data: {
-              title: 'Detail'
-          }
-      },
-      {
-        path: PathConstant.NAP1,
-        component: NapCustMainDataComponent,
-        data: {
-            title: 'NAP Cust Main Data'
-        }
-      },
-      {
-        path: PathConstantDsf.NAP1,
-        component: NapCustMainDataDsfComponent,
-        data: {
-            title: 'NAP Cust Main Data Dsf'
-        }
-      },
-      {
-        path: PathConstant.NAP2,
-        component: NapDetailFormComponent,
-        data: {
-            title: 'NAP Detail'
-        }
-    },
     {
-        path: PathConstantDsf.NAP2,
-        component: NapDetailFormDsfComponent,
-        data: {
-            title: 'NAP Detail Dsf'
-        }
-    },
-    ]
-  }
+        path: '',
+        children: [
+            {
+                path: PathConstantDsf.NAP1,
+                component: NapCustMainDataDsfComponent,
+                data: {
+                    title: 'NAP Cust Main Data Dsf'
+                }
+            },
+            {
+                path: PathConstantDsf.NAP2,
+                component: NapDetailFormDsfComponent,
+                data: {
+                    title: 'NAP Detail Dsf'
+                }
+            },
+            {
+                path: PathConstant.PAGING,
+                component: NapPagingComponent,
+                data: {
+                    title: 'Paging'
+                }
+            },
+            {
+                path: PathConstant.ADD,
+                component: NapAddComponent,
+                data: {
+                    title: 'Add'
+                }
+            },
+            {
+                path: PathConstant.ADD_DETAIL,
+                component: NapAddDetailComponent,
+                data: {
+                    title: 'AddDetail'
+                }
+            },
+            {
+                path: PathConstant.TEST_FINANCIAL,
+                component: FinancialDataComponent,
+                data: {
+                    title: 'Detail'
+                }
+            },
+            {
+                path: PathConstant.NAP1,
+                component: NapCustMainDataComponent,
+                data: {
+                    title: 'NAP Cust Main Data'
+                }
+            },
+            {
+                path: PathConstant.NAP2,
+                component: NapDetailFormComponent,
+                data: {
+                    title: 'NAP Detail'
+                }
+            },
+            {
+                path: PathConstantX.NAP2_X,
+                component: NapDetailFormXComponent,
+                data: {
+                    title: 'NAP Detail'
+                }
+            },
+            {
+                path: PathConstantX.NAP1_X,
+                component: NapCustMainDataXComponent,
+                data: {
+                    title: 'NAP Cust Main Data'
+                }
+            },
+        ]
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class InputNapCF4WRoutingModule { }

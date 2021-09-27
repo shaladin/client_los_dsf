@@ -4,15 +4,19 @@
     </lib-ucthingstodo>
   </div>
 
-  <div class="col-md-8 col-xl-8 col-lg-12" style="margin-top : 10px !important">
+  <div class="col-md-8 col-xl-8 col-lg-12" style="margin-top : 10px !important" *ngIf="!ListRole.includes(roleCode) && checkRole">
     <lib-front-dash [inUsername]="username" [inOfficeCode]="officeCode" [inRoleCode]="roleCode" [inUrl]="url">
     </lib-front-dash>
   </div>
+
+  <div class="col-md-8 col-xl-8 col-lg-12" style="margin-top : 10px !important" *ngIf="ListRole.includes(roleCode) && checkRole">
+    <app-dashboard-bm></app-dashboard-bm>
+  </div>
 </div>
 
-<div class="row" style="margin-top:15px;">
+<!-- <div class="row" style="margin-top:15px;">
   <lib-front-dash2 class="col-md-12" [inUsername]="username" [inOfficeCode]="officeCode" [inRoleCode]="roleCode"
     [inUrl]="url">
   </lib-front-dash2>
 
-</div>
+</div> -->

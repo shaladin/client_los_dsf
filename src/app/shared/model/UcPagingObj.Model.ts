@@ -26,7 +26,7 @@ export class UcPagingObj {
     constructor() {
         this._url = "";
         this.title = "";
-        this.enviromentUrl = environment.losUrl;
+        this.enviromentUrl = environment.isCore ? environment.losUrl + "/v2" : environment.losUrl + "/v1";
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.deleteUrl = "";
         this.pagingJson = "";
@@ -34,8 +34,9 @@ export class UcPagingObj {
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
         this.listEnvironments = new Array<EnvisObj>();
-        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
-        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url  + "/v1"});
+        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl  + "/v1"});
+        this.listEnvironments.push({ environment: "LOSV2", url: environment.losUrl  + "/v2"});
         this.whereValue = new Array<WhereValueObj>();
         this.isHideSearch = false;
         this.delay = 0;

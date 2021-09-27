@@ -100,7 +100,7 @@ export class AdInsHelper {
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_PERSONAL_DETAIL + "?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
-  public static OpenCustomerCoyViewByCustId(CustId: number){
+  public static OpenCustomerCoyViewByCustId(CustId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_COY_DETAIL + "?CustId=" + CustId + "&Token=" + token, "_blank");
   }
@@ -169,13 +169,17 @@ export class AdInsHelper {
     window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_EDIT_MAIN_DATA_COY + "?CustId=" + CustId + "&From=" + From, "_blank");
   }
 
+  public static OpenPefindoView(CustNo: string, IsLos: boolean) {
+    window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos);
+  }
+
   public static CreateUserAccess(response) {
     // unused
   }
 
   public static OpenEditAppAfterApv(TrxHId, AgrmntId) {
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW + "?EditAppAftApvTrxHId=" + TrxHId + "&AgrmntId="+  AgrmntId + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW + "?EditAppAftApvTrxHId=" + TrxHId + "&AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
   }
 
   public static IsGrantAccess(formPath) {

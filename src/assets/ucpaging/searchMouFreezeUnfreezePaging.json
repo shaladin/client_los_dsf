@@ -155,7 +155,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "/Mou/FreezeUnfreeze/Detail",
+          "path": "MOU_FREEZE_DETAIL",
           "param": [
             {
               "type": "MouCustId",

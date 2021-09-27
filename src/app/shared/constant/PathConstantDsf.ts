@@ -97,4 +97,16 @@ export class PathConstantDsf {
     public static REPORT_LTKM = "ReportLTKM"
     public static PRINT_REPORT_LTKM = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_LTKM; 
     //#endregion
+    public static REPORT_PLAFOND_FACTORING = "PlafondFactoringDsf";
+    public static REPORT_PLAFOND_DF = "PlafondDfDsf";
+    public static PRINT_REPORT_PLAFOND_FACTORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_PLAFOND_FACTORING;
+    public static PRINT_REPORT_PLAFOND_DSF = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_PLAFOND_DF;
+    public static REPORT_DISB_ORDER_DETAIL = "ReportDisbursementOrderDetail";
+    public static REPORT_DISB_ORDER_PAGING = "ReportDisbursementOrderPaging";
+    public static PRINT_REPORT_DISBURSEMENT_ORDER_PAGING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_DISB_ORDER_PAGING;
+    public static PRINT_REPORT_DISBURSEMENT_ORDER_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_DISB_ORDER_DETAIL;
+
+    public static NAP_SIMPLE_LEAD = "NapFromSimpleLeadDsf";
+    public static NAP_SIMPLE_LEAD_PAGING = PathConstantDsf.NAP_SIMPLE_LEAD + "/" + PathConstant.PAGING;
+    public static NAP_SIMPLE_LEAD_DETAIL = PathConstantDsf.NAP_SIMPLE_LEAD + "/" + PathConstant.DETAIL;
 }

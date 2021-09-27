@@ -9,60 +9,69 @@ import { PathConstant } from 'app/shared/constant/PathConstant';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { NapCustMainDataDsfComponent } from '../DSF/RFN4W-dsf/nap-cust-main-data-dsf/nap-cust-main-data-dsf.component';
 import { NapDetailFormDsfComponent } from '../DSF/RFN4W-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component';
+import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/RFN4W/nap-cust-main-data/nap-cust-main-data-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-          path: PathConstant.PAGING,
-          component: NapPagingComponent,
-          data: {
-              title: 'Paging'
-          }
+        path: PathConstant.PAGING,
+        component: NapPagingComponent,
+        data: {
+          title: 'Paging'
+        }
       },
       {
-          path: PathConstant.ADD,
-          component: NapAddComponent,
-          data: {
-              title: 'Add'
-          }
+        path: PathConstant.ADD,
+        component: NapAddComponent,
+        data: {
+          title: 'Add'
+        }
       },
       {
-          path: PathConstant.ADD_DETAIL,
-          component: NapAddDetailComponent,
-          data: {
-              title: 'AddDetail'
-          }
+        path: PathConstant.ADD_DETAIL,
+        component: NapAddDetailComponent,
+        data: {
+          title: 'AddDetail'
+        }
       },
       {
         path: PathConstant.NAP1,
         component: NapCustMainDataComponent,
         data: {
-            title: 'NAP Cust Main Data'
+          title: 'NAP Cust Main Data'
         }
       },
       {
         path: PathConstantDsf.NAP1,
         component: NapCustMainDataDsfComponent,
         data: {
-            title: 'NAP Cust Main Data Dsf'
+          title: 'NAP Cust Main Data Dsf'
         }
       },
       {
         path: PathConstant.NAP2,
         component: NapDetailFormComponent,
         data: {
-            title: 'NAP Detail'
+          title: 'NAP Detail'
         }
-     },
-     {
-      path: PathConstantDsf.NAP2,
-      component: NapDetailFormDsfComponent,
-      data: {
+      },
+      {
+        path: PathConstantX.NAP1_X,
+        component: NapCustMainDataXComponent,
+        data: {
+          title: 'NAP Cust Main Data'
+        }
+      },
+      {
+        path: PathConstantDsf.NAP2,
+        component: NapDetailFormDsfComponent,
+        data: {
           title: 'NAP Detail Dsf'
-      }
-   },
+        }
+      },
     ]
   }
 ];

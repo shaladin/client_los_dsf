@@ -12,6 +12,12 @@ import { String } from 'typescript-string-operations';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
+import { ReqCopyAssetObj } from 'app/shared/model/Request/AppAsset/ReqCopyAssetObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -19,6 +25,7 @@ import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResul
 })
 export class AssetDataPagingComponent implements OnInit {
   @Input() AppId: number;
+  @Input() BizTemplateCode: string = "-";
   @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
@@ -41,6 +48,8 @@ export class AssetDataPagingComponent implements OnInit {
   generalSettingObj: GenericListByCodeObj;
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsSvcExist: boolean = false;
   LastRequestedDate: any;
   IsCalledIntegrator: boolean = false;
   thirdPartyRsltHId: any;
@@ -58,7 +67,7 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   async GetThirdPartyResultH() {
-    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
       this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {
           this.appObj = response;
@@ -66,7 +75,7 @@ export class AssetDataPagingComponent implements OnInit {
             this.mouCustId = response['MouCustId'];
           }
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
-            (response : ResThirdPartyRsltHObj) => {
+            (response: ResThirdPartyRsltHObj) => {
               if (response.ThirdPartyRsltHId != null) {
                 this.LastRequestedDate = response.ReqDt;
                 this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
@@ -120,8 +129,8 @@ export class AssetDataPagingComponent implements OnInit {
 
         var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined){
+
+        if (gsNeedCheckBySystem != undefined) {
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
@@ -129,11 +138,10 @@ export class AssetDataPagingComponent implements OnInit {
 
         if (gsUseDigitalization != undefined) {
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
+          this.getDigitalizationSvcType();
         } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
-
-        this.GetThirdPartyResultH();
       }
     );
   }
@@ -163,6 +171,7 @@ export class AssetDataPagingComponent implements OnInit {
             this.gridAssetDataObj.resultData = DetailForGridAsset;
             this.IsCalledIntegrator = false;
             this.getGridCollateral();
+            this.getListDataAsset();
           }
         );
       }
@@ -204,23 +213,26 @@ export class AssetDataPagingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.UNIT_CANT_BE_ZERO);
     }
     else {
-      var splitted = this.selectedAsset.split(";");
+      let splitted = this.selectedAsset.split(";");
 
-      if(splitted.length == 1){
+      if (splitted.length == 1) {
         this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
         return;
       }
 
-      this.http.post(URLConstant.CopyAppAsset, {
-        AppId: this.AppId,
-        Code: this.selectedAsset,
-        count: this.units,
-        FullAssetCode: splitted[0],
-        ManufacturingYear: splitted[1],
-        Color: splitted[2],
-        MrAssetConditionCode: splitted[3],
-        AssetPriceAmt: +splitted[4]
-      }).subscribe(
+      let reqCopyAssetObj: ReqCopyAssetObj = new ReqCopyAssetObj();
+      reqCopyAssetObj.AppId = this.AppId;
+      reqCopyAssetObj.Code = this.selectedAsset;
+      reqCopyAssetObj.count = this.units;
+      reqCopyAssetObj.FullAssetCode = splitted[0];
+      reqCopyAssetObj.ManufacturingYear = splitted[1];
+      reqCopyAssetObj.Color = splitted[2];
+      reqCopyAssetObj.MrAssetConditionCode = splitted[3];
+      reqCopyAssetObj.AssetPriceAmt = +splitted[4];
+      reqCopyAssetObj.MrAssetUsageCode = splitted[5];
+      reqCopyAssetObj.TotalAccessoryPriceAmt = +splitted[6];
+
+      this.http.post(URLConstant.CopyAppAsset, reqCopyAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.ngOnInit();
@@ -265,6 +277,7 @@ export class AssetDataPagingComponent implements OnInit {
     // this.appAssetObj.AppAssetId = "-";
     this.appAssetObj.AppId = this.AppId;
     this.getListDataAsset();
+    this.GetListAssetSerialNo();
 
 
     this.gridAppCollateralObj = new InputGridObj();
@@ -286,6 +299,22 @@ export class AssetDataPagingComponent implements OnInit {
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       });
     this.GetGS();
+  }
+
+  SerialNoList: Array<SerialNoObj> = new Array();
+  GetListAssetSerialNo() {
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response: AppObj) => {
+        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion }).toPromise().then(
+          (response2: ProdOfferingDObj) => {
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response2.CompntValue }).subscribe(
+              (response3: GenericListObj) => {
+                this.SerialNoList = response3[CommonConstant.ReturnObj];
+              })
+          }
+        )
+      }
+    );
   }
 
   getGridCollateral() {
@@ -314,21 +343,40 @@ export class AssetDataPagingComponent implements OnInit {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
+  checkValidityAssetUsed() {
+    let listAsset: Array<AppAssetObj> = this.gridAssetDataObj.resultData.Data;
+    let flag: boolean = false;
+    for (let index = 0; index < listAsset.length; index++) {
+      const element = listAsset[index];
+      if (element.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
+        for (let index = 0; index < this.SerialNoList.length; index++) {
+          if (!element["SerialNo" + (index + 1)]) {
+            flag = true;
+            this.toastr.warningMessage(element.FullAssetName + "\'s data not complete");
+            break;
+          }
+        }
+      }
+    }
+    return flag;
+  }
+
   next() {
     if (this.gridAssetDataObj.resultData.Data.length < 1) {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;
     }
     else {
-      for(let i=0;i< this.gridAssetDataObj.resultData.Data.length ;i++){
-        if(this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == ""  || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null){
-          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE);
+      for (let i = 0; i < this.gridAssetDataObj.resultData.Data.length; i++) {
+        if (this.gridAssetDataObj.resultData.Data[i].SupplCode == null || this.gridAssetDataObj.resultData.Data[i].SupplName == null || this.gridAssetDataObj.resultData.Data[i].SupplCode == "" || this.gridAssetDataObj.resultData.Data[i].SupplName == "" || this.gridAssetDataObj.resultData.Data[i].DownPaymentPrcnt == 0 || this.gridAssetDataObj.resultData.Data[i].DownPaymentAmt == 0 || this.gridAssetDataObj.resultData.Data[i].ManufacturingYear == null) {
+          this.toastr.warningMessage(ExceptionConstant.ASSET_DATA_NOT_COMPLETE + ' (Asset No. ' + (i + 1) + ')');
           return;
         }
       }
     }
-      
-    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+    if (this.checkValidityAssetUsed()) return;
+
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
 
       if (!this.IsCalledIntegrator) {
         if (confirm("Submit without Integrator ? ")) {
@@ -346,6 +394,29 @@ export class AssetDataPagingComponent implements OnInit {
     }
     else {
       this.outputValue.emit({ mode: 'submit' });
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.BizTemplateCode}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+      var svcType = listSvcType.find(x => x == refSvcType);
+
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+      this.GetThirdPartyResultH();
     }
   }
 }

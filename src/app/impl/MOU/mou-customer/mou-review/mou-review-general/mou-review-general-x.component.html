@@ -1,0 +1,93 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title" style="margin-bottom: 10px;">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Review - General
+              </h4>
+            </div>
+          </div>
+        </div>
+        <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
+        <div>
+          <mat-tab-group>
+            <mat-tab label="MOU Detail">
+              <ng-template matTabContent>
+                <div class="px-3">
+                  <app-mou-view-detail [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail>
+                </div>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Collateral">
+              <ng-template matTabContent>
+                <div class="px-3">
+                  <app-mou-tab-view-addcoll-x [MouCustId]="MouCustId"></app-mou-tab-view-addcoll-x>
+                </div>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Term and Condition">
+              <ng-template matTabContent>
+                <div class="px-3">
+                  <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
+                </div>
+              </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
+              <ng-template matTabContent>
+                <div class="px-3">
+                  <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                </div>
+              </ng-template>
+            </mat-tab>
+            <!-- <mat-tab label="Survey">
+              <ng-template matTabContent>
+                <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
+              </ng-template>
+            </mat-tab> -->
+            <mat-tab label="Third Party Checking">
+              <ng-template matTabContent>
+                <div class="px-3">
+                  <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
+                </div>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
+              <ng-template matTabContent>
+                <div class="px-3">
+                  <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+                </div>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+
+          <p> &nbsp; <span style="display: block;"> <br> </span> &nbsp; </p>
+          <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid && Submit()"
+            #enjiForm="ngForm">
+            <lib-ucapprovalcreate [parentForm]="MouReviewDataForm" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent></lib-ucapprovalcreate>
+            <div class="card">
+              <div class="card-body">
+                <div class="px-3">
+                    <div class="form-actions right">
+
+                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
+                      translate>
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="button" (click)="Return()" class="btn btn-raised btn-primary mr-1" translate>
+                      <i class="fa fa-reply"></i> Return
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary" translate>
+                      <i class="fa fa-check"></i> Submit
+                    </button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

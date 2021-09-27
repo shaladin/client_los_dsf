@@ -48,7 +48,7 @@
           },
           {
             "type": "text",
-            "label": "Id Type",
+            "label": "Owner Id Type",
             "property": "IdType"
           },
           {
@@ -68,14 +68,19 @@
           },
           {
             "type": "text",
-            "label": "Mobile Phone No",
+            "label": "Owner Mobile Phone No",
             "property": "MobilePhn"
           },
           {
             "type": "text",
             "label": "City",
             "property": "City"
-          },{},
+          },
+          {
+            "type": "text",
+            "label": "Owner Profession",
+            "property": "OwnerProfessionName"
+          },
           {
             "type": "text",
             "label": "Zip Code",

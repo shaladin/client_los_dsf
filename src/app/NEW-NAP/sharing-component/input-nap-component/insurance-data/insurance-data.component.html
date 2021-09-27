@@ -14,6 +14,11 @@
                 <label class="col-md-2" translate>Asset Price</label>
                 <label class="col-md-4" translate>{{totalAssetPriceAmt | number:'.2':'en-US'}}</label>
               </div>
+              <div class="form-group row">
+                <label class="col-md-6" translate></label>
+                <label class="col-md-2" translate>Asset Price (Incl. Accessory)</label>
+                <label class="col-md-4" translate>{{totalAssetInclAccessoryPriceAmt | number:'.2':'en-US'}}</label>
+              </div>
             </div>
             <lib-ucSubsection [id]="'collateralAccessoriesId'" [title]="'Insurance Object Accessories'"
               [panel]="'collateralAccessories'">
@@ -368,7 +373,7 @@
                           <div class="form-group-row">
                             <input type="" currencyMask class="form-control text-right"
                               formControlName="SumInsuredPrcnt" (ngModelChange)="IsMainCvgChaged($event, i)"
-                              [options]="{ allowNegative: false }"
+                              [options]="CurrencyMaskPrct"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt.invalid }">
                           </div>
                           <lib-uc-show-errors

@@ -42,7 +42,7 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   }
   ValidationMessages = {
     "Detail": "Please complete required data in tab \"Customer Detail\"",
-    "Address": "Please add Legal Address in tab \"Address Information\"",
+    "Address": "Please add Legal & Business Address in tab \"Address Information\"",
     "Shrholder": "Please complete required data in tab \"Management / Shareholder\"",
     "Contact": "Please complete required data in tab \"Contact Information\"",
     "Financial": "Please complete required data in tab \"Financial Data\"",

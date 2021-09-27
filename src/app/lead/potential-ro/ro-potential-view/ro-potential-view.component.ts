@@ -66,7 +66,6 @@ export class RoPotentialViewComponent implements OnInit {
       this.ViewMainDataObj.viewInput = "./assets/ucviewgeneric/viewTelemkOfferDetailMainInfo.json";
     else
       this.ViewMainDataObj.viewInput = "./assets/ucviewgeneric/viewRoPotentialMainInfo.json";
-    this.ViewMainDataObj.viewEnvironment = environment.losUrl;
     this.ViewMainDataObj.whereValue = whereForView;
 
     await this.getVerfResultData();

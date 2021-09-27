@@ -1,0 +1,110 @@
+<div class="card">
+  <div class="card-body">
+    <div class="card-header header-title" style="margin-bottom: 10px;">
+      <div class="row">
+        <div class="col-md-8">
+          <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU EXECUTION
+          </h4>
+        </div>
+      </div>
+    </div>
+    <app-mou-main-info-x [MouCustId]="MouCustId"></app-mou-main-info-x>
+    <mat-tab-group>
+      <mat-tab label="MOU Detail">
+        <ng-template matTabContent>
+          <div class="px-3">
+            <app-mou-view-detail-x [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail-x>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab *ngIf="resultData?.MrMouTypeCode != MouTypeGeneral" label="Fee">
+        <ng-template matTabContent>
+          <div class="px-3">
+            <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Collateral">
+        <ng-template matTabContent>
+          <div class="px-3">
+            <app-mou-tab-view-addcoll-x [MouCustId]="MouCustId"></app-mou-tab-view-addcoll-x>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Term and Condition">
+        <ng-template matTabContent>
+          <div class="px-3">
+            <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab *ngIf="SysConfigResultObj?.ConfigValue" label="Document">
+        <ng-template matTabContent>
+          <div class="px-3">
+            <app-dms-iframe *ngIf="SysConfigResultObj?.ConfigValue" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Third Party Checking">
+        <ng-template matTabContent>
+          <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Legal Review" *ngIf="this.MrCustTypeCode == 'COMPANY'">
+        <ng-template matTabContent>
+          <div class="px-3">
+            <app-mou-view-legal [MouCustId]="MouCustId"></app-mou-view-legal>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="px-3">
+      <lib-ucSubsection [id]="'MOUMainInfoId'" [title]="'Main Information'" [panel]="'MOUMainInfoSection'">
+      </lib-ucSubsection>
+      <div id="MOUMainInfoSection">
+        <form class="form form-horizontal" [formGroup]="MouExecutionForm" #enjiForm="ngForm" novalidate
+          (ngSubmit)="enjiForm.form.valid && SaveForm()">
+          <div class="form-group row">
+            <label class="col-md-3 adInsLabel adins-required-label" for="MouCustDt" translate>Mou Date</label>
+            <div class="col-md-2">
+              <input type="date" class="form-control adInsInput" formControlName="MouCustDt" (focusout) ="checkMouDate($event)"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouExecutionForm.controls.MouCustDt.invalid }"
+                [min]="businessDtYesterday | date: 'yyyy-MM-dd'" onkeypress="return false;" />
+              <lib-uc-show-errors [control]="MouExecutionForm.controls.MouCustDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 adInsLabel adins-required-label" for="StartDtEndDt" translate>Start Date - End
+              Date</label>
+            <div class="col-md-2">
+              <input type="date" class="form-control adInsInput" formControlName="StartDt"
+                [min]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;" />
+              <lib-uc-show-errors [control]="MouExecutionForm.controls.StartDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <div style="text-align: center;">
+              <i class="fas fa-slash" style="transform: rotate(142.5deg); margin-top: 50%;"></i>
+            </div>
+            <div class="col-md-2">
+              <input type="date" readonly class="form-control adInsInput" formControlName="EndDt"
+                [min]="this.MouExecutionForm.controls.StartDt.value | date: 'yyyy-MM-dd'"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouExecutionForm.controls.EndDt.invalid }"
+                (focusout) ="checkEndDate($event)" />
+              <lib-uc-show-errors [control]="MouExecutionForm.controls.EndDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button type="button" (click)="Back()" class="btn btn-raised btn-warning mr-1" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary" translate>
+              <i class=" fa fa-arrow-circle-right"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

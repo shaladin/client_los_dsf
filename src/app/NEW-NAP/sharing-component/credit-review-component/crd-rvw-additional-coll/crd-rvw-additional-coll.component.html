@@ -35,9 +35,9 @@
           <tr *ngFor="let item of ListCrdRvwCollateralObj; let i = index">
             <td style="text-align: center;">{{i+1}}</td>
             <td style="text-align: left;">{{item.CollateralName}}</td>
-            <td style="text-align: left;">{{item.CollateralValue}}</td>
-            <td style="text-align: right;">{{item.CollateralPortionAmt}} / {{item.CollateralPortionPrcnt}}%</td>
-            <td style="text-align: left;">{{item.CollateralTotalUsage}}%</td>
+            <td style="text-align: left;">{{item.CollateralValue | number:'.2':'en-US'}}</td>
+            <td style="text-align: right;">{{item.CollateralPortionAmt | number:'.2':'en-US'}} / {{item.CollateralPortionPrcnt | number:'.6':'en-US'}} %</td>
+            <td style="text-align: left;">{{item.CollateralTotalUsage | number:'.6':'en-US'}} %</td>
             <td style="text-align: left;">{{item.Insurance}}</td>
           </tr>
         </tbody>

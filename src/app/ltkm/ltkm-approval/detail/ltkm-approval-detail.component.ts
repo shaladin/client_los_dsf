@@ -121,7 +121,6 @@ export class LtkmApprovalDetailComponent implements OnInit {
         this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
         this.DDLReason = new Array();
         this.DDLReasonReturn = new Array();
-        this.isReturnOn = false;
     }
 
     async GetLtkmReqByLtkmNo() {
@@ -140,11 +139,6 @@ export class LtkmApprovalDetailComponent implements OnInit {
             (response) => {
                 this.DDLReasonReturn = response[CommonConstant.ReturnObj];
             });
-    }
-    onChangeReason(ev) {
-        this.FormObj.patchValue({
-            ReasonDesc: ev.target.selectedOptions[0].text
-        });
     }
 
     HoldTask(obj) {
@@ -175,12 +169,10 @@ export class LtkmApprovalDetailComponent implements OnInit {
 
     initInputApprovalObj() {
         this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-        this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
         this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
         this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
 
         this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-        this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
         this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
         this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
@@ -192,41 +184,4 @@ export class LtkmApprovalDetailComponent implements OnInit {
         this.IsReady = true;
     }
 
-    FormObj = this.fb.group({
-        arr: this.fb.array([]),
-        Reason: [''],
-        Notes: ['']
-    });
-
-    isReturnOn: boolean = false;
-    switchForm() {
-        this.FormObj.patchValue({
-            Reason: "",
-            ReasonDesc: "",
-            Notes: ""
-        });
-
-        if (!this.isReturnOn) {
-            this.isReturnOn = true;;
-            this.FormObj.controls.Reason.setValidators([Validators.required]);
-            this.FormObj.controls.Notes.setValidators([Validators.required]);
-        } else {
-            this.isReturnOn = false;
-            this.FormObj.controls.Reason.clearValidators()
-            this.FormObj.controls.Notes.clearValidators()
-        }
-        this.FormObj.controls.Reason.updateValueAndValidity();
-        this.FormObj.controls.Notes.updateValueAndValidity();
-    }
-
-    SaveForm() {
-        var apiObj = {
-            WfTaskListId: this.WfTaskListId,
-            ApvReqId: this.ApvReqId
-        }
-        this.http.post(URLConstant.SubmitLtkmReturnAtApv, apiObj).subscribe(
-            (response) => {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_APV_PAGING], {});
-            });
-    }
 }

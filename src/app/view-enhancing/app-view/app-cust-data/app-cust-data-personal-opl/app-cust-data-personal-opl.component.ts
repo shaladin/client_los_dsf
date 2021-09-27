@@ -31,13 +31,11 @@ export class AppCustDataPersonalOplComponent implements OnInit {
     
     this.custArrValue.push(this.appCustObj.AppCustId);
     this.viewCustDataObj.viewInput = "./assets/ucviewgeneric/view/app-view/app-cust-data/personal/view-app-cust-data-personal-opl-cust-data.json";
-    this.viewCustDataObj.viewEnvironment = environment.losUrl;
     this.viewCustDataObj.whereValue = this.custArrValue;
 
     if(this.isSpouseExists) {
       this.spouseArrValue.push(this.appCustSpouseObj.AppCustId);
       this.viewSpouseDataObj.viewInput = "./assets/ucviewgeneric/view/app-view/app-cust-data/personal/view-app-cust-data-personal-opl-spouse-data.json";
-      this.viewSpouseDataObj.viewEnvironment = environment.losUrl;
       this.viewSpouseDataObj.whereValue = this.spouseArrValue;
     }
 

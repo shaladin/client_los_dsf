@@ -71,8 +71,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
-    Email: ['', Validators.maxLength(50)],
-    SharePrcnt: [0, [Validators.min(0), Validators.max(100), Validators.pattern("^[0-9]+$")]],
+    Email: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
+    SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     IsOwner: [false],
@@ -82,7 +82,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     IsGuarantor: [false]
   });
 
-
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -134,7 +134,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     var totalPrcnt = 0;
 
     for (let i = 0; i < this.listShareholder.length; i++) {
-      if (currentEditedIndex == -1 || currentEditedIndex != i) {
+      if (this.listShareholder[i].IsActive && (currentEditedIndex == -1 || currentEditedIndex != i)) {
         totalPrcnt += this.listShareholder[i].SharePrcnt;
       }
     }
@@ -262,13 +262,6 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.open(content);
   }
 
-  delete(i) {
-    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.listShareholder.splice(i, 1);
-      this.callbackSubmit.emit(this.listShareholder);
-    }
-  }
-
   clearForm() {
     this.CustShareholderForm = this.fb.group({
       MrCustTypeCode: [this.defaultCustType, [Validators.required, Validators.maxLength(50)]],
@@ -280,7 +273,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
       IdExpiredDt: [''],
       MobilePhnNo: ['', Validators.maxLength(50)],
-      Email: ['', [Validators.maxLength(50), Validators.email]],
+      Email: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
       SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
       IsSigner: [false],
@@ -477,16 +470,14 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
 
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.isRequired = false;

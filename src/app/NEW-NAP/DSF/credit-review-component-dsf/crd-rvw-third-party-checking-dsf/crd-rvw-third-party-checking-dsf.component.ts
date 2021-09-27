@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { AppObj } from 'app/shared/model/App/App.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ThirdPartyDataRobotObj } from 'app/shared/model/ThirdPartyData/ThirdPartyDataRobotObj.Model';
 import { ThirdPartyDukcapilRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyDukcapilRsltObj.Model';
@@ -22,6 +23,8 @@ export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
 
   @Input() CrdRvwCustInfoId: number;
   @Input() AppNo: string = "";
+  @Input() appId: number = 0;
+  MrCustTypeCode: string;
   IsUseDigitalization: string;
 
   constructor(
@@ -74,9 +77,17 @@ export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
       }
     )
 
-    this.dataRobotInfoObj.AppNo = this.AppNo;
+    var appObj = { Id: this.appId };
+    await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
+      (response) => {
+        this.AppNo = response.AppNo;
+        this.MrCustTypeCode = response.MrCustTypeCode;
+        this.dataRobotInfoObj.AppNo = this.AppNo;
+        this.dataRobotInfoObj.MrCustTypeCode = this.MrCustTypeCode;
+      }
+    )
     
-    this.http.post<ThirdPartyDataRobotObj>(URLConstantDsf.GetCrdRvwDataRobot, this.dataRobotInfoObj).toPromise().then(
+    await this.http.post<ThirdPartyDataRobotObj>(URLConstantDsf.GetCrdRvwDataRobot, this.dataRobotInfoObj).toPromise().then(
       (response) => {
         this.dataRobotInfoObj = response;
       }

@@ -1,0 +1,86 @@
+<div class="card" style="background-color: #FFFFFF; width: 600px; height: auto; margin-top: 10px; margin-bottom: 10px;">
+  <div class="card-block">
+    <h4 class="card-title" style="margin-left: 30%;color: #0152CC;">Application In Process </h4>
+  </div>
+  <div class="col-md-12">
+    <div class="row">
+      <!-- <div class="col-md-1">
+        <h5>Total App: {{TotalApp}}</h5>
+      </div> -->
+      <div class ="col-md-1" style="margin-top: 7px; margin-left :90px">
+        <label style="color: #0152CC; font-size: 11px !important;" for="lobSelect">Lob</label>
+      </div>
+      <div class="col-md-5" style="padding-left: 3px">
+        <select style="color: #0152CC;" class="form-control adInsInput" id="lobSelect" style="width: auto" (change)="radioChange($event)">
+          <option>All</option>
+          <option *ngFor="let it of DropDownList" [value]="it.LobCode">
+            {{it.LobName}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-1" style="margin-top: 7px" *ngIf="done">
+        <button style="border:0px;font-size: 15px; background-color: transparent; color: #0152CC;" id="refresh-button" (click)="Refresh()"><span>&#x27f3;</span></button>
+      </div>
+    </div>
+  </div>
+  <div style="margin-bottom: 10px;"> 
+    <ngx-charts-bar-horizontal *ngIf="done"
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="UserList"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [showDataLabel]="showDataLabel"
+    style="fill: #0152CC"
+    >
+    <ng-template #tooltipTemplate let-model="model">
+      <h6>
+        {{model.name}}
+      </h6>
+      <h6>
+        <!-- matiin dlu karna blm ada SLA -->
+        <!-- <div class="row">
+          <div class="col-md-6">
+            SLA Indicator
+          </div> -->
+          <div>
+            Total : {{model.value}}
+          </div>
+      <!-- </div> -->
+      </h6>
+        <!-- <div class="row">
+          <div class="col-md-1">
+            <div style = "width: 8px; height: 8px; background: #FF6A64;"></div>
+          </div>
+          <div class="col-md-0.5">
+            <h6>{{TotalApp}}</h6>
+          </div>
+          <div class="col-md-1">
+            <div style = "width: 8px; height: 8px; background: #FFF173;"></div>
+          </div>
+          <div class="col-md-0.5">
+            <h6>{{TotalApp}}</h6>
+          </div>
+          <div class="col-md-1">
+            <div style = "width: 8px; height: 8px; background: #FFCC5B;"></div>
+          </div>
+          <div class="col-md-0.5">
+            <h6>{{TotalApp}}</h6>
+          </div>
+          <div class="col-md-1">
+            <div style = "width: 8px; height: 8px; background: #85F983;"></div>
+          </div>
+          <div class="col-md-0.5">
+            <h6>{{TotalApp}}</h6>
+          </div>
+          <div class="col-md-1">
+            <div style = "width: 8px; height: 8px; background: #20BF60;"></div>
+          </div>
+          <div class="col-md-0.5">
+            <h6>{{TotalApp}}</h6>
+          </div>
+        </div> -->
+    </ng-template>
+    </ngx-charts-bar-horizontal>
+  </div>
+</div>

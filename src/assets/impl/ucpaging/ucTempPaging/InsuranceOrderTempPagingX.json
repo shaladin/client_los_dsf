@@ -1,0 +1,57 @@
+{
+    "title": "Insurance Order",
+    "keyProperty": "AppAssetId",
+    "keyPropCriteria": "AA.APP_ASSET_ID",
+    "component": [],
+    "querystring": {
+        "name": "InsuranceOrderTempPaging"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Asset Name",
+            "name": "AA.FULL_ASSET_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Engine No",
+            "name": "AA.SERIAL_NO_2"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Chassis No",
+            "name": "AA.SERIAL_NO_1"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Insco Branch Name",
+            "name": "AIO.INSCO_BRANCH_NAME"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AssetName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "EngineNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ChassisNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "InscoBranchName"
+        }
+    ]
+}

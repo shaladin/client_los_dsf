@@ -116,7 +116,7 @@ export class Nap1FromLeadDetailComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -187,7 +187,9 @@ export class Nap1FromLeadDetailComponent implements OnInit {
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
-    this.http.post<GenericObj>(URLConstant.AddNap1FromLead, napAppObj).subscribe(
+
+    let AddNap1FromLeadUrl = environment.isCore ? URLConstant.AddNap1FromLeadV2 : URLConstant.AddNap1FromLead;
+    this.http.post<GenericObj>(AddNap1FromLeadUrl, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (this.bizTemplateCode == CommonConstant.CF4W) {

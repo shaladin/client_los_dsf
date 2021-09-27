@@ -138,18 +138,10 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
   }
 
   MakeLookUpObj() {
-    // this.inputLookupObjCopyProduct = new InputLookupObj();
-    // this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    // this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    // this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
-    // this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
-    // this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
-    // this.inputLookupObjCopyProduct.isRequired = false;
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -273,7 +265,9 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
     reqAddApp.CurrCode = this.NapAppForm.controls['CurrCode'].value;
     reqAddApp.PayFreqCode = this.NapAppForm.controls['PayFreqCode'].value;
     reqAddApp.RefProdTypeCode = this.NapAppForm.controls['RefProdTypeCode'].value;
-    this.http.post(URLConstant.AddAppFromCopyCancledApp, reqAddApp).subscribe(
+
+    let urlPost = environment.isCore ? URLConstant.AddAppFromCopyCancledAppV2 : URLConstant.AddAppFromCopyCancledApp; 
+    this.http.post(urlPost, reqAddApp).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.router.navigate([NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL], { queryParams: { "IsNapVersionMainData": true } });

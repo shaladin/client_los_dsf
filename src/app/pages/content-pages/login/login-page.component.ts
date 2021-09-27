@@ -9,6 +9,7 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-login-page',
@@ -23,7 +24,6 @@ export class LoginPageComponent implements OnInit {
   @ViewChild('f') loginForm: NgForm;
   private apiUrl: string;
   IsNeedUpdate: boolean;
-  FoundationR3Url: string;
   token: string;
   version: string;
   result: any;
@@ -45,13 +45,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.FoundationR3Url = environment.FoundationR3Url;
-
-
     if (this.token != null) {
       localStorage.setItem("Token", this.token);
-      this.http.post(URLConstant.LoginWithToken, { ModuleCode: environment.Module }).subscribe(
+      this.http.post(AdInsConstant.LoginWithToken, { ModuleCode: environment.Module }).subscribe(
         (response) => {
           AdInsHelper.CreateUserAccess(response);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
@@ -63,11 +59,10 @@ export class LoginPageComponent implements OnInit {
     event.preventDefault();
     const username = this.userInputRef.nativeElement.value;
     const password = this.userPassRef.nativeElement.value;
-    this.apiUrl = this.FoundationR3Url + URLConstant.Login;
     var requestObj = { "Username": username, "Password": password };
     localStorage.setItem("Username", username);
     //this.rolePickService.openDialog(data.returnObject);
-    this.http.post(this.apiUrl, requestObj).subscribe(
+    this.http.post(AdInsConstant.Login, requestObj).subscribe(
       (response) => {
         if (response["StatusCode"] == CommonConstant.STATUS_CODE_USER_LOCKED) {
           this.isLocked = true;
@@ -98,7 +93,7 @@ export class LoginPageComponent implements OnInit {
   }
   // On Forgot password link click
   onForgotPassword() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.BACK_TO_REQ_PASSWORD], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PAGES_REQ_PASSWORD], {});
   }
   // On registration link click
   onRegister() {

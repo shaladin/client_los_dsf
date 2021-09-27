@@ -49,6 +49,7 @@ export class InsuranceDataComponent implements OnInit {
   appAssetId: number = 0;
   appCollateralId: number = 0;
   totalAssetPriceAmt: number;
+  totalAssetInclAccessoryPriceAmt: number = 0;
   defaultInsAssetRegion: string;
   IsMultiAsset: string = "false";
 
@@ -132,6 +133,7 @@ export class InsuranceDataComponent implements OnInit {
     IsFullCapitalizedAmount: [false]
   });
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -412,6 +414,8 @@ export class InsuranceDataComponent implements OnInit {
       for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
         var insCoverage = new AppInsMainCvgObj();
         insCoverage.YearNo = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].YearNo.value;
+        insCoverage.MrInsPaidByCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrInsPaidByCode.value;
+        insCoverage.IsCapitalized = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].IsCapitalized.value;
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
 
@@ -654,7 +658,7 @@ export class InsuranceDataComponent implements OnInit {
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.AssetCategory = this.appCollateralObj.AssetCategoryCode;
     reqObj.AssetCondition = this.appCollateralObj.MrCollateralConditionCode;
-    reqObj.AssetPriceAmount = this.totalAssetPriceAmt;
+    reqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
     reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
@@ -692,10 +696,10 @@ export class InsuranceDataComponent implements OnInit {
             TotalInscoFeeAmt: this.ruleObj.AdminFeeFromInsco + this.ruleObj.InscoStampdutyFeeToCust
           });
           this.GenerateMainAndAddCvgTable();
-          this.isGenerate = true;
         } else {
           this.GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj);
         }
+        this.isGenerate = true;
         this.bindInsFeeBehaviorRuleObj();
         this.showGenerate = true;
         this.checkPaidBy();
@@ -1533,22 +1537,18 @@ export class InsuranceDataComponent implements OnInit {
         this.appCollateralAccessoryObjs = response["AppCollateralAccessoryObjs"];
         this.defaultInsAssetRegion = response["DefaultInsAssetRegion"];
 
+        this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
+        this.totalAssetInclAccessoryPriceAmt = this.totalAssetPriceAmt;
         if (this.appCollateralAccessoryObjs.length > 0) {
-          var totalAccessoryPriceAmt = 0;
-
           for (let i = 0; i < this.appCollateralAccessoryObjs.length; i++) {
-            totalAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
+            this.totalAssetInclAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
           }
-
-          this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt + totalAccessoryPriceAmt;
-        } else {
-          this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
         }
 
         if (this.appFinDataObj != undefined) {
           this.InsuranceDataForm.patchValue({
-            CvgAmt: this.totalAssetPriceAmt,
-            CustCvgAmt: this.totalAssetPriceAmt
+            CvgAmt: this.totalAssetInclAccessoryPriceAmt,
+            CustCvgAmt: this.totalAssetInclAccessoryPriceAmt
           });
         }
         if (this.appAssetObj != undefined) {
@@ -1596,6 +1596,7 @@ export class InsuranceDataComponent implements OnInit {
           TotalInscoAddPremiAmt: this.appInsObjObj.TotalInscoAddPremiAmt,
           InsCpltzAmt: this.appInsObjObj.InsCpltzAmt,
           InscoAdminFeeAmt: this.appInsObjObj.InscoAdminFeeAmt,
+          InscoStampDutyFeeAmt: this.appInsObjObj.InscoStampDutyFee,
           CustAdminFeeAmt: this.appInsObjObj.CustAdminFeeAmt,
           CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
           CustInscoBranchName: this.appInsObjObj.CustInscoBranchName,
@@ -1631,6 +1632,7 @@ export class InsuranceDataComponent implements OnInit {
           TotalInscoAddPremiAmt: this.appInsObjObj.TotalInscoAddPremiAmt,
           InsCpltzAmt: this.appInsObjObj.InsCpltzAmt,
           InscoAdminFeeAmt: this.appInsObjObj.InscoAdminFeeAmt,
+          InscoStampDutyFeeAmt: this.appInsObjObj.InscoStampDutyFee,
           CustAdminFeeAmt: this.appInsObjObj.CustAdminFeeAmt,
           CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
           CvgAmt: this.appInsObjObj.CvgAmt,

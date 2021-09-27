@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PhoneVerificationPagingComponent } from './phone-verification/phone-verification-paging/phone-verification-paging.component';
-import { CommissionReservedFundDetailComponent } from './commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component';
 import { CommissionReservedFundPagingComponent } from './commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component';
 import { PhoneVerificationSubjectComponent } from './phone-verification/phone-verification-subject/phone-verification-subject.component';
 import { PhoneVerificationSubjectVerifComponent } from './phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component';
@@ -32,11 +31,36 @@ import { CreditApprovalPagingDsfComponent } from 'app/NEW-NAP/DSF/business-proce
 import { CreditApprovalCfnaPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-cfna-dsf/credit-approval-cfna-paging-dsf/credit-approval-cfna-paging-dsf.component';
 import { CreditApprovalCfnaDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-cfna-dsf/credit-approval-cfna-detail-dsf/credit-approval-cfna-detail-dsf.component';
 
+import { ComissionReservedFundDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-detail-x/comission-reserved-fund-detail-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { ComissionReservedFundPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/comission-reserved-fund-paging-x/comission-reserved-fund-paging-x.component';
+import { SurveyPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-paging-x/survey-paging-x.component';
+import { SurveySubjectXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component';
+import { SurveySubjectVerifXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component';
+import { SurveySubjectViewXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component';
+import { CommissionReservedFundDetailComponent } from './commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component';
+import { CreditReviewCrDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-detail/credit-review-cr-detail-x.component';
+import { CreditReviewCrPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-paging/credit-review-cr-paging-x.component';
+import { CreditApprovalCrDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail-x.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: PathConstantX.COMM_RSV_FUND_PAGING,
+        component: ComissionReservedFundPagingXComponent,
+        data: {
+          title: 'Commission Reserved Fund Paging'
+        }
+      },
+      {
+        path: PathConstantX.COMM_RSV_FUND_DETAIL,
+        component: ComissionReservedFundDetailXComponent,
+        data: {
+          title: 'Commission Reserved Fund Detail'
+        }
+      },
       {
         path: PathConstant.COMM_RSV_FUND_PAGING,
         component: CommissionReservedFundPagingComponent,
@@ -118,37 +142,51 @@ const routes: Routes = [
         path: PathConstantDsf.CRD_REVIEW_DETAIL,
         component: CreditReviewDetailDsfComponent,
         data: {
-            title: 'Credit Review Detail Dsf'
+          title: 'Credit Review Detail Dsf'
         }
       },
       {
         path: PathConstant.CRD_APPRV_CR_PAGING,
         component: CreditApprovalCrPagingComponent,
         data: {
-            title: 'Credit Approval Paging'
+          title: 'Credit Approval Paging'
         }
       },
       {
         path: PathConstantDsf.CRD_APPRV_CR_PAGING,
         component: CreditApprovalPagingDsfComponent,
         data: {
-            title: 'Credit Approval Paging Dsf'
+          title: 'Credit Approval Paging Dsf'
         }
-    },
+      },
       {
-          path: PathConstant.CRD_APPRV_CR_DETAIL,
-          component: CreditApprovalCrDetailComponent,
-          data: {
-              title: 'Credit Approval Detail'
-          }
+        path: PathConstantX.CRD_APPRV_CR_DETAIL,
+        component: CreditApprovalCrDetailXComponent,
+        data: {
+          title: 'Credit Approval Detail'
+        }
+      },
+      {
+        path: PathConstant.CRD_APPRV_CR_DETAIL,
+        component: CreditApprovalCrDetailComponent,
+        data: {
+          title: 'Credit Approval Paging Dsf'
+        }
+      },
+      {
+        path: PathConstant.CRD_APPRV_CR_DETAIL,
+        component: CreditApprovalCrDetailComponent,
+        data: {
+          title: 'Credit Approval Detail'
+        }
       },
       {
         path: PathConstantDsf.CRD_APPRV_CR_DETAIL,
         component: CreditApprovalDetailDsfComponent,
         data: {
-            title: 'Credit Approval Detail Dsf'
+          title: 'Credit Approval Detail Dsf'
         }
-    },
+      },
       {
         path: PathConstant.CRD_REVIEW_PAGING,
         component: CreditReviewPagingComponent,
@@ -238,6 +276,48 @@ const routes: Routes = [
         component: CreditApprovalCfnaDetailDsfComponent,
         data: {
           title: 'Credit Approval Detail Dsf'
+        }
+      },
+      {
+        path: PathConstantX.CRD_REVIEW_CR_PAGING_X,
+        component: CreditReviewCrPagingXComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
+      },
+      {
+        path: PathConstantX.CRD_REVIEW_CR_DETAIL_X,
+        component: CreditReviewCrDetailXComponent,
+        data: {
+          title: 'Credit Review Detail'
+        }
+      },
+      {
+        path: PathConstantX.SURVEY_VERIF_PAGING,
+        component: SurveyPagingXComponent,
+        data: {
+          title: 'Survey Paging'
+        }
+      },
+      {
+        path: PathConstantX.SURVEY_VERIF_SUBJECT,
+        component: SurveySubjectXComponent,
+        data: {
+          title: 'Survey Subject'
+        }
+      },
+      {
+        path: PathConstantX.SURVEY_VERIF_SUBJECT_VERIF,
+        component: SurveySubjectVerifXComponent,
+        data: {
+          title: 'Survey Subject Verif'
+        }
+      },
+      {
+        path: PathConstantX.SURVEY_VERIF_SUBJECT_VIEW,
+        component: SurveySubjectViewXComponent,
+        data: {
+          title: 'Survey Subject View'
         }
       }
     ]

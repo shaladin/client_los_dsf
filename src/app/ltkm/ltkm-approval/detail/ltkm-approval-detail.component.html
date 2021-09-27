@@ -32,61 +32,13 @@
 
     </mat-tab-group>
     <div class="card-body">
-      <div class="px-3">
-        <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
-        </lib-ucapprovalgeneralinfo>
-        <!-- <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">
-        </lib-ucapprovalHistory> -->
-        <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady && !isReturnOn" (result)="onApprovalSubmited($event)"
-          (onCancel)="onCancelClick()"></lib-ucapprovalR3>
-
-        <form class="form form-horizontal" (ngSubmit)="FormObj.valid &&SaveForm()" [formGroup]="FormObj" #enjiForm="ngForm">
-          <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return LTKM'"
-            [panel]="'formReturnCreditReview'">
-          </lib-ucSubsection>
-          <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCreditReview'">
-            <div class="form-group row adins-required">
-              <div class="form-group col-md-2">
-                <label class="adInsLabel">Return Reason</label>
-              </div>
-              <div class="col-md-4">
-                <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
-                  (change)="onChangeReason($event)"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
-                  <option value="">-Select One-</option>
-                  <option *ngFor="let it of DDLReasonReturn" value="{{it.Key}}">
-                    {{it.Value}}
-                  </option>
-                </select>
-                <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-
-            </div>
-
-            <div class="form-group row adins-required">
-              <div class="form-group col-md-2">
-                <label class="adInsLabel">Return Notes</label>
-              </div>
-              <div class="col-md-4">
-                <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
-                <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="form-actions right" *ngIf= "IsGsReturn">
-            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-              <i class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}}
-            </button>
-            <button *ngIf="isReturnOn" type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Submit Return
-            </button>
-          </div>
-        </form>
-      </div>
+      
+      <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
+      </lib-ucapprovalgeneralinfo>
+      <!-- <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">
+      </lib-ucapprovalHistory> -->
+      <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
+        (onCancel)="onCancelClick()"></lib-ucapprovalR3>
     </div>
   </div>
 </div>

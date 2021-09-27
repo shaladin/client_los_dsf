@@ -188,7 +188,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
 
   setBankName(bankCode) {
     this.bankObj.BankCode = bankCode;
-    this.http.post(environment.FoundationR3Url + URLConstant.GetRefBankByBankCodeAsync, {Code: bankCode}).subscribe(
+    this.http.post(URLConstant.GetRefBankByBankCodeAsync, {Code: bankCode}).subscribe(
       (response) => {
         this.InputLookupBankObj.nameSelect = response["BankName"];
         this.InputLookupBankObj.jsonSelect = response;
@@ -229,8 +229,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
 
   initLookup() {
     this.InputLookupBankObj.urlJson = "./assets/uclookup/lookupBank.json";
-    this.InputLookupBankObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupBankObj.pagingJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
   }

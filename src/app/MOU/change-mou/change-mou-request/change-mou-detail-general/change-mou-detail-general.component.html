@@ -61,7 +61,7 @@
                 <div class="col-md-2">
                     <input type="" currencyMask class="form-control adInsInput" formControlName="DownPaymentFromPrcnt"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.DownPaymentFromPrcnt.invalid }"
-                        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }" />
+                        [options]="CurrencyMaskPrct" />
                     <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.DownPaymentFromPrcnt"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -71,7 +71,7 @@
                 <div class="col-md-2">
                     <input type="" currencyMask class="form-control adInsInput" formControlName="DownPaymentToPrcnt"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.DownPaymentToPrcnt.invalid }"
-                        [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }" />
+                        [options]="CurrencyMaskPrct" />
                     <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.DownPaymentToPrcnt"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>

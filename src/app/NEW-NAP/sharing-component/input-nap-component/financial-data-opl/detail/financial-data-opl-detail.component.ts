@@ -22,19 +22,20 @@ export class FinancialDataOplEditComponent implements OnInit {
   FinancialDataForm = this.fb.group({
     SecurityDepositAmt: [0, Validators.required],
     ResidualType: [''],
-    ResidualValuePrcnt: [0, Validators.required],
+    ResidualValuePrcnt: [0, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
     ResidualValueAmt: [0, Validators.required],
     TotalInsuranceAtCostAmt: [0, Validators.required],
     TotalMaintenanceAtCostAmt: [0, Validators.required],
-    TotalFeeAmt: [0, Validators.required],
+    TotalFeeAmt: [0, Validators.required],  
     TotalFeeCapitalizedAmt: [0, Validators.required],
+    TotalFeeNonCapitalizedAmt: [0, Validators.required],
     TotalOthExpenseAmt: [0, Validators.required],
     CofAmt: [0, Validators.required],
     CofPrcnt: [0, Validators.required],
     CofPrincipal: [0],
     TotalOperatingCostAmt: [0, Validators.required],
     OperatingType: [''],
-    OperatingMarginPrcnt: [0, Validators.required],
+    OperatingMarginPrcnt: [0, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
     OperatingMarginAmt: [0, Validators.required],
     RentAmt: [0, Validators.required],
     VatAmt: [0, Validators.required],
@@ -67,6 +68,7 @@ export class FinancialDataOplEditComponent implements OnInit {
   isCalculate: boolean = false;
   isCalculateCof: boolean = false;
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit(): Promise<void> {
@@ -94,6 +96,7 @@ export class FinancialDataOplEditComponent implements OnInit {
           TotalInsuranceAtCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalInsuranceAmt,
           TotalMaintenanceAtCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalMaintAmt,
           TotalFeeAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalFeeAmt,
+          TotalFeeNonCapitalizedAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalFeeAmt - this.AppFinDataObj.AppAssetRentDataOplObj.TotalFeeCapitalized,
           TotalFeeCapitalizedAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalFeeCapitalized,
           TotalOthExpenseAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalOthExpenseAmt,
           TotalOperatingCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalCostAmt,
@@ -161,6 +164,13 @@ export class FinancialDataOplEditComponent implements OnInit {
   updateResiduAmt() {
     this.FinancialDataForm.patchValue({
       ResidualValueAmt: (this.FinancialDataForm.controls.TotalAssetPrice.value + this.FinancialDataForm.controls.DiscAmt.value) * this.FinancialDataForm.controls.ResidualValuePrcnt.value / 100
+    });
+    this.allCalculate();
+  }
+
+  updatePaidInAdvance() {
+    this.FinancialDataForm.patchValue({
+      CustomerPaidAtCostAmt: this.FinancialDataForm.controls.CustomerPaidAtCostAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
     });
     this.allCalculate();
   }
@@ -327,12 +337,12 @@ export class FinancialDataOplEditComponent implements OnInit {
             });
             if (this.FinancialDataForm.controls.RentalPeriodCode.value == CommonConstant.FirstInstTypeAdvance) {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
+                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value - this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
             else {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
+                CustomerPaidAtCostAmt: this.FinancialDataForm.controls.TotalFeeAmt.value - this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value  + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
           }
@@ -377,12 +387,12 @@ export class FinancialDataOplEditComponent implements OnInit {
             });
             if (this.FinancialDataForm.controls.RentalPeriodCode.value == CommonConstant.FirstInstTypeAdvance) {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
+                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value - this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
             else {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt
+                CustomerPaidAtCostAmt: this.FinancialDataForm.controls.TotalFeeAmt.value - this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
           }
@@ -407,7 +417,7 @@ export class FinancialDataOplEditComponent implements OnInit {
       (response: OutputCalcFinancialCofObj) => {
         this.CalculatedCofObj = response;
         this.FinancialDataForm.patchValue({
-          CofAmt: this.CalculatedCofObj.CofAmt
+          CofAmt: this.CalculatedCofObj.CofAmt.toFixed(2)
         });
         this.isCalculateCof = true;
       }

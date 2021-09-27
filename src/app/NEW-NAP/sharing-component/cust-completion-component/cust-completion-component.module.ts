@@ -21,6 +21,13 @@ import { FinancialPersonalComponent } from "./financial-tab/financial-personal/f
 import { CcAddressPagingComponent } from './address-tab/cc-address-paging/cc-address-paging.component';
 import { CcAddressDetailComponent } from './address-tab/cc-address-detail/cc-address-detail.component';
 import { MgmntShrholderComponent } from './mgmnt-shrholder/mgmnt-shrholder.component';
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { FinancialPersonalXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/financial-personal/financial-personal-x.component";
+import { FinancialCompanyXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/financial-company/financial-company-x.component";
+import { CustBankAccDetailSectionFindataXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/cust-bank-acc-detail-section-findata-x/cust-bank-acc-detail-section-findata-x.component";
+import { BankSectionXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/bank-section-x/bank-section-x.component";
+import { JobTabXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/job-tab-x/job-tab-x.component";
+import { CustDetailCompanyXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/cust-detail-tab/cust-detail-company-x/cust-detail-company-x.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -32,7 +39,7 @@ export const customCurrencyMaskConfig = {
     suffix: "",
     thousands: ",",
     nullable: false,
-    inputMode: CurrencyMaskInputMode.FINANCIAL
+    inputMode: CurrencyMaskInputMode.NATURAL
 };
 @NgModule({
     exports: [
@@ -43,17 +50,24 @@ export const customCurrencyMaskConfig = {
         EmergencyContactTabComponent,
         FinancialCompanyComponent,
         FinancialPersonalComponent,
+        BankSectionXComponent,
+        CustBankAccDetailSectionFindataXComponent,
         LegalDocTabComponent,
         CcContactInformationTabComponent,
         OtherInfoTabComponent,
         CcAddressPagingComponent,
-        MgmntShrholderComponent
+        MgmntShrholderComponent,
+        FinancialPersonalXComponent,
+        FinancialCompanyXComponent,
+        JobTabXComponent,
+        CustDetailCompanyXComponent
     ],
     imports: [
         CommonModule,
         AdInsModule,
         MatRadioModule,
         MainDataComponentModule,
+        NgMultiSelectDropDownModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
     ],
     declarations: [
@@ -70,12 +84,21 @@ export const customCurrencyMaskConfig = {
         LegalDocDetailComponent,
         FinancialCompanyComponent,
         FinancialPersonalComponent,
+        BankSectionXComponent,
+        CustBankAccDetailSectionFindataXComponent,
         CcAddressPagingComponent,
         CcAddressDetailComponent,
-        MgmntShrholderComponent
+        MgmntShrholderComponent,
+        FinancialPersonalXComponent,
+        FinancialCompanyXComponent,
+        JobTabXComponent,
+        CustDetailCompanyXComponent
     ],
     providers: [
         NGXToastrService
+    ],
+    entryComponents: [
+        CustBankAccDetailSectionFindataXComponent,
     ]
 })
 export class CustCompletionComponentModule { }

@@ -87,15 +87,14 @@ export class LtkmCustGrpMemberComponent implements OnInit {
     initLookup(): InputLookupObj {
         var InputLookupCustomerObj = new InputLookupObj();
         InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
-        InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-        InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
+        InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
         InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
         InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
 
         InputLookupCustomerObj.ddlEnvironments = [
             {
                 name: "C.MR_CUST_TYPE_CODE",
-                environment: environment.FoundationR3Url
+                environment: environment.FoundationR3Url + "/v1"
             },
         ];
 

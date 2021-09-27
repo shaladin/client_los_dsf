@@ -1,0 +1,120 @@
+  <span class="mr-1 pull-right" >
+    <button type="button" class="addButton" (click)="custBankHandler('add',BankAccObjX)" style="margin-right: 0!important;"
+      translate>
+      <i class="ft-plus-circle"></i> Add
+    </button>
+  </span>
+  <lib-ucSubsection [id]="'CustBankAccId'" [title]="'Customer Bank Account'" [panel]="'CustBankAccSection'">
+  </lib-ucSubsection>
+  <div id="CustBankAccSection">
+    <div>
+      <div class="col-md-12" style="padding: 0;">
+        <div class="col-md-12" *ngFor="let item of AppCustBankAccList; let i = index"
+          style="padding: 0; margin-top: 20px;">
+          <div class="col-md-12" style="padding: 0;">
+            <h5 class="col-md-7" style="display: inline-block;">
+              <i class="fas fa-circle" style="color: green" *ngIf="item.IsActive == true || item.IsDefault"></i>
+              <i class="fas fa-circle" style="color: red" *ngIf="item.IsActive == false  && !item.IsDefault"></i>
+              - {{item.BankName}} - {{item.BankBranch}} - {{item.BankAccNo}} - {{item.BankAccName}}
+            </h5>
+            <div class="col-md-12" style="display: inline-block; text-align: right;">
+              <button type="button" class="btn btn-raised btn-primary mr-1"
+                (click)="custBankHandler('editStmnt', item)" translate>
+                Add Bank Statement
+              </button>
+              <button type="button" class="btn btn-raised btn-primary mr-1"
+                (click)="custBankHandler('edit', item)" translate>
+                Edit Bank Account
+              </button>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="custBankHandler('delete', item)"
+                translate>
+                Delete Bank Account
+              </button>
+            </div>
+          </div>
+          <div class="col-md-12" style="padding: 0;">
+            <div class="col-md-12">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th style="text-align: left;">
+                      <span name='month' translate>MONTH</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span name='year' translate>YEAR</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" name='debitTrxCount' translate>DEBIT TRANSACTION COUNT</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span name='debit' translate>DEBIT (-)</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" name='creditTrxCount' translate>CREDIT TRANSACTION COUNT</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span name='credit' translate>CREDIT (+)</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span name='endingBalance' translate>ENDING BALANCE</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="item.ListAppCustBankAccStmntObj?.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr>
+                    <td style="text-align: left;">Beginning Balance</td>
+                    <td style="text-align: left;"></td>
+                    <td style="text-align: center;"></td>
+                    <td style="text-align: left;"></td>
+                    <td style="text-align: center;"></td>
+                    <td style="text-align: left;"></td>
+                    <td style="text-align: left;">{{item.BegBalanceAmt | number:'.2':'en-US'}}</td>
+                  </tr>
+                  <tr *ngFor="let stmnt of item.ListAppCustBankAccStmntObjX">
+                    <td style="text-align: left;">{{stmnt.Month}}</td>
+                    <td style="text-align: left;">{{stmnt.Year}}</td>
+                    <td style="text-align: center;">{{stmnt.DebitTrxCount}}</td>
+                    <td style="text-align: left;">{{stmnt.DebitAmt | number:'.2':'en-US'}}</td>
+                    <td style="text-align: center;">{{stmnt.CreditTrxCount}}</td>
+                    <td style="text-align: left;">{{stmnt.CreditAmt | number:'.2':'en-US'}}</td>
+                    <td style="text-align: left;">{{stmnt.BalanceAmt | number:'.2':'en-US'}}</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Average Debit</td>
+                    <td style="text-align: left;">{{item.AverageDebit | number:'.2':'en-US'}}</td>
+                    <td style="text-align: center;"></td>
+                    <td style="text-align: left;"></td>
+                    <td style="text-align: center;"></td>
+                    <td style="text-align: left;"></td>
+                    <td style="text-align: left;"></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Average Credit</td>
+                    <td style="text-align: left;">{{item.AverageCredit  | number:'.2':'en-US'}}</td>
+                    <td style="text-align: center;"></td>
+                    <td style="text-align: left;"></td>
+                    <td style="text-align: center;"></td>
+                    <td style="text-align: left;"></td>
+                    <td style="text-align: left;"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- <div class="col-md-12" style="padding: 0;">
+            <label class="col-md-2 adInsLabel">Average Debit</label>
+            <label class="col-md-10 adInsLabel">{{item.AverageDebit}}</label>
+          </div>
+          <div class="col-md-12" style="padding: 0;">
+            <label class="col-md-2 adInsLabel">Average Credit</label>
+            <label class="col-md-10 adInsLabel">{{item.AverageCredit}}</label>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>

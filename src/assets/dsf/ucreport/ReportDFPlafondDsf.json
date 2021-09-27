@@ -1,0 +1,54 @@
+{ 
+    "title" : "REPORT DF PLAFOND",
+    "reportName": "Report of DF Plafond",
+    "reportTemplateCode": "DF_PLAFOND",
+    "component": [ 
+        {
+            "type" : "dropdown",
+            "label" : "Product Type",
+            "name" : "ProductType",
+            "datatype" : "text",
+            "isSelectOne" : true,
+            "items" : [
+                {
+                "key": "UN",
+                "value": "Unit"
+            },
+            {
+                "key": "SP",
+                "value": "Sparepart"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type": "dropdown",
+            "label": "Branch Name",
+            "name": "BranchCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "environment": "FOU",
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOffice",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "paramAssignment": 1
+        }  
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+

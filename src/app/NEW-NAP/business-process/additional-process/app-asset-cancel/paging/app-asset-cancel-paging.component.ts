@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
@@ -31,13 +30,6 @@ export class AppAssetCancelPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchAppAssetCancel.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppAssetCancel.json";
     this.inputPagingObj.addCritInput = new Array();
-
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "REQ_AST_DLVRY_" + this.bizTemplateCode;
-
-    this.inputPagingObj.addCritInput.push(critObj);
 
     var critBizTemplate = new CriteriaObj();
     critBizTemplate.restriction = AdInsConstant.RestrictionEq;

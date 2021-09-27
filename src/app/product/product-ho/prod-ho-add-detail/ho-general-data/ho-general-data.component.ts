@@ -80,7 +80,7 @@ export class HoGeneralDataComponent implements OnInit {
     this.LoadProdComponent(this.ProdHId, "GEN", true, "");
 
     this.InputLookUpObj.urlJson = "./assets/uclookup/product/lookupProduct.json";
-    this.InputLookUpObj.urlEnviPaging = environment.losUrl;
+    this.InputLookUpObj.urlEnviPaging = environment.losUrl + "/v1";
     this.InputLookUpObj.pagingJson = "./assets/uclookup/product/lookupProduct.json";
     this.InputLookUpObj.genericJson = "./assets/uclookup/product/lookupProduct.json";
     this.InputLookUpObj.isRequired = false;

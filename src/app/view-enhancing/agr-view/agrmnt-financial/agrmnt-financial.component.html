@@ -220,7 +220,7 @@
             <label class="adInsLabel" translate> Effective Rate to Customer </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{agrmntFinDataObj?.EffectiveRatePrcnt | number:'.2':'en-US'}} </label>
+            <label class="adInsLabel"> {{agrmntFinDataObj?.EffectiveRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
       </div>
@@ -230,7 +230,7 @@
             <label class="adInsLabel" translate> Effective Rate to Supplier </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{agrmntFinDataObj?.SupplEffectiveRatePrcnt | number:'.2':'en-US'}} </label>
+            <label class="adInsLabel"> {{agrmntFinDataObj?.SupplEffectiveRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
       </div>
@@ -240,7 +240,7 @@
             <label class="adInsLabel" translate> Flat Rate to Customer </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{agrmntFinDataObj?.FlatRatePrcnt | number:'.2':'en-US'}} </label>
+            <label class="adInsLabel"> {{agrmntFinDataObj?.FlatRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
       </div>
@@ -250,7 +250,7 @@
             <label class="adInsLabel" translate> Flat Rate to Supplier </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{agrmntFinDataObj?.SupplFlatRatePrcnt | number:'.2':'en-US'}} </label>
+            <label class="adInsLabel"> {{agrmntFinDataObj?.SupplFlatRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
       </div>
@@ -356,7 +356,7 @@
             <label class="adInsLabel" translate> Gross Yield </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{agrmntFinDataObj?.GrossYieldPrcnt | number:'.2':'en-US'}}%</label>
+            <label class="adInsLabel"> {{agrmntFinDataObj?.GrossYieldPrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
       </div>
@@ -365,27 +365,27 @@
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
-          <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
+          <th style="text-align: center;"><span class="thead-header" name="No" translate>
               No
             </span>
           </th>
-          <th style="text-align: right;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
+          <th style="text-align: right;"><span class="thead-header" name="InstAmt" translate>
               Installment Amount
             </span>
           </th>
-          <th style="text-align: right;"><span class="thead-header" name="MrSubsidyAllocName" translate>
+          <th style="text-align: right;"><span class="thead-header" name="PrincipalAmt" translate>
               Principal Amount
             </span>
           </th>
-          <th style="text-align: right;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
+          <th style="text-align: right;"><span class="thead-header" name="InterestAmt" translate>
               Interest Amount
             </span>
           </th>
-          <th style="text-align: right;"><span class="thead-header" name="SubsidyPrcnt" translate>
+          <th style="text-align: right;"><span class="thead-header" name="OsPrincipalAmt" translate>
               Os Principal Amount
             </span>
           </th>
-          <th style="text-align: right;"><span class="thead-header" name="SubsidyAmt" translate>
+          <th style="text-align: right;"><span class="thead-header" name="OsInterestAmt" translate>
               Os Interest Amount
             </span>
           </th>

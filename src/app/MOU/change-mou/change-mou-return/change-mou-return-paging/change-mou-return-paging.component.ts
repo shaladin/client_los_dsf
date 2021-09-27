@@ -12,6 +12,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 
 @Component({
   selector: 'app-change-mou-return-paging',
@@ -21,7 +23,9 @@ export class ChangeMouReturnPagingComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
-  user: CurrentUserContext;
+  UserAccess: CurrentUserContext;
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
 
   constructor(
     private http: HttpClient, 
@@ -30,20 +34,39 @@ export class ChangeMouReturnPagingComponent implements OnInit {
     private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouReturn.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouReturn.json";
+    
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "MOU.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/mou/V2/searchChangeMouReturnV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchChangeMouReturnV2.json";
+      this.inputPagingObj.isJoinExAPI = true;
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CHANGE_MOU;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CHG_MOU_RTRN;
+      this.RequestTaskModel.OfficeCode = this.UserAccess[CommonConstant.OFFICE_CODE];
+      this.RequestTaskModel.RoleCode = this.UserAccess[CommonConstant.ROLE_CODE];
+      this.RequestTaskModel.OfficeRoleCodes = [this.UserAccess[CommonConstant.ROLE_CODE],
+                                               this.UserAccess[CommonConstant.OFFICE_CODE],
+                                               this.UserAccess[CommonConstant.ROLE_CODE] + "-" + this.UserAccess[CommonConstant.OFFICE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "TrxNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
+
     this.arrCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;

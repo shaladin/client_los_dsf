@@ -37,36 +37,25 @@ export class NapFromSimpleLeadComponent implements OnInit {
   ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.arrCrit = new Array();    
-    this.makeCriteria();
-
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/searchAppFromSimpleLead.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromSimpleLead.json";
+
+    if(environment.isCore){
+      this.inputPagingObj._url="./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+    }
 
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "RO.OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
       {
         name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
-
-    this.inputPagingObj.addCritInput = this.arrCrit;
-  }
-
-  makeCriteria(){
-    var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'LEAD_STAT';
-    critObj.value = 'RAPP';
-    this.arrCrit.push(critObj);
   }
 
   AddApp(ev){
