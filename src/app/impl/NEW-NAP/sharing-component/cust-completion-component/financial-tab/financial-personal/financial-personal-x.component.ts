@@ -13,6 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 @Component({
   selector: 'app-financial-personal-x',
   templateUrl: './financial-personal-x.component.html'
@@ -51,6 +52,8 @@ export class FinancialPersonalXComponent implements OnInit {
   ExpenseList: Array<{ Index: number, Amount: number }> = new Array<{ Index: number, Amount: number }>();
   TotalExpenseListAmt: number = 0;
   LobCode: string;
+  AppObj: AppObj = new AppObj();
+  IsDisburseToCust: boolean = false;
 
   FinancialForm = this.fb.group({
     AppCustPersonalFinDataId: [0],
@@ -271,6 +274,26 @@ export class FinancialPersonalXComponent implements OnInit {
       });
   }
 
+  async GetIsDisburseToCust() {
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      async (response: AppObj) => {
+        this.AppObj = response;
+        var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+        objIsDisburse.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+        objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+        objIsDisburse.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+        await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
+          (response) => {
+            if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
+              this.IsDisburseToCust = response["CompntValue"] == 'Y' ? true : false;
+            }
+          }
+        );
+      }
+    );
+  }
+
   async SaveForm() {
     if (this.AppCustAttrListForm.get('AttrList') != undefined) {
       this.SetAttrContent();
@@ -286,6 +309,14 @@ export class FinancialPersonalXComponent implements OnInit {
     if (!this.AppCustBankAccList.length && this.LobCode == "SLB") {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_BANK_ACCOUNT);
       return;
+    }
+
+    if (!this.AppCustBankAccList.length && (this.LobCode == "MPF" || this.LobCode == "FD")) {
+      await this.GetIsDisburseToCust();
+      if (this.IsDisburseToCust === true) {
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_BANK_ACCOUNT);
+        return;
+      }
     }
 
     // this.AppCustPersonalFinData = this.AppCustAttrListForm.value;
