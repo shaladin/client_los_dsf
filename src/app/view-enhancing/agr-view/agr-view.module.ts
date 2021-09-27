@@ -42,6 +42,7 @@ import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-a
 import { ViewInsuranceDataXComponent } from "app/impl/view-enhancing/agr-view/view-insurance-data/view-insurance-data-x.component";
 import { ViewInsuranceDataDetailXComponent } from "app/impl/view-enhancing/agr-view/view-insurance-data/view-insurance-data-detail-x/view-insurance-data-detail-x.component";
 import { AgrMainInfoXComponent } from "app/impl/view-enhancing/agr-main-info/agr-main-info-x.component";
+import { AgreementViewContainerXComponent } from "app/impl/view-enhancing/agr-view/agreement-view-container-x.component";
 
 @NgModule({
     imports: [
@@ -70,6 +71,7 @@ import { AgrMainInfoXComponent } from "app/impl/view-enhancing/agr-main-info/agr
     ],
     declarations: [
         AgreementViewContainerComponent,
+        AgreementViewContainerXComponent,
         ViewAssetCollateralComponent,
         ViewAppCollateralMultiComponent,
         ViewAppCollateralSingleComponent,

@@ -264,7 +264,7 @@ export class NavigationConstant {
   public static VIEW_APP = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP + "/" + PathConstantX.X; //'/View/AppView/X'
   public static BACK_VIEW_APP = NavigationConstant.VIEW_APP; //'/View/AppView/X'
   public static VIEW_APP_ASSET = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP_ASSET; //'/View/AppAsset'
-  public static VIEW_AGRMNT = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_AGRMNT; //"/View/AgrmntView"
+  public static VIEW_AGRMNT = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_AGRMNT_X; //"/View/AgrmntView/X"
   public static VIEW_CUST_EXPSR = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CUST_EXPSR; //"/View/CustExposureView"
   public static VIEW_LEAD = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_LEAD; //"/View/Lead"
   public static VIEW_MOU_CUST = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_MOU_CUST_X; //"/View/Mou/CustView/X"
