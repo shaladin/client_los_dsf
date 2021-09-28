@@ -187,5 +187,6 @@ export class ExceptionConstant {
     public static MANUFACTURING_YEAR_CAN_NOT_LESS_THAN = "Manufacturing Year can not less than ";
     public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
     
+    public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
 }
 
