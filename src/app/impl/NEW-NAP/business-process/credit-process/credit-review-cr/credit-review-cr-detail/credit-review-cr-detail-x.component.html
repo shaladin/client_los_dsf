@@ -1,5 +1,9 @@
 <div class="col-md-12 text-left">
   <div class="card">
+    <div class="card-header header-title">
+      <h4 class="card-title" translate>Credit Review</h4>
+    </div>
+    <br>
     <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
@@ -13,8 +17,8 @@
         </app-crd-rvw-third-party-checking-x>
         <app-crd-rvw-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
         </app-crd-rvw-app-info-x>
-        <app-crd-rvw-asset *ngIf="isShow" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
-        <app-crd-rvw-asset-acc *ngIf="isShow" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-asset-acc>
+        <app-crd-rvw-asset [hidden]="BizTemplateCode==bizCfna" *ngIf="isShow" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
+        <app-crd-rvw-asset-acc [hidden]="BizTemplateCode==bizCfna" *ngIf="isShow" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-asset-acc>
         <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-additional-coll>
         <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
