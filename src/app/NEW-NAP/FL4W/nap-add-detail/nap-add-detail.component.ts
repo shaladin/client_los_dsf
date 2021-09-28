@@ -20,6 +20,7 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -282,6 +283,16 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   UpdateAppStep(Step: string) {
+    // Trap, cari hantu main coverage ke hapus
+    if (Step == "LFI" || Step == "FIN" || Step == "TC") {
+      let reqObj: GenericObj = new GenericObj();
+      reqObj.Id = this.appId;
+      this.http.post(AdInsConstant.CheckListAppInsMainCvgByAppId, reqObj).subscribe(
+        () => {
+        }
+      )
+    }
+    
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       () => {
