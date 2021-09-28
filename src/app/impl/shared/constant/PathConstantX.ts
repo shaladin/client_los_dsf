@@ -172,6 +172,10 @@ export class PathConstantX {
   //region copy app cross bl
   public static COPY_CANCEL_APP_CROSS_BL_DETAIL_X = PathConstant.COPY_CANCEL_APP_CROSS_BL + "/" + PathConstantX.DETAIL_X;
   //endregion
+
+    //#region Nap-Sharing-Page
+    public static NAP_SIMPLE_LEAD_DETAIL_X = PathConstant.NAP_SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
+    //#endregion
 }
 
 

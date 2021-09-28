@@ -13,6 +13,7 @@ import { Nap1FromLeadDetailComponent } from './nap1-from-lead/nap1-from-lead-det
 import { NapFromSimpleLeadComponent } from './nap-from-simple-lead/nap-from-simple-lead.component';
 import { NapFromSimpleLeadDetailComponent } from './nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail.component';
 import { UclookupgenericComponent } from "@adins/uclookupgeneric";
+import { NapFromSimpleLeadDetailXComponent } from "app/impl/NEW-NAP/sharing-page/nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail-x.component";
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { UclookupgenericComponent } from "@adins/uclookupgeneric";
     NapFromSimpleLeadDetailComponent,
     Nap1FromLeadPagingComponent,
     Nap1FromLeadDetailComponent,
+    NapFromSimpleLeadDetailXComponent,
   ],
   providers: [
     NGXToastrService
