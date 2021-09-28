@@ -471,7 +471,7 @@ export class TrialCalculationXComponent implements OnInit {
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          TotalDpAmt: this.appFinDataObj.TotalDpAmt,
+          TotalDpAmt: this.TrialForm.getRawValue().DownPaymentAmt,
           VendorAtpmCode: this.appFinDataObj.VendorAtpmCode,
           BalloonValueAmt: this.appFinDataObj.BalloonValueAmt,
           ResidualValueAmt: this.appFinDataObj.ResidualValueAmt && this.appFinDataObj.ResidualValueAmt > 0 ? this.appFinDataObj.ResidualValueAmt : 0,
@@ -508,7 +508,7 @@ export class TrialCalculationXComponent implements OnInit {
   ChooseFirstInstType(ev) {
     if (ev.target.selectedIndex == 0) return;
     var idx = ev.target.selectedIndex - 1;
-    
+
     this.TrialForm.patchValue({
       MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][idx].Key,
       MrFirstInstTypeName: this.applicationDDLitems['FIRSTINSTTYPE'][idx].Value,
@@ -519,7 +519,7 @@ export class TrialCalculationXComponent implements OnInit {
   ChooseInstScheme(ev) {
     if (ev.target.selectedIndex == 0) return;
     var idx = ev.target.selectedIndex - 1;
-    
+
     this.TrialForm.patchValue({
       MrInstSchemeCode: this.applicationDDLitems['INST_SCHM'][idx].Key,
       MrInstSchemeValue: this.applicationDDLitems['INST_SCHM'][idx].Value,
