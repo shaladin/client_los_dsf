@@ -53,19 +53,19 @@ export class ChangeMouDetailDealerFinancingXComponent implements OnInit {
   IsAssetNew: boolean = true;
 
   MouDetailFinancingForm = this.fb.group({
-    TopDays: ["", [Validators.min(0)]],
-    InterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
+    TopDays: [0, [Validators.min(0)]],
+    InterestRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
     Notes: [""],
     CurrCode: ["", [Validators.required]],
     RowVersion: [""],
-    TopInterestRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
-    ExtendRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
-    MmForExtend: [""],
-    PpForExtendPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+    TopInterestRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
+    ExtendRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
+    MmForExtend: [0, [Validators.required, Validators.min(1)]],
+    PpForExtendPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
     SpareDayToPay: [""],
     AssetCondition: [""],
-    LcRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
-    MaximumExtendTimes: [""],
+    LcRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
+    MaximumExtendTimes: [0, [Validators.required, Validators.min(1)]], 
     ManufacturerCode: [""],
     ManufacturerCustNo: [""],
     DealerCode: [""],
@@ -245,7 +245,7 @@ export class ChangeMouDetailDealerFinancingXComponent implements OnInit {
     this.InputLookupLinkSupplGradingObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.isReadonly = false;
-    this.InputLookupLinkSupplGradingObj.isRequired = false;
+    this.InputLookupLinkSupplGradingObj.isRequired = true;
     this.InputLookupLinkSupplGradingObj.addCritInput = suppCrit;
 
     this.InputLookupLinkManufacturerObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";

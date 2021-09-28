@@ -333,7 +333,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     this.ddlMrWopObj.requestObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeWOP
     }
-    this.ddlMrWopObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlMrWopObj.ddlType = UcDropdownListConstant.DDL_TYPE_ONE;
     this.ddlMrWopObj.isSelectOutput = true;
   }
 
@@ -449,13 +449,13 @@ export class ApplicationDataFL4WXComponent implements OnInit {
           Tenor: this.resultResponse.Tenor,
           NumOfInst: this.resultResponse.NumOfInst,
           PayFreqCode: this.resultResponse.PayFreqCode == null ? '' : this.resultResponse.PayFreqCode,
-          MrFirstInstTypeCode: this.resultResponse.MrFirstInstTypeCode,
+          MrFirstInstTypeCode: this.resultResponse.MrFirstInstTypeCode == null ? '' : this.resultResponse.MrFirstInstTypeCode,
           NumOfAsset: this.resultResponse.NumOfAsset,
           MrLcCalcMethodCode: this.resultResponse.MrLcCalcMethodCode,
           LcInstRatePrml: this.resultResponse.LcInstRatePrml,
           LcInsRatePrml: this.resultResponse.LcInsRatePrml,
-          MrAppSourceCode: this.resultResponse.MrAppSourceCode,
-          MrWopCode: this.resultResponse.MrWopCode,
+          MrAppSourceCode: this.resultResponse.MrAppSourceCode == null ? '' : this.resultResponse.MrAppSourceCode,
+          MrWopCode: this.resultResponse.MrWopCode == null ? '' : this.resultResponse.MrWopCode,
           SrvyOrderNo: this.resultResponse.SrvyOrderNo,
           ApvDt: this.resultResponse.ApvDt,
           SalesHeadNo: this.resultResponse.SalesHeadNo,
@@ -467,7 +467,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
           CreditAnalystNo: this.resultResponse.CreditAnalystNo,
           CreditRiskNo: this.resultResponse.CreditRiskNo,
           DataEntryNo: this.resultResponse.DataEntryNo,
-          MrCustNotifyOptCode: this.resultResponse.MrCustNotifyOptCode,
+          MrCustNotifyOptCode: this.resultResponse.MrCustNotifyOptCode == null ? '' : this.resultResponse.MrCustNotifyOptCode,
           PreviousAppId: this.resultResponse.PreviousAppId,
           IsAppInitDone: this.resultResponse.IsAppInitDone,
           MrOrderInfoCode: this.resultResponse.MrOrderInfoCode,
@@ -477,7 +477,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
           RsvField3: this.resultResponse.RsvField3,
           RsvField4: this.resultResponse.RsvField4,
           RsvField5: this.resultResponse.RsvField5,
-          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
+          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode == null ? '' : this.resultResponse.MrInstSchemeCode,
           InterestType: this.resultResponse.InterestType,
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,

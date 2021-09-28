@@ -48,6 +48,16 @@
             "type": "text",
             "label": "Virtual Account",
             "property": "VirtualAccount"
+          },
+          {
+            "type": "text",
+            "label": "Cessie Last Step",
+            "property": "CessieLastStep"
+          },
+          {
+            "type": "text",
+            "label": "Cessie Curr Step",
+            "property": "CessieCurStep"
           }
         ],
         "querystring": {

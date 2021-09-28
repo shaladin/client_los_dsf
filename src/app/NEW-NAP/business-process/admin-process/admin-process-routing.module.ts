@@ -63,6 +63,9 @@ import { InsuranceOrderPagingXComponent } from 'app/impl/NEW-NAP/business-proces
 import { InsuranceOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component';
 import {InvoiceVerifDetailListOfInvoiceXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
 import { DocumentViewXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/document-printing/document-view/document-view-x.component';
+import { NewPurchaseOrderDetailXComponent } from 'app/impl/NEW-NAP/admin-process/new-purchase-order/new-purchase-order-detail-x/new-purchase-order-detail-x.component';
+import { DocSignerDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-detail/doc-signer-detail-x.component';
+import { DocSignerPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-paging/doc-signer-paging-x.component';
 
 
 const routes: Routes = [
@@ -252,10 +255,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.NAP_DOC_SIGNER_PAGING_X,
+        component: DocSignerPagingXComponent,
+        data: {
+          title: 'Document Signer Paging X'
+        }
+      },
+      {
         path: PathConstant.NAP_DOC_SIGNER_DETAIL,
         component: DocSignerDetailComponent,
         data: {
           title: 'Document Signer Detail'
+        }
+      },
+      {
+        path: PathConstantX.NAP_DOC_SIGNER_DETAIL_X,
+        component: DocSignerDetailXComponent,
+        data: {
+          title: 'Document Signer Detail X'
         }
       },
       {
@@ -487,6 +504,13 @@ const routes: Routes = [
         component: PurchaseOrderDetailXComponent,
         data: {
           title: 'Purchase Order Detail'
+        }
+      },
+      {
+        path: PathConstantX.NEW_PO_DETAIL,
+        component: NewPurchaseOrderDetailXComponent,
+        data: {
+          title: "Purchase Order Detail"
         }
       }
     ]

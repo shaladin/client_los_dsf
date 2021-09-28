@@ -45,7 +45,7 @@ export class NewLeadUpdateComponent implements OnInit {
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_SIMPLE_LEAD;
       this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_LEAD_UPD;
-      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
+      // this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];

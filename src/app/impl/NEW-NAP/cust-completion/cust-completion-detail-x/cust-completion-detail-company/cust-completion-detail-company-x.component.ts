@@ -4,9 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
@@ -50,6 +57,11 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
     "Other": "Please complete required data in tab \"Other Attribute\"",
   }
   ReturnHandlingHId: number = 0;
+  LobCode: string;
+  AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
+  AppObj: AppObj = new AppObj();
+  IsDisburseToCust: boolean = false;
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -156,8 +168,27 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
       this.ucViewMainProd.initiateForm();
     }    
   }
-  Save() {
-    this.http.post(URLConstant.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
+
+  async Save() {
+
+    await this.GetAppCustBankAcc();
+
+    if (!this.AppCustBankAccList.length && this.LobCode == "SLB") {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_BANK_ACCOUNT);
+      this.EnterTab(CommonConstantX.FINANCIAL_TAB);
+      return;
+    }
+
+    if (!this.AppCustBankAccList.length && (this.LobCode == "MPF" || this.LobCode == "FD")) {
+      await this.GetIsDisburseToCust();
+      if (this.IsDisburseToCust === true) {
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_BANK_ACCOUNT);
+        this.EnterTab(CommonConstantX.FINANCIAL_TAB);
+        return;
+      }
+    }
+
+    this.http.post(URLConstantX.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
@@ -177,5 +208,38 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  async GetAppCustBankAcc() {
+    await this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { Id: this.AppCustId }).toPromise().then(
+      (response) => {
+        this.AppCustBankAccList = response["AppCustBankAccList"];
+      }
+    );
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response) => {
+        this.LobCode = response.LobCode;
+      }
+    );
+  }
+
+  async GetIsDisburseToCust() {
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      async (response: AppObj) => {
+        this.AppObj = response;
+        var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+        objIsDisburse.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+        objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+        objIsDisburse.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+        await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
+          (response) => {
+            if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
+              this.IsDisburseToCust = response["CompntValue"] == 'Y' ? true : false;
+            }
+          }
+        );
+      }
+    );
   }
 }

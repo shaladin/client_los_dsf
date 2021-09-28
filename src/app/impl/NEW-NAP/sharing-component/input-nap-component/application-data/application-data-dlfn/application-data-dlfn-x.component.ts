@@ -796,9 +796,9 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng['MouCustDlrFncngId'];
 
-        if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
+        // if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
           this.SaveAppOtherInfo();
-        }
+        // }
 
         let appXobj = {};
         if (this.isShowAppCustBankAcc == false) {
@@ -847,7 +847,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
 
 
         if (this.mode == 'add') {
-          this.http.post(URLConstant.SaveApplicationDataDF, this.salesAppInfoObj).subscribe(
+          this.http.post(URLConstantX.SaveApplicationDataDF, this.salesAppInfoObj).subscribe(
             (response) => {
               if (response['StatusCode'] == 200) {
                 this.toastr.successMessage(response['message']);
