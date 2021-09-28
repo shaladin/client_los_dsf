@@ -1,0 +1,154 @@
+<form class="form form-horizontal" [formGroup]="DeliveryOrderForm" #enjiForm="ngForm" novalidate
+  (ngSubmit)="enjiForm.form.valid && Save()">
+  <div class="modal-header">
+    <h4 class="modal-title" translate>DELIVERY ORDER DETAIL</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'DOAssetListId'" [title]="'Asset List'" [panel]="'DOAssetListSection'"></lib-ucSubsection>
+        <div id="DOAssetListSection">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th style="text-align: left;">
+                  <span class="thead-header" name='seqNo' translate>SEQ NO.</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='assetName' translate>FULL ASSET NAME</span>
+                </th>
+                <th style="text-align: right;">
+                  <span class="thead-header" name='assetPrice' translate>ASSET PRICE</span>
+                </th>
+                <th style="text-align: right;">
+                  <span class="thead-header" name='downPayment' translate>DOWN PAYMENT</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='serialNo1' translate>SERIAL NO. 1</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='serialNo2' translate>SERIAL NO. 2</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='serialNo3' translate>SERIAL NO. 3</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='serialNo4' translate>SERIAL NO. 4</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='serialNo5' translate>SERIAL NO. 5</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='manufacturingYear' translate>MANUFACTURING YEAR</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='tempLetterNo' translate>TEMP LETTER NO</span>
+                </th>
+                <th style="text-align: center;">
+                  <span class="thead-header" name='action' translate>ACTION</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of SelectedDOAssetList; index as i">
+                <td style="text-align: left;">
+                  {{item.AssetSeqNo}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.FullAssetName}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.AssetPriceAmt | currency : "USD" : ""}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.DownPaymentAmt | currency : "USD" : ""}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.SerialNo1}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.SerialNo2}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.SerialNo3}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.SerialNo4}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.SerialNo5}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.ManufacturingYear}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.TempLetterNo}}
+                </td>
+                <td style="text-align: left;">
+                  <a (click)="AssetTempLetterHandler(item.AppAssetId)"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'RecipientInfoId'" [title]="'Recipient Information'" [panel]="'RecipientInfoSection'"></lib-ucSubsection>
+        <div class="form-body" id="RecipientInfoSection">
+          <div class="form-group row" style="margin-left: 0; margin-right: 0;">
+            <div class="col-md-6 row">
+              <label class="col-md-3 adInsLabel adins-required-label" for="DeliveryDt" translate>Delivery Date</label>
+              <div class="col-md-9">
+                <input type="date" class="form-control adInsInput" formControlName="DeliveryDt" [min]="PODt | date: 'yyyy-MM-dd'" onkeypress="return false;"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.DeliveryDt.invalid }" />
+                <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="col-md-6 row" style="margin-left: 15px;">
+              <label class="col-md-3 adInsLabel adins-required-label" for="RecipientName" translate>Recipient Name</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control adInsInput" formControlName="RecipientName" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.RecipientName.invalid }" />
+                <lib-uc-show-errors [control]="DeliveryOrderForm.controls.RecipientName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-left: 0; margin-right: 0;">
+            <div class="col-md-6 row">
+              <label class="col-md-3 adInsLabel adins-required-label" for="MrCustRelationshipCode" translate>Customer Relationship</label>
+              <div class="col-md-9">
+                <select type="text" class="form-control adInsInput" formControlName="MrCustRelationshipCode" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.MrCustRelationshipCode.invalid }">
+                  <option *ngFor="let item of relationshipList" [value]="item.Key">{{item.Value}}</option>
+                </select>
+                <lib-uc-show-errors [control]="DeliveryOrderForm.controls.MrCustRelationshipCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="col-md-6 row" style="margin-left: 15px;">
+              <label class="col-md-3 adInsLabel adins-required-label" for="DeliveryAddr" translate>Recipient Address</label>
+              <div class="col-md-9">
+                <textarea class="form-control adInsInput" formControlName="DeliveryAddr"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.DeliveryAddr.invalid }" ></textarea> 
+                <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryAddr" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer"> 
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')" translate>
+      <i class="ft-x"></i> Cancel
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary" translate>
+      <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
+</form>
+
