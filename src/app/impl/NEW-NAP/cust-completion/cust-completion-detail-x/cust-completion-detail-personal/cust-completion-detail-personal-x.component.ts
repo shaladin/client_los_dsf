@@ -12,6 +12,11 @@ import Stepper from 'bs-stepper';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-cust-completion-detail-personal-x',
@@ -53,6 +58,11 @@ export class CustCompletionDetailPersonalXComponent implements OnInit {
     "Other": "Please complete required data in tab \"Other Attribute\"",
   }
   ReturnHandlingHId: number = 0;
+  LobCode: string;
+  AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
+  AppObj: AppObj = new AppObj();
+  IsDisburseToCust: boolean = false;
+
   constructor(
     private http: HttpClient,
     private location: Location,
@@ -163,8 +173,27 @@ export class CustCompletionDetailPersonalXComponent implements OnInit {
       this.ucViewMainProd.initiateForm();
     }
   }
+
   completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
-  Save() {
+  async Save() {
+
+    await this.GetAppCustBankAcc();
+
+    if (!this.AppCustBankAccList.length && this.LobCode == "SLB") {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_BANK_ACCOUNT);
+      this.EnterTab(CommonConstantX.FINANCIAL_TAB);
+      return;
+    }
+
+    if (!this.AppCustBankAccList.length && (this.LobCode == "MPF" || this.LobCode == "FD")) {
+      await this.GetIsDisburseToCust();
+      if (this.IsDisburseToCust === true) {
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_BANK_ACCOUNT);
+        this.EnterTab(CommonConstantX.FINANCIAL_TAB);
+        return;
+      }
+    }
+
     this.http.post(URLConstantX.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
@@ -184,5 +213,38 @@ export class CustCompletionDetailPersonalXComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  async GetAppCustBankAcc() {
+    await this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { Id: this.AppCustId }).toPromise().then(
+      (response) => {
+        this.AppCustBankAccList = response["AppCustBankAccList"];
+      }
+    );
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response) => {
+        this.LobCode = response.LobCode;
+      }
+    );
+  }
+
+  async GetIsDisburseToCust() {
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      async (response: AppObj) => {
+        this.AppObj = response;
+        var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+        objIsDisburse.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+        objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+        objIsDisburse.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+        await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
+          (response) => {
+            if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
+              this.IsDisburseToCust = response["CompntValue"] == 'Y' ? true : false;
+            }
+          }
+        );
+      }
+    );
   }
 }

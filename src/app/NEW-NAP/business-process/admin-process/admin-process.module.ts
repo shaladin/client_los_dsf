@@ -86,6 +86,10 @@ import { DocumentViewXComponent } from "app/impl/NEW-NAP/business-process/admin-
 import { AgrViewModule } from "app/view-enhancing/agr-view/agr-view.module";
 import { NewPurchaseOrderDetailXComponent } from "app/impl/NEW-NAP/admin-process/new-purchase-order/new-purchase-order-detail-x/new-purchase-order-detail-x.component";
 import { PoEntryXComponent } from "app/impl/NEW-NAP/admin-process/new-purchase-order/new-purchase-order-detail-x/po-entry-x/po-entry-x.component";
+import { DocSignerDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-detail/doc-signer-detail-x.component";
+import { DocSignerPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-paging/doc-signer-paging-x.component";
+import { CreateDoMultiAssetXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/create-do-multi-asset-x/create-do-multi-asset-x.component";
+import { DoAssetDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/do-asset-detail-x/do-asset-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -140,6 +144,8 @@ export const customCurrencyMaskConfig = {
     OfferingValidityCheckingApprovalDetailComponent,
     DocSignerDetailComponent,
     DocSignerPagingComponent,
+    DocSignerDetailXComponent,
+    DocSignerPagingXComponent,
     InvoiceDetailComponent,
     DocumentPagingComponent,
     DocumentViewComponent,
@@ -184,7 +190,9 @@ export const customCurrencyMaskConfig = {
     AgrmntActivationDetailXComponent,
     DocumentViewXComponent,
     NewPurchaseOrderDetailXComponent,
-    PoEntryXComponent
+    PoEntryXComponent,
+    CreateDoMultiAssetXComponent,
+    DoAssetDetailXComponent
   ],
   providers: [
     NGXToastrService,
@@ -194,7 +202,9 @@ export const customCurrencyMaskConfig = {
     CreateDoMultiAssetComponent,
     DoAssetDetailComponent,
     PoEntryComponent,
-    PoEntryXComponent
+    PoEntryXComponent,
+    CreateDoMultiAssetXComponent,
+    DoAssetDetailXComponent
   ]
 })
 export class AdminProcessSharingModule { }

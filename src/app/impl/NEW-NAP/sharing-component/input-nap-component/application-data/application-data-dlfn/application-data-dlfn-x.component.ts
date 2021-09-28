@@ -796,9 +796,9 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng['MouCustDlrFncngId'];
 
-        if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
+        // if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
           this.SaveAppOtherInfo();
-        }
+        // }
 
         let appXobj = {};
         if (this.isShowAppCustBankAcc == false) {

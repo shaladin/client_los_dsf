@@ -40,7 +40,7 @@ export class NavigationConstant {
 
   //#region CustCompletion
   public static NAP_CUST_COMPL_PAGING = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.PAGING; //"Nap/CustCompletion/Paging"
-  public static NAP_CUST_COMPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.DETAIL; //"Nap/CustCompletion/Detail"
+  public static NAP_CUST_COMPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstantX.DETAIL_X; //"Nap/CustCompletion/DetailX"
   public static NAP_CUST_COMPL_OPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.OPL_DETAIL_LOWERCASE; //"Nap/CustCompletion/opl/detail"
   //#endregion
 
@@ -58,7 +58,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPRVL_RES_EXT_DETAIL; //"/Nap/AddProcess/CreditApprovalResultExt/Detail"
   public static NAP_ADD_PRCS_COPY_CANCEL_APP = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.COPY_CANCEL_APP; //'/Nap/AddProcess/CopyCancelledApplicationX'
   public static NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.COPY_CANCEL_APP_CROSS_BL; //"/Nap/AddProcess/CopyCancelledApplicationCrossBl"
-  public static NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.COPY_CANCEL_APP_CROSS_BL_DETAIL; //"/Nap/AddProcess/CopyCancelledApplicationCrossBl/Detail"
+  public static NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.COPY_CANCEL_APP_CROSS_BL_DETAIL_X; //"/Nap/AddProcess/CopyCancelledApplicationCrossBl/DetailX"
   public static NAP_ADD_PRCS_OUTSTANDING_TC_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.OUTSTANDING_TC_PAGING; //"/Nap/AddProcess/OutstandingTC/Paging"
   public static NAP_ADD_PRCS_OUTSTANDING_TC_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.OUTSTANDING_TC_DETAIL; //"/Nap/AddProcess/OutstandingTC/Detail"
   public static NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_ADD_TC_PAGING; //'/Nap/AddProcess/ReturnHandlingAddTc/Paging'
@@ -114,6 +114,8 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/DocumentSigner/Detail'
   public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_CFNA_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/NewDocumentSigner/Paging'  => '/Nap/AdminProcess/CfnaDocumentSigner/Paging'
   public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_CFNA_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/NewDocumentSigner/Detail'  => '/Nap/AdminProcess/CfnaDocumentSigner/Detail'
+  public static NAP_ADM_PRCS_NAP_FCTR_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NAP_DOC_SIGNER_PAGING_X; //'/Nap/AdminProcess/DocumentSigner/PagingX'
+  public static NAP_ADM_PRCS_NAP_FCTR_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NAP_DOC_SIGNER_DETAIL_X; //'/Nap/AdminProcess/DocumentSigner/DetailX'
   public static NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_PRINT_PAGING; //'/Nap/AdminProcess/DocPrint/Paging/'
   public static NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NAP_DOC_PRINT_VIEW_X; //'/Nap/AdminProcess/DocPrint/ViewX/'
   public static NAP_ADM_PRCS_INVOICE_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.INVOICE_DETAIL; //"/Nap/AdminProcess/Invoice/Detail"
@@ -133,7 +135,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_PO_PO_EXT_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PO_EXT_DETAIL_X; //"/Nap/AdminProcess/PurchaseOrder/PO/Detail"
   public static NAP_ADM_PRCS_PO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PAGING_X; //"/Nap/AdminProcess/PurchaseOrder/Paging"
   public static NAP_ADM_PRCS_NEW_PO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NEW_PO_PAGING; //'/Nap/AdminProcess/NewPurchaseOrder/Paging'
-  public static NAP_ADM_PRCS_NEW_PO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NEW_PO_DETAIL; //'/Nap/AdminProcess/NewPurchaseOrder/Detail'
+  public static NAP_ADM_PRCS_NEW_PO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.NEW_PO_DETAIL; //'/Nap/AdminProcess/NewPurchaseOrder/DetailX'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_REQ_APPRV = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_REQ_APPRV; //'/Nap/AdminProcess/DocChecklist/RequestApproval'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_PAGING; //'/Nap/AdminProcess/DocChecklist/Paging'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_DETAIL; //'/Nap/AdminProcess/DocChecklist/Detail'
@@ -264,7 +266,7 @@ export class NavigationConstant {
   public static VIEW_APP = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP + "/" + PathConstantX.X; //'/View/AppView/X'
   public static BACK_VIEW_APP = NavigationConstant.VIEW_APP; //'/View/AppView/X'
   public static VIEW_APP_ASSET = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP_ASSET; //'/View/AppAsset'
-  public static VIEW_AGRMNT = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_AGRMNT; //"/View/AgrmntView"
+  public static VIEW_AGRMNT = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_AGRMNT_X; //"/View/AgrmntView/X"
   public static VIEW_CUST_EXPSR = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CUST_EXPSR; //"/View/CustExposureView"
   public static VIEW_LEAD = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_LEAD; //"/View/Lead"
   public static VIEW_MOU_CUST = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_MOU_CUST_X; //"/View/Mou/CustView/X"
