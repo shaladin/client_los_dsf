@@ -27,7 +27,7 @@
                 <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
                 <div class="col-md-4">
                   <input type="date" id="EffectiveDt" class="form-control adInsInput name"
-                    formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                    formControlName="EffectiveDt" min="{{minDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.EffectiveDt"
                     >
                   </lib-uc-show-errors>

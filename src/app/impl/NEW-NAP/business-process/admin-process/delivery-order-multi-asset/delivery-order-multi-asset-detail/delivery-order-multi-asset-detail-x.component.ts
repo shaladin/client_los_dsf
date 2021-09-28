@@ -68,7 +68,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   UserAccess: CurrentUserContext;
-  businessDt: Date = new Date();
+  minDt: Date = new Date();
   checkPOReady: boolean = false;
   PODt: Date = new Date();
   isHasPO: boolean = false;
@@ -113,7 +113,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       this.claimTask();
     }
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.businessDt = this.UserAccess.BusinessDt;
+    this.minDt = this.UserAccess.BusinessDt;
     this.DOAssetForm.patchValue({
       GoLiveEstimated: formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'),
     });
@@ -145,7 +145,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         this.licensePlateAttr = response[0]["LicensePlateAttr"];
         this.doList = response[1]["DeliveryOrderHObjs"];
         var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
-
+        let tempDt = this.UserAccess.BusinessDt;
         for (const item of this.doAssetList) {
           var formGroup = this.fb.group({
             AppAssetId: [item.AppAssetId],
@@ -166,9 +166,24 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
             TempLetterNo: [item.TempLetterNo],
             IsSelected: false
           });
+          console.log("AAAAAAAAAA");
+          if(item.DeliveryDt != null){
+            let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
+            if(new Date(tempDt) < devDt){
+              this.minDt = devDt;
+              if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+                this.DOAssetForm.patchValue({
+                  EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
+                });
+              }
+
+            }
+          }
+          else{
+            this.minDt = tempDt;
+          }
           formArray.push(formGroup);
         }
-
         this.isFinal = response[2]["IsFinal"];
       }
     );
@@ -266,7 +281,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
             while (formArray.length !== 0) {
               formArray.removeAt(0);
             }
-
+            let tempDt = this.UserAccess.BusinessDt;
             for (const item of this.doAssetList) {
               var formGroup = this.fb.group({
                 AppAssetId: [item.AppAssetId],
@@ -286,9 +301,23 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
                 ManufacturingYear: [item.ManufacturingYear],
                 IsSelected: false
               });
+              console.log("AAAAAAAAAA");
+              if(item.DeliveryDt != null){
+                let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
+                if(new Date(tempDt) < devDt){
+                  this.minDt = devDt;
+                  if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+                    this.DOAssetForm.patchValue({
+                      EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
+                    });
+                  }
+                }
+              }
+              else{
+                this.minDt = tempDt;
+              }
               formArray.push(formGroup);
             }
-
             this.isFinal = response[2]["IsFinal"];
           }
         );
@@ -353,7 +382,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           while (formArray.length !== 0) {
             formArray.removeAt(0);
           }
-
+          let tempDt = this.UserAccess.BusinessDt;
           for (const item of this.doAssetList) {
             var formGroup = this.fb.group({
               AppAssetId: [item.AppAssetId],
@@ -374,9 +403,23 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
               TempLetterNo: [item.TempLetterNo],
               IsSelected: false
             });
+            console.log("AAAAAAAAAA");
+            if(item.DeliveryDt != null){
+              let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
+              if(new Date(tempDt) < devDt){
+                this.minDt = devDt;
+                if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+                  this.DOAssetForm.patchValue({
+                    EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
+                  });
+                }
+              }
+            }
+            else{
+              this.minDt = tempDt;
+            }
             formArray.push(formGroup);
           }
-
           this.isFinal = response[3]["IsFinal"];
 
           this.spinner.hide();
