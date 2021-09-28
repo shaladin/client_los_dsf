@@ -219,7 +219,7 @@ export class DocSignerDetailDsfComponent implements OnInit {
 
   setLookupObj() {
     this.inputLookupBranchEmpObj.urlJson = "./assets/uclookup/lookupBranchEmp.json";
-    this.inputLookupBranchEmpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupBranchEmpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupBranchEmpObj.pagingJson = "./assets/uclookup/lookupBranchEmp.json";
     this.inputLookupBranchEmpObj.genericJson = "./assets/uclookup/lookupBranchEmp.json";
     this.inputLookupBranchEmpObj.addCritInput = new Array();
@@ -260,13 +260,13 @@ export class DocSignerDetailDsfComponent implements OnInit {
     this.inputLookupBranchEmpObj.addCritInput.push(crit2Obj);
 
     this.inputLookupOfficeEmp1Obj.urlJson = "./assets/dsf/uclookup/lookupOfficeEmpDsf.json";
-    this.inputLookupOfficeEmp1Obj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupOfficeEmp1Obj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupOfficeEmp1Obj.pagingJson = "./assets/dsf/uclookup/lookupOfficeEmpDsf.json";
     this.inputLookupOfficeEmp1Obj.genericJson = "./assets/dsf/uclookup/lookupOfficeEmpDsf.json";
     this.inputLookupOfficeEmp1Obj.addCritInput = new Array();
 
     this.inputLookupOfficeEmp2Obj.urlJson = "./assets/dsf/uclookup/lookupOfficeEmpDsf.json";
-    this.inputLookupOfficeEmp2Obj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupOfficeEmp2Obj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupOfficeEmp2Obj.pagingJson = "./assets/dsf/uclookup/lookupOfficeEmpDsf.json";
     this.inputLookupOfficeEmp2Obj.genericJson = "./assets/dsf/uclookup/lookupOfficeEmpDsf.json";
     this.inputLookupOfficeEmp2Obj.isRequired = false;
@@ -312,7 +312,7 @@ export class DocSignerDetailDsfComponent implements OnInit {
         // }
 
     this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-    this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl;
+    this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
@@ -452,18 +452,16 @@ export class DocSignerDetailDsfComponent implements OnInit {
       this.agrmntSignerObj.AppCustSpouseId = this.ResponseAppCustDataObj.AppCustSpouseId;
     }
 
+    let urlPost = environment.isCore ? URLConstant.SubmitAgrmntSignerDataV2 : URLConstant.SubmitAgrmntSignerData;
+
     if (this.mode == "edit") {
-      this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
-        });
-    } else {
-      this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
-        });
+      urlPost = environment.isCore ? URLConstant.EditAgrmntSignerDataV2 : URLConstant.EditAgrmntSignerData;
     }
+
+    this.http.post(urlPost, this.agrmntSignerObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
+      });
   }
 }
