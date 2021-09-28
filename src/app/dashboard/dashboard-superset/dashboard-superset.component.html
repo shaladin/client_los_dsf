@@ -1,14 +1,3 @@
 <div *ngIf="(isCMO || isCMH || isBM || isAM || isBOD) && isReady" class="card" style="background-color: #FFFFFF; width: auto; height: auto; margin-top: 10px; margin-bottom: 10px;">
-  <iframe [src] = "url | safe" style="width: auto; height: 570px;" > </iframe>
+  <iframe [src] = "url | safe" style="width: auto; height: 570px; border:none" > </iframe>
 </div>
-
-    <!-- <script>
-        let myIframe = document.getElementById("myFrame");
-        let endpoint = "http://linuxdev4:8091/";
-        let user_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MzIyOTg0OTEsIm5iZiI6MTYzMjI5ODQ5MSwianRpIjoiYWFmYzgyYmUtOTg2OS00ZjkyLWIwZmMtMzI3MGYxNGQ2ZmZjIiwiZXhwIjoxNjMyMjk5MzkxLCJpZGVudGl0eSI6MiwiZnJlc2giOnRydWUsInR5cGUiOiJhY2Nlc3MifQ.TQKrJ4iWg8ghj749ra5reFhEtmZqP5e8t4C00KOK06o";
-        let dashboard = "&dbrdid=25";
-        let parameter = "/?usr=User1+offcode=0002"
-        let dashboardURL = endpoint+"login/?token="+user_token+dashboard+parameter;
-        console.log(dashboardURL);
-        myIframe.src = dashboardURL;
-    </script> -->
