@@ -46,6 +46,12 @@
         {
             "type": "label",
             "position": "center",
+            "label": "Disburse Amount",
+            "name": "DisbAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
             "label": "Top Days",
             "name": "TopDays"
         },
@@ -157,6 +163,11 @@
             "type": "decimal",
             "position": "center",
             "property": "PurchaseAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "DisbAmt"
         },
         {
             "type": "text",
