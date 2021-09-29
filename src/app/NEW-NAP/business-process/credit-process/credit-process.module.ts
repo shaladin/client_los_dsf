@@ -71,7 +71,6 @@ import { SurveyPagingXComponent } from "app/impl/NEW-NAP/business-process/credit
 import { SurveySubjectXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component";
 import { SurveySubjectVerifXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component";
 import { SurveySubjectViewXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component";
-import { CustHistoryComponent } from "app/NEW-NAP/sharing-component/process-component/cust-history/cust-history.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -146,7 +145,6 @@ export const customCurrencyMaskConfig = {
     CreditApprovalCfnaDetailComponent,
     TabApplicationDataComponent,
     ViewApplicationDataMultiComponent,
-    CustHistoryComponent,
     CreditReviewPagingDsfComponent,
     CreditReviewCfnaPagingDsfComponent,
     CreditReviewDetailDsfComponent,

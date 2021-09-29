@@ -41,9 +41,24 @@
             "value": "",
             "label": "Product Offering Name",
             "placeholder": "Placeholder"
-        }
+        },
+        {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "claimById",
+            "value": "",
+            "label": "Claim By",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+          }
     ],
     "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Claim By",
+            "name": "Assignee"
+        },
         {
             "type": "sort",
             "position": "left",
@@ -82,6 +97,11 @@
         "value": "false"
     },
     "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
+        },
         {
             "type": "text",
             "position": "left",
