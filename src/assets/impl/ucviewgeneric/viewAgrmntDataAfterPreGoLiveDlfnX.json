@@ -45,7 +45,7 @@
             "property": "PreGoLiveNotes"
           },
           {
-            "type": "text",
+            "type": "date",
             "label": "End Date For Golive",
             "property": "EndDateGoLive"
           }
