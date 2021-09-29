@@ -7,6 +7,8 @@ import { PathConstant } from "app/shared/constant/PathConstant";
 import { PathConstantDsf } from "app/shared/constant/PathConstantDsf";
 import { CustMainDataAddDsfComponent } from "../DSF/main-data-dsf/cust-main-data-dsf/cust-main-data-add-dsf/cust-main-data-add-dsf.component";
 import { CustMainDataPagingDsfComponent } from "../DSF/main-data-dsf/cust-main-data-dsf/cust-main-data-paging-dsf/cust-main-data-paging-dsf.component";
+import { CustMainDataAddXDsfComponent } from "../DSF/main-data-dsf/cust-main-data-x-dsf/cust-main-data-add-x-dsf/cust-main-data-add-x-dsf.component";
+import { CustMainDataPagingXDsfComponent } from "../DSF/main-data-dsf/cust-main-data-x-dsf/cust-main-data-paging-x-dsf/cust-main-data-paging-x-dsf.component";
 import { NapDetailPagingDsfComponent } from "../DSF/main-data-dsf/nap-detail-dsf/nap-detail-paging-dsf/nap-detail-paging-dsf.component";
 import { CustMainDataAddComponent } from "./cust-main-data/cust-main-data-add/cust-main-data-add.component";
 import { CustMainDataPagingComponent } from "./cust-main-data/cust-main-data-paging/cust-main-data-paging.component";
@@ -21,6 +23,13 @@ const routes: Routes = [
         component: CustMainDataPagingXComponent,
         data: {
           title: 'Cust Main Data Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.NAP1_PAGING_X_DSF,
+        component: CustMainDataPagingXDsfComponent,
+        data: {
+          title: 'Cust Main Data Paging Dsf'
         }
       },
       {
@@ -63,6 +72,13 @@ const routes: Routes = [
         component: CustMainDataAddXComponent,
         data: {
           title: 'Add Cust Main Data'
+        }
+      },
+      {
+        path: PathConstantDsf.NAP1_ADD_X_DSF,
+        component: CustMainDataAddXDsfComponent,
+        data: {
+          title: 'Add Cust Main Data Dsf'
         }
       },
     ]

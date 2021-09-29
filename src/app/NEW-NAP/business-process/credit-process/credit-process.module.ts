@@ -71,7 +71,10 @@ import { SurveyPagingXComponent } from "app/impl/NEW-NAP/business-process/credit
 import { SurveySubjectXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component";
 import { SurveySubjectVerifXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component";
 import { SurveySubjectViewXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component";
-import { CustHistoryComponent } from "app/NEW-NAP/sharing-component/process-component/cust-history/cust-history.component";
+// import { CustHistoryComponent } from "app/NEW-NAP/sharing-component/process-component/cust-history/cust-history.component";
+import { CreditReviewPagingXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-x-dsf/credit-review-paging-x-dsf/credit-review-paging-x-dsf.component";
+import { CreditReviewDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-x-dsf/credit-review-detail-x-dsf/credit-review-detail-x-dsf.component";
+import { CreditApprovalDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-x-dsf/credit-approval-detail-x-dsf/credit-approval-detail-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -146,7 +149,7 @@ export const customCurrencyMaskConfig = {
     CreditApprovalCfnaDetailComponent,
     TabApplicationDataComponent,
     ViewApplicationDataMultiComponent,
-    CustHistoryComponent,
+    // CustHistoryComponent,
     CreditReviewPagingDsfComponent,
     CreditReviewCfnaPagingDsfComponent,
     CreditReviewDetailDsfComponent,
@@ -166,7 +169,10 @@ export const customCurrencyMaskConfig = {
     SurveyPagingXComponent,
     SurveySubjectXComponent,
     SurveySubjectVerifXComponent,
-    SurveySubjectViewXComponent
+    SurveySubjectViewXComponent,
+    CreditReviewDetailXDsfComponent,
+    CreditReviewPagingXDsfComponent,
+    CreditApprovalDetailXDsfComponent
   ],
   providers: [
     NGXToastrService

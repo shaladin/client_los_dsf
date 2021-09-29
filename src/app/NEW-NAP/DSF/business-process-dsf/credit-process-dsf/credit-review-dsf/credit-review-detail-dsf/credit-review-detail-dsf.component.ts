@@ -42,7 +42,7 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     }
   }
   appId: number = 0;
-  wfTaskListId: number = 0;
+  wfTaskListId: any;
   isReturnOn: boolean = false;
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   Arr: FormArray;
@@ -101,7 +101,7 @@ export class CreditReviewDetailDsfComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.ClaimTask();
     await this.GetAppNo();
     await this.GetListDeviation();
     await this.BindDDLRecommendation();
@@ -193,7 +193,7 @@ export class CreditReviewDetailDsfComponent implements OnInit {
 
   //#region DDL Data
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
-  readonly DDLRecomendation: string = "RECOMENDED";
+  readonly DDLRecomendation: string = CommonConstant.RefReasonTypeCodeCrdReview;
   async BindDDLRecommendation() {
     let Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
@@ -202,9 +202,9 @@ export class CreditReviewDetailDsfComponent implements OnInit {
       });
   }
 
-  readonly DDLReason: string = "REASON";
+  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
   async BindDDLReasonReturn() {
-    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
@@ -358,7 +358,8 @@ export class CreditReviewDetailDsfComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: this.RFAInfo
     };
-    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+    let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
+    this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
@@ -370,11 +371,13 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     let apiObj = {
       WfTaskListId: this.wfTaskListId,
       Notes: temp.Notes,
+      Reason: temp.Reason,
       RowVersion: "",
       AppId: this.appId
     }
     console.log(apiObj);
-    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+    let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
+    this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
@@ -383,14 +386,16 @@ export class CreditReviewDetailDsfComponent implements OnInit {
   ReCaptureCreditReviewData() {
     let workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
+    let CrdRvwDataReCaptureUrl = environment.isCore ? URLConstant.CrdRvwDataReCaptureV2 : URLConstant.CrdRvwDataReCapture;
+    this.http.post(CrdRvwDataReCaptureUrl, workflowApiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
   ReCaptureDataR2() {
-    this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
+    let ReCaptureDataR2Url = environment.isCore ? URLConstant.ReCaptureDataR2V2 : URLConstant.ReCaptureDataR2;
+    this.http.post(ReCaptureDataR2Url, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
@@ -412,5 +417,14 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     return AppCrdRvwDObjs;
   }
   //#endregion
-
+  ClaimTask(){
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
+  }
 }

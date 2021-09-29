@@ -18,6 +18,8 @@ import { NapDetailFormDsfComponent } from "../DSF/CF4W-dsf/nap-detail-form-dsf/n
 import { NapCustMainDataDsfComponent } from "../DSF/CF4W-dsf/nap-cust-main-data-dsf/nap-cust-main-data-dsf.component";
 import { NapDetailFormXComponent } from "app/impl/NEW-NAP/CF4W/nap-detail-form/nap-detail-form-x.component";
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/CF4W/nap-cust-main-data/nap-cust-main-data-x.component";
+import { NapCustMainDataXDsfComponent } from "../DSF/CF4W-dsf/nap-cust-main-data-x-dsf/nap-cust-main-data-x-dsf.component";
+import { NapDetailFormXDsfComponent } from "../DSF/CF4W-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component";
 
 @NgModule({
   imports: [
@@ -41,6 +43,8 @@ import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/CF4W/nap-cust-main-d
     NapDetailFormDsfComponent,
     NapDetailFormXComponent,
     NapCustMainDataXComponent,
+    NapCustMainDataXDsfComponent,
+    NapDetailFormXDsfComponent
   ],
   providers: [
     NGXToastrService

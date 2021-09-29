@@ -1,9 +1,14 @@
+import { PathConstantX } from "app/impl/shared/constant/PathConstantX";
 import { PathConstant } from "./PathConstant";
 
 export class PathConstantDsf {
     public static NAP1 = "NAP1Dsf";
+    public static ADD_X = "AddXDsf";
+    public static PAGING_X = "PagingXDsf";
     public static NAP1_PAGING = PathConstantDsf.NAP1 + "/" + PathConstant.PAGING;
     public static NAP1_ADD = PathConstantDsf.NAP1 + "/" + PathConstant.ADD;
+    public static NAP1_ADD_X_DSF = PathConstant.NAP1 + '/' + PathConstantDsf.ADD_X;
+    public static NAP1_PAGING_X_DSF = PathConstant.NAP1 + '/' + PathConstantDsf.PAGING_X;
 
     public static NAP2 = "NAP2Dsf";
     public static NAP2_PAGING = PathConstantDsf.NAP2 + "/" + PathConstant.PAGING;
@@ -109,4 +114,12 @@ export class PathConstantDsf {
     public static NAP_SIMPLE_LEAD = "NapFromSimpleLeadDsf";
     public static NAP_SIMPLE_LEAD_PAGING = PathConstantDsf.NAP_SIMPLE_LEAD + "/" + PathConstant.PAGING;
     public static NAP_SIMPLE_LEAD_DETAIL = PathConstantDsf.NAP_SIMPLE_LEAD + "/" + PathConstant.DETAIL;
+
+    public static NAP1_X = 'NAP1XDsf';
+    public static NAP2_X = 'NAP2XDsf';
+    public static CRD_REVIEW_X = "CreditReviewXDsf";
+    public static DETAIL_X = 'DetailXDsf';
+    public static CRD_REVIEW_PAGING_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstant.PAGING;
+    public static CRD_REVIEW_DETAIL_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstant.DETAIL;
+    public static CRD_APPRV_DETAIL_X = PathConstant.CRD_APPRV_CR + "/" + PathConstantDsf.DETAIL_X;
 }
