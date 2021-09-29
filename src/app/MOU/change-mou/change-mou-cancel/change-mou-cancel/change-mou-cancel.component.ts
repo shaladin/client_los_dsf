@@ -59,10 +59,10 @@ export class ChangeMouCancelComponent implements OnInit {
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
       
-      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "TrxNo";
-      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.IntegrationObj.rightColumnToJoin = "BusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
   }
