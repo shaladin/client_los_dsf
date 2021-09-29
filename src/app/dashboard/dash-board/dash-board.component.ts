@@ -62,7 +62,7 @@ export class DashBoardComponent implements OnInit {
       integrationObj2 = new ThingsToDoIntegrationV2Obj();
       integrationObj2.BaseUrl = AdInsConstant.GetListApvTaskListByUsernameAndRoleCodeForThingsToDo;
       integrationObj2.ApiPath = "";
-      integrationObj2.RequestObj.OfficeCode = "";
+      integrationObj2.RequestObj.OfficeCode = this.officeCode;
       integrationObj2.RequestObj.UserName = this.username;
       integrationObj2.RequestObj.RoleCode = this.roleCode;
       this.Item.RequestObj.IntegrationObj.push(integrationObj2);
