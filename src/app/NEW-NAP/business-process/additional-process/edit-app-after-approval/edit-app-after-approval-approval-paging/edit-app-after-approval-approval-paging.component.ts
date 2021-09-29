@@ -88,7 +88,6 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
   }
 
   CallBackHandler(ev) {
-    console.log(ev);
     var ApvReqObj = new ApprovalObj();
     if(ev.Key == "Process"){
       if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.UserAccess.UserName)) {
