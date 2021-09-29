@@ -222,7 +222,7 @@
               </button>
             </div>
 
-            <!--FEES-->
+            <!--FINANCIAL DATA & FEES-->
             <div *ngIf="IsGenerate">
 
               <app-fee-x [ProdOfferingCode]="ProdOfferingCode" [ParentForm]="TrialForm"
@@ -255,127 +255,8 @@
                                          [ParentForm]="TrialForm"
                                          [BizTemplateCode]="BizTmpltCode"
                                          [TrialCalc]="TrialCalc"></app-schm-even-principal-x>
-
-              <!--NORMAL-->
-              <!--              <app-fee-x *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W')" [ProdOfferingCode]="ProdOfferingCode"-->
-              <!--                [ParentForm]="TrialForm" [identifier]="'AppFee'">-->
-              <!--              </app-fee-x>-->
-              <!--END NORMAL-->
-
-              <!--CFNA-->
-              <!--              <app-fee-cfna *ngIf="BizTmpltCode == 'CFNA'" [ParentForm]="TrialForm" [identifier]="'AppFee'"-->
-              <!--                [ProdOfferingCode]="ProdOfferingCode">-->
-              <!--              </app-fee-cfna>-->
-              <!--END CFNA-->
-
-              <!--FL4W-->
-              <!--              <app-fee-FL4W *ngIf="BizTmpltCode == 'FL4W'" [ParentForm]="TrialForm" [identifier]="'AppFee'"-->
-              <!--                [ProdOfferingCode]="ProdOfferingCode">-->
-              <!--              </app-fee-FL4W>-->
-              <!--END FL4W-->
-
-              <!--FCTR-->
-              <!-- <app-fee-fctr *ngIf="BizTmpltCode == 'FCTR'" [ParentForm]="TrialForm" [identifier]="'AppFee'"
-                [ProdOfferingCode]="ProdOfferingCode"></app-fee-fctr> -->
-              <!--END FCTR-->
-
-              <!--DLFN-->
-              <!--END DLFN-->
-              <!--END FEES-->
-
-              <!--FINANCIAL DATA-->
-              <!--NORMAL-->
-              <!--              <app-schm-reguler-fix-x-->
-              <!--                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'RF'"-->
-              <!--                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">-->
-              <!--              </app-schm-reguler-fix-x>-->
-              <!--              <app-schm-irregular-x-->
-              <!--                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'IR'"-->
-              <!--                [ParentForm]="TrialForm" [NumOfInst]="NumOfInst" [TrialCalc]="TrialCalc"></app-schm-irregular-x>-->
-              <!--              <app-schm-step-up-step-down-normal-x-->
-              <!--                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'STNM'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-normal-x>-->
-              <!--              <app-schm-step-up-step-down-leasing-x-->
-              <!--                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'STLS'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-leasing-x>-->
-              <!--              <app-schm-step-up-step-down-cummulative-x-->
-              <!--                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'STCM'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-cummulative-x>-->
-              <!--              <app-schm-balloon-x-->
-              <!--                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'BL'"-->
-              <!--                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">-->
-              <!--              </app-schm-balloon-x>-->
-              <!--              <app-schm-even-principal-x-->
-              <!--                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'EP'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-even-principal-x>-->
-              <!--END NORMAL-->
-
-              <!--CFNA-->
-              <!--              <app-schm-reguler-fix-cfna-->
-              <!--                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'RF'"-->
-              <!--                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">-->
-              <!--              </app-schm-reguler-fix-cfna>-->
-              <!--              <app-schm-irregular-cfna-->
-              <!--                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'IR'"-->
-              <!--                [ParentForm]="TrialForm" [NumOfInst]="NumOfInst" [TrialCalc]="TrialCalc"> </app-schm-irregular-cfna>-->
-              <!--              <app-schm-step-up-step-down-normal-cfna-->
-              <!--                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'STNM'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-normal-cfna>-->
-              <!--              <app-schm-step-up-step-down-leasing-cfna-->
-              <!--                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'STLS'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-leasing-cfna>-->
-              <!--              <app-schm-step-up-step-down-cummulative-cfna-->
-              <!--                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'STCM'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-cummulative-cfna>-->
-              <!--              <app-schm-balloon-cfna *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'BL'"-->
-              <!--                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">-->
-              <!--              </app-schm-balloon-cfna>-->
-              <!--              <app-schm-even-principal-cfna-->
-              <!--                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'EP'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-even-principal-cfna>-->
-              <!--END CFNA-->
-
-              <!--FL4W-->
-              <!--              <app-schm-reguler-fix-FL4W-->
-              <!--                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'RF'"-->
-              <!--                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">-->
-              <!--              </app-schm-reguler-fix-FL4W>-->
-              <!--              <app-schm-irregular-FL4W-->
-              <!--                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'IR'"-->
-              <!--                [ParentForm]="TrialForm" [NumOfInst]="NumOfInst" [TrialCalc]="TrialCalc"> </app-schm-irregular-FL4W>-->
-              <!--              <app-schm-step-up-step-down-normal-FL4W-->
-              <!--                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'STNM'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-normal-FL4W>-->
-              <!--              <app-schm-step-up-step-down-leasing-FL4W-->
-              <!--                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'STLS'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-leasing-FL4W>-->
-              <!--              <app-schm-step-up-step-down-cummulative-FL4W-->
-              <!--                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'STCM'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-cummulative-FL4W>-->
-              <!--              <app-schm-balloon-FL4W *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'BL'"-->
-              <!--                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">-->
-              <!--              </app-schm-balloon-FL4W>-->
-              <!--              <app-schm-even-principal-FL4W-->
-              <!--                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'EP'"-->
-              <!--                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-even-principal-FL4W>-->
-              <!--END FL4W-->
-
-              <!--FCTR-->
-              <!-- <app-single-inst-fctr *ngIf="BizTmpltCode == 'FCTR' && TrialForm.controls.MrInstTypeCode.value == 'SINGLE'"
-                [AppId]="AppId" [ParentForm]="FinDataForm"></app-single-inst-fctr>
-              <app-schm-reguler-fix-fctr
-                *ngIf="BizTmpltCode == 'FCTR' && TrialForm.controls.MrInstSchemeCode.value == 'RF' && TrialForm.controls.MrInstTypeCode.value == 'MULTIPLE'"
-                [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-fctr>
-              <app-schm-even-principal-fctr
-                *ngIf="BizTmpltCode == 'FCTR' && TrialForm.controls.MrInstSchemeCode.value == 'EP' && TrialForm.controls.MrInstTypeCode.value == 'MULTIPLE'"
-                [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal-fctr> -->
-              <!--END FCTR-->
-
-              <!--DLFN-->
-              <!--END DLFN-->
-
             </div>
-            <!--END FINANCIAL DATA-->
+            <!--END FINANCIAL DATA & FEES-->
 
             <!-- <div *ngIf="IsGenerate" class="form-inline-right">
               <button class="btn btn-raised btn-primary margin-r-5" translate type="submit">
