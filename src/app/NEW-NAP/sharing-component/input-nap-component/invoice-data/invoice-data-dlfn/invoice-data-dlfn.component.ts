@@ -533,25 +533,39 @@ export class InvoiceDataDlfnComponent implements OnInit {
           this.toastr.errorMessage(ExceptionConstant.DOUBLE_FINANCING);
         }
         else {
-          var obj = {
-            AppInvoiceDlrFncngHId: this.AppInvoiceDlrFncngHId,
-            FullAssetName: this.InvoiceForm.controls.FullAssetName.value,
-            SerialNo1: this.InvoiceForm.controls.SerialNo1.value,
-            SerialNo2: this.InvoiceForm.controls.SerialNo2.value,
-            SerialNo3: this.InvoiceForm.controls.SerialNo3.value,
-            SerialNo4: this.InvoiceForm.controls.SerialNo4.value,
-            SerialNo5: this.InvoiceForm.controls.SerialNo5.value,
-            CollateralPriceAmt: this.InvoiceForm.controls.CollateralPrice.value
-          }
-
-          this.httpClient.post(URLConstant.AddAppInvoiceDlrFncngD, obj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.GetListAppInvoiceD();
-              this.CLearCollateralForm();
-            });
+          this.ResultDuplicateDoubleFinancing = new ResDuplicateDoubleFinancingObj();
+          this.httpClient.post(URLConstant.GetDoubleFinancingCheckInvoiceDlrFncngD, this.negativeAssetCheckObj).subscribe(
+            (response2) => {
+              this.ResultDuplicateDoubleFinancing = response2[CommonConstant.ReturnObj];
+      
+              if (this.ResultDuplicateDoubleFinancing["length"] > 0) {
+                this.toastr.errorMessage(ExceptionConstant.DOUBLE_FINANCING);
+              }
+              else {
+                var obj = {
+                  AppInvoiceDlrFncngHId: this.AppInvoiceDlrFncngHId,
+                  FullAssetName: this.InvoiceForm.controls.FullAssetName.value,
+                  SerialNo1: this.InvoiceForm.controls.SerialNo1.value,
+                  SerialNo2: this.InvoiceForm.controls.SerialNo2.value,
+                  SerialNo3: this.InvoiceForm.controls.SerialNo3.value,
+                  SerialNo4: this.InvoiceForm.controls.SerialNo4.value,
+                  SerialNo5: this.InvoiceForm.controls.SerialNo5.value,
+                  CollateralPriceAmt: this.InvoiceForm.controls.CollateralPrice.value
+                }
+      
+                this.httpClient.post(URLConstant.AddAppInvoiceDlrFncngD, obj).subscribe(
+                  (response3) => {
+                    this.toastr.successMessage(response3["message"]);
+                    this.GetListAppInvoiceD();
+                    this.CLearCollateralForm();
+                  });
+              }
+            }
+          );
         }
-      })
+      }
+    );
+      
   }
 
   CLearCollateralForm() {
