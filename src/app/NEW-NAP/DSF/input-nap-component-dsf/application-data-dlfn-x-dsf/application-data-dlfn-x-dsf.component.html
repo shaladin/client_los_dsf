@@ -25,6 +25,7 @@
                           <lib-uc-show-errors [control]="SalesAppInfoForm.controls.SalesOfficerName"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
+                        <label class="col-md-4 adInsLabel" *ngIf="!isInputLookupObj">{{SalesAppInfoForm.controls.SalesOfficerName.value}}</label>
                         <!-- Sales Supervisor -->
                         <label class="col-md-2 adInsLabel" translate>MO's Supervisor </label>
                         <label class="col-md-4 adInsLabel" translate>{{SalesAppInfoForm.controls.SalesHeadName.value}} </label>

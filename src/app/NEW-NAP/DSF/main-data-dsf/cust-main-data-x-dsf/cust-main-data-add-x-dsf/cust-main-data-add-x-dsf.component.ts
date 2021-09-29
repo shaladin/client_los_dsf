@@ -23,6 +23,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
+import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddAppRoleObj.Model';
 
 @Component({
   selector: 'app-cust-main-data-add-x-dsf',
@@ -69,22 +71,29 @@ export class CustMainDataAddXDsfComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.MakeLookUpObj();
+    if (this.user.RoleCode == 'MKT-MAO' || this.user.RoleCode == 'DPC' || this.user.RoleCode == 'MKT-MO')
+    {
+      this.MakeLookUpObj();
 
-    if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
-      this.NapAppForm.patchValue({
-        CrtOfficeCode: this.user.OfficeCode,
-        CrtOfficeName: this.user.OfficeName,
-      });
+      if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
+        this.NapAppForm.patchValue({
+          CrtOfficeCode: this.user.OfficeCode,
+          CrtOfficeName: this.user.OfficeName,
+        });
+      }
+      else {
+        this.NapAppForm.controls.OriOfficeCode.disable();
+        this.NapAppForm.patchValue({
+          OriOfficeCode: this.user.OfficeCode,
+          OriOfficeName: this.user.OfficeName,
+          CrtOfficeCode: this.user.OfficeCode,
+          CrtOfficeName: this.user.OfficeName,
+        });
+      }
     }
-    else {
-      this.NapAppForm.controls.OriOfficeCode.disable();
-      this.NapAppForm.patchValue({
-        OriOfficeCode: this.user.OfficeCode,
-        OriOfficeName: this.user.OfficeName,
-        CrtOfficeCode: this.user.OfficeCode,
-        CrtOfficeName: this.user.OfficeName,
-      });
+    else
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
     }
   }
 
@@ -323,6 +332,16 @@ export class CustMainDataAddXDsfComponent implements OnInit {
       (response) => {
         setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
+        let requestAddAppRoleObj: ReqAddAppRoleObj = new ReqAddAppRoleObj();
+
+        requestAddAppRoleObj.AppId = response.Id;
+        requestAddAppRoleObj.AppRoleCode = this.user.RoleCode;
+        
+        this.http.post<ReqAddAppRoleObj>(URLConstantDsf.AddNapRole, requestAddAppRoleObj).subscribe(
+          (response) => {
+            
+          }
+        )
         switch (this.bizTemplateCode) {
           case CommonConstant.CF4W:
             AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP1], { "AppId": response.Id });

@@ -176,8 +176,7 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -246,8 +245,9 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
     (response) => {
         
         });
-        
-    this.http.post(URLConstant.AddAppFromSimpleLead, napAppObj).subscribe(
+    
+    let urlPost = environment.isCore ? URLConstant.AddAppFromSimpleLeadV2 : URLConstant.AddAppFromSimpleLead;
+    this.http.post(urlPost, napAppObj).subscribe(
       (response) => {
 
         this.toastr.successMessage(response["message"]);

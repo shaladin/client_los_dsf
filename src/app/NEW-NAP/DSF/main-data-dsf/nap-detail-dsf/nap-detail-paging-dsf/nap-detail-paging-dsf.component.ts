@@ -13,6 +13,8 @@ import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-nap-detail-paging-dsf',
@@ -31,7 +33,7 @@ export class NapDetailPagingDsfComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute, private cookieService: CookieService) {
+    private route: ActivatedRoute, private cookieService: CookieService, private toastr: NGXToastrService,) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
     });
@@ -67,31 +69,37 @@ export class NapDetailPagingDsfComponent implements OnInit {
 
   async ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    if (this.userAccess.RoleCode == 'MKT-MAO' || this.userAccess.RoleCode == 'DPC' || this.userAccess.RoleCode == 'MKT-MO')
+    {
+      this.arrCrit = new Array();
+      this.makeCriteria();
 
-    this.arrCrit = new Array();
-    this.makeCriteria();
+      this.inputPagingObj.title = "Application Data Paging";
+      this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
+      this.inputPagingObj.addCritInput = this.arrCrit;
 
-    this.inputPagingObj.title = "Application Data Paging";
-    this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
-    this.inputPagingObj.addCritInput = this.arrCrit;
-
-    if(environment.isCore){
-      this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
-      this.inputPagingObj.isJoinExAPI = true
-      
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_NAPD_MD + this.bizTemplateCode;
-      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                               this.userAccess[CommonConstant.OFFICE_CODE], 
-                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
-      
-      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
-      this.IntegrationObj.requestObj = this.RequestTaskModel;
-      this.IntegrationObj.leftColumnToJoin = "AppNo";
-      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
-      this.inputPagingObj.integrationObj = this.IntegrationObj;
+      if(environment.isCore){
+        this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+        this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+        this.inputPagingObj.isJoinExAPI = true
+        
+        this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
+        this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_NAPD_MD + this.bizTemplateCode;
+        this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                                this.userAccess[CommonConstant.OFFICE_CODE], 
+                                                this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+        
+        this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+        this.IntegrationObj.requestObj = this.RequestTaskModel;
+        this.IntegrationObj.leftColumnToJoin = "AppNo";
+        this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+        this.inputPagingObj.integrationObj = this.IntegrationObj;
+      }
+    }
+    else
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
     }
   }
 

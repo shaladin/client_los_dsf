@@ -276,11 +276,14 @@ export class ApplicationDataXDsfComponent implements OnInit {
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
         if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-          this.isSalesOfficerCode = true;
-          this.NapAppModelForm.patchValue({
-            SalesOfficerNo: this.user.EmpNo,
-            SalesOfficerName: this.user.EmpName
-          });
+          if (this.user.RoleCode != 'MKT-MO')
+          {
+            this.isSalesOfficerCode = true;
+            this.NapAppModelForm.patchValue({
+              SalesOfficerNo: this.user.EmpNo,
+              SalesOfficerName: this.user.EmpName
+            });
+          }
 
           let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
           ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;

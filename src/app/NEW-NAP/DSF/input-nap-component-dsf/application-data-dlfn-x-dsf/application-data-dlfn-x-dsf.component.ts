@@ -31,6 +31,11 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 import { DatePipe } from '@angular/common';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { CookieService } from 'ngx-cookie';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ResRefEmpObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-application-data-dlfn-x-dsf',
@@ -123,6 +128,9 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   allCharacteristicCredit: Array<KeyValueObj>;
   responseApp: AppObj;
   responseProd: ProdOfferingDObj;
+  user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  salesOfficerCode: Array<string> = new Array();
+  refEmpSpvObj: ResRefEmpObj;
 
   listCustBankAcc: Array<AppCustBankAccObj>;
   selectedBankAcc: any;
@@ -139,7 +147,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   isDdlIdTypeReady: boolean = false;
   isShowAppCustBankAcc: boolean = false;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -600,6 +608,8 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   }
 
   makeLookUpObj() {
+    if (this.user.RoleCode == 'MKT-MAO')
+    {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -609,7 +619,38 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     this.inputLookupObj.jsonSelect = { SalesOfficerName: this.resultData.SalesOfficerName };
     this.inputLookupObj.nameSelect = this.resultData.SalesOfficerName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
-
+    }
+    else{
+      this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
+        (response: GeneralSettingObj) => {
+          this.salesOfficerCode = response.GsValue.split(',');
+          if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
+            if (this.user.RoleCode != 'MKT-MO')
+            {
+              this.SalesAppInfoForm.patchValue({
+                SalesOfficerNo: this.user.EmpNo,
+                SalesOfficerName: this.user.EmpName
+              });
+            }
+  
+            let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
+            ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
+  
+            this.http.post<ResRefEmpObj>(URLConstant.GetRefEmpSpvByEmpNo, ReqGetRefEmpSpvByEmpNo).subscribe(
+              (response) => {
+                this.refEmpSpvObj = response;
+                if (this.refEmpSpvObj !== null) {
+                  this.SalesAppInfoForm.patchValue({
+                    SalesHeadNo: this.refEmpSpvObj.EmpNo,
+                    SalesHeadName: this.refEmpSpvObj.EmpName
+                  });
+                }
+              }
+            );
+          }
+        }
+      );
+    }
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json";
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";

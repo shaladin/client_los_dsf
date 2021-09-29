@@ -24,6 +24,7 @@
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.SalesOfficerName"
                     [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
+                <label class="col-md-4 adInsLabel" *ngIf="!isInputLookupObj" translate>{{NapAppModelForm.controls.SalesOfficerName.value}} </label>>
                 <!-- Sales Supervisor -->
                 <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
                 <label class="col-md-4 adInsLabel" translate>{{NapAppModelForm.controls.SalesHeadName.value}} </label>
