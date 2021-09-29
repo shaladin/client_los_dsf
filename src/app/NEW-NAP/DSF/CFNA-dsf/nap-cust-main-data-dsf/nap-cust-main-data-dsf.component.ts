@@ -16,6 +16,7 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-cust-main-data-dsf',
@@ -28,7 +29,7 @@ export class NapCustMainDataDsfComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   mode: string;
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
@@ -64,6 +65,9 @@ export class NapCustMainDataDsfComponent implements OnInit {
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
+      else{
+        this.wfTaskListId = environment.isCore ? "" : 0;
+      }
       if(params["from"]!= null)
       {
         this.from = params["from"];
@@ -72,7 +76,7 @@ export class NapCustMainDataDsfComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
+    this.claimTask();
     this.AppStepIndex = 0;
     this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
@@ -116,7 +120,7 @@ export class NapCustMainDataDsfComponent implements OnInit {
   }
   
   Back() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X], { "BizTemplateCode": this.bizTemplateCode });
   }
 
 
@@ -165,12 +169,20 @@ export class NapCustMainDataDsfComponent implements OnInit {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNapCustMainData, reqObj).subscribe(
+    let submitNapCustMainDataUrl = environment.isCore? URLConstant.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
+    this.http.post(submitNapCustMainDataUrl, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }
 
+  claimTask(){
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskNapCustMainDataV2(this.appId, this.wfTaskListId);
+    }else{
+      this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
+    }
+  }
 }

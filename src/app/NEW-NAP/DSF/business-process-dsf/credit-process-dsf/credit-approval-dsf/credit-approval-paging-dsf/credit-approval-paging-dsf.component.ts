@@ -15,6 +15,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { String } from 'typescript-string-operations';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-credit-approval-paging-dsf',
@@ -41,6 +42,11 @@ export class CreditApprovalPagingDsfComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApproval.json";
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchCreditApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCreditApprovalV2.json";
+    }
 
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
@@ -74,7 +80,7 @@ export class CreditApprovalPagingDsfComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_CR_DETAIL], { "AppId": ev.RowObj.AppId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_DETAIL_X], { "AppId": ev.RowObj.AppId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId });
       }
     }
     else if (ev.Key == "HoldTask") {
