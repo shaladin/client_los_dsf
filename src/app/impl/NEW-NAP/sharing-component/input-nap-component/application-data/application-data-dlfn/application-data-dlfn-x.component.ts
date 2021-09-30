@@ -734,8 +734,8 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       });
 
       if (this.resultData.MrWopCode == 'AD') {
-        this.GetBankAccCust();
-        this.setBankAcc(this.resultData.MrWopCode)
+        await this.GetBankAccCust();
+        await this.setBankAcc(this.resultData.MrWopCode)
       }
     }
     await this.getDropDown();
@@ -953,35 +953,37 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
           (response) => {
             this.listCustBankAcc = response.ReturnObject["AppCustBankAccObjs"];
+
+            var currAppOthInfoBank = this.listCustBankAcc.find(x => 
+              x.BankCode == this.AppOthInfoBank.BankCode && x.BankBranch == this.AppOthInfoBank.BankBranch && 
+              x.BankAccNo == this.AppOthInfoBank.BankAccNo && x.BankAccName == this.AppOthInfoBank.BankAccName
+            );
+            if(currAppOthInfoBank && currAppOthInfoBank.AppCustBankAccId)
+            {
+              this.SalesAppInfoForm.patchValue({
+                CustBankAcc: currAppOthInfoBank.AppCustBankAccId
+              });
+              this.selectedBank(currAppOthInfoBank.AppCustBankAccId);
+            }
           });
       });
   }
 
-  GetBankAccCust() {
-    this.http.post(URLConstant.GetAppOtherInfoByAppId, { AppId: this.AppId }).subscribe(
+  AppOthInfoBank : {BankCode:string,BankBranch:string,BankAccNo:string, BankAccName:string,AppCustId: number} = {BankCode:'', BankBranch:'', BankAccNo:'', BankAccName:'', AppCustId: 0};
+  async GetBankAccCust() {
+    await this.http.post(URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).toPromise().then(
       (responseAoi) => {
-        const objectForAppCustBankAcc = {
+        this.AppOthInfoBank = {
           BankCode: responseAoi['BankCode'],
+          BankBranch: responseAoi['BankBranch'],
           BankAccNo: responseAoi['BankAccNo'],
+          BankAccName: responseAoi['BankAccName'],
           AppCustId: this.appCustId
         }
-        // this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
-        //   (response: any) => {
-        //     this.SalesAppInfoForm.patchValue({
-        //       CustBankAcc: response['AppCustBankAccId']
-        //     });
-        //     this.GetBankInfo = {
-        //       BankCode: response['BankCode'],
-        //       BankBranch: response['BankBranch'],
-        //       AppId: this.AppId,
-        //       BankAccNo: response['BankAccNo'],
-        //       BankAccName: response['BankAccName']
-        //     };
-        //   });
       });
   }
 
-  selectedBank(event) {
+  async selectedBank(event) {
     if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
       this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.SalesAppInfoForm.controls['CustBankAcc'].updateValueAndValidity()
