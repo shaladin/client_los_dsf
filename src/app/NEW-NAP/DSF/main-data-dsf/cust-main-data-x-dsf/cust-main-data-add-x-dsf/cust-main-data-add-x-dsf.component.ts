@@ -71,8 +71,8 @@ export class CustMainDataAddXDsfComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    if (this.user.RoleCode == 'MKT-MAO' || this.user.RoleCode == 'DPC' || this.user.RoleCode == 'MKT-MO')
-    {
+    // if (this.user.RoleCode == 'MKT-MAO' || this.user.RoleCode == 'DPC' || this.user.RoleCode == 'MKT-MO')
+    // {
       this.MakeLookUpObj();
 
       if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
@@ -90,11 +90,11 @@ export class CustMainDataAddXDsfComponent implements OnInit {
           CrtOfficeName: this.user.OfficeName,
         });
       }
-    }
-    else
-    {
-      this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
-    }
+    // }
+    // else
+    // {
+    //   this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
+    // }
   }
 
   MakeLookUpObj() {
