@@ -43,7 +43,7 @@ export class ReturnHandlingAdditionalTcPagingComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true
       
       this.RequestTaskModel.ProcessKey = CommonConstant.RTN_ADD_TC + this.BizTemplateCode;
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ADD_COLTR_ + this.BizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ADD_TC + this.BizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                 UserAccess[CommonConstant.OFFICE_CODE],
                                                 UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];

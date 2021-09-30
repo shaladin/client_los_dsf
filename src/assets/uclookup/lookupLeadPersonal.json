@@ -64,5 +64,5 @@
         }
     ],
     "propertyId": "LeadId",
-    "propertyName": "CustName"
+    "propertyName": "LeadNo"
 }

@@ -12,6 +12,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 import { UploadReviewCustomObj } from 'app/shared/model/V2/UploadReviewObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 
 @Component({
   selector: 'app-lead-monitoring-review-detail',
@@ -66,6 +68,23 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.inputPagingObj.addCritInput = arrCrit;
   }
 
+  cancel() {
+    let CancelUrl = environment.isCore? URLConstant.CancelUploadV2 : URLConstant.CancelUpload;
+    var wfObj = new WorkflowApiObj();
+    wfObj.TransactionNo = this.UploadNo;
+    wfObj.ListValue["Status"] = "RJC";
+    wfObj.ListValue["WfCode"] = CommonConstant.WF_UPL_LEAD;
+    wfObj.ListValue["TaskId"] = this.taskListId;
+    this.http.post(CancelUrl, wfObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["Message"]);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_RVW_MONITORING_PAGING],{});
+      }); 
+      }
+    );
+  }
+
   uploadReview(status : string) {
     let UploadReviewUrl = environment.isCore? URLConstant.UploadReviewV2 : URLConstant.UploadReview;
 
@@ -91,6 +110,6 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     else if (this.taskListId> 0) {	
         this.claimTaskService.ClaimTask(this.taskListId);	
     }
-}
+  }
   
 }

@@ -46,7 +46,7 @@ export class NapDetailFormComponent implements OnInit {
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;
   IsDataReady: boolean = false;
-  
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   
   FormReturnObj = this.fb.group({
@@ -119,6 +119,10 @@ export class NapDetailFormComponent implements OnInit {
     else {
       if (this.NapObj.AppCurrStep == CommonConstant.AppStepUplDoc) {
         await this.initDms();
+      }
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepNapd) {
+        this.NapObj.AppCurrStep = CommonConstant.AppStepRef;
+        this.UpdateAppStep(this.NapObj.AppCurrStep);
       }
       this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
       this.stepper.to(this.AppStepIndex);
@@ -206,7 +210,20 @@ export class NapDetailFormComponent implements OnInit {
       })
   }
 
-  ChangeTab(AppStep) {
+  UpdateAppStep(Step: string) {
+    this.NapObj.AppCurrStep = Step;
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+      (response) => {
+        this.spinner.show();
+        setTimeout(() => { this.spinner.hide(); }, 1500);
+      }
+    )
+  }
+
+  ChangeTab(AppStep: string) {
+    if (this.ReturnHandlingHId == 0) {
+      this.UpdateAppStep(AppStep);
+    }
     switch (AppStep) {
       case CommonConstant.AppStepRef:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
@@ -244,15 +261,6 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId == 0) {
-      this.NapObj.AppCurrStep = Step;
-      this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-        (response) => {
-          this.spinner.show();
-          setTimeout(() => { this.spinner.hide(); }, 1500);
-        }
-      )
-    }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }

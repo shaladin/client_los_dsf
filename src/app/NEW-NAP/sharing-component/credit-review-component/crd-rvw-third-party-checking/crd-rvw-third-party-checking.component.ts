@@ -7,6 +7,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ThirdPartyDukcapilRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyDukcapilRsltObj.Model';
 import { ThirdPartyPefindoRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyPefindoRsltObj.Model';
 import { ThirdPartyProfindRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyProfindRsltObj.Model';
@@ -26,15 +27,23 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
   @Input() CrdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   @Input() AppNo: string = "";
   IsUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  IsUseTs: boolean = false;
+  IsUsePefindo: boolean = false;
+  IsUseRapindo: boolean = false;
+  IsUseDukcapil: boolean = false;
+  IsUseProfind: boolean = false;
+  IsUseSlik: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   constructor(
     private http: HttpClient,
-    private modalService: NgbModal,) { }
+    private modalService: NgbModal) { }
 
   async ngOnInit(): Promise<void> {
     await this.GetIsUseDigitalization();
-
-    if (this.IsUseDigitalization == "1") {
+    await this.getDigitalizationSvcType();
+    if (this.IsUseDigitalization == "1" && this.IsSvcExist) {
       await this.GetCrdRvwThirdPartyData();
     }
   }
@@ -111,6 +120,59 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+
+      var svcTypeDukcapil = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeDukcapil);
+
+      if(svcTypeDukcapil != null){
+        this.IsUseDukcapil = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypePefindo = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypePefindo);
+
+      if(svcTypePefindo != null){
+        this.IsUsePefindo = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypeTs = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeTrustingSocial);
+
+      if(svcTypeTs != null){
+        this.IsUseTs = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypeProfind = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeProfind);
+
+      if(svcTypeProfind != null){
+        this.IsUseProfind = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypeRapindo = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeRapindo);
+
+      if(svcTypeRapindo != null){
+        this.IsUseRapindo = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypeSlik = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeSlik);
+
+      if(svcTypeSlik != null){
+        this.IsUseSlik = true;
+        this.IsSvcExist = true;
+      }
     }
   }
 }

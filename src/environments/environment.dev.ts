@@ -13,7 +13,7 @@ export const environment = {
   DMSUrl : "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
   AMSUrl : "http://r3app-server.ad-ins.com/AMS_DEMO", //OPL dah ada
   LMSUrl : "http://r3app-server.ad-ins.com/LMS_DEMO", //OPL dah ada
-  ApprovalR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_DEV/Approval',
+  ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_R3_BE_DEV',
   ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
   FoundationR3Web: 'http://r3web-server.ad-ins.com/FOUNDATION_DEV',
   losR3Web: 'http://r3web-server/LOS_DEV',
@@ -26,5 +26,6 @@ export const environment = {
   ChipperKeyLocalStorage: "AdInsFOU2020OKOK", // 256 bit atau 16 karakter
   ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
   Module: "LOS",
+  Superset: 'http://linuxdev4:8091/',
   isCore : true
 };

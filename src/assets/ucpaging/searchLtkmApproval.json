@@ -52,7 +52,7 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "CUSTOMER NO",
       "name": "LC.CUST_NO"
     },
@@ -70,7 +70,7 @@
     },
     {
       "type": "sort",
-      "position": "left",
+      "position": "center",
       "label": "ID NO",
       "name": "LC.ID_NO"
     },
@@ -100,61 +100,10 @@
       "property": "CurrentUser"
     },
     {
-      "type": "action",
+      "type": "callback",
+      "key": "customer",
       "position": "center",
-      "action": [
-        {
-          "type": "switch",
-          "case": [
-            {
-              "conditions": [
-                {
-                  "property": "MrCustTypeCode",
-                  "value": "PERSONAL",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "CustNo",
-                "path": "VIEW_FOU_CUST_PERSONAL_DETAIL",
-                "target": "_blank",
-                "param": [
-                  {
-                    "type": "CustId",
-                    "property": "CustId"
-                  }
-                ]
-              },
-              "isHide": false
-            },
-            {
-              "conditions": [
-                {
-                  "property": "MrCustTypeCode",
-                  "value": "COMPANY",
-                  "restriction": "EQ"
-                }
-              ],
-              "result": {
-                "type": "link",
-                "position": "left",
-                "property": "CustNo",
-                "path": "VIEW_FOU_CUST_COY_DETAIL",
-                "target": "_blank",
-                "param": [
-                  {
-                    "type": "CustId",
-                    "property": "CustId"
-                  }
-                ]
-              },
-              "isHide": false
-            }
-          ]
-        }
-      ]
+      "property": "CustNo"
     },
     {
       "type": "text",
@@ -164,12 +113,12 @@
     {
       "type": "callback",
       "key": "ltkmno",
-      "position": "left",
+      "position": "center",
       "property": "LtkmNo"
     },
     {
       "type": "text",
-      "position": "left",
+      "position": "center",
       "property": "IdNo"
     },
     {

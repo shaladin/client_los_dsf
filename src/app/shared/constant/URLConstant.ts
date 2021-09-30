@@ -59,6 +59,7 @@ export class URLConstant {
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
+  public static CopyCancelledAppForMainDataMultiBLV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
   public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
   public static AddAppFromMou = environment.losUrl + "/v1" + "/Application/AddAppFromMou";
@@ -698,7 +699,7 @@ export class URLConstant {
   public static GetMouShareholderDuplicateCheck = environment.losUrl + "/v1" + "/MouCustDupCheck/GetMouShareholderDuplicateCheck";
   public static EditCustNoMouCust = environment.losUrl + "/v1" + "/MouCustDupCheck/EditCustNoMouCust";
   public static SubmitMouDupCheck = environment.losUrl + "/v1" + "/MouCustDupCheck/SubmitMouDupCheck";
-
+ 
   // MOU Freeze Unfreeze
   public static SubmitMouFreezeUnfreeze = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
   public static SubmitMouFreezeUnfreezeV2 = environment.losUrl + "/v2" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
@@ -1356,6 +1357,7 @@ export class URLConstant {
   public static ClaimTaskNapCustmainDataV2 = environment.losUrl + "/v2" + "/Application/ClaimTaskNapCustmainData";
   public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
   public static GetAllWorkflowInstance = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllWorkflowInstance";
+  public static GetTaskHistoryByTransactionNo = environment.FoundationR3Url + "/v2" + "/Workflow/GetTaskHistoryByTransactionNo";
   public static CompleteTask = environment.FoundationR3Url + "/v2" + "/Workflow/CompleteTask";
 
   //Application Data
@@ -1382,6 +1384,7 @@ export class URLConstant {
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerifEdit = environment.FoundationR3Url + "/v1" + "/VerfResultH/AddEditVerfResultHeaderAndVerfResultDetailForSurveyVerif";
   public static GetVerfQuestionListByAppIdAndSubjectForSurveyVerifEdit = environment.FoundationR3Url + "/v1" + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfResultH";
   public static CompleteAppSurveyVerif = environment.losUrl + "/v1" + "/SurveyVerif/CompleteAppSurveyVerif";
+  public static CompleteAppSurveyVerifV2 = environment.losUrl + "/v2" + "/SurveyVerif/CompleteAppSurveyVerif";
 
   // App Cust
   public static GetAppCustByAppId = environment.losUrl + "/v1" + "/AppCust/GetAppCustByAppId";
@@ -1640,6 +1643,8 @@ export class URLConstant {
   public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset";
   public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
   public static DigitalizationAddTrxSrcDataForFraudCheckingNAPCust = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingNAPCust";
+  public static GetRuleIntegratorPackageMapAsset = environment.losUrl + "/v1" + "/Digitalization/GetRuleIntegratorPackageMapAsset";
+  public static GetRuleIntegratorPackageMapCust = environment.losUrl + "/v1" + "/Digitalization/GetRuleIntegratorPackageMapCust";
 
   //ThirdPartyRsltH
   public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/v1" + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
@@ -1852,5 +1857,6 @@ export class URLConstant {
 
   //Dashboard
   public static GetAppCountAndMappingStep = environment.losUrl + "/v1" + "/Dashboard/GetAppCountAndMappingStep";
+  public static HitSuperset = environment.Superset + "api/v1" + "/security/login";
 
 }

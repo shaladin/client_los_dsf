@@ -63,9 +63,9 @@ export class NewLeadInputCustDataComponent implements OnInit {
   custModel: RefMasterObj;
   listCustModel: Array<KeyValueObj>;
   leadInputObj: LeadInputObj = new LeadInputObj();
-  leadCustFacebookObj: LeadCustSocmedObj;
-  leadCustInstagramObj: LeadCustSocmedObj;
-  leadCustTwitterObj: LeadCustSocmedObj;
+  // leadCustFacebookObj: LeadCustSocmedObj;
+  // leadCustInstagramObj: LeadCustSocmedObj;
+  // leadCustTwitterObj: LeadCustSocmedObj;
   genderType: RefMasterObj;
   tempGender: Array<KeyValueObj>;
   reqLeadCustObj: LeadCustObj;
@@ -102,9 +102,9 @@ export class NewLeadInputCustDataComponent implements OnInit {
     Email: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$"), Validators.required]],
     MobilePhone2: ['', Validators.pattern("^[0-9]+$")],
-    Facebook: [''],
-    Instagram: [''],
-    Twitter: [''],
+    // Facebook: [''],
+    // Instagram: [''],
+    // Twitter: [''],
     CustModel: [''],
     CompanyName: [''],
     MonthlyIncome: [0],
@@ -184,7 +184,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
 
     this.InitDms();
-    this.ClaimTask();
+    // this.ClaimTask();
       
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -356,15 +356,15 @@ export class NewLeadInputCustDataComponent implements OnInit {
           let obj = {
             Id: this.reqLeadCustSocmedObj.LeadCustId
           }
-          this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
-            (response) => {
-              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-              this.CustomerDataForm.patchValue({
-                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
-                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
-                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
-              });
-            });
+          // this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
+          //   (response) => {
+          //     this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
+          //     this.CustomerDataForm.patchValue({
+          //       Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
+          //       Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
+          //       Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
+          //     });
+          //   });
 
           this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
           this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
@@ -543,15 +543,15 @@ export class NewLeadInputCustDataComponent implements OnInit {
             let obj = {
               Id: this.reqLeadCustSocmedObj.LeadCustId
             }
-            this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
-              (response) => {
-                this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-                this.CustomerDataForm.patchValue({
-                  Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
-                  Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
-                  Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
-                });
-              });
+            // this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
+            //   (response) => {
+            //     this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
+            //     this.CustomerDataForm.patchValue({
+            //       Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "FB").SocmedId,
+            //       Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "IG").SocmedId,
+            //       Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW") == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == "TW").SocmedId,
+            //     });
+            //   });
 
             this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
             this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
@@ -907,32 +907,32 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.leadInputObj.LeadCustPersonalObj.MobilePhnNo2 = this.CustomerDataForm.controls["MobilePhone2"].value;
   }
 
-  setLeadCustSocmed() {
-    this.leadCustFacebookObj = new LeadCustSocmedObj();
-    this.leadCustFacebookObj.MrSocmedCode = CommonConstant.FACEBOOK;
-    this.leadCustFacebookObj.MrSocmedName = "Facebook";
-    this.leadCustFacebookObj.SocmedId = this.CustomerDataForm.controls["Facebook"].value;
+  // setLeadCustSocmed() {
+  //   this.leadCustFacebookObj = new LeadCustSocmedObj();
+  //   this.leadCustFacebookObj.MrSocmedCode = CommonConstant.FACEBOOK;
+  //   this.leadCustFacebookObj.MrSocmedName = "Facebook";
+  //   this.leadCustFacebookObj.SocmedId = this.CustomerDataForm.controls["Facebook"].value;
 
-    this.leadCustInstagramObj = new LeadCustSocmedObj();
-    this.leadCustInstagramObj.MrSocmedCode = CommonConstant.INSTAGRAM;
-    this.leadCustInstagramObj.MrSocmedName = "Instagram";
-    this.leadCustInstagramObj.SocmedId = this.CustomerDataForm.controls["Instagram"].value;
+  //   this.leadCustInstagramObj = new LeadCustSocmedObj();
+  //   this.leadCustInstagramObj.MrSocmedCode = CommonConstant.INSTAGRAM;
+  //   this.leadCustInstagramObj.MrSocmedName = "Instagram";
+  //   this.leadCustInstagramObj.SocmedId = this.CustomerDataForm.controls["Instagram"].value;
 
-    this.leadCustTwitterObj = new LeadCustSocmedObj();
-    this.leadCustTwitterObj.MrSocmedCode = CommonConstant.TWITTER;
-    this.leadCustTwitterObj.MrSocmedName = "Twitter";
-    this.leadCustTwitterObj.SocmedId = this.CustomerDataForm.controls["Twitter"].value;
+  //   this.leadCustTwitterObj = new LeadCustSocmedObj();
+  //   this.leadCustTwitterObj.MrSocmedCode = CommonConstant.TWITTER;
+  //   this.leadCustTwitterObj.MrSocmedName = "Twitter";
+  //   this.leadCustTwitterObj.SocmedId = this.CustomerDataForm.controls["Twitter"].value;
 
-    if (this.CustomerDataForm.controls["Facebook"].value != "") {
-      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustFacebookObj);
-    }
-    if (this.CustomerDataForm.controls["Instagram"].value != "") {
-      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustInstagramObj);
-    }
-    if (this.CustomerDataForm.controls["Twitter"].value != "") {
-      this.leadInputObj.LeadCustSocmedObj.push(this.leadCustTwitterObj);
-    }
-  }
+  //   if (this.CustomerDataForm.controls["Facebook"].value != "") {
+  //     this.leadInputObj.LeadCustSocmedObj.push(this.leadCustFacebookObj);
+  //   }
+  //   if (this.CustomerDataForm.controls["Instagram"].value != "") {
+  //     this.leadInputObj.LeadCustSocmedObj.push(this.leadCustInstagramObj);
+  //   }
+  //   if (this.CustomerDataForm.controls["Twitter"].value != "") {
+  //     this.leadInputObj.LeadCustSocmedObj.push(this.leadCustTwitterObj);
+  //   }
+  // }
 
   setLeadCustPersonalJobData() {
     this.leadInputObj.LeadCustPersonalJobDataObj.MrProfessionCode = this.tempProfession;
@@ -960,7 +960,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.setLeadCust();
         this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
         this.setLeadCustPersonal();
-        this.setLeadCustSocmed();
+        // this.setLeadCustSocmed();
         this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
         this.setLegalAddr();
         this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
@@ -981,7 +981,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.leadInputObj = new LeadInputObj();
         this.setLeadCust();
         this.setLeadCustPersonal();
-        this.setLeadCustSocmed();
+        // this.setLeadCustSocmed();
         this.setLegalAddr();
         this.setResidenceAddr();
         this.setLeadCustPersonalJobData();
@@ -1002,7 +1002,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.setLeadCust();
         this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
         this.setLeadCustPersonal();
-        this.setLeadCustSocmed();
+        // this.setLeadCustSocmed();
         this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
         this.setLegalAddr();
         this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
@@ -1024,7 +1024,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
-      this.setLeadCustSocmed();
+      // this.setLeadCustSocmed();
       this.setLegalAddr();
       this.setResidenceAddr();
       this.setLeadCustPersonalJobData();
@@ -1076,15 +1076,15 @@ export class NewLeadInputCustDataComponent implements OnInit {
           let obj = {
             Id: this.reqLeadCustSocmedObj.LeadCustId
           }
-          this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
-            (response) => {
-              this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
-              this.CustomerDataForm.patchValue({
-                Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK).SocmedId,
-                Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM).SocmedId,
-                Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER).SocmedId,
-              });
-            });
+          // this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, obj).subscribe(
+          //   (response) => {
+          //     this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
+          //     this.CustomerDataForm.patchValue({
+          //       Facebook: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.FACEBOOK).SocmedId,
+          //       Instagram: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.INSTAGRAM).SocmedId,
+          //       Twitter: this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER) == undefined ? "" : this.resLeadCustSocmedObj.find(x => x.MrSocmedCode == CommonConstant.TWITTER).SocmedId,
+          //     });
+          //   });
 
           this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
           this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;

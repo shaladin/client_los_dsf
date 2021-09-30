@@ -1,64 +1,32 @@
-<div *ngIf="IsUseDigitalization == '1'">
+<div *ngIf="IsUseDigitalization == '1' && IsSvcExist">
   <lib-ucSubsection [id]="'ThirdPartyId'" [title]="'Third Party Checking'" [panel]="'ThirdParty'">
   </lib-ucSubsection>
   <div id="ThirdParty">
     <div class="card-body">
-      <div class="row">
-        <div class="col-md-6 ">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="label-control" translate> Dukcapil </label>
-            </div>
-            <div class="col-md-6 ">
-              <label class="label-control"> {{ThirdPartyDukcapilRsltObj?.Result}} : {{ThirdPartyDukcapilRsltObj?.DiffItem}}</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="label-control" translate> Rapindo </label>
-            </div>
-            <div class="col-md-6 ">
-              <label class="label-control"> Data Exist: {{RapindoDataObj.DataExist}}, Active: {{RapindoDataObj.DataActive}}, Not Active: {{RapindoDataObj.DataNoActive}} </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="label-control" translate> Profind </label>
-            </div>
-            <div class="col-md-6 ">
-              <!-- <label class="label-control"> {{ThirdPartyProfindRsltObj.}} </label> -->
-            </div>
-          </div>
+        <div *ngIf="IsUseDukcapil || IsUsePefindo" class="form-group row">
+          <label *ngIf="IsUseDukcapil" class="col-md-3" translate>Dukcapil</label>
+          <label *ngIf="IsUseDukcapil" class="col-md-3" translate>{{ThirdPartyDukcapilRsltObj?.Result}} : {{ThirdPartyDukcapilRsltObj?.DiffItem}}</label>
+          <label *ngIf="IsUsePefindo" class="col-md-3" translate>PEFINDO</label>
+          <label *ngIf="IsUsePefindo" class="col-md-3" translate><a href="javascript:void(0);" (click)="pefindoHandler()"> Click Here to View </a></label>
         </div>
-    
-        <div class="col-md-6 ">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="label-control" translate> PEFINDO </label>
-            </div>
-            <div class="col-md-6 ">
-              <label class="label-control"><a href="javascript:void(0);" (click)="pefindoHandler()"> Click Here to View </a></label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="label-control" translate> Trusting Social </label>
-            </div>
-            <div class="col-md-6 ">
-              <label class="label-control"><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="trustingSocialHandler(TrustingSocialView)"> Click Here to View </a></label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="label-control" translate> SLIK </label>
-            </div>
-            <div class="col-md-6 ">
-              <label class="label-control"> Data Exist in {{ThirdPartySlikRsltObj?.DebtorCount}}, Lancar: {{ThirdPartySlikRsltObj?.PerformingCount}} </label>
-              <label class="label-control"> Dalam Perhatian Khusus: {{ThirdPartySlikRsltObj?.SpecialMentionCount}} </label>
-            </div>
-          </div>
+        <div *ngIf="IsUseRapindo || IsUseTs" class="form-group row">
+          <label *ngIf="IsUseRapindo" class="col-md-3" translate>Rapindo</label>
+          <label *ngIf="IsUseRapindo" class="col-md-3" translate>Data Exist: {{RapindoDataObj.DataExist}}, Active: {{RapindoDataObj.DataActive}}, Not Active: {{RapindoDataObj.DataNoActive}}</label>
+          <label *ngIf="IsUseTs" class="col-md-3" translate>Trusting Social</label>
+          <label *ngIf="IsUseTs" class="col-md-3" translate><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="trustingSocialHandler(TrustingSocialView)"> Click Here to View </a></label>
         </div>
-      </div>
+        <div *ngIf="IsUseProfind || IsUseSlik" class="form-group row">
+          <label *ngIf="IsUseProfind" class="col-md-3" translate>Profind</label>
+          <label *ngIf="IsUseProfind" class="col-md-3" translate></label>
+          <label *ngIf="IsUseSlik" class="col-md-3" translate>SLIK</label>
+          <label *ngIf="IsUseSlik" class="col-md-3" translate>Data Exist in {{ThirdPartySlikRsltObj?.DebtorCount}}, Lancar: {{ThirdPartySlikRsltObj?.PerformingCount}}</label>
+        </div>
+        <div *ngIf="IsUseSlik" class="form-group row">
+          <label class="col-md-3" translate></label>
+          <label class="col-md-3" translate></label>
+          <label class="col-md-3" translate></label>
+          <label class="col-md-3" translate>Dalam Perhatian Khusus: {{ThirdPartySlikRsltObj?.SpecialMentionCount}}</label>
+        </div>
     </div>
   </div>
 </div>

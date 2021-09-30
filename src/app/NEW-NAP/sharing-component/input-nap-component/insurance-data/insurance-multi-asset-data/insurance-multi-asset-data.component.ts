@@ -1895,15 +1895,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.defaultInsAssetRegion = response["DefaultInsAssetRegion"];
 
         this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
+        this.totalAssetInclAccessoryPriceAmt = this.totalAssetPriceAmt
         if (this.appCollateralAccessoryObjs.length > 0) {
-          this.totalAssetInclAccessoryPriceAmt = 0;
-
           for (let i = 0; i < this.appCollateralAccessoryObjs.length; i++) {
             this.totalAssetInclAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
           }
 
         }
-        this.totalAssetInclAccessoryPriceAmt += this.totalAssetPriceAmt
 
         this.InsuranceDataForm.patchValue({
           CvgAmt: this.totalAssetInclAccessoryPriceAmt,
@@ -1962,6 +1960,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
           InscoStampDutyFeeAmt: this.appInsObjObj.InscoStampDutyFee,
           TotalCustFeeAmt: this.appInsObjObj.CustAdminFeeAmt + this.appInsObjObj.CustStampDutyFee,
+          TotalInscoFeeAmt: this.appInsObjObj.InscoAdminFeeAmt + this.appInsObjObj.InscoStampDutyFee,
           CvgAmt: this.appInsObjObj.CvgAmt,
           TotalCustDiscAmt: this.appInsObjObj.TotalCustDiscAmt,
           PayPeriodToInsco: this.appInsObjObj.PayPeriodToInsco
@@ -1989,6 +1988,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
           InscoStampDutyFeeAmt: this.appInsObjObj.InscoStampDutyFee,
           TotalCustFeeAmt: this.appInsObjObj.CustAdminFeeAmt + this.appInsObjObj.CustStampDutyFee,
+          TotalInscoFeeAmt: this.appInsObjObj.InscoAdminFeeAmt + this.appInsObjObj.InscoStampDutyFee,
           CustInscoBranchName: this.appInsObjObj.CustInscoBranchName,
           InsPolicyNo: this.appInsObjObj.InsPolicyNo,
           InsPolicyName: this.appInsObjObj.InsPolicyName,

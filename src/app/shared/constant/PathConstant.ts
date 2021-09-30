@@ -488,6 +488,10 @@ export class PathConstant {
     public static REPORT_DAILY_PENDING_APP_AFT_APV = "RptDailyPendingAppAftApv";
     public static REPORT_MONTHLY_PENDING_LEAD = "RptMonthlyPendingLead";
     public static REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO = "RptMonthlyPreGoLiveByCMO";
+    public static REPORT_MONTHLY_PRE_GO_LIVE_BY_PRODUCT = "RptMonthlyPreGoLiveByProduct";
+    public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "RptMonthlyPendingPreGoLiveAftApv";
+    public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "RptMonthlyPreGoLiveBySupplier";
+    public static REPORT_MONTHLY_TOP_SUPPLIER = "RptMonthlyTopSupplier";
     //#endregion
 
     //#region Inquiry-Module
