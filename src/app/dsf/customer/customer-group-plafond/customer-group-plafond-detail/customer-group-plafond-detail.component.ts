@@ -15,6 +15,7 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { CustGrpPlfndReqDsfObj } from 'app/dsf/model/CustGrpPlfndReqDsfObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-customer-group-plafond-detail',
@@ -124,7 +125,7 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     this.CustGrpPlfnReqDsfObj.PropDtmStart = this.plafondProposalForm.controls["StartPlafondDate"].value;
     this.CustGrpPlfnReqDsfObj.PropDtmEnd = this.plafondProposalForm.controls["EndPlafondDate"].value;
     this.CustGrpPlfnReqDsfObj.RequestRFAObj = {RFAInfo: this.plafondProposalForm.controls.RFAInfo.value}
-    this.http.post(URLConstantDsf.AddCustomerGroupPlafondRequestDsf, this.CustGrpPlfnReqDsfObj).subscribe(
+    this.http.post(environment.isCore? URLConstantDsf.AddCustomerGroupPlafondRequestDsfV2 : URLConstantDsf.AddCustomerGroupPlafondRequestDsf, this.CustGrpPlfnReqDsfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response['message']);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING],{});
