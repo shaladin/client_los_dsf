@@ -54,6 +54,12 @@
     "headerList": [
       {
         "type": "label",
+        "position": "center",
+        "label": "SLA",
+        "name": "IndicatorSLA"
+      },
+      {
+        "type": "label",
         "position": "left",
         "label": "Claim By",
         "name": "Assignee"
@@ -102,6 +108,11 @@
         "value": "false"
     },
     "bodyList": [
+      {
+        "type": "sla",
+        "position": "center",
+        "property": "IndicatorSLA"
+      },
       {
         "type": "text",
         "position": "left",
