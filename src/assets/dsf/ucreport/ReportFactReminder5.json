@@ -1,0 +1,38 @@
+{ 
+    "title" : "REPORT FACT REMINDER OUTSTANDING 5 DAY LATER",
+    "reportName": "Report of Reminder Outstanding 5 Day Later",
+    "reportTemplateCode": "FACT_REMINDER5",
+    "component": [ 
+        {
+            "type" : "dropdown",
+            "label" : "Product Type",
+            "name" : "CrtProductType",
+            "datatype" : "text",
+            "isSelectOne" : true,
+            "items" : [
+                {
+                "key": "UN",
+                "value": "Unit"
+            },
+            {
+                "key": "SP",
+                "value": "Sparepart"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        } 
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+

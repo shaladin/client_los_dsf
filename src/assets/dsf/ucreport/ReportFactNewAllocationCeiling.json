@@ -1,0 +1,23 @@
+{ 
+    "title" : "REPORT FACT NEW ALLOCATION CEILING ",
+    "reportName": "Report of New Allocation Ceiling",
+    "reportTemplateCode": "FACT_NEWALLOCATIONCEILING",
+    "component": [ 
+        {
+            "type" : "datepicker",
+            "label" : "Date As Of",
+            "name" : "LeadDtGte",
+            "value" : "BD",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }  
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+

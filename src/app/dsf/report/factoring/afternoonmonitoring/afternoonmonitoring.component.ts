@@ -11,7 +11,7 @@ export class AfternoonmonitoringComponent implements OnInit {
 
   inputReportObj: InputReportObj = new InputReportObj();
   constructor() {
-    this.inputReportObj.JsonPath = "./assets/ucreport/ReportFactAfternoonMonitoring.json";
+    this.inputReportObj.JsonPath = "./assets/dsf/ucreport/ReportFactAfternoonMonitoring.json";
     this.inputReportObj.EnvironmentUrl = environment.FoundationR3Url;
     this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3";
    }

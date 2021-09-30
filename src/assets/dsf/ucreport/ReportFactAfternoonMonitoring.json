@@ -1,22 +1,22 @@
 { 
-    "title" : "REPORT FACT MONITORING PAGI ",
-    "reportName": "Daily Report of Customer Collateral Position",
-    "reportTemplateCode": "FACT_MORNING_MONITORING",
+    "title" : "REPORT FACT AFTERNOON MONITORING",
+    "reportName": "Report Fact Afternoon Monitoring",
+    "reportTemplateCode": "FACT_AFTERNOON_MONITORING",
     "component": [ 
         {
             "type" : "dropdown",
-            "label" : "Client Name",
-            "name" : "CrtClientName",
+            "label" : "Product Type",
+            "name" : "CrtProductType",
             "datatype" : "text",
             "isSelectOne" : true,
             "items" : [
                 {
-                "key": "KTB",
-                "value": "PT KRAMA YUDHA TIGA BERLIAN"
+                "key": "UN",
+                "value": "Unit"
             },
             {
-                "key": "MMKSI",
-                "value": "PT MITSUBISHI MOTOR"
+                "key": "SP",
+                "value": "Sparepart"
             }
             ],
             "isFromURL" : false,
@@ -35,25 +35,12 @@
             "restriction" : "gte",
             "datatype" : "date",
             "paramAssignment": 1 
-        },
-        {
-            "type" : "datepicker",
-            "label" : "Date As Of",
-            "name" : "LeadDtLte",
-            "value" : "BD+42",
-            "restriction" : "lte",
-            "datatype" : "date",
-            "paramAssignment": 1 
-        }       
+        }    
     ],
     "exportTypeList": [
         {
             "key": 0,
             "value": "PDF"
-        },
-        {
-            "key": 2,
-            "value": "Excel"
         }
     ]
 }

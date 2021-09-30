@@ -11,9 +11,9 @@ export class NewallocationceilingComponent implements OnInit {
 
   inputReportObj: InputReportObj = new InputReportObj();
   constructor() {
-    this.inputReportObj.JsonPath = "./assets/ucreport/ReportFactNewAllocatoonCeiling.json";
+    this.inputReportObj.JsonPath = "./assets/dsf/ucreport/ReportFactNewAllocationCeiling.json";
     this.inputReportObj.EnvironmentUrl = environment.FoundationR3Url;
-    this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3";
+    this.inputReportObj.ApiReportPath = "/v1/Report/GenerateReportR3";
    }
 
   ngOnInit() {

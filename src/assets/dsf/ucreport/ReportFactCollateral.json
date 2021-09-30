@@ -35,11 +35,11 @@
             "isSelectOne" : true,
             "items" : [
                 {
-                "key": "MMC",
+                "key": "UN",
                 "value": "Unit"
             },
             {
-                "key": "MFTBC",
+                "key": "SP",
                 "value": "Sparepart"
             }
             ],

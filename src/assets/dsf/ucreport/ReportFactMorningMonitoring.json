@@ -1,22 +1,22 @@
 { 
-    "title" : "REPORT FACT NEW ALLOCATION CEILING ",
-    "reportName": "Report of New Allocation Ceiling",
-    "reportTemplateCode": "FACT_NEWALLOCATIONCEILING",
+    "title" : "REPORT FACT MONITORING PAGI ",
+    "reportName": "Daily Report of Customer Collateral Position",
+    "reportTemplateCode": "FACT_MORNING_MONITORING",
     "component": [ 
         {
             "type" : "dropdown",
-            "label" : "Client Name",
-            "name" : "CrtClientName",
+            "label" : "Product Type",
+            "name" : "CrtProductType",
             "datatype" : "text",
             "isSelectOne" : true,
             "items" : [
                 {
-                "key": "KTB",
-                "value": "PT KRAMA YUDHA TIGA BERLIAN"
+                "key": "UN",
+                "value": "Unit"
             },
             {
-                "key": "MMKSI",
-                "value": "PT MITSUBISHI MOTOR"
+                "key": "SP",
+                "value": "Sparepart"
             }
             ],
             "isFromURL" : false,
@@ -35,12 +35,16 @@
             "restriction" : "gte",
             "datatype" : "date",
             "paramAssignment": 1 
-        }  
+        }    
     ],
     "exportTypeList": [
         {
             "key": 0,
             "value": "PDF"
+        },
+        {
+            "key": 2,
+            "value": "Excel"
         }
     ]
 }
