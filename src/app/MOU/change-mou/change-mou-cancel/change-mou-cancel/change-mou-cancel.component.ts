@@ -64,7 +64,6 @@ export class ChangeMouCancelComponent implements OnInit {
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "TrxNo";
       this.IntegrationObj.rightColumnToJoin = "BusinessKey";
-      this.IntegrationObj.joinType = AdInsConstant.JoinTypeLeft;
       this.inputPagingObj.integrationObj = this.IntegrationObj;   
     }
   }
@@ -96,7 +95,7 @@ export class ChangeMouCancelComponent implements OnInit {
         mouCancel.Status = CommonConstant.MouStatCancel;
         mouCancel.ChangeMouTrxId = event.RowObj.ChangeMouTrxId;
         mouCancel.TrxNo = event.RowObj.TrxNo;
-        mouCancel.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId;
+        mouCancel.WfTaskListId = environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId;
         mouCancel.RowVersion = event.RowObj.RowVersions;
         this.http
           .post(urlPost, mouCancel)
