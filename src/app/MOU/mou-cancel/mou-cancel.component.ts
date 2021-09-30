@@ -54,7 +54,6 @@ export class MouCancelComponent implements OnInit {
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "MouCustNo";
       this.IntegrationObj.rightColumnToJoin = "BusinessKey";
-      this.IntegrationObj.joinType = AdInsConstant.JoinTypeLeft;
       this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
   }
@@ -83,7 +82,7 @@ export class MouCancelComponent implements OnInit {
         let mouCancel =  new ReqMouForEditConfirmCancelObj();
         mouCancel.MouStat = CommonConstant.MouStatCancel;
         mouCancel.MouCustId = event.RowObj.MouCustId;
-        mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
+        mouCancel.WfTaskListId = environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId;
         mouCancel.RowVersion = event.RowObj.RowVersions;
 
         let EditMouForCancelByMouIdUrl = environment.isCore ? URLConstant.EditMouForCancelByMouIdV2 : URLConstant.EditMouForCancelByMouId;

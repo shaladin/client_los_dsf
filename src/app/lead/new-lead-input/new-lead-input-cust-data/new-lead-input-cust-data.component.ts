@@ -184,7 +184,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
 
     this.InitDms();
-    this.ClaimTask();
+    // this.ClaimTask();
       
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
