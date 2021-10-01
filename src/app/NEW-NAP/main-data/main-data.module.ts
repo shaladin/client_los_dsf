@@ -12,6 +12,8 @@ import { CustMainDataAddDsfComponent } from "../DSF/main-data-dsf/cust-main-data
 import { NapDetailPagingDsfComponent } from "../DSF/main-data-dsf/nap-detail-dsf/nap-detail-paging-dsf/nap-detail-paging-dsf.component";
 import { CustMainDataPagingXComponent } from "app/impl/NEW-NAP/main-data/cust-main-data/cust-main-data-paging-x/cust-main-data-paging-x.component";
 import { CustMainDataAddXComponent } from "app/impl/NEW-NAP/main-data/cust-main-data/cust-main-data-add-x/cust-main-data-add-x.component";
+import { CustMainDataAddXDsfComponent } from "../DSF/main-data-dsf/cust-main-data-x-dsf/cust-main-data-add-x-dsf/cust-main-data-add-x-dsf.component";
+import { CustMainDataPagingXDsfComponent } from "../DSF/main-data-dsf/cust-main-data-x-dsf/cust-main-data-paging-x-dsf/cust-main-data-paging-x-dsf.component";
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { CustMainDataAddXComponent } from "app/impl/NEW-NAP/main-data/cust-main-
         CustMainDataAddDsfComponent,
         NapDetailPagingDsfComponent,
         CustMainDataPagingXComponent,
-        CustMainDataAddXComponent
+        CustMainDataAddXComponent,
+        CustMainDataAddXDsfComponent,
+        CustMainDataPagingXDsfComponent
     ],
     imports: [
         CommonModule,

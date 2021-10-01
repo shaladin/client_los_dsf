@@ -13,6 +13,8 @@ import { NapDetailFormDsfComponent } from '../DSF/CFNA-dsf/nap-detail-form-dsf/n
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { NapDetailFormXComponent } from 'app/impl/NEW-NAP/CFNA/nap-detail-form/nap-detail-form-x.component';
 import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/CFNA/nap-cust-main-data/nap-cust-main-data-x.component';
+import { NapCustMainDataXDsfComponent } from '../DSF/CFNA-dsf/nap-cust-main-data-x-dsf/nap-cust-main-data-x-dsf.component';
+import { NapDetailFormXDsfComponent } from '../DSF/CFNA-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -68,10 +70,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.NAP2_X,
+        component: NapDetailFormXDsfComponent,
+        data: {
+          title: 'NAP Detail Dsf'
+        }
+      },
+      {
         path: PathConstantX.NAP1_X,
         component: NapCustMainDataXComponent,
         data: {
           title: 'NAP Cust Main Data'
+        }
+      },
+      {
+        path: PathConstantDsf.NAP1_X,
+        component: NapCustMainDataXDsfComponent,
+        data: {
+          title: 'NAP Cust Main Data Dsf'
         }
       },
     ]

@@ -25,6 +25,8 @@ import { NapCustMainDataDsfComponent } from "../DSF/CFNA-dsf/nap-cust-main-data-
 import { NapDetailFormDsfComponent } from "../DSF/CFNA-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component";
 import { NapDetailFormXComponent } from "app/impl/NEW-NAP/CFNA/nap-detail-form/nap-detail-form-x.component";
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/CFNA/nap-cust-main-data/nap-cust-main-data-x.component";
+import { NapCustMainDataXDsfComponent } from "../DSF/CFNA-dsf/nap-cust-main-data-x-dsf/nap-cust-main-data-x-dsf.component";
+import { NapDetailFormXDsfComponent } from "../DSF/CFNA-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -69,7 +71,9 @@ export const customCurrencyMaskConfig = {
     NapCustMainDataDsfComponent,
     NapDetailFormDsfComponent,
     NapDetailFormXComponent,
-    NapCustMainDataXComponent
+    NapCustMainDataXComponent,
+    NapCustMainDataXDsfComponent,
+    NapDetailFormXDsfComponent
   ],
   providers: [
     NGXToastrService

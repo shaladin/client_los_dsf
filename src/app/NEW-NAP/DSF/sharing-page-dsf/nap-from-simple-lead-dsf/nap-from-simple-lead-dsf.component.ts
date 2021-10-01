@@ -5,6 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -37,37 +38,33 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
 
   ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
-    this.arrCrit = new Array();    
-    this.makeCriteria();
-
-    this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchAppFromSimpleLead.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromSimpleLead.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "RO.OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
+    if (this.userAccess.RoleCode == 'MKT-MAO' || this.userAccess.RoleCode == 'DPC' || this.userAccess.RoleCode == 'MKT-MO')
+    {
+    
+      this.inputPagingObj = new UcPagingObj();
+      this.inputPagingObj._url="./assets/ucpaging/searchAppFromSimpleLead.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromSimpleLead.json";
+  
+      if(environment.isCore){
+        this.inputPagingObj._url="./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+        this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
       }
-    ];
-
-    this.inputPagingObj.addCritInput = this.arrCrit;
-  }
-
-  makeCriteria(){
-    var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'LEAD_STAT';
-    critObj.value = 'RAPP';
-    this.arrCrit.push(critObj);
+  
+      this.inputPagingObj.ddlEnvironments = [
+        {
+          name: "RO.OFFICE_CODE",
+          environment: environment.FoundationR3Url + "/v1"
+        },
+        {
+          name: "L.MR_LEAD_SOURCE_CODE",
+          environment: environment.FoundationR3Url + "/v1"
+        }
+      ];
+    }
+    else
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
+    }
   }
 
   AddApp(ev){

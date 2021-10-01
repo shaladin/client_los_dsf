@@ -63,8 +63,11 @@ export const ROUTES: RouteInfo[] = [
       {
         Path: '', Title: 'New Consumer Finance 4W', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X, Title: 'NAP 1 X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_PAGING, Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstant.NAP_CUST_COMPL_PAGING, Title: 'NAP 4', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP, Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }, { Attr: "IsNapVersionMainData", Value: "true" }] }
@@ -72,7 +75,7 @@ export const ROUTES: RouteInfo[] = [
       },
       { Path: NavigationConstant.NAP_CF4W_PAGING, Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       // { Path: NavigationConstant.NAP_SHARING_FROM_LEAD_PAGING, Title: 'New Application from Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
-      { Path: NavigationConstant.NAP_SHARING_FROM_SIMPLE_LEAD_PAGING, Title: 'New Application from Simple Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+      { Path: NavigationConstantDsf.NAP_SHARING_FROM_SIMPLE_LEAD_PAGING, Title: 'New Application from Simple Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP1_SHARING_FROM_LEAD_PAGING, Title: 'NAP 1 From Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING, Title: 'Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING, Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
@@ -80,10 +83,13 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING, Title: 'Phone Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING, Title: 'Fraud Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_CRD_INVESTIGATION_PAGING, Title: 'Credit Investigation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
-      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING, Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING_X, Title: 'Credit Review X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+      { Path: NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING, Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING, Title: 'Credit Review Baru', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PROTOTYPE_PAGING, Title: 'Credit Review Prototype', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
-      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_PAGING, Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_PAGING, Title: 'Credit Approval Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+      { Path: NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING, Title: 'Credit Approval CR', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+      { Path: NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING, Title: 'Credit Approval CR', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_PAGING, Title: 'Customer Confirmation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstantDsf.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING, Title: 'Document Signer Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_ACT_PAGING, Title: 'Agreement Activation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
@@ -145,7 +151,8 @@ export const ROUTES: RouteInfo[] = [
       {
         Path: '', Title: 'New CFNA', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X, Title: 'NAP 1 X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           //{ Path: NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_PAGING, Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           { Path: NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
@@ -156,7 +163,7 @@ export const ROUTES: RouteInfo[] = [
         ], Params: []
       },
       { Path: NavigationConstant.NAP_SHARING_FROM_LEAD_PAGING, Title: 'New Application from Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
-      { Path: NavigationConstant.NAP_SHARING_FROM_SIMPLE_LEAD_PAGING, Title: 'New Application from Simple Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+      { Path: NavigationConstantDsf.NAP_SHARING_FROM_SIMPLE_LEAD_PAGING, Title: 'New Application from Simple Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       { Path: NavigationConstant.NAP1_SHARING_FROM_LEAD_PAGING, Title: 'NAP 1 From Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       // { Path: NavigationConstant.NAP_CFNA_PAGING, Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       // { Path: NavigationConstant.NAP_SHARING_FROM_LEAD_PAGING, Title: 'New Application from Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }]},
@@ -168,8 +175,8 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING, Title: 'Phone Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       // { Path: NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING, Title: 'Fraud Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       // { Path: NavigationConstant.NAP_CRD_PRCS_NEW_CRD_INVESTIGATION_PAGING, Title: 'Credit Investigation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
-      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_CFNA_PAGING, Title: 'Credit Review Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
-      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_CFNA_PAGING, Title: 'Credit Approval Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING_X, Title: 'Credit Review X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_PAGING, Title: 'Credit Approval Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       // { Path: NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CFNA_PAGING, Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING, Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
       // { Path: NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CFNA_PAGING, Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
@@ -216,7 +223,8 @@ export const ROUTES: RouteInfo[] = [
       {
         Path: '', Title: 'New Finance Leasing 4W', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X, Title: 'NAP 1 X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_PAGING, Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_CUST_COMPL_PAGING, Title: 'NAP 4', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
@@ -230,12 +238,13 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING, Title: 'Phone Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING, Title: 'Fraud Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_CRD_INVESTIGATION_PAGING, Title: 'Credit Investigation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
-      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING, Title: 'Credit Review Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING_X, Title: 'Credit Review X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING, Title: 'Credit Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
-      { Path: NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING, Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+      { Path: NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_PAGING, Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_PAGING, Title: 'Customer Confirmation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_ACT_PAGING, Title: 'Agreement Activation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
-      { Path: NavigationConstantDsf.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING, Title: 'Document Signer', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+      { Path: NavigationConstantDsf.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING, Title: 'Document Signer Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+      { Path: NavigationConstant.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING, Title: 'Document Signer', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING, Title: 'Document Printing', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PO_PAGING, Title: 'Purchase Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING, Title: 'Delivery Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
@@ -283,8 +292,8 @@ export const ROUTES: RouteInfo[] = [
       {
         Path: '', Title: 'New Refinancing 4W', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
+          { Path: NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
+          { Path: NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_PAGING, Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
           { Path: NavigationConstant.NAP_CUST_COMPL_PAGING, Title: 'NAP 4', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP, Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }, { Attr: "IsNapVersionMainData", Value: "true" }] }
@@ -380,7 +389,7 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstantDsf.REPORT_FACT_REMINDER1, Title: 'Reminder Outstanding 1 Day Later', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_REMINDER5, Title: 'Reminder Outstanding 5 Day Later', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_NEW_ALLOCATION_CEILING, Title: 'New Allocation Ceiling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
-          { Path: NavigationConstantDsf.REPORT_PLAFOND_FACTORING, Title: 'Print FCT/DF', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_PLAFOND_FACTORING, Title: 'Print Plafond FCT', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_PLAFOND_DF, Title: 'Print Plafond DF', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_DISBURSEMENR_ORDER_PAGING, Title: 'Factoring Disbursement Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
         ], Params: [] 
@@ -393,7 +402,8 @@ export const ROUTES: RouteInfo[] = [
       {
         Path: '', Title: 'New Dealer Financing', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X, Title: 'NAP 1 X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_PAGING, Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
           { Path: NavigationConstant.NAP_CUST_COMPL_PAGING, Title: 'NAP 4', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },

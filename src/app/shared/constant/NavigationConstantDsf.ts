@@ -1,3 +1,4 @@
+import { PathConstantX } from "app/impl/shared/constant/PathConstantX";
 import { NavigationConstant } from "./NavigationConstant";
 import { PathConstant } from "./PathConstant";
 import { PathConstantDsf } from "./PathConstantDsf";
@@ -68,5 +69,25 @@ export class NavigationConstantDsf {
 
      public static NAP_SHARING_FROM_SIMPLE_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstantDsf.NAP_SIMPLE_LEAD_PAGING; //"/Nap/Sharing/NapFromSimpleLead/Paging"
      public static NAP_SHARING_FROM_SIMPLE_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstantDsf.NAP_SIMPLE_LEAD_DETAIL; //"/Nap/Sharing/NapFromSimpleLead/Detail"
+
+     public static NAP_MAIN_DATA_NAP1_PAGING_X = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantDsf.NAP1_PAGING_X_DSF; //"/Nap/MainData/NAP2/Paging"
+     //public static NAP_MAIN_DATA_NAP2_PAGING_X = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantDsf.NAP2_PAGING_X_DSF; //"/Nap/MainData/NAP2/Paging"
+     
+     public static NAP_MAIN_DATA_NAP1_ADD_X = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantDsf.NAP1_ADD_X_DSF; //"/Nap/MainData/NAP1/Add"
+
+     public static NAP_CF4W_NAP1 = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstantDsf.NAP1_X; //"Nap/ConsumerFinance/NAP1X"
+     public static NAP_FL4W_NAP1 = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstantDsf.NAP1_X; //"Nap/FinanceLeasing/NAP1X"
+     public static NAP_CFNA_NAP1 = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstantDsf.NAP1_X; //"Nap/CFNA/NAP1X"
+     public static NAP_DLFN_NAP1 = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstantDsf.NAP1_X; //"/Nap/DLFN/NAP1X"
+
+     public static NAP_CF4W_NAP2_X = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstantDsf.NAP2_X; //"Nap/ConsumerFinance/NAP1X"
+     public static NAP_FL4W_NAP2_X = "/" + NavigationConstant.NAP_FL4W_HEADER + "/" + PathConstantDsf.NAP2_X; //"Nap/FinanceLeasing/NAP1X"
+     public static NAP_CFNA_NAP2_X = "/" + NavigationConstant.NAP_CFNA_HEADER + "/" + PathConstantDsf.NAP2_X; //"Nap/CFNA/NAP1X"
+     public static NAP_DLFN_NAP2_X = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstantDsf.NAP2_X; //"/Nap/DLFN/NAP1X"
+
+     public static NAP_CRD_PRCS_CRD_REVIEW_PAGING_X = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantDsf.CRD_REVIEW_PAGING_X; //"Nap/CreditProcess/CreditReview/Paging"
+     public static NAP_CRD_PRCS_CRD_REVIEW_CR_DETAIL_X = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantDsf.CRD_REVIEW_DETAIL_X; //"Nap/CreditProcess/CreditReviewCr/DetailX"
+
+     public static NAP_CRD_PRCS_CRD_APPRV_DETAIL_X = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantDsf.CRD_APPRV_DETAIL_X; //"/Nap/CreditProcess/CreditApproval/Paging"
 }
  

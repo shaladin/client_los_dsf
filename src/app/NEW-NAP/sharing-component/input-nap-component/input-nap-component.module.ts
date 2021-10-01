@@ -139,6 +139,9 @@ import {FinancialDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/in
 import {SingleInstDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/single-inst-dlfn/single-inst-dlfn-x.component';
 import {SchmRegularFixDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn-x.component';
 import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn-x.component';
+import { ApplicationDataXDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-x-dsf/application-data-x-dsf.component";
+import { ApplicationDataXFL4WDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-x-FL4W-dsf/application-data-x-FL4W-dsf.component";
+import { ApplicationDataDlfnXDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-dlfn-x-dsf/application-data-dlfn-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -287,7 +290,10 @@ export const customCurrencyMaskConfig = {
     FinancialDataDlfnXComponent,
     SingleInstDlfnXComponent,
     SchmRegularFixDlfnXComponent,
-    SchmEvenPrincipalDlfnXComponent
+    SchmEvenPrincipalDlfnXComponent,
+    ApplicationDataXDsfComponent,
+    ApplicationDataXFL4WDsfComponent,
+    ApplicationDataDlfnXDsfComponent,
   ],
   imports: [
     CommonModule,
@@ -433,7 +439,10 @@ export const customCurrencyMaskConfig = {
     FinancialDataDlfnXComponent,
     SingleInstDlfnXComponent,
     SchmRegularFixDlfnXComponent,
-    SchmEvenPrincipalDlfnXComponent
+    SchmEvenPrincipalDlfnXComponent,
+    ApplicationDataXDsfComponent,
+    ApplicationDataXFL4WDsfComponent,
+    ApplicationDataDlfnXDsfComponent,
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

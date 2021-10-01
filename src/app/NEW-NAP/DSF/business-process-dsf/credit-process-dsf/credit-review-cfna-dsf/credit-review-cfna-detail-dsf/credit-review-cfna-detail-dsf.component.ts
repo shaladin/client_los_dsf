@@ -454,14 +454,6 @@ export class CreditReviewCfnaDetailDsfComponent implements OnInit {
     this.InputObj.RequestedBy = this.UserAccess.UserName;
     this.InputObj.OfficeCode = this.UserAccess.OfficeCode;
     this.InputObj.ApvTypecodes = listTypeCode;
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstantDsf.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstantDsf.SCHM_CODE_CRD_APV_MPF;
     this.InputObj.Reason = this.DDLRecommendation;

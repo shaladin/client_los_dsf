@@ -21,7 +21,6 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
-import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddAppRoleObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
@@ -93,14 +92,14 @@ export class CustMainDataAddDsfComponent implements OnInit {
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.isRequired = false;
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -279,7 +278,7 @@ export class CustMainDataAddDsfComponent implements OnInit {
       reqAddNapObj.BizTemplateCode = this.bizTemplateCode;
 
       requestAddNapObj = reqAddNapObj;
-      AddNapUrl = URLConstant.AddNewApplication;
+      AddNapUrl = environment.isCore ? URLConstant.AddNewApplicationV2 : URLConstant.AddNewApplication;
     }
     else {
 
@@ -293,7 +292,7 @@ export class CustMainDataAddDsfComponent implements OnInit {
         AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
       }
       else {
-        AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+        AddNapUrl =  environment.isCore ? URLConstant.AddNewApplicationFromCopyV2 : URLConstant.AddNewApplicationFromCopy;
       }
     }
 
@@ -301,19 +300,9 @@ export class CustMainDataAddDsfComponent implements OnInit {
       (response) => {
         setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
-        let requestAddAppRoleObj: ReqAddAppRoleObj = new ReqAddAppRoleObj();
-
-        requestAddAppRoleObj.AppId = response.Id;
-        requestAddAppRoleObj.AppRoleCode = this.user.RoleCode;
-        
-        this.http.post<ReqAddAppRoleObj>(URLConstantDsf.AddNapRole, requestAddAppRoleObj).subscribe(
-          (response) => {
-            
-          }
-        )
           switch (this.bizTemplateCode) {
             case CommonConstant.CF4W:
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response.Id });
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP1], { "AppId": response.Id });
               break;
             case CommonConstant.CFRFN4W:
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id });
@@ -322,23 +311,23 @@ export class CustMainDataAddDsfComponent implements OnInit {
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response.Id });
               break;
             case CommonConstant.FL4W:
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response.Id });
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_FL4W_NAP1], { "AppId": response.Id });
               break;
             case CommonConstant.CFNA:
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id });
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CFNA_NAP1], { "AppId": response.Id });
               break;
             case CommonConstant.OPL:
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": response.Id });
               break;
             case CommonConstant.DF :
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": response.Id});
-            break;
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_DLFN_NAP1], { "AppId": response.Id});
+              break;
           }
       }
     );
   }
 
   buttonCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X], { "BizTemplateCode": this.bizTemplateCode });
   }
 }

@@ -12,7 +12,8 @@ export class URLConstantDsf {
     public static AddReceiptForm = environment.losUrl + "/ReceiptFormDsfX/AddReceiptFormDsfX";
     public static EditReceiptForm = environment.losUrl + "/ReceiptFormDsfX/EditReceiptFormDsfX";
     public static GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId = environment.losUrl + "/CustomerGroupPlafondDsf/GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId";
-    public static AddCustomerGroupPlafondRequestDsf = environment.losUrl + "/CustomerGroupPlafondDsf/AddCustomerGroupPlafondRequestDsf";
+    public static AddCustomerGroupPlafondRequestDsf = environment.losUrl + "/v1" + "/CustomerGroupPlafondDsf/AddCustomerGroupPlafondRequestDsf";
+    public static AddCustomerGroupPlafondRequestDsfV2 = environment.losUrl + "/v2" + "/CustomerGroupPlafondDsf/AddCustomerGroupPlafondRequestDsf";
     public static CustomerGroupPlafondApproval = environment.losUrl + "/ApprovalDsf/CustomerGroupPlafondApprovalDsf";
     public static GetCustomerGroupPlafondDsfByCustomerGroupPlafondId = environment.losUrl + "/CustomerGroupPlafondDsf/GetCustomerGroupPlafondDsfByCustomerGroupPlafondId";
 

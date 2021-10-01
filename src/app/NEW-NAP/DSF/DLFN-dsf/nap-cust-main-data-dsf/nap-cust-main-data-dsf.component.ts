@@ -15,6 +15,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-nap-cust-main-data-dsf',
@@ -33,7 +34,7 @@ export class NapCustMainDataDsfComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
   mode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
@@ -65,7 +66,8 @@ export class NapCustMainDataDsfComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private toastr: NGXToastrService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -73,6 +75,9 @@ export class NapCustMainDataDsfComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
+      }
+      else{
+        this.wfTaskListId = environment.isCore ? "" : 0;
       }
       if (params["from"] != null) {
         this.from = params["from"];
@@ -84,7 +89,6 @@ export class NapCustMainDataDsfComponent implements OnInit {
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationDF.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",
@@ -140,7 +144,7 @@ export class NapCustMainDataDsfComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X], { "BizTemplateCode": this.bizTemplateCode });
   }
 
   MakeViewReturnInfoObj() {
@@ -214,24 +218,21 @@ export class NapCustMainDataDsfComponent implements OnInit {
 
   LastStep() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
+    let SubmitNapCustMainDataUrl = environment.isCore ? URLConstant.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
+    this.http.post(SubmitNapCustMainDataUrl, this.NapObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }
 
   ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
-      () => {
-      });
+    if(environment.isCore){
+      this.claimTaskService.ClaimTaskNapCustMainDataV2(this.appId, this.wfTaskListId);
+    }else{
+      this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
+    }
   }
 
   // GetCallback(ev) {

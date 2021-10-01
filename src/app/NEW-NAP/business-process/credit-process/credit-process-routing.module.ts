@@ -42,6 +42,9 @@ import { CommissionReservedFundDetailComponent } from './commission-reserved-fun
 import { CreditReviewCrDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-detail/credit-review-cr-detail-x.component';
 import { CreditReviewCrPagingXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-review-cr/credit-review-cr-paging/credit-review-cr-paging-x.component';
 import { CreditApprovalCrDetailXComponent } from 'app/impl/NEW-NAP/business-process/credit-process/credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail-x.component';
+import { CreditReviewDetailXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-x-dsf/credit-review-detail-x-dsf/credit-review-detail-x-dsf.component';
+import { CreditReviewPagingXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-x-dsf/credit-review-paging-x-dsf/credit-review-paging-x-dsf.component';
+import { CreditApprovalDetailXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-x-dsf/credit-approval-detail-x-dsf/credit-approval-detail-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -167,6 +170,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CRD_APPRV_DETAIL_X,
+        component: CreditApprovalDetailXDsfComponent,
+        data: {
+          title: 'Credit Approval Detail Dsf'
+        }
+      },
+      {
         path: PathConstant.CRD_APPRV_CR_DETAIL,
         component: CreditApprovalCrDetailComponent,
         data: {
@@ -286,10 +296,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CRD_REVIEW_PAGING_X,
+        component: CreditReviewPagingXDsfComponent,
+        data: {
+          title: 'Credit Review Paging Dsf'
+        }
+      },
+      {
         path: PathConstantX.CRD_REVIEW_CR_DETAIL_X,
         component: CreditReviewCrDetailXComponent,
         data: {
           title: 'Credit Review Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.CRD_REVIEW_DETAIL_X,
+        component: CreditReviewDetailXDsfComponent,
+        data: {
+          title: 'Credit Review Detail Dsf'
         }
       },
       {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
@@ -13,33 +13,43 @@ import { ThirdPartyProfindRsltObj } from 'app/shared/model/ThirdPartyData/ThirdP
 import { ThirdPartyRapindoRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyRapindoRsltObj.Model';
 import { ThirdPartyResultHObj } from 'app/shared/model/ThirdPartyData/ThirdPartyResultH.Model';
 import { ThirdPartySlikRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartySlikRsltObj.Model';
-
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'app-crd-rvw-third-party-checking-dsf',
   templateUrl: './crd-rvw-third-party-checking-dsf.component.html',
   styleUrls: ['./crd-rvw-third-party-checking-dsf.component.css']
 })
+
 export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
 
   @Input() CrdRvwCustInfoId: number;
+  @Input() CrdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   @Input() AppNo: string = "";
-  @Input() appId: number = 0;
-  MrCustTypeCode: string;
   IsUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  IsUseTs: boolean = false;
+  IsUsePefindo: boolean = false;
+  IsUseRapindo: boolean = false;
+  IsUseDukcapil: boolean = false;
+  IsUseProfind: boolean = false;
+  IsUseSlik: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   constructor(
     private http: HttpClient,
-    private modalService: NgbModal,) { }
+    private modalService: NgbModal) { }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     await this.GetIsUseDigitalization();
-
-    if(this.IsUseDigitalization == "1"){
+    await this.getDigitalizationSvcType();
+    if (this.IsUseDigitalization == "1" && this.IsSvcExist) {
       await this.GetCrdRvwThirdPartyData();
     }
   }
-
-  readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
 
   ThirdPartyDukcapilRsltObj: ThirdPartyDukcapilRsltObj = new ThirdPartyDukcapilRsltObj();
   ThirdPartyPefindoRsltObj: ThirdPartyPefindoRsltObj = new ThirdPartyPefindoRsltObj();
@@ -57,7 +67,6 @@ export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
       DataActive: 0,
       DataNoActive: 0,
     };
-
   async GetCrdRvwThirdPartyData() {
     await this.http.post<ThirdPartyResultHObj>(URLConstant.GetCrdRvwThirdPartyData, { TrxNo: this.AppNo }).toPromise().then(
       (response) => {
@@ -69,24 +78,14 @@ export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
 
         for (let index = 0; index < this.ListThirdPartyRapindoRsltObj.length; index++) {
           const element = this.ListThirdPartyRapindoRsltObj[index];
-          if(element.IsExists) this.RapindoDataObj.DataExist++;
+          if (element.IsExists) this.RapindoDataObj.DataExist++;
 
-          if(element.IsActive) this.RapindoDataObj.DataActive++;
+          if (element.IsActive) this.RapindoDataObj.DataActive++;
           else this.RapindoDataObj.DataNoActive++;
         }
       }
     )
 
-    var appObj = { Id: this.appId };
-    await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
-      (response) => {
-        this.AppNo = response.AppNo;
-        this.MrCustTypeCode = response.MrCustTypeCode;
-        this.dataRobotInfoObj.AppNo = this.AppNo;
-        this.dataRobotInfoObj.MrCustTypeCode = this.MrCustTypeCode;
-      }
-    )
-    
     await this.http.post<ThirdPartyDataRobotObj>(URLConstantDsf.GetCrdRvwDataRobot, this.dataRobotInfoObj).toPromise().then(
       (response) => {
         this.dataRobotInfoObj = response;
@@ -97,11 +96,94 @@ export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeIsUseDigitalization }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.IsUseDigitalization = response.GsValue;
       }
     )
   }
 
+  pefindoHandler() {
+    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true);
+  }
+
+  closeResult: any;
+  modalContainer: any;
+  urlLink: string = "";
+  trustingSocialHandler(model) {
+    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_TRUST_SOC + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo;
+    // window.open(this.urlLink);
+    this.modalContainer = this.modalService.open(model);
+    this.modalContainer.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.modalContainer.close();
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modalContainer.close();
+    });
+  }
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+
+      var svcTypeDukcapil = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeDukcapil);
+
+      if(svcTypeDukcapil != null){
+        this.IsUseDukcapil = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypePefindo = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypePefindo);
+
+      if(svcTypePefindo != null){
+        this.IsUsePefindo = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypeTs = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeTrustingSocial);
+
+      if(svcTypeTs != null){
+        this.IsUseTs = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypeProfind = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeProfind);
+
+      if(svcTypeProfind != null){
+        this.IsUseProfind = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypeRapindo = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeRapindo);
+
+      if(svcTypeRapindo != null){
+        this.IsUseRapindo = true;
+        this.IsSvcExist = true;
+      }
+
+      var svcTypeSlik = listSvcType.find(x => x == CommonConstant.DigitalizationSvcTypeSlik);
+
+      if(svcTypeSlik != null){
+        this.IsUseSlik = true;
+        this.IsSvcExist = true;
+      }
+    }
+  }
 }
+
