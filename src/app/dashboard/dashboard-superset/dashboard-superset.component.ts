@@ -38,7 +38,7 @@ export class DashboardSupersetComponent implements OnInit {
 
   async ngOnInit() {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.user = context[CommonConstant.EMP_NAME];
+    this.user = context[CommonConstant.USER_NAME];
     this.officeCode = context[CommonConstant.OFFICE_CODE];
 
     this.checkRole();
