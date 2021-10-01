@@ -21,7 +21,7 @@ export class ReturnHandlingNewEditAppPagingComponent implements OnInit {
   BizTemplateCode: string;
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,7 +44,7 @@ export class ReturnHandlingNewEditAppPagingComponent implements OnInit {
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchReturnHandlingNAP2V2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchReturnHandlingNAP2V2.json";
       this.inputPagingObj.isJoinExAPI = true
-      
+
       this.RequestTaskModel.ProcessKey = CommonConstant.RTN_EDIT_APP + this.BizTemplateCode;
       this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.EDIT_APP + this.BizTemplateCode;
@@ -52,7 +52,7 @@ export class ReturnHandlingNewEditAppPagingComponent implements OnInit {
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
-      
+
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "AppNo";
@@ -78,7 +78,7 @@ export class ReturnHandlingNewEditAppPagingComponent implements OnInit {
   GetCallback(ev) {
     if (ev.Key == "Edit") {
       let wfTaskListIdTemp = environment.isCore? ev.RowObj.Id : ev.RowObj.WfTaskListId;
-      
+
       if (this.BizTemplateCode == CommonConstant.CF4W) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
@@ -93,6 +93,9 @@ export class ReturnHandlingNewEditAppPagingComponent implements OnInit {
       }
       if (this.BizTemplateCode == CommonConstant.FCTR) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+      }
+      if (this.BizTemplateCode == CommonConstant.DF) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
     }
     if (ev.Key == "ViewProdOffering") {

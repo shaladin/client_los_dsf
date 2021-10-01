@@ -10,15 +10,15 @@
       </div>
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="TrialForm" (ngSubmit)="TrialForm.valid && Print()"
-          #enjiForm="ngForm">
+              #enjiForm="ngForm">
           <div class="form-body">
 
             <div class="form-group row">
               <label class="col-md-3 adins-required-label" for="ProdOffering" translate>Product Offering</label>
               <div class="col-md-6">
                 <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupProductOfferingObj"
-                  [parentForm]="TrialForm" [identifier]="'lookupProductOffering'"
-                  (lookup)="ProductOfferingEvent($event)">
+                                     [parentForm]="TrialForm" [identifier]="'lookupProductOffering'"
+                                     (lookup)="ProductOfferingEvent($event)">
                 </lib-uclookupgeneric>
               </div>
             </div>
@@ -30,7 +30,7 @@
                 <label class="col-md-3" translate>Customer Name</label>
                 <div class="col-md-3">
                   <input type="text" class="form-control" formControlName="CustName"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.CustName.invalid }">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.CustName.invalid }">
                   <lib-uc-show-errors [control]="TrialForm.controls.CustName" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -40,7 +40,7 @@
                 <label class="col-md-3" translate>Address</label>
                 <div class="col-md-3">
                   <textarea class="form-control adInsInput" formControlName="Addr"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.Addr.invalid }"></textarea>
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.Addr.invalid }"></textarea>
                   <lib-uc-show-errors [control]="TrialForm.controls.Addr" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -50,7 +50,7 @@
                 <label class="col-md-3" translate>Mobile Phone</label>
                 <div class="col-md-3">
                   <input type="text" class="form-control" formControlName="MobilePhone"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MobilePhone.invalid }">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MobilePhone.invalid }">
                   <lib-uc-show-errors [control]="TrialForm.controls.MobilePhone" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -65,8 +65,8 @@
                 <label class="col-md-3  adins-required-label" translate>Asset Price</label>
                 <div class="col-md-3">
                   <input type="" currencyMask id="assetPriceAmt" class="form-control" formControlName="AssetPriceAmt"
-                    (focusout)="updateValueDownPaymentAmt()"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.AssetPriceAmt.invalid}">
+                         (focusout)="updateValueDownPaymentAmt()"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.AssetPriceAmt.invalid}">
                   <lib-uc-show-errors [control]="TrialForm.controls.AssetPriceAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -76,7 +76,7 @@
                 <label class="col-md-3 adins-required-label" translate>Down Payment Type</label>
                 <div class="col-md-3">
                   <select class="form-control" id="selectedDpTypeId" formControlName="selectedDpType"
-                    (change)="DpTypeChange()" style="width:50%">
+                          (change)="DpTypeChange()" style="width:50%">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of dpTypeValue" [value]="item.Key">
                       {{item.Value}}
@@ -92,27 +92,27 @@
                 <label class="col-md-3  adins-required-label" translate>Down Payment (%/Amt)</label>
                 <div class="col-md-3" style="border-right: 1px solid grey">
                   <input type="" currencyMask id="downPaymentPrctg" class="form-control"
-                    formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)"
-                    [options]="{min: 0, max:100, suffix:' %'}"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.DownPaymentPrctg.invalid}"
-                    *ngIf="TrialForm.controls.selectedDpType.value == 'PRCTG'">
+                         formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)"
+                         [options]="{min: 0, max:100, suffix:' %'}"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.DownPaymentPrctg.invalid}"
+                         *ngIf="TrialForm.controls.selectedDpType.value == 'PRCTG'">
                   <input type="" currencyMask id="downPaymentPrctg" class="form-control"
-                    formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)" readonly
-                    [options]="{min: 0, max:100, suffix:' %'}"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.DownPaymentPrctg.invalid}"
-                    *ngIf="TrialForm.controls.selectedDpType.value != 'PRCTG'">
+                         formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)" readonly
+                         [options]="{min: 0, max:100, suffix:' %'}"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.DownPaymentPrctg.invalid}"
+                         *ngIf="TrialForm.controls.selectedDpType.value != 'PRCTG'">
                   <lib-uc-show-errors [control]="TrialForm.controls.DownPaymentPrctg" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-3">
                   <input type="" currencyMask id="downPaymentAmt" class="form-control" formControlName="DownPaymentAmt"
-                    (focusout)="updateValueDownPaymentPrctg($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.DownPaymentAmt.invalid}"
-                    *ngIf="TrialForm.controls.selectedDpType.value == 'AMT'">
+                         (focusout)="updateValueDownPaymentPrctg($event)"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.DownPaymentAmt.invalid}"
+                         *ngIf="TrialForm.controls.selectedDpType.value == 'AMT'">
                   <input type="" currencyMask id="downPaymentAmt" class="form-control" formControlName="DownPaymentAmt"
-                    (focusout)="updateValueDownPaymentPrctg($event)" readonly
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.DownPaymentAmt.invalid}"
-                    *ngIf="TrialForm.controls.selectedDpType.value != 'AMT'">
+                         (focusout)="updateValueDownPaymentPrctg($event)" readonly
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.DownPaymentAmt.invalid}"
+                         *ngIf="TrialForm.controls.selectedDpType.value != 'AMT'">
                   <lib-uc-show-errors [control]="TrialForm.controls.DownPaymentAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -123,8 +123,8 @@
                 <label class="col-md-3 adInsLabel" *ngIf="BizTmpltCode == 'OPL'">Rental Period (In Months) </label>
                 <div class="col-md-3">
                   <input type="number" class="form-control adInsInput number" formControlName="Tenor" min="0"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.Tenor.invalid }"
-                    (change)="ChangeNumOfInstallmentTenor()">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.Tenor.invalid }"
+                         (change)="ChangeNumOfInstallmentTenor()">
                   <lib-uc-show-errors [control]="TrialForm.controls.Tenor" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -134,8 +134,8 @@
                 <label class="col-md-3 adInsLabel">Payment Frequency</label>
                 <div class="col-md-3">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="PayFreqCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.PayFreqCode.invalid }"
-                    (change)="ChangeNumOfInstallmentPayFreq($event)">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.PayFreqCode.invalid }"
+                          (change)="ChangeNumOfInstallmentPayFreq($event)">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['PAYFREQ']" value="{{it.Key}}">
                       {{it.Value}}
@@ -157,8 +157,8 @@
                 </div>
                 <div class="col-md-3">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="MrInstSchemeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MrInstSchemeCode.invalid }"
-                    (change)="ChooseInstScheme($event)">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MrInstSchemeCode.invalid }"
+                          (change)="ChooseInstScheme($event)">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
                       {{it.Value}}
@@ -174,8 +174,8 @@
                 <label class="col-md-3 adInsLabel" *ngIf="BizTmpltCode == 'OPL'"> First Rental Type </label>
                 <div class="col-md-3">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MrFirstInstTypeCode.invalid }"
-                    (change)="ChooseFirstInstType($event)">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.MrFirstInstTypeCode.invalid }"
+                          (change)="ChooseFirstInstType($event)">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
                       {{it.Value}}
@@ -195,9 +195,10 @@
               <div class="form-group row">
                 <label class="col-md-3" translate>Insurance</label>
                 <div class="col-md-3">
-                  <input type="" currencyMask id="totalInsCustAmt" class="form-control" formControlName="TotalInsCustAmt"
-                    (focusout)="updateInsuranceAmt()"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.TotalInsCustAmt.invalid}">
+                  <input type="" currencyMask id="totalInsCustAmt" class="form-control"
+                         formControlName="TotalInsCustAmt"
+                         (focusout)="updateInsuranceAmt()"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.TotalInsCustAmt.invalid}">
                   <lib-uc-show-errors [control]="TrialForm.controls.TotalInsCustAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -206,8 +207,8 @@
                 <label class="col-md-3" translate>Insurance Capitalized</label>
                 <div class="col-md-3">
                   <input type="" currencyMask id="insCptlzAmt" class="form-control" formControlName="InsCptlzAmt"
-                    (focusout)="updateInsuranceAmt()"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.InsCptlzAmt.invalid}">
+                         (focusout)="updateInsuranceAmt()"
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.InsCptlzAmt.invalid}">
                   <lib-uc-show-errors [control]="TrialForm.controls.InsCptlzAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -221,128 +222,41 @@
               </button>
             </div>
 
-            <!--FEES-->
+            <!--FINANCIAL DATA & FEES-->
             <div *ngIf="IsGenerate">
-              <!--NORMAL-->
-              <app-fee-x *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W')" [ProdOfferingCode]="ProdOfferingCode"
-                [ParentForm]="TrialForm" [identifier]="'AppFee'">
-              </app-fee-x>
-              <!--END NORMAL-->
 
-              <!--CFNA-->
-              <app-fee-cfna *ngIf="BizTmpltCode == 'CFNA'" [ParentForm]="TrialForm" [identifier]="'AppFee'"
-                [ProdOfferingCode]="ProdOfferingCode">
-              </app-fee-cfna>
-              <!--END CFNA-->
-
-              <!--FL4W-->
-              <app-fee-FL4W *ngIf="BizTmpltCode == 'FL4W'" [ParentForm]="TrialForm" [identifier]="'AppFee'"
-                [ProdOfferingCode]="ProdOfferingCode">
-              </app-fee-FL4W>
-              <!--END FL4W-->
-
-              <!--FCTR-->
-              <!-- <app-fee-fctr *ngIf="BizTmpltCode == 'FCTR'" [ParentForm]="TrialForm" [identifier]="'AppFee'"
-                [ProdOfferingCode]="ProdOfferingCode"></app-fee-fctr> -->
-              <!--END FCTR-->
-
-              <!--DLFN-->
-              <!--END DLFN-->
-              <!--END FEES-->
-
-              <!--FINANCIAL DATA-->
-              <!--NORMAL-->
-              <app-schm-reguler-fix
-                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'RF'"
-                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">
-              </app-schm-reguler-fix>
-              <app-schm-irregular
-                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'IR'"
-                [ParentForm]="TrialForm" [NumOfInst]="NumOfInst" [TrialCalc]="TrialCalc"> </app-schm-irregular>
-              <app-schm-step-up-step-down-normal
-                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'STNM'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-normal>
-              <app-schm-step-up-step-down-leasing
-                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'STLS'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-leasing>
-              <app-schm-step-up-step-down-cummulative
-                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'STCM'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-cummulative>
-              <app-schm-balloon
-                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'BL'"
-                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">
-              </app-schm-balloon>
-              <app-schm-even-principal
-                *ngIf="(BizTmpltCode != 'CFNA' && BizTmpltCode != 'FL4W' && BizTmpltCode != 'FCTR') && TrialForm.controls.MrInstSchemeCode.value == 'EP'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-even-principal>
-              <!--END NORMAL-->
-
-              <!--CFNA-->
-              <app-schm-reguler-fix-cfna
-                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'RF'"
-                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">
-              </app-schm-reguler-fix-cfna>
-              <app-schm-irregular-cfna
-                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'IR'"
-                [ParentForm]="TrialForm" [NumOfInst]="NumOfInst" [TrialCalc]="TrialCalc"> </app-schm-irregular-cfna>
-              <app-schm-step-up-step-down-normal-cfna
-                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'STNM'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-normal-cfna>
-              <app-schm-step-up-step-down-leasing-cfna
-                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'STLS'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-leasing-cfna>
-              <app-schm-step-up-step-down-cummulative-cfna
-                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'STCM'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-cummulative-cfna>
-              <app-schm-balloon-cfna *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'BL'"
-                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">
-              </app-schm-balloon-cfna>
-              <app-schm-even-principal-cfna
-                *ngIf="BizTmpltCode == 'CFNA' && TrialForm.controls.MrInstSchemeCode.value == 'EP'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-even-principal-cfna>
-              <!--END CFNA-->
-
-              <!--FL4W-->
-              <app-schm-reguler-fix-FL4W
-                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'RF'"
-                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">
-              </app-schm-reguler-fix-FL4W>
-              <app-schm-irregular-FL4W
-                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'IR'"
-                [ParentForm]="TrialForm" [NumOfInst]="NumOfInst" [TrialCalc]="TrialCalc"> </app-schm-irregular-FL4W>
-              <app-schm-step-up-step-down-normal-FL4W
-                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'STNM'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-normal-FL4W>
-              <app-schm-step-up-step-down-leasing-FL4W
-                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'STLS'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-leasing-FL4W>
-              <app-schm-step-up-step-down-cummulative-FL4W
-                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'STCM'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-cummulative-FL4W>
-              <app-schm-balloon-FL4W *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'BL'"
-                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">
-              </app-schm-balloon-FL4W>
-              <app-schm-even-principal-FL4W
-                *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'EP'"
-                [ParentForm]="TrialForm" [TrialCalc]="TrialCalc"></app-schm-even-principal-FL4W>
-              <!--END FL4W-->
-
-              <!--FCTR-->
-              <!-- <app-single-inst-fctr *ngIf="BizTmpltCode == 'FCTR' && TrialForm.controls.MrInstTypeCode.value == 'SINGLE'"
-                [AppId]="AppId" [ParentForm]="FinDataForm"></app-single-inst-fctr>
-              <app-schm-reguler-fix-fctr
-                *ngIf="BizTmpltCode == 'FCTR' && TrialForm.controls.MrInstSchemeCode.value == 'RF' && TrialForm.controls.MrInstTypeCode.value == 'MULTIPLE'"
-                [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-reguler-fix-fctr>
-              <app-schm-even-principal-fctr
-                *ngIf="BizTmpltCode == 'FCTR' && TrialForm.controls.MrInstSchemeCode.value == 'EP' && TrialForm.controls.MrInstTypeCode.value == 'MULTIPLE'"
-                [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal-fctr> -->
-              <!--END FCTR-->
-
-              <!--DLFN-->
-              <!--END DLFN-->
-
+              <app-fee-x [ProdOfferingCode]="ProdOfferingCode" [ParentForm]="TrialForm"
+                         [identifier]="'AppFee'"></app-fee-x>
+              <app-schm-reguler-fix-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'RF'"
+                                      [ParentForm]="TrialForm"
+                                      [BizTemplateCode]="BizTmpltCode"
+                                      [TrialCalc]="TrialCalc"></app-schm-reguler-fix-x>
+              <app-schm-irregular-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'IR'"
+                                    [ParentForm]="TrialForm"
+                                    [TrialCalc]="TrialCalc"
+                                    [BizTemplateCode]="BizTmpltCode"></app-schm-irregular-x>
+              <app-schm-step-up-step-down-normal-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'STNM'"
+                                                   [ParentForm]="TrialForm"
+                                                   [BizTemplateCode]="BizTmpltCode"
+                                                   [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-normal-x>
+              <app-schm-step-up-step-down-leasing-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'STLS'"
+                                                    [ParentForm]="TrialForm"
+                                                    [BizTemplateCode]="BizTmpltCode"
+                                                    [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-leasing-x>
+              <app-schm-step-up-step-down-cummulative-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'STCM'"
+                                                        [ParentForm]="TrialForm"
+                                                        [BizTemplateCode]="BizTmpltCode"
+                                                        [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-cummulative-x>
+              <app-schm-balloon-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'BL'"
+                                  [ParentForm]="TrialForm"
+                                  [TrialCalc]="TrialCalc"
+                                  [BizTemplateCode]="BizTmpltCode"></app-schm-balloon-x>
+              <app-schm-even-principal-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'EP'"
+                                         [ParentForm]="TrialForm"
+                                         [BizTemplateCode]="BizTmpltCode"
+                                         [TrialCalc]="TrialCalc"></app-schm-even-principal-x>
             </div>
-            <!--END FINANCIAL DATA-->
+            <!--END FINANCIAL DATA & FEES-->
 
             <!-- <div *ngIf="IsGenerate" class="form-inline-right">
               <button class="btn btn-raised btn-primary margin-r-5" translate type="submit">

@@ -33,6 +33,7 @@ export class PathConstantX {
   //#region View-Enhancing-Module
   public static VIEW_MOU_CUST_X = 'Mou/CustView/X';
   public static VIEW_CHANGE_MOU_X = "ChangeMouView/X";
+  public static VIEW_AGRMNT_X = "AgrmntView/X";
   //#endregion
 
   //#region Nap-Crd-Prcs
@@ -69,6 +70,8 @@ export class PathConstantX {
   public static INSURANCE_ORDER_DETAIL_X = PathConstantX.INSURANCE_ORDER_X + '/' + PathConstantX.DETAIL_X;
   public static COPY_CANCEL_APP = "CopyCancelledApplicationX";
   public static NAP_DOC_PRINT_VIEW_X = PathConstant.NAP_DOC_PRINT + "/" + PathConstantX.VIEW;
+  public static NAP_DOC_SIGNER_PAGING_X = PathConstant.NAP_DOC_SIGNER + "/" + PathConstantX.PAGING;
+  public static NAP_DOC_SIGNER_DETAIL_X = PathConstant.NAP_DOC_SIGNER + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Nap-Cust-Compl
@@ -137,8 +140,10 @@ export class PathConstantX {
   public static CUST_COMPL_PRSNL = PathConstant.DETAIL + "/" + PathConstantX.PERSONAL;
   public static CUST_COMPL_COY = PathConstant.DETAIL + "/" + PathConstantX.COY;
   //endregion
-	
+
   //#region Nap-Additional-Prcs
+  public static RETURN_HANDLING_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstantX.PAGING;
+  public static RETURN_HANDLING_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
   public static RETURN_HANDLING_SURVEY_VERIF_PAGING_X = PathConstant.RETURN_HANDLING + "/" + PathConstantX.SURVEY_VERIF_PAGING;
   //#endregion
 
@@ -146,11 +151,13 @@ export class PathConstantX {
   public static PO_PAGING_X = PathConstant.PO + "/" + PathConstantX.PAGING;
   public static PO_PO_EXT_X = PathConstant.PO + "/" + PathConstantX.PO_EXT_X;
   public static PO_PO_EXT_DETAIL_X = PathConstantX.PO_PO_EXT_X + "/" + PathConstantX.DETAIL_X;
+  public static NEW_PO_DETAIL = PathConstant.NEW_PO + "/" + PathConstantX.DETAIL_X;
   public static INVOICE_VERIF_DETAIL_X = PathConstant.INVOICE_VERIF + '/' + PathConstantX.DETAIL_X;
   public static TRIAL_CALC_X = "Trial-Calculation-X";
 
   //#region Nap-Admin-Prcs
   public static AGRMNT_ACT_DETAIL = PathConstant.AGRMNT_ACT + "/" + PathConstantX.DETAIL_X;
+  public static INVOICE_VERIF_DETAIL_LIST_INV_X = PathConstant.INVOICE_VERIF + "/" + PathConstant.DETAIL + "/listOfInvoiceX";
   //endregion
 
   //#region View-Enhancing-Module
@@ -161,6 +168,14 @@ export class PathConstantX {
   //#region Inquiry-Module
   public static APP_INQUIRY = "AppInquiryX";
   //#endregion
+
+  //region copy app cross bl
+  public static COPY_CANCEL_APP_CROSS_BL_DETAIL_X = PathConstant.COPY_CANCEL_APP_CROSS_BL + "/" + PathConstantX.DETAIL_X;
+  //endregion
+
+    //#region Nap-Sharing-Page
+    public static NAP_SIMPLE_LEAD_DETAIL_X = PathConstant.NAP_SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
+    //#endregion
 }
 
 

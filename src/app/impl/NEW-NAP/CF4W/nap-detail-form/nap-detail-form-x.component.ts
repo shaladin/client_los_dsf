@@ -134,7 +134,7 @@ export class NapDetailFormXComponent implements OnInit {
     }
     this.IsDataReady = true;
     this.MakeViewReturnInfoObj();
-    
+
 
   }
 
@@ -310,6 +310,16 @@ export class NapDetailFormXComponent implements OnInit {
   }
 
   async NextStep(Step) {
+    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
+      const appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+          }
+        }
+      );
+    }
     if (Step == CommonConstant.AppStepUplDoc) {
       await this.initDms();
     }

@@ -25,7 +25,6 @@ export class ChangeMouMainInfoXComponent implements OnInit {
     }else{
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouMainInformation.json";
     }
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.whereValue = this.arrValue;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -52,10 +51,10 @@ export class ChangeMouMainInfoXComponent implements OnInit {
       var custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+          if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           }
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          if (response["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
             AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }

@@ -142,6 +142,7 @@ import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-componen
 import { ApplicationDataXDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-x-dsf/application-data-x-dsf.component";
 import { ApplicationDataXFL4WDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-x-FL4W-dsf/application-data-x-FL4W-dsf.component";
 import { ApplicationDataDlfnXDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-dlfn-x-dsf/application-data-dlfn-x-dsf.component";
+import { LoanObjectXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/loan-object-x/loan-object-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -294,6 +295,7 @@ export const customCurrencyMaskConfig = {
     ApplicationDataXDsfComponent,
     ApplicationDataXFL4WDsfComponent,
     ApplicationDataDlfnXDsfComponent,
+    LoanObjectXComponent
   ],
   imports: [
     CommonModule,
@@ -443,6 +445,7 @@ export const customCurrencyMaskConfig = {
     ApplicationDataXDsfComponent,
     ApplicationDataXFL4WDsfComponent,
     ApplicationDataDlfnXDsfComponent,
+    LoanObjectXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

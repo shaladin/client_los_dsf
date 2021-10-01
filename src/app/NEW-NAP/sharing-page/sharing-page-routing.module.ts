@@ -12,6 +12,8 @@ import { PathConstant } from 'app/shared/constant/PathConstant';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { NapFromSimpleLeadDsfComponent } from '../DSF/sharing-page-dsf/nap-from-simple-lead-dsf/nap-from-simple-lead-dsf.component';
 import { NapFromSimpleLeadDetailDsfComponent } from '../DSF/sharing-page-dsf/nap-from-simple-lead-detail-dsf/nap-from-simple-lead-detail-dsf.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { NapFromSimpleLeadDetailXComponent } from 'app/impl/NEW-NAP/sharing-page/nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail-x.component';
 
 const routes: Routes = [
     {
@@ -86,7 +88,14 @@ const routes: Routes = [
                 data: {
                     title: 'Detail Dsf'
                 }
-            }
+            },
+            {
+                path: PathConstantX.NAP_SIMPLE_LEAD_DETAIL_X,
+                component: NapFromSimpleLeadDetailXComponent,
+                data: {
+                    title: 'Detail'
+                }
+            },
         ]
     }
 ];

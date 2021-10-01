@@ -42,6 +42,7 @@ export class CustDetailPersonalComponent implements OnInit {
   ReligionObj: Array<KeyValueObj> = new Array();
   CustNoObj: GenericObj = new GenericObj();
   CustDetailForm = this.fb.group({
+    CustFullName :[''],
     FamilyCardNo: ['', Validators.pattern("^[0-9]+$")],
     NoOfDependents: ['', Validators.pattern("^[0-9]+$")],
     NoOfResidence: ['', Validators.pattern("^[0-9]+$")],
@@ -162,8 +163,9 @@ export class CustDetailPersonalComponent implements OnInit {
   GetData() {
     this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
-        this.CustFullName = response.AppCustObj.CustName;
+        //this.CustFullName = response.AppCustObj.CustName;
         this.CustDetailForm.patchValue({
+          CustFullName: response.AppCustPersonalObj.CustFullName,
           FamilyCardNo: response.AppCustPersonalObj.FamilyCardNo,
           NoOfDependents: response.AppCustPersonalObj.NoOfDependents,
           NoOfResidence: response.AppCustPersonalObj.NoOfResidence,
@@ -218,8 +220,9 @@ export class CustDetailPersonalComponent implements OnInit {
     this.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
     this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMf.value;
     this.AppCustObj.VipNotes = this.CustDetailForm.controls.VIPNotes.value;
+    this.AppCustObj.CustName = this.CustDetailForm.controls.CustFullName.value;
 
-    this.AppCustPersonalObj.CustFullName = this.CustFullName;
+    this.AppCustPersonalObj.CustFullName = this.CustDetailForm.controls.CustFullName.value;
     this.AppCustPersonalObj.CustPrefixName = this.CustDetailForm.controls.CustPrefixName.value;
     this.AppCustPersonalObj.CustSuffixName = this.CustDetailForm.controls.CustSuffixName.value;
     this.AppCustPersonalObj.MrNationalityCode = this.CustDetailForm.controls.MrNationalityCode.value;

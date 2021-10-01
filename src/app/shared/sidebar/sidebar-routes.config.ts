@@ -582,7 +582,8 @@ export const ROUTES: RouteInfo[] = [
       },
       { Path: NavigationConstant.CESSIE_CANCEL_PAGING, Title: 'Cessie Cancellation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.CESSIE_INQUIRY, Title: 'Cessie Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: NavigationConstant.APP_INQUIRY, Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] }
+      { Path: NavigationConstant.APP_INQUIRY, Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
+      { Path: NavigationConstant.NAP_ADM_PRCS_NAP_FCTR_DOC_SIGNER_PAGING, Title: 'Document Signer CESSIE', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] }
     ], Params: []
   },
   {

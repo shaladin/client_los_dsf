@@ -95,14 +95,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
       this.CustConfirmForm.patchValue({
         GoLiveEstimated: formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'),
       });
-      this.http.post(URLConstant.GetAgrmntByAgrmntId, {Id: this.AgrmntId}).subscribe(
-        (response: AgrmntObj) => {
-          this.CustConfirmForm.patchValue({
-            AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
-            EffectiveDt: formatDate(response["EffectiveDt"], 'yyyy-MM-dd', 'en-US'),
-          })
-        }
-      );
+      
       this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, {Id: this.AgrmntId}).subscribe(
         (response) => {
           if(response["PurchaseOrderHId"] != 0){
@@ -112,6 +105,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
           this.checkPOReady = true;
         }
       );
+      this.getLocalStorageData();
     } else {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
     }
@@ -205,7 +199,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
         this.http.post(URLConstantX.AddCustCnfrmX, CustCnfrmWFCFNAObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
+            this.clickCancel();
           });
       }
       else{
@@ -216,7 +210,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
         this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
+            this.clickCancel();
           });
       }
     }
@@ -231,7 +225,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
         this.http.post(URLConstantX.AddCustCnfrmX, CustCnfrmWFCFNAObj).subscribe(
           () => {
             this.toastr.successMessage("Success !");
-            AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
+            this.clickCancel();
           });
       }
       else{
@@ -242,7 +236,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
         this.http.post(URLConstant.AddCustCnfrm, CustCnfrmWFObj).subscribe(
           () => {
             this.toastr.successMessage("Success !");
-            AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
+            this.clickCancel();
           });
       }
 
@@ -290,5 +284,57 @@ export class CustConfirmationDetailXComponent implements OnInit {
     else if (this.TaskListId > 0) {
       this.claimTaskService.ClaimTask(this.TaskListId);
     }
+  }
+
+  getLocalStorageData() {
+    var AgrmntCreatedDt = localStorage.getItem("AgrmntCreatedDt");
+    var EffectiveDt = localStorage.getItem("EffectiveDt");
+    var GoLiveEstimated = localStorage.getItem("GoLiveEstimated");
+
+    if (AgrmntCreatedDt != null && AgrmntCreatedDt != "") {
+      this.CustConfirmForm.patchValue({
+        AgrmntCreatedDt: formatDate(AgrmntCreatedDt, 'yyyy-MM-dd', 'en-US'),
+      });
+    }
+    
+    if (EffectiveDt != null && EffectiveDt != "") {
+      this.CustConfirmForm.patchValue({
+        EffectiveDt: formatDate(EffectiveDt, 'yyyy-MM-dd', 'en-US'),
+      });
+    }
+    
+    if (GoLiveEstimated != null && GoLiveEstimated != "") {
+      this.CustConfirmForm.patchValue({
+        GoLiveEstimated: formatDate(GoLiveEstimated, 'yyyy-MM-dd', 'en-US'),
+      });
+    }
+    this.calculateAddInterest();
+  }
+
+  saveToLocalStorage() {
+    localStorage.setItem("AgrmntCreatedDt", this.CustConfirmForm.controls.AgrmntCreatedDt.value);
+    localStorage.setItem("EffectiveDt", this.CustConfirmForm.controls.EffectiveDt.value);
+    localStorage.setItem("GoLiveEstimated", this.CustConfirmForm.controls.GoLiveEstimated.value);
+  }
+
+  removeFromLocalStorage() {
+    localStorage.removeItem("AgrmntCreatedDt");
+    localStorage.removeItem("EffectiveDt");
+    localStorage.removeItem("GoLiveEstimated");
+  }
+
+  clickView(VerfResultHId) {
+    this.saveToLocalStorage();
+    AdInsHelper.RedirectUrl(this.router,[this.ViewLink], { "VerfResultHId": VerfResultHId, "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "BizTemplateCode": this.BizTemplateCode });
+  }
+
+  clickEdit(VerfResultHId, MrVerfSubjectRelationCode) {
+    this.saveToLocalStorage();
+    AdInsHelper.RedirectUrl(this.router,[this.DetailLink], { "VerfResultHId": VerfResultHId, "AgrmntId": this.AgrmntId, "AppId": this.AppId, "Subject": MrVerfSubjectRelationCode,"AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "BizTemplateCode": this.BizTemplateCode });
+  }
+
+  clickCancel() {
+    this.removeFromLocalStorage();
+    AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
   }
 }

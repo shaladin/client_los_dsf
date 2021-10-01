@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CreateDoMultiAssetComponent } from 'app/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/create-do-multi-asset/create-do-multi-asset.component';
 import { map, mergeMap } from 'rxjs/operators';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -27,6 +26,9 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { formatDate } from '@angular/common';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CreateDoMultiAssetXComponent } from '../create-do-multi-asset-x/create-do-multi-asset-x.component';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail-x',
@@ -66,10 +68,11 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   UserAccess: CurrentUserContext;
-  businessDt: Date = new Date();
+  minDt: Date = new Date();
   checkPOReady: boolean = false;
   PODt: Date = new Date();
   isHasPO: boolean = false;
+  LobCode: string;
 
   constructor(
     private httpClient: HttpClient,
@@ -98,13 +101,19 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      (response) => {
+        this.LobCode = response.LobCode;
+      }
+    );
+
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
       this.claimTask();
     }
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.businessDt = this.UserAccess.BusinessDt;
+    this.minDt = this.UserAccess.BusinessDt;
     this.DOAssetForm.patchValue({
       GoLiveEstimated: formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'),
     });
@@ -136,7 +145,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         this.licensePlateAttr = response[0]["LicensePlateAttr"];
         this.doList = response[1]["DeliveryOrderHObjs"];
         var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
-
+        let tempDt = this.UserAccess.BusinessDt;
         for (const item of this.doAssetList) {
           var formGroup = this.fb.group({
             AppAssetId: [item.AppAssetId],
@@ -157,9 +166,24 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
             TempLetterNo: [item.TempLetterNo],
             IsSelected: false
           });
+          console.log("AAAAAAAAAA");
+          if(item.DeliveryDt != null){
+            let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
+            if(new Date(tempDt) < devDt){
+              this.minDt = devDt;
+              if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+                this.DOAssetForm.patchValue({
+                  EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
+                });
+              }
+
+            }
+          }
+          else{
+            this.minDt = tempDt;
+          }
           formArray.push(formGroup);
         }
-
         this.isFinal = response[2]["IsFinal"];
       }
     );
@@ -229,7 +253,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number) {
-    const modalCreateDO = this.modalService.open(CreateDoMultiAssetComponent);
+    const modalCreateDO = this.modalService.open(CreateDoMultiAssetXComponent);
     modalCreateDO.componentInstance.SelectedDOAssetList = formArray.value;
     modalCreateDO.componentInstance.LicensePlateAttr = this.licensePlateAttr;
     modalCreateDO.componentInstance.CustType = this.custType;
@@ -257,7 +281,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
             while (formArray.length !== 0) {
               formArray.removeAt(0);
             }
-
+            let tempDt = this.UserAccess.BusinessDt;
             for (const item of this.doAssetList) {
               var formGroup = this.fb.group({
                 AppAssetId: [item.AppAssetId],
@@ -277,9 +301,23 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
                 ManufacturingYear: [item.ManufacturingYear],
                 IsSelected: false
               });
+              console.log("AAAAAAAAAA");
+              if(item.DeliveryDt != null){
+                let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
+                if(new Date(tempDt) < devDt){
+                  this.minDt = devDt;
+                  if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+                    this.DOAssetForm.patchValue({
+                      EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
+                    });
+                  }
+                }
+              }
+              else{
+                this.minDt = tempDt;
+              }
               formArray.push(formGroup);
             }
-
             this.isFinal = response[2]["IsFinal"];
           }
         );
@@ -344,7 +382,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           while (formArray.length !== 0) {
             formArray.removeAt(0);
           }
-
+          let tempDt = this.UserAccess.BusinessDt;
           for (const item of this.doAssetList) {
             var formGroup = this.fb.group({
               AppAssetId: [item.AppAssetId],
@@ -365,9 +403,23 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
               TempLetterNo: [item.TempLetterNo],
               IsSelected: false
             });
+            console.log("AAAAAAAAAA");
+            if(item.DeliveryDt != null){
+              let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
+              if(new Date(tempDt) < devDt){
+                this.minDt = devDt;
+                if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+                  this.DOAssetForm.patchValue({
+                    EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
+                  });
+                }
+              }
+            }
+            else{
+              this.minDt = tempDt;
+            }
             formArray.push(formGroup);
           }
-
           this.isFinal = response[3]["IsFinal"];
 
           this.spinner.hide();
@@ -412,13 +464,15 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     }
     else {
       var valid: boolean = true;
-
-      for (let index = 0; index < this.doAssetList.length; index++) {
-        if (this.doAssetList[index].SerialNo1 == '' || this.doAssetList[index].SerialNo1 == null || this.doAssetList[index].SerialNo1 == undefined) {
-          valid = false;
-        }
-        if (this.doAssetList[index].SerialNo2 == '' || this.doAssetList[index].SerialNo2 == null || this.doAssetList[index].SerialNo2 == undefined) {
-          valid = false;
+      
+      if (this.LobCode != CommonConstantX.CF4W_LOB_CODE_CF) {
+        for (let index = 0; index < this.doAssetList.length; index++) {
+          if (this.doAssetList[index].SerialNo1 == '' || this.doAssetList[index].SerialNo1 == null || this.doAssetList[index].SerialNo1 == undefined) {
+            valid = false;
+          }
+          if (this.doAssetList[index].SerialNo2 == '' || this.doAssetList[index].SerialNo2 == null || this.doAssetList[index].SerialNo2 == undefined) {
+            valid = false;
+          }
         }
       }
 

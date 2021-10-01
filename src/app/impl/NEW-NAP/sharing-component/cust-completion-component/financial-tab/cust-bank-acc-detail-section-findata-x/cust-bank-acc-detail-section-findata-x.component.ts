@@ -128,7 +128,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
       this.BankAccObj.AppCustBankAccId = this.BankAccAndStmntObjX.AppCustBankAccId;
       this.BankAccObj.BankCode = this.BankAccAndStmntObjX.BankCode;
       this.BankAccObj.RowVersion = this.BankAccAndStmntObjX.RowVersion;
-      this.ListBankStmntObj = this.BankAccAndStmntObjX.ListAppCustBankAccStmntObjX;
+      this.ListBankStmntObj = this.BankAccAndStmntObjX.ListAppCustBankAccStmntObjX != null ? this.BankAccAndStmntObjX.ListAppCustBankAccStmntObjX : [];
       this.CheckDefault();
     }
     else if (this.pageType == "editStmnt") {

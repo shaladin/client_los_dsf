@@ -11,12 +11,16 @@ export class URLConstantX {
   public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
   public static AddPreGoLiveXV2 = environment.losUrl+ "/v2" + "/PreGoLiveX/AddPreGoLive";
 
+  public static AddAppFromCopyCancledApp = environment.losUrl + "/v1" + "/AppX/AddAppFromCopyCancledApp";
+  public static AddAppFromCopyCancledAppV2 = environment.losUrl + "/v2" + "/AppX/AddAppFromCopyCancledApp";
+  public static GetOfficeBankAccAndRefBankDataByOfficeBankAccCode = environment.FoundationR3Url + "/v1" + "/OfficeBankAccX/GetOfficeBankAccAndRefBankDataByOfficeBankAccCode";
+
   //App CustX
   public static AddCustMainDataPersonalX = environment.losUrl + "/v1" + "/AppCustX/AddCustMainDataPersonal";
   public static EditCustMainDataPersonalX = environment.losUrl + "/v1" + "/AppCustX/EditCustMainDataPersonal";
   public static GetAppCustMainDataByAppCustIdX = environment.losUrl + "/v1" + "/AppCustX/GetAppCustMainDataByAppCustId";
 
-  
+
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
 
@@ -34,9 +38,10 @@ export class URLConstantX {
   public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/AppX/CopyCancelledApp";
   public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/AppX/CopyCancelledAppForMainData";
   public static SubmitNapCustMainDataV2 = environment.losUrl + "/v2" + "/AppX/SubmitNAPCustMainData";
-
+  public static AddAppFromSimpleLeadXV2 = environment.losUrl + "/v2" + "/AppX/AddAppFromSimpleLead";
   // App Invoice
   public static UpdateAppInvoiceDlfnX = environment.losUrl + '/v1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
+  public static UpdateAppInvoiceDlfnV2X = environment.losUrl + '/v2' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
 
   //App Reserved Fund
   public static GetRsvFundSingleRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetRsvFundSingleRule";
@@ -143,6 +148,11 @@ export class URLConstantX {
   //PO
   public static GetAppCustBankAccsByAppIdX = environment.losUrl  + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";
   public static GetPurchaseOrderHByAgrmntIdAndSupplCodeX = environment.losUrl  + '/v1' + "/PurchaseOrderHX/GetPurchaseOrderHByAgrmntIdAndSupplCode";
+  public static GetPurchaseOrderListForNewPOByAppId = environment.losUrl + "/v1" + "/PurchaseOrderHX/GetPurchaseOrderListForNewPOByAppId";
+  public static ResumeWorkflowNewPurchaseOrderV2 = environment.losUrl + "/v2" + "/PurchaseOrderHX/ResumeWorkflowNewPurchaseOrder";
+
+  //BANK PO
+  public static GetBankDsfbyGeneralSettingR2 = environment.losUrl + "/v1" + "/PurchaseOrderHX/GetBankDsfbyGeneralSettingR2";
 
   //SURVEY VERIF X
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/AddVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
@@ -176,7 +186,8 @@ export class URLConstantX {
 
   //Application Data DF
   public static EditApplicationDataDF = environment.losUrl + "/v1" + "/ApplicationDataX/EditApplicationDataDF";
-
+  public static SaveApplicationDataDF = environment.losUrl + "/v1" + "/ApplicationDataX/SaveApplicationDataDF";
+  
   //APP TC
   public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
 
@@ -203,6 +214,7 @@ export class URLConstantX {
   // tslint:disable-next-line:max-line-length
   public static GetAppCustAndAppCustCompanyDataByAppCustId = environment.losUrl + "/v1" + "/AppCustX/GetAppCustAndAppCustCompanyDataByAppCustId";
   public static UpdateAppCustCompletionCompany = environment.losUrl + "/v1" + "/AppCustX/UpdateAppCustCompletionCompany";
+  public static SaveAppCustCompletion = environment.losUrl + "/v1" + "/AppCustX/SaveAppCustCompletion";
 
   //APP CUST PERSONAL JOB DATA X
   public static AddAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/AddAppCustPersonalJobData";
@@ -211,5 +223,13 @@ export class URLConstantX {
 
   //Dealer Financing
   public static CalcGrossYieldSingleInstDF = environment.losUrl + "/v1" + "/AppFinDataX/CalcGrossYieldSingleInstDF";
+
+  //LTKM Customer Data
+  public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
+  public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmAppRjcByCustNoAndAppStat";
+  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
+
+  //Delivery Order
+  public static EditAppAssetDOMultiAsset = environment.losUrl + "/v1" + "/AppAssetX/EditAppAssetDOMultiAsset";
 
 }
