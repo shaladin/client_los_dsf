@@ -43,14 +43,14 @@ export class DisbursementPagingDsfComponent implements OnInit {
 
     let reportParamObj: ReportParamObj = new ReportParamObj();
     reportParamObj.paramKey = "CessieNo";
-    reportParamObj.paramValue = ev.RowObj.CessieNo;
+    reportParamObj.paramValue = ev.RowObj.CESSIE_NO;
     reportParamObj.paramAssignment = 1;
     this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
     
     this.http.post(URLConstant.GenerateReportR3, this.RdlcReport).subscribe(
       (response) => {
         let linkSource: string = 'data:application/pdf;base64,' + response["ReportFile"];
-        let fileName: string =  "Report_Disbursement_Order"+ev.RowObj.CessieNo+ ".pdf";
+        let fileName: string =  "Report_Disbursement_Order"+ev.RowObj.CESSIE_NO+ ".pdf";
         const downloadLink = document.createElement("a");
         downloadLink.href = linkSource;
         downloadLink.download = fileName;

@@ -13,7 +13,7 @@ export class AfternoonmonitoringComponent implements OnInit {
   constructor() {
     this.inputReportObj.JsonPath = "./assets/dsf/ucreport/ReportFactAfternoonMonitoring.json";
     this.inputReportObj.EnvironmentUrl = environment.FoundationR3Url;
-    this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3";
+    this.inputReportObj.ApiReportPath = "/v1/Report/GenerateReportR3";
    }
 
   ngOnInit() {

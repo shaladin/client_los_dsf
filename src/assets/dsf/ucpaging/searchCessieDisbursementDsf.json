@@ -69,31 +69,31 @@
             "type": "sort",
             "position": "center",
             "label": "Cessie Number",
-            "name": "A.CESSIE_NO"
+            "name": "CESSIE_NO"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Cessie Date",
-            "name": "A.CESSIE_DT"
+            "name": "CESSIE_DT"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Client Name",
-            "name": "B.CUST_NAME"
+            "name": "CLIENT_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Payment Due Date",
-            "name": "E.FACT_DSB_DT"
+            "name": "FACT_DSB_DT"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Payment Amount",
-            "name": "A.TOTAL_PURCHASE_AMT"
+            "name": "TOTAL_PURCHASE_AMT"
         },
         {
             "type": "sort",
@@ -116,27 +116,27 @@
         {
             "type": "text",
             "position": "center",
-            "property": "A.CESSIE_NO"
+            "property": "CESSIE_NO"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "A.CESSIE_DT"
+            "property": "CESSIE_DT"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "B.CUST_NAME"
+            "property": "CLIENT_NAME"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "E.FACT_DSB_DT"
+            "property": "FACT_DSB_DT"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "A.TOTAL_PURCHASE_AMT"
+            "property": "TOTAL_PURCHASE_AMT"
         },
         {
             "type": "text",
@@ -153,7 +153,7 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "ResultDisb",
+                                    "property": "RESULT_FACT_DSB",
                                     "value": "0",
                                     "restriction": "EQ"
                                 }
@@ -182,7 +182,7 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "ResultDisb",
+                                    "property": "RESULT_FACT_DSB",
                                     "value": "1",
                                     "restriction": "EQ"
                                 }
@@ -222,7 +222,7 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "ResultDisb",
+                                    "property": "RESULT_FACT_DSB",
                                     "value": "0",
                                     "restriction": "EQ"
                                 }
@@ -238,7 +238,7 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "ResultDisb",
+                                    "property": "RESULT_FACT_DSB",
                                     "value": "1",
                                     "restriction": "EQ"
                                 }

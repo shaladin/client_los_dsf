@@ -1,5 +1,5 @@
 { 
-    "title" : "REPORT APPLICATION STATUS",
+    "title" : "REPORT CREDIT APPLICATION PER STATUS",
     "reportName": "Report Application Status",
     "reportTemplateCode": "APP_STATUS_REPORT",
     "component": [ 
