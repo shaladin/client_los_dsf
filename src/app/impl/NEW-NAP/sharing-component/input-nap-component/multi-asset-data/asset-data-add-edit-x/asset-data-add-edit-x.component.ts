@@ -1667,7 +1667,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
         if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
           if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
@@ -1678,7 +1678,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         }
         else if (!this.IsIntegrator) {
             if (confirm("Submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
@@ -1688,7 +1688,7 @@ export class AssetDataAddEditXComponent implements OnInit {
             }
         }
         else if (this.IsIntegrator) {
-          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
@@ -1699,7 +1699,7 @@ export class AssetDataAddEditXComponent implements OnInit {
             });
         }
       }else{
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+        this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.AssetDataForm.reset();
@@ -1778,7 +1778,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
         if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
           if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
@@ -1790,7 +1790,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         else if (!this.IsIntegrator) {
           
           if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
@@ -1799,7 +1799,7 @@ export class AssetDataAddEditXComponent implements OnInit {
           }
           else{
             if (confirm("Submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
@@ -1809,7 +1809,7 @@ export class AssetDataAddEditXComponent implements OnInit {
           }
         }
         else if (this.IsIntegrator) {
-          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
@@ -1820,7 +1820,7 @@ export class AssetDataAddEditXComponent implements OnInit {
             });
         }
       }else{
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+        this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.AssetDataForm.reset();

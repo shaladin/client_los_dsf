@@ -28,7 +28,11 @@
               [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
             </app-form-commission-generate-x>
           </div>
-
+          <div class="form-actions right">
+          <button type="button" (click)="NewCalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>
+            <i class="far fa-check-square"></i> Calculate
+          </button>
+          </div>
           <!-- Summary -->
           <lib-ucSubsection [id]="'viewSummaryId'" [title]="'Summary'" [panel]="'viewSummary'">
           </lib-ucSubsection>
@@ -80,10 +84,7 @@
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
               (click)="Cancel()" translate>
               <i class="ft-x"></i> Cancel
-            </button>
-            <button type="button" (click)="NewCalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>
-              <i class="far fa-check-square"></i> Calculate
-            </button>
+            </button>     
             <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
               <i class="far fa-check-square"></i> Save
             </button>

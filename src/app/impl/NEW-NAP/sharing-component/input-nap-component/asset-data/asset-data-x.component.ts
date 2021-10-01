@@ -630,7 +630,7 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
       this.allAssetDataObj = this.listAsset[this.index];
       this.allAssetDataObj.BizTemplateCode = this.BizTemplateCode;
       this.allAssetDataObj.Copy = "Yes";
-      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+      this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           for (let i = 0; i < this.units; i++) {
@@ -785,7 +785,7 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
         if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
           if (this.IsIntegrator) {
             if (confirm("Submit data without Integrator ?")) {
-              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
                   this.AssetDataForm.reset();
@@ -796,7 +796,7 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
           }
           else if (!this.IsIntegrator) {
             if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
-              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
                   this.AssetDataForm.reset();
@@ -806,7 +806,7 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
             }
             else {
               if (confirm("Submit data without Integrator ?")) {
-                this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
                   (response) => {
                     this.toastr.successMessage(response["message"]);
                     this.AssetDataForm.reset();
@@ -817,7 +817,7 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
             }
           }
           else if (this.IsIntegrator) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
@@ -831,7 +831,7 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
         }
       }
       else if (this.BizTemplateCode === "OPL") {
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+        this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.isListAsset === true) {
