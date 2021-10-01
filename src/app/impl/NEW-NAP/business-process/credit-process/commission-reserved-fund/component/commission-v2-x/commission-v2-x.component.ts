@@ -812,8 +812,11 @@ export class CommissionV2XComponent implements OnInit {
     this.outputCancel.emit();
   }
   inputTypeChange() {
-    this.FormAdd1.UpdateInputType();
-    this.FormAdd2.UpdateInputType();
+    if(!this.HideForm1 && !this.HideForm2)
+    {
+      this.FormAdd1.UpdateInputType();
+      this.FormAdd2.UpdateInputType();
+    }
     this.FormAdd3.UpdateInputType();
   }
 
