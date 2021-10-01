@@ -16,8 +16,10 @@ export class CommonConstantX {
 
     //General Setting Code
     public static GSVendorSlbCode = "VENDOR_SLB_CODE";
+    public static GSVendorMpfFdCode = "VENDOR_MPFFD_CODE";
     public static RefMasterTypeCodeMouFctrType = 'MOU_FCTR_TYPE';
     public static GSCodePefindoBasicRole = "PEFINDO_BASIC_ROLE";
+    public static GsCodePONoNeedToPayBank = "PO_NO_NEED_TO_PAY_BANK_ACC";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
@@ -78,4 +80,7 @@ export class CommonConstantX {
     // BOOLEAN CONDITION
     public static TRUE_CONDITION = "1";
     public static FALSE_CONDITION = "0";
+
+    // NAP 4 Tab
+    public static FINANCIAL_TAB = "Financial";
 }

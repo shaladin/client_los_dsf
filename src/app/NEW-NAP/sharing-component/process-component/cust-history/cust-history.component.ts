@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
     selector: 'app-cust-history',
@@ -35,7 +36,7 @@ export class CustHistoryComponent implements OnInit {
                 if (this.CustNo != null && this.CustNo != undefined && this.CustNo != "") {
                     this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
                         (response: AppObj) => {
-                            this.http.post(URLConstant.GetListLtkmAppPrcsByCustNoAndIsAppInitDone, { CustNo: this.CustNo, IsAppInitDone: response.IsAppInitDone }).subscribe(
+                            this.http.post(URLConstantX.GetListLtkmAppPrcsByCustNoAndIsAppInitDone, { CustNo: this.CustNo, IsAppInitDone: response.IsAppInitDone }).subscribe(
                                 (response: GenericListObj) => {
                                     this.AppPrcs = response.ReturnObject;
                                 });
@@ -44,11 +45,11 @@ export class CustHistoryComponent implements OnInit {
                             console.log(error);
                         }
                     );
-                    this.http.post(URLConstant.GetLtkmExistAgrmntByCustNoAndIsAppInitDone, { CustNo: this.CustNo }).subscribe(
+                    this.http.post(URLConstantX.GetLtkmExistAgrmntByCustNoAndIsAppInitDone, { CustNo: this.CustNo }).subscribe(
                         (response: GenericListObj) => {
                             this.ExstAgrmnt = response.ReturnObject;
                         });
-                    this.http.post(URLConstant.GetLtkmAppRjcByCustNoAndAppStat, { CustNo: this.CustNo, AppStat: CommonConstant.Reject }).subscribe(
+                    this.http.post(URLConstantX.GetLtkmAppRjcByCustNoAndAppStat, { CustNo: this.CustNo, AppStat: "RJC" }).subscribe(
                         (response: GenericListObj) => {
                             this.AppRjct = response.ReturnObject;
                         });

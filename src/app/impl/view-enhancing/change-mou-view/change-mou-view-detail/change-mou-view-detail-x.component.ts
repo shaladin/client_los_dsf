@@ -6,6 +6,8 @@ import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
 import { VendorObj } from "app/shared/model/Vendor.Model";
+import { GenericKeyValueListObj } from "app/shared/model/Generic/GenericKeyValueListObj.model";
+import { AdInsHelper } from "app/shared/AdInsHelper";
 
 @Component({
   selector: 'app-change-mou-view-detail-x',
@@ -15,7 +17,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() MouType: string;
   @Input() ChangeMouTrxId: number;
-  
+
   MouCustClauseId: number;
   CurrCode: string;
   AssetTypeCode: string;
@@ -31,6 +33,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
 
   WopCode: string;
   PlafondAmt: number;
+  RealisationAmt: number;
   IsRevolving: boolean;
   TopDays: number;
   InterestRatePrcnt: number;
@@ -43,7 +46,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
   mouCust: any;
   mouCustClause: any;
   mouCustFctr: any;
-  mouCustDlrFncng:any;
+  mouCustDlrFncng: any;
   listAssetData: Array<any> = new Array();
   MrPaidByCode: string;
   SingleInstCalcMthd: string;
@@ -52,24 +55,26 @@ export class ChangeMouViewDetailXComponent implements OnInit {
   dealerRating: number;
 
   RevolvingType: string;
-  TopDaysRatePercent:number;
-  ExtendRate:number;
-  MaxExtendRate:number;
-  PrincipalPaid:number;
-  SpareDay:number;
-  AssetCondition:string;
-  LinkManufacturer:VendorObj;
-  Manufacturer:string;
-  LinkSupplGrading:VendorObj;
-  Customer:string;
-  LcRate:number;
-  MaxMonths:number;
-  MaxExtendTimes:number;
+  TopDaysRatePercent: number;
+  ExtendRate: number;
+  MaxExtendRate: number;
+  PrincipalPaid: number;
+  SpareDay: number;
+  AssetCondition: string;
+  LinkManufacturer: VendorObj;
+  Manufacturer: string;
+  LinkSupplGrading: VendorObj = new VendorObj(); 
+  Customer: string;
+  LcRate: number;
+  MaxMonths: number;
+  MaxExtendTimes: number;
+  MouOsPlafond: number = 0;
+  VirtualAccNo: string;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit() {
     let mouCustObj = { Id: this.MouCustId };
@@ -82,7 +87,6 @@ export class ChangeMouViewDetailXComponent implements OnInit {
           this.CurrCode = this.mouCust.CurrCode;
           this.PlafondAmt = this.mouCust.PlafondAmt;
           this.IsRevolving = this.mouCust.IsRevolving;
-
           this.mouCustClause = response["MouCustClauseObj"];
           this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
           this.MrInterestTypeCode = this.mouCustClause.InterestTypeDescr;
@@ -103,7 +107,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
           this.CurrCode = this.mouCust.CurrCode;
           this.PlafondAmt = this.mouCust.PlafondAmt;
           this.IsRevolving = this.mouCust.IsRevolving;
-
+          this.RealisationAmt = this.mouCust.RealisationAmt;
           this.mouCustFctr = response["MouCustFctrObj"];
           this.AssetTypeCode = this.mouCustFctr.AssetTypeCode;
           this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
@@ -116,7 +120,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
           this.TenorFrom = this.mouCustFctr.TenorFrom;
           this.TenorTo = this.mouCustFctr.TenorTo;
-
+          this.IsListedCust = this.mouCustFctr.IsListedCust;
           this.WopCode = this.mouCustFctr.WopCode;
           this.TopDays = this.mouCustFctr.TopDays;
           this.InterestRatePrcnt = this.mouCustFctr.InterestRatePrcnt;
@@ -124,11 +128,31 @@ export class ChangeMouViewDetailXComponent implements OnInit {
           this.IsDisclosed = this.mouCustFctr.IsDisclosed;
           this.MrRecourseTypeCode = this.mouCustFctr.MrRecourseTypeCode;
           this.Notes = this.mouCustFctr.Notes;
+          this.VirtualAccNo = this.mouCustFctr.VirtualAccNo;
+          this.LinkSupplGrading.VendorCode = this.mouCustFctr.VendorCode;
+          this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.LinkSupplGrading.VendorCode }).toPromise().then(
+            (vendor: VendorObj) => {
+              this.LinkSupplGrading = vendor;
+            });
         });
     } else if (this.MouType == CommonConstant.FINANCING) {
       this.getChangeMouDealerFinancingView();
     }
-    
+
+    var url: string = "";
+    if (this.MouType == CommonConstant.FACTORING) {
+      url = URLConstantX.GetMouFctrOsPlafondById;
+    } else if (this.MouType == CommonConstant.DEALERFINANCING) {
+      url = URLConstantX.GetMouDfOsPlafondByIdX;
+    }
+
+    if (this.MouType == CommonConstant.FACTORING || this.MouType == CommonConstant.DEALERFINANCING) {
+      this.http.post(url, { Id: this.MouCustId }).toPromise().then(
+        (response) => {
+          this.MouOsPlafond = response['Result'];
+        }
+      );
+    }
 
     this.http
       .post(URLConstant.GetMouCustAssetByMouCustId, { Id: this.MouCustId })
@@ -138,6 +162,7 @@ export class ChangeMouViewDetailXComponent implements OnInit {
       });
 
     this.getChangeMouDealerGrading();
+    this.GetListKvpActiveRefCurr();
   }
 
   getChangeMouDealerGrading() {
@@ -150,39 +175,58 @@ export class ChangeMouViewDetailXComponent implements OnInit {
       });
   }
 
-  async getChangeMouDealerFinancingView(){
-    var ChangeMouTrxObj = { MouCustId: this.MouCustId,ChangeMouTrxId: this.ChangeMouTrxId };
+  dictRefCurr: { [id: string]: string } = {};
+  GetListKvpActiveRefCurr() {
+    this.http.post(URLConstant.GetListKvpActiveRefCurr, null).subscribe(
+      (response: GenericKeyValueListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefCurr[element.Key] = element.Value;
+        }
+      }
+    );
+  }
+
+  async getChangeMouDealerFinancingView() {
+    var ChangeMouTrxObj = { MouCustId: this.MouCustId, ChangeMouTrxId: this.ChangeMouTrxId };
     this.LinkManufacturer = new VendorObj();
-    this.LinkSupplGrading = new VendorObj();
     await this.http.post(URLConstantX.GetMouCustDataByMouCustIdX, ChangeMouTrxObj).toPromise().then(
       (response) => {
-      this.mouCust = response["MouCustObj"];
-      this.MouCustId = this.mouCust.MouCustId;
-      this.CurrCode = this.mouCust.CurrCode;
-      this.PlafondAmt = this.mouCust.PlafondAmt;
-      this.IsRevolving = this.mouCust.IsRevolving;
-
-      this.mouCustDlrFncng = response["MouCustDlrFncngObj"];
-      this.PayFreqCode = this.mouCustDlrFncng.PayFreqCode;
-      this.WopCode = this.mouCustDlrFncng.WopCode;
-      this.RevolvingType = this.mouCustDlrFncng.RevolvingType;
-      this.TopDaysRatePercent = this.mouCustDlrFncng.TopInterestRatePrcnt;
-      this.ExtendRate = this.mouCustDlrFncng.ExtendRatePrcnt;
-      this.MaxExtendRate = this.mouCustDlrFncng.MaxExtendRate;
-      this.PrincipalPaid = this.mouCustDlrFncng.PrincipalPaidInExtendPrcntg;
-      this.SpareDay = this.mouCustDlrFncng.SpareDayToPay;
-      this.AssetCondition = this.mouCustDlrFncng.AssetCondition;
-      this.LinkManufacturer.VendorCode = this.mouCustDlrFncng.ManufacturerCode;
-      this.Manufacturer = this.mouCustDlrFncng.ManufacturerCustNo;
-      this.LinkSupplGrading.VendorCode = this.mouCustDlrFncng.DealerCode;
-      this.Customer = this.mouCustDlrFncng.DealerCustNo;
-      this.LcRate = this.mouCustDlrFncng.LcRate;
-      this.Notes = this.mouCustDlrFncng.Notes;
-      this.InterestRatePrcnt = this.mouCustDlrFncng.InterestRatePrcnt;
-      this.MaxMonths = this.mouCustDlrFncng.MaximumMonthsForExtend;
-      this.TopDays = this.mouCustDlrFncng.TopDays;
-      this.MaxExtendTimes = this.mouCustDlrFncng.MaximumExtendTimes;
-    });
+        this.mouCust = response["MouCustObj"];
+        this.MouCustId = this.mouCust.MouCustId;
+        this.CurrCode = this.mouCust.CurrCode;
+        this.PlafondAmt = this.mouCust.PlafondAmt;
+        this.IsRevolving = this.mouCust.IsRevolving;
+        this.RealisationAmt = this.mouCust.RealisationAmt;
+        this.mouCustDlrFncng = response["MouCustDlrFncngObj"];
+        this.PayFreqCode = this.mouCustDlrFncng.PayFreqCode;
+        this.WopCode = this.mouCustDlrFncng.WopCode;
+        this.RevolvingType = this.mouCustDlrFncng.RevolvingType;
+        this.TopDaysRatePercent = this.mouCustDlrFncng.TopInterestRatePrcnt;
+        this.ExtendRate = this.mouCustDlrFncng.ExtendRatePrcnt;
+        this.MaxExtendRate = this.mouCustDlrFncng.MaxExtendRate;
+        this.PrincipalPaid = this.mouCustDlrFncng.PrincipalPaidInExtendPrcntg;
+        this.SpareDay = this.mouCustDlrFncng.SpareDayToPay;
+        this.AssetCondition = this.mouCustDlrFncng.AssetCondition;
+        this.LinkManufacturer.VendorCode = this.mouCustDlrFncng.ManufacturerCode;
+        this.Manufacturer = this.mouCustDlrFncng.ManufacturerCustNo;
+        this.LinkSupplGrading.VendorCode = this.mouCustDlrFncng.DealerCode;
+        this.Customer = this.mouCustDlrFncng.DealerCustNo;
+        this.LcRate = this.mouCustDlrFncng.LcRate;
+        this.Notes = this.mouCustDlrFncng.Notes;
+        this.InterestRatePrcnt = this.mouCustDlrFncng.InterestRatePrcnt;
+        this.MaxMonths = this.mouCustDlrFncng.MaximumMonthsForExtend;
+        this.TopDays = this.mouCustDlrFncng.TopDays;
+        this.MaxExtendTimes = this.mouCustDlrFncng.MaximumExtendTimes;
+        var ObjectRefMaster = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInstType,
+          MasterCode: this.mouCustDlrFncng.MrInstTypeCode
+        }
+        this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, ObjectRefMaster).subscribe(
+          (responseRefMaster) => {
+            this.MrInstTypeCode = responseRefMaster["Descr"];
+          });
+      });
     await this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.LinkManufacturer.VendorCode }).toPromise().then(
       (vendor: VendorObj) => {
         this.LinkManufacturer = vendor;
@@ -192,13 +236,13 @@ export class ChangeMouViewDetailXComponent implements OnInit {
         this.LinkSupplGrading = vendor;
       });
 
-    await this.http.post(URLConstant.GetCustByCustNo, {CustNo: this.Manufacturer}).toPromise().then(
-      (response:any) => {
+    await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.Manufacturer }).toPromise().then(
+      (response: any) => {
         this.Manufacturer = response['CustName'];
       });
 
-    await this.http.post(URLConstant.GetCustByCustNo, {CustNo: this.Customer}).toPromise().then(
-      (response:any) => {
+    await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.Customer }).toPromise().then(
+      (response: any) => {
         this.Customer = response['CustName'];
       });
   }
@@ -206,4 +250,12 @@ export class ChangeMouViewDetailXComponent implements OnInit {
   MouDataForm = this.fb.group({});
 
   AssetDataForm = this.fb.group({});
+
+  ClickLinkManufacturer(vendorCode: string) {
+    this.http.post(URLConstant.GetVendorByVendorCode, { Code: vendorCode }).subscribe(
+      (responseLink: VendorObj) => {
+        console.log(responseLink);
+        AdInsHelper.OpenVendorBranchViewByVendorId(responseLink.VendorId);
+      });
+  }
 }

@@ -42,7 +42,7 @@ export class NapDetailFormXComponent implements OnInit {
   wfTaskListId: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
-  NapObj: AppObj;  
+  NapObj: AppObj;
   IsMultiAsset: boolean = false;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
@@ -94,14 +94,39 @@ export class NapDetailFormXComponent implements OnInit {
     });
   }
   //---
-  ngOnInit() {
+  async ngOnInit() {
     this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
-        this.SysConfigResultObj = response;        
+        this.SysConfigResultObj = response;
       });
 
-    let appObj = { Id: this.appId };
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    this.ClaimTask();
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
+
+    this.stepper = new Stepper(document.querySelector("#stepper1"), {
+      linear: false,
+      animation: true,
+    });
+
+    this.NapObj = new AppObj();
+    this.NapObj.AppId = this.appId;
+
+    const appObj = { Id: this.appId };
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
@@ -125,45 +150,6 @@ export class NapDetailFormXComponent implements OnInit {
       }
     );
 
-    this.ClaimTask();
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
-    this.NapObj = new AppObj();
-    this.NapObj.AppId = this.appId;
-
-    let obj = {
-      Id: this.appId
-    }
-
-    this.http.post(URLConstant.GetAppById, obj).subscribe(
-      (response: AppObj) => {
-        if (response) {
-          this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.stepper.to(this.AppStepIndex);
-        } else {
-          this.AppStepIndex = 0;
-          this.stepper.to(this.AppStepIndex);
-        }
-      }
-    );
-
-    this.stepper = new Stepper(document.querySelector("#stepper1"), {
-      linear: false,
-      animation: true,
-    });
     this.MakeViewReturnInfoObj();
   }
 
@@ -319,6 +305,16 @@ export class NapDetailFormXComponent implements OnInit {
   }
 
   NextStep(Step) {
+    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
+      const appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+          }
+        }
+      );
+    }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
@@ -342,9 +338,9 @@ export class NapDetailFormXComponent implements OnInit {
       this.LastStepHandler();
     }
   }
-  
+
   LastStepHandler() {  //lmyn miripp
-    
+
     let IsInValid;
     this.http.post(URLConstant.CheckIsMouFreeze, {MouCustId : this.NapObj.MouCustId}).toPromise().then(
       (response) => {
@@ -352,22 +348,44 @@ export class NapDetailFormXComponent implements OnInit {
         if (IsInValid) {
           this.toastr.warningMessage(ExceptionConstant.MOU_FREEZE_STATE);
           return
-        }        
-        if (IsInValid == false){                 
+        }
+        if (IsInValid == false){
           this.NapObj.WfTaskListId = this.wfTaskListId;
           if (this.ReturnHandlingHId > 0) {
-            this.IsSavedTC = true;                  
-          } else {      
+            this.IsSavedTC = true;
+          } else {
             let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
             this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
-              (response) => {                
+              (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.Cancel();
               })
           }
         }
       }
-    );        
+    );
+  }
+
+  Submit() {
+    if (this.ReturnHandlingHId > 0) {
+      const ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+
+      const EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.DF });
+        }
+      )
+    }
   }
 
   Cancel() {

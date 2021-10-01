@@ -45,6 +45,8 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   lobCode: string;
   TaskListId: string;
   BizTemplateCode: string;
+  bankVisible:boolean = false;
+  responseRefBank: any
 
   POForm = this.fb.group({
     Notes: [''],
@@ -83,6 +85,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
+    this.getGeneralSetBankAcc();
 
     let poUrl = "";
     if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W) {
@@ -230,6 +233,13 @@ export class PurchaseOrderDetailXComponent implements OnInit {
     // this.listPurchaseOrderD = new Array();
     // this.purchaseOrderDObj = new PurchaseOrderDObj();
 
+    if(this.bankVisible == true){
+      this.purchaseOrderHObj.BankCode = this.responseRefBank.BankCode;
+      this.purchaseOrderHObj.BankBranch = this.responseRefBank.OfficeBankAccBranch;
+      this.purchaseOrderHObj.BankAccNo = this.responseRefBank.OfficeBankAccNo;
+      this.purchaseOrderHObj.BankAccName = this.responseRefBank.OfficeBankAccName;
+    }
+
     var ListPORefMasterObj = await this.GetFromRule();
     var listPurchaseOrderD = this.GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj);
     var POObj = {
@@ -272,5 +282,46 @@ export class PurchaseOrderDetailXComponent implements OnInit {
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId, "BizTemplateCode": this.BizTemplateCode });
         });
     }
+  }
+
+  selectedOption(event)
+  {    
+    if(event == 'Yes'){
+      this.bankVisible = true;
+    } 
+    else{
+      this.bankVisible = false;
+    }      
+  }
+
+  getGeneralSetBankAcc(){
+    let reqByCodeObj ={
+      Code: CommonConstantX.GsCodePONoNeedToPayBank
+    }
+    this.http.post(URLConstant.GetGeneralSettingByCode, reqByCodeObj).subscribe(
+    (response) => {
+      console.log(response)
+      if(response != null)
+      {
+        this.getBankAcc(response['GsValue']);
+      }
+    
+    });
+    // this.responseGeneralSetting = {OfficeBankAccNo:"testNo", OfficeBankAccName:"testName"}
+    // this.getBankName("002");
+  }
+
+  getBankAcc(OfficeBankAccCode: string){
+    var officeBankObj = {
+      Code: OfficeBankAccCode
+    };
+    this.http.post(URLConstantX.GetOfficeBankAccAndRefBankDataByOfficeBankAccCode, officeBankObj).subscribe(
+      (response) => {
+        this.responseRefBank = response
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

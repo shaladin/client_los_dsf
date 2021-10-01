@@ -157,7 +157,7 @@
                 <label class="col-md-2" *ngIf="CustModelCode != 'SME'" [ngClass]="{ 'adins-required-label': CustModelCode == 'EMP' }"
                 translate >Employment Establishment Date</label>
                 <label class="col-md-2" *ngIf="CustModelCode == 'SME'" [ngClass]="{ 'adins-required-label': CustModelCode == 'SME' }"
-                translate >Start Working Date</label>
+                translate >Start Working Year</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"

@@ -8,9 +8,10 @@ import { CustCompletionDetailPersonalComponent } from "./cust-completion-detail/
 import { CustCompletionOplDetailComponent } from './cust-completion-opl-detail/cust-completion-opl-detail.component';
 import { CustCompletionOplDetailCompanyComponent } from './cust-completion-opl-detail/cust-completion-opl-detail-company/cust-completion-opl-detail-company.component';
 import { CustCompletionOplDetailPersonalComponent } from './cust-completion-opl-detail/cust-completion-opl-detail-personal/cust-completion-opl-detail-personal.component';
-import { CustCompletionDetailCompanyXComponent } from "app/impl/NEW-NAP/cust-completion/cust-completion-detail/cust-completion-detail-company/cust-completion-detail-company-x.component";
-import { CustCompletionDetailPersonalXComponent } from "app/impl/NEW-NAP/cust-completion/cust-completion-detail/cust-completion-detail-personal/cust-completion-detail-personal-x.component";
+import { CustCompletionDetailCompanyXComponent } from "app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-company/cust-completion-detail-company-x.component";
+import { CustCompletionDetailPersonalXComponent } from "app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-personal/cust-completion-detail-personal-x.component";
 import { PathConstantX } from "app/impl/shared/constant/PathConstantX";
+import { CustCompletionDetailXComponent } from "app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-x.component";
 
 const routes: Routes = [
   {
@@ -77,6 +78,13 @@ const routes: Routes = [
         component: CustCompletionDetailCompanyXComponent,
         data: {
           title: 'Cust Completion Detail Company X'
+        }
+      },
+      {
+        path: PathConstantX.DETAIL_X,
+        component: CustCompletionDetailXComponent,
+        data: {
+          title: 'Cust Completion Detail X'
         }
       },
     ]

@@ -99,9 +99,9 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
       MrAssetConditionCode: ['', [Validators.required, Validators.maxLength(50)]],
       MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
       SupplName: ['', Validators.maxLength(500)],
-      AssetPriceAmt: ['', Validators.required],
-      DownPaymentAmt: ['', [Validators.required, Validators.min(0.00)]],
-      DownPaymentPrctg: ['', Validators.max(100)],
+      AssetPriceAmt: ['', [Validators.required, Validators.min(0.01)]],
+      DownPaymentAmt: ['', [Validators.required, Validators.min(0.01)]],
+      DownPaymentPrctg: [0, [Validators.min(0.000001), Validators.max(100)]],
       AssetNotes: ['', [Validators.maxLength(4000)]],
       Color: ['', Validators.maxLength(50)],
       TaxCityIssuer: [''],
@@ -1164,6 +1164,7 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
           this.appCollateralDoc.IsReceived = this.AssetDataForm.value.ListDoc[i].IsReceived;
         }
         this.appCollateralDoc.DocCode = this.AssetDataForm.value.ListDoc[i].DocCode;
+        this.appCollateralDoc.DocName = this.AssetDataForm.value.ListDoc[i].AssetDocName;
         this.appCollateralDoc.DocNo = this.AssetDataForm.value.ListDoc[i].DocNo;
         this.appCollateralDoc.ExpiredDt = this.AssetDataForm.value.ListDoc[i].ACDExpiredDt;
         this.appCollateralDoc.DocNotes = this.AssetDataForm.value.ListDoc[i].DocNotes;
@@ -1279,15 +1280,12 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
     DpTypeChange() {
       if (this.AssetDataForm.controls.selectedDpType.value != '') {
         if (this.AssetDataForm.controls.selectedDpType.value == 'AMT' && this.DpTypeBefore == 'PRCTG') {
-          this.AssetDataForm.controls["DownPaymentAmt"].enable()
           this.AssetDataForm.patchValue({
             DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
           });
-          this.AssetDataForm.controls["DownPaymentPrctg"].disable();
           this.AssetDataForm.controls["DownPaymentAmt"].updateValueAndValidity();
         }
         else if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
-          this.AssetDataForm.controls["DownPaymentPrctg"].enable();
           if (this.AssetDataForm.controls.AssetPriceAmt.value == 0) {
             this.AssetDataForm.patchValue({
               DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
@@ -1298,7 +1296,6 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
               DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
             });
           }
-          this.AssetDataForm.controls["DownPaymentAmt"].disable();
           this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
         };
         this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
@@ -1322,7 +1319,13 @@ import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
   
     updateValueDownPaymentPrctg() {
       var DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
-      if (DownPaymentPrctg > 100) {
+      if(isNaN(DownPaymentPrctg)){
+        this.AssetDataForm.patchValue({
+          DownPaymentAmt: 0,
+          DownPaymentPrctg: 0
+        });
+      }
+      else if (DownPaymentPrctg > 100) {
         this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
         this.AssetDataForm.patchValue({
           DownPaymentAmt: 0,

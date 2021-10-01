@@ -13,11 +13,11 @@
         </lib-ucSubsection>
         <div class="form-body" id="DoInfoForm">
           <div class="form-group row">
-            <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
+            <label class="col-md-2 adins-required-label" for="AgrmntCreatedDt" translate>Agreement Date</label>
             <div *ngIf = "checkPOReady" class="col-md-4">
-              <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
-              <input *ngIf = "isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
-              <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntDt" [submit]="CustConfirmForm.submitted">
+              <input *ngIf = "!isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+              <input *ngIf = "isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
+              <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntCreatedDt" [submit]="CustConfirmForm.submitted">
               </lib-uc-show-errors>
             </div>
             <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
@@ -78,12 +78,10 @@
               <td>{{item.MrVerfResultHStatName}}</td>
               <td>{{item.Notes}}</td>
               <td>
-                <a [routerLink]="[ViewLink]"
-                  [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:AgrmntNo, TaskListId:TaskListId, BizTemplateCode:BizTemplateCode}">View</a>
+                <a class="success p-0" (click)="clickView(item.VerfResultHId)">View</a>
               </td>
               <td>
-                <a class="success p-0" [routerLink]="[DetailLink]"
-                  [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId, AppId:AppId, Subject:item.MrVerfSubjectRelationCode, AgrmntNo:AgrmntNo, TaskListId:TaskListId, BizTemplateCode:BizTemplateCode}">
+                <a class="success p-0" (click)="clickEdit(item.VerfResultHId, item.MrVerfSubjectRelationCode)">
                   <i class="ft-edit-2 font-medium-3 mr-2"></i>
                 </a>
               </td>
@@ -110,8 +108,7 @@
 
       <form (ngSubmit)="CustConfirmForm.valid && SaveForm()">
         <div class="form-actions right">
-          <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
-            [queryParams]="{BizTemplateCode: this.BizTemplateCode}" translate>
+          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="clickCancel()" translate>
             <i class="ft-x"></i> Cancel
           </button>
           <button type="submit" class="btn btn-raised btn-primary" translate>
