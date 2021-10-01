@@ -709,28 +709,25 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
 
   makeLookUpObj() {
     // Lookup obj
-    if (this.user.RoleCode == 'MKT-MAO')
+    if (this.user.RoleCode == 'MKT - MAO' ||  this.user.RoleCode == 'SUPUSR')
     {
       this.isInputLookupObj = true;
+    }
       this.inputLookupObj = new InputLookupObj();
       this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
       this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
       this.inputLookupObj.pagingJson = './assets/uclookup/NAP/lookupEmp.json';
       this.inputLookupObj.genericJson = './assets/uclookup/NAP/lookupEmp.json';
       this.inputLookupObj.jsonSelect = this.resultResponse;
-    }
-    else{
+    
       this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
         (response: GeneralSettingObj) => {
           this.salesOfficerCode = response.GsValue.split(',');
           if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-            if (this.user.RoleCode != 'MKT-MO')
-            {
               this.NapAppModelForm.patchValue({
                 SalesOfficerNo: this.user.EmpNo,
                 SalesOfficerName: this.user.EmpName
               });
-            }
   
             let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
             ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
@@ -749,7 +746,6 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
           }
         }
       );
-    }
     // this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();

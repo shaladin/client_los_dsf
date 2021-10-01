@@ -608,8 +608,6 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   }
 
   makeLookUpObj() {
-    if (this.user.RoleCode == 'MKT-MAO')
-    {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
     this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -619,19 +617,18 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     this.inputLookupObj.jsonSelect = { SalesOfficerName: this.resultData.SalesOfficerName };
     this.inputLookupObj.nameSelect = this.resultData.SalesOfficerName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
+    if (this.user.RoleCode == 'MKT - MAO' || this.user.RoleCode == 'SUPUSR')
+    {
+      this.isInputLookupObj = true;
     }
-    else{
       this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
         (response: GeneralSettingObj) => {
           this.salesOfficerCode = response.GsValue.split(',');
           if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-            if (this.user.RoleCode != 'MKT-MO')
-            {
               this.SalesAppInfoForm.patchValue({
                 SalesOfficerNo: this.user.EmpNo,
                 SalesOfficerName: this.user.EmpName
               });
-            }
   
             let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
             ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
@@ -650,7 +647,6 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
           }
         }
       );
-    }
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json";
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -674,8 +670,6 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
           MrSlikSecEcoCode: response.SectorEconomySlikCode
         });
       });
-
-    this.isInputLookupObj = true;
   }
 
   makeNewLookupCriteria() {

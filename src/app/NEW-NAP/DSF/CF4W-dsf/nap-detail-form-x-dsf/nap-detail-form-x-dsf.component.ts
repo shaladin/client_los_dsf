@@ -27,7 +27,8 @@ import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf
 @Component({
   selector: 'app-nap-detail-form-x-dsf',
   templateUrl: './nap-detail-form-x-dsf.component.html',
-  styleUrls: ['./nap-detail-form-x-dsf.component.css']
+  styleUrls: ['./nap-detail-form-x-dsf.component.css'],
+  providers: [NGXToastrService]
 })
 export class NapDetailFormXDsfComponent implements OnInit {
 

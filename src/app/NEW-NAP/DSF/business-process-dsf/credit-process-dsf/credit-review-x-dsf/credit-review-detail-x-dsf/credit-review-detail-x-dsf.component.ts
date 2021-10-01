@@ -27,6 +27,8 @@ import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-credit-review-detail-x-dsf',
@@ -53,6 +55,10 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   IsViewReady: boolean = false;
   RFAInfo: Object = new Object();
   readonly apvBaseUrl = environment.ApprovalR3Url;
+  lobCode: string;
+  NapObj: AppObj = new AppObj();
+  bizTemplateCode: string;
+  
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
@@ -308,6 +314,22 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
 
   PlafondAmt: number = 0;
   initInputApprovalObj(manualDevList = null) {
+    this.NapObj.AppId = this.appId;
+    var appObj = { Id: this.appId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          this.bizTemplateCode = this.NapObj.BizTemplateCode;
+          this.lobCode = this.NapObj.LobCode;          
+          if(this.lobCode == CommonConstantX.CFNA_LOB_CODE_FD ||
+             this.lobCode == CommonConstantX.CFNA_LOB_CODE_MPF)
+          {      
+            
+          }
+        }
+      }
+    )
     var Attributes: Array<ResultAttrObj> = new Array();
     var attribute1: ResultAttrObj = {
       AttributeName: "Approval Amount",
