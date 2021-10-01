@@ -22,6 +22,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { environment } from 'environments/environment';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -48,6 +49,7 @@ export class NapDetailFormComponent implements OnInit {
   IsSavedTC: boolean = false;
   IsDataReady: boolean = false;
   bizTemplateCode: string;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "NAPD": 1,
@@ -125,6 +127,10 @@ export class NapDetailFormComponent implements OnInit {
         await this.initDms();
       }
       this.ChangeStepper();
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepNapd) {
+        this.NapObj.AppCurrStep = CommonConstant.AppStepRef;
+        this.UpdateAppStep(this.NapObj.AppCurrStep);
+      }
       this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
       this.ChooseStep(this.AppStepIndex);
     }
@@ -266,6 +272,9 @@ export class NapDetailFormComponent implements OnInit {
 
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
+    if (this.ReturnHandlingHId == 0) {
+      this.UpdateAppStep(AppStep);
+    }
     switch (AppStep) {
       case CommonConstant.AppStepRef:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
@@ -303,10 +312,6 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async NextStep(Step) {
-    if (this.ReturnHandlingHId == 0) {
-      this.UpdateAppStep(Step);
-    }
-
     if (Step == CommonConstant.AppStepUplDoc) {
       await this.initDms();
     }

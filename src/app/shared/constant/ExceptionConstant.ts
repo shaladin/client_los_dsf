@@ -49,7 +49,7 @@ export class ExceptionConstant {
 
     public static EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be less than Sell Supplier Rate ({0}).";
     public static EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be greater than Sell Supplier Rate ({0}).";
-    public static EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE = "Effective Rate cannot be less than Supplier Rate.";
+    public static EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE = "Effective Rate is less than Supplier Rate.";
 
     public static CLICK_GENERATE_INSURANCE = "Please click Generate Insurance.";
     public static CLICK_CALCULATE_INSURANCE = "Please click Calculate Insurance.";
@@ -187,5 +187,6 @@ export class ExceptionConstant {
     public static MANUFACTURING_YEAR_CAN_NOT_LESS_THAN = "Manufacturing Year can not less than ";
     public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
     
+    public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
 }
 

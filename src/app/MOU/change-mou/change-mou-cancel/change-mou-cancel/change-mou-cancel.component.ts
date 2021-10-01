@@ -53,16 +53,14 @@ export class ChangeMouCancelComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true;
       
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CHANGE_MOU;
-      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
-      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
       
-      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "TrxNo";
-      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.IntegrationObj.rightColumnToJoin = "BusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
   }
@@ -94,7 +92,7 @@ export class ChangeMouCancelComponent implements OnInit {
         mouCancel.Status = CommonConstant.MouStatCancel;
         mouCancel.ChangeMouTrxId = event.RowObj.ChangeMouTrxId;
         mouCancel.TrxNo = event.RowObj.TrxNo;
-        mouCancel.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId;
+        mouCancel.WfTaskListId = environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId;
         mouCancel.RowVersion = event.RowObj.RowVersions;
         this.http
           .post(urlPost, mouCancel)

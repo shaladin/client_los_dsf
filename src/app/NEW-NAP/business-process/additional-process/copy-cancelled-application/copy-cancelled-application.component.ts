@@ -11,6 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-copy-cancelled-application',
@@ -87,7 +88,12 @@ export class CopyCancelledApplicationComponent implements OnInit {
               }
             }
           );
+
           var url = this.IsNapVersionMainData ? URLConstant.CopyCancelledAppForMainData : URLConstant.CopyCancelledApp;
+          
+          if(environment.isCore)
+             url = this.IsNapVersionMainData ? URLConstant.CopyCancelledAppForMainDataV2 : URLConstant.CopyCancelledAppV2;
+             
           this.http.post(url, { AppId: ev.RowObj.AppId }).subscribe(
             response => {
               this.toastr.successMessage(response["message"]);

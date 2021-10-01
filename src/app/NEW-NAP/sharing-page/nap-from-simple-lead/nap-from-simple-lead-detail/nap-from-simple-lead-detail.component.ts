@@ -91,6 +91,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
 
   leadObj: LeadObj;
   bizTemplateCode: string;
+  lobCode: string;
   refMasterObj: RefMasterObj;
   getListActiveLob: string;
 
@@ -135,8 +136,10 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
     let refLob = this.listRefLobObj.find((x) => x.LobCode == this.NapAppForm.controls["LobCode"].value);
     if (refLob == undefined) {
       this.bizTemplateCode = null;
+      this.lobCode = null;
     } else {
       this.bizTemplateCode = refLob.BlCode;
+      this.lobCode = refLob.LobCode;
     }
     this.arrAddCrit = new Array();
 
@@ -153,6 +156,13 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
     addCritBizTemplate.restriction = AdInsConstant.RestrictionEq;
     addCritBizTemplate.value = this.bizTemplateCode;
     this.arrAddCrit.push(addCritBizTemplate);
+
+    let addCritLob = new CriteriaObj();
+    addCritLob.DataType = "text";
+    addCritLob.propName = "rlob.LOB_CODE";
+    addCritLob.restriction = AdInsConstant.RestrictionEq;
+    addCritLob.value = this.lobCode;
+    this.arrAddCrit.push(addCritLob);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
 
@@ -236,23 +246,24 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
-    this.http.post(URLConstant.AddAppFromSimpleLead, napAppObj).subscribe(
+    let urlPost = environment.isCore ? URLConstant.AddAppFromSimpleLeadV2 : URLConstant.AddAppFromSimpleLead;
+    this.http.post(urlPost, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (this.bizTemplateCode == CommonConstant.CF4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
         }
         if (this.bizTemplateCode == CommonConstant.FL4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
         }
         if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
         }
         if (this.bizTemplateCode == CommonConstant.FCTR) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
         }
         if (this.bizTemplateCode == CommonConstant.CFNA) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
         }
       });
 

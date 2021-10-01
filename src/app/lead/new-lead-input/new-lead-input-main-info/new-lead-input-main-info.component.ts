@@ -231,8 +231,8 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     }
   }
 
-  AddView() {
-    AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
+  AddView(leadId: number) {
+    AdInsHelper.OpenLeadViewByLeadId(leadId);
   }
 
   backHandler() {
@@ -449,7 +449,7 @@ export class NewLeadInputMainInfoComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit") {
-              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "CopyFrom": this.leadIdExist } });
             }
             else {
               this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });

@@ -207,7 +207,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.MakeLookUpObj();
     this.GetOfficeDDL();
 
-    this.http.post(URLConstant.GetListActiveLob, {}).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "LOB" }).subscribe(
       (response) => {
         this.listRefLob = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({

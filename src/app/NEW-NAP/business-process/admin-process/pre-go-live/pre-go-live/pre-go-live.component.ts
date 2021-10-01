@@ -27,6 +27,8 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -39,7 +41,7 @@ export class PreGoLiveComponent implements OnInit {
   AgrmntNo: string;
   result: AgrmntObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  appTC: AppTCObj;
+  agrmntTcObj: AgrmntTcObj;
   TaskListId: any;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
@@ -57,8 +59,7 @@ export class PreGoLiveComponent implements OnInit {
     ApprovalStatus: [''],
     AdditionalInterestPaidBy: ['',Validators.required]
   })
-  listAppTCObj: ListAppTCObj;
-  ListAppTCObj: ListAppTCObj;
+  listAgrmntTcObj: Array<AgrmntTcObj>;
 
   count1: number = 0;
   ListRfaLogObj: Array<RfaObj>;
@@ -242,38 +243,42 @@ export class PreGoLiveComponent implements OnInit {
 
   RFA() {
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
-    this.ListAppTCObj = new ListAppTCObj();
-    this.ListAppTCObj["ListAppTcObj"] = new Array();
+    this.listAgrmntTcObj = new Array<AgrmntTcObj>();
     for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
-      this.appTC = new AppTCObj();
-      this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
-      this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
-      this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
-      this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
-      this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.IsWaived = this.MainInfoForm.getRawValue().TCList[i].IsWaived;
-      this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
-      this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
-      this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
-      this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
+      this.agrmntTcObj = new AgrmntTcObj();
+      this.agrmntTcObj.AgrmntId = this.MainInfoForm.value.TCList[i].AgrmntId;
+      this.agrmntTcObj.AgrmntTcId = this.MainInfoForm.value.TCList[i].AgrmntTcId;
+      this.agrmntTcObj.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
+      this.agrmntTcObj.TcName = this.MainInfoForm.value.TCList[i].TcName;
+      this.agrmntTcObj.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
+      this.agrmntTcObj.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
+      this.agrmntTcObj.IsWaived = this.MainInfoForm.getRawValue().TCList[i].IsWaived;
+      this.agrmntTcObj.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
+      this.agrmntTcObj.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
+      this.agrmntTcObj.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
+      this.agrmntTcObj.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
+      this.agrmntTcObj.Notes = this.MainInfoForm.value.TCList[i].Notes;
+      this.agrmntTcObj.IsAdditional = this.MainInfoForm.value.TCList[i].IsAdditional;
 
-      var prmsDt = new Date(this.appTC.PromisedDt);
+      var prmsDt = new Date(this.agrmntTcObj.PromisedDt);
       var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
 
-      if (this.appTC.IsChecked == false) {
+      if (this.agrmntTcObj.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
-            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + this.agrmntTcObj.TcName + " can't be lower than Business Date");
             return;
           }
         }
       }
-      this.ListAppTCObj["ListAppTcObj"].push(this.appTC);
+      this.listAgrmntTcObj.push(this.agrmntTcObj);
     }
-    this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
+
+    var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+    reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
+    reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.listAgrmntTcObj;
+
+    this.http.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_REQ_APPRVL],{ "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
         this.toastr.successMessage(response['message']);
@@ -285,37 +290,36 @@ export class PreGoLiveComponent implements OnInit {
   SaveForm(flag = true) {
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
 
-    this.listAppTCObj = new ListAppTCObj();
-    this.listAppTCObj.AppTCObj = new Array();
+    this.listAgrmntTcObj = new Array<AgrmntTcObj>();
     if (this.BizTemplateCode != CommonConstant.DF) {
       for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
-        this.appTC = new AppTCObj();
-        this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
-        this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
-        this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
-        this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
-        this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
-        this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
-        this.appTC.IsWaived = this.MainInfoForm.getRawValue().TCList[i].IsWaived;
-        this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
-        this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
-        this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
-        this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
-        this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
-        this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
+        this.agrmntTcObj = new AgrmntTcObj();
+        this.agrmntTcObj.AgrmntId = this.MainInfoForm.value.TCList[i].AgrmntId;
+        this.agrmntTcObj.AgrmntTcId = this.MainInfoForm.value.TCList[i].AgrmntTcId;
+        this.agrmntTcObj.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
+        this.agrmntTcObj.TcName = this.MainInfoForm.value.TCList[i].TcName;
+        this.agrmntTcObj.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
+        this.agrmntTcObj.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
+        this.agrmntTcObj.IsWaived = this.MainInfoForm.getRawValue().TCList[i].IsWaived;
+        this.agrmntTcObj.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
+        this.agrmntTcObj.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
+        this.agrmntTcObj.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
+        this.agrmntTcObj.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
+        this.agrmntTcObj.Notes = this.MainInfoForm.value.TCList[i].Notes;
+        this.agrmntTcObj.IsAdditional = this.MainInfoForm.value.TCList[i].IsAdditional;
   
-        var prmsDt = new Date(this.appTC.PromisedDt);
+        var prmsDt = new Date(this.agrmntTcObj.PromisedDt);
         var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
   
-        if (this.appTC.IsChecked == false) {
+        if (this.agrmntTcObj.IsChecked == false) {
           if (prmsDtForm != null) {
             if (prmsDt < businessDt) {
-              this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+              this.toastr.warningMessage("Promise Date for " + this.agrmntTcObj.TcName + " can't be lower than Business Date");
               return;
             }
           }
         }
-        this.listAppTCObj.AppTCObj.push(this.appTC);
+        this.listAgrmntTcObj.push(this.agrmntTcObj);
   
       }
 
@@ -333,7 +337,7 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveMainObj.Notes = this.MainInfoForm.controls.Notes.value;
 
     this.PreGoLiveObj.rAgrmntTC = this.AgrmntObj;
-    this.PreGoLiveObj.rAppTcObj = this.listAppTCObj.AppTCObj;
+    this.PreGoLiveObj.ListAgrmntTcObj = this.listAgrmntTcObj;
     this.PreGoLiveObj.preGoLiveObj = this.PreGoLiveMainObj;
     this.PreGoLiveObj.AdditionalInterestPaidBy = this.MainInfoForm.controls.AdditionalInterestPaidBy.value;
     this.PreGoLiveObj.TaskListId = this.TaskListId;

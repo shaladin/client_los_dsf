@@ -45,7 +45,9 @@ export class MouViewDetailComponent implements OnInit {
   IsDisclosed: boolean;
   IsListedCust: boolean;
   MrRecourseTypeCode: string;
+  MrRevolvingTypeCode: string;
   Notes: string;
+  dictRevolvingTypeCode: { [id: string]: string } = {};
 
   mouCust: any;
   mouCustClause: any;
@@ -73,6 +75,7 @@ export class MouViewDetailComponent implements OnInit {
         this.RealisationAmt = this.mouCust.RealisationAmt;
         this.IsRevolving = this.mouCust.IsRevolving;
         this.MouType = this.mouCust.MrMouTypeCode;
+        this.MrRevolvingTypeCode = this.mouCust.MrRevolvingTypeCode;
 
         if (this.MouType == CommonConstant.GENERAL) {
           this.mouCustClause = response["MouCustClauseObj"];
@@ -122,7 +125,6 @@ export class MouViewDetailComponent implements OnInit {
         else if (this.MouType == CommonConstant.FINANCING) {
           this.http.post(URLConstant.GetMouCustDlrWithCustVendorNameFindById, mouCustObj).subscribe(
             (responses: MouCustDlrFinObj) => {
-              console.log(responses)
               this.MouCustDlrFindData = responses;
               this.MouCustDlrFindData.WopCode = responses["WopCode"];
               this.MouCustDlrFindData.TopDays = responses["TopDays"];
@@ -153,6 +155,17 @@ export class MouViewDetailComponent implements OnInit {
                 });
               this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.MouCustDlrFindData.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);
             })
+        }
+
+        if(this.mouCust.MrRevolvingTypeCode != null || this.mouCust.MrRevolvingTypeCode != ''){
+          this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE }).subscribe(
+            (responseRefMaster: GenericKeyValueListObj) => {
+              for (let index = 0; index < responseRefMaster.ReturnObject.length; index++) {
+                const element = responseRefMaster.ReturnObject[index];
+                this.dictRevolvingTypeCode[element.Key] = element.Value;
+              }
+            }
+          );
         }
 
       })
@@ -203,7 +216,6 @@ export class MouViewDetailComponent implements OnInit {
   ClickLinkManufacturer(vendorCode: string) {
     this.http.post(URLConstant.GetVendorByVendorCode, { Code: vendorCode }).subscribe(
       (responseLink: VendorObj) => {
-        console.log(responseLink);
         AdInsHelper.OpenVendorBranchViewByVendorId(responseLink.VendorId);
       });
   }

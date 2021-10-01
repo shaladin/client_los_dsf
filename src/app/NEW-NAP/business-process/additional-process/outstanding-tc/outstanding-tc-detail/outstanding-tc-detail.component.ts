@@ -17,6 +17,8 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -26,9 +28,9 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 export class OutstandingTcDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
-  listAppTCObj: ListAppTCObj;
-  appTC: AppTCObj;
-  outstandingTcObj: any;
+  AgrmntId: number;
+  listAgrmntTcObj: Array<AgrmntTcObj>;
+  agrmntTcObj: AgrmntTcObj;
   BizTemplateCode: string;
   dmsObj: DMSObj = new DMSObj();
   custNo: string = "";
@@ -39,6 +41,7 @@ export class OutstandingTcDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
+      this.AgrmntId = params["AgrmntId"];
       this.BizTemplateCode = params["BizTemplateCode"];
     });
   }
@@ -94,31 +97,33 @@ export class OutstandingTcDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    this.outstandingTcObj = new OutstandingTcObj();
-
-    this.listAppTCObj = new ListAppTCObj();
-    this.listAppTCObj.AppTCObj = new Array();
+    this.listAgrmntTcObj = new Array<AgrmntTcObj>();
 
     for (var i = 0; i < this.OustandingTCForm.value.TCList["length"]; i++) {
-      this.appTC = new AppTCObj();
-      this.appTC.AppId = this.OustandingTCForm.value.TCList[i].AppId;
-      this.appTC.AppTcId = this.OustandingTCForm.value.TCList[i].AppTcId;
-      this.appTC.TcCode = this.OustandingTCForm.value.TCList[i].TcCode;
-      this.appTC.TcName = this.OustandingTCForm.value.TCList[i].TcName;
-      this.appTC.PriorTo = this.OustandingTCForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.OustandingTCForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.OustandingTCForm.getRawValue().TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.OustandingTCForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.OustandingTCForm.getRawValue().TCList[i].PromisedDt;
-      this.appTC.IsWaived = this.OustandingTCForm.getRawValue().TCList[i].IsWaived;
-      this.appTC.CheckedDt = this.OustandingTCForm.value.TCList[i].CheckedDt;
-      this.appTC.Notes = this.OustandingTCForm.value.TCList[i].Notes;
-      this.listAppTCObj.AppTCObj.push(this.appTC);
+      this.agrmntTcObj = new AgrmntTcObj();
+      this.agrmntTcObj.AgrmntId = this.OustandingTCForm.value.TCList[i].AgrmntId;
+      this.agrmntTcObj.AgrmntTcId = this.OustandingTCForm.value.TCList[i].AgrmntTcId;
+      this.agrmntTcObj.TcCode = this.OustandingTCForm.value.TCList[i].TcCode;
+      this.agrmntTcObj.TcName = this.OustandingTCForm.value.TCList[i].TcName;
+      this.agrmntTcObj.PriorTo = this.OustandingTCForm.value.TCList[i].PriorTo;
+      this.agrmntTcObj.IsChecked = this.OustandingTCForm.getRawValue().TCList[i].IsChecked;
+      this.agrmntTcObj.ExpiredDt = this.OustandingTCForm.getRawValue().TCList[i].ExpiredDt;
+      this.agrmntTcObj.IsMandatory = this.OustandingTCForm.value.TCList[i].IsMandatory;
+      this.agrmntTcObj.PromisedDt = this.OustandingTCForm.getRawValue().TCList[i].PromisedDt;
+      this.agrmntTcObj.IsWaived = this.OustandingTCForm.getRawValue().TCList[i].IsWaived;
+      this.agrmntTcObj.IsExpDtMandatory = this.OustandingTCForm.getRawValue().TCList[i].IsExpDtMandatory;
+      this.agrmntTcObj.IsWaivable = this.OustandingTCForm.getRawValue().TCList[i].IsWaivable;
+      this.agrmntTcObj.CheckedDt = this.OustandingTCForm.value.TCList[i].CheckedDt;
+      this.agrmntTcObj.Notes = this.OustandingTCForm.value.TCList[i].Notes;
+      this.agrmntTcObj.IsAdditional = this.OustandingTCForm.value.TCList[i].IsAdditional;
+      this.listAgrmntTcObj.push(this.agrmntTcObj);
     }
 
-    this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
+    var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+    reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
+    reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.listAgrmntTcObj;
 
-    this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
+    this.http.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING], { BizTemplateCode: this.BizTemplateCode });

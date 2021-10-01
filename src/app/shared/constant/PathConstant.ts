@@ -478,6 +478,20 @@ export class PathConstant {
     public static REPORT_RENT_DETAIL = "RptRentDetail";
     public static REPORT_PLAFOND_MOU_SUMMARY = "RptPlafondMouSummary";
     public static REPORT_PLAFOND_MOU_DETAIL = "RptPlafondMouDetail";
+    public static REPORT_COLLATERAL_MOU = "RptCollateralMou";
+    public static REPORT_DAILY_INCOMING_APP = "RptDailyIncomingApp";
+    public static REPORT_DAILY_INCOMING_LEAD = "RptDailyIncomingLead";
+    public static REPORT_CANCEL_LEAD = "RptCancelLead";
+    public static REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT = "RptDailyPreGoLiveByProduct";
+    public static REPORT_DAILY_PRE_GO_LIVE_BY_CMO = "RptDailyPreGoLiveByCMO";
+    public static REPORT_MONTHLY_INPROCESS_APP = "RptMonthlyInprocessApp";
+    public static REPORT_DAILY_PENDING_APP_AFT_APV = "RptDailyPendingAppAftApv";
+    public static REPORT_MONTHLY_PENDING_LEAD = "RptMonthlyPendingLead";
+    public static REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO = "RptMonthlyPreGoLiveByCMO";
+    public static REPORT_MONTHLY_PRE_GO_LIVE_BY_PRODUCT = "RptMonthlyPreGoLiveByProduct";
+    public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "RptMonthlyPendingPreGoLiveAftApv";
+    public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "RptMonthlyPreGoLiveBySupplier";
+    public static REPORT_MONTHLY_TOP_SUPPLIER = "RptMonthlyTopSupplier";
     //#endregion
 
     //#region Inquiry-Module
@@ -507,6 +521,7 @@ export class PathConstant {
     public static DASHBOARD2 = "DashBoard2";
     public static DASHBOARD = "Dash-Board";
     public static DASHEMPTY = "Dash-Empty";
+    public static DASHBOARDBM = "DashBoardBM";
     //#endregion
 
     //#region Content-Route
@@ -534,7 +549,8 @@ export class PathConstant {
 
     //#region FOU-View-Module
     public static VIEW_FOU_CUST_PERSONAL_DETAIL = "Customer/PersonalDetail";
-    public static VIEW_FOU_CUST_COY_DETAIL = "Customer/CoyDetail"
+    public static VIEW_FOU_CUST_COY_DETAIL = "Customer/CoyDetail";
+    public static VIEW_FOU_CUST_TRUST_SOC = "Customer/CustTrustSoc";
     public static VIEW_FOU_VENDOR_BRANCH = "Vendor/VendorBranch";
     public static VIEW_FOU_SRVY_TASK = "Survey/SurveyTask";
     public static VIEW_FOU_SRVY_ORDER = "Survey/SurveyOrder";

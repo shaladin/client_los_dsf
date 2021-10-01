@@ -28,6 +28,7 @@
   "Organization Name": "Organization Name",
   "Virtual Office": "Virtual Office",
   "Search": "Search",
+  "Generate Report": "Generate Report",
   "Cancel": "Cancel",
   "Click Me": "Click Me",
   "LEAD VIEW": "LEAD VIEW",
@@ -133,5 +134,14 @@
   "Maintenance": "Maintenance",
   "Gallery": "Gallery",
   "Documentation": "Documentation",
-  "Support": "Support"
+  "Support": "Support",
+  "Sales Information": "MO Information",
+  "Sales Officer": "MO's Officer",
+  "Sales Supervisor": "MO's Supervisor",
+  "Sales Notes": "MO's Notes",
+  "Sales Code": "MO Code",
+  "Sales Head Name": "MO Head Name",
+  "Sales Office Name": "MO Office Name",
+  "Sales Officer Code": "MO Code",
+  "Sales Officer Name": "MO Name"
 }

@@ -20,27 +20,26 @@
       <label *ngIf="IsRevolving == true" class="col-md-4 adInsLabel" translate>Yes </label>
       <label *ngIf="IsRevolving == false" class="col-md-4 adInsLabel" translate>No </label>
 
-      <label class="col-md-2 adInsLabel" translate>Recourse Type</label>
-      <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-4 adInsLabel" translate>With Recourse </label>
-      <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-4 adInsLabel" translate>Without Recourse
-      </label>
+      <label class="col-md-2 adInsLabel" translate>Revolving Type</label>
+      <label class="col-md-4 adInsLabel" translate>{{ MrRevolvingTypeCode == null ? '-' : dictRevolvingTypeCode[MrRevolvingTypeCode]}} </label>
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>Recourse Type</label>
+      <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-4 adInsLabel" translate>With Recourse </label>
+      <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-4 adInsLabel" translate>Without Recourse</label>
+
       <label class="col-md-2 adInsLabel" translate>Is Disclosed</label>
       <label *ngIf="IsDisclosed == true" class="col-md-4 adInsLabel" translate>Yes </label>
       <label *ngIf="IsDisclosed == false" class="col-md-4 adInsLabel" translate>No </label>
-
-      <label class="col-md-2 adInsLabel" translate>WoP</label>
-      <label class="col-md-4 adInsLabel" translate>{{dictMasterCode['WopCode']}} </label>
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>WoP</label>
+      <label class="col-md-4 adInsLabel" translate>{{dictMasterCode['WopCode']}} </label>
+      
       <label class="col-md-2 adInsLabel" translate>Paid By</label>
       <label class="col-md-4 adInsLabel" translate>{{MrPaidByCode}}</label>
-
-      <label class="col-md-2 adInsLabel" translate>Installment Type / Calculate Method</label>
-      <label class="col-md-4 adInsLabel" translate>{{MrInstTypeCode + ' / ' + SingleInstCalcMthd}}</label>
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
@@ -49,7 +48,6 @@
 
       <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
       <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}} %</label>
-
     </div>
 
     <div *ngIf="MouType == 'GENERAL'" class="form-group row">
@@ -89,12 +87,18 @@
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
       <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}} %</label>
+
       <label class="col-md-2 adInsLabel" translate>Retention (%)</label>
       <label class="col-md-4 adInsLabel" translate>{{RetentionPrcnt | number:'.6':'en-US'}} %</label>
+    </div>
 
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Listed Customer Factoring</label>
       <label *ngIf="IsListedCust == true" class="col-md-4 adInsLabel" translate>Yes </label>
       <label *ngIf="IsListedCust == false" class="col-md-4 adInsLabel" translate>No </label>
+
+      <label class="col-md-2 adInsLabel" translate>Installment Type / Calculate Method</label>
+      <label class="col-md-4 adInsLabel" translate>{{MrInstTypeCode + ' / ' + SingleInstCalcMthd}}</label>
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
@@ -156,6 +160,14 @@
         <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.PrincipalPaidInExtendPrcntg | number:'.6':'en-US'}} %</label>
       </div>
       <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate>Revolving</label>
+        <label *ngIf="IsRevolving == true" class="col-md-4 adInsLabel" translate>Yes </label>
+        <label *ngIf="IsRevolving == false" class="col-md-4 adInsLabel" translate>No </label>
+
+        <label class="col-md-2 adInsLabel" translate>Revolving Type</label>
+        <label class="col-md-4 adInsLabel" translate>{{ MrRevolvingTypeCode == null ? '-' : dictRevolvingTypeCode[MrRevolvingTypeCode]}} </label>
+      </div>
+      <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Spare Day To Pay</label>
         <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.SpareDayToPay}}</label>
 
@@ -182,7 +194,7 @@
       </div>
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Lc Rate (%)</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.LcRate}}</label>
+        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.LcRate | number:'.6':'en-US'}} %</label>
 
         <label class="col-md-2 adInsLabel" translate>Note</label>
         <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.Notes}} </label>

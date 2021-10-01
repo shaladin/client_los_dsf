@@ -8,6 +8,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 @Component({
   selector: 'app-family-main-data-paging',
   templateUrl: './family-main-data-paging.component.html',
@@ -28,6 +30,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
   inputMode: string = "ADD";
   custDataObj: CustDataObj;
   custMainDataMode: string;
+  critCust: Array<string> = new Array<string>();
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -77,6 +80,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
       this.isDetail = true;
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
+      this.critCust = this.critCust.filter((value) => value != ev.RowObj.CustNo);
     }    
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
@@ -91,18 +95,28 @@ export class FamilyMainDataPagingComponent implements OnInit {
   }
 
   loadGuarantorListData() {
-    this.custDataObj = new CustDataObj();
-    this.custDataObj.AppId = this.appId;
-    this.custDataObj.IsFamily = true;
-    this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
-      (response : ResListCustMainDataObj) => {
+    let reqByIdObj: GenericObj = new GenericObj();
+    reqByIdObj.Id = this.appId;
+    this.http.post(URLConstant.GetAppCustAndListFamilyByAppId, reqByIdObj).subscribe(
+      (response: GenericListObj) => {
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response['ListAppCustObj'];
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.listFamily = this.inputGridObj.resultData.Data;
+        this.critCust = this.SetListCustNo(response.ReturnObject);
       }
     );
+  }
+
+  SetListCustNo(listCust: Array<any>): Array<string> {
+    let tempListCustNo: Array<string> = new Array();
+    let listCustNo: Array<string> = listCust.map(x => x.CustNo);
+    for (let index = 0; index < listCustNo.length; index++) {
+      const element: string = listCustNo[index];
+      if (element) tempListCustNo.push(element);
+    }
+    return tempListCustNo;
   }
 }

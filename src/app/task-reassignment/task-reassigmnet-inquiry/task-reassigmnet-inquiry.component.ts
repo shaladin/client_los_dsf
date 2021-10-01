@@ -12,13 +12,23 @@ export class TaskReassigmnetInquiryComponent implements OnInit {
   constructor() {
     this.InputPagingObj._url = "./assets/ucpaging/searchTaskReassignmentInquiry.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/searchTaskReassignmentInquiry.json";
+    let activityVersion: string = "/v1";
+    let nameActivity: string = "T.ACT_CODE";
+    let nameOffice: string = "T.OFFICE_CODE";
+    if (environment.isCore) {
+      this.InputPagingObj._url = "./assets/ucpaging/V2/searchTaskReassignmentInquiryV2.json";
+      this.InputPagingObj.pagingJson = "./assets/ucpaging/V2/searchTaskReassignmentInquiryV2.json";
+      nameActivity = "TRT.WF_ACTIVITY_CODE";
+      nameOffice = "TRT.OFFICE_CODE";
+      activityVersion = "/v2";
+    }
     this.InputPagingObj.ddlEnvironments = [
       {
-        name: "T.ACT_CODE",
-        environment: environment.losUrl + "/v1"
+        name: nameActivity,
+        environment: environment.losUrl + activityVersion
       },
       {
-        name: "T.OFFICE_CODE",
+        name: nameOffice,
         environment: environment.FoundationR3Url + "/v1"
       }
     ];

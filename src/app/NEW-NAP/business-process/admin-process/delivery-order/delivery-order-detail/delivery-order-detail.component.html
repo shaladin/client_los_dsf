@@ -177,8 +177,8 @@
             <mat-tab-group>
               <mat-tab label="Term & Conditions">
                 <ng-template matTabContent>
-                  <app-term-conditions [AppId]="AppId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm">
-                  </app-term-conditions>
+                  <app-agrmnt-tc [AgrmntId]="AgrmntId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm">
+                  </app-agrmnt-tc>
                 </ng-template>
               </mat-tab>
               <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="App Document">

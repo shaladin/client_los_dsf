@@ -1,0 +1,68 @@
+{
+    "title": "Report Daily Incoming Lead",
+    "reportName": "Report Daily Incoming Lead",
+    "reportTemplateCode": "DAILY_INCOMING_LEAD",
+    "component": [
+        {
+            "type": "dropdown",
+            "label": "Office Name",
+            "name": "OfficeCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment":"FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "paramAssignment": 1
+          },
+          {
+            "type": "dropdown",
+            "label": "LOB",
+            "name": "LobCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment":"FOU",
+            "path": "/RefLob/GetListKvpRefLob",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "paramAssignment": 1
+          },
+          {
+        "type": "datepicker",
+        "label": "Period From >=",
+        "name": "PeriodFrom",
+        "datatype": "date",
+        "value": "BD-10",
+        "restriction": "gte",
+        "paramAssignment": 0
+      },
+      {
+        "type": "textbox",
+        "name": "LeadSourceCode",
+        "id": "LeadSourceId",
+        "value": "",
+        "label": "Lead Source",
+        "placeholder": "Placeholder",
+        "paramAssignment": 1
+    },
+      {
+        "type": "datepicker",
+        "label": "Period To <=",
+        "name": "PeriodTo",
+        "datatype": "date",
+        "value": "BD+10",
+        "restriction": "lte",
+        "paramAssignment": 0
+      }
+    ],
+    "exportTypeList": [
+    ]
+  }

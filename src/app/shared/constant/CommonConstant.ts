@@ -60,6 +60,7 @@ export class CommonConstant {
   public static VERSION = "Version";
   public static LAST_ACCESS_TIME = "LastAccessTime";
   public static EMP_NO = "EmpNo";
+  public static EMP_NAME = "EmpName";
 
   // Module
   public static LOAN_ORIGINATION = "LOS";
@@ -713,6 +714,9 @@ export class CommonConstant {
   public static GSCodeLobKta = "LOB_KTA";
   public static GSSerialNoRegex = "SERIAL_NO_REGEX";
   public static GSCodeListLegalDocCantDuplicate = "LIST_LEGAL_DOC_CANNOT_DUPLICATE";
+  public static GSCodeRoleDashboardLosOperational = "ROLE_DASHBOARD_LOS_OPERATIONAL";
+  public static GSCodeDashboardUsr = "DASHBOARD_USR";
+  public static GSCodeDashboardPwd = "DASHBOARD_PWD";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -875,6 +879,7 @@ export class CommonConstant {
 
   //SYS CONFIG
   public static ConfigCodeIsUseDms = "IS_USE_DMS";
+  public static ConfigCodeDigitalizationSvcType = "DIGITALIZATION_SVC_TYPE";
   public static SYS_CONFIG_USING_DMS_ADINS = "USING_DMS_ADINS"
   
   //interest input type
@@ -988,6 +993,7 @@ export class CommonConstant {
   public static LTKM_RTN = "LTKM_VERIFY";
   public static RTN_ADD_TC = "RTN_ADD_TC_";
   public static ADD_COLTR_ = "ADD_COLTR_";
+  public static ADD_TC = "ADD_TC_";
 
 
 
@@ -1034,4 +1040,31 @@ export class CommonConstant {
   
   public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
   public static PrcntMinValue: number = 0.000001;
+
+  public static STAT_CODE_ACT = "ACT";
+
+  //DIGITALIZATION SVC TYPE CODE
+  public static DigitalizationSvcTypeTrustingSocial = "TS";
+  public static DigitalizationSvcTypePefindo = "PEFINDO";
+  public static DigitalizationSvcTypeDukcapil = "DUKCAPIL";
+  public static DigitalizationSvcTypeRapindo = "RAPINDO";
+  public static DigitalizationSvcTypeProfind = "PROFIND";
+  public static DigitalizationSvcTypeSlik = "SLIK";
+
+  //LIST APP STEP
+  public static AppCurrStepNap2 = {
+    "NAPD": CommonConstant.AppStepNapd,
+    "REF": CommonConstant.AppStepRef,
+    "APP": CommonConstant.AppStepApp,
+    "ASSET": CommonConstant.AppStepAsset,
+    "COLL": CommonConstant.AppStepColl,
+    "INS": CommonConstant.AppStepIns,
+    "LFI": CommonConstant.AppStepLIns,
+    "FIN": CommonConstant.AppStepFin,
+    "TC": CommonConstant.AppStepTC,
+    "UPL_DOC": CommonConstant.AppStepUplDoc,
+    "INVOICE": CommonConstant.AppStepInvoice,
+    "CMPLTN": CommonConstant.AppStepCustCmpltn,
+    "AEX": CommonConstant.AppStepAssetExpense
+  }
 }

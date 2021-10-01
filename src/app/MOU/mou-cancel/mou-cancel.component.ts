@@ -14,6 +14,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { environment } from 'environments/environment';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -49,10 +50,10 @@ export class MouCancelComponent implements OnInit {
                                                this.user[CommonConstant.OFFICE_CODE],
                                                this.user[CommonConstant.ROLE_CODE] + "-" + this.user[CommonConstant.OFFICE_CODE]];
       
-      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "MouCustNo";
-      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.IntegrationObj.rightColumnToJoin = "BusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
   }
@@ -81,7 +82,7 @@ export class MouCancelComponent implements OnInit {
         let mouCancel =  new ReqMouForEditConfirmCancelObj();
         mouCancel.MouStat = CommonConstant.MouStatCancel;
         mouCancel.MouCustId = event.RowObj.MouCustId;
-        mouCancel.WfTaskListId = event.RowObj.WfTaskListId;
+        mouCancel.WfTaskListId = environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId;
         mouCancel.RowVersion = event.RowObj.RowVersions;
 
         let EditMouForCancelByMouIdUrl = environment.isCore ? URLConstant.EditMouForCancelByMouIdV2 : URLConstant.EditMouForCancelByMouId;

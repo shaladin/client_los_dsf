@@ -67,7 +67,8 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post(URLConstant.GetTaskReassignmentDetailForApproval, { TaskReassignmentTrxId: this.TaskReassignmentTrxId }).toPromise().then(
+    let urlApi: string = environment.isCore ? URLConstant.GetTaskReassignmentDetailForApprovalV2 : URLConstant.GetTaskReassignmentDetailForApproval
+    this.http.post(urlApi, { TaskReassignmentTrxId: this.TaskReassignmentTrxId }).toPromise().then(
       (response: ResponseTaskReassignmentDetailPageObj) => {
         this.TaskReassignmentObj = response;
         this.initInputApprovalObj();

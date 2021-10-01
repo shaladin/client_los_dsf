@@ -45,6 +45,7 @@ import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPers
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-asset-data',
@@ -95,9 +96,9 @@ export class AssetDataComponent implements OnInit {
     MrAssetConditionCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
     SupplName: ['', Validators.maxLength(500)],
-    AssetPriceAmt: ['', Validators.required],
-    DownPaymentAmt: ['', [Validators.required, Validators.min(0.00)]],
-    DownPaymentPrctg: [0, Validators.max(100)],
+    AssetPriceAmt: ['', [Validators.required, Validators.min(0.01)]],
+    DownPaymentAmt: ['', [Validators.required, Validators.min(0.01)]],
+    DownPaymentPrctg: [0, [Validators.min(0.000001), Validators.max(100)]],
     AssetNotes: ['', [Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
     TaxCityIssuer: [''],
@@ -315,6 +316,8 @@ export class AssetDataComponent implements OnInit {
   generalSettingObj: GenericListByCodeObj = new GenericListByCodeObj();
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsSvcExist: boolean = false;
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   LastRequestedDate: any = "";
@@ -668,6 +671,7 @@ export class AssetDataComponent implements OnInit {
         }
 
         if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+          this.getDigitalizationSvcType();
           this.GetThirdPartyResultH();
         }
       }
@@ -786,7 +790,7 @@ export class AssetDataComponent implements OnInit {
         if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
         if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
       }
-      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
         if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
           if (confirm("Chassis No not filled, submit data without Integrator ?")) {
             this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
@@ -1298,15 +1302,12 @@ export class AssetDataComponent implements OnInit {
   DpTypeChange() {
     if (this.AssetDataForm.controls.selectedDpType.value != '') {
       if (this.AssetDataForm.controls.selectedDpType.value == 'AMT' && this.DpTypeBefore == 'PRCTG') {
-        this.AssetDataForm.controls["DownPaymentAmt"].enable()
         this.AssetDataForm.patchValue({
           DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
         });
-        this.AssetDataForm.controls["DownPaymentPrctg"].disable();
         this.AssetDataForm.controls["DownPaymentAmt"].updateValueAndValidity();
       }
       else if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG' && this.DpTypeBefore == 'AMT') {
-        this.AssetDataForm.controls["DownPaymentPrctg"].enable();
         if (this.AssetDataForm.controls.AssetPriceAmt.value == 0) {
           this.AssetDataForm.patchValue({
             DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
@@ -1317,7 +1318,6 @@ export class AssetDataComponent implements OnInit {
             DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
           });
         }
-        this.AssetDataForm.controls["DownPaymentAmt"].disable();
         this.AssetDataForm.controls["DownPaymentPrctg"].updateValueAndValidity();
       };
       this.DpTypeBefore = this.AssetDataForm.controls.selectedDpType.value;
@@ -1341,7 +1341,13 @@ export class AssetDataComponent implements OnInit {
 
   updateValueDownPaymentPrctg() {
     let DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
-    if (DownPaymentPrctg > 100) {
+    if(isNaN(DownPaymentPrctg)){
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: 0,
+        DownPaymentPrctg: 0
+      });
+    }
+    else if (DownPaymentPrctg > 100) {
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount!");
       this.AssetDataForm.patchValue({
         DownPaymentAmt: 0,
@@ -2763,6 +2769,28 @@ export class AssetDataComponent implements OnInit {
       }else{
         let DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+      }
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.BizTemplateCode}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+      var svcType = listSvcType.find(x => x == refSvcType);
+
+      if(svcType != null){
+        this.IsSvcExist = true;
       }
     }
   }

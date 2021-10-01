@@ -89,6 +89,8 @@ export class CustMainDataComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   @Input() from: string;
   @Input() tempTotalSharePrct: number = 0;
+  @Input() critCust: Array<string> = new Array<string>();
+  @Input() critCustCompany: Array<string> = new Array<string>();
 
   LeadId: number;
   LeadNo: string;
@@ -475,6 +477,21 @@ export class CustMainDataComponent implements OnInit {
     critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = custType;
+
+    if(this.critCust.length > 0 && custType == CommonConstant.CustTypePersonal){
+      critObj.DataType = "text";
+      critObj.propName = 'C.CUST_NO';
+      critObj.restriction = AdInsConstant.RestrictionNotIn;
+      critObj.listValue = this.critCust;
+    }
+
+    if(this.critCustCompany.length > 0 && custType == CommonConstant.CustTypeCompany){
+      critObj.DataType = "text";
+      critObj.propName = 'C.CUST_NO';
+      critObj.restriction = AdInsConstant.RestrictionNotIn;
+      critObj.listValue = this.critCustCompany;
+    }
+
     this.ArrAddCrit.push(critObj);
 
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;

@@ -14,8 +14,11 @@ import { ContextMenuModule } from '@progress/kendo-angular-menu';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import {ucdashboard2Module} from '@adins/ucdashboard2';
 import { DashEmptyComponent } from './dash-empty/dash-empty.component';
+import { DashboardBmComponent } from './dashboard-bm/dashboard-bm.component';
 
-
+import { NgxChartsModule } from '@swimlane/ngx-charts'
+import { DashboardSupersetComponent } from './dashboard-superset/dashboard-superset.component';
+import { SharedModule } from 'app/shared/shared.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -26,14 +29,18 @@ import { DashEmptyComponent } from './dash-empty/dash-empty.component';
         TreeViewModule,
         ContextMenuModule,
         SharingComponentModule,
-        ucdashboard2Module
+        ucdashboard2Module,
+        NgxChartsModule,
+        SharedModule
     ],
     exports: [],
     declarations: [
         Dashboard1Component,
         Dashboard2Component,
         DashBoardComponent,
-        DashEmptyComponent
+        DashEmptyComponent,
+        DashboardBmComponent,
+        DashboardSupersetComponent
     ],
     providers: [],
 })

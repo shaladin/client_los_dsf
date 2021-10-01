@@ -30,6 +30,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsCompletion: boolean = false;
+  IsCustomer: boolean = false;
   isCompletionCheck: boolean = true;
   isCompleteCustStep: object = {};
   CustStep = {
@@ -74,7 +75,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionPersonalData.json";
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
@@ -82,12 +83,13 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       animation: true
     })
 
-    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).subscribe(
+    await this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         if (response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.IsMarried = true;
         this.CustModelCode = response.AppCustObj.MrCustModelCode;
         this.AppCustPersonalId = response.AppCustPersonalObj.AppCustPersonalId;
         this.IsCompletion = response.AppCustObj.IsCompletion;
+        this.IsCustomer = response.AppCustObj.IsCustomer;
       }
     );
 
@@ -154,6 +156,9 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       this.Save();
     }
     else {
+      if(!this.IsCustomer && Step == 'Family'){
+        Step = 'Job';
+      }
       this.EnterTab(Step);
       this.ucViewMainProd.initiateForm();
     }

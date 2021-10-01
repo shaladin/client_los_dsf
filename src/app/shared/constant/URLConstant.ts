@@ -33,6 +33,7 @@ export class URLConstant {
 
   // APP Application
   public static AddAppFromCopyCancledApp = environment.losUrl + "/v1" + "/Application/AddAppFromCopyCancledApp";
+  public static AddAppFromCopyCancledAppV2 = environment.losUrl + "/v2" + "/Application/AddAppFromCopyCancledApp";
   public static AddAppMaindata = environment.losUrl + "/v1" + "/Application/AddAppMainData";
   public static GetPurchaseOrderExpDt = environment.losUrl + "/v1" + "/Application/GetPurchaseOrderExpDt";
   public static GetAppById = environment.losUrl + "/v1" + "/Application/GetAppById";
@@ -41,6 +42,7 @@ export class URLConstant {
   public static GetAppDetailForAppTabById = environment.losUrl + "/v1" + "/Application/GetAppDetailForAppTabById";
   public static AddAppFromLead = environment.losUrl + "/v1" + "/Application/AddAppFromLead";
   public static AddAppFromSimpleLead = environment.losUrl + "/v1" + "/Application/AddAppFromSimpleLead";
+  public static AddAppFromSimpleLeadV2 = environment.losUrl + "/v2" + "/Application/AddAppFromSimpleLead";
   public static DataTableNAP = environment.losUrl + "/v1" + "/Application/DataTableNAP";
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/v1" + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/v1" + "/Application/GetAppAndAppCustDetailByAgrmntId";
@@ -53,13 +55,17 @@ export class URLConstant {
   public static DataTableFeeAndInsNAP = environment.losUrl + "/v1" + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl + "/v1" + "/Application/UpdateAppStepByAppId";
   public static CopyCancelledApp = environment.losUrl + "/v1" + "/Application/CopyCancelledApp";
+  public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledApp";
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainData";
+  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
+  public static CopyCancelledAppForMainDataMultiBLV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
   public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
   public static AddAppFromMou = environment.losUrl + "/v1" + "/Application/AddAppFromMou";
   public static CheckMouCustIntegrator = environment.losUrl + "/v1" + "/MouCust/CheckMouCustIntegrator";
   public static AddNap1FromLead = environment.losUrl + "/v1" + "/Application/AddNap1FromLead";
+  public static AddNap1FromLeadV2 = environment.losUrl + "/v2" + "/Application/AddNap1FromLead";
 
   public static CalculatePlafondAgrmnt = environment.losUrl + "/v1" + "/ApplicationX/CalculatePlafondAgrmnt";
   public static CheckIsMouFreeze = environment.losUrl + "/v1" + "/MouCust/CheckIsMouFreeze";
@@ -492,6 +498,7 @@ export class URLConstant {
   
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
+  public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
   public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
 
   // SERVICE TASK
@@ -692,7 +699,7 @@ export class URLConstant {
   public static GetMouShareholderDuplicateCheck = environment.losUrl + "/v1" + "/MouCustDupCheck/GetMouShareholderDuplicateCheck";
   public static EditCustNoMouCust = environment.losUrl + "/v1" + "/MouCustDupCheck/EditCustNoMouCust";
   public static SubmitMouDupCheck = environment.losUrl + "/v1" + "/MouCustDupCheck/SubmitMouDupCheck";
-
+ 
   // MOU Freeze Unfreeze
   public static SubmitMouFreezeUnfreeze = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
   public static SubmitMouFreezeUnfreezeV2 = environment.losUrl + "/v2" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
@@ -735,7 +742,8 @@ export class URLConstant {
   public static GetMouCustCollateralDataExistingByCollateralNo = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralDataExistingByCollateralNo";
 
   public static CheckMouCustCollateralIntegrator = environment.losUrl + "/v1" + "/MouCustCollateral/CheckMouCustCollateralIntegrator";
-  public static ValidateAddExistingByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateral/ValidateAddExistingByMouCustId";
+  public static ValidateAddExistingByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateral/ValidateAddExistingByMouCustId"
+  public static GetListMouCustCollateralActiveByCustNo = environment.losUrl + "/v1" + "/MouCustCollateral/GetListMouCustCollateralActiveByCustNo";
   // MOU CUST COLLATERAL DOC
 
   // MOU CUST RVW H
@@ -758,7 +766,11 @@ export class URLConstant {
   public static AddMouCustSignerV2 = environment.losUrl + "/v2" + "/MouCustSigner/AddMouCustSigner";
   public static GetMouCustSignerByMouCustId = environment.losUrl + "/v1" + "/MouCustSigner/GetMouCustSignerByMouCustId";
 
+  // MOU CUST DOC
+  public static GetListMouCustDocByMouCustId = environment.losUrl + "/v1" + "/MouCustDoc/GetListMouCustDocByMouCustId";
+
   // MOU CUST DOC PRINT
+  public static AddMouCustDocPrint = environment.losUrl + "/v1" + "/MouCustDocPrint/AddMouCustDocPrint";
   public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/v1" + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
   public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/v1" + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
 
@@ -835,6 +847,7 @@ export class URLConstant {
   public static GetPurchaseOrderByPurchaseOrderHIdForNewPO = environment.losUrl + "/v1" + "/PurchaseOrderH/GetPurchaseOrderByPurchaseOrderHIdForNewPO";
   public static GetPurchaseOrderDPoItemCodeFromRuleByType = environment.losUrl + "/v1" + "/PurchaseOrderH/GetPurchaseOrderDPoItemCodeFromRuleByType";
   public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
+  public static ResumeWorkflowNewPurchaseOrderV2 = environment.losUrl + "/v2" + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
   public static GetBankDsfbyGeneralSettingR2 = environment.losUrl + "/v1" + "/PurchaseOrderH/GetBankDsfbyGeneralSettingR2";
 
   // LEAD
@@ -1020,7 +1033,9 @@ export class URLConstant {
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/SubmitAgrmntSignerData";
+  public static SubmitAgrmntSignerDataV2 = environment.losUrl + "/v2" + "/AgrmntSigner/SubmitAgrmntSignerData";
   public static EditAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/EditAgrmntSignerData";
+  public static EditAgrmntSignerDataV2 = environment.losUrl + "/v2" + "/AgrmntSigner/EditAgrmntSignerData";
   public static GetAgrmntSignerByAgrmntId = environment.losUrl + "/v1" + "/AgrmntSigner/GetAgrmntSignerByAgrmntId";
 
   //AGRMNT FIN DATA
@@ -1343,6 +1358,7 @@ export class URLConstant {
   public static ClaimTaskNapCustmainDataV2 = environment.losUrl + "/v2" + "/Application/ClaimTaskNapCustmainData";
   public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
   public static GetAllWorkflowInstance = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllWorkflowInstance";
+  public static GetTaskHistoryByTransactionNo = environment.FoundationR3Url + "/v2" + "/Workflow/GetTaskHistoryByTransactionNo";
   public static CompleteTask = environment.FoundationR3Url + "/v2" + "/Workflow/CompleteTask";
 
   //Application Data
@@ -1369,6 +1385,7 @@ export class URLConstant {
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerifEdit = environment.FoundationR3Url + "/v1" + "/VerfResultH/AddEditVerfResultHeaderAndVerfResultDetailForSurveyVerif";
   public static GetVerfQuestionListByAppIdAndSubjectForSurveyVerifEdit = environment.FoundationR3Url + "/v1" + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfResultH";
   public static CompleteAppSurveyVerif = environment.losUrl + "/v1" + "/SurveyVerif/CompleteAppSurveyVerif";
+  public static CompleteAppSurveyVerifV2 = environment.losUrl + "/v2" + "/SurveyVerif/CompleteAppSurveyVerif";
 
   // App Cust
   public static GetAppCustByAppId = environment.losUrl + "/v1" + "/AppCust/GetAppCustByAppId";
@@ -1495,6 +1512,7 @@ export class URLConstant {
   public static GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId = environment.losUrl + "/v1" + "/EditAppAftApv/GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId";
   public static GetAgrmntDataForEditAppAfterApprovalByAgrmntId = environment.losUrl + "/v1" + "/EditAppAftApv/GetAgrmntDataForEditAppAfterApprovalByAgrmntId";
   public static SubmitEditAppAftApvReq = environment.losUrl + "/v1" + "/EditAppAftApv/SubmitEditAppAftApvReq";
+  public static SubmitEditAppAftApvReqV2 = environment.losUrl + "/v2" + "/EditAppAftApv/SubmitEditAppAftApvReq";
 
   //LTKM
   public static GetCustCompanyLtkmForCopyByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyLtkmForCopyByCustId";
@@ -1626,6 +1644,8 @@ export class URLConstant {
   public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset";
   public static DigitalizationAddTrxSrcDataForFraudChecking = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudChecking";
   public static DigitalizationAddTrxSrcDataForFraudCheckingNAPCust = environment.losUrl + "/v1" + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingNAPCust";
+  public static GetRuleIntegratorPackageMapAsset = environment.losUrl + "/v1" + "/Digitalization/GetRuleIntegratorPackageMapAsset";
+  public static GetRuleIntegratorPackageMapCust = environment.losUrl + "/v1" + "/Digitalization/GetRuleIntegratorPackageMapCust";
 
   //ThirdPartyRsltH
   public static GetThirdPartyResultHByTrxTypeCodeAndTrxNo = environment.losUrl + "/v1" + "/ThirdPartyRsltH/GetThirdPartyResultHByTrxTypeCodeAndTrxNo";
@@ -1638,9 +1658,12 @@ export class URLConstant {
 
   //Task Reassignment
   public static GetTaskReassignmentDetail = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetail";
+  public static GetTaskReassignmentDetailV2 = environment.losUrl + "/v2" + "/TaskReassignment/GetTaskReassignmentDetail";
   public static SubmitTaskReassignment = environment.losUrl + "/v1" + "/TaskReassignment/SubmitTaskReassignment";
+  public static SubmitTaskReassignmentV2 = environment.losUrl + "/v2" + "/TaskReassignment/SubmitTaskReassignment";
   public static GetUserRoleByUsernameForReassignment = environment.FoundationR3Url + "/v1" + "/RefUserRole/GetUserRoleByUsernameForReassignment";
   public static GetTaskReassignmentDetailForApproval = environment.losUrl + "/v1" + "/TaskReassignment/GetTaskReassignmentDetailForApproval";
+  public static GetTaskReassignmentDetailForApprovalV2 = environment.losUrl + "/v2" + "/TaskReassignment/GetTaskReassignmentDetailForApproval";
 
   //APP CUST BANK ACC
   public static GetListAppCustBankAccByAppCustId = environment.losUrl + "/v1" + "/AppCustBankAcc/GetListAppCustBankAccByAppCustId";
@@ -1832,5 +1855,13 @@ export class URLConstant {
   //App Attr Content
   public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
   public static GetListAppAttrContentForView = environment.losUrl + "/v1" + "/AppAttrContent/GetListAppAttrContentForView";
+
+  //Dashboard
+  public static GetAppCountAndMappingStep = environment.losUrl + "/v1" + "/Dashboard/GetAppCountAndMappingStep";
+  public static HitSuperset = environment.Superset + "api/v1" + "/security/login";
+
+  //Agrmnt Tc
+  public static GetListAgrmntTcbyAgrmntId = environment.losUrl + "/v1" + "/AgrmntTc/GetListAgrmntTcbyAgrmntId";
+  public static SubmitAgrmntTc = environment.losUrl + "/v1" + "/AgrmntTc/SubmitAgrmntTc";
 
 }

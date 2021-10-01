@@ -389,9 +389,12 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     var appObj = {
       Id: this.AppId,
     };
-    await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
       (response: AppCustObj) => {
-        this.AppCustObj = response;
+        this.AppCustObj = response['AppCustObj'];
+        if(response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'] != null)  
+          this.AppCustObj.MobilePhnNo1 = response['AppCustPersonalObj']['MobilePhnNo1'];
+
         this.CustType = this.AppCustObj.MrCustTypeCode;
         if (this.CustType == CommonConstant.CustTypePersonal) {
           this.EditAppAssetForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
@@ -657,6 +660,13 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
         OwnerZipcode: this.EditAppAssetForm.controls.OwnerZipcode.value,
       },
       AppAssetAttrObjs: [],
+      AppInsObj:
+      {
+        InsAssetCoverPeriod: '-',
+        InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy,
+        InscoBranchCode: "",
+        InscoBranchName: "",
+      }
     }
 
     var listAppAssetAttrs = this.EditAppAssetForm.controls["AppAssetAttrObjs"] as FormArray;

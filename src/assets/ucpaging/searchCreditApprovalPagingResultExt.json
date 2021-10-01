@@ -69,9 +69,10 @@
     ],
     "bodyList": [
         {
-            "type": "text",
+            "type": "callback",
             "position": "center",
-            "property": "TrxNo"
+            "property": "TrxNo",
+            "key": "application"
         },
         {
             "type": "text",

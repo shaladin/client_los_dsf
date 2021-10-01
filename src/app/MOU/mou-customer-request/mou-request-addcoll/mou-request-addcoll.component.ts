@@ -38,6 +38,7 @@ import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from 'app/shared/model/MouCustCollateralAttrObj.Model';
 import { RefAttrGenerateObj } from 'app/shared/model/RefAttrGenerate.Model';
 import { RefAttrGenerate } from 'app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -60,6 +61,8 @@ export class MouRequestAddcollComponent implements OnInit {
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   thirdPartyRsltHId: number = 0;
   controlNameIdNo: string = 'OwnerIdNo';
   resultPattern: Array<KeyValueObj>;
@@ -478,6 +481,13 @@ export class MouRequestAddcollComponent implements OnInit {
       addCritCustNo.restriction = AdInsConstant.RestrictionEq;
       addCritCustNo.value = this.custNo;
       this.criteriaList.push(addCritCustNo);
+
+      const addMouActive = new CriteriaObj();
+      addMouActive.DataType = 'text';
+      addMouActive.propName = 'MC.MOU_STAT';
+      addMouActive.restriction = AdInsConstant.RestrictionEq;
+      addMouActive.value = CommonConstant.STAT_CODE_ACT;
+      this.criteriaList.push(addMouActive);
     }
 
     this.inputLookupObj.nameSelect = "";
@@ -566,12 +576,27 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   MouCustCollateralId: number = 0;
-  open(pageType) {
-    if (pageType == 'AddExisting' && this.listCollateralData.length < 1) {
+  isAddExistingOK: boolean = true;
+  async open(pageType) {
+    this.isAddExistingOK = true;
+    if (pageType == 'AddExisting') {
+      await this.http.post(URLConstant.GetListMouCustCollateralActiveByCustNo, { TrxNo: this.custNo }).toPromise().then(
+        (response) => {
+          console.log(response);
+          if(response["ReturnObject"].length < 1){
+            this.isAddExistingOK = false;
+          }
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    if(!this.isAddExistingOK){
       this.toastr.warningMessage(ExceptionConstant.NO_EXISTING_COLL);
       return;
     }
-
     this.maxPrcnt = 100;
     this.ResetForm();
     this.MouCustCollateralId = 0;
@@ -581,10 +606,10 @@ export class MouRequestAddcollComponent implements OnInit {
     this.type = pageType;
     if (pageType == 'AddExisting') {
       this.bindUcLookupExisting();
-      this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
+      this.updateUcLookup(this.CollTypeList[0].Key, true, pageType);
     } else {
       this.bindUcLookup();
-      this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
+      this.updateUcLookup(this.CollTypeList[0].Key, true, pageType);
       this.AddCollForm.controls.CopyFromLegal.enable();
       this.AddCollForm.controls.CopyToOwnerLocation.enable();
       this.AddCollForm.controls.AssetTypeCode.enable();
@@ -1395,7 +1420,7 @@ export class MouRequestAddcollComponent implements OnInit {
       }
     }
 
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       if (!this.IsCalledIntegrator) {
         if (confirm("Continue without integrator ?")) {
           this.UpdatePlafondAmt(sumCollateralValue);
@@ -1457,6 +1482,7 @@ export class MouRequestAddcollComponent implements OnInit {
         }
 
         if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+          this.getDigitalizationSvcType();
           this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
           this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
           this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
@@ -1556,6 +1582,27 @@ export class MouRequestAddcollComponent implements OnInit {
     }
     else {
       this.toastr.warningMessage("Must have atleast 1 asset.");
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+        var svcType = listSvcType.find(x => x == refSvcType);
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
     }
   }
 }
