@@ -42,8 +42,8 @@
               </div>                
             </div>
             <div class="form-actions right">
-              <button type="submit" class="btn btn-raised btn-primary" translate>
-                <i class="fa fa-check-square-o"></i> Add
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Add</span>
               </button>
             </div>
             <div class="form-group row">
@@ -96,11 +96,11 @@
               </table>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: lobCode}" translate>
-                <i class="ft-x"></i> Cancel
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: lobCode}">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>            
-              <button type="button" class="btn btn-raised btn-primary" (click)="SubmitAll()" translate>
-                <i class="far fa-check-square"></i> Save
+              <button type="button" class="btn btn-raised btn-primary" (click)="SubmitAll()">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="Test()" translate>
                 <i class="fa fa-check-square-o"></i> Test

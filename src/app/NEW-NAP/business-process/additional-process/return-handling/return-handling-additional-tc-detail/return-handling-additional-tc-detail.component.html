@@ -28,8 +28,8 @@
           </lib-ucSubsection>
           <div id="newTc">
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-primary" (click)="add(content)" translate>
-                <i class="fa fa-check-square-o"></i> Add
+              <button type="button" class="btn btn-raised btn-primary" (click)="add(content)">
+                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Add</span>
               </button>
             </div>
             <ng-container formArrayName="AppTcs">
@@ -91,18 +91,18 @@
             </ng-container>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-warning mr-1" translate
+            <button type="button" class="btn btn-raised btn-warning mr-1"
               [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: BizTemplateCode}">
-              <i class="ft-x"></i> Cancel
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
             <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
               <i class="ft-x"></i> Cancel
             </button> -->
-            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="SaveAdditionalTCHandler()" translate>
-              <i class="far fa-check-square"></i> Save
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="SaveAdditionalTCHandler()">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Submit
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
             </button>
           </div>
         </div>
@@ -144,11 +144,11 @@
                 </div>
               </div>
               <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
-                  <i class="ft-x"></i> Cancel
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()">
+                  <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="far fa-check-square"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
             </div>

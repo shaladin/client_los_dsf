@@ -33,7 +33,7 @@
                                     <div class="col-md-3" *ngIf="this.pageType == 'add'">
                                         <button type="button" class="btn btn-raised btn-primary" (click)="copyLead()"
                                             [disabled]="isCopyButtonDisabled">
-                                            <i class="fa fa-check-square-o"></i> Copy
+                                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                                         </button>
                                     </div>
                                 </div>
@@ -131,15 +131,14 @@
                             </div>
                         </div>
                         <div class="form-actions right" style="text-align: right;">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()"
-                                translate>
-                                <i class="ft-x"></i> Cancel
+                            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backHandler()">
+                                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                             </button>
-                            <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
-                                <i class="fa fa-check-square-o"></i> Save
+                            <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()">
+                                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Save</span>
                             </button>
-                            <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
-                                <i class="fa fa-check-square-o"></i> Next
+                            <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()">
+                                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Next</span>
                             </button>
                         </div>
                     </form>

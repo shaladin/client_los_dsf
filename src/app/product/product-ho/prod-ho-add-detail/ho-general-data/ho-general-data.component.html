@@ -12,7 +12,7 @@
           </div>
           <div class="col-md-4">
             <button type="button" (click)="reload()" class="btn btn-raised btn-primary margin-r-5">
-              <i class="far fa-check-square"></i> Copy
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Copy</span>
             </button>
           </div>
         </div>
@@ -55,11 +55,11 @@
         </div>
       </div>
       <div class="form-actions right">
-        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-          <i class="far fa-window-close"></i> Cancel
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+          <i class="far fa-window-close"></i>&nbsp;<span translate>Cancel</span>
         </button>
         <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
-          <i class="far fa-check-square"></i> Save
+          <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
         </button>
       </div>
     </form>

@@ -1,7 +1,7 @@
 <div *ngIf="!isDetail">
   <div class="button-right margin-15">
-    <button type="button" class="btn btn-raised btn-primary" (click)="add()" translate>
-      <i class="ft-plus-circle"></i> Add
+    <button type="button" class="btn btn-raised btn-primary" (click)="add()">
+      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
     </button>
   </div>
   <div *ngIf="listMgmntShrholder?.length == 0">
@@ -55,7 +55,7 @@
   </div>
   <div class="pull-right margin-15">
     <button type="button" (click)="saveAndContinue()" class="btn btn-raised btn-primary">
-      <i class="far fa-check-square"></i> Save
+      <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
     </button>
   </div>
 </div>

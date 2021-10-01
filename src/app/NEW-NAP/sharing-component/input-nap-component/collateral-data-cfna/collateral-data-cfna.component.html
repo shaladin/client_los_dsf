@@ -2,8 +2,8 @@
   <!-- <div class="ucSearch-Button-Right"> -->
   <div class="text-right">
     <span class="mr-1">
-      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="OpenDetail()" translate>
-        <i class="ft-plus-circle"></i> Add Collateral
+      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="OpenDetail()">
+        <i class="ft-plus-circle"></i>&nbsp;<span translate>Add Collateral</span>
       </button>
     </span>
   </div>
@@ -12,11 +12,11 @@
   </app-collateral-data-cfna-paging>
 
   <div class="col-md-12" style="padding: 0; text-align: right;">
-    <button type="button" *ngIf="showCancel" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-      <i class="ft-x"></i> Cancel
+    <button type="button" *ngIf="showCancel" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
     </button>
-    <button type="submit" class="btn btn-raised btn-primary" (click)="Next()" translate>
-      <i class="fa fa-check-square"></i> Save
+    <button type="submit" class="btn btn-raised btn-primary" (click)="Next()">
+      <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
     </button>
   </div>
 </div>

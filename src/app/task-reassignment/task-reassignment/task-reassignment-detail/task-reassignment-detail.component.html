@@ -40,11 +40,11 @@
               <lib-ucapprovalcreate [parentForm]= "TaskReassignmentForm" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="SaveForm()" #ApprovalComponent></lib-ucapprovalcreate>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
-                <i class="ft-x"></i> Cancel
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square"></i> Save
+                <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
               </button>
             </div>
           </div>
