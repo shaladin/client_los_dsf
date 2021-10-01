@@ -49,7 +49,8 @@
               "type": "MouCustId",
               "property": "MouCustId"
             }
-          ]
+          ],
+          "isHide": true
         },
         {
           "type": "text",
@@ -72,6 +73,16 @@
           "type": "text",
           "label": "Tenor",
           "property": "Tenor"
+        },
+        {
+          "type": "text",
+          "label": "Agreement Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Agreement Last Step",
+          "property": "LastStep"
         }
       ],
       "querystring": {

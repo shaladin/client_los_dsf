@@ -73,7 +73,16 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
     if (ev.Key == "customer") {
-      AdInsHelper.OpenCustomerViewByCustId(ev.ViewObj.AppCustId);
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.ViewObj.CustNo}).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        }
+      );
     }
   }
 
