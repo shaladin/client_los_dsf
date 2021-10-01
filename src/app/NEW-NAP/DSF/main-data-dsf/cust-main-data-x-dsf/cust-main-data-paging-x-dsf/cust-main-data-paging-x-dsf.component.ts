@@ -66,8 +66,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit {
 
   async ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    // if (this.userAccess.RoleCode == 'MKT-MAO' || this.userAccess.RoleCode == 'DPC' || this.userAccess.RoleCode == 'MKT-MO')
-    // {
+    
       this.arrCrit = new Array();
       this.makeCriteria();
 
@@ -93,11 +92,6 @@ export class CustMainDataPagingXDsfComponent implements OnInit {
         this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
         this.inputPagingObj.integrationObj = this.IntegrationObj;
       }
-    // }
-    // else
-    // {
-    //   this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
-    // }
   }
 
   AddApp(addType = '') {
