@@ -23,7 +23,7 @@
         </app-crd-rvw-additional-coll>
         <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-cmo-info>
-        <app-crd-rvw-dealer-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        <app-crd-rvw-dealer-info *ngIf="isShow && !IsFD" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
         <app-tab-deviation [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
         
