@@ -13,12 +13,14 @@ import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.compon
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 import { SharedModule } from "app/shared/shared.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
   imports: [
     CommonModule,
     InputNapROSRoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     InputNapComponentModule,
     ArchwizardModule,
     ViewMainInfoComponentModule,

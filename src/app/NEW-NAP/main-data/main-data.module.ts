@@ -7,6 +7,7 @@ import { MainDataRoutingModule } from "./main-data-routing.module";
 import { CustMainDataPagingComponent } from "./cust-main-data/cust-main-data-paging/cust-main-data-paging.component";
 import { CustMainDataAddComponent } from "./cust-main-data/cust-main-data-add/cust-main-data-add.component";
 import { NapDetailPagingComponent } from "./nap-detail/nap-detail-paging/nap-detail-paging.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { NapDetailPagingComponent } from "./nap-detail/nap-detail-paging/nap-det
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         UcSubsectionModule,
         MainDataRoutingModule,
     ],

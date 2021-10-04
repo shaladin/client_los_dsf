@@ -4,8 +4,8 @@
     <div id="LegalDocSection">
       <div *ngIf="!IsDetail">
         <div *ngIf="!isLockMode" class="button-right margin-15">
-          <button type="button" class="btn btn-raised btn-primary" (click)="LegalDocHandler(ModeAddConst)" translate>
-            <i class="ft-plus-circle"></i> Add
+          <button type="button" class="btn btn-raised btn-primary" (click)="LegalDocHandler(ModeAddConst)">
+            <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
           </button>
         </div>
         <div *ngIf="listLtkmCustCompanyLegalDoc?.length != 0">
@@ -158,10 +158,10 @@
         </div>
         <div class="form-actions right">
           <button type="button" (click)="LegalDocHandler(ModeCanConst)" class="btn btn-raised btn-warning mr-1">
-            <i class="ft-x"></i> Cancel
+            <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
           </button>
           <button type="submit" *ngIf="!isLockMode" (click)="SaveForm(enjiForm)" class="btn btn-raised btn-primary mr-1">
-            <i class="fa fa-check-square"></i> Save
+            <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
           </button>
         </div>
       </div>

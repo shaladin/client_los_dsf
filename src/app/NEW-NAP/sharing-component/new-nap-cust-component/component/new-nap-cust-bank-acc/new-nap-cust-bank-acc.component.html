@@ -6,9 +6,8 @@
     <div *ngIf="!IsDetail">
       <div class="col-md-12" style="padding: 0;">
         <div class="button-right margin-15">
-            <button type="button" class="btn btn-raised btn-primary" (click)="CustBankHandler('Add')"
-            translate>
-            <i class="ft-plus-circle"></i> Add
+            <button type="button" class="btn btn-raised btn-primary" (click)="CustBankHandler('Add')">
+            <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
           </button>
         </div>
         <div class="col-md-12" *ngFor="let item of AppCustBankAccList; let i = index" style="padding: 0; margin-top: 20px;">
@@ -191,10 +190,10 @@
           </table>
           <div class="form-actions right">
             <button type="button" (click)="CustBankHandler('Cancel')" class="btn btn-raised btn-warning mr-1">
-              <i class="ft-x"></i> Cancel
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
             <button type="submit" class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square"></i> Save
+              <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
           </div>
         </div>

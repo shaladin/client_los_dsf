@@ -122,14 +122,14 @@
 
 
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-                <i  class="ft-x"></i> {{IsReturnOn ? 'Cancel Return' : 'Return'}} 
+              <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+                <i class="ft-x"></i>&nbsp;<span translate>{{IsReturnOn ? 'Cancel Return' : 'Return'}}</span>
               </button>
-              <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-                <i class="ft-x"></i> Cancel
+              <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
-              <button type="submit" class="btn btn-raised btn-primary" translate>
-                <i class="fa fa-check-square-o"></i> Save
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Save</span>
               </button>
             </div>
           </form>

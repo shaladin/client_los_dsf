@@ -8,8 +8,8 @@
   
             <div *ngIf="isListAsset">
               <div class="ucSearch-Button-Right">
-                <button type="button" class="addButton" (click)="AddAsset()" translate>
-                  <i class="ft-plus-circle"></i> Add Asset
+                <button type="button" class="addButton" (click)="AddAsset()">
+                  <i class="ft-plus-circle"></i>&nbsp;<span translate>Add Asset</span>
                 </button>
               </div>
   
@@ -82,12 +82,11 @@
                 </div>
               
                 <div class="form-actions right">
-                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
-                    translate *ngIf="showCancel">
-                    <i class="ft-x"></i> Cancel
+                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" *ngIf="showCancel">
+                    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                   </button>
-                  <button type="button" class="btn btn-raised btn-primary" (click)="Save()" translate>
-                    <i class="far fa-check-square"></i> Save
+                  <button type="button" class="btn btn-raised btn-primary" (click)="Save()">
+                    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                   </button>
                 </div>
               </form>
@@ -324,9 +323,8 @@
                 </lib-ucSubsection>
                 <div id="accessoriesData">
                   <div class="form-actions right">
-                    <button type="button" name="add" id="add" (click)="addAccessories()"
-                      class="btn btn-raised btn-primary" translate>
-                      <i class="ft-plus-circle"></i> Add
+                    <button type="button" name="add" id="add" (click)="addAccessories()" class="btn btn-raised btn-primary">
+                      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
                     </button>
                   </div>
                   <div formArrayName="AssetAccessoriesObjs">
@@ -401,8 +399,8 @@
                           [identifier]="'DelivAddrType'" (callback) = "SetDelivAddrType($event)"></lib-ucdropdownlist>
                         <div class="input-group-append ml-1">
                           <span class="input-group-btn">
-                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToDelivAddr()" translate>
-                              <i class="fa fa-check-square-o"></i>Copy
+                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToDelivAddr()">
+                              <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                             </button>
                           </span>
                         </div>
@@ -428,8 +426,8 @@
                           [identifier]="'LocationAddrType'" (callback) = "SetLocationAddrType($event)"></lib-ucdropdownlist>
                         <div class="input-group-append ml-1">
                           <span class="input-group-btn">
-                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()" translate>
-                              <i class="fa fa-check-square-o"></i>Copy
+                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                              <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                             </button>
                           </span>
                         </div>
@@ -445,12 +443,11 @@
                 </div>
                 
                 <div class="form-actions right">
-                  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
-                    (click)="Back()" translate>
-                    <i class="ft-x"></i> Cancel
+                  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
+                    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                   </button>
-                  <button type="submit" class="btn btn-raised btn-primary" translate>
-                    <i class="far fa-check-square"></i> Save
+                  <button type="submit" class="btn btn-raised btn-primary">
+                    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                   </button>
                 </div>
               </div>
@@ -461,4 +458,4 @@
       </div>
     </div>
   </div>
-</div>
+</div><

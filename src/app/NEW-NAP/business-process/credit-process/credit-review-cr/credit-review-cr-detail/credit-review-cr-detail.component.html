@@ -53,26 +53,26 @@
         </div>
 
         <div class="form-actions right">
-          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatFail" (click)="ReCaptureDataR2()" class="btn btn-raised btn-warning mr-1" translate>
-            <i class="far fa-check-square"></i> Re-Captured Data R2
+          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatFail" (click)="ReCaptureDataR2()" class="btn btn-raised btn-warning mr-1">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Re-Captured Data R2</span>
           </button>
-          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1" translate>
-            <i class="far fa-check-square"></i> Re-Captured Data
+          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Re-Captured Data</span>
           </button>
         </div>
         <div class="form-actions right">
-          <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-            <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 
+          <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+            <i class="ft-x"></i>&nbsp;<span translate>{{isReturnOn ? 'Cancel Return' : 'Return'}}</span>
           </button>
           <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-                  [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
-            <i class="ft-x"></i> Cancel
+                  [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}">
+            <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
           </button>
           <!-- <button type="button" (click)="CheckDeviationData()" class="btn btn-raised btn-primary" translate>
           <i class="fa fa-check-square-o"></i> Check
         </button> -->
-          <button type="submit" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" class="btn btn-raised btn-primary" translate>
-            <i class="far fa-check-square"></i> Save
+          <button type="submit" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
           </button>
         </div>
 
@@ -115,11 +115,11 @@
               </div>
 
               <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-                  <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 
+                <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+                  <i class="ft-x"></i>&nbsp;<span translate>{{isReturnOn ? 'Cancel Return' : 'Return'}}</span>
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="far fa-check-square"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
             </div>

@@ -89,8 +89,8 @@
               </table>
             </div>
             <div class="col-md-12" style="padding: 0; text-align: right">
-              <button type="submit" class="btn btn-raised btn-primary" translate>
-                <i class="ft-plus-circle"></i> Create DO
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="ft-plus-circle"></i>&nbsp;<span translate>Create DO</span>
               </button>
             </div>
             <div *ngIf="isCreateDOInvalid" class="invalid-feedback d-block col-md-12"
@@ -175,14 +175,14 @@
               </mat-tab>
             </mat-tab-group>
             <div class="form-actions right">
-              <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
-                <i class="ft-x"></i> Cancel
+              <button type="button" (click)="Back()" class="btn btn-raised btn-warning">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
-              <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1" translate>
-                <i class="far fa-check-square"></i> Save
+              <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
               </button>
-              <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal" translate>
-                <i class="far fa-check-square"></i> Submit
+              <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
               </button>
             </div>
           </form>

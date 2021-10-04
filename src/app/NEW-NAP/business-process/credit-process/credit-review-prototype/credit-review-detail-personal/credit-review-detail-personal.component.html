@@ -2598,15 +2598,14 @@
                   </div>
                   <div class="ucSearch-Button-Right">
 
-                    <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm1()" translate>
-                      <i class="ft-x"></i>Return
+                    <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm1()">
+                      <i class="ft-x"></i>&nbsp;<span translate>Return</span>
                     </button>
-                    <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-                      [routerLink]="[CancelLink]" translate>
-                      <i class="fa fa-arrow-left"></i> Cancel
+                    <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]">
+                      <i class="fa fa-arrow-left"></i>&nbsp;<span translate>Cancel</span>
                     </button>
-                    <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
-                      <i class="far fa-check-square"></i> Save
+                    <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()">
+                      <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                     </button>
                   </div>
                 </div>
@@ -2657,11 +2656,11 @@
                   </div>
                   <div class="ucSearch-Button-Right">
 
-                    <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm2()" translate>
-                      <i class="ft-x"></i>Cancel Return
+                    <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm2()">
+                      <i class="ft-x"></i>&nbsp;<span translate>Cancel Return</span>
                     </button>
-                    <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
-                      <i class="far fa-check-square"></i> Submit
+                    <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()">
+                      <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
                     </button>
                   </div>
                   <div class="form-group row"> </div>
@@ -3733,16 +3732,15 @@
                     </div>
                     <div class="ucSearch-Button-Right">
                       <span class="mr-1">
-                        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm1()" translate>
-                          <i class="ft-x"></i>Return
+                        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm1()">
+                          <i class="ft-x"></i>&nbsp;<span translate>Return</span>
                         </button>
                         <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-                          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}"
-                          translate>
-                          <i class="fa fa-arrow-left"></i> Cancel
+                          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}">
+                          <i class="fa fa-arrow-left"></i>&nbsp;<span translate>Cancel</span>
                         </button>
-                        <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
-                          <i class="far fa-check-square"></i> Save
+                        <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()">
+                          <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                         </button>
                       </span>
 
@@ -3795,11 +3793,11 @@
                     <div class="ucSearch-Button-Right">
                       <div class="form-actions right">
 
-                        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm2()" translate>
-                          <i class="ft-x"></i>Cancel Return
+                        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm2()">
+                          <i class="ft-x"></i>&nbsp;<span translate>Cancel Return</span>
                         </button>
-                        <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()" translate>
-                          <i class="far fa-check-square"></i> Submit
+                        <button type="submit" class="btn btn-raised btn-primary" (click)="saveForm()">
+                          <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
                         </button>
                       </div>
                     </div>

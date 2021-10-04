@@ -341,9 +341,9 @@
               </lib-ucSubsection>
               <div id="accessoriesData">
                 <div class="form-actions right">
-                  <button type="button" name="add" id="add" (click)="addAccessories()" translate
+                  <button type="button" name="add" id="add" (click)="addAccessories()"
                     class="btn btn-raised btn-primary">
-                    <i class="ft-plus-circle"></i> Add
+                    <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
                   </button>
                 </div>
                 <div formArrayName="AssetAccessoriesObjs" class="table-responsive" *ngIf="IsReady">
@@ -492,8 +492,8 @@
                   </div>
                   <div class="input-group-append">
                     <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()" translate>
-                        <i class="fa fa-check-square-o"></i>Copy
+                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                        <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                       </button>
                     </span>
                   </div>
@@ -508,11 +508,11 @@
             </div>
           </div>
           <div class="form-actions right" style="text-align: right;">
-            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-              <i class="ft-x"></i> Cancel
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="fa fa-check-square"></i> Save
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
           </div>
         </form>

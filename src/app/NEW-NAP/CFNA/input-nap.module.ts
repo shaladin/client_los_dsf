@@ -21,6 +21,7 @@ import { MainDataComponentModule } from "../sharing-component/main-data-componen
 import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -40,6 +41,7 @@ export const customCurrencyMaskConfig = {
     CommonModule,
     InputNapCFNARoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     InputNapComponentModule,
     ArchwizardModule,
     MatCheckboxModule,

@@ -76,15 +76,14 @@
               <div class="card-body">
                 <div class="px-3"> 
                     <div class="form-actions right">
-                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
-                      translate>
-                      <i class="ft-x"></i> Cancel
+                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]">
+                      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                     </button>
-                    <button type="button" (click)="Return()" class="btn btn-raised btn-primary mr-1" translate>
-                      <i class="fa fa-reply"></i> Return
+                    <button type="button" (click)="Return()" class="btn btn-raised btn-primary mr-1">
+                      <i class="fa fa-reply"></i>&nbsp;<span translate>Return</span>
                     </button>
-                    <button type="submit" class="btn btn-raised btn-primary" translate>
-                      <i class="fa fa-check"></i> Submit
+                    <button type="submit" class="btn btn-raised btn-primary">
+                      <i class="fa fa-check"></i>&nbsp;<span translate>Submit</span>
                     </button> 
                     </div> 
                 </div>

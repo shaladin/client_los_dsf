@@ -7,6 +7,7 @@ import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
 import { MouViewAddcollDetailComponent } from './mou-view-addcoll-detail/mou-view-addcoll-detail.component';
 import { RefAttrModule } from '../ref-attr/ref-attr.module';
 import { ChangeMouViewAddcollDetailComponent } from './change-mou-view-addcoll-detail/change-mou-view-addcoll-detail.component';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import { ChangeMouViewAddcollDetailComponent } from './change-mou-view-addcoll-d
         UcviewgenericModule,
         UcgridviewModule,
         RefAttrModule,
+        AdInsSharedModule,
         UcapprovalgeneralinfoModule
     ],
     declarations: [

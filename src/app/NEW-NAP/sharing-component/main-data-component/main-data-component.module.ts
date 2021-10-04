@@ -11,6 +11,7 @@ import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { CustPublicComponent } from "./components/cust-public/cust-public.component";
 import { CustAttrFormComponent } from "./components/cust-attr-form/cust-attr-form.component";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -37,6 +38,7 @@ export const customCurrencyMaskConfig = {
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         MatRadioModule,
         NgMultiSelectDropDownModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig)

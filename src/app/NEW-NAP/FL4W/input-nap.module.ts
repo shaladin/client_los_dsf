@@ -49,6 +49,7 @@ import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.compon
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
  
 export const customCurrencyMaskConfig = {     
@@ -70,6 +71,7 @@ export const customCurrencyMaskConfig = {
     CommonModule,
     InputNapFL4WRoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     InputNapComponentModule,
     ArchwizardModule,
     UcShowErrorsModule,

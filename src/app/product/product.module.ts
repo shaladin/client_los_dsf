@@ -51,6 +51,7 @@ import { UcapprovebyModule } from '@adins/ucapproveby';
 import { MatTabsModule } from '@angular/material';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
   imports: [
     CommonModule,
     AdInsModule,
+    AdInsSharedModule,
     SharedModule,
     ProductRoutingModule,
     AdInsModule,

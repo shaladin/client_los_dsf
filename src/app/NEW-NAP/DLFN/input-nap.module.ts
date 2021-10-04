@@ -13,6 +13,7 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { ArchwizardModule } from 'angular-archwizard';
 import { MainDataComponentModule } from '../sharing-component/main-data-component/main-data-component.module';
 import {SharedModule} from '../../shared/shared.module';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {SharedModule} from '../../shared/shared.module';
         CommonModule,
         InputNapDLFNRoutingModule,
         AdInsModule,
+        AdInsSharedModule,
         InputNapComponentModule,
         ArchwizardModule,
         MainDataComponentModule,

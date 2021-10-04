@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { FooterComponent } from "app/shared/footer/footer.component";
 import { NavbarComponent } from "app/shared/navbar/navbar.component";
@@ -15,6 +14,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { DmsIframeComponent } from './dms-iframe/dms-iframe.component';
 import { SafePipe } from './pipe/safepipe';
 import { CookieModule } from 'ngx-cookie';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 
 @NgModule({
@@ -27,7 +27,6 @@ import { CookieModule } from 'ngx-cookie';
         NotificationSidebarComponent,
         ToggleFullscreenDirective,
         NgbModule,
-        TranslateModule,
         DmsIframeComponent,
         SafePipe
     ],
@@ -35,7 +34,7 @@ import { CookieModule } from 'ngx-cookie';
         RouterModule,
         CommonModule,
         NgbModule,
-        TranslateModule,
+        AdInsSharedModule,
         ContextMenuModule.forRoot(),
         CookieModule.forRoot()
     ],

@@ -16,6 +16,7 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { InputNapFL4WModule } from "app/NEW-NAP/FL4W/input-nap.module";
 import { InputNapCFNAModule } from "app/NEW-NAP/CFNA/input-nap.module";
 import { InputNapFCTRModule } from "app/NEW-NAP/FCTR/input-nap.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -35,6 +36,7 @@ export const customCurrencyMaskConfig = {
     NgbModule,
     RouterModule,
     AdInsModule,
+    AdInsSharedModule,
     TrialCalculationRoutingModule,
     SharingModule,
     ArchwizardModule,

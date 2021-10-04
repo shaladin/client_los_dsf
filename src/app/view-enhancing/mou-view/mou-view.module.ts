@@ -35,6 +35,7 @@ import { ViewModule } from "../view.module";
 import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-recommendation/mou-view-approval-recommendation.component";
 import { MouViewSrvyTaskComponent } from "./mou-view-srvy-task/mou-view-srvy-task.component";
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -56,6 +57,7 @@ import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou
         UcapprovalhistModule,
         UcShowErrorsModule,
         SharedModule,
+        AdInsSharedModule,
         UcapprovalHistoryModule,
         ShrCompMouModule,
         ViewModule

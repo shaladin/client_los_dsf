@@ -1,9 +1,8 @@
 <form class="form form-horizontal" [formGroup]="BankAccStmntForm"
   (ngSubmit)="BankAccStmntForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
   <span class="mr-1 pull-right" *ngIf="!IsDetail">
-    <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
-      translate>
-      <i class="ft-plus-circle"></i> Add
+    <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;">
+      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
     </button>
   </span>
   <lib-ucSubsection [id]="'CustBankAccId'" [title]="'Customer Bank Account'" [panel]="'CustBankAccSection'">
@@ -201,13 +200,11 @@
             </tbody>
           </table>
           <div class="form-actions right">
-            <button type="reset" (click)="CustBankHandler('Cancel'); enjiForm.resetForm()" translate
-              class="btn btn-raised btn-warning mr-1">
-              <i class="ft-x"></i> Cancel
+            <button type="reset" (click)="CustBankHandler('Cancel'); enjiForm.resetForm()" class="btn btn-raised btn-warning mr-1">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
-            <button type="submit" (click)="formValidate.scrollIfFormHasErrors(BankAccStmntForm)" translate
-              class="btn btn-raised btn-primary">
-              <i class="fa fa-check-square"></i> Save
+            <button type="submit" (click)="formValidate.scrollIfFormHasErrors(BankAccStmntForm)" class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
           </div>
         </div>

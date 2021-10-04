@@ -1,8 +1,8 @@
 <div class="card">
   <div class="card-body px-3 pt-2">
     <h4 class="form-section card-title" style="float:left" translate>{{IsFromTelemkOffer ? 'Telemarketing Offering Call View' : 'RO Potential Data View'}}</h4>
-    <button type="button" class="backButton pull-right" (click)="gotoTelemkDetail()" translate *ngIf="IsFromTelemkOffer">
-      <i class="ft-arrow-left"></i> Back
+    <button type="button" class="backButton pull-right" (click)="gotoTelemkDetail()" *ngIf="IsFromTelemkOffer">
+      <i class="ft-arrow-left"></i>&nbsp;<span translate>Back</span>
     </button>
   </div>
 </div>
@@ -69,8 +69,8 @@
         <div *ngIf="VerifResultHDetailObj">
           <div class="ucSearch-Button-Right">
             <span class="mr-1">
-              <button type="button" class="backButton" (click)="hideDetail()" translate>
-                <i class="ft-arrow-left"></i> Back
+              <button type="button" class="backButton" (click)="hideDetail()">
+                <i class="ft-arrow-left"></i>&nbsp;<span translate>Back</span>
               </button>
             </span>
           </div>
