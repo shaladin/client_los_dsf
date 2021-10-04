@@ -39,9 +39,7 @@ export class LeadMonitoringReviewComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true;
 
       this.requestTaskModel.ProcessKey = CommonConstant.WF_UPL_LEAD;
-      this.requestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.requestTaskModel.TaskDefinitionKey = CommonConstant.UPLOAD_LEAD_REVIEW;
-      this.requestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE], 
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];

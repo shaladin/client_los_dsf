@@ -41,7 +41,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   TCList: any;
   identifier: string = "TCList";
   IsApvReady: boolean = false;
-  outstandingTcObj: any;
   listAppTCObj: ListAppTCObj;
   appTC: AppTCObj;
   count1: number = 0;
@@ -95,9 +94,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.IsApvReady = true;
       });
 
-    this.http.post(URLConstant.GetListTCbyAppId, { Id: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListAgrmntTcbyAgrmntId, { Id: this.AgrmntId }).subscribe(
       (response) => {
-        this.TCList = response["AppTcs"];
+        this.TCList = response["ReturnObject"];
       });
 
     this.initInputApprovalObj();
@@ -118,31 +117,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.outstandingTcObj = new OutstandingTcObj();
-    this.listAppTCObj = new ListAppTCObj();
-    this.listAppTCObj.AppTCObj = new Array();
- 
-    for (var i = 0; i < this.TCList["length"]; i++) {
-      this.appTC = new AppTCObj();
-      this.appTC.AppId = this.TCList[i].AppId;
-      this.appTC.AppTcId = this.TCList[i].AppTcId;
-      this.appTC.TcCode = this.TCList[i].TcCode;
-      this.appTC.TcName = this.TCList[i].TcName;
-      this.appTC.PriorTo = this.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.TCList[i].PromisedDt;
-      this.appTC.CheckedDt = this.TCList[i].CheckedDt;
-      this.appTC.Notes = this.TCList[i].Notes;
-      this.listAppTCObj.AppTCObj.push(this.appTC);
-    }
-
-    this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
-
     let ReqPreGoLiveApvCustomObj = {
-      Tasks: event.Tasks,
-      requestListOutstandingTcObj: this.outstandingTcObj
+      Tasks: event.Tasks
     }
 
     this.http.post(URLConstant.PreGoLiveApproval, ReqPreGoLiveApvCustomObj).subscribe(

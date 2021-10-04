@@ -23,6 +23,8 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
 import { AssetListForDOMultiAssetObj } from 'app/shared/model/AssetListForDOMultiAssetObj.Model';
 import { environment } from 'environments/environment';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
+import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -347,9 +349,11 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
 
   SaveForm() {
     if (this.doList.length > 0) {
-      // var tcFormData = this.AppTcForm.value.TCList;
-      var tcFormData = { "ListAppTcObj": [...this.AppTcForm.getRawValue().TCList] };
-      this.httpClient.post(URLConstant.EditAppTc, tcFormData).subscribe(
+      var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+      reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
+      reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
+
+      this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ BizTemplateCode: 'FL4W' });
@@ -377,9 +381,10 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       }
 
       if (valid) {
-        // var tcFormData = this.AppTcForm.value.TCList;
-        var tcFormData = { "ListAppTcObj": [...this.AppTcForm.getRawValue().TCList] };
-        let editTc = this.httpClient.post(URLConstant.EditAppTc, tcFormData);
+        var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+        reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
+        reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
+        let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
         var submitDO = null;
         if(environment.isCore){
           submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
@@ -409,5 +414,43 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       else if (this.wfTaskListId > 0) {
         this.claimTaskService.ClaimTask(this.wfTaskListId);
       }
+  }
+
+  SetTcForm(): Array<AgrmntTcObj>{    
+    let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    let listAgrmntTcObj: Array<AgrmntTcObj> = new Array<AgrmntTcObj>();
+    for (var i = 0; i < this.AppTcForm.value.TCList["length"]; i++) {
+      const tempAgrmntTc = this.AppTcForm.getRawValue().TCList[i];
+      let agrmntTc = new AgrmntTcObj();
+      agrmntTc.AgrmntId = tempAgrmntTc.AgrmntId;
+      agrmntTc.AgrmntTcId = tempAgrmntTc.AgrmntTcId;
+      agrmntTc.TcCode = tempAgrmntTc.TcCode;
+      agrmntTc.TcName = tempAgrmntTc.TcName;
+      agrmntTc.PriorTo = tempAgrmntTc.PriorTo;
+      agrmntTc.IsChecked = tempAgrmntTc.IsChecked;
+      agrmntTc.ExpiredDt = tempAgrmntTc.ExpiredDt;
+      agrmntTc.IsMandatory = tempAgrmntTc.IsMandatory;
+      agrmntTc.PromisedDt = tempAgrmntTc.PromisedDt;
+      agrmntTc.CheckedDt = tempAgrmntTc.CheckedDt;
+      agrmntTc.IsWaived = tempAgrmntTc.IsWaived;
+      agrmntTc.IsExpDtMandatory = tempAgrmntTc.IsExpDtMandatory;
+      agrmntTc.IsWaivable = tempAgrmntTc.IsWaivable;
+      agrmntTc.Notes = tempAgrmntTc.Notes;
+      agrmntTc.IsAdditional = tempAgrmntTc.IsAdditional;
+
+      var prmsDt = new Date(agrmntTc.PromisedDt);
+      var prmsDtForm = tempAgrmntTc.PromisedDt;
+      if (agrmntTc.IsChecked == false) {
+        if (prmsDtForm != null) {
+          if (prmsDt < businessDt) {
+            this.toastr.warningMessage("Promise Date for " + agrmntTc.TcName + " can't be lower than Business Date");
+            return;
+          }
+        }
+      }
+      listAgrmntTcObj.push(agrmntTc);
+    }
+
+    return listAgrmntTcObj;
   }
 }

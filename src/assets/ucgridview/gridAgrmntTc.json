@@ -1,0 +1,84 @@
+{
+    "isSeq" : true,
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Document Name",
+            "name": "TcName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Prior To",
+            "name": "PriorTo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Check",
+            "name": "IsChecked"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Waived",
+            "name": "IsWaived"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Promise Date",
+            "name": "PromisedDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Expired Date",
+            "name": "ExpiredDt"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Notes",
+            "name": "Notes"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "TcName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "PriorTo"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsChecked"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsWaived"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "PromisedDt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "ExpiredDt"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Notes"
+        }
+    ]
+}

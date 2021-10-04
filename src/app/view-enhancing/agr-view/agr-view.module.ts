@@ -38,6 +38,7 @@ import { ViewAssetCollateralComponent } from "./view-asset-collateral/view-asset
 import { ViewAssetCollateralDetailComponent } from "./view-asset-collateral/view-asset-collateral-detail/view-asset-collateral-detail.component";
 import { SharedModule } from "app/shared/shared.module";
 import { ViewInsuranceDetailComponent } from "./view-insurance-detail/view-insurance-detail.component";
+import { ViewAgrmntTcComponent } from "./view-agrmnt-tc/view-agrmnt-tc.component";
 
 @NgModule({
     imports: [
@@ -81,7 +82,8 @@ import { ViewInsuranceDetailComponent } from "./view-insurance-detail/view-insur
         ViewAgrmntDocumentComponent,
         AgrMainInfoComponent,
         ViewAssetCollateralDetailComponent, 
-        ViewInsuranceDetailComponent, 
+        ViewInsuranceDetailComponent,
+        ViewAgrmntTcComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

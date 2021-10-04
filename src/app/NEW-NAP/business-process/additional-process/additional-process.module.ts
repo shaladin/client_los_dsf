@@ -63,6 +63,7 @@ import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
 
 
 
@@ -94,7 +95,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalR3Module,
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
-    MatTabsModule
+    MatTabsModule,
+    ProcessComponentModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,
