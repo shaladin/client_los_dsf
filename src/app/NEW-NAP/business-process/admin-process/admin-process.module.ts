@@ -66,6 +66,7 @@ import { AssetAllocationPagingComponent } from "./asset-allocation/asset-allocat
 import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocation-detail/asset-allocation-detail.component";
 import { InvoiceVerifDetailListOfInvoiceComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component";
 import { InvoiceVerifDetailDFComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {     
   align: "left",
@@ -88,6 +89,7 @@ export const customCurrencyMaskConfig = {
     ProcessComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     AdInsModule,
+    AdInsSharedModule,
     UcaddtotempModule,
     UcapprovalcreateModule,
     UcapprovalR3Module,

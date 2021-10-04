@@ -22,6 +22,7 @@ import { CcAddressPagingComponent } from './address-tab/cc-address-paging/cc-add
 import { CcAddressDetailComponent } from './address-tab/cc-address-detail/cc-address-detail.component';
 import { MgmntShrholderComponent } from './mgmnt-shrholder/mgmnt-shrholder.component';
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -53,6 +54,7 @@ export const customCurrencyMaskConfig = {
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         MatRadioModule,
         MainDataComponentModule,
         NgMultiSelectDropDownModule,

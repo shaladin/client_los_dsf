@@ -14,12 +14,14 @@ import { MouViewThirdPartyComponent } from 'app/view/mou-view/mou-view-third-par
 import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
 import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-view-analysis-result.component';
 import { ShrCompMouModule } from 'app/components/sharing-components/shr-comp-mou/shr-comp-mou.module';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
     imports: [
         CommonModule,
         UcSubsectionModule,
         UcviewgenericModule,
+        AdInsSharedModule,
         UcgridviewModule,
         ShrCompMouModule,
         UcapprovalgeneralinfoModule

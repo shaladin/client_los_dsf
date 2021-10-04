@@ -58,6 +58,7 @@ import { LtkmViewComponent } from "./view-ltkm-component/ltkm-view-component";
 import { LtkmFamilyMainDataPagingComponent } from "./ltkm-request/additional-component/family-main-data/family-main-data-paging.component";
 import { ViewLtkmAppSummaryDataComponent } from "./view-ltkm-component/ltkm-app-summary-data/ltkm-app-summary-data.component";
 import { UcdropdownlistModule } from "@adins/ucdropdownlist";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -81,6 +82,7 @@ export const customCurrencyMaskConfig = {
     UcgridfooterModule,
     UcpagingModule,
     NgbModule,
+    AdInsSharedModule,
     SharingModule,
     ReactiveFormsModule,
     UcaddressModule,

@@ -5,6 +5,7 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { VerfQuestionComponent } from "./verf-question/verf-question.component";
 import { CustHistoryComponent } from "./cust-history/cust-history.component";
 import { AgrmntTcComponent } from "./agrmnt-tc/agrmnt-tc.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     exports: [
@@ -14,6 +15,7 @@ import { AgrmntTcComponent } from "./agrmnt-tc/agrmnt-tc.component";
     ],
     imports: [
         CommonModule,
+        AdInsSharedModule,
         AdInsModule
     ],
     declarations: [

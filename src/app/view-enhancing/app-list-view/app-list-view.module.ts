@@ -20,12 +20,14 @@ import { AppViewComponentsModule } from "app/components/general/app-view/app-vie
 import { SharedModule } from "app/shared/shared.module";
 import { AppListViewRoutingModule } from "./app-list-view-routing.module";
 import { AppListViewComponent } from "./app-list-view.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     imports: [
         AppListViewRoutingModule,
         CommonModule,
         FormsModule,
+        AdInsSharedModule,
         HttpModule,
         UCSearchModule,
         UcgridfooterModule,

@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AdInsModule } from "app/components/adins-module/adins.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { SharedModule } from "app/shared/shared.module";
 import { SharingModule } from "app/shared/sharing.module";
@@ -12,6 +13,7 @@ import { UnauthorizedPageComponent } from "./unauthorized.component";
     imports: [
       RouterModule,
       AdInsModule,
+      AdInsSharedModule,
       SharingModule,
       ReactiveFormsModule,
       SharingComponentModule,

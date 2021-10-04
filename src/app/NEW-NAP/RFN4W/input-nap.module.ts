@@ -14,6 +14,7 @@ import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.compon
 import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
     MainDataComponentModule,
     NewNapCustModule,
     SharedModule,
+    AdInsSharedModule,
     ViewMainInfoComponentModule
   ],
   declarations: [

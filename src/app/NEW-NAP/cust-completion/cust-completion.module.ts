@@ -15,6 +15,7 @@ import { CustCompletionOplDetailCompanyComponent } from './cust-completion-opl-d
 import { CustCompletionOplDetailPersonalComponent } from './cust-completion-opl-detail/cust-completion-opl-detail-personal/cust-completion-opl-detail-personal.component';
 import { InputNapComponentModule } from "../sharing-component/input-nap-component/input-nap-component.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         UcSubsectionModule,
         CustCompletionRoutingModule,
         CustCompletionComponentModule,

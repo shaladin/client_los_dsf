@@ -5,6 +5,7 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { ViewSurveyVerifComponent } from "./view-survey-verif/view-survey-verif.component";
 import { ViewHighlightCommentComponent } from "./view-highlight-comment/view-highlight-comment.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     exports: [
@@ -14,6 +15,7 @@ import { ViewHighlightCommentComponent } from "./view-highlight-comment/view-hig
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         AppCustViewComponentsModule
     ],
     declarations: [
