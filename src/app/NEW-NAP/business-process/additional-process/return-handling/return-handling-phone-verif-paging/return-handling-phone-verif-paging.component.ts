@@ -42,9 +42,7 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true
       
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_RTN_ADD_PHN_VERF + this.BizTemplateCode;
-      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_ADD_PHN_VERF + this.BizTemplateCode;
-      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];

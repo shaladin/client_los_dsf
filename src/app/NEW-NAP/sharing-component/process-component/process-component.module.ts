@@ -4,11 +4,13 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { VerfQuestionComponent } from "./verf-question/verf-question.component";
 import { CustHistoryComponent } from "./cust-history/cust-history.component";
+import { AgrmntTcComponent } from "./agrmnt-tc/agrmnt-tc.component";
 
 @NgModule({
     exports: [
         VerfQuestionComponent,
-        CustHistoryComponent
+        CustHistoryComponent,
+        AgrmntTcComponent
     ],
     imports: [
         CommonModule,
@@ -16,7 +18,8 @@ import { CustHistoryComponent } from "./cust-history/cust-history.component";
     ],
     declarations: [
         VerfQuestionComponent,
-        CustHistoryComponent
+        CustHistoryComponent,
+        AgrmntTcComponent
     ],
     providers: [
         NGXToastrService
