@@ -79,6 +79,12 @@
     "headerList": [
       {
         "type": "label",
+        "position": "center",
+        "label": "SLA",
+        "name": "IndicatorSLA"
+      },
+      {
+        "type": "label",
         "position": "left",
         "label": "CLAIM BY",
         "name": "Assignee"
@@ -135,6 +141,11 @@
       "name": "searchLegalReviewV2"
     },
     "bodyList": [
+      {
+        "type": "sla",
+        "position": "center",
+        "property": "IndicatorSLA"
+      },
       {
         "type": "text",
         "position": "left",

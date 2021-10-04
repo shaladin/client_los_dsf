@@ -32,6 +32,12 @@
   },
     "headerList": [
         {
+            "type": "label",
+            "position": "center",
+            "label": "SLA",
+            "name": "IndicatorSLA"
+        },
+        {
             "type": "sort",
             "position": "center",
             "label": "Application No",
@@ -56,6 +62,11 @@
         }
     ],
     "bodyList": [
+        {
+            "type": "sla",
+            "position": "center",
+            "property": "IndicatorSLA"
+        },
         {
             "type": "link",
             "position": "center",
