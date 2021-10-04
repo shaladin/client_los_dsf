@@ -1254,6 +1254,7 @@ export class URLConstant {
   public static AddAppFraudVerf = environment.losUrl + "/v1" + "/FraudDetection/AddAppFraudVerf";
   public static GetListAppNegativeCheckCustByAppId = environment.losUrl + "/v1" + "/AppDupCheck/GetListAppNegativeCheckCustByAppId";
   public static GetAppFraudVerificationByAppId = environment.losUrl + "/v1" + "/FraudDetection/GetAppFraudVerificationByAppId";
+  public static GetDoubleFinancingCheckInvoiceDlrFncngD = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckInvoiceDlrFncngD";
 
   //Fraud Verif
   public static SurveyFraudAppCheckingValidationForFraudVerif = environment.losUrl + "/v1" + "/Application/SurveyFraudAppCheckingValidationForFraudVerif";
