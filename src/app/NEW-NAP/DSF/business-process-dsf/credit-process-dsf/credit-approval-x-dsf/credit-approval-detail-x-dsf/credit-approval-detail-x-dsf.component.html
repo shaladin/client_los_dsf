@@ -14,13 +14,13 @@
         </app-crd-rvw-third-party-checking-x-dsf>
         <app-crd-rvw-app-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
         </app-crd-rvw-app-info>
-        <app-crd-rvw-asset [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
-        <app-crd-rvw-asset-acc [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-asset-acc>
+        <app-crd-rvw-asset *ngIf="BizTemplateCode!='CFNA'" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
+        <app-crd-rvw-asset-acc *ngIf="BizTemplateCode!='CFNA'" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-asset-acc>
         <app-crd-rvw-additional-coll [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-additional-coll>
         <app-crd-rvw-cmo-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-cmo-info>
-        <app-crd-rvw-dealer-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        <app-crd-rvw-dealer-info *ngIf="!IsFD" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
         <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>
 

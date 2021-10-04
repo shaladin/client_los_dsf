@@ -199,6 +199,9 @@ export class CrdRvwThirdPartyCheckingXDsfComponent implements OnInit {
         this.IsUseSlik = true;
         this.IsSvcExist = true;
       }
+
+      //tidak digunakan
+      this.IsUseSlik = this.IsUseRapindo = this.IsUseProfind = this.IsUseDukcapil = false;
     }
   }
 

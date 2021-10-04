@@ -3,17 +3,11 @@
   </lib-ucSubsection>
   <div id="ThirdParty">
     <div class="card-body">
-        <div *ngIf="IsUseDukcapil || IsUsePefindo" class="form-group row">
+        <div *ngIf="IsUseDukcapil || IsUseRapindo" class="form-group row">
           <label *ngIf="IsUseDukcapil" class="col-md-3" translate>Dukcapil</label>
           <label *ngIf="IsUseDukcapil" class="col-md-3" translate>{{ThirdPartyDukcapilRsltObj?.Result}} : {{ThirdPartyDukcapilRsltObj?.DiffItem}}</label>
-          <label *ngIf="IsUsePefindo" class="col-md-3" translate>PEFINDO</label>
-          <label *ngIf="IsUsePefindo" class="col-md-3" translate><a href="javascript:void(0);" (click)="pefindoHandler()"> Click Here to View </a></label>
-        </div>
-        <div *ngIf="IsUseRapindo || IsUseTs" class="form-group row">
           <label *ngIf="IsUseRapindo" class="col-md-3" translate>Rapindo</label>
           <label *ngIf="IsUseRapindo" class="col-md-3" translate>Data Exist: {{RapindoDataObj.DataExist}}, Active: {{RapindoDataObj.DataActive}}, Not Active: {{RapindoDataObj.DataNoActive}}</label>
-          <label *ngIf="IsUseTs" class="col-md-3" translate>Trusting Social</label>
-          <label *ngIf="IsUseTs" class="col-md-3" translate><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="trustingSocialHandler(TrustingSocialView)"> Click Here to View </a></label>
         </div>
         <div *ngIf="IsUseProfind || IsUseSlik" class="form-group row">
           <label *ngIf="IsUseProfind" class="col-md-3" translate>Profind</label>
@@ -26,6 +20,12 @@
           <label class="col-md-3" translate></label>
           <label class="col-md-3" translate></label>
           <label class="col-md-3" translate>Dalam Perhatian Khusus: {{ThirdPartySlikRsltObj?.SpecialMentionCount}}</label>
+        </div>
+        <div *ngIf="IsUsePefindo || IsUseTs" class="form-group row">
+          <label *ngIf="IsUsePefindo" class="col-md-3" translate>PEFINDO</label>
+          <label *ngIf="IsUsePefindo" class="col-md-3" translate><a href="javascript:void(0);" (click)="pefindoHandler()"> Click Here to View </a></label>
+          <label *ngIf="IsUseTs" class="col-md-3" translate>Trusting Social</label>
+          <label *ngIf="IsUseTs" class="col-md-3" translate><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="trustingSocialHandler(TrustingSocialView)"> Click Here to View </a></label>
         </div>
         <div class="form-group-row">
           <label class="col-md-3" translate>Data Robot</label>

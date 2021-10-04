@@ -872,6 +872,18 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   }
 
   setResidenceAddr() {
+    if (
+      this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value == null ||
+      this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value == "" ||
+      this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value == "-"
+    ) {
+      this.CustomerDataForm.patchValue({
+        residenceAddress: {
+          Addr: "-"
+        },
+      });
+    }
+    console.log(this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value);
     //this.residenceAddressObj = new LeadCustAddrObj();
     this.leadInputObj.LeadCustResidenceAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence
     this.leadInputObj.LeadCustResidenceAddrObj.Addr = this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value;

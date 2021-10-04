@@ -4,6 +4,7 @@ import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRe
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -246,26 +247,27 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
         
         });
     
-    let urlPost = environment.isCore ? URLConstant.AddAppFromSimpleLeadV2 : URLConstant.AddAppFromSimpleLead;
-    this.http.post(urlPost, napAppObj).subscribe(
-      (response) => {
-
-        this.toastr.successMessage(response["message"]);
-        if (this.bizTemplateCode == CommonConstant.CF4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
-        }
-        if (this.bizTemplateCode == CommonConstant.FL4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
-        }
-        if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
-        }
-        if (this.bizTemplateCode == CommonConstant.FCTR) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
-        }
-        if (this.bizTemplateCode == CommonConstant.CFNA) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
-        }
+        let urlPost = environment.isCore ? URLConstantX.AddAppFromSimpleLeadXV2 : URLConstant.AddAppFromSimpleLead;
+        console.log(urlPost);
+        this.http.post(urlPost, napAppObj).subscribe(
+          (response) => {
+    
+            this.toastr.successMessage(response["message"]);
+            if (this.bizTemplateCode == CommonConstant.CF4W) {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
+            }
+            if (this.bizTemplateCode == CommonConstant.FL4W) {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
+            }
+            if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
+            }
+            if (this.bizTemplateCode == CommonConstant.FCTR) {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
+            }
+            if (this.bizTemplateCode == CommonConstant.CFNA) {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
+            }
       });
 
   }

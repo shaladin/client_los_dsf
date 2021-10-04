@@ -78,6 +78,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     Reason: [''],
     Notes: ['']
   });
+  IsFD: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -176,9 +177,13 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
       async (response) => {
         if (response != undefined) {
           this.appNo = response.AppNo;
+          this.lobCode = response.LobCode;
           await this.GetCreditScoring(response.AppNo);
         }
       });
+      if(this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "FD"){
+        this.IsFD = true;
+      }
   }
 
   async GetCreditScoring(appNo: string) {
@@ -265,6 +270,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
   captureStat: string = "";
+  readonly bizCfna: string = CommonConstant.CFNA;
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
