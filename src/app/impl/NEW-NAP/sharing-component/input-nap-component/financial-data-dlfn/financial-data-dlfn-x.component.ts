@@ -240,7 +240,7 @@ export class FinancialDataDlfnXComponent implements OnInit {
 
     if (isValidGracePeriod) {
 
-      this.http.post(URLConstant.SaveAppFinDataDF, this.FinDataForm.value).subscribe(
+      this.http.post(URLConstant.SaveAppFinDataDF, this.FinDataForm.getRawValue()).subscribe(
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["Message"]);

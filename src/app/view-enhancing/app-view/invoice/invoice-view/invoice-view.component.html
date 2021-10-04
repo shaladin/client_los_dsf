@@ -1,4 +1,4 @@
-<div *ngIf="appObj.BizTemplateCode == 'FCTR'">
+<div *ngIf="appObj.BizTemplateCode == 'FCTR'" class="card px-3" >
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -24,26 +24,75 @@
   <button *ngIf="IsShowDetail" type="button" class="backButton" translate (click)="hideDetailInvoiceData()"><i
       class="fa fa-arrow-left"></i> Back</button>
 </div>
-<div *ngIf="appObj.BizTemplateCode != 'FCTR' && !IsShowDetail">
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
+<div *ngIf="appObj.BizTemplateCode != 'FCTR' && !IsShowDetail" class="card px-3" >
+  <lib-ucSubsection [id]="'InvoiceTabId'" [title]="'Invoice'" [panel]="'InvoiceTab'">
+  </lib-ucSubsection>
+  <div id="InvoiceTab">
+    <table class="table table-responsive-md text-center table-hover" >
+      <thead>
       <tr class="table-header">
         <th class="text-center"><span translate class="thead-header" name='InvoiceNo'>INVOICE NO</span></th>
         <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>INVOICE DATE</span></th>
         <th class="text-center"><span translate class="thead-header" name='InvoiceAmt'>INVOICE AMOUNT</span></th>
         <th class="text-center"><span translate class="thead-header" name='Detail'>ACTION</span></th>
       </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       <tr *ngFor="let item of invoiceDataList">
         <td class="text-center"><a (click)="ToDetail(item.AppInvoiceDlrFncngHId)">{{item.InvoiceNo}}</a></td>
         <td class="text-center">{{item.InvoiceDueDt | date: 'yyyy-MM-dd' }}</td>
         <td class="text-right">{{item.InvoiceAmt | number:'.2':'en-US' }}</td>
         <td class="text-center"><a href="javascript:;" (click)="showDetailInvoiceData(item.AppInvoiceDlrFncngHId)"><i
-              class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+          class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="appObj.BizTemplateCode == 'DLFN' && !IsShowDetail" class="card px-3" >
+  <lib-ucSubsection [id]="'DisbInfoId'" [title]="'Disburse Info'" [panel]="'DisbInfo'">
+  </lib-ucSubsection>
+  <div *ngIf="DisbInfoObj && BankInfoObj" id="DisbInfo">
+    <div class="form-group row">
+      <div class="col-md-6 row">
+        <div class="col-md-6">
+          <label class="label-control" translate> Bank Name </label>
+        </div>
+        <div class="col-md-6">
+          <label class="label-control" translate> {{BankInfoObj.BankName}}
+          </label>
+        </div>
+      </div>
+      <div class="col-md-6 row">
+        <div class="col-md-6">
+          <label class="label-control" translate> Bank Branch </label>
+        </div>
+        <div class="col-md-6">
+          <label class="label-control" translate> {{DisbInfoObj.BankBranch}}
+          </label>
+        </div>
+      </div>
+      <div class="col-md-6 row">
+        <div class="col-md-6">
+          <label class="label-control" translate> Account No </label>
+        </div>
+        <div class="col-md-6">
+          <label class="label-control" translate> {{DisbInfoObj.AccNo}}
+          </label>
+        </div>
+      </div>
+      <div class="col-md-6 row">
+        <div class="col-md-6">
+          <label class="label-control" translate> Account Name </label>
+        </div>
+        <div class="col-md-6">
+          <label class="label-control" translate> {{DisbInfoObj.AccName}}
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 <div *ngIf="IsShowDetail">
   <table class="table table-responsive-md text-center table-hover">
