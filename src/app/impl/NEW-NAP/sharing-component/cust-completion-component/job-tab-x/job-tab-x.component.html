@@ -253,7 +253,7 @@
             </div>
           </div>
 
-          <div *ngIf="IsUseDigitalization == '1' && IsIntegratorCheckBySystem == '0' && IsSvcExist && IsCustomer && mouCustId == 0 && bizTemplateCode != 'FCTR'">
+          <!-- <div *ngIf="IsUseDigitalization == '1' && IsIntegratorCheckBySystem == '0' && IsSvcExist && IsCustomer && mouCustId == 0 && bizTemplateCode != 'FCTR'">
             <lib-ucSubsection [id]="'IntegratorId'" [title]="'Fraud Checking Customer'" [panel]="'Integrator'">
             </lib-ucSubsection>
             <div id="Integrator" class="form-group row">
@@ -265,7 +265,7 @@
                 <label *ngIf="requestedDate != ''" class="col-md-8" translate> Last Requested at : {{requestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div *ngIf="CustModelCode != 'NONPROF'">
             <lib-ucSubsection [id]="'PrevJobDataId'" [title]="'Previous Job Data'" [panel]="'PrevJobData'">

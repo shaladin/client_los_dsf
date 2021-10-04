@@ -1482,23 +1482,24 @@ export class MouRequestAddcollXComponent implements OnInit {
       }
     }
 
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
-      if (!this.IsCalledIntegrator) {
-        if (confirm("Continue without integrator ?")) {
-          this.UpdatePlafondAmt(sumCollateralValue);
-        }
-      } else {
-        this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
-          (response) => {
-            this.UpdatePlafondAmt(sumCollateralValue);
-            this.toastr.successMessage("Success !");
-          }
-        );
-      }
-    }
-    else {
-      this.UpdatePlafondAmt(sumCollateralValue);
-    }
+    // if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
+    //   if (!this.IsCalledIntegrator) {
+    //     if (confirm("Continue without integrator ?")) {
+    //       this.UpdatePlafondAmt(sumCollateralValue);
+    //     }
+    //   } else {
+    //     this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
+    //       (response) => {
+    //         this.UpdatePlafondAmt(sumCollateralValue);
+    //         this.toastr.successMessage("Success !");
+    //       }
+    //     );
+    //   }
+    // }
+    // else {
+    //   this.UpdatePlafondAmt(sumCollateralValue);
+    // }
+    this.UpdatePlafondAmt(sumCollateralValue);
   }
 
   UpdatePlafondAmt(sumCollateralValue: number) {
