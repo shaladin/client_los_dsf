@@ -61,6 +61,7 @@ export class CommonConstant {
   public static LAST_ACCESS_TIME = "LastAccessTime";
   public static EMP_NO = "EmpNo";
   public static EMP_NAME = "EmpName";
+  public static MR_OFFICE_TYPE_CODE = "MrOfficeTypeCode";
 
   // Module
   public static LOAN_ORIGINATION = "LOS";
