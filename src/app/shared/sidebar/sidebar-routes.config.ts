@@ -525,6 +525,8 @@ export const ROUTES: RouteInfo[] = [
   //  ], Params: []
   //},
 
+  { Path: NavigationConstant.DASHBOARD_SUPERSET, Title: 'Dashboard Superset', Icon: 'ft-home', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+
   { Path: '', Title: 'Report', Icon: 'fa fa-print', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false, 
     Submenu: [
       { Path: NavigationConstant.FORMS_REPORT, Title: 'Report', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []  },
