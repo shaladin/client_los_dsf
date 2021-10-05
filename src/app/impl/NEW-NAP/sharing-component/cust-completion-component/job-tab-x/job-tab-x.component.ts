@@ -336,24 +336,26 @@ export class JobTabXComponent implements OnInit {
       this.toastr.errorMessage(String.Format(ExceptionConstant.EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN + businessDtStr));
       return false;
     }
-    if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.IsSvcExist && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
-      if (this.IsCustomer) {
-        if (!this.IsNeedIntegrator) {
-          if (confirm("Do you want to submit this data without Integrator ?")) {
-            this.SubmitData();
-          }
-        }
-        else {
-          this.SubmitData();
-        }
-      }
-      else {
-        this.SubmitData();
-      }
-    }
-    else {
-      this.SubmitData();
-    }
+    // if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.IsSvcExist && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
+    //   if (this.IsCustomer) {
+    //     if (!this.IsNeedIntegrator) {
+    //       if (confirm("Do you want to submit this data without Integrator ?")) {
+    //         this.SubmitData();
+    //       }
+    //     }
+    //     else {
+    //       this.SubmitData();
+    //     }
+    //   }
+    //   else {
+    //     this.SubmitData();
+    //   }
+    // }
+    // else {
+    //   this.SubmitData();
+    // }
+
+    this.SubmitData();
   }
 
   SubmitData() {

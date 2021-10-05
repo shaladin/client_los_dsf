@@ -63,6 +63,8 @@ import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-l
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
 import { UcDirectiveUpperCaseModule } from "@adins/uc-directive-upper-case";
+import { NewLeadInputPageXComponent } from "app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component";
+import { NewLeadInputLeadDataXComponent } from "app/impl/lead/new-lead-input/new-lead-input-lead-data-x/new-lead-input-lead-data-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -129,7 +131,9 @@ export const customCurrencyMaskConfig = {
     FraudVerifPagingComponent,
     FraudVerifPageComponent,
     LeadInquiryComponent,
-    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent, NewLeadInputComponent, NewLeadInputMainInfoComponent, NewLeadInputCustDataComponent, NewFraudVerifComponent, NewFraudVerifDetailComponent, NewLeadUpdateComponent, NewLeadInputLeadDataComponent, NewLeadInputPageComponent, SimpleLeadMonitoringComponent, SimpleLeadMonitoringReviewComponent, SimpleLeadMonitoringReviewDetailComponent
+    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent, NewLeadInputComponent, NewLeadInputMainInfoComponent, NewLeadInputCustDataComponent, NewFraudVerifComponent, NewFraudVerifDetailComponent, NewLeadUpdateComponent, NewLeadInputLeadDataComponent, NewLeadInputPageComponent, SimpleLeadMonitoringComponent, SimpleLeadMonitoringReviewComponent, SimpleLeadMonitoringReviewDetailComponent,
+    NewLeadInputPageXComponent,
+    NewLeadInputLeadDataXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

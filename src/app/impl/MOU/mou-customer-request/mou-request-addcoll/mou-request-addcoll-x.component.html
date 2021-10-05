@@ -64,7 +64,7 @@
       </tbody>
     </table>
   </div>
-  <div *ngIf="isUseDigitalization == '1' && isNeedCheckBySystem == '0' && IsSvcExist && type == 'Paging'">
+  <!-- <div *ngIf="isUseDigitalization == '1' && isNeedCheckBySystem == '0' && IsSvcExist && type == 'Paging'">
     <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
     </lib-ucSubsection>
     <div [id]="fraudChecking">
@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <div *ngIf="type == 'Paging'" class="col-md-12" style="padding: 0; text-align: right;">
     <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
       <i class="ft-x"></i> Cancel
