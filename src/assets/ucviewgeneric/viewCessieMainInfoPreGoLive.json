@@ -56,7 +56,7 @@
           },
           {
             "type": "text",
-            "label": "Cessie Curr Step",
+            "label": "Cessie Current Step",
             "property": "CessieCurStep"
           }
         ],
