@@ -31,7 +31,7 @@
             "type": "currency",
             "name": "A.TOTAL_PURCHASE_AMT",
             "id": "PaymentValueAmtId",
-            "value": "9999999999",
+            "value": "9999999999999999",
             "label": "Payment Amount <=",
             "restriction": "lte",
             "datatype": "numeric"
