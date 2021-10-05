@@ -1,3 +1,4 @@
+import { DatePipe, formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -26,6 +27,7 @@ export class DashboardSupersetComponent implements OnInit {
   gsCode: string = "";
   user: string ="";
   officeCode: string = "";
+  businessDt: string = "";
 
   isCMO : boolean = false;
   isCMH : boolean= false;
@@ -40,6 +42,9 @@ export class DashboardSupersetComponent implements OnInit {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.user = context[CommonConstant.USER_NAME];
     this.officeCode = context[CommonConstant.OFFICE_CODE];
+    
+    var datePipe = new DatePipe("en-US");
+    this.businessDt = datePipe.transform(context[CommonConstant.BUSINESS_DT_STR], "yyyy-MM-dd").toString();
 
     this.checkRole();
 
@@ -54,27 +59,27 @@ export class DashboardSupersetComponent implements OnInit {
   checkRole(){
     if(this.inRoleCode == 'CMO'){
       this.gsCode = "DASHBOARD_CMO";
-      this.param = "/?usr=" + this.user + "offcode=" + this.officeCode;
+      this.param = "/?usr=" + this.user + "+offcode=" + this.officeCode + "+businessdt=" + this.businessDt;
       this.isCMO = true;
     }
     else if (this.inRoleCode == 'CMH'){
       this.gsCode = "DASHBOARD_CMO_SPV";
-      this.param = "/?usr=" + this.user + "offcode=" + this.officeCode;
+      this.param = "/?usr=" + this.user + "+offcode=" + this.officeCode + "+businessdt=" + this.businessDt;
       this.isCMH = true;
     }
     else if (this.inRoleCode == 'BM'){
       this.gsCode = "DASHBOARD_BM";
-      this.param = "/?usr=-offcode=" + this.officeCode;
+      this.param = "/?usr=-+offcode=" + this.officeCode + "+businessdt=" + this.businessDt;
       this.isBM = true;
     }
     else if (this.inRoleCode == 'AM'){
       this.gsCode = "DASHBOARD_RM";
-      this.param = "/?usr=-offcode=" + this.officeCode;
+      this.param = "/?usr=-+offcode=" + this.officeCode + "+businessdt=" + this.businessDt;
       this.isAM = true;
     }
     else if (this.inRoleCode == 'BOD'){
       this.gsCode = "DASHBOARD_DM";
-      this.param = "/?usrcode=mktDirector";
+      this.param = "/?usrcode=mktDirector" + "+businessdt=" + this.businessDt;
       this.isBOD = true;
     }
   }

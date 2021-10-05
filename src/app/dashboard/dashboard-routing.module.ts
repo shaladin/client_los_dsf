@@ -6,6 +6,7 @@ import { Dashboard2Component } from "app/dashboard/dashboard2/dashboard2.compone
 import { DashBoardComponent } from 'app/dashboard/dash-board/dash-board.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { DashEmptyComponent } from './dash-empty/dash-empty.component';
+import { DashboardSupersetComponent } from './dashboard-superset/dashboard-superset.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,13 @@ const routes: Routes = [
           title: 'Dashboard Empty'
         }
       },
+      {
+        path: PathConstant.DASHBOARD_SUPERSET,
+        component: DashboardSupersetComponent,
+        data: {
+          title: 'Dashboard Superset'
+        }
+      }
     ]
   }
 ];
