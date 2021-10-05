@@ -29,7 +29,8 @@ export class CustDetailPersonalComponent implements OnInit {
   CustFullName: string;
   NationalityCountryCode: string;
   Country: GeneralSettingObj = new GeneralSettingObj();
-  LocalCountry: any;
+  LocalCountry: string;
+  LocalCountryCode: string;
   AppCustObj: AppCustObj = new AppCustObj();
   AppCustPersonalObj: AppCustPersonalObj = new AppCustPersonalObj();
   AppCustGrpObj: AppCustGrpObj = new AppCustGrpObj();
@@ -95,6 +96,9 @@ export class CustDetailPersonalComponent implements OnInit {
     await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
       (response) => {
         this.Country = response;
+        let splitCodeDesc = this.Country.GsValue.split(';');
+        this.LocalCountryCode = splitCodeDesc[0];
+        this.LocalCountry = splitCodeDesc[1];
         this.lookupCountryObj.urlJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
         this.lookupCountryObj.pagingJson = "./assets/uclookup/lookupCustomerCountry.json";
@@ -104,15 +108,10 @@ export class CustDetailPersonalComponent implements OnInit {
         var criteriaObj = new CriteriaObj();
         criteriaObj.restriction = AdInsConstant.RestrictionNeq;
         criteriaObj.propName = 'COUNTRY_CODE';
-        criteriaObj.value = this.Country.GsValue;
+        criteriaObj.value = this.LocalCountryCode;
         this.lookupCountryObj.addCritInput.push(criteriaObj);
-        this.ChangeNationality(this.Country.GsValue)
-
-        this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: this.Country.GsValue }).subscribe(
-          (response) => {
-            this.LocalCountry = response;
-            this.lookupCountryObj.isReady = true;
-          });
+        this.ChangeNationality(CommonConstant.NationalityLocal);
+        this.lookupCountryObj.isReady = true;
       });
 
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeEducation }).toPromise().then(
@@ -133,17 +132,11 @@ export class CustDetailPersonalComponent implements OnInit {
   }
 
   ChangeNationality(value: string) {
-    if (value == CommonConstant.NationalityLocal || value == "IDN") {
+    if (value == CommonConstant.NationalityLocal) {
       this.isLocal = true;
       this.lookupCountryObj.isRequired = false;
     } else {
       this.isLocal = false;
-      var foreign = this.NationalityObj.find(x => x["MasterCode"] == value);
-
-      var setCountry = foreign["DefaultValue"].split(';');
-      this.lookupCountryObj.nameSelect = setCountry[1] || setCountry[0];
-      this.lookupCountryObj.jsonSelect = { CountryName: setCountry[1] || setCountry[0] };
-      this.NationalityCountryCode = setCountry[0];
       this.lookupCountryObj.isRequired = true;
     }
   }
@@ -223,7 +216,7 @@ export class CustDetailPersonalComponent implements OnInit {
     this.AppCustPersonalObj.CustPrefixName = this.CustDetailForm.controls.CustPrefixName.value;
     this.AppCustPersonalObj.CustSuffixName = this.CustDetailForm.controls.CustSuffixName.value;
     this.AppCustPersonalObj.MrNationalityCode = this.CustDetailForm.controls.MrNationalityCode.value;
-    this.AppCustPersonalObj.NationalityCountryCode = this.isLocal ? this.LocalCountry.CountryCode : this.NationalityCountryCode;
+    this.AppCustPersonalObj.NationalityCountryCode = this.isLocal ? this.LocalCountryCode : this.NationalityCountryCode;
     this.AppCustPersonalObj.MrEducationCode = this.CustDetailForm.controls.MrEducationCode.value;
     this.AppCustPersonalObj.MrReligionCode = this.CustDetailForm.controls.MrReligionCode.value;
     this.AppCustPersonalObj.MrSalutationCode = this.CustDetailForm.controls.MrSalutationCode.value;
