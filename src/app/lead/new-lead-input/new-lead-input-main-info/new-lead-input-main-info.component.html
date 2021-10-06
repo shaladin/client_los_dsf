@@ -17,9 +17,9 @@
                                                 translate>{{this.returnLead?.LeadNo}}</label></a>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row" *ngIf="this.pageType == 'add'">
                                     <label class="col-md-3 adInsLabel adins-required" translate>Copy From </label>
-                                    <div class="col-md-4" *ngIf="this.pageType == 'add'">
+                                    <div class="col-md-4">
                                         <lib-uclookupgeneric [lookupInput]="leadPersonalLookUpObj"
                                             [parentForm]="MainInfoForm" [enjiForm]="enjiForm"
                                             [identifier]="'CustomerName'" (lookup)=getLookUpLead($event)>
