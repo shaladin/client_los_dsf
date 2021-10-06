@@ -48,6 +48,7 @@ export class NapDetailFormComponent implements OnInit {
   bizTemplateCode: string = CommonConstant.OPL;
   isReady: boolean = false;
   IsViewReady: boolean = false;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "CMPLTN": 1,

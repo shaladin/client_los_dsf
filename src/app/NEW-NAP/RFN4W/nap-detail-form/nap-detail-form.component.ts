@@ -46,7 +46,7 @@ export class NapDetailFormComponent implements OnInit {
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;
   IsDataReady: boolean = false;
-  
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   
   FormReturnObj = this.fb.group({

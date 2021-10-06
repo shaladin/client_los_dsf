@@ -12,9 +12,7 @@
         </div>
         <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
         <div class="px-3"> 
-          <app-mou-cust-tc *ngIf="mouType == 'GENERAL'" #MouTcGeneral [MouCustId]="MouCustId"
-            (ResponseMouCustTc)="getValue($event)"></app-mou-cust-tc>
-          <app-mou-cust-tc *ngIf="mouType == 'FACTORING'" #MouTcFactoring [MouCustId]="MouCustId"
+          <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"
             (ResponseMouCustTc)="getValue($event)"></app-mou-cust-tc>
           <br><br><br>
           <div class="col-md-12" style="padding: 0;">

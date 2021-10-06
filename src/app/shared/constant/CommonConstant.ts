@@ -60,6 +60,7 @@ export class CommonConstant {
   public static VERSION = "Version";
   public static LAST_ACCESS_TIME = "LastAccessTime";
   public static EMP_NO = "EmpNo";
+  public static EMP_NAME = "EmpName";
 
   // Module
   public static LOAN_ORIGINATION = "LOS";
@@ -715,6 +716,8 @@ export class CommonConstant {
   public static GSSerialNoRegex = "SERIAL_NO_REGEX";
   public static GSCodeListLegalDocCantDuplicate = "LIST_LEGAL_DOC_CANNOT_DUPLICATE";
   public static GSCodeRoleDashboardLosOperational = "ROLE_DASHBOARD_LOS_OPERATIONAL";
+  public static GSCodeDashboardUsr = "DASHBOARD_USR";
+  public static GSCodeDashboardPwd = "DASHBOARD_PWD";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -1048,4 +1051,21 @@ export class CommonConstant {
   public static DigitalizationSvcTypeRapindo = "RAPINDO";
   public static DigitalizationSvcTypeProfind = "PROFIND";
   public static DigitalizationSvcTypeSlik = "SLIK";
+
+  //LIST APP STEP
+  public static AppCurrStepNap2 = {
+    "NAPD": CommonConstant.AppStepNapd,
+    "REF": CommonConstant.AppStepRef,
+    "APP": CommonConstant.AppStepApp,
+    "ASSET": CommonConstant.AppStepAsset,
+    "COLL": CommonConstant.AppStepColl,
+    "INS": CommonConstant.AppStepIns,
+    "LFI": CommonConstant.AppStepLIns,
+    "FIN": CommonConstant.AppStepFin,
+    "TC": CommonConstant.AppStepTC,
+    "UPL_DOC": CommonConstant.AppStepUplDoc,
+    "INVOICE": CommonConstant.AppStepInvoice,
+    "CMPLTN": CommonConstant.AppStepCustCmpltn,
+    "AEX": CommonConstant.AppStepAssetExpense
+  }
 }
