@@ -45,6 +45,12 @@
     ],
     "headerList": [
         {
+            "type": "label",
+            "position": "center",
+            "label": "SLA",
+            "name": "IndicatorSLA"
+        },
+        {
             "type": "sort",
             "position": "left",
             "label": "Office",
@@ -82,6 +88,11 @@
         "value": "false"
     },
     "bodyList": [
+        {
+            "type": "sla",
+            "position": "center",
+            "property": "IndicatorSLA"
+        },
         {
             "type": "text",
             "position": "left",
@@ -128,9 +139,19 @@
                                 }
                             ],
                             "result": {
-                                "type": "callback",
-                                "key": "Edit",
-                                "icon": "ft-edit-2"
+                                "type": "url",
+                                "path": "BACK_TO_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
                             },
                             "isHide": false
                         },
@@ -144,9 +165,19 @@
                                 }
                             ],
                             "result": {
-                                "type": "callback",
-                                "key": "Edit",
-                                "icon": "ft-edit-2"
+                                "type": "url",
+                                "path": "BACK_TO_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
                             },
                             "isHide": false
                         }
