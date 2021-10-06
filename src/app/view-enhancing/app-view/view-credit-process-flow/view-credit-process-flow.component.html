@@ -1,0 +1,19 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+          <lib-ucSubsection [id]="'viewCreditProcessFlowId'" [title]="'Credit Process Flow'" [panel]="'viewCreditProcessFlow'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewCreditProcessFlow">
+              <lib-ucgridview [gridInput]="inputGridViewCreditObj"></lib-ucgridview>
+          </div>
+          <lib-ucSubsection [id]="'viewAdministrationProcessFlowId'" [title]="'Administratoin Process Flow'" [panel]="'viewAdministrationProcessFlow'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAdministrationProcessFlow">
+            <lib-ucgridview [gridInput]="inputGridViewAdministrationObj"></lib-ucgridview>
+          </div>          
+      </div>
+    </div>
+  </div>
+</div>
+

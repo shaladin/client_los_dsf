@@ -58,6 +58,7 @@ import { TabApplicationXComponent } from "app/impl/view-enhancing/app-view/tab-a
 import { AppViewXComponent } from "app/impl/view-enhancing/app-view/app-view-x.component";
 import { ViewSrvyTaskXComponent } from "app/impl/view-enhancing/app-view/view-srvy-task-x/view-srvy-task-x.component";
 import {ApprovalHistXComponent} from 'app/impl/view-enhancing/app-view/approval-hist/approval-hist-x.component';
+import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -130,7 +131,8 @@ export function createTranslateLoader(http: HttpClient) {
         TabApplicationXComponent,
         AppViewXComponent,
         ViewSrvyTaskXComponent,
-        ApprovalHistXComponent
+        ApprovalHistXComponent,
+        ViewCreditProcessFlowComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

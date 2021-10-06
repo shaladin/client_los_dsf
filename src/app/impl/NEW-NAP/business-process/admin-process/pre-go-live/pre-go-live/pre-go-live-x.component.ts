@@ -358,6 +358,8 @@ export class PreGoLiveXComponent implements OnInit {
         this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
         this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
         this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
+        this.appTC.IsExpDtMandatory = this.MainInfoForm.getRawValue().TCList[i].IsExpDtMandatory;
+        this.appTC.IsWaivable = this.MainInfoForm.getRawValue().TCList[i].IsWaivable;
         this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
         this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
         this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;

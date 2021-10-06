@@ -9,6 +9,7 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 @Component({
   selector: 'app-family-main-data-paging-x',
   templateUrl: './family-main-data-paging-x.component.html',
@@ -97,15 +98,25 @@ export class FamilyMainDataPagingXComponent implements OnInit {
     let reqByIdObj: GenericObj = new GenericObj();
     reqByIdObj.Id = this.appId;
     this.http.post(URLConstant.GetAppCustAndListFamilyByAppId, reqByIdObj).subscribe(
-      (response) => {
+      (response: GenericListObj) => {
         this.inputGridObj.resultData = {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.listFamily = this.inputGridObj.resultData.Data;
-        this.critCust = response[CommonConstant.ReturnObj].map(x => x.CustNo);
+        this.critCust = this.SetListCustNo(response.ReturnObject);
       }
     );
+  }
+
+  SetListCustNo(listCust: Array<any>): Array<string> {
+    let tempListCustNo: Array<string> = new Array();
+    let listCustNo: Array<string> = listCust.map(x => x.CustNo);
+    for (let index = 0; index < listCustNo.length; index++) {
+      const element: string = listCustNo[index];
+      if (element) tempListCustNo.push(element);
+    }
+    return tempListCustNo;
   }
 }

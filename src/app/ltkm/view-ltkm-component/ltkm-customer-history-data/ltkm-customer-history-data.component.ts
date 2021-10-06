@@ -26,19 +26,18 @@ export class ViewLtkmCustHistoryDataComponent implements OnInit {
         this.http.post(URLConstant.getLtkmReqByLtkmCustId, { Id: this.LtkmCustId }).subscribe(
             (response) => {
                 this.CustNo = response["ReturnObject"]["CustNo"];
-                if (response["ReturnObject"]["LtkmSrc"] == 'APP')
-                    if (response["ReturnObject"]["AppId"] != 0) {
-                        this.http.post(URLConstant.GetAppById, { Id: response["ReturnObject"]["AppId"] }).subscribe(
-                            (response: AppObj) => {
-                                this.GetListLtkmAppPrcsByCustNoAndIsAppInitDone(this.CustNo, response.IsAppInitDone);
-                            },
-                            (error) => {
-                                console.log(error);
-                            }
-                        );
-                    } else {
-                        this.GetListLtkmAppPrcsByCustNoAndIsAppInitDone(this.CustNo, false);
-                    }
+                if (response["ReturnObject"]["AppId"] != 0) {
+                    this.http.post(URLConstant.GetAppById, { Id: response["ReturnObject"]["AppId"] }).subscribe(
+                        (response: AppObj) => {
+                            this.GetListLtkmAppPrcsByCustNoAndIsAppInitDone(this.CustNo, response.IsAppInitDone);
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    );
+                } else {
+                    this.GetListLtkmAppPrcsByCustNoAndIsAppInitDone(this.CustNo, false);
+                }
                 this.GetLtkmExistAgrmntByCustNoAndIsAppInitDone();
                 this.GetLtkmAppRjcByCustNoAndAppStat();
             });

@@ -49,6 +49,7 @@ export class NapDetailFormComponent implements OnInit {
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.CFNA;
   @ViewChild("CFNAMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "NAPD": 1,
