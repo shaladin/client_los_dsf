@@ -223,7 +223,7 @@ export class URLConstantX {
   public static GetAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/GetAppCustPersonalJobData";
   
   //R2 API
-  public static R2ApiAgrmntGetListCustNoHaveAgrmntMaster = environment.R2Url + "/api/Agrmnt/GetListCustNoHaveAgrmntMaster";
+  public static R2ApiAgrmntGetListCustNoHaveAgrmntMaster = environment.r2Url + "/api/Agrmnt/GetListCustNoHaveAgrmntMaster";
 
   //Dealer Financing
   public static CalcGrossYieldSingleInstDF = environment.losUrl + "/v1" + "/AppFinDataX/CalcGrossYieldSingleInstDF";
