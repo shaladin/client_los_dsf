@@ -215,12 +215,12 @@
                     </div>
                     <form>
                         <div class="form-actions right">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" translate
+                            <button type="button" class="btn btn-raised btn-warning mr-1"
                                 [routerLink]="[CancelLink]" [queryParams]="{AgrmntId:AgrmntId, LobCode: lobCode,AppId:AppId, TaskListId: TaskListId}">
-                                <i class="ft-x"></i> Cancel
+                                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                             </button>
-                            <button type="button" (click)="SaveForm()" class="btn btn-raised btn-primary" translate>
-                                <i class="far fa-check-square"></i> Save
+                            <button type="button" (click)="SaveForm()" class="btn btn-raised btn-primary">
+                                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                             </button>
                         </div>
                     </form>

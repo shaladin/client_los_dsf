@@ -608,6 +608,7 @@ export class URLConstant {
 
   //ChangeMOu
   public static AddChangeMou = environment.losUrl + "/v1" + "/ChangeMou/AddChangeMou";
+  public static AddChangeMouV2 = environment.losUrl + "/v2" + "/ChangeMou/AddChangeMou";
   public static EditChangeMou = environment.losUrl + "/v1" + "/ChangeMou/EditChangeMou";
   public static AddChangeMouCustAssets = environment.losUrl + "/v1" + "/ChangeMou/AddChangeMouCustAsset";
   public static AddEditChangeMouCustClause = environment.losUrl + "/v1" + "/ChangeMou/AddEditChangeMouCustClause";
@@ -847,6 +848,7 @@ export class URLConstant {
   public static GetPurchaseOrderByPurchaseOrderHIdForNewPO = environment.losUrl + "/v1" + "/PurchaseOrderH/GetPurchaseOrderByPurchaseOrderHIdForNewPO";
   public static GetPurchaseOrderDPoItemCodeFromRuleByType = environment.losUrl + "/v1" + "/PurchaseOrderH/GetPurchaseOrderDPoItemCodeFromRuleByType";
   public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
+  public static ResumeWorkflowNewPurchaseOrderV2 = environment.losUrl + "/v2" + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
   public static GetBankDsfbyGeneralSettingR2 = environment.losUrl + "/v1" + "/PurchaseOrderH/GetBankDsfbyGeneralSettingR2";
 
   // LEAD
@@ -1253,6 +1255,7 @@ export class URLConstant {
   public static AddAppFraudVerf = environment.losUrl + "/v1" + "/FraudDetection/AddAppFraudVerf";
   public static GetListAppNegativeCheckCustByAppId = environment.losUrl + "/v1" + "/AppDupCheck/GetListAppNegativeCheckCustByAppId";
   public static GetAppFraudVerificationByAppId = environment.losUrl + "/v1" + "/FraudDetection/GetAppFraudVerificationByAppId";
+  public static GetDoubleFinancingCheckInvoiceDlrFncngD = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckInvoiceDlrFncngD";
 
   //Fraud Verif
   public static SurveyFraudAppCheckingValidationForFraudVerif = environment.losUrl + "/v1" + "/Application/SurveyFraudAppCheckingValidationForFraudVerif";
@@ -1858,5 +1861,9 @@ export class URLConstant {
   //Dashboard
   public static GetAppCountAndMappingStep = environment.losUrl + "/v1" + "/Dashboard/GetAppCountAndMappingStep";
   public static HitSuperset = environment.Superset + "api/v1" + "/security/login";
+
+  //Agrmnt Tc
+  public static GetListAgrmntTcbyAgrmntId = environment.losUrl + "/v1" + "/AgrmntTc/GetListAgrmntTcbyAgrmntId";
+  public static SubmitAgrmntTc = environment.losUrl + "/v1" + "/AgrmntTc/SubmitAgrmntTc";
 
 }

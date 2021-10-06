@@ -1,6 +1,6 @@
 <span class="mr-1">
-  <button type="button" class="addButton pull-right" (click)="add(content)" translate>
-    <i class="ft-plus-circle"></i> Add Guarantor 
+  <button type="button" class="addButton pull-right" (click)="add(content)">
+    <i class="ft-plus-circle"></i>&nbsp;<span translate>Add Guarantor</span>
   </button>
 </span>
 <div *ngIf="result.length == 0">
@@ -35,11 +35,11 @@
   <lib-ucgridview [gridInput]="inputGridObj" (callback)="event(content,$event)"></lib-ucgridview>
 </div>
 <div class="form-actions right" style="text-align: right;">
-  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-    <i class="ft-x"></i> Cancel
+  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
   </button>
-  <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary" translate>
-    <i class="far fa-check-square"></i> Save
+  <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary">
+    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
   </button>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">

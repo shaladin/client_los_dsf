@@ -84,9 +84,8 @@
                     <div class="input-group">
                       <div class="input-group-append">
                         <span class="input-group-btn">
-                          <button [disabled]="isExisting ? 'true' : null" type="button" class="btn btn-raised btn-primary"
-                            (click)="CopyAddress()" translate>
-                            <i class="fa fa-files-o"></i> Copy
+                          <button [disabled]="isExisting ? 'true' : null" type="button" class="btn btn-raised btn-primary" (click)="CopyAddress()">
+                            <i class="fa fa-files-o"></i>&nbsp;<span translate>Copy</span>
                           </button>
                         </span>
                       </div>
@@ -99,11 +98,11 @@
               </div>
   
               <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-                  <i class="far fa-window-close"></i> Cancel
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                  <i class="far fa-window-close"></i>&nbsp;<span translate>Cancel</span>
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="far fa-check-square"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
             </form>

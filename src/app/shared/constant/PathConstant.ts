@@ -521,7 +521,7 @@ export class PathConstant {
     public static DASHBOARD2 = "DashBoard2";
     public static DASHBOARD = "Dash-Board";
     public static DASHEMPTY = "Dash-Empty";
-    public static DASHBOARDBM = "DashBoardBM";
+    public static DASHBOARD_SUPERSET = "DashBoardSuperset";
     //#endregion
 
     //#region Content-Route

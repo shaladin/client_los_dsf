@@ -17,16 +17,14 @@
               </app-term-conditions>
             </div>
             <div class="form-actions right">
-              <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
-                translate>
-                <i class="fa fa-check-square-o"></i> Request For Approval
+              <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()">
+                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Request For Approval</span>
               </button>
-              <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="[CancelLink]" translate>
-                <i class="ft-x"></i> Cancel
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
-              <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1" translate>
-                <i class="far fa-check-square"></i> Submit
+              <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
               </button>
             </div>
           </form>

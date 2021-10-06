@@ -14,7 +14,7 @@ import { StorageService } from '../services/StorageService';
 @Component({
   selector: 'app-rolepick',
   templateUrl: './rolepick.component.html',
-  styleUrls: ['./rolepick.component.scss']
+  styleUrls: ['./rolepick.component.css']
 })
 export class RolepickComponent implements OnInit, AfterViewInit {
 

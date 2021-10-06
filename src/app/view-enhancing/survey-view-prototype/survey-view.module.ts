@@ -18,6 +18,7 @@ import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapproval
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { SurveyViewComponent } from "./survey-view.component";
 import { SurveyViewRoutingModule } from "./survey-view-routing.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { SurveyViewRoutingModule } from "./survey-view-routing.module";
         UcviewgenericModule,
         UcgridviewModule,
         NgbModule,
+        AdInsSharedModule,
         SharingModule,
         ArchwizardModule,
         ReactiveFormsModule,

@@ -132,14 +132,14 @@
 </div>
 
 <div class="form-actions pull-right">
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']" translate>
-    <i class="fa fa-check-square-o"></i> Cancel
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']">
+    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Cancel</span>
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
-    <i class="fa fa-check-square-o"></i> Back
+    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']">
+    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Back</span>
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
-    <i class="fa fa-check-square-o"></i> Submit Return Handling
+    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Submit Return Handling</span>
   </button>
 </div>

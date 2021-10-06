@@ -61,6 +61,12 @@
       {
         "type": "label",
         "position": "center",
+        "label": "SLA",
+        "name": "IndicatorSLA"
+      },
+      {
+        "type": "label",
+        "position": "center",
         "label": "CLAIM BY",
         "name": "Assignee"
       },
@@ -106,6 +112,11 @@
       }
     ],
     "bodyList": [
+      {
+        "type": "sla",
+        "position": "center",
+        "property": "IndicatorSLA"
+      },
       {
         "type": "text",
         "position": "center",

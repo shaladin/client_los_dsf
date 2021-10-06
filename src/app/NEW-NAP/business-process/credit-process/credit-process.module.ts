@@ -50,6 +50,7 @@ import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit
 import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
 import { TabApplicationDataComponent } from "./shared-component/tab-application-data/tab-application-data.component";
 import { ViewApplicationDataMultiComponent } from "./shared-component/view-application-data-multi/view-application-data-multi.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 export const customCurrencyMaskConfig = {
@@ -72,6 +73,7 @@ export const customCurrencyMaskConfig = {
     CommonModule,
     CreditProcessSharingRoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     ProcessComponentModule,
     ArchwizardModule,
     FormsModule,

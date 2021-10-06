@@ -264,7 +264,7 @@
               <label class="col-md-2" translate>Integrator Checking</label>
               <div class="col-md-10">
                 <button type="button" (click)="FlaggingIsNeedIntegrator()" class="btn btn-raised btn-primary">
-                  <i class="" style="background-color: #23dc29;"></i> Check eKYC
+                  <i class="" style="background-color: #23dc29;"></i>&nbsp;<span translate>Check eKYC</span>
                 </button>
                 <label *ngIf="requestedDate != ''" class="col-md-8" translate> Last Requested at : {{requestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
               </div>
@@ -402,8 +402,8 @@
 
           <div class="form-actions right">
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(JobDataForm)
-              class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Save & Continue
+              class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save & Continue</span>
             </button>
           </div>
         </form>

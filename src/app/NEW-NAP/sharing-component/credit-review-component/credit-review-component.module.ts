@@ -27,6 +27,7 @@ import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/
 import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
 import { CrdRvwAssetAccComponent } from './crd-rvw-asset-acc/crd-rvw-asset-acc.component';
 import { SharedModule } from "app/shared/shared.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     exports: [
@@ -50,6 +51,7 @@ import { SharedModule } from "app/shared/shared.module";
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         SharedModule,
         MatRadioModule
     ],

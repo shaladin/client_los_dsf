@@ -70,7 +70,7 @@ export class ProdOfferingAddComponent implements OnInit {
     this.StartActiveDt = new Date(this.UserContext[CommonConstant.BUSINESS_DT]);
 
     let currOfcCode = this.UserContext[CommonConstant.OFFICE_CODE];
-    if (currOfcCode == CommonConstant.HeadOffice) {
+    if (this.UserContext[CommonConstant.MR_OFFICE_TYPE_CODE] == CommonConstant.HeadOffice) {
       this.InputLookupObj.urlJson = "./assets/uclookup/product/lookupProductForHO.json";
       this.InputLookupObj.pagingJson = "./assets/uclookup/product/lookupProductForHO.json";
       this.InputLookupObj.genericJson = "./assets/uclookup/product/lookupProductForHO.json";

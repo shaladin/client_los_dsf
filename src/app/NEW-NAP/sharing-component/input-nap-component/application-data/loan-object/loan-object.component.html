@@ -1,8 +1,8 @@
 <lib-ucSubsection [id]="'MainInfoFormId3'" [title]="'Loan Object'" [panel]="'tableData'">
 </lib-ucSubsection>
 <div class="form-actions right">
-  <button type="button" (click)="open(loanobjectContent)" class="btn btn-raised btn-primary" translate>
-    <i class="fa fa-check-square-o"></i> Add
+  <button type="button" (click)="open(loanobjectContent)" class="btn btn-raised btn-primary">
+    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Add</span>
   </button>
 </div>
 <div id="tableData" [hidden]="resultData == null">
@@ -116,8 +116,8 @@
           </div>
         </div>
         <div class="form-actions right">
-          <button type="submit" class="btn btn-raised btn-primary" translate>
-            <i class="fa fa-check-square"></i> Save
+          <button type="submit" class="btn btn-raised btn-primary">
+            <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
           </button>
         </div>
       </form>

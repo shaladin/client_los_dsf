@@ -336,9 +336,8 @@
               <div class="input-group">
                 <div class="input-group-append">
                   <span class="input-group-btn">
-                    <button [disabled]="isCopyBtnLock" type="button" class="btn btn-raised btn-primary"
-                      (click)="CopyAddress()" translate>
-                      <i class="fa fa-files-o"></i> Copy
+                    <button [disabled]="isCopyBtnLock" type="button" class="btn btn-raised btn-primary" (click)="CopyAddress()">
+                      <i class="fa fa-files-o"></i>&nbsp;<span translate>Copy</span>
                     </button>
                   </span>
                 </div>
@@ -350,22 +349,12 @@
         </div>
       </div>
       <div class="form-actions right">
-        <button *ngIf="custMainDataMode != 'CUST'" type="button" class="btn btn-raised btn-warning mr-1"
-          (click)="cancel()" translate>
-          <i class="ft-x"></i> Cancel
+        <button *ngIf="custMainDataMode != 'CUST'" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()">
+          <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
         </button>
-        <!-- <button type="button" class="btn btn-raised btn-warning mr-1"
-          (click)="findInvalidControls()" translate>
-          <i class="ft-x"></i> test
-        </button> -->
-        <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm) translate
-          class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square"></i> Save
+        <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm) class="btn btn-raised btn-primary">
+          <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
         </button>
-        <!-- <button type="button" (click)=getFormValidationErrors() translate
-          class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square"></i> cek error
-        </button> -->
       </div>
     </form>
   </div>

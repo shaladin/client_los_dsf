@@ -42,4 +42,5 @@ export class AdInsConstant {
 
   // Storage Watch Key
   public static WatchRoleState = "RoleState";
+  public static WatchRoleLang = "lang";
 }

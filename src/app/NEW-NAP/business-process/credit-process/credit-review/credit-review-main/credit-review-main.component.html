@@ -102,15 +102,14 @@
             <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>  
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-              <i class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}}
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+              <i class="ft-x"></i>&nbsp;<span translate>{{isReturnOn ? 'Cancel Return' : 'Return'}}</span>
             </button>
-            <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()"
-              translate>
-              <i class="ft-x"></i> Cancel
+            <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Save
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
           </div>
 
@@ -151,11 +150,11 @@
               </div>
 
               <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-                  <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 
+                <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+                  <i class="ft-x"></i>&nbsp;<span translate>{{isReturnOn ? 'Cancel Return' : 'Return'}}</span>
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="far fa-check-square"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { TermConditionsComponent } from "./term-conditions/term-conditions.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     exports: [
@@ -10,7 +11,8 @@ import { TermConditionsComponent } from "./term-conditions/term-conditions.compo
     ],
     imports: [
         CommonModule,
-        AdInsModule
+        AdInsModule,
+        AdInsSharedModule
     ],
     declarations: [
         TermConditionsComponent,
