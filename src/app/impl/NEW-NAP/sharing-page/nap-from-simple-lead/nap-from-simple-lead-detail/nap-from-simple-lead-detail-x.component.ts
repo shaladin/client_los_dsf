@@ -92,6 +92,7 @@ export class NapFromSimpleLeadDetailXComponent implements OnInit {
 
   leadObj: LeadObj;
   bizTemplateCode: string;
+  lobCode: string;
   refMasterObj: RefMasterObj;
   getListActiveLob: string;
 
@@ -136,8 +137,10 @@ export class NapFromSimpleLeadDetailXComponent implements OnInit {
     let refLob = this.listRefLobObj.find((x) => x.LobCode == this.NapAppForm.controls["LobCode"].value);
     if (refLob == undefined) {
       this.bizTemplateCode = null;
+      this.lobCode = null;
     } else {
       this.bizTemplateCode = refLob.BlCode;
+      this.lobCode = refLob.LobCode;
     }
     this.arrAddCrit = new Array();
 
@@ -154,6 +157,13 @@ export class NapFromSimpleLeadDetailXComponent implements OnInit {
     addCritBizTemplate.restriction = AdInsConstant.RestrictionEq;
     addCritBizTemplate.value = this.bizTemplateCode;
     this.arrAddCrit.push(addCritBizTemplate);
+
+    let addCritLob = new CriteriaObj();
+    addCritLob.DataType = "text";
+    addCritLob.propName = "rlob.LOB_CODE";
+    addCritLob.restriction = AdInsConstant.RestrictionEq;
+    addCritLob.value = this.lobCode;
+    this.arrAddCrit.push(addCritLob);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
 
