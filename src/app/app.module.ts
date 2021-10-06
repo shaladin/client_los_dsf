@@ -1,5 +1,5 @@
 
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -35,9 +35,16 @@ import { BackdoorComponent } from './backdoor/backdoor.component';
 import { CookieModule } from 'ngx-cookie';
 import { ClaimTaskService } from './shared/claimTask.service';
 import { StorageService } from './shared/services/StorageService';
+import { ConfigService } from './shared/services/config.service';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+const appConfig = (config: ConfigService) => {
+    return () => {
+        return config.loadConfig();
+    }
 }
 
 @NgModule({
@@ -86,6 +93,10 @@ export function createTranslateLoader(http: HttpClient) {
         RolePickService,
         ClaimTaskService,
         StorageService,
+        ConfigService,
+        {
+            provide: APP_INITIALIZER, useFactory: appConfig, multi: true, deps: [ConfigService]
+        },
         { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
     ],
     bootstrap: [AppComponent],
