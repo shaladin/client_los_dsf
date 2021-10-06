@@ -4,20 +4,19 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 
-export class ConfigService {
-    private appConfig: any;
+export class UrlConstantService {
+    private urlConstant: any;
     constructor(private _http: HttpClient){ }
 
     loadConfig() {
-        return this._http.get('../../assets/appConfig.json')
+        return this._http.get('../../assets/urlConstant.json')
         .toPromise()
         .then(res => {
-            this.appConfig = res;
-            console.log('res', res);
-        })
+            this.urlConstant = res;
+        });
     }
 
     getConfig() {
-        return this.appConfig;
+        return this.urlConstant;
     }
 }

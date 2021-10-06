@@ -35,15 +35,23 @@ import { BackdoorComponent } from './backdoor/backdoor.component';
 import { CookieModule } from 'ngx-cookie';
 import { ClaimTaskService } from './shared/claimTask.service';
 import { StorageService } from './shared/services/StorageService';
-import { ConfigService } from './shared/services/config.service';
+import { EnviConfigService } from './shared/services/enviConfig.service';
+import { UrlConstantService } from './shared/services/urlConstant.service';
+import { UrlConstantNew } from './shared/constant/URLConstantNew';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-const appConfig = (config: ConfigService) => {
+const appConfig = (config: EnviConfigService) => {
     return () => {
         return config.loadConfig();
+    }
+}
+
+const urlConstantConfig = (urlConfig: UrlConstantService) => {
+    return () => {
+        return urlConfig.loadConfig();
     }
 }
 
@@ -92,10 +100,15 @@ const appConfig = (config: ConfigService) => {
         ErrorDialogService,
         RolePickService,
         ClaimTaskService,
+        UrlConstantNew,
         StorageService,
-        ConfigService,
+        EnviConfigService,
         {
-            provide: APP_INITIALIZER, useFactory: appConfig, multi: true, deps: [ConfigService]
+            provide: APP_INITIALIZER, useFactory: appConfig, multi: true, deps: [EnviConfigService]
+        },
+        UrlConstantService,
+        {
+            provide: APP_INITIALIZER, useFactory: urlConstantConfig, multi: true, deps: [UrlConstantService]
         },
         { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
     ],
