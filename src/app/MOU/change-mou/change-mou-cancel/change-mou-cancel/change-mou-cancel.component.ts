@@ -64,7 +64,7 @@ export class ChangeMouCancelComponent implements OnInit {
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "TrxNo";
       this.IntegrationObj.rightColumnToJoin = "BusinessKey";
-      this.inputPagingObj.integrationObj = this.IntegrationObj;   
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
   }
 

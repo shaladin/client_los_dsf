@@ -184,8 +184,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
 
     this.InitDms();
-    this.ClaimTask();
-
+      
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -1047,17 +1046,6 @@ export class NewLeadInputCustDataComponent implements OnInit {
             this.outputTab.emit({ stepMode: "next" });
           });
       }
-    }
-  }
-
-  ClaimTask() {
-    if (environment.isCore) {
-      if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
-        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
-      }
-    }
-    else if (this.WfTaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }
 
