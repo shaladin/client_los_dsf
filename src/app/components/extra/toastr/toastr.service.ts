@@ -116,7 +116,7 @@ export class NGXToastrService {
     }
 
     typeWarningCopyOnClick(msg, status) {
-        const toastr = this.toastr.warning(msg, status, { "tapToDismiss": false, "timeOut": 20000, "closeButton": true });
+        const toastr = this.toastr.warning(msg, status, { "tapToDismiss": false, "timeOut": 15000, "closeButton": true, "extendedTimeOut": 5000 });
         toastr.onTap.subscribe(() => {
             this.clipboard.copyFromContent(msg);
         });
