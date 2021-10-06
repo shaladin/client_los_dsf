@@ -9,7 +9,7 @@
                             <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Information'" [panel]="'mainInfo'">
                             </lib-ucSubsection>
                             <div id="mainInfo">
-                                <div class="form-group row">
+                                <div class="form-group row" *ngIf="this.pageType == 'edit' || this.pageType == 'update' || this.returnLead">
                                     <label class="col-md-3 adInsLabel" translate>Lead No. </label>
                                     <div class="col-md-3">
                                         <a (click)="AddView(this.LeadId)"><label class="adInsLabel"
