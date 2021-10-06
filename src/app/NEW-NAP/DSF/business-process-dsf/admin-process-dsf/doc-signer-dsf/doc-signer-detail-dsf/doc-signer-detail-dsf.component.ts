@@ -21,6 +21,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/ResAppCustPersonalAndSpouseDataObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-doc-signer-detail-dsf',
@@ -52,8 +53,9 @@ export class DocSignerDetailDsfComponent implements OnInit {
   signerRoleCode: any;
   roleCode: any;
   roleCodeList: Array<string> = new Array();
+  officeCodeList: Array<string> = new Array();
 
-  readonly CanceLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING;
+  readonly CanceLink: string = NavigationConstantDsf.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService,
     private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
@@ -272,10 +274,13 @@ export class DocSignerDetailDsfComponent implements OnInit {
     this.inputLookupOfficeEmp2Obj.isRequired = false;
     this.inputLookupOfficeEmp2Obj.addCritInput = new Array();
 
+    this.officeCodeList.push(this.OfficeCode);
+    this.officeCodeList.push(CommonConstant.HeadOffice);
+
     var crit3Obj = new CriteriaObj();
     crit3Obj.propName = 'RO.OFFICE_CODE';
-    crit3Obj.restriction = AdInsConstant.RestrictionEq;
-    crit3Obj.value = this.OfficeCode;
+    crit3Obj.restriction = AdInsConstant.RestrictionIn;
+    crit3Obj.listValue = this.officeCodeList;
 
     this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
     this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
@@ -317,14 +322,16 @@ export class DocSignerDetailDsfComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
     this.inputLookupAppCustCompanyShareHolder2Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-    this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
+    this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder2Obj.isRequired = false;
     this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
     this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-    this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
+    this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder3Obj.isRequired = false;
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
 
     var crit4Obj = new CriteriaObj();
