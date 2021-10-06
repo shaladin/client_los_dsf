@@ -413,7 +413,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     }
 
     Cancel() {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_RTN_HANDLING_PAGING]);
     }
 
     setCustPersonalObjForSave() {
