@@ -38,6 +38,8 @@ import { StorageService } from './shared/services/StorageService';
 import { EnviConfigService } from './shared/services/enviConfig.service';
 import { UrlConstantService } from './shared/services/urlConstant.service';
 import { UrlConstantNew } from './shared/constant/URLConstantNew';
+import { ClipboardModule } from 'ngx-clipboard';
+import { NGXToastrService } from './components/extra/toastr/toastr.service';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -92,6 +94,7 @@ const urlConstantConfig = (urlConfig: UrlConstantService) => {
         MatDialogModule,
         BrowserAnimationsModule,
         GrowlModule,
+        ClipboardModule,
         TreeViewModule
     ],
     providers: [
@@ -101,6 +104,7 @@ const urlConstantConfig = (urlConfig: UrlConstantService) => {
         RolePickService,
         ClaimTaskService,
         UrlConstantNew,
+        NGXToastrService,
         StorageService,
         EnviConfigService,
         {

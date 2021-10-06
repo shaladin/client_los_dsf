@@ -94,6 +94,8 @@ export class CustMainDataComponent implements OnInit {
 
   LeadId: number;
   LeadNo: string;
+  CountryCode: string = "";
+  CountryName: string = "";
 
   agrmntParentNo: string = "";
   isExisting: boolean = false;
@@ -273,16 +275,17 @@ export class CustMainDataComponent implements OnInit {
         this.lookUpObjCountry.genericJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookUpObjCountry.isRequired = false;
 
-        this.CountryCode = response.GsValue;
+        let splitCodeDesc = response.GsValue.split(';');
+        this.CountryCode = splitCodeDesc[0];
+        this.CountryName = splitCodeDesc[1];
         let criteriaList = new Array();
         let criteriaObj = new CriteriaObj();
         criteriaObj.restriction = AdInsConstant.RestrictionNeq;
         criteriaObj.propName = 'COUNTRY_CODE';
-        criteriaObj.value = response.GsValue;
+        criteriaObj.value = this.CountryCode;
         criteriaList.push(criteriaObj);
         this.lookUpObjCountry.addCritInput = criteriaList;
-
-        this.GetRefCountry(response.GsValue, true);
+        this.IsLocal = true;
       }
     );
   }
@@ -296,8 +299,6 @@ export class CustMainDataComponent implements OnInit {
     );
   }
 
-  CountryCode: string = "";
-  CountryName: string = "";
   GetRefCountry(code: string, isLocal: boolean = false) {
     this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: code }).subscribe(
       (response) => {
@@ -325,15 +326,8 @@ export class CustMainDataComponent implements OnInit {
     if (event.selectedValue == CommonConstant.NationalityLocal) {
       this.IsLocal = true;
       this.lookUpObjCountry.isRequired = false;
-      this.CustMainDataForm.get("WnaCountryCode").patchValue(this.CountryCode);
     } else {
       this.IsLocal = false;
-      let foreign = this.ListNationality.find(x => x.MasterCode == event.selectedValue);
-      let setCountry = foreign.DefaultValue.split(';');
-      let selectedValue = setCountry[1] ? setCountry[1] : setCountry[0];
-      this.lookUpObjCountry.nameSelect = selectedValue;
-      this.lookUpObjCountry.jsonSelect = { CountryName: selectedValue };
-      this.CustMainDataForm.get("WnaCountryCode").patchValue(setCountry[0]);
       this.lookUpObjCountry.isRequired = true;
     }
   }

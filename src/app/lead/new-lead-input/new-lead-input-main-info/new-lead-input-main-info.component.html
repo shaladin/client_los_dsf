@@ -9,7 +9,7 @@
                             <lib-ucSubsection [id]="'mainInfoId'" [title]="'Main Information'" [panel]="'mainInfo'">
                             </lib-ucSubsection>
                             <div id="mainInfo">
-                                <div class="form-group row">
+                                <div class="form-group row" *ngIf="this.pageType == 'edit' || this.pageType == 'update' || this.returnLead">
                                     <label class="col-md-3 adInsLabel" translate>Lead No. </label>
                                     <div class="col-md-3">
                                         <a (click)="AddView(this.LeadId)"><label class="adInsLabel"
@@ -17,9 +17,9 @@
                                                 translate>{{this.returnLead?.LeadNo}}</label></a>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row" *ngIf="this.pageType == 'add'">
                                     <label class="col-md-3 adInsLabel adins-required" translate>Copy From </label>
-                                    <div class="col-md-4" *ngIf="this.pageType == 'add'">
+                                    <div class="col-md-4">
                                         <lib-uclookupgeneric [lookupInput]="leadPersonalLookUpObj"
                                             [parentForm]="MainInfoForm" [enjiForm]="enjiForm"
                                             [identifier]="'CustomerName'" (lookup)=getLookUpLead($event)>
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 adInsLabel adins-required-label" translate>Agency </label>
+                                    <label class="col-md-3 adInsLabel" translate>Agency </label>
                                     <div class="col-md-4">
                                         <lib-uclookupgeneric [lookupInput]="agencyLookUpObj" [parentForm]="MainInfoForm"
                                             [enjiForm]="enjiForm" [identifier]="'Agency'"
@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 adInsLabel adins-required-label" translate>Tele Sales
+                                    <label class="col-md-3 adInsLabel" translate>Tele Sales
                                         Username </label>
                                     <div class="col-md-4">
                                         <lib-uclookupgeneric [lookupInput]="salesNameLookUpObj"
