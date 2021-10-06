@@ -27,22 +27,22 @@
                 <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
                 <div class="col-md-4">
                   <input type="date" id="EffectiveDt" class="form-control adInsInput name"
-                    formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                    formControlName="EffectiveDt" min="{{minDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.EffectiveDt"
                     >
                   </lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
+                <label class="col-md-2 adinsLabel" for="GoLiveEstimated" translate>Golive Date Estimation</label>
                 <div class="col-md-4">
                   <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
-                    formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                    formControlName="GoLiveEstimated" min="{{minDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.GoLiveEstimated"
                     >
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
+                <label class="col-md-2 adinsLabel" translate>Additional Interest</label>
                 <label class="col-md-4 adinsLabel" translate>{{DOAssetForm.controls.AddIntrstAmt.value | number:'.2':'en-US'}}</label>
               </div>
                 <div class="form-actions right">
@@ -51,7 +51,7 @@
                   Calculate
                 </button>
                 </div>
-             
+
             </div>
             <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetListSection'">
             </lib-ucSubsection>

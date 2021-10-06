@@ -35,6 +35,8 @@ import { NewLeadInputPageComponent } from './new-lead-input/new-lead-input-page/
 import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-lead-monitoring.component';
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
+import { NewLeadInputPageXComponent } from 'app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 
 
 const routes: Routes = [
@@ -226,6 +228,13 @@ const routes: Routes = [
       {
         path: PathConstant.SIMPLE_LEAD_DETAIL,
         component: NewLeadInputPageComponent,
+        data: {
+          title: 'Lead Detail'
+        }
+      },
+      {
+        path: PathConstantX.SIMPLE_LEAD_DETAIL,
+        component: NewLeadInputPageXComponent,
         data: {
           title: 'Lead Detail'
         }

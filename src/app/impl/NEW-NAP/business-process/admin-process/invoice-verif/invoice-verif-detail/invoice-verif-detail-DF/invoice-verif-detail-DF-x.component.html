@@ -40,7 +40,7 @@
                 <!-- your steps content here -->
                 <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
                   <invoice-verif-detail-list-of-invoice-x *ngIf="StepperIndex == 1" [AppId]="AppId"
-                    (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+                    (outputTab)="NextStep($event)" (outputCancel)="Cancel()">
                   </invoice-verif-detail-list-of-invoice-x>
                 </div>
                 <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">

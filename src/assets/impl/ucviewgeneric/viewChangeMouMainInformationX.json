@@ -3,7 +3,7 @@
   "subsection": [
     {
       "subSectionId": "CustMainInfoHeaderId",
-      "subSectionTitle": "Mou Detail",
+      "subSectionTitle": "Main Info",
       "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
@@ -55,11 +55,6 @@
           "type": "text",
           "label": "Notes",
           "property": "Notes"
-        },
-        {
-          "type": "text",
-          "label": "MOU Factoring Type",
-          "property": "MouFctrType"
         }
       ],
       "querystring": {

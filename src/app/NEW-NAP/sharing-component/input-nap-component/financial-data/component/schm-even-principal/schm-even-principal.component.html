@@ -386,6 +386,10 @@
       <br />
     </div>
     <div class="form-inline-right">
+      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0" translate
+              *ngIf="showGenerateReportBtn" (click)="GenerateReport()">
+        Generate Report
+      </button>
       <button class="btn btn-raised btn-primary margin-r-5" translate type="submit" tabindex="0" (click)="Calculate()"
         translate>
         Calculate

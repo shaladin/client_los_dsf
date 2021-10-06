@@ -183,6 +183,8 @@ export class PurchaseOrderXComponent implements OnInit {
       appTC.PromisedDt = tempAppTc.PromisedDt;
       appTC.CheckedDt = tempAppTc.CheckedDt;
       appTC.IsWaived = tempAppTc.IsWaived;
+      appTC.IsExpDtMandatory = tempAppTc.IsExpDtMandatory;
+      appTC.IsWaivable = tempAppTc.IsWaivable;
       appTC.Notes = tempAppTc.Notes;
       appTC.IsAdditional = tempAppTc.IsAdditional;
       appTC.RowVersion = tempAppTc.RowVersion;

@@ -43,6 +43,21 @@
             "type": "text",
             "label": "Cessie Status",
             "property": "CessieStatus"
+          },
+          {
+            "type": "text",
+            "label": "Virtual Account",
+            "property": "VirtualAccount"
+          },
+          {
+            "type": "text",
+            "label": "Cessie Last Step",
+            "property": "CessieLastStep"
+          },
+          {
+            "type": "text",
+            "label": "Cessie Current Step",
+            "property": "CessieCurStep"
           }
         ],
         "querystring": {

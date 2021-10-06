@@ -78,18 +78,18 @@ export class MouDetailFinancingXComponent implements OnInit {
     WopCode: ['', [Validators.required]],
     MrInstTypeCode: ['', [Validators.required]],
     TopDays: [0, [Validators.min(0)]],
-    InterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
+    InterestRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
     Notes: [''],
     CurrCode: ['', [Validators.required]],
     RowVersion: [''],
-    TopInterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
-    ExtendRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
-    MmForExtend: [0, [Validators.required]],
-    PpForExtendPrcnt: [0, [Validators.min(0), Validators.max(100)]],
+    TopInterestRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
+    ExtendRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
+    MmForExtend: [0, [Validators.required, Validators.min(1)]],
+    PpForExtendPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
     SpareDayToPay: [0, [Validators.required]],
     AssetCondition: ['', [Validators.required]],
-    LcRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
-    MaximumExtendTimes: [0, [Validators.required]]
+    LcRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
+    MaximumExtendTimes: [0, [Validators.required, Validators.min(1)]]
   });
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
@@ -270,7 +270,7 @@ export class MouDetailFinancingXComponent implements OnInit {
     this.InputLookupLinkSupplGradingObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.isReadonly = false;
-    this.InputLookupLinkSupplGradingObj.isRequired = false;
+    this.InputLookupLinkSupplGradingObj.isRequired = true;
     this.InputLookupLinkSupplGradingObj.title = "Link Supplier Grading";
 
     this.InputLookupLinkManufacturerObj = new InputLookupObj();
@@ -418,7 +418,7 @@ export class MouDetailFinancingXComponent implements OnInit {
       this.InputLookupManufacturerObj.isDisable = false;
 
       this.InputLookupLinkManufacturerObj.isRequired = false;
-      this.InputLookupManufacturerObj.isRequired = false;
+      this.InputLookupManufacturerObj.isRequired = true;
 
       this.MouDetailFinancingForm.controls.lookupLinkManufacturer.setValidators(Validators.required);
       this.MouDetailFinancingForm.controls.lookupManufacturer.setValidators(Validators.required);

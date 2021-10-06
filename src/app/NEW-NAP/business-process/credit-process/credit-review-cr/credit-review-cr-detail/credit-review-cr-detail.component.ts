@@ -92,6 +92,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   }
 
+  readonly bizCfna: string = CommonConstant.CFNA;
   initData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;

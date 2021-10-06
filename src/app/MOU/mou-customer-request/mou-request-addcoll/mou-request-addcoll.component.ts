@@ -606,10 +606,10 @@ export class MouRequestAddcollComponent implements OnInit {
     this.type = pageType;
     if (pageType == 'AddExisting') {
       this.bindUcLookupExisting();
-      this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
+      this.updateUcLookup(this.CollTypeList[0].Key, true, pageType);
     } else {
       this.bindUcLookup();
-      this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
+      this.updateUcLookup(this.CollTypeList[0].Key, true, pageType);
       this.AddCollForm.controls.CopyFromLegal.enable();
       this.AddCollForm.controls.CopyToOwnerLocation.enable();
       this.AddCollForm.controls.AssetTypeCode.enable();

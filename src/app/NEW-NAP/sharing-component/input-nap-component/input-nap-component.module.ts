@@ -139,6 +139,7 @@ import {FinancialDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/in
 import {SingleInstDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/single-inst-dlfn/single-inst-dlfn-x.component';
 import {SchmRegularFixDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn-x.component';
 import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn-x.component';
+import { LoanObjectXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/loan-object-x/loan-object-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -282,7 +283,8 @@ export const customCurrencyMaskConfig = {
     FinancialDataDlfnXComponent,
     SingleInstDlfnXComponent,
     SchmRegularFixDlfnXComponent,
-    SchmEvenPrincipalDlfnXComponent
+    SchmEvenPrincipalDlfnXComponent,
+    LoanObjectXComponent
   ],
   imports: [
     CommonModule,
@@ -427,7 +429,8 @@ export const customCurrencyMaskConfig = {
     FinancialDataDlfnXComponent,
     SingleInstDlfnXComponent,
     SchmRegularFixDlfnXComponent,
-    SchmEvenPrincipalDlfnXComponent
+    SchmEvenPrincipalDlfnXComponent,
+    LoanObjectXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

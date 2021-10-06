@@ -12,6 +12,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { UploadReviewCustomObj } from 'app/shared/model/V2/UploadReviewObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 
 @Component({
   selector: 'app-simple-lead-monitoring-review-detail',
@@ -78,19 +80,37 @@ export class SimpleLeadMonitoringReviewDetailComponent implements OnInit {
     this.inputPagingObj.addCritInput = arrCrit;
   }
 
+  Cancel() {
+    let CancelUrl = environment.isCore? URLConstant.CancelUploadV2 : URLConstant.CancelUpload;
+    var wfObj = new WorkflowApiObj();
+    wfObj.TransactionNo = this.UploadNo;
+    wfObj.ListValue["Status"] = "RJC";
+    wfObj.ListValue["WfCode"] = CommonConstant.WF_UPL_SMPL_LEAD;
+    wfObj.ListValue["TaskId"] = this.taskListId;
+    this.http.post(CancelUrl, wfObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["Message"]);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING],{});
+      }); 
+      }
+    );
+  }
+
   uploadReview(status : string) {
     let UploadReviewUrl = environment.isCore? URLConstant.UploadReviewV2 : URLConstant.UploadReview;
-    
+
     var uploadObj = new UploadReviewCustomObj();
     uploadObj.TaskListId = this.taskListId;
     uploadObj.MrUploadStatusCode = status;
     uploadObj.UploadMonitoringNo = this.UploadNo;
+
     this.http.post(UploadReviewUrl, uploadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
       }
-    );
+    );   
   }
 
   claimTask() {

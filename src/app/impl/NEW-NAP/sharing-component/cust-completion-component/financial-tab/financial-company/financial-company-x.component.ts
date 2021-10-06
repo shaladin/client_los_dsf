@@ -12,6 +12,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 @Component({
   selector: 'app-financial-company-x',
   templateUrl: './financial-company-x.component.html'
@@ -39,6 +40,8 @@ export class FinancialCompanyXComponent implements OnInit {
   currentCustFinDataIndex: number;
   currentModal: any;
   LobCode: string;
+  AppObj: AppObj = new AppObj();
+  IsDisburseToCust: boolean = false;
 
   AppCustAttrListForm = this.fb.group({
   });
@@ -219,6 +222,26 @@ export class FinancialCompanyXComponent implements OnInit {
       });
   }
 
+  async GetIsDisburseToCust() {
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      async (response: AppObj) => {
+        this.AppObj = response;
+        var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+        objIsDisburse.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+        objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+        objIsDisburse.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+        await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
+          (response) => {
+            if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
+              this.IsDisburseToCust = response["CompntValue"] == 'Y' ? true : false;
+            }
+          }
+        );
+      }
+    );
+  }
+
   async SaveAppCustPersonalFinData()
   {
     if (!this.FinancialForm.valid) return;
@@ -242,6 +265,15 @@ export class FinancialCompanyXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_BANK_ACCOUNT);
       return;
     }
+
+    if (!this.AppCustBankAccList.length && (this.LobCode == "MPF" || this.LobCode == "FD")) {
+      await this.GetIsDisburseToCust();
+      if (this.IsDisburseToCust === true) {
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_BANK_ACCOUNT);
+        return;
+      }
+    }
+
     // this.AppCustCompanyFinData = this.AppCustAttrListForm.value;
     // this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
     // this.AppCustCompanyFinData.AppCustId = this.AppCustId;

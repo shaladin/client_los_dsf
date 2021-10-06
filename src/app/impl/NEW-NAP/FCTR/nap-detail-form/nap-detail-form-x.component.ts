@@ -44,6 +44,7 @@ export class NapDetailFormXComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   IsLastStep: boolean = false;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -251,10 +252,19 @@ export class NapDetailFormXComponent implements OnInit {
   }
 
   NextStep(Step) {
+    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
+      const appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+          }
+        }
+      );
+    }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
-    
     this.ChangeTab(Step);
     this.stepper.next();
     this.viewAppMainInfo.ReloadUcViewGeneric();

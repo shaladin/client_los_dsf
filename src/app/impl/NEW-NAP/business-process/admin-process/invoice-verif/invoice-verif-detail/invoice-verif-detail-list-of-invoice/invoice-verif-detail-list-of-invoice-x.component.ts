@@ -70,7 +70,7 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private cookieService: CookieService,
-    private toastr: NGXToastrService, 
+    private toastr: NGXToastrService,
     private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
@@ -172,6 +172,10 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     this.httpClient.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { Code: CommonConstant.INV_VERF_RESULT_STAT }).subscribe((response) => {
       this.listVerificationStatus = response[CommonConstant.ReturnObj];
     })
+    this.httpClient.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeInvoiceDataVerif }).toPromise().then(
+      (response) => {
+        this.listRefReason = response[CommonConstant.ReturnObj];
+      });
   }
 
   Cancel() {
@@ -209,8 +213,17 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
       AppId: this.AppId
     };
 
-    this.httpClient.post(URLConstantX.UpdateAppInvoiceDlfnX, request).subscribe(() => {
-      this.outputTab.emit();
+    const UpdateAppInvoiceDlfnUrl = environment.isCore ? URLConstantX.UpdateAppInvoiceDlfnV2X : URLConstantX.UpdateAppInvoiceDlfnX;
+    this.httpClient.post(UpdateAppInvoiceDlfnUrl, request).subscribe(() => {
+      if (this.IsReturnOn) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+      } else {
+        let outputObj = {
+          IsReturnOn : this.IsReturnOn,
+          Step : "TC"
+        }
+        this.outputTab.emit(outputObj);
+      }
     });
   }
 

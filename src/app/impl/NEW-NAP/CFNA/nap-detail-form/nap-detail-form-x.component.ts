@@ -50,6 +50,7 @@ export class NapDetailFormXComponent implements OnInit {
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.CFNA;
   @ViewChild("CFNAMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "NAPD": 1,
@@ -290,6 +291,16 @@ export class NapDetailFormXComponent implements OnInit {
   }
 
   NextStep(Step) {
+    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
+      const appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+          }
+        }
+      );
+    }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }

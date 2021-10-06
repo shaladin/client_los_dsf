@@ -1,7 +1,7 @@
 import { CurrencyMaskInputMode } from "ngx-currency";
 
 export class CommonConstant {
-  
+
   // REGEX
   public static regexAPI = "\\/[v,V][1-9]\\d*(\\.[1-9]\\d*)*";
   public static regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
@@ -17,7 +17,7 @@ export class CommonConstant {
   public static CANCEL = 'Cancel';
   public static REQ = 'request';
   public static RTN = 'return';
-  
+
   // Behaviour
   public static DEFAULT = 'DEF';
 
@@ -60,6 +60,7 @@ export class CommonConstant {
   public static VERSION = "Version";
   public static LAST_ACCESS_TIME = "LastAccessTime";
   public static EMP_NO = "EmpNo";
+  public static EMP_NAME = "EmpName";
 
   // Module
   public static LOAN_ORIGINATION = "LOS";
@@ -116,7 +117,7 @@ export class CommonConstant {
   public static LeadStepSelfVerification = "SVR";
   public static LeadStepAppCust = "APP_CUST";
 
-  //ASSET CONDITION 
+  //ASSET CONDITION
   public static AssetConditionUsed = "USED";
   public static AssetConditionNew = "NEW";
 
@@ -196,7 +197,7 @@ export class CommonConstant {
   public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
   public static BRANCH_MANAGER_JOB_CODE = "BRANCH_MANAGER";
   public static SUPERVISOR_JOB_CODE = "SUPERVISOR";
-  
+
   public static REF_REASON_MOU_GENERAL = "MOUC_GEN_RVW";
   public static REF_REASON_MOU_FACTORING = "MOUC_FCTR_RVW";
   public static REF_REASON_MOU_FINANCING = "MOUC_FIN_RVW";
@@ -257,7 +258,7 @@ export class CommonConstant {
   public static VerificationNew = "NEW";
   public static VerificationFail = "FAIL";
 
-  //Asset Usage 
+  //Asset Usage
   public static AssetUsageNonComm = "NON_COMM"
   public static AssetUsageComm = "COMM"
 
@@ -272,7 +273,7 @@ export class CommonConstant {
   public static AppCollateralAttrTaxCityIssuer = "TAX_CITY_ISSUER";
   public static AppCollateralAttrBpkbIssueDate = "BPKB_ISSUE_DATE";
 
-  //ATTR GROUP 
+  //ATTR GROUP
   public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
   public static AttrGroupCustPersonalOther = "CUST_PERSONAL_OTH"
   public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
@@ -298,7 +299,7 @@ export class CommonConstant {
   //ATTR CODE
   public static AttrCodeDeptAml = "DEPT_AML";
   public static AttrCodeAuthAml = "AUTH_AML";
-  
+
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 
@@ -376,7 +377,7 @@ export class CommonConstant {
   public static CustModelEmployee = "EMP";
   public static CustModelSmallMediumEnterprise = "SME";
 
-  //VENDOR CATEGORY 
+  //VENDOR CATEGORY
   public static VendorCategoryAssetInscoBranch = "ASSET_INSCO_BRANCH";
 
   //INSURED BY
@@ -409,7 +410,7 @@ export class CommonConstant {
   public static InsPaidByCustomer = "CU";
   public static InsPaidByAtCost = "CO";
 
-  //LIFE INS PAY METHOD 
+  //LIFE INS PAY METHOD
   public static LifeInsPayMethodFullPaidInAdvance = "PAID_IN_ADV";
   public static LifeInsPayMethodFullCapitalized = "CPTLZ";
   public static LifeInsPayMethodPaidInAdvanceAndCapitalizedMix = "IN_ADV_CPTLZ_MIX";
@@ -488,7 +489,7 @@ export class CommonConstant {
 
   public static AllocTypeAmt = "Amount";
   public static AllocTypePerc = "Percentage";
-  
+
   // VERIFY STAT
   public static Reject = "REJECT";
   public static Verify = "VERIFY";
@@ -585,6 +586,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
   public static RefMasterTypeCodeReturnTaskOPL = "RETURN_TASK_OPL";
   public static RefMasterTypeCodeReturnTaskFCTR = "RETURN_TASK_FCTR";
+  public static RefMasterTypeCodeReturnTaskDLFN = "RETURN_TASK_DLFN";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";
@@ -714,6 +716,8 @@ export class CommonConstant {
   public static GSSerialNoRegex = "SERIAL_NO_REGEX";
   public static GSCodeListLegalDocCantDuplicate = "LIST_LEGAL_DOC_CANNOT_DUPLICATE";
   public static GSCodeRoleDashboardLosOperational = "ROLE_DASHBOARD_LOS_OPERATIONAL";
+  public static GSCodeDashboardUsr = "DASHBOARD_USR";
+  public static GSCodeDashboardPwd = "DASHBOARD_PWD";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -739,7 +743,7 @@ export class CommonConstant {
   public static License_Plate_No = "License Plate No";
   public static Engine_No = "Engine No";
 
-  // Cust Type  
+  // Cust Type
   public static WhiteIndicator = "WHITE";
   public static NoData = "No Data";
   public static MaritalStatusMarried = "MARRIED";
@@ -844,7 +848,7 @@ export class CommonConstant {
   //MR SINGLE CALC METHOD
   public static SINGLE_INST_CALC_MTHD_DISKONTO = "DISKONTO";
   public static SINGLE_INST_CALC_MTHD_SIMPLE = "SIMPLE";
-  
+
   // CrdRvw
   public static CrdRvwRelationTypeCustomer = "Customer";
   public static CrdRvwRelationTypeFamily = "Family";
@@ -878,7 +882,7 @@ export class CommonConstant {
   public static ConfigCodeIsUseDms = "IS_USE_DMS";
   public static ConfigCodeDigitalizationSvcType = "DIGITALIZATION_SVC_TYPE";
   public static SYS_CONFIG_USING_DMS_ADINS = "USING_DMS_ADINS"
-  
+
   //interest input type
   public static InterestInputTypeAmt = "AMT";
   public static InterestInputTypePrcnt = "PRCNT"
@@ -908,7 +912,7 @@ export class CommonConstant {
   public static PRD_HO_APV_TYPE = "PROD_HO_APV_TYPE";
   public static PRD_HO_DEACT_APV_TYPE = "PROD_HO_DEACT_APV_TYPE";
   public static PRD_OFR_APV_TYPE = "PROD_OFR_APV_TYPE";
-  public static PRD_OFR_DEACT_APV_TYPE = "PROD_OFR_DEACT_APV_TYPE";    
+  public static PRD_OFR_DEACT_APV_TYPE = "PROD_OFR_DEACT_APV_TYPE";
 
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";
@@ -916,14 +920,14 @@ export class CommonConstant {
   //APP STAT
   public static AppStatCancel = "CAN";
   public static AppStatReject = "RJC";
-  
+
   //INVOICE STAT
   public static InvoiceStatApv = "APV";
   public static InvoiceStatRjc = "RJC";
 
   //WOP
-  public static WopAutoDebit = "AD";  
-  
+  public static WopAutoDebit = "AD";
+
   // GENERAL SETTING CODE
   public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
 
@@ -952,7 +956,7 @@ export class CommonConstant {
   public static PROD_OFF_APV = "PROD_OFF_APV";
   public static PROD_OFFERING_RVW = "PROD_OFFERING_RVW";
 
-  
+
   // CUST ADDR TYPE
   public static CustAddrTypeLegal = "LEGAL";
   public static CustAddrTypeContact = "CONTACT";
@@ -990,6 +994,7 @@ export class CommonConstant {
   public static LTKM_RTN = "LTKM_RTN";
   public static RTN_ADD_TC = "RTN_ADD_TC_";
   public static ADD_COLTR_ = "ADD_COLTR_";
+  public static ADD_TC = "ADD_TC_";
 
 
 
@@ -997,7 +1002,7 @@ export class CommonConstant {
   //WORFKLOW PRODUCT
   public static WF_CODE_PROD_HO_APV = "PROD_HO_APV";
   public static ACT_CODE_PROD_HO_RVW = "PROD_HO_RVW";
-  
+
   //WORKFLOW MOU
   public static WF_CHANGE_MOU = "WF_CHANGE_MOU";
   public static ACT_CODE_CHNG_MOU_REVIEW = "CHNG_MOU_REVIEW";
@@ -1033,7 +1038,7 @@ export class CommonConstant {
   public static ACT_CODE_CNFR = "CNFR_";
   public static ACT_CODE_PGLV = "PGLV_";
   public static WF_CODE_RTN = "WF_RTN_";
-  
+
   public static CurrencyMaskPrct = { suffix: ' %', thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero: true, precision: 6, nullable: false, inputMode: CurrencyMaskInputMode.NATURAL };
   public static PrcntMinValue: number = 0.000001;
 
@@ -1046,4 +1051,21 @@ export class CommonConstant {
   public static DigitalizationSvcTypeRapindo = "RAPINDO";
   public static DigitalizationSvcTypeProfind = "PROFIND";
   public static DigitalizationSvcTypeSlik = "SLIK";
+
+  //LIST APP STEP
+  public static AppCurrStepNap2 = {
+    "NAPD": CommonConstant.AppStepNapd,
+    "REF": CommonConstant.AppStepRef,
+    "APP": CommonConstant.AppStepApp,
+    "ASSET": CommonConstant.AppStepAsset,
+    "COLL": CommonConstant.AppStepColl,
+    "INS": CommonConstant.AppStepIns,
+    "LFI": CommonConstant.AppStepLIns,
+    "FIN": CommonConstant.AppStepFin,
+    "TC": CommonConstant.AppStepTC,
+    "UPL_DOC": CommonConstant.AppStepUplDoc,
+    "INVOICE": CommonConstant.AppStepInvoice,
+    "CMPLTN": CommonConstant.AppStepCustCmpltn,
+    "AEX": CommonConstant.AppStepAssetExpense
+  }
 }

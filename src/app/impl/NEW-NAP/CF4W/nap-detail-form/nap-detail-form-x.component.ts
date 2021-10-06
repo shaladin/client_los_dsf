@@ -22,6 +22,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { environment } from 'environments/environment';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-nap-detail-form-x',
@@ -48,6 +49,7 @@ export class NapDetailFormXComponent implements OnInit {
   IsSavedTC: boolean = false;
   IsDataReady: boolean = false;
   bizTemplateCode: string;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "NAPD": 1,
@@ -134,7 +136,7 @@ export class NapDetailFormXComponent implements OnInit {
     }
     this.IsDataReady = true;
     this.MakeViewReturnInfoObj();
-    
+
 
   }
 
@@ -310,6 +312,16 @@ export class NapDetailFormXComponent implements OnInit {
   }
 
   async NextStep(Step) {
+    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
+      const appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+          }
+        }
+      );
+    }
     if (Step == CommonConstant.AppStepUplDoc) {
       await this.initDms();
     }

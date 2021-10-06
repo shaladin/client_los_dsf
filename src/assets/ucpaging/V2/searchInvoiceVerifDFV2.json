@@ -86,7 +86,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AdminProcess/InvoiceVerif/InvoiceDetailDF",
+                    "path": "NAP_ADM_PRCS_INVOICE_VERIF_INV_DSF",
                     "param": [
                         {
                             "type": "AppId",

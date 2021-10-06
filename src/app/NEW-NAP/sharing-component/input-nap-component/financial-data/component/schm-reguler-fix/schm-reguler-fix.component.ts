@@ -17,6 +17,7 @@ import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcRepo
 import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
 import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs';
+import {AdInsHelper} from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-schm-reguler-fix',
@@ -39,7 +40,6 @@ export class SchmRegulerFixComponent implements OnInit {
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
   inputReportObj: InputReportObj = new InputReportObj();
-  UserContext: any;
   RdlcReport: RdlcReportObj = new RdlcReportObj();
   reportParameters: any;
   showGenerateReportBtn: boolean;
@@ -91,10 +91,8 @@ export class SchmRegulerFixComponent implements OnInit {
     }
   }
 
-  
-  
   setReportData() {
-    this.getJSON(this.inputReportObj.JsonPath).subscribe(data => {
+    this.http.get(this.inputReportObj.JsonPath).subscribe(data => {
       let obj = this.ParentForm.value;
       let totalFee = obj.TotalInsCustAmt
         + obj.AppFee[0].AppFeeAmt
@@ -176,30 +174,12 @@ export class SchmRegulerFixComponent implements OnInit {
 
         this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
       }
-      let value = this.cookieService.get('UserAccess');
-      let userAccess = this.DecryptString(value, "AdInsFOU12345678");
 
-      this.UserContext = JSON.parse(userAccess);
-      this.RdlcReport.RequestingUsername = this.UserContext.UserName;
-      this.RdlcReport.ReportInfo.ReportName = data.reportInfo.reportName;
-      this.RdlcReport.ReportInfo.ReportTemplateCode = data.reportInfo.reportTemplateCode;
+      const UserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.RdlcReport.RequestingUsername = UserContext.UserName;
+      this.RdlcReport.ReportInfo.ReportName = data['reportInfo'].reportName;
+      this.RdlcReport.ReportInfo.ReportTemplateCode = data['reportInfo'].reportTemplateCode;
     });
-  }
-
-  public getJSON(url: string): Observable<any> {
-    return this.http.get(url);
-  }
-
-  private DecryptString(chipperText: string, chipperKey: string) {
-    if (
-      chipperKey == undefined || chipperKey.trim() == '' ||
-      chipperText == undefined || chipperText.trim() == ''
-    ) return chipperText;
-    var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
-    var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
-    var decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, { iv: iv });
-    var plainText = decrypted.toString(CryptoJS.enc.Utf8);
-    return plainText;
   }
 
   GenerateReport() {
@@ -276,11 +256,11 @@ export class SchmRegulerFixComponent implements OnInit {
       return;
     }
     // if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-    //     && this.ParentForm.controls.IsSubsidyRateExist.value == false 
+    //     && this.ParentForm.controls.IsSubsidyRateExist.value == false
     //     && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt)
     // {
     //   this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
-    //   return;  
+    //   return;
     // }
 
     if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
@@ -404,8 +384,8 @@ export class SchmRegulerFixComponent implements OnInit {
           this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
-          this.showGenerateReportBtn = true;
           this.setReportData();
+          this.showGenerateReportBtn = true;
           if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
             this.RefreshSubsidy.emit();
           }

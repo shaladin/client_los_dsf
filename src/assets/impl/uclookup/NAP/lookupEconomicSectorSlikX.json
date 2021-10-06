@@ -4,7 +4,7 @@
     "component": [
       {
         "type": "textbox",
-        "name": "RefSectorEconomySlikCode",
+        "name": "REF_SECTOR_ECONOMY_SLIK_CODE",
         "id": "RefSectorEconomySlikCodeId",
         "value": "",
         "label": "Economic Sector Code",
@@ -12,7 +12,7 @@
       },
       {
         "type": "textbox",
-        "name": "RefSectorEconomySlikName",
+        "name": "REF_SECTOR_ECONOMY_SLIK_NAME",
         "id": "RefSectorEconomySlikNameId",
         "value": "",
         "label": "Economic Sector Description",
@@ -20,20 +20,20 @@
       }
     ],
   "querystring": {
-    "name": "lookupEconomicSectorSlik"
+    "name": "lookupEconomicSectorSlikX"
   },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
             "label": "Economic Sector Code",
-            "name": "RefSectorEconomySlikCode"
+            "name": "REF_SECTOR_ECONOMY_SLIK_CODE"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Economic Sector Description",
-            "name": "RefSectorEconomySlikName"
+            "name": "REF_SECTOR_ECONOMY_SLIK_NAME"
         },
         {
             "type": "label",

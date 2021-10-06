@@ -9,6 +9,8 @@ import { Nap1FromLeadDetailComponent } from './nap1-from-lead/nap1-from-lead-det
 import { NapFromSimpleLeadComponent } from './nap-from-simple-lead/nap-from-simple-lead.component';
 import { NapFromSimpleLeadDetailComponent } from './nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { NapFromSimpleLeadDetailXComponent } from 'app/impl/NEW-NAP/sharing-page/nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail-x.component';
 
 const routes: Routes = [
     {
@@ -66,6 +68,13 @@ const routes: Routes = [
             {
                 path: PathConstant.NAP_SIMPLE_LEAD_DETAIL,
                 component: NapFromSimpleLeadDetailComponent,
+                data: {
+                    title: 'Detail'
+                }
+            },
+            {
+                path: PathConstantX.NAP_SIMPLE_LEAD_DETAIL_X,
+                component: NapFromSimpleLeadDetailXComponent,
                 data: {
                     title: 'Detail'
                 }

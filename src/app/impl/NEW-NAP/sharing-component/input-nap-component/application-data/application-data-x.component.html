@@ -502,8 +502,8 @@
           <!-- Cross Info -->
           <!-- Loan Object -->
           <div *ngIf="BizTemplateCode != 'OPL'">
-            <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true"
-              (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object>
+            <app-loan-object-x [AppId]="appId" [mode]="mode" [isCollateral]="true"
+              (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object-x>
           </div>
 
           <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">

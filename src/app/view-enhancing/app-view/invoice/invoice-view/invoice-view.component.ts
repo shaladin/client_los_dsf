@@ -7,6 +7,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import {ResDisbInfo} from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
+import {RefBankObj} from 'app/shared/model/RefBankObj.model';
 
 @Component({
   selector: 'app-invoice-view',
@@ -18,14 +20,35 @@ export class InvoiceViewComponent implements OnInit {
   @Input() AppId: number;
   appObj:any;
   listAppInvoiceDlrFncngD:any;
+  DisbInfoObj: ResDisbInfo;
+  BankInfoObj:RefBankObj;
   IsShowDetail:boolean=false;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private http: HttpClient
+  ) {
 
   }
 
   ngOnInit() {
     this.GetListInvoiceData();
+    this.GetDisbInfo();
+  }
+
+  GetDisbInfo(){
+    this.http.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, { Id: this.AppId}).subscribe(
+      (response) => {
+        this.DisbInfoObj = response;
+        this.http.post<RefBankObj>(URLConstant.GetRefBankByBankCodeAsync, {Code: response.BankCode}).subscribe(
+          (responseBank) => {
+            this.BankInfoObj = responseBank;
+            console.log(this.BankInfoObj);
+          });
+      }
+    );
   }
 
   GetListInvoiceData() {
@@ -55,7 +78,7 @@ export class InvoiceViewComponent implements OnInit {
   ToDetail(ev) {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_DETAIL], { "AppInvoiceFctrId": ev });
   }
-  
+
   showDetailInvoiceData(appInvoiceDlrFncngHId){
     console.log("CEK")
     var reqObj = {

@@ -50,6 +50,7 @@ export class NapDetailFormComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.DF;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "NAPD": 1,
@@ -93,14 +94,39 @@ export class NapDetailFormComponent implements OnInit {
     });
   }
   //---
-  ngOnInit() {
+  async ngOnInit() {
     this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
       });
 
-    let appObj = { Id: this.appId };
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    this.ClaimTask();
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
+
+    this.stepper = new Stepper(document.querySelector("#stepper1"), {
+      linear: false,
+      animation: true,
+    });
+
+    this.NapObj = new AppObj();
+    this.NapObj.AppId = this.appId;
+
+    const appObj = { Id: this.appId };
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
@@ -124,45 +150,6 @@ export class NapDetailFormComponent implements OnInit {
       }
     );
 
-    this.ClaimTask();
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
-    this.NapObj = new AppObj();
-    this.NapObj.AppId = this.appId;
-
-    let obj = {
-      Id: this.appId
-    }
-
-    this.http.post(URLConstant.GetAppById, obj).subscribe(
-      (response: AppObj) => {
-        if (response) {
-          this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.stepper.to(this.AppStepIndex);
-        } else {
-          this.AppStepIndex = 0;
-          this.stepper.to(this.AppStepIndex);
-        }
-      }
-    );
-
-    this.stepper = new Stepper(document.querySelector("#stepper1"), {
-      linear: false,
-      animation: true,
-    });
     this.MakeViewReturnInfoObj();
   }
 
