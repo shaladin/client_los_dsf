@@ -1,10 +1,11 @@
 
 import { ToastrService } from 'ngx-toastr';
 import { Injectable } from '@angular/core';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Injectable()
 export class NGXToastrService {
-    constructor(public toastr: ToastrService) { }
+    constructor(public toastr: ToastrService, private clipboard: ClipboardService) { }
 
     // Success Type
     typeSuccess() {
@@ -105,5 +106,19 @@ export class NGXToastrService {
 
     errorAPI(status, reason) {
         this.toastr.error(reason, 'Status: ' + status, { "tapToDismiss": true});   
+    }
+
+    typeErrorCopyOnClick(msg, status){
+        const toastr = this.toastr.error(msg, status, { "tapToDismiss": false, "timeOut": 20000, "closeButton": true });
+        toastr.onTap.subscribe(() => {
+            this.clipboard.copyFromContent(msg);
+        });
+    }
+
+    typeWarningCopyOnClick(msg, status) {
+        const toastr = this.toastr.warning(msg, status, { "tapToDismiss": false, "timeOut": 20000, "closeButton": true });
+        toastr.onTap.subscribe(() => {
+            this.clipboard.copyFromContent(msg);
+        });
     }
 }

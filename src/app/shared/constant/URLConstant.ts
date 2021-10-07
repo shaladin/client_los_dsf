@@ -608,6 +608,7 @@ export class URLConstant {
 
   //ChangeMOu
   public static AddChangeMou = environment.losUrl + "/v1" + "/ChangeMou/AddChangeMou";
+  public static AddChangeMouV2 = environment.losUrl + "/v2" + "/ChangeMou/AddChangeMou";
   public static EditChangeMou = environment.losUrl + "/v1" + "/ChangeMou/EditChangeMou";
   public static AddChangeMouCustAssets = environment.losUrl + "/v1" + "/ChangeMou/AddChangeMouCustAsset";
   public static AddEditChangeMouCustClause = environment.losUrl + "/v1" + "/ChangeMou/AddEditChangeMouCustClause";

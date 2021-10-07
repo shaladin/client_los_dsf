@@ -407,7 +407,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
 
       if (this.tempNewTrx == true) {
         this.httpClient
-          .post(URLConstant.AddChangeMou, mouCustFormData)
+          .post(environment.isCore ? URLConstant.AddChangeMouV2 : URLConstant.AddChangeMou, mouCustFormData)
           .subscribe((response) => {
             this.toastr.successMessage(response["Message"]);
             this.changeMouTrxNo = response["ChangeMouTrxNo"];

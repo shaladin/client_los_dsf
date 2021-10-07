@@ -350,7 +350,6 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
     this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
-    this.agencyLookUpObj.isRequired = true;
 
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
@@ -372,7 +371,6 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
     this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
-    this.salesNameLookUpObj.isRequired = true;
   }
   OfficeChanged(event) {
     // this.MainInfoForm.patchValue({
