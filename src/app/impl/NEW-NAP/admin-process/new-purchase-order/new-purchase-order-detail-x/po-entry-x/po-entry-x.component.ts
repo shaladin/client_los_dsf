@@ -78,13 +78,12 @@ export class PoEntryXComponent implements OnInit {
             reqAppLoanPurposeObj.Id = this.AppId;
             reqAppLoanPurposeObj.Code = this.SupplCode;
             let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, reqAppLoanPurposeObj).toPromise();
-            let getListBankAcc = this.httpClient.post(URLConstant.GetListCustBankAccByCustNo, { CustNo: this.AppCust.CustNo }).toPromise();
+            let getListBankAcc = this.httpClient.post(URLConstant.GetListAppCustBankAccByAppCustId, { Id: this.AppCust.AppCustId }).toPromise();
             forkJoin([getAppLoanPurpose, getListBankAcc]).toPromise().then(
               (response) => {
                 this.AppLoanPurposeList = response[0]["listResponseAppLoanPurpose"] as Array<AppLoanPurposeObj>;
-                this.custBankAccList = response[1]["ReturnObject"];
+                this.custBankAccList = response[1]["ReturnObject"]['AppCustBankAccObjs'];
                 this.custBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
-                console.log("custBankAccList: " + JSON.stringify(this.custBankAccList));
                 var isDefaultFound = false;
                 var totalDisburse = 0;
                 for (const item of this.custBankAccList) {
@@ -114,10 +113,10 @@ export class PoEntryXComponent implements OnInit {
           }
           else {
             let getPurchaseOrderHId = this.httpClient.post(URLConstant.GetPurchaseOrderByPurchaseOrderHIdForNewPO, { Id: this.PurchaseOrderHId }).toPromise();
-            let getListBankAcc = this.httpClient.post(URLConstant.GetListCustBankAccByCustNo, { CustNo: this.AppCust.CustNo }).toPromise();
+            let getListBankAcc = this.httpClient.post(URLConstant.GetListAppCustBankAccByAppCustId, { Id: this.AppCust.AppCustId }).toPromise();
             forkJoin([getPurchaseOrderHId, getListBankAcc]).toPromise().then(
               (response) => {
-                this.custBankAccList = response[1]["ReturnObject"];
+                this.custBankAccList = response[1]["ReturnObject"]['AppCustBankAccObjs'];
                 this.PurchaseOrderH = response[0] as PurchaseOrderHObj;
                 this.custBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
                 for (const item of this.custBankAccList) {
