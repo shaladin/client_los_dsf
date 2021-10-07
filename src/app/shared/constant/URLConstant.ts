@@ -859,7 +859,7 @@ export class URLConstant {
   public static EditSimpleLeadCustTypeUpdate = environment.losUrl + "/v1" + "/LeadCust/EditSimpleLeadCustTypeUpdate";
   public static AddLeadData = environment.losUrl + "/v1" + "/Lead/AddLeadData";
   public static EditLeadData = environment.losUrl + "/v1" + "/Lead/EditLeadData";
-  public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/v1" + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
+  public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/v2" + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
   public static AddLeadDataKta = environment.losUrl + "/v1" + "/Lead/AddLeadDataKta";
   public static EditLeadDataKta = environment.losUrl + "/v1" + "/Lead/EditLeadDataKta";
 
@@ -1456,8 +1456,8 @@ export class URLConstant {
   public static UploadFileV2 = environment.FoundationR3Url + "/v2" + "/Upload/UploadFile";
 
   // Download
-  public static DownloadTemplate = environment.FoundationR3Url + "/v1" + '/Download/DownloadTemplate';
-  public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + "/v1" + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
+  public static DownloadTemplate = environment.FoundationR3Url + "/v2" + '/Download/DownloadTemplate';
+  public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + "/v2" + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
 
   // Report
   public static GenerateReportSync = environment.FoundationR3Url + "/v1" + '/Report/GenerateReportSync';
