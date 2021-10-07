@@ -5,6 +5,7 @@ export class ResMouCollForMouViewObj {
     CollateralStat: string;
     OwnerName: string;
     MouCustCollateralId: number;
+    ChangeMouCustCollateralId: number;
     SerialNo1: string;
     SerialNo2: string;
     SerialNo3: string;

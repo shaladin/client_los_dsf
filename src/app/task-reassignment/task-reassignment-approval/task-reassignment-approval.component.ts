@@ -11,7 +11,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
@@ -35,17 +37,24 @@ export class TaskReassignmentApprovalComponent implements OnInit {
   ) { 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchTaskReassignmentApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchTaskReassignmentApproval.json";
+    let activityVersion: string = "/v1";
+    let nameOffice: string = "WF.OFFICE_CODE";
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchTaskReassignmentApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchTaskReassignmentApprovalV2.json";
+      
+      nameOffice = "TaskOfficeCode";
+      activityVersion = "/v2";
+    }
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "T.WF_ACTIVITY_CODE",
-        environment: environment.losUrl
+        environment: environment.losUrl + activityVersion
       },
       {
-        name: "WF.OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        name: nameOffice,
+        environment: environment.FoundationR3Url + "/v1"
       },
     ];
   }
@@ -96,7 +105,7 @@ export class TaskReassignmentApprovalComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId;
-        ApvReqObj.UsernameMemberId = ev.RowObj.MainUsernameMemberId;
+        ApvReqObj.Username = ev.RowObj.MainUser;
         this.httpClient.post(URLConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);

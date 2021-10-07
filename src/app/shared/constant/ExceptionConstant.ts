@@ -23,6 +23,8 @@ export class ExceptionConstant {
     public static BALLOON_AMOUNT_MUST_HIGHER_THAN = "Balloon Amount must be higher than ";
     public static INST_AMOUNT_MUST_HIGHER_THAN = "Installment Amount must be higher than ";
     public static INPUT_INST_AMOUNT = "Please Input Installment Amount on Installment No ";
+    public static INPUT_INST_AMOUNT_SUSD = "Installment No {0} and {1} must different.";
+    public static INPUT_NUM_OF_INST = "Please Input # of Installment on Installment No ";
     public static TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN = "Total Commision Amount cannot more than ";
     public static ID_EXPIRED_DATE_CANNOT_LESS_THAN = "Id Expired Date can not be less than ";
     public static INSURANCE_LENGTH_MUST_HIGHER_THAN = "Insurance Length must be higher than ";
@@ -47,7 +49,7 @@ export class ExceptionConstant {
 
     public static EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be less than Sell Supplier Rate ({0}).";
     public static EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE = "Effective Rate cannot be greater than Sell Supplier Rate ({0}).";
-    public static EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE = "Effective Rate cannot be less than Supplier Rate.";
+    public static EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE = "Effective Rate is less than Supplier Rate.";
 
     public static CLICK_GENERATE_INSURANCE = "Please click Generate Insurance.";
     public static CLICK_CALCULATE_INSURANCE = "Please click Calculate Insurance.";
@@ -85,6 +87,8 @@ export class ExceptionConstant {
     public static OTHER_BANK_ACCOUNT_ALREADY_DEFAULT = "Other bank account is already default";
     public static INPUT_MIN_1_INVOICE = "Please Input At Least 1 invoice";
     public static ADD_MIN_1_DATA = "Please add at least one data";
+    public static Add_Min_1_Owner = "Please Input at least 1 Owner";
+    public static Add_Min_1_Active_Signer = "Please Input at least 1 Active Signer";
     public static INPUT_MIN_1_COLLATERAL_DATA = "Please Input At Least 1 Collateral Data";
     public static MIN_1_SUBJECT = "Minimal 1 Subject";
     public static MIN_1_ASSET = "Asset minimum is 1";
@@ -107,11 +111,14 @@ export class ExceptionConstant {
     public static MUST_INPUT_OWNER_DATA = "Please Input Owner Data in Management/Shareholder!";
     public static MUST_INPUT_ACTIVE_SIGNER = "At Least 1 Active Signer is Required";
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
+    public static TOTAL_SHARE_CAN_NOT_100 = "Total Share can not more than 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
     public static SUPPLIER_BANK_ACC_NOT_SET = "Please input a valid Bank Account Data for this supplier";
     public static MUST_COMPLETE_FAMILY_DATA = "Please complete customer family data";
     public static COMPLETE_SHAREHOLDER_COMPANY_MODEL = "Please complete all shareholder company model";
     public static MUST_COMPLETE_SHAREHOLDER_DATA = "Please complete all shareholder data";
+    public static DUPLICATE_LEGAL_DOC = "Document with Legal Document Type {0} and Document No {1} already exists";
+
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
@@ -173,7 +180,13 @@ export class ExceptionConstant {
     public static PLEASE_COMPLETE_RESIDENCE_ADDRESS = "Please complete Residence Address First";
     public static PLEASE_COMPLETE_BIZ_ADDRESS = "Please Complete Business Address First";
     public static CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE = " can't be higher than Accessory Price"
-    public static ACCESSORY_PRICE_NOT_SET = "Please Input Accessory Price"
+    public static ACCESSORY_PRICE_NOT_SET = "Please Input Accessory Price";
+
+    public static PLEASE_COMPLETE_FOLLOWING_FIELD = "Please Complete the following field : ";
+    public static DUP_CHECK_NOT_COMPLETE = "Please complete Duplicate checking first";
+    public static MANUFACTURING_YEAR_CAN_NOT_LESS_THAN = "Manufacturing Year can not less than ";
+    public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
     
+    public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
 }
 

@@ -207,7 +207,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.MakeLookUpObj();
     this.GetOfficeDDL();
 
-    this.http.post(URLConstant.GetListActiveLob, {}).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "LOB" }).subscribe(
       (response) => {
         this.listRefLob = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
@@ -234,6 +234,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.http.post(URLConstant.GetListKvpRefAppSrcForAppOrLead, obj).subscribe(
       (response) => {
         this.listLeadSource = response[CommonConstant.ReturnObj];
+        this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
       });
 
     if (this.pageType == "edit" || this.pageType == "update") {
@@ -312,7 +313,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.leadPersonalLookUpObj.isRequired = false;
     this.leadPersonalLookUpObj.urlJson = "./assets/uclookup/lookupLeadPersonal.json";
     this.leadPersonalLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl;
+    this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl + "/v1";
     this.leadPersonalLookUpObj.pagingJson = "./assets/uclookup/lookupLeadPersonal.json";
     this.leadPersonalLookUpObj.genericJson = "./assets/uclookup/lookupLeadPersonal.json";
     if (this.user.MrOfficeTypeCode != "CG" && this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
@@ -326,8 +327,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.agencyLookUpObj = new InputLookupObj();
     this.agencyLookUpObj.isRequired = false;
     this.agencyLookUpObj.urlJson = "./assets/uclookup/lookupAgency.json";
-    this.agencyLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
     this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
     this.agencyLookUpObj.isRequired = true;
@@ -335,24 +335,21 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
     this.cmoNameLookUpObj.urlJson = "./assets/uclookup/lookupCMO.json";
-    this.cmoNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
     this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
 
     this.surveyorNameLookUpObj = new InputLookupObj();
     this.surveyorNameLookUpObj.isRequired = false;
     this.surveyorNameLookUpObj.urlJson = "./assets/uclookup/lookupSurveyor.json";
-    this.surveyorNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
     this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
 
     this.salesNameLookUpObj = new InputLookupObj();
     this.salesNameLookUpObj.isRequired = false;
     this.salesNameLookUpObj.urlJson = "./assets/uclookup/lookupTeleSales.json";
-    this.salesNameLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
     this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
     this.salesNameLookUpObj.isRequired = true;

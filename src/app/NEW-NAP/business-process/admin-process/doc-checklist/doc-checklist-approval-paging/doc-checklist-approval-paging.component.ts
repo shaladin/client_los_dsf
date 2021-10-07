@@ -44,8 +44,6 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchDocChecklistApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocChecklistApproval.json";
     this.inputPagingObj.isJoinExAPI = true;
 
@@ -92,7 +90,8 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.MainUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
-        ApvReqObj.TaskId = ev.RowObj.TaskId
+        ApvReqObj.TaskId = ev.RowObj.TaskId;
+        ApvReqObj.Username = ev.RowObj.MainUser;
         this.httpClient.post(URLConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);

@@ -44,6 +44,7 @@ export class EmergencyContactTabComponent implements OnInit {
   MrCustRelationshipObj: Array<KeyValueObj> = new Array();
   ArrAddCrit: Array<CriteriaObj> = new Array();
   copyAddressFromObj: any;
+  tempCustEmgncyName : string = "";
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
   BusinessDt: Date;
   IsCustRelationshipReady: boolean = false;
@@ -55,15 +56,15 @@ export class EmergencyContactTabComponent implements OnInit {
     ContactPersonName: [''],
     ContactPersonCustNo: [''],
     MrIdTypeCode: [''],
-    MrGenderCode: [''],
+    MrGenderCode: ['', Validators.required],
     IdNo: [''],
     BirthPlace: [''],
     IdExpiredDt: [''],
     BirthDt: [''],
-    MrCustRelationshipCode: [''],
+    MrCustRelationshipCode: ['', Validators.required],
     MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     MobilePhnNo2: ['', Validators.pattern("^[0-9]+$")],
-    Email: ['', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')],
+    Email: ['', Validators.pattern(CommonConstant.regexEmail)],
     CopyAddrFrom: ['']
   })
 
@@ -81,7 +82,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.BusinessDt = UserAccess.BusinessDt;
 
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.addCritInput = new Array();
@@ -162,7 +163,8 @@ export class EmergencyContactTabComponent implements OnInit {
             MobilePhnNo2: response.MobilePhnNo2,
             Email: response.Email
           })
-
+          this.tempCustEmgncyName = response.ContactPersonName;
+          this.setDisableForm(response.MobilePhnNo1);
           if (this.GenderObj.findIndex(x => x.Key == this.EmergencyContactForm.controls.MrGenderCode.value) == -1) {
             this.EmergencyContactForm.patchValue({
               MrGenderCode: ''
@@ -238,6 +240,7 @@ export class EmergencyContactTabComponent implements OnInit {
           this.setValidatorPattern();
           this.InputLookupCustObj.nameSelect = response.CustObj.CustName;
           this.InputLookupCustObj.jsonSelect = { CustName: response.CustObj.CustName };
+          this.tempCustEmgncyName = response.CustObj.CustName;
         }
 
         if (response.CustPersonalObj != undefined) {
@@ -250,6 +253,7 @@ export class EmergencyContactTabComponent implements OnInit {
             Email: response.CustPersonalObj.Email1,
           });
         }
+        this.setDisableForm(response.CustPersonalObj.MobilePhnNo1);
 
         if (response.CustAddrObjs.length > 0) {
           var custAddrLegalObj = response.CustAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
@@ -436,5 +440,62 @@ export class EmergencyContactTabComponent implements OnInit {
     }
 
     return isValid;
+  }
+
+  setDisableForm(MobilePhone1 : string){
+
+    if(MobilePhone1 != null && MobilePhone1 != ""){
+      this.EmergencyContactForm.controls.MobilePhnNo1.disable();
+      this.EmergencyContactForm.controls.MobilePhnNo2.disable();
+      this.EmergencyContactForm.controls.Email.disable();
+    }
+    this.EmergencyContactForm.controls.MrIdTypeCode.disable();
+    this.EmergencyContactForm.controls.IdExpiredDt.disable();
+    this.EmergencyContactForm.controls.IdNo.disable();
+    this.EmergencyContactForm.controls.BirthPlace.disable();
+    this.EmergencyContactForm.controls.BirthDt.disable();
+    this.EmergencyContactForm.controls.MrGenderCode.disable();
+    this.InputUcAddressObj.isReadonly = true;
+    this.InputUcAddressObj.inputField.inputLookupObj.isReadonly = true;
+  }
+
+  onTypeName(ev : string){
+    if(ev != ""){
+      if(this.tempCustEmgncyName != ev){
+        this.EmergencyContactForm.controls.MobilePhnNo1.enable();
+        this.EmergencyContactForm.controls.MobilePhnNo2.enable();
+        this.EmergencyContactForm.controls.Email.enable();
+        this.EmergencyContactForm.controls.MrIdTypeCode.enable();
+        this.EmergencyContactForm.controls.IdExpiredDt.enable();
+        this.EmergencyContactForm.controls.IdNo.enable();
+        this.EmergencyContactForm.controls.BirthPlace.enable();
+        this.EmergencyContactForm.controls.BirthDt.enable();
+        this.EmergencyContactForm.controls.MrGenderCode.enable();
+
+        this.EmergencyContactForm.patchValue({
+          MrIdTypeCode: "" ,
+          MrGenderCode: "" ,
+          IdNo: "",
+          BirthPlace:"" ,
+          IdExpiredDt: "" ,
+          BirthDt:  "" ,
+          MrCustRelationshipCode: "" ,
+          MobilePhnNo1:"" ,
+          MobilePhnNo2:"" ,
+          Email: ""         
+        });
+
+        this.UcAddrObj = new AddrObj();
+        this.InputUcAddressObj = new InputAddressObj();
+        this.InputUcAddressObj.inputField.inputLookupObj = new InputLookupObj();
+        this.InputUcAddressObj.inputField.inputLookupObj.isRequired = false;
+        this.InputUcAddressObj.inputField.inputLookupObj.isReadonly = false;
+        this.InputUcAddressObj.showSubsection = false;
+        this.InputUcAddressObj.showFax = false;
+        this.InputUcAddressObj.isRequired = false;
+        this.InputUcAddressObj.default = this.UcAddrObj;
+
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-<form class="form form-horizontal" [formGroup]="AddCollDataForm" (ngSubmit)="AddCollDataForm.valid" #enjiForm="ngForm">
+<form class="form form-horizontal">
   <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Collateral'" [panel]="'AddCollData'">
   </lib-ucSubsection>
   <div class="form-body" id="AddCollData">
@@ -15,6 +15,8 @@
           </th>
           <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
           </th>
+          <th><span style="float: center;" class="thead-header" name='ViewDetail' translate>VIEW DETAIL</span>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -24,8 +26,21 @@
           <td align="left">{{item.OwnerName}}</td>
           <td align="center">{{item.CollateralStat}}</td>
           <td align="right">{{item.CollateralValueAmt | number}}</td>
+          <td align="center">
+            <a class="success p-0" (click)="ViewColl(item.ChangeMouCustCollateralId)">
+              <i class="ft-edit-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
+    <div class="form-body" id="AddCollDetailData" *ngIf="isView">
+      <div class="ucSearch-Button-Right">
+        <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
+          <i class="fa fa-check-square-o"></i> Back
+        </button>
+      </div>
+      <app-change-mou-view-addcoll-detail [ChangeMouCustCollateralId]="ChangeMouCustCollateralId"></app-change-mou-view-addcoll-detail>
+    </div>
   </div>
 </form>

@@ -1,3 +1,5 @@
+import { environment } from "environments/environment";
+
 export class AppObj {
     AppId: number;
     MouCustId: number;
@@ -57,12 +59,14 @@ export class AppObj {
     MrWayOfRestructureCode: string; 
     MrSlikSecEcoCode: string; 
     FloatingPeriodCode: string;
-    WfTaskListId: number;
+    WfTaskListId: any;
     Username: string;
     BizTemplateCode: string;
     MrCustTypeCode: string;
     RowVersion: string;
     CrdApvResultExpDt: Date;
+    MrDpSrcPaymentCode: string;
+    MrInstSrcPaymentCode: string;
 
     constructor() {
         this.AppId = 0;
@@ -113,10 +117,12 @@ export class AppObj {
         this.RsvField3 = "";
         this.RsvField4 = "";
         this.RsvField5 = "";
-        this.WfTaskListId = 0;
+        this.WfTaskListId = environment.isCore ? "" : 0;
         this.BizTemplateCode = "";
         this.MrCustTypeCode = "";
         this.RowVersion = "";
         this.CrdApvResultExpDt = new Date();
+        this.MrDpSrcPaymentCode = "";
+        this.MrInstSrcPaymentCode = "";
     }
 }

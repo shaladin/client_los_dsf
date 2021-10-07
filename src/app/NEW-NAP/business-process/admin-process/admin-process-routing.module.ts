@@ -45,6 +45,28 @@ import { AssetAllocationPagingComponent } from './asset-allocation/asset-allocat
 import { AssetAllocationDetailComponent } from './asset-allocation/asset-allocation-detail/asset-allocation-detail.component';
 import { InvoiceVerifDetailListOfInvoiceComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component';
 import { InvoiceVerifDetailDFComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component';
+import { PreGoLiveXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live/pre-go-live-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { DeliveryOrderMultiAssetDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail-x.component';
+import { CustConfirmationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-detail/cust-confirmation-detail-x.component';
+import { EndDateForGoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-paging/end-date-go-live-approval-paging-x.component';
+import { EndDateForGoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-detail/end-date-go-live-approval-detail-x.component';
+import { GoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-paging/go-live-approval-paging-x.component';
+import { GoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-detail/go-live-approval-detail-x.component';
+import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
+import {InvoiceVerifDetailDFXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF-x.component';
+import { PurchaseOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail/purchase-order-detail-x.component';
+import { PurchaseOrderXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order/purchase-order-x.component';
+import { PurchaseOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging/purchase-order-paging-x.component';
+import { AgrmntActivationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component';
+import { InsuranceOrderPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-paging/insurance-order-paging-x/insurance-order-paging-x.component';
+import { InsuranceOrderDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component';
+import {InvoiceVerifDetailListOfInvoiceXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
+import { DocumentViewXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/document-printing/document-view/document-view-x.component';
+import { NewPurchaseOrderDetailXComponent } from 'app/impl/NEW-NAP/admin-process/new-purchase-order/new-purchase-order-detail-x/new-purchase-order-detail-x.component';
+import { DocSignerDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-detail/doc-signer-detail-x.component';
+import { DocSignerPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-paging/doc-signer-paging-x.component';
+
 
 const routes: Routes = [
   {
@@ -107,8 +129,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.CUST_CONFIRM_DETAIL,
-        component: CustConfirmationDetailComponent,
+        path: PathConstantX.CUST_CONFIRM_DETAIL_X,
+        component: CustConfirmationDetailXComponent,
         data: {
           title: 'Customer Confirmation Detail'
         }
@@ -205,6 +227,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.AGRMNT_ACT_DETAIL,
+        component: AgrmntActivationDetailXComponent,
+        data: {
+          title: 'Agreement Activation Detail'
+        }
+      },
+      {
         path: PathConstant.OFFERING_VALIDITY_APPRV_PAGING,
         component: OfferingValidityCheckingApprovalPagingComponent,
         data: {
@@ -226,10 +255,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.NAP_DOC_SIGNER_PAGING_X,
+        component: DocSignerPagingXComponent,
+        data: {
+          title: 'Document Signer Paging X'
+        }
+      },
+      {
         path: PathConstant.NAP_DOC_SIGNER_DETAIL,
         component: DocSignerDetailComponent,
         data: {
           title: 'Document Signer Detail'
+        }
+      },
+      {
+        path: PathConstantX.NAP_DOC_SIGNER_DETAIL_X,
+        component: DocSignerDetailXComponent,
+        data: {
+          title: 'Document Signer Detail X'
         }
       },
       {
@@ -268,6 +311,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.NAP_DOC_PRINT_VIEW_X,
+        component: DocumentViewXComponent,
+        data: {
+          title: 'Document Printing View X'
+        }
+      },
+      {
         path: PathConstant.DO_MULTI_ASSET_PAGING,
         component: DeliveryOrderMultiAssetComponent,
         data: {
@@ -293,6 +343,13 @@ const routes: Routes = [
         component: InvoiceVerifDetailComponent,
         data: {
           title: 'Delivery Order Detail'
+        }
+      },
+      {
+        path: PathConstantX.INVOICE_VERIF_DETAIL_X,
+        component: InvoiceVerifDetailXComponent,
+        data: {
+          title: 'Delivery Order Detail X'
         }
       },
       {
@@ -352,10 +409,108 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.INVOICE_VERIF_DETAIL_LIST_INV_X,
+        component: InvoiceVerifDetailListOfInvoiceXComponent,
+        data: {
+          title: 'Invoice Detail List Of Invoice X'
+        }
+      },
+      {
         path: PathConstant.INVOICE_VERIF_INV_DSF,
         component:InvoiceVerifDetailDFComponent,
         data:{
           title: 'Invoice Detail DF'
+        }
+      },
+      {
+        path: PathConstantX.INVOICE_VERIF_INV_DSF_X,
+        component:InvoiceVerifDetailDFXComponent,
+        data:{
+          title: 'Invoice Detail DF X'
+        }
+      },
+      {
+        path: PathConstantX.END_DATE_GO_LIVE_APV_PAGING_X,
+        component:EndDateForGoLiveApprovalPagingXComponent,
+        data:{
+          title: 'End Date Go Live Approval Paging'
+        }
+      },
+      {
+        path: PathConstantX.END_DATE_GO_LIVE_APV_DETAIL_X,
+        component:EndDateForGoLiveApprovalDetailXComponent,
+        data:{
+          title: 'End Date Go Live Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.GO_LIVE_APV_PAGING_X,
+        component:GoLiveApprovalPagingXComponent,
+        data:{
+          title: 'Go Live Approval Paging'
+        }
+      },
+      {
+        path: PathConstantX.GO_LIVE_APV_DETAIL_X,
+        component:GoLiveApprovalDetailXComponent,
+        data:{
+          title: 'Go Live Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.DO_MULTI_ASSET_DETAIL_X,
+        component: DeliveryOrderMultiAssetDetailXComponent,
+        data: {
+          title: 'Delivery Order'
+        }
+      },
+      {
+        path: PathConstantX.PGL_DETAIL_X,
+        component: PreGoLiveXComponent,
+        data: {
+          title: 'PreGoLive Detail'
+        }
+      },
+      {
+        path: PathConstantX.INSURANCE_ORDER_PAGING_X,
+        component: InsuranceOrderPagingXComponent,
+        data: {
+          title: 'Insurance Order Paging X'
+        }
+      },
+      {
+        path: PathConstantX.INSURANCE_ORDER_DETAIL_X,
+        component: InsuranceOrderDetailXComponent,
+        data: {
+          title: 'Insurance Order Detail X'
+        }
+      },
+      {
+        path: PathConstantX.PO_PAGING_X,
+        component: PurchaseOrderPagingXComponent,
+        data: {
+          title: 'Purchase Order Paging'
+        }
+      },
+      {
+        path: PathConstantX.PO_PO_EXT_X,
+        component: PurchaseOrderXComponent,
+        data: {
+          title: 'Purchase Order'
+        }
+      },
+      {
+        path: PathConstantX.PO_PO_EXT_DETAIL_X,
+        component: PurchaseOrderDetailXComponent,
+        data: {
+          title: 'Purchase Order Detail'
+        }
+      },
+      {
+        path: PathConstantX.NEW_PO_DETAIL,
+        component: NewPurchaseOrderDetailXComponent,
+        data: {
+          title: "Purchase Order Detail"
         }
       }
     ]

@@ -191,7 +191,7 @@
 
                 <div *ngIf="IsExisting">
                   <div class="form-group row">
-                    <label class="col-md-3 adins-label" translate>Asset Number</label>
+                    <label class="col-md-3 adins-required-label" translate>Asset Number</label>
                     <div class="col-md-3">
                       <lib-uclookupgeneric [lookupInput]="InputLookupAssetObj"
                         [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='ReqDecForm'
@@ -326,10 +326,6 @@
               </div>
   
               <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="findInvalidControls()"
-                  translate>
-                  <i class="fa fa-arrow-circle-left"></i> Test
-                </button>
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
                   translate>
                   <i class="fa fa-arrow-circle-left"></i> Cancel

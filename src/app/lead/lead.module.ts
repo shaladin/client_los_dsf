@@ -62,6 +62,9 @@ import { NewLeadInputPageComponent } from './new-lead-input/new-lead-input-page/
 import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-lead-monitoring.component';
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
+import { UcDirectiveUpperCaseModule } from "@adins/uc-directive-upper-case";
+import { NewLeadInputPageXComponent } from "app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component";
+import { NewLeadInputLeadDataXComponent } from "app/impl/lead/new-lead-input/new-lead-input-lead-data-x/new-lead-input-lead-data-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -73,7 +76,7 @@ export const customCurrencyMaskConfig = {
   suffix: "",
   thousands: ",",
   nullable: false,
-  inputMode: CurrencyMaskInputMode.FINANCIAL
+  inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({
@@ -101,7 +104,8 @@ export const customCurrencyMaskConfig = {
     UcuploadModule,
     UcaddtotempModule,
     UcgridviewModule,
-    SharedModule
+    SharedModule,
+    UcDirectiveUpperCaseModule
   ],
   declarations: [
     LeadVerifComponent,
@@ -127,7 +131,9 @@ export const customCurrencyMaskConfig = {
     FraudVerifPagingComponent,
     FraudVerifPageComponent,
     LeadInquiryComponent,
-    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent, NewLeadInputComponent, NewLeadInputMainInfoComponent, NewLeadInputCustDataComponent, NewFraudVerifComponent, NewFraudVerifDetailComponent, NewLeadUpdateComponent, NewLeadInputLeadDataComponent, NewLeadInputPageComponent, SimpleLeadMonitoringComponent, SimpleLeadMonitoringReviewComponent, SimpleLeadMonitoringReviewDetailComponent
+    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent, NewLeadInputComponent, NewLeadInputMainInfoComponent, NewLeadInputCustDataComponent, NewFraudVerifComponent, NewFraudVerifDetailComponent, NewLeadUpdateComponent, NewLeadInputLeadDataComponent, NewLeadInputPageComponent, SimpleLeadMonitoringComponent, SimpleLeadMonitoringReviewComponent, SimpleLeadMonitoringReviewDetailComponent,
+    NewLeadInputPageXComponent,
+    NewLeadInputLeadDataXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

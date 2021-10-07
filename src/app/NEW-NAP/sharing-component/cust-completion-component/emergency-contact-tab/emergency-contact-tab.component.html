@@ -14,7 +14,7 @@
                   <div class="col-md-8">
                     <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustObj"
                       *ngIf="this.InputLookupCustObj.isReady" [parentForm]="EmergencyContactForm"
-                      [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
+                      [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" (inputtedValue)="onTypeName($event)" #LookupExistingCust>
                     </lib-uclookupgeneric>
                   </div>
                 </div>
@@ -81,7 +81,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-md-4" translate>Gender</label>
+                  <label class="col-md-4 adins-required-label" translate>Gender</label>
                   <div class="col-md-6" *ngIf="IsGenderReady">
                     <select class="form-control"
                       formControlName="MrGenderCode" style="width:100%;"
@@ -118,7 +118,7 @@
                   </div>
                 </div>
                 <div class="form-group row ">
-                  <label class="col-md-4" translate>Customer Relationship </label>
+                  <label class="col-md-4 adins-required-label" translate>Customer Relationship </label>
                   <div class="col-md-6" *ngIf="IsCustRelationshipReady">
                     <select class="form-control adInsInput full-width" style="width: 100%"
                       formControlName="MrCustRelationshipCode"

@@ -9,6 +9,8 @@ import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 import { CommonConstant } from '../constant/CommonConstant';
+import { AdInsConstant } from '../AdInstConstant';
+import { StorageService } from '../services/StorageService';
 @Component({
   selector: 'app-rolepick',
   templateUrl: './rolepick.component.html',
@@ -18,18 +20,15 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
   listRole: any;
 
-
-
   ngAfterViewInit(): void {
   }
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-    private http: HttpClient, private router: Router, public dialog: MatDialog, private cookieService: CookieService) {
+    private http: HttpClient, private router: Router, public dialog: MatDialog, private cookieService: CookieService, private strService: StorageService) {
     this.listRole = data["response"];
   }
 
   chooseRole(item) {
-    var roleUrl = environment.FoundationR3Url + URLConstant.LoginByRole;
     var roleObject = {
       UserName: this.data.user,
       Password: this.data.pwd,
@@ -42,8 +41,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
     };
     if (this.data.pwd == null) {
-      var updateRoleUrl = environment.FoundationR3Url + URLConstant.UpdateToken;
-      this.http.post(updateRoleUrl, roleObject).subscribe(
+      this.http.post(AdInsConstant.UpdateToken, roleObject).subscribe(
         (response) => {
           //Cookie sudah diambil dari BE (Di set manual dulu)
 
@@ -53,15 +51,19 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
           AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
           AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
-
-          AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
           AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
-          this.dialog.closeAll();
+
+          this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: item.RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
+            (response) => {
+              AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.ReturnObj]));
+              this.strService.set(AdInsConstant.WatchRoleState, true);
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
+              this.dialog.closeAll();
+            });
         });
     }
     else {
-      this.http.post(roleUrl, roleObject).subscribe(
+      this.http.post(AdInsConstant.LoginByRole, roleObject).subscribe(
         (response) => {
           //Cookie sudah diambil dari BE (Di set manual dulu)
 
@@ -71,11 +73,14 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
           AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
           AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
-
-          AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
           AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
-          this.dialog.closeAll();
+
+          this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: item.RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
+            (response) => {
+              AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.ReturnObj]));
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
+              this.dialog.closeAll();
+            });
         }
       );
     }

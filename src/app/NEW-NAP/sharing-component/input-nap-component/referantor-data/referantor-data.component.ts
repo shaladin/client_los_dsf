@@ -82,7 +82,7 @@ export class ReferantorDataComponent implements OnInit {
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupVendor.json";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.addCritInput = this.arrAddCrit;
@@ -135,6 +135,7 @@ export class ReferantorDataComponent implements OnInit {
 
   ClickSave() {
     var url;
+    this.appReferantorObj.AppId = this.appId;
     if (this.ExistedData) {
       if (this.ReferantorOn) {
         // save
@@ -155,7 +156,6 @@ export class ReferantorDataComponent implements OnInit {
       if (this.ReferantorOn) {
         // save
         url = URLConstant.AddAppReferantor;
-        this.appReferantorObj.AppId = this.appId;
         this.SaveData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Save New Data');

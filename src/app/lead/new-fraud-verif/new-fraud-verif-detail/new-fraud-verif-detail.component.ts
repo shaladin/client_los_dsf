@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -34,7 +35,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
   leadCustObj: LeadCustObj = new LeadCustObj();
   leadAssetObj: LeadAssetObj = new LeadAssetObj();;
   LeadId: number;
-  WfTaskListId: number;
+  WfTaskListId: any;
   leadCustPersonalObj: LeadCustPersonalObj = new LeadCustPersonalObj();;
   DuplicateStatus: string;
   ResultDuplicate: Array<ResDuplicateCustomerObj> = new Array<ResDuplicateCustomerObj>();
@@ -47,6 +48,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
   IsCustPicked: boolean = false;
   HasDuplicateCust: boolean = false;
   DuplicateLeadList: Array<LeadForLeadVerfObj> = new Array<LeadForLeadVerfObj>();
+  urlPost : string;
 
   FraudVerfForm = this.fb.group({
     Notes: ['', [Validators.required]],
@@ -58,7 +60,8 @@ export class NewFraudVerifDetailComponent implements OnInit {
     private toastr: NGXToastrService,
     private fb: FormBuilder,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
@@ -69,11 +72,21 @@ export class NewFraudVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
+    if(environment.isCore){
+      this.urlPost = URLConstant.AddNewLeadFraudVerfV2;
+
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
     }
+    else{
+      this.urlPost = URLConstant.AddNewLeadFraudVerf;
+
+      if (this.WfTaskListId > 0)
+        this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
+
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "LeadNo",
@@ -139,7 +152,22 @@ export class NewFraudVerifDetailComponent implements OnInit {
     this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
     this.leadFraudVerfObj.IsCustPicked = false;
     this.leadFraudVerfObj.HasDuplicateCust = false;
-    this.http.post(URLConstant.AddNewLeadFraudVerf, this.leadFraudVerfObj).subscribe(
+    this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_FRAUD_VERIF_PAGING], {});
+      });
+  }
+
+  SkipVerify(): void {
+    this.leadFraudVerfObj = new LeadFraudVerfObj();
+    this.leadFraudVerfObj.LeadId = this.LeadId;
+    this.leadFraudVerfObj.VerifyStat = CommonConstant.Verify;
+    this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
+    this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
+    this.leadFraudVerfObj.IsCustPicked = false;
+    this.leadFraudVerfObj.HasDuplicateCust = false;
+    this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_FRAUD_VERIF_PAGING], {});
@@ -163,22 +191,13 @@ export class NewFraudVerifDetailComponent implements OnInit {
     this.leadFraudVerfObj.IsCustPicked = this.IsCustPicked;
     this.leadFraudVerfObj.HasDuplicateCust = this.HasDuplicateCust;
 
-    this.http.post(URLConstant.AddNewLeadFraudVerf, this.leadFraudVerfObj).subscribe(
+    this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
       });
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   backHandler() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
   }

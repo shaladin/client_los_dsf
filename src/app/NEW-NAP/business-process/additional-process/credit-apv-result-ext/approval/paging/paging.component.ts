@@ -15,6 +15,7 @@ import { String } from 'typescript-string-operations';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-credit-approval-result-extension-approval-paging',
@@ -25,8 +26,19 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
   UserAccess: CurrentUserContext;
+  BizTemplateCode: string = '';
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(
+    private toastr: NGXToastrService, 
+    private httpClient: HttpClient, 
+    private router: Router, 
+    private cookieService: CookieService, 
+    private route: ActivatedRoute
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null)  this.BizTemplateCode = params["BizTemplateCode"];
+    });
+  }
 
   ngOnInit() {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -34,8 +46,24 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditApprovalPagingResultExt.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApprovalPagingResultExt.json";
+    if (environment.isCore) {
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchCreditApprovalPagingResultExtV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCreditApprovalPagingResultExtV2.json";
+    }
 
+    
     this.arrCrit = new Array();
+    
+    if(this.BizTemplateCode != '')
+    {
+      var critObjBizTmpl = new CriteriaObj();
+      critObjBizTmpl.DataType = 'text';
+      critObjBizTmpl.propName = 'APP.BIZ_TEMPLATE_CODE';
+      critObjBizTmpl.restriction = AdInsConstant.RestrictionEq;
+      critObjBizTmpl.value = this.BizTemplateCode;
+      this.arrCrit.push(critObjBizTmpl);  
+    }
+
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -94,6 +122,9 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
           }
         )
       }
+    }
+    else if(ev.Key == "application"){
+      AdInsHelper.OpenAppViewByAppId(ev.RowObj.AppId);
     }
     else {
       this.toastr.warningMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));

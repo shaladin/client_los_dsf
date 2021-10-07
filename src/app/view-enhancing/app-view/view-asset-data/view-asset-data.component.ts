@@ -30,6 +30,10 @@ export class ViewAssetDataComponent implements OnInit {
   listAsset: Array<any> = new Array<any>();
   allAssetDataObj: AllAssetDataObj;
   inputGridObj: InputGridObj = new InputGridObj();
+  appCollateralList: Array<any>;
+  IsHidden: boolean = true;
+  AppCollateralId: number;
+  IsReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -69,7 +73,30 @@ export class ViewAssetDataComponent implements OnInit {
         this.initUrl();
         await this.GetAllAssetData(this.appObj);
       }
+      if(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode != null || this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode != undefined) {
+        await this.GetProfessionName(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode);
+      }
+
+      this.http.post(URLConstant.GetViewAppCollateralObjByAppId, {Id: this.appId}).subscribe(
+        response => {
+          this.appCollateralList = response["AppCollateralObjs"];
+        }
+      );
+
+      this.IsReady = true;
     }
+  }
+
+  async GetProfessionName(professionCode: string) {
+    await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
+      (response) => {
+        this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionName = response["ProfessionName"]
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   async GetAllAssetData(obj: any) {
@@ -113,5 +140,14 @@ export class ViewAssetDataComponent implements OnInit {
         }
       }
     );
+  }
+
+  viewDetailCollateralHandler(AppCollateralId){
+    this.IsHidden = false;
+    this.AppCollateralId = AppCollateralId;
+  }
+
+  getValue(event){
+    this.IsHidden = event;
   }
 }

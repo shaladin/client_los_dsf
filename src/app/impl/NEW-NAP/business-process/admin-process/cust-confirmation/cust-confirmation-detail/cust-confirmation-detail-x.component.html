@@ -1,0 +1,121 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title" translate> Customer Confirmation Detail </h4>
+  </div>
+  <div class="card-body">
+    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+
+    <div class="px-3">
+      <form class="form form-horizontal" [formGroup]="CustConfirmForm"
+      #enjiForm="ngForm">
+      <div *ngIf="BizTemplateCode=='CFNA'">
+        <lib-ucSubsection [id]="'DoInfo'" [title]="'Agreement Information'" [panel]="'DoInfoForm'">
+        </lib-ucSubsection>
+        <div class="form-body" id="DoInfoForm">
+          <div class="form-group row">
+            <label class="col-md-2 adins-required-label" for="AgrmntCreatedDt" translate>Agreement Date</label>
+            <div *ngIf = "checkPOReady" class="col-md-4">
+              <input *ngIf = "!isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+              <input *ngIf = "isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
+              <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntCreatedDt" [submit]="CustConfirmForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
+            <div class="col-md-4">
+              <input type="date" id="EffectiveDt" class="form-control adInsInput name"
+                formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+              <lib-uc-show-errors [control]="CustConfirmForm.controls.EffectiveDt"
+                [submit]="CustConfirmForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
+            <div class="col-md-4">
+              <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
+                formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
+              <lib-uc-show-errors [control]="CustConfirmForm.controls.GoLiveEstimated"
+                [submit]="CustConfirmForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
+            <label class="col-md-4 adinsLabel" translate>{{CustConfirmForm.controls.AddIntrstAmt.value | number:'.2':'en-US'}}</label>
+          </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-primary mr-2"
+              (click)="calculateAddInterest()" translate>
+              Calculate
+            </button>
+            </div>
+        </div>
+      </div>
+    </form>
+
+      <lib-ucSubsection [id]="'SubjectListId'" [title]="'Subject List'" [panel]="'SubjectList'">
+      </lib-ucSubsection>
+      <div class="form-body" id="SubjectList">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th><span translate class="thead-header">No</span></th>
+              <th><span translate class="thead-header text-left">Subject</span></th>
+              <th><span translate class="thead-header">Phone</span></th>
+              <th><span translate class="thead-header">Date</span></th>
+              <th><span translate class="thead-header">Time</span></th>
+              <th><span translate class="thead-header">Result</span></th>
+              <th><span translate class="thead-header">Notes</span></th>
+              <th translate>View</th>
+              <th translate>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of VerfResultList; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{item.MrVerfSubjectRelationName}}</td>
+              <td>{{item.Phn}}</td>
+              <td>{{item.VerfDt | date}}</td>
+              <td>{{item.VerfDt | date:'mediumTime'}}</td>
+              <td>{{item.MrVerfResultHStatName}}</td>
+              <td>{{item.Notes}}</td>
+              <td>
+                <a class="success p-0" (click)="clickView(item.VerfResultHId)">View</a>
+              </td>
+              <td>
+                <a class="success p-0" (click)="clickEdit(item.VerfResultHId, item.MrVerfSubjectRelationCode)">
+                  <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <!-- <div class="col-md-12">
+          <input type="checkbox" class="border-primary" [(ngModel)]="CustCnfrmObj.IsSkip" name="IsSkip">Skip
+        </div> -->
+        <div class="col-md-1">
+          <mat-checkbox color="primary" class="border-primary" [(ngModel)]="CustCnfrmObj.IsSkip"></mat-checkbox>
+          <label translate>Skip</label>
+        </div>
+      </div>
+      <div class="row" *ngIf="CustCnfrmObj.IsSkip">
+        <label class="col-md-3" translate>Skip Reason</label>
+        <div class="col-md-3">
+          <textarea class="form-control" [(ngModel)]="CustCnfrmObj.SkipReason" name="SkipReason"></textarea>
+        </div>
+      </div>
+
+      <form (ngSubmit)="CustConfirmForm.valid && SaveForm()">
+        <div class="form-actions right">
+          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="clickCancel()" translate>
+            <i class="ft-x"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-raised btn-primary" translate>
+            <i class="far fa-check-square"></i> Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

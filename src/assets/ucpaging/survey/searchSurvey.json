@@ -19,11 +19,11 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "textbox",
-            "name": "PROD_OFFERING_NAME",
-            "id": "ProdOfferingNameId",
-            "value": "",
-            "label": "Prod Offering Name",
+            "type" : "textbox",
+            "name" : "A.PROD_OFFERING_NAME",
+            "id" : "ProdOfferingNameId",
+            "value" : "",
+            "label" : "Prod Offering Name",
             "placeholder": "Placeholder"
         },
         {
@@ -34,20 +34,20 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
-            "ddlType": "all",
-            "isQueryIn": true,
+            "isSelectOne": false,
+            "isQueryIn" : true,
             "url": "",
-            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "path":"/v1/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office",
             "items": [],
             "itemsUrl": []
-        },
+          },
         {
-            "type": "textbox",
-            "name": "WF.USERNAME",
-            "id": "TaskClaimById",
-            "value": "",
-            "label": "Task Claim By",
+            "type" : "textbox",
+            "name" : "WF.USERNAME",
+            "id" : "TaskClaimById",
+            "value" : "",
+            "label" : "Task Claim By",
             "placeholder": "Placeholder"
         },
         {
@@ -58,29 +58,29 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
-            "ddlType": "all",
+            "isSelectOne": false,
             "items": [
-                {
-                    "key": "CLAIMED",
-                    "value": "CLAIMED"
-                },
-                {
-                    "key": "UNCLAIMED",
-                    "value": "UNCLAIMED"
-                }
+              {
+                "key": "CLAIMED",
+                "value": "CLAIMED"
+              },
+              {
+                "key": "UNCLAIMED",
+                "value": "UNCLAIMED"
+              }
             ],
             "itemsUrl": []
         }
     ],
     "querystring": {
         "name": "searchSurveyVerif"
-    },
+      },
     "headerList": [
         {
             "type": "sort",
             "position": "center",
             "label": "SLA",
-            "name": "SlaColor"
+            "name": "WF.SLA_COLOR"
         },
         {
             "type": "sort",
@@ -128,14 +128,14 @@
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
-            "path": "VIEW_APP",
+            "path": "/View/AppView",
             "param": [
-                {
-                    "type": "AppId",
-                    "property": "AppId"
-                }
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
             ]
-        },
+          },
         {
             "type": "text",
             "position": "left",
@@ -153,19 +153,19 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/CreditProcess/SurveyVerif/Subject",
+                    "path": "/Nap/CreditProcess/SurveyVerif/SubjectX",
                     "param": [
                         {
                             "type": "AppId",
                             "property": "AppId"
                         },
                         {
-                            "type": "WfTaskListId",
-                            "property": "WFTaskListId"
+                            "type" : "WfTaskListId",
+                            "property" : "WFTaskListId"
                         },
                         {
-                            "type": "TrxNo",
-                            "property": "TrxNo"
+                            "type" : "TrxNo",
+                            "property" : "TrxNo"
                         }
                     ]
                 }

@@ -17,6 +17,10 @@
 .settings/
 *.sublime-workspace
 
+#darurat
+node_modules.rar
+node_modules.zip
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

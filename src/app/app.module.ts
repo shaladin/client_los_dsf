@@ -34,6 +34,7 @@ import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { BackdoorComponent } from './backdoor/backdoor.component';
 import { CookieModule } from 'ngx-cookie';
 import { ClaimTaskService } from './shared/claimTask.service';
+import { StorageService } from './shared/services/StorageService';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -46,7 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
         ContentLayoutComponent,
         ErrorDialogComponent,
         RolepickComponent,
-        BackdoorComponent
+        BackdoorComponent,
         ],
     
     imports: [
@@ -84,6 +85,7 @@ export function createTranslateLoader(http: HttpClient) {
         ErrorDialogService,
         RolePickService,
         ClaimTaskService,
+        StorageService,
         { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
     ],
     bootstrap: [AppComponent],

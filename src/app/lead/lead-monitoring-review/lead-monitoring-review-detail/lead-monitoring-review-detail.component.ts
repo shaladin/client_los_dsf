@@ -9,8 +9,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { CookieService } from 'ngx-cookie';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
+import { UploadReviewCustomObj } from 'app/shared/model/V2/UploadReviewObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 
 @Component({
   selector: 'app-lead-monitoring-review-detail',
@@ -23,7 +26,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   UploadMonitoringHId: number;
   UploadNo: string;
-  taskListId: number;
+  taskListId: any;
 
   readonly BackLink: string = NavigationConstant.LEAD_RVW_MONITORING_PAGING;
 
@@ -32,7 +35,6 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService, 
-    private cookieService: CookieService,
     private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
@@ -49,9 +51,8 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.taskListId > 0) {
-      this.claimTaskService.ClaimTask(this.taskListId);
-    }
+    this.claimTask();
+
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewReviewMonitoringLead.json";
 
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
@@ -67,18 +68,48 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.inputPagingObj.addCritInput = arrCrit;
   }
 
-  uploadReview(status) {
-    let uploadObj = {
-      MrUploadStatusCode: status,
-      TaskListId: this.taskListId,
-      UploadMonitoringNo: this.UploadNo
-    };
-    this.http.post(URLConstant.UploadReview, uploadObj).subscribe(
+  cancel() {
+    let CancelUrl = environment.isCore? URLConstant.CancelUploadV2 : URLConstant.CancelUpload;
+    var wfObj = new WorkflowApiObj();
+    wfObj.TransactionNo = this.UploadNo;
+    wfObj.ListValue["Status"] = "RJC";
+    wfObj.ListValue["WfCode"] = CommonConstant.WF_UPL_LEAD;
+    wfObj.ListValue["TaskId"] = this.taskListId;
+    this.http.post(CancelUrl, wfObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_RVW_MONITORING_PAGING], {});
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_RVW_MONITORING_PAGING],{});
+      }); 
       }
     );
   }
 
+  uploadReview(status : string) {
+    let UploadReviewUrl = environment.isCore? URLConstant.UploadReviewV2 : URLConstant.UploadReview;
+
+    var uploadObj = new UploadReviewCustomObj();
+    uploadObj.TaskListId = this.taskListId;
+    uploadObj.MrUploadStatusCode = status;
+    uploadObj.UploadMonitoringNo = this.UploadNo;
+
+    this.http.post(UploadReviewUrl, uploadObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_RVW_MONITORING_PAGING], {});
+      }
+    );   
+  }
+
+  claimTask() {
+    if(environment.isCore){	
+        if(this.taskListId!= "" && this.taskListId!= undefined){	
+            this.claimTaskService.ClaimTaskV2(this.taskListId);	
+        }	
+    }	
+    else if (this.taskListId> 0) {	
+        this.claimTaskService.ClaimTask(this.taskListId);	
+    }
+  }
+  
 }

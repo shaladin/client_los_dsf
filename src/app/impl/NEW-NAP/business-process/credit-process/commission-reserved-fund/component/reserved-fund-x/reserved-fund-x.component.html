@@ -1,0 +1,120 @@
+
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <form class="form form-horizontal" [formGroup]="RsvForm" (ngSubmit)="RsvForm.valid && SaveForm()"
+        #enjiForm="ngForm">
+        <div class="form-body">
+          <lib-ucSubsection [id]="'AllocateToId'" [title]="'ALLOCATE TO'" [panel]="'AllocateToSect'">
+          </lib-ucSubsection>
+          <div id="AllocateToSect">
+            <div formArrayName="ReservedFundObjs">
+              <div *ngFor="let item of RsvForm.controls['ReservedFundObjs']['controls'];let i = index">
+                <div [id]="'reservedFundDataId' + i">
+                  <div [formGroupName]="i" class="form-group row">
+                    <label class="col-md-2  adins-required-label" translate>{{RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundCode.value}}</label>
+                    <div class="col-md-4">
+                      <input type="" readonly currencyMask id="ReservedFundAmt{{i}}" class="form-control" formControlName="ReservedFundAmt"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }">
+                      <lib-uc-show-errors [control]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-primary" (click)="calculated()" translate>
+              <i class="fa fa-check-square-o"></i> Calculate
+            </button>
+          </div>
+          <lib-ucSubsection [id]="'bottomSideId'" [title]="'Summary'" [panel]="'bottomSide'">
+          </lib-ucSubsection>
+          <div id="bottomSide">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <label class="col-md-6" translate>Total Reserved Fund Amount</label>
+                  <label class="col-md-6">{{totalRsvFundAmt | number:'.2':'en-US'}}</label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6" translate>Gross Yield</label>
+                  <label class="col-md-6">{{grossYield | number:'.6':'en-US'}}%</label>
+                </div>
+                <div *ngIf="!isReturnOn" class="form-actions right">
+                  <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+                    <i  class="ft-x"></i> Return 
+                  </button>                 
+                  <button *ngIf="showCancel" type="button"  class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                    <i class="ft-x"></i> Cancel
+                  </button>
+                  <button type="submit" class="btn btn-raised btn-primary" translate>
+                    <i class="far fa-check-square"></i> Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <form class="form form-horizontal" *ngIf="isReturnOn && ReturnHandlingHObj.ReturnHandlingHId == 0" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid && SaveReturnForm()"
+      #enjiForm="ngForm">
+        <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCommissionId'" [title]="'Return Commission & Reserved Fund'"
+        [panel]="'formReturnCommission'">
+        </lib-ucSubsection>
+        <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCommission'">
+          <div class="form-group row adins-required">
+            <div class="form-group col-md-2">
+              <label class="adInsLabel" translate>Return To</label>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control adInsInput" style="width: auto" formControlName="ReturnTo"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnTo.invalid}">
+                <option value="">-Select One-</option>
+                <option *ngFor="let it of DDLData[DDLTask]" value="{{it.Key}}">
+                  {{it.Value}} </option>
+              </select>
+              <lib-uc-show-errors [control]="FormReturnObj.controls.ReturnTo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+
+          </div>
+          <div class="form-group row adins-required">
+            <div class="form-group col-md-2">
+              <label class="adInsLabel" translate>Return Reason</label>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.Reason.invalid}">
+                <option value="">-Select One-</option>
+                <option *ngFor="let it of DDLData[DDLReason]" value="{{it.Key}}">
+                  {{it.Value}} </option>
+              </select>
+              <lib-uc-show-errors [control]="FormReturnObj.controls.Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+
+          </div>
+
+          <div class="form-group row adins-required">
+            <div class="form-group col-md-2">
+              <label class="adInsLabel" translate>Return Notes</label>
+            </div>
+            <div class="col-md-4">
+              <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.Notes.invalid}"></textarea>
+              <lib-uc-show-errors [control]="FormReturnObj.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+          </div>
+
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+              <i  class="ft-x"></i> Cancel Return 
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary" translate>
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

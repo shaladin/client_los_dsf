@@ -46,9 +46,6 @@
         <div style="margin-left: -15px; margin-right: -15px;">
           <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()"></lib-ucapprovalR3>
         </div>
-        <div style="margin-left: -20px; margin-right: -20px;">
-          <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady"></lib-ucapprovalHistory>
-        </div>
       </div>
     </div>
   </div>

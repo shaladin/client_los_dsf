@@ -42,7 +42,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   add() {
     this.inputMode = "ADD";
     this.isDetail = true;
-    this.appCustId = null; 
+    this.appCustId = 0; 
   }
 
   saveAndContinue() {
@@ -66,6 +66,13 @@ export class GuarantorMainDataPagingComponent implements OnInit {
       this.isDetail = true;
       this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
+      if(ev.RowObj.MrCustTypeCode == CommonConstant.CustTypeCompany){
+        this.listCustNoCoy = this.listCustNoCoy.filter((value) => value != ev.RowObj.CustNo);
+      }
+
+      if(ev.RowObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
+        this.listCustNoPers = this.listCustNoPers.filter((value) => value != ev.RowObj.CustNo);
+      }
     }
 
     if (ev.Key == "delete") {
@@ -80,6 +87,8 @@ export class GuarantorMainDataPagingComponent implements OnInit {
     }
   }
 
+  listCustNoPers: Array<string> = new Array();
+  listCustNoCoy: Array<string> = new Array();
   loadGuarantorListData() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
@@ -87,13 +96,25 @@ export class GuarantorMainDataPagingComponent implements OnInit {
     this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
       (response : ResListCustMainDataObj) => {
         this.inputGridObj.resultData = {
-          Data: ""
+          Data: new Array()
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response['ListAppCustObj'];
         this.listGuarantor = this.inputGridObj.resultData.Data;
+        this.listCustNoPers = this.SetListCustNo(this.listGuarantor, CommonConstant.CustTypePersonal);
+        this.listCustNoCoy = this.SetListCustNo(this.listGuarantor, CommonConstant.CustTypeCompany);
       }
     );
+  }
+
+  SetListCustNo(listCust: Array<any>, custType: string): Array<string> {
+    let tempListCustNo: Array<string> = new Array();
+    let listCustNo: Array<string> = listCust.filter(x => x.MrCustTypeCode == custType).map(x => x.CustNo);
+    for (let index = 0; index < listCustNo.length; index++) {
+      const element: string = listCustNo[index];
+      if (element) tempListCustNo.push(element);
+    }
+    return tempListCustNo;
   }
 
   close() {

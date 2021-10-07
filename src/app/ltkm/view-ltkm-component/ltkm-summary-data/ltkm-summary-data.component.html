@@ -1,196 +1,307 @@
 <div class="px-3">
-    <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
-    </lib-ucSubsection>
-    <div class="form-body" id="custInfo">
-      <div class="form-group row">
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Customer Name</label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.rLtkmCustObj?.CustName}}</label>
-            </div>
+  <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="custInfo">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Customer Name</label>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Age </label>
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> NPWP </label>
-            </div>
-            <div class="col-md-6">
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">
-                {{SummaryLtkmObj?.Age}} </label>
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel">
-                {{SummaryLtkmObj?.TaxIdNo}} </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Address </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.rLtkmCustAddrObj?.FullAddr}} </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Occupation
-              </label>
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> Industry Type
-              </label>
-            </div>
-            <div class="col-md-6">
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">
-                {{SummaryLtkmObj?.rLtkmCustPersonalJobData?.ProfessionName}} </label>
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel">
-                {{SummaryLtkmObj?.AppCustCompanyObj?.IndustryTypeName}} </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Status
-              </label>
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> Owner </label>
-            </div>
-            <div class="col-md-6">
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">
-                {{SummaryLtkmObj?.rLtkmCustPersonalObj?.MaritalStatName}} </label>
-              <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel">
-                {{SummaryLtkmObj?.OwnerName}} </label>
-            </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.rLtkmCustObj?.CustName}}</label>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Existing Customer </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.rLtkmCustObj?.IsExistingCust == true ? 'Yes' : 'No'}} </label>
-            </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Age </label>
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> NPWP </label>
           </div>
-          <div *ngIf="SummaryLtkmObj?.rLtkmCustObj?.IsExistingCust == true" class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Negative Customer </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.NegCustTypeName}} <i class="fa fa-circle"
-                  *ngIf="SummaryLtkmObj?.NegCustColor != ''" aria-hidden="true"
-                  [ngStyle]="{'color': SummaryLtkmObj?.NegCustColor}"></i></label>
-            </div>
-          </div>
-  
-          <div *ngIf="SummaryLtkmObj?.rLtkmCustPersonalObj?.MrMaritalStatCode != null" class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Status </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.rLtkmCustPersonalObj?.MrMaritalStatCode}}</label>
-            </div>
-          </div>
-          <!-- <div *ngIf="SummaryLtkmObj?.rLtkmCustPersonalObj?.MrMaritalStatCode == 'MARRIED'" class="row">
-              <div class="col-md-6">
-                <label class="adInsLabel"> Spouse </label>
-              </div>
-              <div class="col-md-6">
-                <label class="adInsLabel"> {{SummaryLtkmObj?.SpouseName}} </label>
-              </div>
-            </div>
-            <div class="row" *ngFor="let item of SummaryLtkmObj?.AppGuarantorObjs; let i=index">
-              <div class="col-md-6">
-                <label *ngIf="i == 0" class="adInsLabel"> Guarantor </label>
-              </div>
-              <div class="col-md-6">
-                <label class="adInsLabel"> {{item.GuarantorName + ' - ' + item.CustRelationshipCodeDesc}} </label>
-              </div>
-            </div> -->
-        </div>
-      </div>
-    </div>
-    <lib-ucSubsection [id]="'exposureInfoId'" [title]="'Exposure Information'" [panel]="'exposureInfo'">
-    </lib-ucSubsection>
-    <div class="form-body" id="exposureInfo">
-      <div class="form-group row">
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel" style="font-weight: bold;"> Exposure </label>
-            </div>
-            <div class="col-md-6">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Customer Exposure </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.CustExposureAmt | number:'.2':'en-US'}} </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Customer Group Exposure </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.CustGrpExposureAmt | number:'.2':'en-US'}} </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Obligor Exposure </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.ObligorExposureAmt | number:'.2':'en-US'}} </label>
-            </div>
+          <div class="col-md-6">
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">
+              {{SummaryLtkmObj?.Age ? SummaryLtkmObj?.Age : Age}} </label>
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel">
+              {{SummaryLtkmObj?.TaxIdNo}} </label>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel" style="font-weight: bold;"> Existing Application / Agreement </label>
-            </div>
-            <div class="col-md-6">
-            </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Address </label>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> OS AR Agreement </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.OsArAgrmntAmt | number:'.2':'en-US'}} </label>
-            </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.rLtkmCustAddrObj?.FullAddr}} </label>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Application Reject </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.AppRejectCount}} </label>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Occupation
+            </label>
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> Industry Type
+            </label>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="adInsLabel"> Application in Process </label>
-            </div>
-            <div class="col-md-6">
-              <label class="adInsLabel"> {{SummaryLtkmObj?.AppInProcessCount}} </label>
-            </div>
+          <div class="col-md-6">
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">
+              {{Job}} </label>
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel">
+              {{SummaryLtkmObj?.AppCustCompanyObj?.IndustryTypeName}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <!-- <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Status
+            </label> -->
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> Owner </label>
+          </div>
+          <div class="col-md-6">
+            <!-- <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">
+              {{SummaryLtkmObj?.rLtkmCustPersonalObj?.MaritalStatName}} </label> -->
+            <label *ngIf="SummaryLtkmObj?.rLtkmCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel">
+              {{SummaryLtkmObj?.OwnerName}} </label>
           </div>
         </div>
       </div>
-    </div>
-  
-    <lib-ucSubsection [id]="'scoringInfoId'" [title]="'Scoring Information'" [panel]="'scoringInfo'">
-    </lib-ucSubsection>
-    <div class="form-body" id="scoringInfo">
-  
-      <div *ngFor="let item of SummaryLtkmObj?.responseScoringResultHObjs; let i = index;" class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{item['ScoringCategoryName']}} </label>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Existing Customer </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.rLtkmCustObj?.IsExistingCust == true ? 'Yes' : 'No'}} </label>
+          </div>
         </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{item['ScoringAlias']}} </label>
+        <div *ngIf="SummaryLtkmObj?.rLtkmCustObj?.IsExistingCust == true" class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Negative Customer </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.NegCustTypeName}} <i class="fa fa-circle"
+                *ngIf="SummaryLtkmObj?.NegCustColor != ''" aria-hidden="true"
+                [ngStyle]="{'color': SummaryLtkmObj?.NegCustColor}"></i></label>
+          </div>
         </div>
+
+        <div *ngIf="SummaryLtkmObj?.rLtkmCustPersonalObj?.MrMaritalStatCode != null" class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Status </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.rLtkmCustPersonalObj?.MrMaritalStatCode}}</label>
+          </div>
+        </div>
+        <!-- <div *ngIf="SummaryLtkmObj?.rLtkmCustPersonalObj?.MrMaritalStatCode == 'MARRIED'" class="row">
+            <div class="col-md-6">
+              <label class="adInsLabel"> Spouse </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{SummaryLtkmObj?.SpouseName}} </label>
+            </div>
+          </div>
+          <div class="row" *ngFor="let item of SummaryLtkmObj?.AppGuarantorObjs; let i=index">
+            <div class="col-md-6">
+              <label *ngIf="i == 0" class="adInsLabel"> Guarantor </label>
+            </div>
+            <div class="col-md-6">
+              <label class="adInsLabel"> {{item.GuarantorName + ' - ' + item.CustRelationshipCodeDesc}} </label>
+            </div>
+          </div> -->
       </div>
     </div>
   </div>
+  <lib-ucSubsection [id]="'exposureInfoId'" [title]="'Exposure Information'" [panel]="'exposureInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="exposureInfo">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel" style="font-weight: bold;"> Exposure </label>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Customer Exposure </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.CustExposureAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Customer Group Exposure </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.CustGrpExposureAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Obligor Exposure </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.ObligorExposureAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel" style="font-weight: bold;"> Existing Application / Agreement </label>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> OS AR Agreement </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.OsArAgrmntAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Application Reject </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.AppRejectCount}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Application in Process </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{SummaryLtkmObj?.AppInProcessCount}} </label>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+  <lib-ucSubsection [id]="'scoringInfoId'" [title]="'Scoring Information'" [panel]="'scoringInfo'">
+  </lib-ucSubsection>
+  <div class="form-body" id="scoringInfo">
+
+    <div *ngFor="let item of SummaryLtkmObj?.responseScoringResultHObjs; let i = index;" class="row">
+      <div class="col-md-3">
+        <label class="adInsLabel"> {{item['ScoringCategoryName']}} </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel"> {{item['ScoringAlias']}} </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label class="adInsLabel">Additional Reason</label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['AddSrcNotes'] == undefined || SummaryLtkmReqObj['ReturnObject']['AddSrcNotes'] == null ? "-": SummaryLtkmReqObj['ReturnObject']['AddSrcNotes']}}</label>
+      </div>        
+    </div>
+  </div>
+
+  <div *ngIf="SummaryLtkmObj != null && SummaryLtkmObj.LtkmAnalysisObj != null">
+    <lib-ucSubsection [id]="'ltkmAnalysisId'" [title]="'LTKM Analysis'" [panel]="'ltkmAnalysis'">
+    </lib-ucSubsection>
+    <div class="form-body" id="ltkmAnalysis">
+      <div class="row">
+        <div class="col-md-3"><label class="adInsLabel">MF Suspicious Transaction due to</label></div>
+        <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrSuspiciousTrxDueToDescr']}}</label></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3"><label class="adInsLabel">MF Suspicious For</label></div>
+        <div class="col-md-3">
+          <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrSuspiciousForDescr']}}</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3"><label class="adInsLabel">MF Source Indication</label></div>
+        <div class="col-md-3">
+          <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrSourceIndicationDescr']}}</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3"><label class="adInsLabel">MF Level Indication</label></div>
+        <div class="col-md-3">
+          <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['MrLevelIndicationDescr']}}</label>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-3"><label class="adInsLabel">LTKM Analysis Notes</label></div>
+        <div class="col-md-3">
+          <label class="adInsLabel">{{SummaryLtkmObj['LtkmAnalysisObj']['Notes']}}</label>
+        </div>
+      </div>               
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'applicationDataId'" [title]="'Application Data'" [panel]="'applicationData'">
+  </lib-ucSubsection>
+  <div class="form-body" id="applicationData">   
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">Application No</label></div>
+          <div class="col-md-3"><label class="adInsLabel">
+            <a [href]="UrlAppView + '?AppId=' + AppId" target="_blank" noreferrer noopener  *ngIf="SummaryLtkmReqObj['ReturnObject']['AppNo']">
+              {{SummaryLtkmReqObj['ReturnObject']['AppNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AppNo']}}
+            </a>
+            <div *ngIf="!SummaryLtkmReqObj['ReturnObject']['AppNo']">
+              {{SummaryLtkmReqObj['ReturnObject']['AppNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AppNo']}}
+            </div>
+          </label></div>            
+        </div>
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">Agreement No</label></div>            
+          <div class="col-md-6">
+            <a [href]="UrlAgrmntView + '?AgrmntId='+AgrmntId" target="_blank" noreferrer noopener *ngIf="SummaryLtkmReqObj['ReturnObject']['AgrmntNo']">
+              {{SummaryLtkmReqObj['ReturnObject']['AgrmntNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AgrmntNo']}}
+            </a>
+            <div *ngIf="!AgrmntId">
+              {{SummaryLtkmReqObj['ReturnObject']['AgrmntNo'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['AgrmntNo']}}
+            </div>
+          </div>
+        </div>   
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">Dp Amount</label></div>
+          <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['DownPaymentAmt'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['DownPaymentAmt']  | number:'.2':'en-US'}}</label></div>
+        </div>   
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">Dp Percentage</label></div>
+          <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['DownPaymentPrctg'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['DownPaymentPrctg'] | number:'.6'}} %</label></div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">Installment Amount</label></div>
+          <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['InstAmt'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['InstAmt'] | number:'.2'}}</label></div>
+        </div>     
+      </div>     
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">BPKB Name</label></div>
+          <div class="col-md-3"><label class="adInsLabel">{{SummaryLtkmReqObj['ReturnObject']['OwnerName'] == undefined ? "-": SummaryLtkmReqObj['ReturnObject']['OwnerName']}}</label></div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">BPKB Occupancy</label></div>
+          <div class="col-md-3"><label class="adInsLabel">{{SummaryRefProfesionObj['ProfessionName'] == undefined ? "-": SummaryRefProfesionObj['ProfessionName']}}</label></div>
+        </div>      
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">Installment Source Payment</label></div>
+          <div class="col-md-3"><label class="adInsLabel">{{DescInstSrcPayment['Descr'] == undefined ? "-": DescInstSrcPayment['Descr']}}</label></div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"><label class="adInsLabel">DP Source Payment</label></div>
+          <div class="col-md-3"><label class="adInsLabel">{{DescDpSrcPayment['Descr'] == undefined ? "-": DescDpSrcPayment['Descr']}}</label></div>
+        </div>     
+      </div> 
+    </div>  
+  </div>
+</div>
+
+
+
+

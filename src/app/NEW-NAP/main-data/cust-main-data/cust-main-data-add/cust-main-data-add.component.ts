@@ -89,14 +89,14 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.isRequired = false;
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl + "/v1";
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -275,7 +275,7 @@ export class CustMainDataAddComponent implements OnInit {
       reqAddNapObj.BizTemplateCode = this.bizTemplateCode;
 
       requestAddNapObj = reqAddNapObj;
-      AddNapUrl = URLConstant.AddNewApplication;
+      AddNapUrl = environment.isCore ? URLConstant.AddNewApplicationV2 : URLConstant.AddNewApplication;
     }
     else {
 
@@ -289,13 +289,13 @@ export class CustMainDataAddComponent implements OnInit {
         AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
       }
       else {
-        AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+        AddNapUrl =  environment.isCore ? URLConstant.AddNewApplicationFromCopyV2 : URLConstant.AddNewApplicationFromCopy;
       }
     }
 
     this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
-        // setTimeout(() => { this.spinner.show(); }, 10);
+        setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
         switch (this.bizTemplateCode) {
           case CommonConstant.CF4W:

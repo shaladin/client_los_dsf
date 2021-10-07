@@ -14,7 +14,8 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
+import { MouMainInfoComponent } from 'app/view-enhancing/mou-main-info/mou-main-info.component';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -43,7 +44,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   custObj: CustObj = new CustObj();
   isDmsReady: boolean = false;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
-  
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -102,7 +103,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
           this.dmsObj.User = currentUserContext.UserName;
           this.dmsObj.Role = currentUserContext.RoleCode;
           this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-  
+
           if(response['CustNo'] != null && response['CustNo'] != ""){
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
           }
@@ -165,19 +166,19 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       this.mouTcGeneral.Save();
       if(this.SysConfigResultObj.ConfigValue == '0'){
         this.endOfTab()
-      }     
+      }
     }
     else if (this.mouType == CommonConstant.FACTORING) {
       this.mouTcFactoring.Save();
       if(this.SysConfigResultObj.ConfigValue == '0'){
         this.endOfTab()
-      }  
+      }
     }
     else if (this.mouType == CommonConstant.FINANCING) {
       this.mouTcFinancing.Save();
       if(this.SysConfigResultObj.ConfigValue == '0'){
         this.endOfTab()
-      }  
+      }
     }
   }
 
@@ -228,9 +229,11 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   submitHandler() {
     if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex >= 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex >= 5) || (this.mouType == CommonConstant.FINANCING && this.currentStepIndex >= 5)) {
-      
+
       var mouObj = { Id: this.mouCustId }
-      this.httpClient.post(URLConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
+
+      let SubmitMouRequestUrl = environment.isCore ? URLConstant.SubmitWorkflowMouRequestV2 : URLConstant.SubmitWorkflowMouRequest;
+      this.httpClient.post(SubmitMouRequestUrl, mouObj).subscribe(
         () => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
@@ -239,7 +242,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
           else {
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
           }
-        });
+      });      
     }
     else {
       this.toastr.warningMessage("Please follow the steps first");
@@ -332,7 +335,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       await this.initDms();
     }
   }
-  
+
   endOfTab() {
     this.toastr.successMessage("Success");
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});

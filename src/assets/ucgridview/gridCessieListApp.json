@@ -1,0 +1,238 @@
+{
+    "isSeq" : true,
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Application No",
+            "name": "AppNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Sales Order No",
+            "name": "SoNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Invoice No",
+            "name": "InvcNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Supplier Name",
+            "name": "SupplName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Supplier Branch Name",
+            "name": "SupplBranchName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Receivable Amount",
+            "name": "ReceivableAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Purchase Amount",
+            "name": "PurchaseAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Disburse Amount",
+            "name": "DisbAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Top Days",
+            "name": "TopDays"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Discount Rate",
+            "name": "DiscountRatePrcntg"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Calculate Rate By System",
+            "name": "EffectiveRatePrcnt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Value Date",
+            "name": "ValueDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Admin Fee Percentage/Amount",
+            "name": "AdmFeeAmtPrcntg"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Giro No",
+            "name": "GiroNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Giro Amount",
+            "name": "GiroAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Giro Date",
+            "name": "GiroDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Interest Dealer Amount",
+            "name": "InterestDealerAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Type",
+            "name": "Type"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Material",
+            "name": "Material"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Accounting Code",
+            "name": "AccountingCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Plafond Mou",
+            "name": "PlafondMou"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SoNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InvcNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SupplName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "SupplBranchName"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "ReceivableAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "PurchaseAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "DisbAmt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TopDays"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "DiscountRatePrcntg"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "EffectiveRatePrcnt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "ValueDt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AdmFeeAmtPrcntg"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "GiroNo"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "GiroAmt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "GiroDt"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "InterestDealerAmt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Type"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Material"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AccountingCode"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
+            "property": "PlafondMou"
+        }
+    ]
+}

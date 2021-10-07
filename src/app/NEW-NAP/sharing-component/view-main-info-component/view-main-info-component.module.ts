@@ -9,12 +9,16 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { AppMainInfoComponent } from "./app-main-info/app-main-info.component";
 import { DocSignerMainInfoComponent } from './doc-signer-main-info/doc-signer-main-info.component';
+import { AppMainInfoComponentXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/app-main-info-component-x/app-main-info-component-x.component";
+import { DocSignerMainInfoXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/doc-signer-main-info/doc-signer-main-info-x.component";
 
 @NgModule({
   exports: [
     AgrMainInfoComponent,
     AppMainInfoComponent,
-    DocSignerMainInfoComponent
+    DocSignerMainInfoComponent,
+    DocSignerMainInfoXComponent,
+    AppMainInfoComponentXComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,9 @@ import { DocSignerMainInfoComponent } from './doc-signer-main-info/doc-signer-ma
   declarations: [ 
     AgrMainInfoComponent,
     AppMainInfoComponent,
-    DocSignerMainInfoComponent
+    DocSignerMainInfoComponent,
+    DocSignerMainInfoXComponent,
+    AppMainInfoComponentXComponent
   ],
 
   providers: [

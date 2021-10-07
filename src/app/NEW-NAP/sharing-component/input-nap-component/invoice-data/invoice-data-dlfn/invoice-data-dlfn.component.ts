@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppDlrFncng } from 'app/shared/model/AppData/AppDlrFncng.Model';
 import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 import { AppInvoiceDlrFncngHObj } from 'app/shared/model/AppInvoiceDlrFncngHObj.Model';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -44,6 +45,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
 
   EditAppInvoiceDlrFncngHId: number;
   selectedBankCode: string;
+  DisbInfoObj: any;
   DisbInfoId: number;
   AgrmntId: number;
   disburseTos: Array<RefMasterObj>;
@@ -51,6 +53,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
   BankAccs: any;
   AppCustId: number;
   CustNo: string;
+  AssetType: AssetTypeObj;
 
   invoiceDuedtMax: Date;
   ToInvoiceDetail: boolean = false;
@@ -58,26 +61,34 @@ export class InvoiceDataDlfnComponent implements OnInit {
   }
 
   InvoiceForm = this.fb.group({
-    AppFctrId: [''],
-    CustomerFactoringNo: [''],
-    InvoiceNo: [''],
-    InvoiceAmt: [''],
-    InvoiceDueDt: [''],
-    Notes: [''],
-    RowVersion: [''],
+    AccName: ['', Validators.required],
     AccNo: ['', Validators.required],
+    AppFctrId: [''],
+    AssetTypeCode: [''],
+    BankAccountNo: [''],
+    BankBranch: ['', Validators.required],
     BankName: [''],
     CollateralPrice: [''],
-    ChassisNo: [''],
-    EngineNo: [''],
-    AssetTypeCode: [''],
+    CustomerFactoringNo: [''],
+    DisburseTo: [''],
     FullAssetCode: [''],
     FullAssetName: [''],
-    BankBranch: ['', Validators.required],
-    AccName: ['', Validators.required],
-    BankAccountNo: [''],
-    DisburseTo: ['']
+    InvoiceAmt: [''],
+    InvoiceDueDt: [''],
+    InvoiceNo: [''],
+    Notes: [''],
+    RowVersion: [''],
+    SerialNo1: [''],
+    SerialNo2: [''],
+    SerialNo3: [''],
+    SerialNo4: [''],
+    SerialNo5: [''],
   })
+
+  ResponseBank: any = null;
+  IsDisburseInfoExist: boolean = false;
+  CustBankAccs: any;
+  VendorBankAccs: any;
 
   async ngOnInit() {
     this.CollateralNameLookupObj = new InputLookupObj();
@@ -92,7 +103,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
     this.CollateralNameLookupObj.ddlEnvironments = [
       {
         name: "ASSET_TYPE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       },
     ];
     this.InputLookupBankObj = new InputLookupObj();
@@ -103,21 +114,25 @@ export class InvoiceDataDlfnComponent implements OnInit {
 
 
     var obj = { Id: this.AppId, };
+    let objectReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+    objectReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDisbToDlrFncng
     await this.httpClient.post(URLConstant.GetAppDlrFinByAppId, obj).subscribe(
       (response) => {
         this.AppDlrFncngId = response["AppDlrFncngId"];
         this.GetListAppInvoiceH();
       });
     await this.httpClient.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, obj).subscribe(
-      (response) => {
+      async (response) => {
         if (response.DisbInfoId != 0) {
+          this.DisbInfoObj = response;
           this.DisbInfoId = response.DisbInfoId;
 
           var objectBank = {
             Code: response.BankCode
           }
-          this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, objectBank).subscribe(
+          await this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, objectBank).subscribe(
             (responseBank) => {
+              this.ResponseBank = responseBank;
               this.InputLookupBankObj.jsonSelect = {
                 bankCode: responseBank["BankCode"],
                 bankName: responseBank["BankName"]
@@ -127,21 +142,163 @@ export class InvoiceDataDlfnComponent implements OnInit {
             });
         }
         this.InputLookupBankObj.isReady = true;
-
         this.InvoiceForm.patchValue({
           ...response
         });
+        await this.httpClient.post(URLConstant.GetListActiveRefMaster, objectReq).subscribe(
+          async (response) => {
+            this.disburseTos = response[CommonConstant.ReturnObj];
+    
+            for(var i = 0, len = this.disburseTos.length; i < len; i++) {
+              if (this.disburseTos[i].MasterCode === CommonConstant.RefMasterMasterCodeCust) {
+                // Customer
+                await this.CheckDisburseToCustomer();
+              } else if (this.disburseTos[i].MasterCode === CommonConstant.RefMasterMasterCodeVendor) {
+                // Vendor
+                await this.CheckDisburseToVendor();
+              } else if (this.disburseTos[i].MasterCode === CommonConstant.RefMasterMasterCodeOth) {
+                // Other
+                await this.CheckDisburseToOther();
+              }
+            }
+    
+          });
       });
-    let objectReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
-    objectReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDisbToDlrFncng
+  }
 
-    await this.httpClient.post(URLConstant.GetListActiveRefMaster, objectReq).subscribe(
-      (response) => {
-        this.disburseTos = response[CommonConstant.ReturnObj];
-        this.InvoiceForm.patchValue({
-          DisburseTo: this.disburseTos[0].MasterCode
-        })
-      })
+  async CheckDisburseToCustomer() {
+    await this.httpClient.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).subscribe(
+      (responseAppCust) => {
+        this.AppCustId = responseAppCust["AppCustId"];
+        this.httpClient.post(URLConstant.GetListAppCustBankAccByAppCustId, { Id: this.AppCustId }).subscribe(
+          (response) => {
+            this.CustBankAccs = response[CommonConstant.ReturnObj].AppCustBankAccObjs;
+            if (this.ResponseBank != null && !this.IsDisburseInfoExist) {
+              for(var i = 0, len = this.CustBankAccs.length; i < len; i++) {
+                if (this.CustBankAccs[i].BankCode == this.ResponseBank.BankCode) {
+                  var obj = {
+                    BankAccNo: this.CustBankAccs[i].BankAccNo,
+                    AppCustId: this.AppCustId
+                  }
+                  this.BankAccs = this.CustBankAccs;
+                  this.isDdlBankAccountVisible = true;
+                  this.InvoiceForm.controls.BankAccountNo.setValidators([Validators.required]);
+                  this.InvoiceForm.controls.BankAccountNo.updateValueAndValidity();
+                  this.DisableDisbBank();
+                  this.httpClient.post(URLConstant.GetAppCustBankAccByBankAccNoAndAppCustId, obj).subscribe(
+                    (response) => {
+                      this.InvoiceForm.patchValue({
+                        BankBranch: response["BankBranch"],
+                        AccNo: this.CustBankAccs[i].BankAccNo,
+                        AccName: response["BankAccName"]
+                      });
+          
+                      this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, { Code: response["BankCode"] }).subscribe(
+                        (responseBank) => {
+                          this.selectedBankCode = responseBank["BankCode"];
+                          this.InputLookupBankObj.nameSelect = responseBank["BankName"];
+                          this.InputLookupBankObj.jsonSelect = {
+                            bankCode: responseBank["BankCode"],
+                            bankName: responseBank["BankName"]
+                          }
+                        }
+                      )
+                    }
+                  )
+                  this.InvoiceForm.patchValue({
+                    BankAccountNo: this.CustBankAccs[i].BankAccNo,
+                    DisburseTo: CommonConstant.RefMasterMasterCodeCust
+                  });
+                  this.IsDisburseInfoExist = true;
+                  break;
+                }
+              }
+            }
+          }
+        )
+      }
+    );
+  }
+
+  async CheckDisburseToVendor() {
+    await this.httpClient.post(URLConstant.GetMouCustDlrFncngByAppId, { Id: this.AppId }).subscribe(
+      (responseMouCustDlrFncng) => {
+        this.CustNo = responseMouCustDlrFncng["DealerCustNo"];
+        this.httpClient.post(URLConstant.GetListCustBankAccByCustNo, { CustNo: this.CustNo }).subscribe(
+          (response) => {
+            this.VendorBankAccs = response["ReturnObject"];
+            if (this.ResponseBank != null && !this.IsDisburseInfoExist) {
+              for(var i = 0, len = this.VendorBankAccs.length; i < len; i++) {
+                if (this.VendorBankAccs[i].BankCode == this.ResponseBank.BankCode) {
+                  this.httpClient.post(URLConstant.GetCustByCustNo, { CustNo: this.CustNo}).subscribe(
+                    (responseCustObj) => {
+                      var object = {
+                        BankAccNo: this.VendorBankAccs[i].BankAccNo,
+                        CustId: responseCustObj["CustId"]
+                      }
+                      this.BankAccs = this.VendorBankAccs;
+                      this.isDdlBankAccountVisible = true;
+                      this.InvoiceForm.controls.BankAccountNo.setValidators([Validators.required]);
+                      this.InvoiceForm.controls.BankAccountNo.updateValueAndValidity();
+                      this.DisableDisbBank();
+                      this.httpClient.post(URLConstant.GetCustBankAccByCustIdAndBankAccNo, object).subscribe(
+                        (response) => {
+                          this.InvoiceForm.patchValue({
+                            BankBranch: response["ReturnObject"].BankBranch,
+                            AccNo: this.VendorBankAccs[i].BankAccNo,
+                            AccName: response["ReturnObject"].BankAccName
+                          });
+          
+                          this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, { Code: response["ReturnObject"].BankCode }).subscribe(
+                            (responseBank) => {
+                              this.selectedBankCode = responseBank["BankCode"];
+                              this.InputLookupBankObj.nameSelect = responseBank["BankName"];
+                              this.InputLookupBankObj.jsonSelect = {
+                                bankCode: responseBank["BankCode"],
+                                bankName: responseBank["BankName"]
+                              }
+                            }
+                          )
+                        }
+                      )
+                    }
+                  )
+                  this.InvoiceForm.patchValue({
+                    BankAccountNo: this.VendorBankAccs[i].BankAccNo,
+                    DisburseTo: CommonConstant.RefMasterMasterCodeVendor
+                  });
+                  this.IsDisburseInfoExist = true;
+                  break;
+                }
+              }
+            }
+          }
+        )
+      }
+    );
+  }
+
+  async CheckDisburseToOther() {
+    // Other
+    if (this.ResponseBank != null && !this.IsDisburseInfoExist) {
+      this.InvoiceForm.controls.BankAccountNo.clearValidators();
+      this.InvoiceForm.controls.BankAccountNo.updateValueAndValidity();
+      this.isDdlBankAccountVisible = false;
+      this.EnableDisbBank();
+
+      this.selectedBankCode = this.ResponseBank.BankCode;
+      this.InputLookupBankObj.isDisable = false;
+      this.InputLookupBankObj.nameSelect = this.ResponseBank.BankName;
+      this.InputLookupBankObj.jsonSelect = {
+        bankCode: this.ResponseBank.BankCode,
+        bankName: this.ResponseBank.BankName
+      }
+      this.InputLookupBankObj.isReady = true;
+      this.InvoiceForm.patchValue({
+        ...this.DisbInfoObj,
+        DisburseTo: CommonConstant.RefMasterMasterCodeOth
+      });
+    }
   }
 
   ChangeDisburseTo(event) {
@@ -152,50 +309,20 @@ export class InvoiceDataDlfnComponent implements OnInit {
       this.InvoiceForm.controls.BankAccountNo.setValidators([Validators.required]);
       this.InvoiceForm.controls.BankAccountNo.updateValueAndValidity();
       this.DisableDisbBank();
-      var AppObj = {
-        Id: this.AppId
-      }
-      this.httpClient.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
-        (responseAppCust) => {
-          var reqAppCustObj = {
-            Id: responseAppCust["AppCustId"]
-          }
-          this.AppCustId = responseAppCust["AppCustId"];
-          this.httpClient.post(URLConstant.GetListAppCustBankAccByAppCustId, reqAppCustObj).subscribe(
-            (response) => {
-              this.BankAccs = response[CommonConstant.ReturnObj].AppCustBankAccObjs;
-              this.InvoiceForm.patchValue({
-                BankAccountNo: this.BankAccs[0].key
-              });
-            }
-          )
-        }
-      )
+      this.BankAccs = this.CustBankAccs;
+      this.InvoiceForm.patchValue({
+        BankAccountNo: this.BankAccs[0].key
+      });
     }
     else if (event.target.value == CommonConstant.RefMasterMasterCodeVendor) {
       this.isDdlBankAccountVisible = true;
       this.InvoiceForm.controls.BankAccountNo.setValidators([Validators.required]);
       this.InvoiceForm.controls.BankAccountNo.updateValueAndValidity();
       this.DisableDisbBank();
-      var reqGetMouCustAppObj = {
-        Id: this.AppId
-      }
-      this.httpClient.post(URLConstant.GetMouCustDlrFncngByAppId, reqGetMouCustAppObj).subscribe(
-        (responseMouCustDlrFncng) => {
-          var custObj = {
-            CustNo: responseMouCustDlrFncng["DealerCustNo"]
-          }
-          this.CustNo = responseMouCustDlrFncng["DealerCustNo"];
-          this.httpClient.post(URLConstant.GetListCustBankAccByCustNo, custObj).subscribe(
-            (response) => {
-              this.BankAccs = response["ReturnObject"];
-              this.InvoiceForm.patchValue({
-                BankAccountNo: this.BankAccs[0].key
-              });
-            }
-          )
-        }
-      )
+      this.BankAccs = this.VendorBankAccs;
+      this.InvoiceForm.patchValue({
+        BankAccountNo: this.BankAccs[0].key
+      });
     }
     else if (event.target.value == CommonConstant.RefMasterMasterCodeManufacturer) {
       this.isDdlBankAccountVisible = true;
@@ -355,6 +482,12 @@ export class InvoiceDataDlfnComponent implements OnInit {
   }
 
   GetCollateralName(ev) {
+    this.httpClient.post(URLConstant.GetAssetTypeById, { Id: ev.AssetTypeId }).subscribe(
+      (response: AssetTypeObj) => {
+        this.AssetType = response;
+      }
+    );
+
     this.InvoiceForm.patchValue({
       AssetTypeCode: ev.AssetTypeCode,
       FullAssetCode: ev.FullAssetCode,
@@ -481,9 +614,38 @@ export class InvoiceDataDlfnComponent implements OnInit {
       return;
     }
 
+    if(this.AssetType.SerialNo1Label != null && this.AssetType.IsMndtrySerialNo1 && this.InvoiceForm.controls.SerialNo1.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo1Label);
+      return;
+    }
+    if(this.AssetType.SerialNo2Label != null && this.AssetType.IsMndtrySerialNo2 && this.InvoiceForm.controls.SerialNo2.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo2Label);
+      return;
+    }
+    if(this.AssetType.SerialNo3Label != null && this.AssetType.IsMndtrySerialNo3 && this.InvoiceForm.controls.SerialNo3.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo3Label);
+      return;
+    }
+    if(this.AssetType.SerialNo4Label != null && this.AssetType.IsMndtrySerialNo4 && this.InvoiceForm.controls.SerialNo4.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo4Label);
+      return;
+    }
+    if(this.AssetType.SerialNo5Label != null && this.AssetType.IsMndtrySerialNo5 && this.InvoiceForm.controls.SerialNo5.value == '')
+    {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_FOLLOWING_FIELD + this.AssetType.SerialNo5Label);
+      return;
+    }
+
     this.negativeAssetCheckObj.AssetTypeCode = this.InvoiceForm.controls.AssetTypeCode.value;
-    this.negativeAssetCheckObj.SerialNo1 = this.InvoiceForm.controls.ChassisNo.value;
-    this.negativeAssetCheckObj.SerialNo2 = this.InvoiceForm.controls.EngineNo.value;
+    this.negativeAssetCheckObj.SerialNo1 = this.InvoiceForm.controls.SerialNo1.value;
+    this.negativeAssetCheckObj.SerialNo2 = this.InvoiceForm.controls.SerialNo2.value;
+    this.negativeAssetCheckObj.SerialNo3 = this.InvoiceForm.controls.SerialNo3.value;
+    this.negativeAssetCheckObj.SerialNo4 = this.InvoiceForm.controls.SerialNo4.value;
+    this.negativeAssetCheckObj.SerialNo5 = this.InvoiceForm.controls.SerialNo5.value;
 
     this.httpClient.post(URLConstant.GetDoubleFinancingCheckAppAsset, this.negativeAssetCheckObj).subscribe(
       (response) => {
@@ -496,8 +658,11 @@ export class InvoiceDataDlfnComponent implements OnInit {
           var obj = {
             AppInvoiceDlrFncngHId: this.AppInvoiceDlrFncngHId,
             FullAssetName: this.InvoiceForm.controls.FullAssetName.value,
-            SerialNo1: this.InvoiceForm.controls.ChassisNo.value,
-            SerialNo2: this.InvoiceForm.controls.EngineNo.value,
+            SerialNo1: this.InvoiceForm.controls.SerialNo1.value,
+            SerialNo2: this.InvoiceForm.controls.SerialNo2.value,
+            SerialNo3: this.InvoiceForm.controls.SerialNo3.value,
+            SerialNo4: this.InvoiceForm.controls.SerialNo4.value,
+            SerialNo5: this.InvoiceForm.controls.SerialNo5.value,
             CollateralPriceAmt: this.InvoiceForm.controls.CollateralPrice.value
           }
 
@@ -513,8 +678,11 @@ export class InvoiceDataDlfnComponent implements OnInit {
 
   CLearCollateralForm() {
     this.InvoiceForm.controls.CollateralPrice.patchValue(0);
-    this.InvoiceForm.controls.ChassisNo.patchValue("");
-    this.InvoiceForm.controls.EngineNo.patchValue("");
+    this.InvoiceForm.controls.SerialNo1.patchValue("");
+    this.InvoiceForm.controls.SerialNo2.patchValue("");
+    this.InvoiceForm.controls.SerialNo3.patchValue("");
+    this.InvoiceForm.controls.SerialNo4.patchValue("");
+    this.InvoiceForm.controls.SerialNo5.patchValue("");
 
     this.CollateralNameLookupObj.nameSelect = "";
     this.CollateralNameLookupObj.jsonSelect = { FullAssetName: "" };

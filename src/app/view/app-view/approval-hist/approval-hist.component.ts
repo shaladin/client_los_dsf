@@ -26,15 +26,12 @@ export class ApprovalHistComponent implements OnInit {
 
   async ngOnInit() {
     this.OfferingObj = new UcInputApprovalHistoryObj();
-    this.OfferingObj.EnvUrl = environment.FoundationR3Url;
     this.OfferingObj.PathUrl = "/Approval/GetTaskHistory";
 
     this.CrdApvObj = new UcInputApprovalHistoryObj();
-    this.CrdApvObj.EnvUrl = environment.FoundationR3Url;
     this.CrdApvObj.PathUrl = "/Approval/GetTaskHistory";
 
     this.PregoliveApvObj = new UcInputApprovalHistoryObj();
-    this.PregoliveApvObj.EnvUrl = environment.FoundationR3Url;
     this.PregoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
     this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
       (response) => {

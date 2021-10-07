@@ -12,10 +12,10 @@
         },
         {
             "type": "textbox",
-            "name": "ISNULL(APP_NO,'-')",
+            "name": "APP.APP_NO",
             "id": "AppNoId",
             "value": "",
-            "label": "App No",
+            "label": "Application No",
             "placeholder": "Placeholder"
         },
         {
@@ -57,7 +57,7 @@
             "label": "LTKM Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "LTKM"
         }
     ],
@@ -74,7 +74,7 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "APP NO",
+            "label": "Application No",
             "name": "AppNo"
         },
         {
@@ -98,7 +98,7 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "LTKM STAT",
+            "label": "LTKM STATUS",
             "name": "LtkmStep"
         }
     ],

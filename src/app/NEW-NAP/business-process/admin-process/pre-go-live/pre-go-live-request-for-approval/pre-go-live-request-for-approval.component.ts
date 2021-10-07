@@ -13,6 +13,8 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { environment } from 'environments/environment';
+import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
@@ -32,6 +34,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   BizTemplateCode: string;
+  PlafondAmt: number = 0;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -51,7 +54,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   }
 
   FormObj = this.fb.group({
-
+    AppvAmt: ['']
   });
 
   async ngOnInit() {
@@ -64,6 +67,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     }
 
     await this.LoadRefReason();
+    await this.BindAppvAmt();
     this.initInputApprovalObj();
   }
 
@@ -72,7 +76,16 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
     if (ev.Key == "customer") {
-      AdInsHelper.OpenCustomerViewByCustId(ev.ViewObj.AppCustId);
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.ViewObj.CustNo}).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        }
+      );
     }
   }
 
@@ -92,7 +105,8 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.RFAPreGoLive.TaskListId = this.TaskListId;
     this.RFAPreGoLive.RowVersion = "";
     this.RFAPreGoLive.RequestRFAObj = this.RFAInfo;
-    this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
+    let createRFAPreGoLiveUrl = environment.isCore? URLConstant.CreateRFAPreGoLiveNewV2 : URLConstant.CreateRFAPreGoLiveNew;
+    this.http.post(createRFAPreGoLiveUrl, this.RFAPreGoLive).subscribe((response) => {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_PAGING], { BizTemplateCode: localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
     });
   }
@@ -100,9 +114,25 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   Cancel() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_DETAIL], { AgrmntId: this.AgrmntId, AppId: this.AppId, TaskListId: this.TaskListId, AgrmntNo: this.AgrmntNo });
   }
+
+  async BindAppvAmt() {
+    await this.http.post(URLConstant.GetAgrmntFinDataByAgrmntId, { Id: this.AgrmntId }).toPromise().then(
+      (response) => {
+        this.FormObj.patchValue({
+          AppvAmt: response["NtfAmt"]
+        });
+        this.PlafondAmt = response["NtfAmt"];
+      });
+  }
+
   initInputApprovalObj() {
-    var Attributes = [{}]
-    var TypeCode = {
+    let Attributes: Array<ResultAttrObj> = new Array();
+    let Attribute1: ResultAttrObj = {
+      AttributeName: "Approval Amount",
+      AttributeValue: this.PlafondAmt.toString()
+    };
+    Attributes.push(Attribute1);
+    let TypeCode = {
       "TypeCode": "PRE_GLV_APV_TYPE",
       "Attributes": Attributes,
     };

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-company-financial-data',
@@ -19,7 +20,7 @@ export class CustCompanyFinancialDataComponent implements OnInit {
   @Input() appCustCompanyFinDataObj: AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
   isReady : boolean = false;
 
-
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder) {
 
@@ -42,15 +43,15 @@ this.addControl();
     this.parentForm.addControl(this.identifier, this.fb.group({
       GrossMonthlyIncomeAmt: [0],
       GrossMonthlyExpenseAmt: [0],
-      ReturnOfInvestmentPrcnt: [0],
-      ReturnOfEquityPrcnt: [0],
-      ReturnOfAssetPrcnt: [0],
-      ProfitMarginPrcnt: [0],
-      CurrentRatioPrcnt: [0],
-      DebtEquityRatioPrcnt: [0],
-      InvTurnOverPrcnt: [0],
-      ArTurnOverPrcnt: [0],
-      GrowthPrcnt: [0],
+      ReturnOfInvestmentPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+      ReturnOfEquityPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+      ReturnOfAssetPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+      ProfitMarginPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+      CurrentRatioPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+      DebtEquityRatioPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+      InvTurnOverPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+      ArTurnOverPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
+      GrowthPrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
       WorkingCapitalAmt: [0],
       OthMonthlyInstAmt: [0],
       Revenue: [0],

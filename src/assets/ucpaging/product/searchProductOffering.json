@@ -48,7 +48,7 @@
         "items": [],
         "itemsUrl": [],
         "criteriaPropName": "RefMasterTypeCode",
-        "criteriaPropValue": "PROD_STAT"
+        "criteriaPropValue": "PRODUCT_STAT"
       },
       {
         "type": "datepicker",

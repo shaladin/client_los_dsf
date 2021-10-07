@@ -20,6 +20,8 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { environment } from 'environments/environment';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -30,7 +32,7 @@ export class NapDetailFormComponent implements OnInit {
 
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
-  wfTaskListId: number;
+  wfTaskListId: any;
   ReturnHandlingHId: number = 0;
   AppStepIndex: number = 1;
   appId: number;
@@ -48,6 +50,7 @@ export class NapDetailFormComponent implements OnInit {
   IsDataReady: boolean = false;
   BizTemplateCode: string = CommonConstant.FL4W;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -100,7 +103,7 @@ export class NapDetailFormComponent implements OnInit {
         this.SysConfigResultObj = response;
       });
 
-    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.claimTask();
     this.NapObj.AppId = this.appId;
 
     await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
@@ -121,6 +124,10 @@ export class NapDetailFormComponent implements OnInit {
         await this.initDms();
       }
       this.ChangeStepper();
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepNapd) {
+        this.NapObj.AppCurrStep = CommonConstant.AppStepRef;
+        this.UpdateAppStep(this.NapObj.AppCurrStep);
+      }
       this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
       this.ChooseStep(this.AppStepIndex);
     }
@@ -139,31 +146,36 @@ export class NapDetailFormComponent implements OnInit {
       let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
-          this.appNo = this.NapObj.AppNo;
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-          let isExisting = response['IsExistingCust'];
-          if (isExisting) {
-            let custNo = response['CustNo'];
-            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
-          }
-          else {
-            this.dmsObj.MetadataParent = null;
-          }
+          if (response != null && ((response["CustNo"] != null && response["CustNo"] != "") || (response["ApplicantNo"] != null && response["ApplicantNo"] != ""))) {
+            let trxNo;
+            this.appNo = this.NapObj.AppNo;
+            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            let isExisting = response['IsExistingCust'];
+            if (isExisting) {
+              trxNo = response['CustNo'];
+            }
+            else {
+              trxNo = response['ApplicantNo'];
+            }
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
 
-          let mouId = this.NapObj.MouCustId;
-          if (mouId != null && mouId != 0) {
-            let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                let mouCustNo = result['MouCustNo'];
-                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-                this.isDmsReady = true;
-              }
-            )
-          }
-          else {
-            this.isDmsReady = true;
+            let mouId = this.NapObj.MouCustId;
+            if (mouId != null && mouId != 0) {
+              let mouObj = { Id: mouId };
+              this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+                result => {
+                  let mouCustNo = result['MouCustNo'];
+                  this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                  this.isDmsReady = true;
+                }
+              )
+            }
+            else {
+              this.isDmsReady = true;
+            }
+          } else {
+            this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
           }
         }
       );
@@ -241,8 +253,6 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId == 0) this.UpdateAppStep(Step);
-
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
@@ -258,9 +268,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       () => {
-        // this.spinner.show();
-        // setTimeout(() => { this.spinner.hide(); }, 1500);
-          setTimeout(() => {  }, 1500);
+        this.spinner.show();
+        setTimeout(() => { this.spinner.hide(); }, 1500);
         this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
         this.ChooseStep(this.AppStepIndex);
       }
@@ -283,7 +292,8 @@ export class NapDetailFormComponent implements OnInit {
       let reqObj: SubmitNapObj = new SubmitNapObj();
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
-      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
+      let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+      this.http.post(SubmitNAPUrl, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.Cancel();
@@ -293,6 +303,9 @@ export class NapDetailFormComponent implements OnInit {
 
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
+    if (this.ReturnHandlingHId == 0) {
+      this.UpdateAppStep(AppStep);
+    }
     switch (AppStep) {
       case CommonConstant.AppStepRef:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepRef];
@@ -341,7 +354,8 @@ export class NapDetailFormComponent implements OnInit {
       ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
       ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.FL4W });
@@ -354,5 +368,16 @@ export class NapDetailFormComponent implements OnInit {
     this.custType = ev;
     this.ChangeStepper();
     this.NextStep(CommonConstant.AppStepGuar);
+  }
+
+  claimTask() {
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }

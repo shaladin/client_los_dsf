@@ -13,6 +13,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-prod-ho-apv-paging',
@@ -33,6 +34,11 @@ export class ProdHoApvPagingComponent implements OnInit {
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHOApproval.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOApproval.json";
 
+    if(environment.isCore){
+      this.InputPagingObj._url = "./assets/ucpaging/product/V2/searchProductHOApprovalV2.json";
+      this.InputPagingObj.pagingJson = "./assets/ucpaging/product/V2/searchProductHOApprovalV2.json";
+    }
+    
     let critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -83,7 +89,8 @@ export class ProdHoApvPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.MAIN_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
-        this.ApvReqObj.TaskId = ev.RowObj.TaskId
+        this.ApvReqObj.TaskId = ev.RowObj.TaskId;
+        this.ApvReqObj.Username = ev.RowObj.MAIN_USER_ID;
         this.http.post(AdInsConstant.ApvTakeBackTaskUrl, this.ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);

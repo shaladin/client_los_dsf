@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 
@@ -10,26 +7,29 @@ import { environment } from 'environments/environment';
   templateUrl: './task-reassigmnet-inquiry.component.html'
 })
 export class TaskReassigmnetInquiryComponent implements OnInit {
-  InputPagingObj: UcPagingObj;
+  InputPagingObj: UcPagingObj = new UcPagingObj();
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { 
-    this.InputPagingObj = new UcPagingObj();
-    this.InputPagingObj._url="./assets/ucpaging/searchTaskReassignmentInquiry.json";
-    this.InputPagingObj.enviromentUrl = environment.losUrl;
-    this.InputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
+  constructor() {
+    this.InputPagingObj._url = "./assets/ucpaging/searchTaskReassignmentInquiry.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/searchTaskReassignmentInquiry.json";
+    let activityVersion: string = "/v1";
+    let nameActivity: string = "T.ACT_CODE";
+    let nameOffice: string = "T.OFFICE_CODE";
+    if (environment.isCore) {
+      this.InputPagingObj._url = "./assets/ucpaging/V2/searchTaskReassignmentInquiryV2.json";
+      this.InputPagingObj.pagingJson = "./assets/ucpaging/V2/searchTaskReassignmentInquiryV2.json";
+      nameActivity = "TRT.WF_ACTIVITY_CODE";
+      nameOffice = "TRT.OFFICE_CODE";
+      activityVersion = "/v2";
+    }
     this.InputPagingObj.ddlEnvironments = [
       {
-        name: "T.ACT_CODE",
-        environment: environment.losUrl
+        name: nameActivity,
+        environment: environment.losUrl + activityVersion
       },
       {
-        name: "T.OFFICE_CODE",
-        environment: environment.FoundationR3Url
+        name: nameOffice,
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
   }

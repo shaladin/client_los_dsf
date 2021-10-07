@@ -50,6 +50,11 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchEditAppAfterApprovalApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditAppAfterApprovalApproval.json";
 
+    if(environment.isCore) {
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchEditAppAfterApprovalApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchEditAppAfterApprovalApprovalV2.json";
+    }
+
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
@@ -104,6 +109,7 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId;
+        ApvReqObj.Username = ev.RowObj.MAIN_USER_ID;
         this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);

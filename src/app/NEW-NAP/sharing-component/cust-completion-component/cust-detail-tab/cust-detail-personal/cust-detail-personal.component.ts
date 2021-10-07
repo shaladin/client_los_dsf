@@ -42,6 +42,7 @@ export class CustDetailPersonalComponent implements OnInit {
   ReligionObj: Array<KeyValueObj> = new Array();
   CustNoObj: GenericObj = new GenericObj();
   CustDetailForm = this.fb.group({
+    CustFullName :[''],
     FamilyCardNo: ['', Validators.pattern("^[0-9]+$")],
     NoOfDependents: ['', Validators.pattern("^[0-9]+$")],
     NoOfResidence: ['', Validators.pattern("^[0-9]+$")],
@@ -66,8 +67,7 @@ export class CustDetailPersonalComponent implements OnInit {
 
   async ngOnInit() {
     this.lookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.lookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.lookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.isRequired = false;
@@ -97,8 +97,7 @@ export class CustDetailPersonalComponent implements OnInit {
       (response) => {
         this.Country = response;
         this.lookupCountryObj.urlJson = "./assets/uclookup/lookupCustomerCountry.json";
-        this.lookupCountryObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-        this.lookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
+        this.lookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
         this.lookupCountryObj.pagingJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookupCountryObj.genericJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookupCountryObj.addCritInput = new Array();
@@ -164,8 +163,9 @@ export class CustDetailPersonalComponent implements OnInit {
   GetData() {
     this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
-        this.CustFullName = response.AppCustObj.CustName;
+        //this.CustFullName = response.AppCustObj.CustName;
         this.CustDetailForm.patchValue({
+          CustFullName: response.AppCustPersonalObj.CustFullName,
           FamilyCardNo: response.AppCustPersonalObj.FamilyCardNo,
           NoOfDependents: response.AppCustPersonalObj.NoOfDependents,
           NoOfResidence: response.AppCustPersonalObj.NoOfResidence,
@@ -220,8 +220,9 @@ export class CustDetailPersonalComponent implements OnInit {
     this.AppCustObj.IsVip = this.CustDetailForm.controls.IsVip.value;
     this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMf.value;
     this.AppCustObj.VipNotes = this.CustDetailForm.controls.VIPNotes.value;
+    this.AppCustObj.CustName = this.CustDetailForm.controls.CustFullName.value;
 
-    this.AppCustPersonalObj.CustFullName = this.CustFullName;
+    this.AppCustPersonalObj.CustFullName = this.CustDetailForm.controls.CustFullName.value;
     this.AppCustPersonalObj.CustPrefixName = this.CustDetailForm.controls.CustPrefixName.value;
     this.AppCustPersonalObj.CustSuffixName = this.CustDetailForm.controls.CustSuffixName.value;
     this.AppCustPersonalObj.MrNationalityCode = this.CustDetailForm.controls.MrNationalityCode.value;

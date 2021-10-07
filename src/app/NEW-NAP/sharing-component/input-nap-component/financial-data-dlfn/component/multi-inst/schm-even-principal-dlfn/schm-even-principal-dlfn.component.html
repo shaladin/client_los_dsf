@@ -152,7 +152,7 @@
             <div class="col-md-3 form-inline form-inline-right">
               <div class="row">
                 <div class="col-md-6">
-                  <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
+                  <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt" [options]="CurrencyMaskPrct"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)" currencyMask>
@@ -160,7 +160,7 @@
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-6">
-                  <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
+                  <input type="" class="form-control full-width" formControlName="FlatRatePrcnt" [options]="CurrencyMaskPrct"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
                     [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
                     currencyMask>
@@ -186,7 +186,7 @@
               <label>Gross Yield</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number:'.6':'en-US'}} %</label>
             </div>
           </div>
         </div>
@@ -198,7 +198,7 @@
               <label>Grace Period</label>
             </div>
             <div class="col-md-1 form-inline form-inline-right">
-              <input type="number" class="form-control full-width" formControlName="GracePeriod" disabled
+              <input type="number" class="form-control full-width" formControlName="GracePeriod"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
                 (keyup)="SetNeedReCalculate(true)">
               <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
@@ -206,7 +206,7 @@
             </div>
             <div class="col-md-2 form-inline">
               <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
-                (change)="SetNeedReCalculate(true)" disabled>
+                (change)="SetNeedReCalculate(true)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -224,7 +224,7 @@
               <label>Top Interest Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.TopInterestRatePrcnt.value | number : '1.2-2'}}%</label>
+              <label>{{ParentForm.controls.TopInterestRatePrcnt.value | number:'.6':'en-US'}} %</label>
             </div>
             <div class="col-md-3 form-inline">
               <label>Total Top Amount</label>
@@ -268,27 +268,31 @@
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="No" translate>
                 No
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="DueDt" translate>
+                Due Date
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="InstAmt" translate>
                 Installment Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="PrincipalAmt" translate>
                 Principal Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
+            <th style="text-align: center;"><span class="thead-header" name="InterestAmt" translate>
                 Interest Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
+            <th style="text-align: center;"><span class="thead-header" name="OsPrincipalAmt" translate>
                 Os Principal Amount
               </span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
+            <th style="text-align: center;"><span class="thead-header" name="OsInterestAmt" translate>
                 Os Interest Amount
               </span>
             </th>
@@ -302,6 +306,7 @@
         <tbody *ngIf="listInstallment.length > 0">
           <tr *ngFor="let item of listInstallment; let i = index">
             <td style="text-align: center;">{{item.InstSeqNo}}</td>
+            <td style="text-align: center;">{{item.DueDt | date: 'dd-MMM-yyyy'}}</td>
             <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
             <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
             <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>

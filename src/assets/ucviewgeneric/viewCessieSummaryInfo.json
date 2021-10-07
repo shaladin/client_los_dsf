@@ -1,0 +1,45 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "CustMainInfoHeaderId",
+            "subSectionTitle": "Cessie Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "date",
+                    "label": "Cessie Date",
+                    "property": "CessieDt"
+                },
+                {
+                    "type": "currency",
+                    "label": "Total Receivable Amount",
+                    "property": "TotalReceivableAmt"
+                },
+                {
+                    "type": "text",
+                    "label": "Cessie Type",
+                    "property": "CessieType"
+                },
+                {
+                    "type": "currency",
+                    "label": "Total Purchase Amount",
+                    "property": "TotalPurchaseAmt"
+                },
+                {
+                    "type": "text",
+                    "label": "Total Sales Order",
+                    "property": "TotalSalesOrder"
+                },
+                {
+                    "type": "currency",
+                    "label": "Total Admin Fee",
+                    "property": "TotalAdminFee"
+                }
+            ],
+            "querystring": {
+                "name": "viewCessieSummaryInfo"
+            }
+        }
+    ]
+}

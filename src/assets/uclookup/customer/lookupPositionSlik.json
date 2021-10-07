@@ -1,0 +1,67 @@
+{
+    "title": "Position SLIK",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RM.MASTER_CODE",
+        "id": "JabatanCodeId",
+        "value": "",
+        "label": "Jabatan Code",
+        "placeholder": "Jabatan Code"
+      },
+      {
+        "type": "textbox",
+        "name": "RM.DESCR",
+        "id": "JabatanNameId",
+        "value": "",
+        "label": "Jabatan Name",
+        "placeholder": "Jabatan Name"
+      }
+    ],
+  "querystring": {
+    "name": "lookupPositionSlik"
+  },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Jabatan Code",
+          "name": "Code"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Jabatan Name",
+          "name": "Jabatan"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Action"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "Code"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "Jabatan"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "Jabatan"
+          }
+        ]
+      }
+    ],
+    "propertyId": "Jabatan",
+    "propertyName": "Jabatan"
+  }

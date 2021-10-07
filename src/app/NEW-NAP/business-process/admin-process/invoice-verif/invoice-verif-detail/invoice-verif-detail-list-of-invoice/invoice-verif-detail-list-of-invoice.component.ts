@@ -17,6 +17,8 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { environment } from 'environments/environment';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'invoice-verif-detail-list-of-invoice',
@@ -34,7 +36,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   verifStatCode: RefMasterObj;
   BusinessDate: Date;
   Username: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   TrxNo: string;
   PlafondAmt: number;
   OsPlafondAmt: number;
@@ -62,7 +64,8 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     ReasonDesc: ['']
   });
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient,
+              private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["TaskListId"];
@@ -170,9 +173,11 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {"BizTemplateCode":this.bizTemplateCode});
   }
   SaveData() {
-    var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
+    const fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
     for (let i = 0; i < fa_listInvoice.length; i++) {
-      var item = fa_listInvoice.at(i);
+      const item = fa_listInvoice.at(i);
+      this.listInvoice[i].IsApproved = true;
+      this.listInvoice[i].InvoiceStat = "APV";
       this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
       this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
@@ -194,23 +199,28 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       ReturnHandlingHObj: this.ReturnHandlingHData
     };
 
-    this.httpClient.post(URLConstant.UpdateAppInvoiceDlfn, request).subscribe(() => {
+      let UpdateAppInvoiceDlfnUrl = environment.isCore ? URLConstant.UpdateAppInvoiceDlfnV2 : URLConstant.UpdateAppInvoiceDlfn;
+      this.httpClient.post(UpdateAppInvoiceDlfnUrl, request).subscribe(() => {
       if (this.IsReturnOn) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       } else {
-        this.outputTab.emit();
+        let outputObj = {
+          IsReturnOn : this.IsReturnOn,
+          Step : "TC"
+        }
+        this.outputTab.emit(outputObj);
       }
     });
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
+  claimTask() {
+    if(environment.isCore){
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+      }
+    }else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
   }
 
   GetCallBack(ev) {

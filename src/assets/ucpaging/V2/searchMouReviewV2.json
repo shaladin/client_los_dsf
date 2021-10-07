@@ -1,0 +1,376 @@
+{
+    "title": "MOU Review",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "MOU.MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCode",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Mou Type",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "MOU.IS_REVOLVING",
+            "id": "IsRevolvingId",
+            "label": "Revolving",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": true,
+                    "value": "Yes"
+                },
+                {
+                    "key": false,
+                    "value": "No"
+                }
+            ],
+            "itemsUrl": []
+        },    
+        {
+            "type": "textbox",
+            "name": "MOU.REF_NO",
+            "id": "RefNoId",
+            "value": "",
+            "label": "Reference No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "ClaimById",
+            "value": "",
+            "label": "Claim By",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+          }
+    ],
+  "querystring": {
+    "name": "searchMouReviewV2"
+  },
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "CLAIM BY",
+            "name": "Assignee"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "MouCustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "EXPIRED DATE",
+            "name": "EndDt"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "PLAFOND AMOUNT",
+            "name": "PlafondAmt"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REVOLVING",
+            "name": "IsRevolving"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU TYPE",
+            "name": "MrMouTypeCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "ACTION"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "EndDt"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "PlafondAmt"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsRevolving"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MouTypeName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property" : "Assignee",
+                                    "value" : null,
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_RVW_FCTR",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property" : "Assignee",
+                                    "value" : null,
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_RVW_FCTR",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property" : "Assignee",
+                                    "value" : null,
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_RVW_GENERAL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property" : "Assignee",
+                                    "value" : null,
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_RVW_GENERAL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property" : "Assignee",
+                                    "value" : null,
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FINANCING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_RVW_DFLN",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property" : "Assignee",
+                                    "value" : null,
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FINANCING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "MOU_CUST_RVW_DFLN",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

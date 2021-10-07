@@ -23,6 +23,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
   @Input() appId: number = 0;
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   @Input() captureStat: string = "";
+  isCustCrdRvwExposureObj: boolean = false;
 
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
@@ -56,6 +57,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
           const element = response.ListCrdRvwExposureDObj[index];
           if (element.ExposureType == this.ExposureCustTypeCode) {
             this.CustCrdRvwExposureObj = element;
+            this.isCustCrdRvwExposureObj = true;
           }
           if (element.ExposureType == this.ExposureCustGroupTypeCode) {
             this.CustGroupCrdRvwExposureObj = element;

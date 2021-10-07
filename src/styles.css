@@ -1,105 +1,109 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-.number{
-    width:30%;
+.number {
+    width: 30%;
 }
 
-.code{
-    width:50%;
+.code {
+    width: 50%;
 }
 
-.name{
-    width:80%;
+.name {
+    width: 80%;
 }
 
-body{
+.overlay {
+    height: calc(100% + 7px) !important;
+    margin-top: -7px;
+}
+
+body {
     background-image: url('assets/img/background.png');
-     /* Full height */
+    /* Full height */
     height: 100%;
-
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-
     /* font-family: Arial, Helvetica, sans-serif !important; */
 }
 
-.no-padding{
-    padding-left:0px !important;
-    padding-right:0px !important;
+.no-padding {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
-.header-title{
-    padding-left:0px !important;
-    padding-right:0px !important;
-    padding-bottom:0px !important;
+.header-title {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 0px !important;
 }
 
-.form-actions{
+.form-actions {
     padding: 0px !important;
     margin-top: 10px !important;
     border-top: 0px !important;
 }
 
-.search-form-control{
+.search-form-control {
     padding: 0.75rem !important;
     height: calc(1.5rem + 2px) !important;
     font-size: 12px !important;
 }
 
-.lookup-form-control{
+.lookup-form-control {
     height: calc(1.5rem + 2px) !important;
     font-size: 12px !important;
 }
 
-.form-group{
+.form-group {
     margin-bottom: 5px !important;
 }
 
-.form-section{
+.form-section {
     line-height: 2rem !important;
     margin-bottom: 7px !important;
 }
 
-.card{
+.card {
     margin: 3px !important;
-    margin-top : -7px !important;
+    margin-top: -7px !important;
     padding-top: 5px !important;
 }
 
-.card-title{
+.card-title {
     font-weight: bold !important;
 }
 
-.row-button-search{
+.row-button-search {
     margin-top: -20px !important;
 }
 
-.navbar{
+.navbar {
     padding: 5px 1.5rem !important;
 }
 
-form label{
+form label {
     letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
 }
 
-.btn-lookup{
+.btn-lookup {
     padding: 3px 0.75rem !important;
 }
 
-.table-header{
+.table-header {
     font-size: 12px !important;
-    background-color:lightgray;
+    background-color: lightgray;
 }
 
-.table{
-    background-color:white;
-    margin-bottom:3px !important;
+.table {
+    background-color: white;
+    margin-bottom: 3px !important;
 }
 
-.navigation li > a {
+.navigation li>a {
     margin: 0px !important;
 }
 
@@ -107,39 +111,39 @@ form label{
     cursor: pointer;
 }
 
-.gridFooter{
+.gridFooter {
     border-top: 1px solid #e7e7e7;
-    background-color:white;
-    margin-left:0px !important;
-    padding-top:10px;
+    background-color: white;
+    margin-left: 0px !important;
+    padding-top: 10px;
 }
 
-.light-gray{
+.light-gray {
     background-color: #F0F0F0;
 }
 
-.font-navbar{
-    font-size:12px;
+.font-navbar {
+    font-size: 12px;
 }
 
-#role-modal{
-    background-color:white !important;
-    color:black !important;
+#role-modal {
+    background-color: white !important;
+    color: black !important;
 }
 
-.white-background{
-    background-color:white !important;
-    color:black !important;
+.white-background {
+    background-color: white !important;
+    color: black !important;
 }
 
-.mat-dialog-container{
+.mat-dialog-container {
     background-color: #BD362F;
     color: #FFFFFF;
 }
 
-.header-page{
-    background-color:white !important;
-    color:black !important;
+.header-page {
+    background-color: white !important;
+    color: black !important;
 }
 
 thead tr th {
@@ -151,16 +155,40 @@ thead tr th {
     text-transform: uppercase;
 }
 
-.align-left{
+.align-left {
     text-align: left;
 }
 
-.align-mid{
-    text-align:center;
+.align-mid {
+    text-align: center;
 }
 
-.align-right{
-    text-align:right;
+.align-right {
+    text-align: right;
+}
+
+tbody tr td {
+    text-transform: uppercase !important;
+}
+
+select {
+    text-transform: uppercase !important;
+}
+
+div {
+    text-transform: uppercase !important;    
+}
+
+a {
+    text-transform: uppercase !important;
+}
+
+span {
+    text-transform: uppercase !important;
+}
+
+button {
+    text-transform: uppercase !important;
 }
 
 .button-right {
@@ -171,59 +199,56 @@ thead tr th {
     margin-bottom: 0 !important;
 }
 
-.link-Button{
+.link-Button {
     color: blue !important;
     text-decoration-color: blue !important;
 }
 
-.ucSearch-Button-Right{
-    z-index:1 ;
-    position:absolute;
-    right: 50px; 
+.ucSearch-Button-Right {
+    z-index: 1;
+    position: absolute;
+    right: 50px;
     text-decoration-line: underline;
 }
 
-.overlay {
-    position : fixed !important;
-}
-
-#toast-container > div {
-    opacity:1;
+#toast-container>div {
+    opacity: 1;
 }
 
 .toast-error {
     background-color: #BD362F !important;
 }
 
-select.form-control{
+select.form-control {
     width: unset;
 }
 
-select.form-control.search-form-control{
+select.form-control.search-form-control {
     width: 100%;
 }
 
-.custom-radio, input[type="checkbox"].border-primary{
+.custom-radio,
+input[type="checkbox"].border-primary {
     height: 26.5px;
 }
 
-.custom-control.custom-radio{
+.custom-control.custom-radio {
     padding-right: 10px;
 }
 
-label.custom-control-label{
+label.custom-control-label {
     padding-top: 4px;
 }
 
-.custom-control-label{
+.custom-control-label {
     font-size: 1rem;
 }
 
-.text-center{
+.text-center {
     text-align: center;
 }
 
-.addButton{
+.addButton {
     text-align: center;
     font-size: 0.875rem;
     font-weight: 400;
@@ -243,7 +268,7 @@ label.custom-control-label{
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.backButton{
+.backButton {
     text-align: center;
     font-size: 0.875rem;
     font-weight: 400;
@@ -263,89 +288,90 @@ label.custom-control-label{
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.formHeader{
+.formHeader {
     background-color: #b2b3b5 !important;
     padding: 0.75rem 1.25rem !important;
 }
 
-form .form-section{
+form .form-section {
     font-size: 1rem;
 }
 
-.card .card-header{
+.card .card-header {
     padding-left: 10px !important;
 }
 
-.adins-required label::after{
-    content:"*";
-    color:red;
+.adins-required label::after {
+    content: "*";
+    color: red;
 }
 
-.adins-required-label::after{
-    content:"*";
-    color:red;
+.adins-required-label::after {
+    content: "*";
+    color: red;
 }
 
-.adins-back-fixed{
-    position:fixed;
-    top:8px;
-    right:10%;
+.adins-back-fixed {
+    position: fixed;
+    top: 8px;
+    right: 10%;
 }
-.adins-add-fixed{
-    position:fixed;
-    top:8px;
-    right:6%;
+
+.adins-add-fixed {
+    position: fixed;
+    top: 8px;
+    right: 6%;
 }
 
 aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
     font-size: smaller;
 }
 
-.margin-r-5{
+.margin-r-5 {
     margin-right: 5px;
 }
 
-.margin-15{
+.margin-15 {
     margin: 15px;
 }
 
-.margin-b-5
-{
-    margin-bottom:5px;
+.margin-b-5 {
+    margin-bottom: 5px;
 }
+
 .pull-right {
     float: right !important;
-  }
+}
 
-.form-inline-right{
-    display: flex; 
+.form-inline-right {
+    display: flex;
     justify-content: flex-end
 }
 
-.form-inline{
-    display: flex; 
+.form-inline {
+    display: flex;
     justify-content: flex-start;
     margin-bottom: 5px;
 }
 
-.margin-stepper{
+.margin-stepper {
     margin-left: 150px;
     margin-right: 150px;
 }
 
-.bs-stepper-content{
+.bs-stepper-content {
     padding: 0px !important;
 }
 
-.bs-stepper-center{
+.bs-stepper-center {
     width: 50%;
     margin: auto;
 }
 
 label {
-    text-transform: none !important;
+    text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
-    font-size:  1rem !important;
+    font-size: 1rem !important;
 }
 
 form.form-horizontal .form-group .label-control {
@@ -353,7 +379,7 @@ form.form-horizontal .form-group .label-control {
     padding-top: 10px;
 }
 
-.modal-sm{
+.modal-sm {
     max-width: 50%;
     position: absolute;
     left: 30%;
@@ -400,23 +426,29 @@ form.form-horizontal .form-group .label-control {
     opacity: 1;
 }
 
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
-.was-validated input[type=date].form-control:invalid, input[type=date].form-control.is-invalid {
+.was-validated input[type=date].form-control:invalid,
+input[type=date].form-control.is-invalid {
     background-position: right calc(0.02rem) center;
-  }
+}
 
-.breakword{
+.breakword {
     word-break: break-word;
 }
 
-.nowrap{
+.nowrap {
     white-space: nowrap;
+}
+
+.app-sidebar .navigation li a, .off-canvas-sidebar .navigation li a {
+    white-space: pre-wrap;
 }

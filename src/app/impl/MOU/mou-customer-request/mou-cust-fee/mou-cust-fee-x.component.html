@@ -1,0 +1,63 @@
+<lib-ucSubsection [id]="'MouCustFeeId'" [title]="'MOU Fee'" [panel]="'MouCustFeeSection'"></lib-ucSubsection>
+<div id="MouCustFeeSection">
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <span class="mr-1">
+      <button type="button" class="addButton" (click)="openModalAddFee()" translate>
+        <i class="ft-plus-circle"></i> Add
+      </button>
+    </span>
+  </div>
+  <div class="col-md-12" style="padding: 0;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span class="thead-header" name='RefFeeId' translate>MOU FEE</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='FeeType' translate>FEE TYPE</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='Amount' translate>AMOUNT</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='PaymentType' translate>PAYMENT TYPE</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='AgreementOption' translate>AGREEMENT OPTION</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='action' translate>DELETE</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mouCustFeeList; let i = index">
+          <td style="text-align: left;">{{item.FeeName}}</td>
+          <td style="text-align: left;">{{item.FeeTypeView}}</td>
+          <td style="text-align: left;" *ngIf="item.FeeType == 'AMT'">{{item.FeeAmt | currency : "USD" : ""}}</td>
+          <td style="text-align: left;" *ngIf="item.FeeType == 'PRCNT'">{{item.FeeAmt | number:'.6':'en-US'}} %</td>
+          <td style="text-align: left;">{{item.MouCustFeePaymentTypeView}}</td>
+          <td style="text-align: left;" *ngIf="item.MouCustFeePaymentTypeView == 'Direct Payment'">-</td>
+          <td style="text-align: left;" *ngIf="item.MouCustFeePaymentTypeView != 'Direct Payment'">{{item.MrAgreementAffectedView}}</td>
+          <td style="text-align: center;">
+            <a (click)="deleteMouCustFee(item.MouCustFeeId, i)">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<div class="form-actions right" style="text-align: right;">
+  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+    <i class="ft-x"></i> Cancel
+  </button>
+  <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
+    <i class="far fa-check-square"></i> Save
+  </button>
+</div>

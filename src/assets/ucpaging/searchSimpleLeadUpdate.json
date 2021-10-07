@@ -16,7 +16,8 @@
             "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office Name",
             "items": [],
-            "itemsUrl": []
+            "itemsUrl": [],
+            "environment": "FOU"
         },
         {
             "type": "dropdown",
@@ -31,7 +32,8 @@
             "path": "/RefAppSrc/GetListKeyValueActive",
             "label": "Lead Source",
             "items": [],
-            "itemsUrl": []
+            "itemsUrl": [],
+            "environment": "FOU"
         },
         {
             "type": "textbox",

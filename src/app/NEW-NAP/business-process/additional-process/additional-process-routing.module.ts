@@ -47,6 +47,12 @@ import { EditAppAfterApprovalInquiryComponent } from './edit-app-after-approval-
 import { EditAppAfterApprovalPagingComponent } from './edit-app-after-approval/edit-app-after-approval-paging/edit-app-after-approval-paging.component';
 import { CreditApprovalResultExtensionApprovalDetailComponent } from './credit-apv-result-ext/approval/detail/detail.component';
 import { CreditApprovalResultExtensionApprovalPagingComponent } from './credit-apv-result-ext/approval/paging/paging.component';
+import { ReturnHandlingSurveyVerifXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-survey-verif-x/return-handling-survey-verif-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { CopyCancelledApplicationXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/copy-cancelled-application-x/copy-cancelled-application-x.component';
+import { CopyCanAppMultiBlDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/copy-can-app-multi-bl-detail/copy-can-app-multi-bl-detail-x.component';
+import { ReturnHandlingPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-paging-x/return-handling-paging-x.component';
+import { ReturnHandlingDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-detail-x/return-handling-detail-x.component';
 
 
 const routes: Routes = [
@@ -222,6 +228,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.COPY_CANCEL_APP,
+        component: CopyCancelledApplicationXComponent,
+        data: {
+          title: 'Copy From Cancelled Application'
+        }
+      },
+      {
         path: PathConstant.RETURN_HANDLING_ADD_TC_PAGING,
         component: ReturnHandlingAdditionalTcPagingComponent,
         data: {
@@ -363,6 +376,34 @@ const routes: Routes = [
           title: 'Copy From Cancelled Application Detail'
         }
       },
+      {
+        path: PathConstantX.RETURN_HANDLING_SURVEY_VERIF_PAGING_X,
+        component: ReturnHandlingSurveyVerifXComponent,
+        data: {
+          title: 'Return Handling Survey Verification'
+        }
+      },
+      {
+        path: PathConstantX.COPY_CANCEL_APP_CROSS_BL_DETAIL_X,
+        component: CopyCanAppMultiBlDetailXComponent,
+        data: {
+          title: 'Copy From Cancelled Application Detail'
+        }
+      },
+      {
+        path: PathConstantX.RETURN_HANDLING_PAGING,
+        component: ReturnHandlingPagingXComponent,
+        data: {
+          title: 'Return Handling Paging'
+        }
+      },
+      {
+        path: PathConstantX.RETURN_HANDLING_DETAIL,
+        component: ReturnHandlingDetailXComponent,
+        data: {
+          title: 'Return Handling Detail'
+        }
+      }
     ]
   }
 ];

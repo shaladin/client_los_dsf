@@ -42,18 +42,25 @@ export class CcAddressDetailComponent implements OnInit {
     CopyAddrFrom: []
   })
 
+  listAddrRequiredOwnership: Array<string> = [
+    CommonConstant.CustAddrTypeLegal,
+    CommonConstant.CustAddrTypeResidence,
+    CommonConstant.CustAddrTypeBiz,
+    CommonConstant.CustAddrTypeCompany,
+    CommonConstant.CustAddrTypeOthBiz
+  ]
+
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.AddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
     this.inputAddressObj.showOwnership = true;
-    this.inputAddressObj.requiredOwnership = true;
     if (this.MrCustTypeCode === CommonConstant.CustTypeCompany) {
       this.inputAddressObj.requiredPhn1 = true;
     }
@@ -64,22 +71,22 @@ export class CcAddressDetailComponent implements OnInit {
     this.dllCopyAddressFromObj.customValue = "MrCustAddrTypeDescr";
 
     let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany };
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).toPromise().then(
       async (response) => {
-        let  tempAddressType = response[CommonConstant.ReturnObj];
+        let tempAddressType = response[CommonConstant.ReturnObj];
         let filterTempAddr = tempAddressType.filter(x => x.Key != CommonConstant.AddrTypeCompany && x.Key != CommonConstant.AddrTypeEmergency);
         this.AddressTypeObj = filterTempAddr;
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key
         })
-        this.LoadAddrForCopy();
-        this.ResetForm();
+        await this.LoadAddrForCopy();
+        // this.ResetForm();
         this.isDllAddressTypeReady = true;
       }
     );
 
     if (this.InputObj.AppCustAddrId != 0) {
-      this.http.post<AppCustAddrObj>(URLConstant.GetAppCustAddrByAppCustAddrId, { Id: this.InputObj.AppCustAddrId }).subscribe(
+      await this.http.post<AppCustAddrObj>(URLConstant.GetAppCustAddrByAppCustAddrId, { Id: this.InputObj.AppCustAddrId }).toPromise().then(
         (response) => {
           this.AddrObj = response;
           this.AddressForm.patchValue({ MrCustAddrTypeCode: response.MrCustAddrTypeCode })
@@ -95,6 +102,19 @@ export class CcAddressDetailComponent implements OnInit {
     else {
       this.isAddrObjReady = true;
     }
+    await this.setOwnership(this.AddressForm.controls.MrCustAddrTypeCode.value);
+  }
+
+  async getEvent(event){
+    await this.setOwnership(event.target.value);
+  }
+
+  async setOwnership(MrCustAddrTypeCode: string) {
+    if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+      this.inputAddressObj.requiredOwnership = true;
+      return
+    }
+    this.inputAddressObj.requiredOwnership = false;
   }
 
   ResetForm() {
@@ -107,8 +127,8 @@ export class CcAddressDetailComponent implements OnInit {
     this.inputAddressObj.default = this.AddrObj;
   }
 
-  LoadAddrForCopy() {
-    this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.InputObj.AppCustId }).subscribe(
+  async LoadAddrForCopy() {
+    await this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.InputObj.AppCustId }).toPromise().then(
       (response) => {
         this.copyAddressFromObj = response[CommonConstant.ReturnObj];
         this.AddressForm.patchValue({ CopyAddrFrom: this.copyAddressFromObj[0]['AppCustAddrId'] });
@@ -141,6 +161,7 @@ export class CcAddressDetailComponent implements OnInit {
         this.AddrObj.PhnExt1 = response["PhnExt1"];
         this.AddrObj.PhnExt2 = response["PhnExt2"];
         this.AddrObj.PhnExt3 = response["PhnExt3"];
+        this.AddrObj.MrHouseOwnershipCode = response["MrBuildingOwnershipCode"];
 
         this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
         this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };

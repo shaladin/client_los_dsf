@@ -7,6 +7,9 @@ import { FinancialDataFctrComponent } from '../sharing-component/input-nap-compo
 import { NapCustMainDataComponent } from './nap-cust-main-data/nap-cust-main-data.component';
 import { NapDetailFormComponent } from './nap-detail-form/nap-detail-form.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import {NapDetailFormXComponent} from 'app/impl/NEW-NAP/FCTR/nap-detail-form/nap-detail-form-x.component';
+import {PathConstantX} from 'app/impl/shared/constant/PathConstantX';
+import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/FCTR/nap-cust-main-data/nap-cust-main-data-x.component';
 
 const routes: Routes = [
   {
@@ -54,7 +57,20 @@ const routes: Routes = [
             title: 'NAP Detail'
         }
       },
-    
+      {
+        path: PathConstantX.NAP2_X,
+        component: NapDetailFormXComponent,
+        data: {
+          title: 'NAP Detail X'
+        }
+      },
+      {
+        path: PathConstantX.NAP1_X,
+        component: NapCustMainDataXComponent,
+        data: {
+            title: 'NAP Cust Main Data'
+        }
+      },
     ]
   }
 ];

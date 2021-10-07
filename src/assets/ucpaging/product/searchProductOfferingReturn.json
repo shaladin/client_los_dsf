@@ -34,23 +34,6 @@
         "placeholder": "Placeholder"
       },
       {
-        "type": "dropdown",
-        "name": "A.Prod_Offering_Stat",
-        "id": "ProdOfferingStat",
-        "value": "Product Offering Status",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "ddlType": "all",
-        "url": "",
-        "environment": "FOU",
-        "path": "/RefMaster/GetListKeyValueActiveByCode",
-        "label": "Product Offering Status",
-        "items": [],
-        "itemsUrl": [],
-        "criteriaPropName": "RefMasterTypeCode",
-        "criteriaPropValue": "PROD_STAT"
-      },
-      {
         "type": "datepicker",
         "name": "A.End_Dt",
         "id": "EndDt",

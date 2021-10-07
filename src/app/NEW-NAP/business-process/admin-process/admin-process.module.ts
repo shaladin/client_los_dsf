@@ -66,8 +66,32 @@ import { AssetAllocationPagingComponent } from "./asset-allocation/asset-allocat
 import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocation-detail/asset-allocation-detail.component";
 import { InvoiceVerifDetailListOfInvoiceComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component";
 import { InvoiceVerifDetailDFComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component";
+import { PreGoLiveXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live/pre-go-live-x.component";
+import { DeliveryOrderMultiAssetDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-detail/delivery-order-multi-asset-detail-x.component";
+import { CustConfirmationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-detail/cust-confirmation-detail-x.component";
+import { GoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-paging/go-live-approval-paging-x.component";
+import { GoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-detail/go-live-approval-detail-x.component";
+import { EndDateForGoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-paging/end-date-go-live-approval-paging-x.component";
+import { EndDateForGoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-detail/end-date-go-live-approval-detail-x.component";
+import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
+import {InvoiceVerifDetailDFXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF-x.component';
+import {InvoiceVerifDetailListOfInvoiceXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
+import { PurchaseOrderPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging/purchase-order-paging-x.component";
+import { PurchaseOrderDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail/purchase-order-detail-x.component";
+import { PurchaseOrderXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order/purchase-order-x.component";
+import { AgrmntActivationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/agrmnt-activation/agrmnt-activation-detail-x/agrmnt-activation-detail-x.component";
+import { InsuranceOrderPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-paging/insurance-order-paging-x/insurance-order-paging-x.component";
+import { InsuranceOrderDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/insurance-order/insurance-order-detail/insurance-order-detail-x/insurance-order-detail-x.component";
+import { DocumentViewXComponent } from "app/impl/NEW-NAP/business-process/admin-process/document-printing/document-view/document-view-x.component";
+import { AgrViewModule } from "app/view-enhancing/agr-view/agr-view.module";
+import { NewPurchaseOrderDetailXComponent } from "app/impl/NEW-NAP/admin-process/new-purchase-order/new-purchase-order-detail-x/new-purchase-order-detail-x.component";
+import { PoEntryXComponent } from "app/impl/NEW-NAP/admin-process/new-purchase-order/new-purchase-order-detail-x/po-entry-x/po-entry-x.component";
+import { DocSignerDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-detail/doc-signer-detail-x.component";
+import { DocSignerPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-paging/doc-signer-paging-x.component";
+import { CreateDoMultiAssetXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/create-do-multi-asset-x/create-do-multi-asset-x.component";
+import { DoAssetDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/do-asset-detail-x/do-asset-detail-x.component";
 
-export const customCurrencyMaskConfig = {     
+export const customCurrencyMaskConfig = {
   align: "left",
   allowNegative: true,
   allowZero: true,
@@ -94,7 +118,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
-    SharedModule
+    SharedModule,
+    AgrViewModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
@@ -119,6 +144,8 @@ export const customCurrencyMaskConfig = {
     OfferingValidityCheckingApprovalDetailComponent,
     DocSignerDetailComponent,
     DocSignerPagingComponent,
+    DocSignerDetailXComponent,
+    DocSignerPagingXComponent,
     InvoiceDetailComponent,
     DocumentPagingComponent,
     DocumentViewComponent,
@@ -143,7 +170,29 @@ export const customCurrencyMaskConfig = {
     AssetAllocationPagingComponent,
     AssetAllocationDetailComponent,
     InvoiceVerifDetailListOfInvoiceComponent,
-    InvoiceVerifDetailDFComponent
+    InvoiceVerifDetailDFComponent,
+    PreGoLiveXComponent,
+    DeliveryOrderMultiAssetDetailXComponent,
+    CustConfirmationDetailXComponent,
+    GoLiveApprovalPagingXComponent,
+    GoLiveApprovalDetailXComponent,
+    EndDateForGoLiveApprovalPagingXComponent,
+    EndDateForGoLiveApprovalDetailXComponent,
+    InvoiceVerifDetailXComponent,
+    InvoiceVerifDetailDFXComponent,
+    InvoiceVerifDetailListOfInvoiceXComponent,
+    AgrmntActivationDetailXComponent,
+    InsuranceOrderPagingXComponent,
+    InsuranceOrderDetailXComponent,
+    PurchaseOrderPagingXComponent,
+    PurchaseOrderXComponent,
+    PurchaseOrderDetailXComponent,
+    AgrmntActivationDetailXComponent,
+    DocumentViewXComponent,
+    NewPurchaseOrderDetailXComponent,
+    PoEntryXComponent,
+    CreateDoMultiAssetXComponent,
+    DoAssetDetailXComponent
   ],
   providers: [
     NGXToastrService,
@@ -152,7 +201,10 @@ export const customCurrencyMaskConfig = {
   entryComponents: [
     CreateDoMultiAssetComponent,
     DoAssetDetailComponent,
-    PoEntryComponent
+    PoEntryComponent,
+    PoEntryXComponent,
+    CreateDoMultiAssetXComponent,
+    DoAssetDetailXComponent
   ]
 })
 export class AdminProcessSharingModule { }

@@ -26,6 +26,7 @@ import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResul
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-lead-input-lead-data',
@@ -48,6 +49,8 @@ export class LeadInputLeadDataComponent implements OnInit {
   returnFirstInstObj: Array<KeyValueObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   latestReqDtCheckRapindo: Date;
   leadNo: string;
   reqLatestJson: any;
@@ -96,7 +99,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   leadObj: LeadObj;
   returnLeadObj: LeadObj;
   returnLobCode: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   editLead: string;
   editLeadObj: LeadObj;
   InstAmt: number;
@@ -118,6 +121,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   isReadOnly: boolean = true;
   textButton: string
 
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -127,7 +131,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.typePage = params["mode"];
       }
       if (params["WfTaskListId"] == null) {
-        this.WfTaskListId = 0;
+        this.WfTaskListId = environment.isCore ? "" : 0;
       }
       else {
         this.WfTaskListId = params["WfTaskListId"];
@@ -190,8 +194,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/Lead/lookupAsset.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
 
@@ -236,6 +239,7 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
             if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+              this.getDigitalizationSvcType();
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response: ResThirdPartyRsltHObj) => {
                   this.latestReqDtCheckRapindo = response.ReqDt;
@@ -839,7 +843,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   confirmFraudCheck() {
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       if (!this.isAlreadySubmittedByIntegrator && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == "" && confirm("Submit without integrator?")) {
         return true;
       }
@@ -864,6 +868,14 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
+    let SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInput; 
+    let SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKta;
+
+    if(environment.isCore){
+      SubmitWorkflowLeadInputUrl = URLConstant.SubmitWorkflowLeadInputV2; 
+      SubmitWorkflowLeadInputKtaUrl = URLConstant.SubmitWorkflowLeadInputKtaV2;
+    }
+
     if (this.resLeadAppObj.LeadAppId != 0 && this.resLeadAssetObj.LeadAssetId != 0) {
       this.typePage = "edit";
     }
@@ -888,7 +900,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.setLeadAsset();
         if (this.originPage == "teleVerif") {
           if (this.confirmFraudCheck()) {
-            this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(SubmitWorkflowLeadInputUrl, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 if (this.originPage == "teleVerif") {
@@ -903,7 +915,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.outputTab.emit({
             stepMode: "next",
             LeadInputLeadDataObj: this.leadInputLeadDataObj,
-            urlPost: URLConstant.SubmitWorkflowLeadInput,
+            urlPost: SubmitWorkflowLeadInputUrl,
             paging: "/Lead/LeadUpdate/Paging",
             typePage: this.typePage,
             originPage: this.originPage,
@@ -918,7 +930,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.outputTab.emit({
             stepMode: "next",
             LeadInputLeadDataObj: this.leadInputLeadDataObj,
-            urlPost: URLConstant.SubmitWorkflowLeadInput,
+            urlPost: SubmitWorkflowLeadInputUrl,
             paging: "/Lead/Lead/Paging",
             typePage: this.typePage,
             originPage: this.originPage,
@@ -933,7 +945,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         if (this.lobKta.includes(this.returnLobCode) == true) {
           //this.setLeadAsset();
           if (this.originPage == "teleVerif") {
-            this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+            this.http.post(SubmitWorkflowLeadInputKtaUrl, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 if (this.originPage == "teleVerif") {
@@ -944,7 +956,7 @@ export class LeadInputLeadDataComponent implements OnInit {
             );
           }
           else {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: SubmitWorkflowLeadInputUrl});
           }
         }
         else {
@@ -956,7 +968,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.setLeadAsset();
           if (this.originPage == "teleVerif") {
             if (this.confirmFraudCheck()) {
-              this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+              this.http.post(SubmitWorkflowLeadInputUrl, this.leadInputLeadDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
                   if (this.originPage == "teleVerif") {
@@ -968,7 +980,7 @@ export class LeadInputLeadDataComponent implements OnInit {
             }
           }
           else {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: SubmitWorkflowLeadInputUrl});
           }
         }
       }
@@ -977,7 +989,7 @@ export class LeadInputLeadDataComponent implements OnInit {
       if (this.lobKta.includes(this.returnLobCode) == true) {
         //this.setLeadAsset();
         if (this.originPage == "teleVerif") {
-          this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
+          this.http.post(SubmitWorkflowLeadInputKtaUrl, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
@@ -988,7 +1000,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           );
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: SubmitWorkflowLeadInputUrl});
         }
       }
       else {
@@ -996,7 +1008,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         if (this.originPage == "teleVerif") {
 
           if (this.confirmFraudCheck()) {
-            this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(SubmitWorkflowLeadInputUrl, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 if (this.originPage == "teleVerif") {
@@ -1007,7 +1019,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           }
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: SubmitWorkflowLeadInputUrl});
         }
       }
     }
@@ -1023,7 +1035,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
   }
   checkRapindo() {
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
@@ -1065,6 +1077,26 @@ export class LeadInputLeadDataComponent implements OnInit {
       return;
     } else {
       this.isAbleToSubmit = true;
+    }
+  }
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+            var svcType = listSvcType.find(x => x == refSvcType);
+            if(svcType != null){
+              this.IsSvcExist = true;
+            }
+        });
     }
   }
 }

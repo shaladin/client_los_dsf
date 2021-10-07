@@ -58,6 +58,10 @@ export class AgreementViewContainerComponent implements OnInit {
   IsNeedPO: boolean = false;
   RdlcReport: RdlcReportObjv2 = new RdlcReportObjv2();
 
+  IsMultiAsset: boolean = false;
+  IsMultiInsurance: boolean = false;
+  NumOfAsset: number;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient, private cookieService: CookieService,
@@ -161,6 +165,7 @@ export class AgreementViewContainerComponent implements OnInit {
       (response) => {
         this.BizTemplateCode = response["BizTemplateCode"];
         this.AppId = response['AppId'];
+        this.NumOfAsset = response['NumOfAsset'];
 
         if (this.BizTemplateCode == CommonConstant.FCTR) {
           this.IsCollateral = false;
@@ -191,6 +196,10 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsCollateral = false;
         }
         else if (this.BizTemplateCode == CommonConstant.CF4W) {
+          this.IsAsset = this.NumOfAsset < 2 ? true : false;
+          this.IsInsurance = this.NumOfAsset < 2 ? true : false;
+          this.IsMultiAsset = this.NumOfAsset > 1 ? true : false;
+          this.IsMultiInsurance = this.NumOfAsset > 1 ? true : false;
           this.IsCollateral = false;
           this.IsInsuranceFL4W = false;
           this.IsFinancial = false;
@@ -213,7 +222,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsAsset = false;
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
-          this.IsLifeInsurance = false;
+          this.IsLifeInsurance = true;
           this.IsFinancial = false;
           this.IsTC = false;
           this.IsReservedFund = false;

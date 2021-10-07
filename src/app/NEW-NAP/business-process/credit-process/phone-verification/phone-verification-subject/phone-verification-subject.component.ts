@@ -41,7 +41,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   appId: number;
   returnHandlingHId: number;
-  wfTaskListId: number;
+  wfTaskListId: any;
 
   phoneVerifObj: Array<PhoneVerifObj>;
   AppObj: AppObj;
@@ -76,10 +76,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-
-    if (this.wfTaskListId != null || this.wfTaskListId != undefined){
-      this.claimTaskService.ClaimTask(this.wfTaskListId);
-    }
+    this.ClaimTask();
 
     await this.GetAppData();
     await this.GetVerfResultData();
@@ -97,7 +94,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.blankCount == 0) {
       if (!this.isReturnHandling) {
         this.setReturnHandlingH();
-        this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
+
+        let CompleteAppPhoneVerifUrl = environment.isCore ? URLConstant.CompleteAppPhoneVerifV2 : URLConstant.CompleteAppPhoneVerif;
+        this.http.post(CompleteAppPhoneVerifUrl, this.ReturnHandlingHData).subscribe(
           (response) => {
 
             this.toastr.successMessage(response["message"]);
@@ -106,7 +105,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       }
       if (this.isReturnHandling) {
         this.setReturnHandlingD();
-        this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData).subscribe(
+        let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+        this.http.post(EditReturnHandlingDUrl, this.ReturnHandlingDData).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });
@@ -264,5 +264,16 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.ReturnHandlingForm.controls.UpdateNotes.clearValidators();
     }
     this.ReturnHandlingForm.controls.UpdateNotes.updateValueAndValidity();
+  }
+
+  ClaimTask(){
+    if(environment.isCore){
+      if(this.wfTaskListId != "" && this.wfTaskListId != undefined){
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
+    else if (this.wfTaskListId > 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }

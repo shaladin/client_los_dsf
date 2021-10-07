@@ -31,6 +31,11 @@
           <th>ACTION</th>
         </tr>
       </thead>
+      <tbody *ngIf="listCollateralData?.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr *ngFor="let item of listCollateralData; let i = index">
           <td>{{item.CollateralNo}}</td>
@@ -38,7 +43,7 @@
           <td align="left">{{item.FullAssetCode}}</td>
           <td align="left">{{item.CustName}}</td>
           <td align="right">{{item.CollateralValueAmt | number:'.2':'en-US'}}</td>
-          <td align="right">{{item.CollateralPrcnt | number:'.6':'en-US'}}</td>
+          <td align="right">{{item.CollateralPrcnt | number:'.6':'en-US'}} %</td>
           <td>{{item.CollateralStat}}</td>
           <td>
             <a *ngIf="item.CollateralStat == 'NEW'" class="success p-0" (click)="editData(item.ChangeMouCustCollateralId)">
@@ -109,7 +114,7 @@
               <input type="text" currencyMask class="form-control adInsInput text-right"
                 formControlName="CollateralPrcnt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPrcnt.invalid }"
-                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }">
+                [options]="CurrencyMaskPrct">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -193,16 +198,18 @@
       </div>
     </div>
 
+    <ref-attr-form-generate *ngIf="isAttrReady" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
     <div id="AddCollOwner">
-        <div class="form-group row">
-          <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
-          <div class="col-md-8">
-            <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()">
-            </mat-checkbox>
-          </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
+        <div class="col-md-8">
+          <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()">
+          </mat-checkbox>
         </div>
+      </div>
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Name</label>
         <div class="col-md-3">
@@ -239,6 +246,15 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
             <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern"[submit]="enjiForm.submitted">
             </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Owner Profession</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+            [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
+            [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+          </lib-uclookupgeneric>
         </div>
       </div>
       <div class="form-group row" *ngIf="!isSelfCust">
@@ -431,6 +447,8 @@
       </div>
     </div>
 
+    <ref-attr-form-generate *ngIf="isAttrReady" [IsDisable]="IsDisable" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
     <div id="AddCollOwner">
@@ -477,6 +495,15 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
             <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [customPattern]="customPattern"[submit]="enjiForm.submitted">
             </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Owner Profession</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+            [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm"
+            [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+          </lib-uclookupgeneric>
         </div>
       </div>
       <div class="form-group row" *ngIf="!isSelfCust">

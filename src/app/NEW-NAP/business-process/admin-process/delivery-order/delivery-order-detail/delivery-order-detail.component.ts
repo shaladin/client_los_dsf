@@ -24,6 +24,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -50,7 +51,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   FullAssetName: string;
   MrAssetUsageCode: string;
   AssetCategoryCode: string;
-  TaskListId: number;
+  TaskListId: any;
   arrValue = [];
   UserAccess: CurrentUserContext;
   MaxDate: Date;
@@ -95,7 +96,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   })
 
   async ngOnInit() : Promise<void> {
-    this.claimTaskService.ClaimTask(this.TaskListId);
+    this.claimTask();
     this.arrValue.push(this.AgrmntId);
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
@@ -345,6 +346,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.appTC.CheckedDt = tempAppTc.CheckedDt;
       this.appTC.IsWaived = tempAppTc.IsWaived;
       this.appTC.Notes = tempAppTc.Notes;
+      this.appTC.IsExpDtMandatory = tempAppTc.IsExpDtMandatory;
+      this.appTC.IsWaivable = tempAppTc.IsWaivable;
       this.appTC.IsAdditional = tempAppTc.IsAdditional;
       this.appTC.RowVersion = tempAppTc.RowVersion;
 
@@ -368,7 +371,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
     this.deliveryOrderObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
-    this.http.post(URLConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
+    let submitDeliveryOrderUrl = environment.isCore? URLConstant.SubmitDeliveryOrderDataV2 : URLConstant.SubmitDeliveryOrderData;
+    this.http.post(submitDeliveryOrderUrl, this.deliveryOrderObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[this.CancelLink], {});
@@ -376,4 +380,14 @@ export class DeliveryOrderDetailComponent implements OnInit {
     );
   }
 
+  claimTask(){
+    if(environment.isCore){
+        if(this.TaskListId != "" && this.TaskListId!= undefined){
+            this.claimTaskService.ClaimTaskV2(this.TaskListId);
+          }
+      }
+      else if (this.TaskListId > 0) {
+         this.claimTaskService.ClaimTask(this.TaskListId);
+      }
+  }
 }

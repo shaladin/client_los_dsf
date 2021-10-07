@@ -92,10 +92,10 @@
           <app-mou-cust-grp-mbr [MouCustGrpObjs]="custDataPersonalObj.MouCustGrpObjs" [enjiForm]="enjiForm"
             [parentForm]="CustDataForm" [identifier]="'custGrpMember'"></app-mou-cust-grp-mbr>
 
-          <lib-ucSubsection *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" [id]="'integratorDataId'"
+          <lib-ucSubsection *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0' && IsSvcExist" [id]="'integratorDataId'"
             [title]="'Fraud Checking Customer'" [panel]="'fraudCheckingCust'">
           </lib-ucSubsection>
-          <div *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" id="fraudCheckingCust">
+          <div *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0' && IsSvcExist" id="fraudCheckingCust">
             <div class="form-group row">
               <label class="col-md-3 adins-required-label" translate>Integrator Checking</label>
               <div class="col-md-4">
@@ -162,7 +162,7 @@
           </app-mou-cust-company-financial>
           <app-mou-cust-bank-acc (callbackSubmit)="getMouCustBankAccCompany($event)"
             [listBankAcc]="listMouCustBankAccCompany"></app-mou-cust-bank-acc>
-          <app-mou-cust-legal-doc (callbackSubmit)="getMouCustLegalDoc($event)" [listLegalDoc]="listLegalDoc">
+          <app-mou-cust-legal-doc (callbackSubmit)="getMouCustLegalDoc($event)" [listLegalDoc]="listLegalDoc" [ListLegalDocCantDuplicate] ="ListLegalDocCantDuplicate">
           </app-mou-cust-legal-doc>
           <app-mou-cust-grp-mbr [MouCustGrpObjs]="custDataCompanyObj.MouCustGrpObjs" [enjiForm]="enjiFormCompany"
             [parentForm]="CustDataCompanyForm" [identifier]="'custGrpMemberCompany'"></app-mou-cust-grp-mbr>

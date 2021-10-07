@@ -15,6 +15,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 @Component({
   selector: 'app-ltkm-approval-paging',
   templateUrl: './ltkm-approval-paging.component.html',
@@ -24,6 +25,7 @@ export class LtkmApprovalPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: GenericObj = new GenericObj();
   constructor(
     private route: ActivatedRoute, 
     private toastr: NGXToastrService, 
@@ -36,12 +38,14 @@ export class LtkmApprovalPagingComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.inputPagingObj._url = "./assets/ucpaging/searchLtkmApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLtkmApproval.json";
-
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchLtkmApprovalV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLtkmApprovalV2.json";
+    }
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
 
@@ -63,7 +67,20 @@ export class LtkmApprovalPagingComponent implements OnInit {
   }
   GetCallBack(ev: any) {
     var ApvReqObj = new ApprovalObj();
-    if (ev.Key == "ltkmno") { 
+    if(ev.Key == "customer"){
+      this.CustNoObj.CustNo = ev.RowObj.CustNo;      
+      this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        }
+      );
+    }
+    else if (ev.Key == "ltkmno") { 
         AdInsHelper.OpenLtkmViewByLtkmCustId(ev.RowObj.LtkmCustId);
     }
     else if(ev.Key == "Process"){
@@ -90,7 +107,7 @@ export class LtkmApprovalPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId;
-        ApvReqObj.UsernameMemberId = ev.RowObj.MainUsernameMemberId;
+        ApvReqObj.Username = ev.RowObj.MainUser;
         this.httpClient.post(URLConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);

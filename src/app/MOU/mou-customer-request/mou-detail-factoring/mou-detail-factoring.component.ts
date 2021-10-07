@@ -60,8 +60,8 @@ export class MouDetailFactoringComponent implements OnInit {
     TenorTo: ['', [Validators.min(0)]],
     PayFreqCode: [''],
     MrInstSchmCode: [''],
-    InterestRatePrcnt: ['', [Validators.min(0), Validators.max(100)]],
-    RetentionPrcnt: ['', [Validators.min(0), Validators.max(100)]],
+    InterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
+    RetentionPrcnt: [0, [Validators.min(0), Validators.max(100)]],
     IsListedCust: [false],
     Notes: [''],
     CurrCode: ['', [Validators.required]],
@@ -75,6 +75,7 @@ export class MouDetailFactoringComponent implements OnInit {
     VirtualAccNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
   });
   
+  readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
@@ -364,8 +365,7 @@ export class MouDetailFactoringComponent implements OnInit {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.inputLookupObj.isReadonly = false;
@@ -380,14 +380,13 @@ export class MouDetailFactoringComponent implements OnInit {
     this.inputLookupCustObj.isReady = false;
     this.inputLookupCustObj.isRequired = false;
     this.inputLookupCustObj.urlJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
-    this.inputLookupCustObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupCustObj.pagingJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
     this.inputLookupCustObj.genericJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
     this.inputLookupCustObj.ddlEnvironments = [
       {
         name: "A.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.FoundationR3Url + "/v1"
       }
     ];
   }

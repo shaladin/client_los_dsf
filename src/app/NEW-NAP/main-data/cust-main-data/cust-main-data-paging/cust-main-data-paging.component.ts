@@ -12,6 +12,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 
 @Component({
   selector: 'cust-main-data-paging',
@@ -23,6 +25,8 @@ export class CustMainDataPagingComponent implements OnInit {
   bizTemplateCode: string;
   userAccess: CurrentUserContext;
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  IntegrationObj: IntegrationObj = new IntegrationObj();
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   
   constructor(
     private http: HttpClient,
@@ -35,23 +39,25 @@ export class CustMainDataPagingComponent implements OnInit {
   }
 
   makeCriteria() {
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "CUST_MD_" + this.bizTemplateCode;
-    this.arrCrit.push(critObj);
-
+    if(environment.isCore){
+      var critObj2 = new CriteriaObj();
+      critObj2.restriction = AdInsConstant.RestrictionIn;
+      critObj2.propName = 'a.APP_CURR_STEP';
+      critObj2.listValue = [CommonConstant.AppStepCust, CommonConstant.AppStepFamily, CommonConstant.AppStepGuar, CommonConstant.AppStepShr];
+      this.arrCrit.push(critObj2);
+    }else{
+      var critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionLike;
+      critObj.propName = 'WTL.ACT_CODE';
+      critObj.value = "CUST_MD_" + this.bizTemplateCode;
+      this.arrCrit.push(critObj);
+    }
+      
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.BIZ_TEMPLATE_CODE';
     critObj.value = this.bizTemplateCode;
     this.arrCrit.push(critObj);
-
-    // var critObj2 = new CriteriaObj();
-    // critObj2.restriction = AdInsConstant.RestrictionIn;
-    // critObj2.propName = 'a.APP_CURR_STEP';
-    // critObj2.listValue = [CommonConstant.AppStepCust, CommonConstant.AppStepFamily, CommonConstant.AppStepGuar, CommonConstant.AppStepShr];
-    // this.arrCrit.push(critObj2);
   }
 
   async ngOnInit() {
@@ -60,10 +66,28 @@ export class CustMainDataPagingComponent implements OnInit {
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj.title = "NAP 1 Paging";
+    this.inputPagingObj.title = "Applicant Data Paging";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.addCritInput = this.arrCrit;
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+      this.inputPagingObj.isJoinExAPI = true
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CUST_MD + this.bizTemplateCode;
+      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                               this.userAccess[CommonConstant.OFFICE_CODE],
+                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "AppNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
   }
 
   AddApp() {
@@ -85,25 +109,25 @@ export class CustMainDataPagingComponent implements OnInit {
     if (ev.Key == "Edit") {
       switch (this.bizTemplateCode) {
         case CommonConstant.CF4W:
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });
           break;
         case CommonConstant.CFRFN4W:
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });
           break;
         case CommonConstant.FCTR:
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });
           break;
         case CommonConstant.FL4W:
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });
           break;
         case CommonConstant.CFNA:
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });
           break;
         case CommonConstant.OPL:
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.DF :
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId});
         break;
       }
     }

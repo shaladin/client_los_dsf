@@ -40,6 +40,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 import { RegexService } from 'app/shared/services/regex.services';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -54,7 +55,7 @@ export class LeadInputCustDataComponent implements OnInit {
   CopyFrom: string;
   rowVersion: string;
   typePage: string;
-  WfTaskListId: number;
+  WfTaskListId: any;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
   tempProfession: string;
@@ -103,7 +104,7 @@ export class LeadInputCustDataComponent implements OnInit {
     IdNo: [''],
     MrMaritalStatCode: ['', [Validators.required]],
     Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
-    Email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+    Email: ['', [Validators.required, Validators.pattern(CommonConstant.regexEmail)]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$")]],
     MobilePhone2: ['', Validators.pattern("^[0-9]+$")],
     Facebook: [''],
@@ -120,6 +121,8 @@ export class LeadInputCustDataComponent implements OnInit {
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
+  IsSvcExist: boolean = false;
+  sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   leadObj: LeadObj;
   returnLeadObj: Object;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
@@ -181,7 +184,18 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.addCritInput = arrAddCrit;
   }
 
-  async ngOnInit() {
+  ClaimTask() {
+    if(environment.isCore){	
+      if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
+          this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+      }	
+    }	
+    else if (this.WfTaskListId> 0) {	
+        this.claimTaskService.ClaimTask(this.WfTaskListId);	
+    }
+  }
+
+  async ngOnInit() : Promise<void> {
     this.customPattern = new Array<CustomPatternObj>();
     this.inputAddressObjForLegalAddr = new InputAddressObj();
     this.inputAddressObjForLegalAddr.showSubsection = false;
@@ -194,10 +208,10 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForResidenceAddr.title = "Residence Address";
     this.inputAddressObjForResidenceAddr.showPhn3 = false;
     this.inputAddressObjForResidenceAddr.showOwnership = false;
+
     this.InitDms();
-    if (this.WfTaskListId > 0) {
-      this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
+    this.ClaimTask();
+
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -209,8 +223,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj = new InputLookupObj();
     this.professionLookUpObj.isRequired = false;
     this.professionLookUpObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.professionLookUpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.professionLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.professionLookUpObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.professionLookUpObj.isRequired = true;
@@ -250,6 +263,7 @@ export class LeadInputCustDataComponent implements OnInit {
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
+              this.getDigitalizationSvcType();
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response: ResThirdPartyRsltHObj) => {
                   this.latestReqDtCheckIntegrator = response.ReqDt;
@@ -683,6 +697,14 @@ export class LeadInputCustDataComponent implements OnInit {
     this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
   }
 
+  setEnableZipcodeLookup() {
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isReadonly = false;
+
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
+    this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
+  }
+
   copyAddress() {
     this.residenceAddressObj = new LeadCustAddrObj();
     this.residenceAddressObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
@@ -705,6 +727,8 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value };
     this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
     this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+
+    this.setEnableZipcodeLookup();
   }
 
   setLegalAddr() {
@@ -939,6 +963,7 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputLegalAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrLegalObj.Zipcode };
               this.inputAddressObjForLegalAddr.default = this.legalAddressObj;
               this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
+              this.setEnableZipcodeLookup();
             });
 
           let objLeadCustAddrResObj: GenericObj = new GenericObj();
@@ -969,8 +994,9 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputResidenceAddressObj.inputLookupObj.jsonSelect = { Zipcode: this.resLeadCustAddrResObj.Zipcode };
               this.inputAddressObjForResidenceAddr.default = this.residenceAddressObj;
               this.inputAddressObjForResidenceAddr.inputField = this.inputResidenceAddressObj;
+              this.setEnableZipcodeLookup();
             });
-
+            
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
           this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           let objLeadCustPersonal2 = { Id: this.resLeadCustObj.LeadCustId };
@@ -1020,10 +1046,11 @@ export class LeadInputCustDataComponent implements OnInit {
             });
         }
       });
+
   }
 
   checkIntegrator() {
-    if (this.isUseDigitalization == '1' && this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == '1' && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       this.leadInputObj = new ReqInputLeadCustPersonalObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
@@ -1089,7 +1116,7 @@ export class LeadInputCustDataComponent implements OnInit {
     let inputLeadString = JSON.stringify(inputLeadCustObj);
     let latestCustDataString = JSON.stringify(this.latestCustDataObj);
 
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist && inputLeadString != latestCustDataString) {
       if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check again?")) {
         return true;
       }
@@ -1166,4 +1193,25 @@ export class LeadInputCustDataComponent implements OnInit {
     }
   }
   //END OF URS-LOS-041
+
+  async getDigitalizationSvcType(){
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+      (response) => {
+        this.sysConfigResultObj = response;
+      });
+
+    if(this.sysConfigResultObj.ConfigValue != null){
+      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
+      var refSvcType = "";
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapCust, { TrxNo: "-"}).toPromise().then(
+        (response) => {
+            refSvcType = response["Result"];
+        });
+
+        var svcType = listSvcType.find(x => x == refSvcType);
+      if(svcType != null){
+        this.IsSvcExist = true;
+      }
+    }
+  }
 }

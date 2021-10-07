@@ -1,0 +1,68 @@
+{
+    "url": "",
+    "title":"Lookup Economic Sector (Slik)",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "REF_SECTOR_ECONOMY_SLIK_CODE",
+        "id": "RefSectorEconomySlikCodeId",
+        "value": "",
+        "label": "Economic Sector Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "REF_SECTOR_ECONOMY_SLIK_NAME",
+        "id": "RefSectorEconomySlikNameId",
+        "value": "",
+        "label": "Economic Sector Description",
+        "placeholder": ""
+      }
+    ],
+  "querystring": {
+    "name": "lookupEconomicSectorSlikX"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Economic Sector Code",
+            "name": "REF_SECTOR_ECONOMY_SLIK_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Economic Sector Description",
+            "name": "REF_SECTOR_ECONOMY_SLIK_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RefSectorEconomySlikCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "RefSectorEconomySlikName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "RefSectorEconomySlikCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "RefSectorEconomySlikCode",
+    "propertyName": "RefSectorEconomySlikName"
+}
