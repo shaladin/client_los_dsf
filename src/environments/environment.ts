@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-  //losUrl: 'https://localhost:5001',
+  //losUrl: 'http://localhost:5000',
   // FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL',
   FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_DSF_IMPL',
@@ -23,6 +23,7 @@ export const environment = {
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
   dmsURL: 'http://kfx-svr/LITEDMS_OPL/LiteDMS/pageconfins.aspx',
   WfR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL/',
+  r2Url: 'http://r3impl-appsvr.ad-ins.com/DIPODEVR2/CONFINS_DSF_IMPL',
   ChipperKeyLocalStorage: 'AdInsFOU2020OKOK', // 256 bit atau 16 karakter
   ChipperKeyCookie: 'AdInsFOU12345678', // 256 bit atau 16 karakter & harus sama dengan BE
   Module: 'LOS',
