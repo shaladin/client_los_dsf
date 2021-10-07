@@ -233,6 +233,9 @@ export class URLConstantX {
   public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmAppRjcByCustNoAndAppStat";
   public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
 
+  //ltkm cust personal main data
+  public static GetCustPersonalForLtkmCopyByCustIdX = environment.FoundationR3Url + "/v1" + "/CustX/GetCustPersonalForLtkmCopyByCustId";
+
   //Delivery Order
   public static EditAppAssetDOMultiAsset = environment.losUrl + "/v1" + "/AppAssetX/EditAppAssetDOMultiAsset";
 
