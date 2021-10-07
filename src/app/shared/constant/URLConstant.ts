@@ -499,7 +499,7 @@ export class URLConstant {
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
   public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
-  public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
+  public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = environment.ApprovalR3Url + "/Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode";
 
   // SERVICE TASK
   public static GetListOSWfTaskListByActCode = "ServiceTask/GetListOSWfTaskListByActCode/";
