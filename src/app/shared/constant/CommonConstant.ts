@@ -921,6 +921,7 @@ export class CommonConstant {
 
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";
+  public static PRD_OFR_DEACT_APV = "PRD_OFR_DEACT_APV";
 
   //APP STAT
   public static AppStatCancel = "CAN";

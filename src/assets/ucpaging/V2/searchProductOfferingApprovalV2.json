@@ -155,22 +155,56 @@
         ]
       },
       {
-        "type": "action",
-        "position": "center",
-        "action": [
+        "type" : "action",
+        "position" : "center",
+        "action" : [
           {
-            "type": "callback",
-            "key": "HoldTask"
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [ 
+                  {
+                      "isUser": false,
+                      "property" : "IsRoleAssignment", 
+                      "value" : false, 
+                      "restriction" : "EQ" 
+                  }
+                ],
+                "result" : { 
+                  "type": "callback",
+                  "key": "HoldTask",
+                  "icon" : "ft-edit-2"
+                },
+                "isHide" : false
+              }
+            ]
           }
         ]
       },
       {
-        "type": "action",
-        "position": "center",
-        "action": [
+        "type" : "action",
+        "position" : "center",
+        "action" : [
           {
-            "type": "callback",
-            "key": "TakeBack"
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [ 
+                  {
+                      "isUser": false,
+                      "property" : "IsRoleAssignment", 
+                      "value" : false, 
+                      "restriction" : "EQ" 
+                  }
+                ],
+                "result" : { 
+                  "type": "callback",
+                  "key": "TakeBack",
+                  "icon" : "ft-edit-2"
+                },
+                "isHide" : false
+              }
+            ]
           }
         ]
       },

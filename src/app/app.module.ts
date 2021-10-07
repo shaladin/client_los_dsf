@@ -109,13 +109,6 @@ const urlConstantConfig = (urlConfig: UrlConstantService) => {
         StorageService,
         EnviConfigService,
         ApprovalTaskService,
-        // {
-        //     provide: APP_INITIALIZER, useFactory: appConfig, multi: true, deps: [EnviConfigService]
-        // },
-        // UrlConstantService,
-        // {
-        //     provide: APP_INITIALIZER, useFactory: urlConstantConfig, multi: true, deps: [UrlConstantService]
-        // },
         // EnviConfigService,
         // {
         //     provide: APP_INITIALIZER, useFactory: enviConfig, multi: true, deps: [EnviConfigService]

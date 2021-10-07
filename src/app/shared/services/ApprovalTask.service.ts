@@ -37,11 +37,10 @@ export class ApprovalTaskService{
         );
     }
 
-    TakeBackApvTask(TaskId: number){
-        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    TakeBackApvTask(TaskId: number, Username: string){
         let ApvReqObj = new ApprovalObj();
         ApvReqObj.TaskId = TaskId;
-        ApvReqObj.Username = currentUserContext[CommonConstant.USER_NAME];
+        ApvReqObj.Username = Username;
         this.http.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
             (response) => {
                this.toastr.successMessage(response["Message"]);
