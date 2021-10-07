@@ -35,6 +35,8 @@ export class AdInsConstant {
   public static ApvHoldTaskUrl = environment.FoundationR3Url + "/v1" + "/Approval/Hold";
   public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/v1" + "/Approval/TakeBack";
   public static CheckListAppInsMainCvgByAppId = environment.losUrl + "/v2" + "/AppIns/CheckListAppInsMainCvgByAppId";
+  public static ApvClaimTask = environment.FoundationR3Url + "/v1" + "/Approval/ClaimTask";
+  public static ApvUnclaimTaskUrl = environment.FoundationR3Url + "/v1" + "/Approval/UnClaim";
   
   public static UserCustomer = "Customer";
   public static TextTrue = "True";
