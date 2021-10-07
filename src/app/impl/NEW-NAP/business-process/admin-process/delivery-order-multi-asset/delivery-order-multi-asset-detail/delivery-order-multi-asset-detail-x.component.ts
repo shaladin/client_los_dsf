@@ -53,7 +53,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     DOAssetList: this.fb.array([]),
     AgrmntCreatedDt: ['', Validators.required],
     EffectiveDt: ['', Validators.required],
-    AddIntrstAmt:[0],
+    AddIntrstAmt: [0],
     GoLiveEstimated: ['']
   });
 
@@ -65,7 +65,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   appNo: string;
   dmsAppObj: DMSObj;
   mouCustNo: string;
-  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   UserAccess: CurrentUserContext;
   minDt: Date = new Date();
@@ -94,7 +94,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       this.agrmntId = params['AgrmntId'];
       if (params['WfTaskListId'] != null) {
         this.wfTaskListId = params['WfTaskListId'];
-      }else{
+      } else {
         this.wfTaskListId = params['TaskListId'];
       }
     });
@@ -117,15 +117,21 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     this.DOAssetForm.patchValue({
       GoLiveEstimated: formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'),
     });
-    this.http.post(URLConstant.GetAgrmntByAgrmntId, {Id: this.agrmntId}).subscribe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response: AgrmntObj) => {
-        this.DOAssetForm.patchValue({
-          AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
-          EffectiveDt: formatDate(response["EffectiveDt"], 'yyyy-MM-dd', 'en-US'),
-        })
+        if (response["EffectiveDt"] == null) {
+          this.DOAssetForm.patchValue({
+            AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
+          })
+        } else {
+          this.DOAssetForm.patchValue({
+            AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
+            EffectiveDt: formatDate(response["EffectiveDt"], 'yyyy-MM-dd', 'en-US'),
+          })
+        }
       }
     );
-    this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, {Id: this.agrmntId}).subscribe(
+    this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response) => {
         this.PODt = response["PurchaseOrderDt"];
         this.isHasPO = true;
@@ -167,11 +173,11 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
             IsSelected: false
           });
           console.log("AAAAAAAAAA");
-          if(item.DeliveryDt != null){
+          if (item.DeliveryDt != null) {
             let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
-            if(new Date(tempDt) < devDt){
+            if (new Date(tempDt) < devDt) {
               this.minDt = devDt;
-              if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+              if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt) {
                 this.DOAssetForm.patchValue({
                   EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
                 });
@@ -179,7 +185,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
 
             }
           }
-          else{
+          else {
             this.minDt = tempDt;
           }
           formArray.push(formGroup);
@@ -187,7 +193,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         this.isFinal = response[2]["IsFinal"];
       }
     );
-        await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
@@ -195,7 +201,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   async InitDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       this.dmsAppObj = new DMSObj();
@@ -302,18 +308,18 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
                 IsSelected: false
               });
               console.log("AAAAAAAAAA");
-              if(item.DeliveryDt != null){
+              if (item.DeliveryDt != null) {
                 let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
-                if(new Date(tempDt) < devDt){
+                if (new Date(tempDt) < devDt) {
                   this.minDt = devDt;
-                  if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+                  if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt) {
                     this.DOAssetForm.patchValue({
                       EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
                     });
                   }
                 }
               }
-              else{
+              else {
                 this.minDt = tempDt;
               }
               formArray.push(formGroup);
@@ -404,18 +410,18 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
               IsSelected: false
             });
             console.log("AAAAAAAAAA");
-            if(item.DeliveryDt != null){
+            if (item.DeliveryDt != null) {
               let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
-              if(new Date(tempDt) < devDt){
+              if (new Date(tempDt) < devDt) {
                 this.minDt = devDt;
-                if(new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt){
+                if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < devDt) {
                   this.DOAssetForm.patchValue({
                     EffectiveDt: formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US')
                   });
                 }
               }
             }
-            else{
+            else {
               this.minDt = tempDt;
             }
             formArray.push(formGroup);
@@ -429,7 +435,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ BizTemplateCode: this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { BizTemplateCode: this.bizTemplateCode });
   }
 
   SaveForm() {
@@ -446,7 +452,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       forkJoin([editTc, updateAgrmntDt]).subscribe(
         (response) => {
           this.toastr.successMessage(response[1]["Message"]);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
         }
       );
     }
@@ -456,7 +462,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   DOSubmitHandler() {
-    if(!this.DOAssetForm.valid){
+    if (!this.DOAssetForm.valid) {
       return;
     }
     if (!this.isFinal) {
@@ -464,7 +470,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     }
     else {
       var valid: boolean = true;
-      
+
       if (this.LobCode != CommonConstantX.CF4W_LOB_CODE_CF) {
         for (let index = 0; index < this.doAssetList.length; index++) {
           if (this.doAssetList[index].SerialNo1 == '' || this.doAssetList[index].SerialNo1 == null || this.doAssetList[index].SerialNo1 == undefined) {
@@ -486,17 +492,17 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         };
         let editTc = this.httpClient.post(URLConstant.EditAppTc, tcFormData);
         var submitDO = null;
-        if(environment.isCore){
+        if (environment.isCore) {
           submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
         }
-        else{
+        else {
           submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
         }
         let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
         forkJoin([editTc, submitDO, updateAgrmntDt]).subscribe(
           (response) => {
             this.toastr.successMessage(response[1]["Message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ "BizTemplateCode": this.bizTemplateCode});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
           }
         );
       }
@@ -506,11 +512,11 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     }
   }
 
-  calculateAddInterest(){
+  calculateAddInterest() {
     var diffDays = 0;
-    var diffTimes = new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime()- new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime();
-    if(diffTimes>0){
-      diffDays = diffTimes / (1000*3600*24)
+    var diffTimes = new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime() - new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime();
+    if (diffTimes > 0) {
+      diffDays = diffTimes / (1000 * 3600 * 24)
       console.log(diffDays);
 
       this.http.post(URLConstantX.CalculateAdditionalInterestX, { AgrmntId: this.agrmntId, DiffDays: diffDays }).subscribe(
@@ -521,21 +527,21 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         }
       );
     }
-    else{
+    else {
       this.DOAssetForm.patchValue({
         AddIntrstAmt: 0
       });
     }
   }
 
-  claimTask(){
-    if(environment.isCore){
-        if(this.wfTaskListId != "" && this.wfTaskListId != undefined){
-          this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-        }
+  claimTask() {
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
       }
-      else if (this.wfTaskListId > 0) {
-        this.claimTaskService.ClaimTask(this.wfTaskListId);
-      }
+    }
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
   }
 }
