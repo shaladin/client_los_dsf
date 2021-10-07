@@ -38,6 +38,8 @@ import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-l
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
 import { NewLeadInputPageDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input-page-dsf/new-lead-input-page-dsf.component';
+import { NewLeadInputPageXComponent } from 'app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 
 
 const routes: Routes = [
@@ -252,6 +254,13 @@ const routes: Routes = [
         component: NewLeadInputPageDsfComponent,
         data: {
           title: 'Lead Detail Dsf'
+        }
+      },
+      {
+        path: PathConstantX.SIMPLE_LEAD_DETAIL,
+        component: NewLeadInputPageXComponent,
+        data: {
+          title: 'Lead Detail'
         }
       },
       {

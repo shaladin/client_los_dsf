@@ -16,6 +16,10 @@ export class LtkmInquiryComponent implements OnInit {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchLtkmInquiry.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLtkmInquiry.json";
+      if (environment.isCore) {
+        this.inputPagingObj._url = "./assets/ucpaging/V2/searchLtkmInquiryV2.json";
+        this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLtkmInquiryV2.json";
+      }
       this.inputPagingObj.ddlEnvironments = [
         {
           name: "LC.MR_CUST_TYPE_CODE",

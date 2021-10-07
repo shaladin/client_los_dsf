@@ -628,10 +628,10 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.type = pageType;
     if (pageType == 'AddExisting') {
       this.bindUcLookupExisting();
-      this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
+      this.updateUcLookup(this.CollTypeList[0].Key, true, pageType);
     } else {
       this.bindUcLookup();
-      this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
+      this.updateUcLookup(this.CollTypeList[0].Key, true, pageType);
       this.AddCollForm.controls.CopyFromLegal.enable();
       this.AddCollForm.controls.CopyToOwnerLocation.enable();
       this.AddCollForm.controls.AssetTypeCode.enable();
@@ -1482,23 +1482,24 @@ export class MouRequestAddcollXComponent implements OnInit {
       }
     }
 
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
-      if (!this.IsCalledIntegrator) {
-        if (confirm("Continue without integrator ?")) {
-          this.UpdatePlafondAmt(sumCollateralValue);
-        }
-      } else {
-        this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
-          (response) => {
-            this.UpdatePlafondAmt(sumCollateralValue);
-            this.toastr.successMessage("Success !");
-          }
-        );
-      }
-    }
-    else {
-      this.UpdatePlafondAmt(sumCollateralValue);
-    }
+    // if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
+    //   if (!this.IsCalledIntegrator) {
+    //     if (confirm("Continue without integrator ?")) {
+    //       this.UpdatePlafondAmt(sumCollateralValue);
+    //     }
+    //   } else {
+    //     this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
+    //       (response) => {
+    //         this.UpdatePlafondAmt(sumCollateralValue);
+    //         this.toastr.successMessage("Success !");
+    //       }
+    //     );
+    //   }
+    // }
+    // else {
+    //   this.UpdatePlafondAmt(sumCollateralValue);
+    // }
+    this.UpdatePlafondAmt(sumCollateralValue);
   }
 
   UpdatePlafondAmt(sumCollateralValue: number) {

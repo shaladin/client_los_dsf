@@ -47,7 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
         ContentLayoutComponent,
         ErrorDialogComponent,
         RolepickComponent,
-        BackdoorComponent
+        BackdoorComponent,
         ],
     
     imports: [

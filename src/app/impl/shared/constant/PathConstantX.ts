@@ -176,6 +176,11 @@ export class PathConstantX {
     //#region Nap-Sharing-Page
     public static NAP_SIMPLE_LEAD_DETAIL_X = PathConstant.NAP_SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
     //#endregion
+
+
+  //region LEAD
+  public static SIMPLE_LEAD_DETAIL = PathConstant.SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
+  //endregion
 }
 
 

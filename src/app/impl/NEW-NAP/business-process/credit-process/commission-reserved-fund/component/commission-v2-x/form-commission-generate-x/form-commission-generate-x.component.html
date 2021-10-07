@@ -129,15 +129,16 @@
                         <label class="col-md-1 adInsLabel">/</label>
                         <div class="col-md-3" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                             <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
-                            class="form-control adInsInput  text-right"
-                            formControlName="AllocationPercentage" 
-                            (focusout)="ChangeAllocAmountBasedOnPercentage(i)">
+                              class="form-control adInsInput  text-right"
+                              formControlName="AllocationPercentage" 
+                              (focusout)="ChangeAllocAmountBasedOnPercentage(i)">
+
                             <input type="" currencyMask class="form-control adInsInput" 
-                            (focusout)="ChangeAllocAmountBasedOnPercentage(i)" 
-                            formControlName="AllocationPercentage" 
-                            *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationPercentage.invalid }"
-                            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }"/>
+                              (focusout)="ChangeAllocAmountBasedOnPercentage(i)" 
+                              formControlName="AllocationPercentage" 
+                              *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationPercentage.invalid }"
+                              [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }"/>
                           <lib-uc-show-errors [control]="ruleItem.controls.AllocationPercentage" 
                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>

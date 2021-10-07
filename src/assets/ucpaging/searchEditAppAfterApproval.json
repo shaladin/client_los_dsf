@@ -114,7 +114,8 @@
       ]
     },
     {
-      "type": "text",
+      "type": "callback",
+      "key": "ViewCustomer",
       "position": "left",
       "property": "CustName"
     },

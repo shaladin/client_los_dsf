@@ -44,6 +44,7 @@ export class NapDetailFormXComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   IsLastStep: boolean = false;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']

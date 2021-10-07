@@ -157,8 +157,8 @@
 
             <mat-tab *ngIf="IsApprovalHist" label="Approval History">
               <ng-template matTabContent>
-                <app-approval-hist [BizTemplateCode]="bizTemplateCode" [AppNo]="AppNo" [AppId]="AppId">
-                </app-approval-hist>
+                <app-approval-hist-x [BizTemplateCode]="bizTemplateCode" [AppNo]="AppNo" [AppId]="AppId">
+                </app-approval-hist-x>
               </ng-template>
             </mat-tab>
             <mat-tab label="Highlight Comment">
@@ -181,6 +181,12 @@
             <mat-tab label="Survey Task Result">
               <ng-template matTabContent>
                 <app-view-srvy-task-x [AppId]="AppId"></app-view-srvy-task-x>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Credit Process Flow">
+              <ng-template matTabContent>
+                <app-view-credit-process-flow [AppNo]="AppNo"></app-view-credit-process-flow>
               </ng-template>
             </mat-tab>
           </mat-tab-group>
