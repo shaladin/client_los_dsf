@@ -61,7 +61,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     ReasonDesc: ['']
   });
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, 
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient,
               private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -169,9 +169,11 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {"BizTemplateCode":this.bizTemplateCode});
   }
   SaveData() {
-    var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
+    const fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
     for (let i = 0; i < fa_listInvoice.length; i++) {
-      var item = fa_listInvoice.at(i);
+      const item = fa_listInvoice.at(i);
+      this.listInvoice[i].IsApproved = true;
+      this.listInvoice[i].InvoiceStat = "APV";
       this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
       this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
@@ -192,7 +194,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       IsReturn: this.IsReturnOn,
       ReturnHandlingHObj: this.ReturnHandlingHData
     };
-    
+
       let UpdateAppInvoiceDlfnUrl = environment.isCore ? URLConstant.UpdateAppInvoiceDlfnV2 : URLConstant.UpdateAppInvoiceDlfn;
       this.httpClient.post(UpdateAppInvoiceDlfnUrl, request).subscribe(() => {
       if (this.IsReturnOn) {
