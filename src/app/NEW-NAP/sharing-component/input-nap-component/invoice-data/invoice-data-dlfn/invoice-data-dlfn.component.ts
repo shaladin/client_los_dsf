@@ -375,7 +375,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
 
   SaveForm(enjiForm: NgForm) {
     console.log("DEBUG FE")
-    if (this.dataobj["TotalInvoiceAmt"] <= 0) {
+    if (this.dataobj == null || this.dataobj["TotalInvoiceAmt"] <= 0) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_INVOICE);
     }
     else {
