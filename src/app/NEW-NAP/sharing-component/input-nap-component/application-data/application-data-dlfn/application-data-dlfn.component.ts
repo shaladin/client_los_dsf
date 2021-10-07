@@ -24,6 +24,7 @@ import {RefEmpObj} from 'app/shared/model/RefEmpObj.Model';
 import {AppObj} from 'app/shared/model/App/App.Model';
 import {ProdOfferingDObj} from 'app/shared/model/Product/ProdOfferingDObj.model';
 import {AppCustBankAccObj} from 'app/shared/model/AppCustBankAccObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-application-data-dlfn',
@@ -190,7 +191,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
         });
 
         await this.SetPayFreq(MouCustId, true);
-        this.makeNewLookupCriteria();
+        await this.makeNewLookupCriteria();
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
@@ -432,7 +433,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.isInputLookupObj = true;
   }
 
-  makeNewLookupCriteria() {
+  async makeNewLookupCriteria() {
     this.arrAddCrit = new Array<CriteriaObj>();
 
     const addCrit1 = new CriteriaObj();
@@ -449,13 +450,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
     addCrit2.value = '1';
     this.arrAddCrit.push(addCrit2);
 
-    const addCrit3 = new CriteriaObj();
-    addCrit3.DataType = 'text';
-    addCrit3.propName = 'rbt.JOB_TITLE_CODE';
-    addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
-    this.arrAddCrit.push(addCrit3);
-
     const addCrit4 = new CriteriaObj();
     addCrit4.DataType = 'text';
     addCrit4.propName = 'ro.OFFICE_CODE';
@@ -463,7 +457,22 @@ export class ApplicationDataDlfnComponent implements OnInit {
     addCrit4.listValue = [this.resultData.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
 
+    await this.GetGSValueSalesOfficer();
+
     this.makeLookUpObj();
+  }
+  
+  async GetGSValueSalesOfficer() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+      (response) => {
+        let addCrit3 = new CriteriaObj();
+        addCrit3.DataType = "text";
+        addCrit3.propName = "rbt.JOB_TITLE_CODE";
+        addCrit3.restriction = AdInsConstant.RestrictionIn;
+        addCrit3.listValue = [response.GsValue];
+        this.arrAddCrit.push(addCrit3);
+      }
+    );
   }
 
   async loadData() {
