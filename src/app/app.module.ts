@@ -103,17 +103,17 @@ const urlConstantConfig = (urlConfig: UrlConstantService) => {
         ErrorDialogService,
         RolePickService,
         ClaimTaskService,
-        UrlConstantNew,
+        // UrlConstantNew,
         NGXToastrService,
         StorageService,
-        EnviConfigService,
-        {
-            provide: APP_INITIALIZER, useFactory: enviConfig, multi: true, deps: [EnviConfigService]
-        },
-        UrlConstantService,
-        {
-            provide: APP_INITIALIZER, useFactory: urlConstantConfig, multi: true, deps: [UrlConstantService]
-        },
+        // EnviConfigService,
+        // {
+        //     provide: APP_INITIALIZER, useFactory: enviConfig, multi: true, deps: [EnviConfigService]
+        // },
+        // UrlConstantService,
+        // {
+        //     provide: APP_INITIALIZER, useFactory: urlConstantConfig, multi: true, deps: [UrlConstantService]
+        // },
         { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
     ],
     bootstrap: [AppComponent],
