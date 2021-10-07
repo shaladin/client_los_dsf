@@ -22,6 +22,7 @@ import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/ResAppCustPersonalAndSpouseDataObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 
 @Component({
   selector: 'app-doc-signer-detail-dsf',
@@ -277,14 +278,6 @@ export class DocSignerDetailDsfComponent implements OnInit {
     this.officeCodeList.push(this.OfficeCode);
     this.officeCodeList.push(CommonConstant.HeadOffice);
 
-    var crit3Obj = new CriteriaObj();
-    crit3Obj.propName = 'RO.OFFICE_CODE';
-    crit3Obj.restriction = AdInsConstant.RestrictionIn;
-    crit3Obj.listValue = this.officeCodeList;
-
-    this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
-    this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
-
     var critSignerRoleObj = new CriteriaObj();
     critSignerRoleObj.propName = 'RR.ROLE_CODE';
     critSignerRoleObj.restriction = AdInsConstant.RestrictionIn;
@@ -292,6 +285,23 @@ export class DocSignerDetailDsfComponent implements OnInit {
 
     this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
     this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
+
+    var crit3Obj = new CriteriaObj();
+    crit3Obj.propName = 'RO.OFFICE_CODE';
+    crit3Obj.restriction = AdInsConstant.RestrictionEq;
+    crit3Obj.value = this.OfficeCode;
+
+    this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
+    this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
+
+    var critSignerRoleDIRObj = new CriteriaObj();
+    critSignerRoleDIRObj.propName = 'RR.ROLE_CODE';
+    critSignerRoleDIRObj.restriction = AdInsConstant.RestrictionOr;
+    critSignerRoleDIRObj.value = CommonConstantDsf.Director;
+
+    this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleDIRObj);
+    this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleDIRObj);
+
 
         // if (this.signerRoleCode != null)
         // {

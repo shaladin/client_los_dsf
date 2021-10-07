@@ -4,4 +4,6 @@ export class CommonConstantDsf {
     public static SCHM_CODE_CRD_APV_MPF = "CRD_APV_MPF";
     public static CAT_CODE_CRD_APV = "CRD_APV";
     public static GS_ROLE_PRV = "ROLE_PRV";
+
+    public static Director = "DIR";
 }
