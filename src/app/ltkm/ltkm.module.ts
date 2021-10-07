@@ -60,6 +60,8 @@ import { ViewLtkmAppSummaryDataComponent } from "./view-ltkm-component/ltkm-app-
 import { UcdropdownlistModule } from "@adins/ucdropdownlist";
 import { LtkmReturnHandlingXComponent } from "app/impl/ltkm/ltkm-return-handling/detail/ltkm-return-handling-x.component";
 import { LtkmCustJobDataXComponent } from "app/impl/ltkm/ltkm-request/additional-component/cust-job-data/cust-job-data-x.component";
+import { LtkmRequestXComponent } from "app/impl/ltkm/ltkm-request/ltkm-request-x.component";
+import { LtkmCustPersonalMainDataXComponent } from "app/impl/ltkm/ltkm-request/additional-component/cust-personal-main-data/cust-personal-main-data-x.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -110,6 +112,7 @@ export const customCurrencyMaskConfig = {
   declarations: [
     LtkmRequestAnalysisComponent,
     LtkmRequestComponent,
+    LtkmRequestXComponent,
     LtkmVerifyPagingComponent,
     LtkmVerifyDetailComponent,
     LtkmApprovalPagingComponent,
@@ -125,6 +128,7 @@ export const customCurrencyMaskConfig = {
     LtkmReturnHandlingPagingComponent,
     LtkmReturnHandlingComponent,
     LtkmCustPersonalMainDataComponent,
+    LtkmCustPersonalMainDataXComponent,
     LtkmMgmntShrholderComponent,
     LtkmLegalDocComponent,
     LtkmFinancialCompanyComponent,
