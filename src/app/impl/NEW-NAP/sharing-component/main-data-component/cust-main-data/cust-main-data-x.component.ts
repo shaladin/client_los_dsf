@@ -49,6 +49,7 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CustAttrFormComponent } from 'app/NEW-NAP/sharing-component/main-data-component/components/cust-attr-form/cust-attr-form.component';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 
 @Component({
   selector: 'app-cust-main-data-x',
@@ -503,28 +504,16 @@ export class CustMainDataXComponent implements OnInit {
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
-    if (this.bizTemplateCode == CommonConstant.CFNA) {
-      if (this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD) {
-        this.InputLookupCustObj.isReadonly = true;
-      } else {
-        this.InputLookupCustObj.isReadonly = false;
-      }
-    } else {
-      this.InputLookupCustObj.isReadonly = false;
-    }
+   
+    this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustObj.isRequired = true;
 
     this.InputLookupCustCoyObj.urlJson = "./assets/uclookup/impl/lookUpExistingCustCompanyX.json";
     this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustCoyObj.pagingJson = "./assets/uclookup/impl/lookUpExistingCustCompanyX.json";
     this.InputLookupCustCoyObj.genericJson = "./assets/uclookup/impl/lookUpExistingCustCompanyX.json";
-    if (this.bizTemplateCode == CommonConstant.CFNA) {
-      if (this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD) {
-        this.InputLookupCustCoyObj.isReadonly = true;
-      }
-    } else {
-      this.InputLookupCustCoyObj.isReadonly = false;
-    }
+    this.InputLookupCustCoyObj.isReadonly = true;
+
     this.InputLookupCustCoyObj.isRequired = true;
     this.InputLookupCustCoyObj.nameSelect = "";
 
@@ -559,6 +548,31 @@ export class CustMainDataXComponent implements OnInit {
 
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustCoyObj.addCritInput = this.ArrAddCrit;
+
+    if (this.bizTemplateCode == CommonConstant.CFNA) 
+    {
+      let intR2ObjPer: IntegrationObj = new IntegrationObj();
+      intR2ObjPer.baseUrl = URLConstantX.R2ApiAgrmntGetListCustNoHaveAgrmntMaster;
+      intR2ObjPer.requestObj = { "CustType": "P" };
+      intR2ObjPer.leftColumnToJoin = "CustNo";
+      intR2ObjPer.rightColumnToJoin = "CustNo";
+
+      this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v2";
+      this.InputLookupCustObj.isJoinExAPI = true
+      this.InputLookupCustObj.integrationObj = intR2ObjPer;
+
+      let intR2ObjCoy: IntegrationObj = new IntegrationObj();
+      intR2ObjCoy.baseUrl = URLConstantX.R2ApiAgrmntGetListCustNoHaveAgrmntMaster;
+      intR2ObjCoy.requestObj = { "CustType": "C" };
+      intR2ObjCoy.leftColumnToJoin = "CustNo";
+      intR2ObjCoy.rightColumnToJoin = "CustNo";
+
+      this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v2";
+      this.InputLookupCustCoyObj.isJoinExAPI = true;
+      this.InputLookupCustCoyObj.integrationObj = intR2ObjCoy;
+      
+      this.disableInput();
+    }
 
     if (isChange) {
       this.ucLookupExistingCust.setAddCritInput();
@@ -1040,18 +1054,8 @@ export class CustMainDataXComponent implements OnInit {
     // this.CustMainDataForm.controls.MrIdTypeCode.enable();
     // this.CustMainDataForm.controls.MrMaritalStatCode.enable();
     this.inputAddressObj.isReadonly = false;
-    if (this.bizTemplateCode == CommonConstant.CFNA) {
-      if (this.LobCode == CommonConstantX.CFNA_LOB_CODE_FD) {
-        this.InputLookupCustObj.isReadonly = true;
-        this.InputLookupCustCoyObj.isReadonly = true;
-      } else {
-        this.InputLookupCustObj.isReadonly = false;
-        this.InputLookupCustCoyObj.isReadonly = false;
-      }
-    } else {
-      this.InputLookupCustObj.isReadonly = false;
-      this.InputLookupCustCoyObj.isReadonly = false;
-    }
+    this.InputLookupCustObj.isReadonly = false;
+    this.InputLookupCustCoyObj.isReadonly = false;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = false;
     this.inputAddressObj.inputField.inputLookupObj.isDisable = false;
   }

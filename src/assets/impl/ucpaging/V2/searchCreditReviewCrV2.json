@@ -154,7 +154,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "BACK_TO_DETAIL",
+                                "path": "BACK_TO_DETAIL_X",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -180,7 +180,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "BACK_TO_DETAIL",
+                                "path": "BACK_TO_DETAIL_X",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

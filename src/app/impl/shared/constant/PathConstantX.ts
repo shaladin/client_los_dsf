@@ -22,6 +22,7 @@ export class PathConstantX {
   public static APPROVAL_FACTORING_X ="ApprovalFactoringX";
   public static NAP1_X = 'NAP1X';
   public static VIEW = 'ViewX';
+  public static REQ_X = "RequestX";
   //#endregion
 
   public static NAP2 = "NAP2X";
