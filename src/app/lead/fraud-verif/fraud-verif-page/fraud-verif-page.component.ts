@@ -139,7 +139,7 @@ export class FraudVerifPageComponent implements OnInit {
                   this.negativeAssetCheckObj.SerialNo4 = this.tempLeadAsset.SerialNo4;
                   this.negativeAssetCheckObj.SerialNo5 = this.tempLeadAsset.SerialNo5;
 
-                  this.http.post(URLConstant.GetDoubleFinancingCheckAppAsset, this.negativeAssetCheckObj).subscribe(
+                  this.http.post(URLConstant.GetDoubleFinancingCheckAppAssetV2, this.negativeAssetCheckObj).subscribe(
                     (response) => {
                       this.ResultDuplicateDoubleFinancing = response[CommonConstant.ReturnObj];
                     })
