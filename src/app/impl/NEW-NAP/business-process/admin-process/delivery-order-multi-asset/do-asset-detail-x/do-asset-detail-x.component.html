@@ -24,7 +24,8 @@
             <div formArrayName="listItem">
               <div *ngFor="let item of listItem.controls; let i = index;">
                 <div class="form-group row" [formGroupName]="i">
-                  <label class="col-md-4 " translate> {{item.controls.SerialNoLabel.value}} </label>
+                  <label *ngIf="LobCode == 'CF'" class="col-md-4 " translate> {{item.controls.SerialNoLabel.value}} </label>
+                  <label *ngIf="LobCode != 'CF'" class="col-md-4 adInsLabel adins-required-label" translate> {{item.controls.SerialNoLabel.value}} </label>
                   <div class="col-md-8">
                     <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.listItem['controls'][i]['controls'].SerialNoValue.invalid}">

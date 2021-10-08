@@ -29,7 +29,7 @@
                 <select class="form-control adInsInput" formControlName="BankAccNo" (change)="BankAccHandler()"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && PODetailForm.controls.BankAccNo.invalid }">
                   <ng-container *ngIf="IsDisburseToCust">
-                    <option *ngFor="let custBankAcc of custBankAccList" [value]="custBankAcc.BankAccNo">{{custBankAcc.BankAccNo}}</option>
+                    <option *ngFor="let custBankAcc of custBankAccList" [value]="custBankAcc.BankAccNo">{{custBankAcc.BankName}} - {{custBankAcc.BankAccNo}}  - {{custBankAcc.BankAccName}}</option>
                   </ng-container>
                   <ng-container *ngIf="!IsDisburseToCust">
                     <option *ngFor="let bankAcc of vendorBankAccList" [value]="bankAcc.BankAccountNo">{{bankAcc.BankAccountNo}}</option>

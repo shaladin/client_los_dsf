@@ -21,7 +21,6 @@
                     <th style="text-align: right;"><span translate class="thead-header text-right">Invoice Amount</span>
                     </th>
                     <th style="text-align: center;"><span translate class="thead-header">Invoice Date</span></th>
-                    <th style="text-align: left;"><span translate class="thead-header">Verification</span></th>
                     <th><span translate class="thead-header">Notes</span></th>
                   </tr>
                   </thead>
@@ -37,11 +36,6 @@
                     <td class="text-center">
                       {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceDt.value | date : 'dd-MMM-yyyy' }}
                     </td>
-                    <td><select class="form-control adInsInput" style="width: auto" formControlName="Verification"
-                                (change)="Calculate(i)">
-                      <option *ngFor="let sr of listVerificationStatus" value="{{sr.Key}}">
-                        {{sr.Value}}</option>
-                    </select></td>
                     <td><textarea type="text" class="form-control adInsInput" formControlName="InvoiceNotes"></textarea>
                     </td>
                   </tr>
@@ -59,7 +53,6 @@
                     <th style="text-align: right;"><span translate class="thead-header text-right">Invoice Amount</span>
                     </th>
                     <th style="text-align: center;"><span translate class="thead-header">Invoice Date</span></th>
-                    <th style="text-align: left;"><span translate class="thead-header">Verification</span></th>
                     <th><span translate class="thead-header">Notes</span></th>
                   </tr>
                   </thead>
@@ -74,11 +67,6 @@
                     <td class="text-center">
                       {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceDt.value | date : 'dd-MMM-yyyy' }}
                     </td>
-                    <td><select class="form-control adInsInput" style="width: auto" formControlName="Verification"
-                                (change)="Calculate(i)">
-                      <option *ngFor="let sr of listVerificationStatus" value="{{sr.Key}}">
-                        {{sr.Value}}</option>
-                    </select></td>
                     <td><textarea type="text" class="form-control adInsInput" formControlName="InvoiceNotes"></textarea>
                     </td>
                   </tr>
