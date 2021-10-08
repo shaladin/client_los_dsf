@@ -16,6 +16,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-po-entry-x',
@@ -69,7 +70,15 @@ export class PoEntryXComponent implements OnInit {
     var datePipe = new DatePipe("en-US");
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context["BusinessDt"]);
+    var MrFistInstTypeCode : string = "";
+    await this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+      (response) => {
+        MrFistInstTypeCode = response["MrFirstInstTypeCode"];
+      }
+    );
+
     if (this.IsDisburseToCust) {
+      
       await this.httpClient.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).subscribe(
         (response : AppCustObj) => {
           this.AppCust = response;
@@ -79,7 +88,8 @@ export class PoEntryXComponent implements OnInit {
             reqAppLoanPurposeObj.Code = this.SupplCode;
             let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, reqAppLoanPurposeObj).toPromise();
             let getListBankAcc = this.httpClient.post(URLConstant.GetListCustBankAccByCustNo, { CustNo: this.AppCust.CustNo }).toPromise();
-            forkJoin([getAppLoanPurpose, getListBankAcc]).toPromise().then(
+            let getFirstInstAMt = this.httpClient.post(URLConstantX.GetFirstInstAmtForAppLoanPurpose, { Id: this.AgrmntId , Code: MrFistInstTypeCode }).toPromise();
+            forkJoin([getAppLoanPurpose, getListBankAcc, getFirstInstAMt]).toPromise().then(
               (response) => {
                 this.AppLoanPurposeList = response[0]["listResponseAppLoanPurpose"] as Array<AppLoanPurposeObj>;
                 this.custBankAccList = response[1]["ReturnObject"];
@@ -87,6 +97,7 @@ export class PoEntryXComponent implements OnInit {
                 console.log("custBankAccList: " + JSON.stringify(this.custBankAccList));
                 var isDefaultFound = false;
                 var totalDisburse = 0;
+                var firstInstAmt = 0;
                 for (const item of this.custBankAccList) {
                   if (item["IsDefault"]) {
                     this.CustBankAcc = item as AppCustBankAccObj;
@@ -100,6 +111,12 @@ export class PoEntryXComponent implements OnInit {
                 for (const loan of this.AppLoanPurposeList) {
                   totalDisburse += loan.FinancingAmt;
                 }
+
+                if (MrFistInstTypeCode == CommonConstant.FirstInstTypeAdvance)
+                {
+                  totalDisburse = totalDisburse - response[2]["Result"];
+                }
+
                 this.PODetailForm.patchValue({
                   SupplName: this.AppCust.CustName,
                   BankAccNo: this.CustBankAcc.BankAccNo,
@@ -151,7 +168,8 @@ export class PoEntryXComponent implements OnInit {
         reqAppLoanPurposeObj.Code = this.SupplCode;
         let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, reqAppLoanPurposeObj).toPromise();
         let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise();
-        forkJoin([getAppLoanPurpose, getListBankAcc]).toPromise().then(
+        let getFirstInstAMt = this.httpClient.post(URLConstantX.GetFirstInstAmtForAppLoanPurpose, { Id: this.AgrmntId , Code: MrFistInstTypeCode }).toPromise();
+        forkJoin([getAppLoanPurpose, getListBankAcc, getFirstInstAMt]).toPromise().then(
           (response) => {
             this.AppLoanPurposeList = response[0]["listResponseAppLoanPurpose"] as Array<AppLoanPurposeObj>;
             this.vendorBankAccList = response[1]["ReturnObject"];
@@ -172,6 +190,12 @@ export class PoEntryXComponent implements OnInit {
             for (const loan of this.AppLoanPurposeList) {
               totalDisburse += loan.FinancingAmt;
             }
+
+            if (MrFistInstTypeCode == CommonConstant.FirstInstTypeAdvance)
+            {
+              totalDisburse = totalDisburse - response[2]["Result"];
+            }
+
             this.PODetailForm.patchValue({
               SupplName: this.AppLoanPurposeList[0].SupplName,
               BankAccNo: this.VendorBankAcc.BankAccountNo,
