@@ -9,6 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -254,10 +255,10 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
     
             this.toastr.successMessage(response["message"]);
             if (this.bizTemplateCode == CommonConstant.CF4W) {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
             }
             if (this.bizTemplateCode == CommonConstant.FL4W) {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_FL4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
             }
             if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
@@ -266,7 +267,7 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
             }
             if (this.bizTemplateCode == CommonConstant.CFNA) {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CFNA_NAP1], { "AppId": response["Id"], "from": "SMPLLEAD" });
             }
       });
 
