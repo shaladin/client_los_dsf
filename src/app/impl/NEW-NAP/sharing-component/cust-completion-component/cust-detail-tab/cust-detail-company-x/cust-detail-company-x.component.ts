@@ -1,4 +1,4 @@
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -19,6 +19,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-cust-detail-company-x',
@@ -38,6 +40,7 @@ export class CustDetailCompanyXComponent implements OnInit {
   ddlCustModelObj: UcDropdownListObj = new UcDropdownListObj();
   CustNoObj: GenericObj = new GenericObj();
   BizTemplateCode: string = "";
+  MaxDtValidate: string;
   ReturnAppCustCompletionCompanyDataObj: any;
   ReturnSectorEconomySlikObj: any;
   TempRefSectorEconomySlikCode: any;
@@ -67,9 +70,11 @@ export class CustDetailCompanyXComponent implements OnInit {
   })
 
   ngOnInit() {
-    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let datePipe = new DatePipe("en-US");
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
+    this.MaxDtValidate = datePipe.transform(this.businessDt, "yyyy-MM-dd");
 
     this.lookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -123,9 +128,19 @@ export class CustDetailCompanyXComponent implements OnInit {
     }
   }
 
+  onFocusOutEstDate(event){
+    if(event.target.value > this.MaxDtValidate){
+      this.toastr.warningMessage(String.Format(ExceptionConstant.EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+      return;
+    }
+  }
+
   SaveForm() {
     this.SetData();
-
+    if(this.CustDetailForm.controls.EstablishmentDate.value > this.MaxDtValidate){
+      this.toastr.warningMessage(String.Format(ExceptionConstant.EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+      return;
+    }
     let reqAppCustCompanyObjX = {
       AppCustId: this.AppCustId,
       RefSectorEconomySlikCode: this.TempRefSectorEconomySlikCode

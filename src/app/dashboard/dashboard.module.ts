@@ -17,6 +17,8 @@ import { DashEmptyComponent } from './dash-empty/dash-empty.component';
 import { DashboardBmComponent } from './dashboard-bm/dashboard-bm.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts'
+import { DashboardSupersetComponent } from './dashboard-superset/dashboard-superset.component';
+import { SharedModule } from 'app/shared/shared.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -28,7 +30,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts'
         ContextMenuModule,
         SharingComponentModule,
         ucdashboard2Module,
-        NgxChartsModule
+        NgxChartsModule,
+        SharedModule
     ],
     exports: [],
     declarations: [
@@ -36,7 +39,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts'
         Dashboard2Component,
         DashBoardComponent,
         DashEmptyComponent,
-        DashboardBmComponent
+        DashboardBmComponent,
+        DashboardSupersetComponent
     ],
     providers: [],
 })

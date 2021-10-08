@@ -47,7 +47,9 @@ export class MouViewDetailXComponent implements OnInit {
   IsDisclosed: boolean;
   IsListedCust: boolean;
   MrRecourseTypeCode: string;
+  MrRevolvingTypeCode: string;
   Notes: string;
+  dictRevolvingTypeCode: { [id: string]: string } = {};
 
   mouCust: any;
   mouCustClause: any;
@@ -96,6 +98,7 @@ export class MouViewDetailXComponent implements OnInit {
         this.RealisationAmt = this.mouCust.RealisationAmt;
         this.IsRevolving = this.mouCust.IsRevolving;
         this.MouType = this.mouCust.MrMouTypeCode;
+        this.MrRevolvingTypeCode = this.mouCust.MrRevolvingTypeCode;
 
         if (this.MouType == CommonConstant.GENERAL) {
           this.mouCustClause = response["MouCustClauseObj"];
@@ -177,6 +180,17 @@ export class MouViewDetailXComponent implements OnInit {
                 });
               this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.MouCustDlrFindData.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);
             })
+        }
+
+        if(this.mouCust.MrRevolvingTypeCode != null || this.mouCust.MrRevolvingTypeCode != ''){
+          this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE }).subscribe(
+            (responseRefMaster: GenericKeyValueListObj) => {
+              for (let index = 0; index < responseRefMaster.ReturnObject.length; index++) {
+                const element = responseRefMaster.ReturnObject[index];
+                this.dictRevolvingTypeCode[element.Key] = element.Value;
+              }
+            }
+          );
         }
 
       })

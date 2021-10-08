@@ -61,6 +61,7 @@ export class SchmIrregularXComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.SetEntryInstallment()
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -104,7 +105,7 @@ export class SchmIrregularXComponent implements OnInit {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
     
-    if (this.listInstallment.length != 0) {
+    if (this.listInstallment && this.listInstallment.length != 0) {
       for (let i = 0; i < numOfStep; i++) {
         const group = this.fb.group({
           InstSeqNo: i + 1,

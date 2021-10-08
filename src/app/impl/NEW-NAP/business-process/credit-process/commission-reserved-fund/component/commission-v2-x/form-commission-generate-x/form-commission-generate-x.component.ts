@@ -24,7 +24,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: string;
-  @Input() RemainingAllocatedAmount:number=0;
+  @Input() maxAllocatedAmount:number=0;
   @Input() FormInputObj: object = {};
   @Input() ListSupplEmpPos: Array<RefMasterObj> = new Array<RefMasterObj>();
   @Input() DictMaxIncomeForm: object = {};
@@ -211,8 +211,8 @@ export class FormCommissionGenerateXComponent implements OnInit {
       let percentageAmt: number = 0;
 
       
-      if (ruleObj[0].MaxAllocationAmount > this.RemainingAllocatedAmount){
-        maxAllocAmt = this.RemainingAllocatedAmount;
+      if (ruleObj[0].MaxAllocationAmount > this.maxAllocatedAmount){
+        maxAllocAmt = this.maxAllocatedAmount;
       }
         if (maxAllocAmt <= 0) {
           behaviour = CommonConstant.RuleBehaviourLock;
@@ -226,7 +226,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
           allocAmt = 0;
         }
         
-      percentageAmt = (allocAmt / this.RemainingAllocatedAmount) * 100;
+      percentageAmt = (allocAmt / this.maxAllocatedAmount) * 100;
 
       if (isNaN(percentageAmt)) {
         percentageAmt = 0;
@@ -447,7 +447,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       var newPercent: number = 0;
       if (getamount.value != null && getamount.value != undefined) {
         let ttlAvailableAmt: number = 0;
-        ttlAvailableAmt = this.RemainingAllocatedAmount;
+        ttlAvailableAmt = this.maxAllocatedAmount;
         if (ttlAvailableAmt != 0 && ttlAvailableAmt != undefined) {
           newPercent = (getamount.value / ttlAvailableAmt) * 100;
           this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][i].patchValue({
@@ -471,7 +471,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
         if (percent != undefined && percent != null) {
           let ttlAvailableAmt: number = 0;
 
-          ttlAvailableAmt = this.RemainingAllocatedAmount;
+          ttlAvailableAmt = this.maxAllocatedAmount;
           if (ttlAvailableAmt != 0 && ttlAvailableAmt != undefined) {
             newAmt = (getpercentage.value / 100) * ttlAvailableAmt;
             this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][i].patchValue({

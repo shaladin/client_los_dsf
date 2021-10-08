@@ -187,12 +187,22 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
             this.tempIsSigner = tempIsSigner;
             this.inputGridObj.resultData["Data"] = new Array();
             this.inputGridObj.resultData.Data = response2.ReturnObject;
-            this.critCustCompany = response2.ReturnObject.filter(x => x.ShareholderType == CommonConstant.CustTypeCompany).map(x => x.CustNo);
-            this.critCust = response2.ReturnObject.filter(x => x.ShareholderType == CommonConstant.CustTypePersonal).map(x => x.CustNo);
+            this.critCust = this.SetListCustNo(response2.ReturnObject, CommonConstant.CustTypePersonal);
+            this.critCustCompany = this.SetListCustNo(response2.ReturnObject, CommonConstant.CustTypeCompany);
           }
         )
       }
     );
+  }
+
+  SetListCustNo(listCust: Array<any>, ShareholderType: string): Array<string> {
+    let tempListCustNo: Array<string> = new Array();
+    let listCustNo: Array<string> = listCust.filter(x => x.ShareholderType == ShareholderType).map(x => x.CustNo);
+    for (let index = 0; index < listCustNo.length; index++) {
+      const element: string = listCustNo[index];
+      if (element) tempListCustNo.push(element);
+    }
+    return tempListCustNo;
   }
 
   async getCustMainData() {

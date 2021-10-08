@@ -16,19 +16,23 @@
               </div>
             </div>
             <app-form-commission-generate-x #Form1 *ngIf="OnForm1 && !HideForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier" [RemainingAllocatedAmount] = "ActRemainingAlloc"
+              [parentForm]="CommissionForm" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier" [maxAllocatedAmount] = "maxAllocAmt"
               [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
             </app-form-commission-generate-x>
             <app-form-commission-generate-x #Form2 *ngIf="OnForm2 && !HideForm2" [hidden]="HideForm2" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierSupplierEmp" [FormInputObj]="FormInputObjSupplierEmp" [RemainingAllocatedAmount] = "ActRemainingAlloc" 
+              [parentForm]="CommissionForm" [identifier]="identifierSupplierEmp" [FormInputObj]="FormInputObjSupplierEmp" [maxAllocatedAmount] = "maxAllocAmt" 
               [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
             </app-form-commission-generate-x>
             <app-form-commission-generate-x #Form3 *ngIf="OnForm3 && !HideForm3" [hidden]="HideForm3" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor" [RemainingAllocatedAmount] = "ActRemainingAlloc"
+              [parentForm]="CommissionForm" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor" [maxAllocatedAmount] = "maxAllocAmt"
               [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
             </app-form-commission-generate-x>
           </div>
-
+          <div class="form-actions right">
+          <button type="button" (click)="NewCalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>
+            <i class="far fa-check-square"></i> Calculate
+          </button>
+          </div>
           <!-- Summary -->
           <lib-ucSubsection [id]="'viewSummaryId'" [title]="'Summary'" [panel]="'viewSummary'">
           </lib-ucSubsection>
@@ -80,10 +84,7 @@
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
               (click)="Cancel()" translate>
               <i class="ft-x"></i> Cancel
-            </button>
-            <button type="button" (click)="NewCalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>
-              <i class="far fa-check-square"></i> Calculate
-            </button>
+            </button>     
             <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
               <i class="far fa-check-square"></i> Save
             </button>

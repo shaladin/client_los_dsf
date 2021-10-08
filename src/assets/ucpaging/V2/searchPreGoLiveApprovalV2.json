@@ -56,8 +56,18 @@
             "name": "vApv.REQUEST_DATE",
             "id": "RequestDateId",
             "value": "BD",
+            "restriction": "gte",
+            "label": "Request Date >=",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "datatype": "date",
+            "name": "vApv.REQUEST_DATE",
+            "id": "RequestDateId",
+            "value": "BD",
             "restriction": "lte",
-            "label": "Request Date",
+            "label": "Request Date <=",
             "placeholder": "Placeholder"
         }
         

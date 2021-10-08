@@ -16,8 +16,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 })
 export class MouOsTcDetailComponent implements OnInit {
-  @ViewChild("MouTcGeneral") public mouTcGeneral: MouCustTcComponent;
-  @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
+  @ViewChild("MouTc") public mouTc: MouCustTcComponent;
   MouCustId: number = 0;
   mouType: string;
   resultData: MouCustObj;
@@ -56,11 +55,6 @@ export class MouOsTcDetailComponent implements OnInit {
   }
 
   saveMouTc() {
-    if (this.mouType == CommonConstant.GENERAL) {
-      this.mouTcGeneral.Save();
-    }
-    else if (this.mouType == CommonConstant.FACTORING) {
-      this.mouTcFactoring.Save();
-    }
+    this.mouTc.Save();
   }
 }

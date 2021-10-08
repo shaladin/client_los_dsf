@@ -1664,48 +1664,49 @@ export class AssetDataAddEditXComponent implements OnInit {
           }
         }
       }
-      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
-        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
-          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.AssetDataForm.reset();
-                //this.router.navigate(["/Nap/AssetData/Paging"]);
-                this.assetValue.emit({ mode: 'paging' });
-              });
-          }
-        }
-        else if (!this.IsIntegrator) {
-            if (confirm("Submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.AssetDataForm.reset();
-                //this.router.navigate(["/Nap/AssetData/Paging"]);
-                this.assetValue.emit({ mode: 'paging' });
-              });
-            }
-        }
-        else if (this.IsIntegrator) {
-          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
-                (response) => {
-                });
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
-            });
-        }
-      }else{
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.AssetDataForm.reset();
-            this.assetValue.emit({ mode: 'paging' });
-          });
-      }
+      //DSF TIDAK MEMAKAI RAPINDO
+      // if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
+      //   if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+      //     if (confirm("Chassis No not filled, submit data without Integrator ?")) {
+      //       this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+      //         (response) => {
+      //           this.toastr.successMessage(response["message"]);
+      //           this.AssetDataForm.reset();
+      //           //this.router.navigate(["/Nap/AssetData/Paging"]);
+      //           this.assetValue.emit({ mode: 'paging' });
+      //         });
+      //     }
+      //   }
+      //   else if (!this.IsIntegrator) {
+      //       if (confirm("Submit data without Integrator ?")) {
+      //       this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+      //         (response) => {
+      //           this.toastr.successMessage(response["message"]);
+      //           this.AssetDataForm.reset();
+      //           //this.router.navigate(["/Nap/AssetData/Paging"]);
+      //           this.assetValue.emit({ mode: 'paging' });
+      //         });
+      //       }
+      //   }
+      //   else if (this.IsIntegrator) {
+      //     this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+      //       (response) => {
+      //         this.toastr.successMessage(response["message"]);
+      //         this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+      //           (response) => {
+      //           });
+      //           this.AssetDataForm.reset();
+      //           this.assetValue.emit({ mode: 'paging' });
+      //       });
+      //   }
+      // }
+
+      this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.AssetDataForm.reset();
+          this.assetValue.emit({ mode: 'paging' });
+        });
     }
     else {
       this.allAssetDataObj = new AllAssetDataObj();
@@ -1775,58 +1776,59 @@ export class AssetDataAddEditXComponent implements OnInit {
         }
       }
 
-      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
-        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
-          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.AssetDataForm.reset();
-                //this.router.navigate(["/Nap/AssetData/Paging"]);
-                this.assetValue.emit({ mode: 'paging' });
-              });
-          }
-        }
-        else if (!this.IsIntegrator) {
+      //DSF TIDAK MEMAKAI RAPINDO
+      // if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
+      //   if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+      //     if (confirm("Chassis No not filled, submit data without Integrator ?")) {
+      //       this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+      //         (response) => {
+      //           this.toastr.successMessage(response["message"]);
+      //           this.AssetDataForm.reset();
+      //           //this.router.navigate(["/Nap/AssetData/Paging"]);
+      //           this.assetValue.emit({ mode: 'paging' });
+      //         });
+      //     }
+      //   }
+      //   else if (!this.IsIntegrator) {
           
-          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
-              });
-          }
-          else{
-            if (confirm("Submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
-              });
-            }
-          }
-        }
-        else if (this.IsIntegrator) {
-          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
-                (response) => {
-                });
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
-            });
-        }
-      }else{
-        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.AssetDataForm.reset();
-            this.assetValue.emit({ mode: 'paging' });
-          });
-      }
+      //     if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
+      //       this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+      //         (response) => {
+      //           this.toastr.successMessage(response["message"]);
+      //           this.AssetDataForm.reset();
+      //           this.assetValue.emit({ mode: 'paging' });
+      //         });
+      //     }
+      //     else{
+      //       if (confirm("Submit data without Integrator ?")) {
+      //       this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+      //         (response) => {
+      //           this.toastr.successMessage(response["message"]);
+      //           this.AssetDataForm.reset();
+      //           this.assetValue.emit({ mode: 'paging' });
+      //         });
+      //       }
+      //     }
+      //   }
+      //   else if (this.IsIntegrator) {
+      //     this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+      //       (response) => {
+      //         this.toastr.successMessage(response["message"]);
+      //         this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+      //           (response) => {
+      //           });
+      //           this.AssetDataForm.reset();
+      //           this.assetValue.emit({ mode: 'paging' });
+      //       });
+      //   }
+      // }
+
+      this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.AssetDataForm.reset();
+          this.assetValue.emit({ mode: 'paging' });
+        });
     }
   }
   addGroup(appAssetAccessoriesObj, i) {

@@ -1,0 +1,116 @@
+{
+    "title": "Report Monthly Pre Go Live By Product",
+    "reportName": "Report Monthly Pre Go Live By Product",
+    "reportTemplateCode": "MONTHLY_PRE_GO_LIVE_BY_PRODUCT",
+    "component": [
+      {
+        "type": "dropdown",
+        "label": "Office Name",
+        "name": "OfficeCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "items": [],
+        "itemsUrl": [],
+        "isEvent": "true",
+        "affectedFilter": [
+          "EmpNo"
+        ],
+        "paramAssignment": 1
+      },
+      {
+        "type": "dropdown",
+        "label": "LOB",
+        "name": "LobCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment":"FOU",
+        "path": "/RefLob/GetListKvpRefLob",
+        "items": [],
+        "itemsUrl": [],
+        "isEvent": "true",
+        "affectedFilter": [
+          "ProductCode"
+        ],
+        "filterPropName" : "LobCode",
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 1
+      },
+      {
+        "type": "dropdown",
+        "label": "Year",
+        "name": "Year",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "one",
+        "url": "",
+        "environment": "FOU",
+        "path": "/ReportPeriod/GetListYearByGeneralSetting",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 0
+      },
+      {
+        "type": "dropdown",
+        "label": "Product",
+        "name": "ProductCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment":"LOS",
+        "path": "/Product/GetProdNameForPaging",
+        "items": [],
+        "itemsUrl": [],
+        "isEvent": "true",
+        "affectedFilter": [
+          "ProductOfferingCode"
+        ],
+        "filterPropName" : "ProductCode",
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 1
+      },
+      {
+        "type": "dropdown",
+        "label": "Month",
+        "name": "Month",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "one",
+        "url": "",
+        "environment": "FOU",
+        "path": "/ReportPeriod/GetListMonthByGeneralSetting",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 0
+      },
+      {
+        "type": "dropdown",
+        "label": "Product Offering",
+        "name": "ProductOfferingCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment":"LOS",
+        "path": "/ProductOffering/GetProdOfferingByProdCode",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "paramAssignment": 1
+      }
+    ],
+    "exportTypeList": []
+  }

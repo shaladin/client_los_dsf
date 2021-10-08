@@ -236,7 +236,7 @@
                 </div>
                 <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Id No </label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="OwnerIdNo">
+                  <input type="text" class="form-control" formControlName="OwnerIdNo" [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.OwnerIdNo.invalid }">
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.OwnerIdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
@@ -250,7 +250,7 @@
                 </div>
                 <label class="col-md-2 adInsLabel adins-required-label" translate>Owner Mobile Phone No</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
+                  <input type="text" class="form-control" formControlName="OwnerMobilePhnNo" [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.OwnerMobilePhnNo.invalid }">
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.OwnerMobilePhnNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>

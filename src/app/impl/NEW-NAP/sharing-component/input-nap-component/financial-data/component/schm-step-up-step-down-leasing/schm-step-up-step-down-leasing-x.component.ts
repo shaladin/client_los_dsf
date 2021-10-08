@@ -189,6 +189,7 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
 
 
   CalculateAmortization() {
+    this.calcStepUpStepDownObj = this.ParentForm.value;
     if (this.ValidateFee() == false) {
       return;
     }
@@ -200,13 +201,24 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
       return;
     }
+
+    let NumOfInstKosong = this.calcStepUpStepDownObj.ListEntryInst.findIndex(x => x.NumOfInst == 0);
+    if (NumOfInstKosong != -1) {
+      this.toastr.warningMessage(ExceptionConstant.INPUT_NUM_OF_INST + (NumOfInstKosong + 1));
+      return;
+    }
+    let InstAmtKosong = this.calcStepUpStepDownObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
+    if (InstAmtKosong != -1) {
+      this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (InstAmtKosong + 1));
+      return;
+    }
+    
     if (!this.IsTrialCalc) {
       this.calcStepUpStepDownObj = this.ParentForm.value;
       this.calcStepUpStepDownObj["IsRecalculate"] = false;
       this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
       this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
       this.calcStepUpStepDownObj["InstAmt"] = 0;
-
 
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentStepUpStepDownX, this.calcStepUpStepDownObj).subscribe(
         (response) => {
@@ -254,7 +266,6 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
       this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
       this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
       this.calcStepUpStepDownObjForTrialCalc["InstAmt"] = 0;
-
 
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).subscribe(
         (response) => {
