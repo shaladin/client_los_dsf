@@ -55,7 +55,6 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   defaultJobPosition: string;
   CompanyTypeObj: Array<KeyValueObj>;
   defaultCompanyType: string;
-  industryTypeName: string;
   isCust: boolean = false;
   selectedCustTypeName: string;
   selectedJobPositionName: string;
@@ -480,10 +479,10 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   setIndustryTypeName(industryTypeCode: string) {
+    if(!industryTypeCode) return;
     this.http.post(URLConstant.GetRefIndustryTypeByCode, { Code: industryTypeCode }).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
-        this.industryTypeName = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;
       },
       (error) => {
