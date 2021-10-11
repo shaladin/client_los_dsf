@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-po-entry',
@@ -32,6 +33,7 @@ export class PoEntryComponent implements OnInit {
   VendorBankAcc: VendorBankAccObj;
   PurchaseOrderH: PurchaseOrderHObj;
   BusinessDt: Date;
+  UserContext : CurrentUserContext;
   vendorBankAccList: Array<Object>;
 
   Date: Date;
@@ -61,8 +63,9 @@ export class PoEntryComponent implements OnInit {
   ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     var datePipe = new DatePipe("en-US");
-    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.BusinessDt = new Date(context["BusinessDt"]);
+    this.UserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.BusinessDt = new Date(this.UserContext[CommonConstant.BUSINESS_DT]);
+    
     if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
       let reqAppLoanPurposeObj : GenericObj = new GenericObj();
       reqAppLoanPurposeObj.Id = this.AppId;
@@ -229,7 +232,7 @@ export class PoEntryComponent implements OnInit {
     if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
       requestPurchaseOrderH.PurchaseOrderHId = 0;
       requestPurchaseOrderH.PurchaseOrderNo = "";
-      requestPurchaseOrderH.PurchaseOrderDt = new Date();
+      requestPurchaseOrderH.PurchaseOrderDt = new Date(formatDate(this.UserContext[CommonConstant.BUSINESS_DT], 'yyyy-MM-dd', 'en-US'));
       requestPurchaseOrderH.PurchaseOrderExpiredDt = new Date(this.ExpirationDate);
       requestPurchaseOrderH.TotalPurchaseOrderAmt = formValue["TotalDisburse"];
       requestPurchaseOrderH.AgrmntId = this.AgrmntId;
