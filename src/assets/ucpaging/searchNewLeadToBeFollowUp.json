@@ -71,7 +71,7 @@
         }
     ],
   "querystring": {
-    "name": "searchNewLeadToBeFollowUp"
+    "name": "searchNewLeadToBeFollowUpDsf"
   },
     "headerList": [
         {
@@ -139,7 +139,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "OfficeName"
+            "property": "OriOfficeName"
         },
         {
             "type": "text",
@@ -154,7 +154,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "SourceCode"
+            "property": "MrLeadSourceCode"
         },
         {
             "type": "text",
@@ -164,7 +164,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "AssetPrice"
+            "property": "AssetPriceAmt"
         },
         {
             "type": "action",

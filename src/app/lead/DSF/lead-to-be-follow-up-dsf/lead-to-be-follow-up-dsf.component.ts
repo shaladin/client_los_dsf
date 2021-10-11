@@ -5,6 +5,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-lead-to-be-follow-up-dsf',
@@ -22,6 +23,17 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchNewLeadToBeFollowUp.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewLeadToBeFollowUp.json";
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "L.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url + "/v1"
+      },
+      {
+        name: "L.MR_LEAD_SOURCE_CODE",
+        environment: environment.FoundationR3Url + "/v1"
+      }
+    ];
   }
 
   GetCallBack(ev: any) {

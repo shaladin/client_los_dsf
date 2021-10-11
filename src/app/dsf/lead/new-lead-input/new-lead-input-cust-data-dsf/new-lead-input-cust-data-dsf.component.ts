@@ -186,7 +186,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
 
 
     this.InitDms();
-    this.ClaimTask();
+    // this.ClaimTask();
       
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -1058,16 +1058,16 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     }
   }
 
-  ClaimTask() {
-    if(environment.isCore){	
-        if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
-            this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
-        }	
-    }	
-    else if (this.WfTaskListId> 0) {	
-        this.claimTaskService.ClaimTask(this.WfTaskListId);	
-    }
-  }
+  // ClaimTask() {
+  //   if(environment.isCore){	
+  //       if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
+  //           this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
+  //       }	
+  //   }	
+  //   else if (this.WfTaskListId> 0) {	
+  //       this.claimTaskService.ClaimTask(this.WfTaskListId);	
+  //   }
+  // }
 
   async getLeadData() {
     this.reqLeadCustObj = new LeadCustObj();
