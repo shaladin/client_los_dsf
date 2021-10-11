@@ -28,6 +28,7 @@ export const environment = {
   ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
   Module:"LOS",
   lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
+  r2Url: 'http://r3impl-appsvr.ad-ins.com/DIPODEVR2/CONFINS_DSF_IMPL',
   Superset: 'http://linuxdev4:8091/',
   isCore: true
 };

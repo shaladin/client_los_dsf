@@ -142,6 +142,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
           this.purchaseOrderHObj.BankAccName = this.AssetObj.VendorBankAccObj.BankAccountName;
         }
       });
+    this.checkValidExpDt();
   }
   listCustBankAcc: Array<AppCustBankAccObj>;
   async GetListAppCustBankAcc() {

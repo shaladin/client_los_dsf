@@ -41,16 +41,7 @@
             "value": "",
             "label": "Product Offering Name",
             "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "Assignee",
-            "id": "claimById",
-            "value": "",
-            "label": "Claim By",
-            "placeholder": "Placeholder",
-            "isCriteriaDataTable" : true
-          }
+        }
     ],
     "headerList": [
         {
@@ -105,11 +96,6 @@
         {
             "type": "text",
             "position": "left",
-            "property": "Assignee"
-        },
-        {
-            "type": "text",
-            "position": "left",
             "property": "OfficeName"
         },
         {
@@ -154,7 +140,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "BACK_TO_DETAIL",
+                                "path": "BACK_TO_DETAIL_X",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -180,7 +166,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "BACK_TO_DETAIL",
+                                "path": "BACK_TO_DETAIL_X",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

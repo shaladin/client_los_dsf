@@ -35,7 +35,6 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
   bizTemplateCode: string = "";
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listInvoice: Array<AppInvoiceFctrObj>;
-  listVerificationStatus: Array<KeyValueObj>;
   verifStatCode: RefMasterObj;
   BusinessDate: Date;
   Username: string;
@@ -169,9 +168,6 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
   }
 
   GetListVerifStatus() {
-    this.httpClient.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { Code: CommonConstant.INV_VERF_RESULT_STAT }).subscribe((response) => {
-      this.listVerificationStatus = response[CommonConstant.ReturnObj];
-    })
     this.httpClient.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeInvoiceDataVerif }).toPromise().then(
       (response) => {
         this.listRefReason = response[CommonConstant.ReturnObj];
@@ -189,8 +185,8 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
     const fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
     for (let i = 0; i < fa_listInvoice.length; i++) {
       const item = fa_listInvoice.at(i);
-      this.listInvoice[i].IsApproved = item.get("Verification").value == "APV" ? true : false;
-      this.listInvoice[i].InvoiceStat = item.get("Verification").value;
+      this.listInvoice[i].IsApproved = true;
+      this.listInvoice[i].InvoiceStat = "APV";
       this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
       this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
@@ -234,17 +230,6 @@ export class InvoiceVerifDetailListOfInvoiceXComponent implements OnInit {
       }
     }else if (this.WfTaskListId > 0) {
       this.claimTaskService.ClaimTask(this.WfTaskListId);
-    }
-  }
-
-  Calculate(i) {
-    var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-    var item = fa_listInvoice.at(i);
-    if (item.get("Verification").value == "APV") {
-      this.OsPlafondAmt -= item.get("InvoiceAmt").value;
-    }
-    else {
-      this.OsPlafondAmt += item.get("InvoiceAmt").value;
     }
   }
 

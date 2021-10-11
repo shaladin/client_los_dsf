@@ -253,16 +253,6 @@ export class NapDetailFormXComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
-      const appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppById, appObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            this.NapObj = response;
-          }
-        }
-      );
-    }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
