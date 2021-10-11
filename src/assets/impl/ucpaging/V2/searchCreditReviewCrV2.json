@@ -41,16 +41,7 @@
             "value": "",
             "label": "Product Offering Name",
             "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "Assignee",
-            "id": "claimById",
-            "value": "",
-            "label": "Claim By",
-            "placeholder": "Placeholder",
-            "isCriteriaDataTable" : true
-          }
+        }
     ],
     "headerList": [
         {
@@ -101,11 +92,6 @@
             "type": "sla",
             "position": "center",
             "property": "IndicatorSLA"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "Assignee"
         },
         {
             "type": "text",
