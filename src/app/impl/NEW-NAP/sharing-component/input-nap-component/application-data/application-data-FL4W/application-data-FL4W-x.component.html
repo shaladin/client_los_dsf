@@ -187,6 +187,23 @@
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.CustBankAcc" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+
+                <!-- Installment Source Payment -->
+                <div class="form-group col-md-2 adins-required" *ngIf="NapAppModelForm.controls.MrWopCode.value != WopAutoDebit">
+                  <label class="adInsLabel" translate>Installment Source Payment
+                    Type</label>
+                </div>
+                <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value != WopAutoDebit">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="InstSrcPaymentCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of applicationDDLitems['CSP_USL_AML']" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                  <lib-uc-show-errors [control]="NapAppModelForm.controls.InstSrcPaymentCode" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+
               </div>
 
               <div class="form-group row">
@@ -206,11 +223,11 @@
                   </lib-uc-show-errors>
                   </div>
                 <!-- Installment Source Payment -->
-                <div class="form-group col-md-2 adins-required">
+                <div class="form-group col-md-2 adins-required" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <label class="adInsLabel" translate>Installment Source Payment
                     Type</label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <select class="form-control adInsInput" style="width: auto" formControlName="InstSrcPaymentCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">
                     <option value="">-Select One-</option>
@@ -220,6 +237,19 @@
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.InstSrcPaymentCode" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+
+                <label class="col-md-2 adInsLabel" translate *ngIf="NapAppModelForm.controls.MrWopCode.value != WopAutoDebit">Order Status</label>
+                <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value != WopAutoDebit">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="OrdStatCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.OrdStatCode.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of applicationDDLitems['ORD_STATUS']" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                  <lib-uc-show-errors [control]="NapAppModelForm.controls.OrdStatCode" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+
               </div>
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Status BPKB</label>
@@ -232,16 +262,16 @@
                 <lib-uc-show-errors [control]="NapAppModelForm.controls.BpkbStatCode" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adInsLabel" translate>Order Status</label>
-                <div class="col-md-4">
-                <select class="form-control adInsInput" style="width: auto" formControlName="OrdStatCode"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.OrdStatCode.invalid }">
-                  <option value="">-Select One-</option>
-                  <option *ngFor="let it of applicationDDLitems['ORD_STATUS']" value="{{it.Key}}">
-                    {{it.Value}} </option>
-                </select>
-                <lib-uc-show-errors [control]="NapAppModelForm.controls.OrdStatCode" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
+                <label class="col-md-2 adInsLabel" translate *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">Order Status</label>
+                <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="OrdStatCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.OrdStatCode.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of applicationDDLitems['ORD_STATUS']" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                  <lib-uc-show-errors [control]="NapAppModelForm.controls.OrdStatCode" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
 
