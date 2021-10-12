@@ -107,6 +107,7 @@ import { MouUnfreezeViewComponent } from "./mou-unfreeze/mou-unfreeze-view/mou-u
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
 import { MouCustMgmntShrholderPublicComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
 
 export const customCurrencyMaskConfig = {
@@ -242,7 +243,8 @@ export const customCurrencyMaskConfig = {
     MouUnfreezePagingComponent,
     MouUnfreezeDetailComponent,
     MouUnfreezeInquiryComponent,
-    MouUnfreezeViewComponent
+    MouUnfreezeViewComponent,
+    MouCancelDetailComponent
   ],
   exports: [],
   providers: [NGXToastrService],
