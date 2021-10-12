@@ -90,6 +90,7 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
 import { TabDeviationComponent } from "./app-view/tab-deviation/tab-deviation.component";
 import { NewApplicationDataComponent } from "./app-view/application-data/new-application-data.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -97,6 +98,7 @@ import { NewApplicationDataComponent } from "./app-view/application-data/new-app
     NgbModule,
     ViewRoutingModule,
     CommonModule,
+    AdInsSharedModule,
     FormsModule,
     HttpModule,
     UCSearchModule,

@@ -28,12 +28,14 @@ import { ChangeMouViewAddcollXComponent } from '../../impl/view-enhancing/change
 import { ChangeMouMainInfoXComponent } from '../../impl/view-enhancing/change-mou-main-info/change-mou-main-info-x.component';
 import { ChangeMouViewDetailXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-detail/change-mou-view-detail-x.component";
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     imports: [
         ChangeMouViewRoutingModule,
         CommonModule,
         FormsModule,
+        AdInsSharedModule,
         HttpModule,
         UCSearchModule,
         UcgridfooterModule,

@@ -19,12 +19,14 @@ import { DashboardBmComponent } from './dashboard-bm/dashboard-bm.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts'
 import { DashboardSupersetComponent } from './dashboard-superset/dashboard-superset.component';
 import { SharedModule } from 'app/shared/shared.module';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 @NgModule({
     imports: [
         CommonModule,
         DashboardRoutingModule,
         ChartistModule,
         NgbModule,
+        AdInsSharedModule,
         MatchHeightModule,
         TreeViewModule,
         ContextMenuModule,

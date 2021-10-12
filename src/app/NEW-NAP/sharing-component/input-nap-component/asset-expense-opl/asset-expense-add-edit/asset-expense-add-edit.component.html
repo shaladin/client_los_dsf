@@ -58,9 +58,8 @@
                 </div>
               </div>
               <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance(undefined)"
-                  translate>
-                  <i class="fa fa-check-square-o"></i> Generate Insurance
+                <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance(undefined)">
+                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Generate Insurance</span>
                 </button>
               </div>
               <div *ngIf="showGenerate == true">
@@ -96,8 +95,8 @@
                   </div>
                 </div>
                 <div class="form-actions right">
-                  <button type="button" class="btn btn-raised btn-primary" (click)="CalculateInsurance()" translate>
-                    <i class="fa fa-check-square-o"></i> Calculate Insurance
+                  <button type="button" class="btn btn-raised btn-primary" (click)="CalculateInsurance()">
+                    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Calculate Insurance</span>
                   </button>
                 </div>
               </div>
@@ -139,9 +138,8 @@
                     </div>
                   </div>
                   <div class="form-actions right" *ngIf="isCanBeAddedMaintenance">
-                    <button type="button" name="add" id="add" (click)="addService()" translate
-                      class="btn btn-raised btn-primary">
-                      <i class="ft-plus-circle"></i> Add
+                    <button type="button" name="add" id="add" (click)="addService()" class="btn btn-raised btn-primary">
+                      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
                     </button>
                   </div>
                   <div formArrayName="ServiceObjs">
@@ -192,9 +190,8 @@
 
                   <!--sparepart-->
                   <div class="form-actions right" *ngIf="isCanBeAddedMaintenance">
-                    <button type="button" name="add" id="add" (click)="addSparePart()" translate
-                      class="btn btn-raised btn-primary">
-                      <i class="ft-plus-circle"></i> Add
+                    <button type="button" name="add" id="add" (click)="addSparePart()" class="btn btn-raised btn-primary">
+                      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
                     </button>
                   </div>
                   <div formArrayName="SparePartObjs">
@@ -258,9 +255,8 @@
               </lib-ucSubsection>
               <div id="expense">
                 <div class="form-actions right" *ngIf="isExpenseCanAdd">
-                  <button type="button" name="add" id="add" (click)="addOtherExpense()" translate
-                    class="btn btn-raised btn-primary">
-                    <i class="ft-plus-circle"></i> Add
+                  <button type="button" name="add" id="add" (click)="addOtherExpense()" class="btn btn-raised btn-primary">
+                    <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
                   </button>
                 </div>
                 <div formArrayName="OtherExpenseObjs">
@@ -422,11 +418,11 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-              <i class="ft-x"></i> Cancel
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Save
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
           </div>
         </form>

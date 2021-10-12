@@ -9,6 +9,7 @@ export class ExceptionConstant {
     public static NOT_ELIGIBLE_FOR_TAKE_BACK = "You are not Eligible to Take Back this Task";
     public static NOT_ELIGIBLE_FOR_HOLD = "You are not Eligible to Hold this Task";
     public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
+    public static NOT_ELIGIBLE_FOR_UNCLAIM = "You are not Eligible to Unclaim this Task";
 
     
     public static TOTAL_SHARE_PERCENTAGE_MUST_100 = "Total Share Percentage must be 100.";
@@ -188,5 +189,7 @@ export class ExceptionConstant {
     public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
     
     public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
+    
+    public static JOB_POSITION_CANT_BE_EMPTY = "Job Position Cannot Be Empty - Shareholder {0}";
 }
 

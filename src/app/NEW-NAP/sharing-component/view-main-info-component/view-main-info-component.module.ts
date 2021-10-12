@@ -11,6 +11,7 @@ import { AppMainInfoComponent } from "./app-main-info/app-main-info.component";
 import { DocSignerMainInfoComponent } from './doc-signer-main-info/doc-signer-main-info.component';
 import { AppMainInfoComponentXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/app-main-info-component-x/app-main-info-component-x.component";
 import { DocSignerMainInfoXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/doc-signer-main-info/doc-signer-main-info-x.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
   exports: [
@@ -23,6 +24,7 @@ import { DocSignerMainInfoXComponent } from "app/impl/NEW-NAP/sharing-component/
   imports: [
     CommonModule,
     AdInsModule,
+    AdInsSharedModule,
     ReactiveFormsModule,
     UcShowErrorsModule,
     SharingComponentModule,

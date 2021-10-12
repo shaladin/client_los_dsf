@@ -172,7 +172,7 @@ export class MouCustTabComponent implements OnInit {
     await this.getCustData();
   }
 
-  SaveForm() {
+  async SaveForm() {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.custDataPersonalObj = new MouCustPersonalDataObj();
       this.setCustPersonalObjForSave();
@@ -263,6 +263,11 @@ export class MouCustTabComponent implements OnInit {
         return false;
       }
       this.custDataCompanyObj = new MouCustCompanyDataObj();
+
+      let isJobPositionNull = await this.checkJobPosition()
+      if(isJobPositionNull){
+        return;
+      }
       this.setCustCompanyObjForSave();
       for (let i = 0; i < this.custDataCompanyObj.MouCustGrpObjs.length; i++) {
         for (let j = i + 1; j < this.custDataCompanyObj.MouCustGrpObjs.length; j++) {
@@ -361,6 +366,18 @@ export class MouCustTabComponent implements OnInit {
     this.setMouCustPersonalJobData();
     this.setMouCustSocmedObj();
     this.setMouCustGrpObj();
+  }
+
+  async checkJobPosition() {
+    let flag: boolean = false;
+    for(let i = 0; i < this.listShareholder.length; i++){
+      console.log(this.listShareholder[i]);
+      if(this.listShareholder[i]['MrJobPositionCode'] == null || this.listShareholder[i]['MrJobPositionCode'] == ''){
+        this.toastr.warningMessage(String.Format(ExceptionConstant.JOB_POSITION_CANT_BE_EMPTY, this.listShareholder[i]['MgmntShrholderName']))
+        flag = true;
+      }
+    }
+    return flag;
   }
 
   setCustCompanyObjForSave() {

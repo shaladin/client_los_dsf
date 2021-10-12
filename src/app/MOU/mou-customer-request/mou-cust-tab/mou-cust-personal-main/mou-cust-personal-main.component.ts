@@ -17,6 +17,7 @@ import { RegexService } from 'app/shared/services/regex.services';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-mou-cust-personal-main',
@@ -90,8 +91,9 @@ export class MouCustPersonalMainComponent implements OnInit {
       NoOfDependents: ['', [Validators.maxLength(4)]],
     }));
 
-    await this.initLookup();
     this.bindAllRefMasterObj();
+    await this.initLookup();
+    await this.initLookupCountry();
     await this.bindCustData();
   }
 
@@ -200,6 +202,7 @@ export class MouCustPersonalMainComponent implements OnInit {
         TaxIdNo: this.custDataPersonalObj.MouCustObj.TaxIdNo,
         IsVip: this.custDataPersonalObj.MouCustObj.IsVip,
       });
+      this.InputLookupCustomerObj.nameSelect = this.custDataPersonalObj.MouCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = { CustName: this.custDataPersonalObj.MouCustObj.CustName };
       if(this.custDataPersonalObj.MouCustObj.CustName != null || this.custDataPersonalObj.MouCustObj.CustName != "" || this.custDataPersonalObj.MouCustObj.CustName != undefined)
       {
@@ -250,17 +253,33 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
     await this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
-
-    this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.isRequired = false;
-
   }
 
-  bindAllRefMasterObj() {
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+  async initLookupCountry(){
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
+      (response) => {
+        let splitCodeDesc = response.GsValue.split(';');
+        this.selectedNationalityCountryCode = splitCodeDesc[0];
+        this.selectedNationalityCountryName = splitCodeDesc[1];
+        this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
+        this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+        this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
+        this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
+        this.InputLookupCountryObj.isRequired = false;
+        this.InputLookupCountryObj.addCritInput = new Array();
+
+        var criteriaObj = new CriteriaObj();
+        criteriaObj.restriction = AdInsConstant.RestrictionNeq;
+        criteriaObj.propName = 'COUNTRY_CODE';
+        criteriaObj.value = this.selectedNationalityCountryCode;
+        this.InputLookupCountryObj.addCritInput.push(criteriaObj);
+        this.ChangeNationality(CommonConstant.NationalityLocal);
+      }
+    );
+  }
+
+  async bindAllRefMasterObj() {
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
         if (this.IdTypeObj.length > 0) {
@@ -277,7 +296,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeGender }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -290,7 +309,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeMaritalStat }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if (this.MaritalStatObj.length > 0) {
@@ -304,20 +323,18 @@ export class MouCustPersonalMainComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
       (response) => {
-        this.NationalityObj = response["RefMasterObjs"];
+        this.NationalityObj = response[CommonConstant.RefMasterObjs];
         if (this.NationalityObj.length > 0) {
-          var idxDefault = this.NationalityObj.findIndex(x => x.IsDefaultValue);
           this.parentForm.controls[this.identifier].patchValue({
-            MrNationalityCode: this.NationalityObj[idxDefault].MasterCode
+            MrNationalityCode: this.NationalityObj[1]["MasterCode"]
           });
-          this.ChangeNationality(this.NationalityObj[idxDefault].MasterCode);
         }
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeEducation }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeEducation }).toPromise().then(
       (response) => {
         this.EducationObj = response[CommonConstant.ReturnObj];
         if (this.EducationObj.length > 0 && this.custDataPersonalObj.MouCustObj.MouCustId == 0) {
@@ -328,7 +345,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeReligion }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeReligion }).toPromise().then(
       (response) => {
         this.ReligionObj = response[CommonConstant.ReturnObj];
         if (this.ReligionObj.length > 0 && this.custDataPersonalObj.MouCustObj.MouCustId == 0) {
@@ -364,7 +381,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.setValidatorPattern();
   }
 
-  isLocal: boolean = false;
+  isLocal: boolean = true;
   selectedNationalityCountryName: string = "";
 
   NationalityChanged(event) {
@@ -374,17 +391,11 @@ export class MouCustPersonalMainComponent implements OnInit {
   ChangeNationality(mrNationalityCode) {
     if (this.NationalityObj != undefined) {
       if (mrNationalityCode == CommonConstant.NationalityLocal) {
-        var setCountry = this.NationalityObj.find(x => x.MasterCode == mrNationalityCode).DefaultValue.split(';');
-        this.selectedNationalityCountryCode = setCountry[0];
-        this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0];
+        this.InputLookupCountryObj.isRequired = false;
         this.isLocal = true;
       } else {
+        this.InputLookupCountryObj.isRequired = true;
         this.isLocal = false;
-        var foreign = this.NationalityObj.find(x => x["MasterCode"] == mrNationalityCode);
-        var setCountry = foreign.DefaultValue.split(';');
-        this.InputLookupCountryObj.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
-        this.InputLookupCountryObj.jsonSelect = { CountryName: setCountry[1] ? setCountry[1] : setCountry[0] };
-        this.selectedNationalityCountryCode = setCountry[0];
       }
     }
   }

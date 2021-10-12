@@ -2,7 +2,7 @@
   <div class="card">
     <div class="text-right">
       <button type="button" (click)="addOfficeMember()" class="btn btn-raised btn-warning ">
-        <i class="fa ft-plus"></i> Add Office Member
+        <i class="fa ft-plus"></i>&nbsp;<span translate>Add Office Member</span>
       </button>
     </div>
     <div>
@@ -45,11 +45,11 @@
       </table>
     </div>
     <div class="text-right">
-      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-        <i class="far fa-window-close"></i> Cancel
+      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+        <i class="far fa-window-close"></i>&nbsp;<span translate>Cancel</span>
       </button>
-      <button type="submit" (click)="DoneForm()" class="btn btn-raised btn-primary" translate>
-        <i class="far fa-check-square"></i> Save
+      <button type="submit" (click)="DoneForm()" class="btn btn-raised btn-primary">
+        <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
       </button>
     </div>
   </div>

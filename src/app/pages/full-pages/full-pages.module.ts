@@ -8,6 +8,7 @@ import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserProfilePageComponent } from "app/pages/full-pages/user-profile/user-profile-page.component";
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { UserProfilePageComponent } from "app/pages/full-pages/user-profile/user
         CommonModule,
         FullPagesRoutingModule,
         FormsModule,
+        AdInsSharedModule,
         ChartistModule,
         AgmCoreModule,
         NgbModule,

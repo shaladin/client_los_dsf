@@ -2,8 +2,8 @@
 </lib-ucSubsection>
 <div *ngIf="!IsDetail" id="AddrSection">
   <div class="button-right margin-15">
-    <button type="button" class="btn btn-raised btn-primary" (click)="Add()" translate>
-      <i class="ft-plus-circle"></i> Add
+    <button type="button" class="btn btn-raised btn-primary" (click)="Add()">
+      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
     </button>
   </div>
   <div *ngIf="ListAddress?.length == 0">

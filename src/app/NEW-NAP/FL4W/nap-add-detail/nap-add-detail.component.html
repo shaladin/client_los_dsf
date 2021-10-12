@@ -4,7 +4,7 @@
       <div class="form-action pull-right">
         <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
           [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
-          <i class="ft-x"></i> Cancel
+          <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
         </button>
       </div>
     </div>
@@ -327,7 +327,7 @@
       <div class="px-3">
         <div class="form-action pull-right">
           <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()" class="btn btn-raised btn-primary" translate>
-            <i class="far fa-check-square"></i> Submit
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
           </button>
         </div>
       </div>

@@ -17,6 +17,7 @@ import { LtkmViewComponent } from "./ltkm-view-component";
 import { MatTabsModule } from "@angular/material";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewLtkmAppSummaryDataComponent } from "./ltkm-app-summary-data/ltkm-app-summary-data.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
   exports: [
@@ -39,6 +40,7 @@ import { ViewLtkmAppSummaryDataComponent } from "./ltkm-app-summary-data/ltkm-ap
     UcSubsectionModule,
     UcapprovalhistModule,
     MatTabsModule,
+    AdInsSharedModule,
     UcapprovalHistoryModule
   ],
   declarations: [

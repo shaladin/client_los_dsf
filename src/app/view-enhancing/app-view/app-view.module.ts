@@ -50,19 +50,13 @@ import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-co
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
 import { AppViewInsuranceDetailComponent } from "./app-insurance/app-insurance-detail/app-insurance-detail.component";
-import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
-import { HttpClient } from "@angular/common/http";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { ViewSrvyTaskComponent } from "./view-srvy-task/view-srvy-task.component";
 import { TabApplicationXComponent } from "app/impl/view-enhancing/app-view/tab-application/tab-application-x.component";
 import { AppViewXComponent } from "app/impl/view-enhancing/app-view/app-view-x.component";
 import { ViewSrvyTaskXComponent } from "app/impl/view-enhancing/app-view/view-srvy-task-x/view-srvy-task-x.component";
 import {ApprovalHistXComponent} from 'app/impl/view-enhancing/app-view/approval-hist/approval-hist-x.component';
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
-
-export function createTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-  }
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     imports: [
@@ -88,13 +82,7 @@ export function createTranslateLoader(http: HttpClient) {
         AppCustViewComponentsModule,
         ViewSharingComponentModule,
         SharedModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-        }),
+        AdInsSharedModule
     ],
     declarations: [
         AppMainInfoComponent,

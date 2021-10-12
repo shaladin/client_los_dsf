@@ -60,14 +60,14 @@
                   </table>
               </ng-container> -->
               <div class="form-actions right">
-                <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-                  <i class="ft-x"></i> Cancel
+                <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                  <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                 </button>
                 <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Test()" translate>
                   <i class="ft-x"></i> test
                 </button> -->
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="far fa-check-square"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
             </div>

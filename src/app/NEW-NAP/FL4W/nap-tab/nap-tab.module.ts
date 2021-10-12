@@ -26,6 +26,7 @@ import { GuarantorPersonalFL4WComponent } from "./guarantor-data/guarantor-perso
 import { GuarantorCompanyFL4WComponent } from "./guarantor-data/guarantor-company/guarantor-company-FL4W.component";
 import { ReferantorDataFL4WComponent } from "./referantor-data/referantor-data-FL4W.component";
 import { CustomerDataFL4WComponent } from "./customer-data/customer-data-FL4W.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
  
 export const customCurrencyMaskConfig = {     
@@ -66,6 +67,7 @@ export const customCurrencyMaskConfig = {
   imports: [
     CommonModule,
     AdInsModule,
+    AdInsSharedModule,
     TcSharingComponentModule,
     MatCheckboxModule,
     MatRadioModule,

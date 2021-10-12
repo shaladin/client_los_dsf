@@ -21,8 +21,8 @@ import { ViewLeadDataComponent } from "./view-lead-data/view-lead-data.component
 import { ViewCustomerDataComponent } from "./view-customer-data/view-customer-data.component";
 import { LeadViewRoutingModule } from "./lead-view-routing.module";
 import { SharedModule } from "app/shared/shared.module";
-import { TranslateModule } from "@ngx-translate/core";
 import { LeadViewSrvyTaskComponent } from "./lead-view-srvy-task/lead-view-srvy-task.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 @NgModule({
@@ -45,7 +45,7 @@ import { LeadViewSrvyTaskComponent } from "./lead-view-srvy-task/lead-view-srvy-
         SharingComponentModule,
         UcapprovalhistModule,
         UcShowErrorsModule,
-        TranslateModule,
+        AdInsSharedModule,
         SharedModule
     ],
     declarations: [
@@ -61,7 +61,6 @@ import { LeadViewSrvyTaskComponent } from "./lead-view-srvy-task/lead-view-srvy-
         UcapprovalhistComponent,
     ],
     exports: [
-        TranslateModule
     ]
 
 })

@@ -2,11 +2,11 @@
   <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Collateral'" [panel]="'AddCollData'">
   </lib-ucSubsection>
   <div *ngIf="type == 'Paging'" class="form-actions right">
-    <button type="button" (click)="open('AddExisting')" class="btn btn-raised btn-warning mr-1" translate>
-      <i class="fa fa-plus"></i> Add Existing
+    <button type="button" (click)="open('AddExisting')" class="btn btn-raised btn-warning mr-1">
+      <i class="fa fa-plus"></i>&nbsp;<span translate>Add Existing</span>
     </button>
-    <button type="button" (click)="open('AddEdit')" class="btn btn-raised btn-warning mr-1" translate>
-      <i class="fa fa-plus"></i> Add New
+    <button type="button" (click)="open('AddEdit')" class="btn btn-raised btn-warning mr-1">
+      <i class="fa fa-plus"></i>&nbsp;<span translate>Add New</span>
     </button>
   </div>
 
@@ -80,11 +80,11 @@
     </div>
   </div>
   <div *ngIf="type == 'Paging'" class="col-md-12" style="padding: 0; text-align: right;">
-    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-      <i class="ft-x"></i> Cancel
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()">
+      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
     </button>
-    <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
-      <i class="far fa-check-square"></i> Save
+    <button type="submit" class="btn btn-raised btn-primary" (click)="next()">
+      <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
     </button>
   </div>
 </form>
@@ -318,8 +318,8 @@
             </select>
             <div class="input-group-append">
               <span class="input-group-btn">
-                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationOwner()" translate>
-                  <i class="fa fa-check-square-o"></i>Copy
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationOwner()">
+                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                 </button>
               </span>
             </div>
@@ -344,8 +344,8 @@
             </select>
             <div class="input-group-append">
               <span class="input-group-btn">
-                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()" translate>
-                  <i class="fa fa-check-square-o"></i>Copy
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()">
+                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                 </button>
               </span>
             </div>
@@ -357,11 +357,11 @@
     </div>
 
     <div class="form-actions right">
-      <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1" translate>
-        <i class="ft-x"></i> Cancel
+      <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
+        <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
       </button>
-      <button type="submit" class="btn btn-raised btn-primary" translate>
-        <i class="far fa-check-square"></i> Save
+      <button type="submit" class="btn btn-raised btn-primary">
+        <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
       </button>
     </div>
   </form>
@@ -595,8 +595,8 @@
             </select>
             <div class="input-group-append">
               <span class="input-group-btn">
-                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationOwner()" translate>
-                  <i class="fa fa-check-square-o"></i>Copy
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationOwner()">
+                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                 </button>
               </span>
             </div>
@@ -621,8 +621,8 @@
             </select>
             <div class="input-group-append">
               <span class="input-group-btn">
-                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()" translate>
-                  <i class="fa fa-check-square-o"></i>Copy
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()">
+                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                 </button>
               </span>
             </div>
@@ -634,11 +634,11 @@
     </div>
 
     <div class="form-actions right">
-      <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1" translate>
-        <i class="ft-x"></i> Cancel
+      <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
+        <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
       </button>
-      <button type="submit" class="btn btn-raised btn-primary" translate>
-        <i class="far fa-check-square"></i> Save
+      <button type="submit" class="btn btn-raised btn-primary">
+        <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
       </button> 
     </div>
   </form>

@@ -54,8 +54,6 @@ export class ChangeMouCancelComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true;
       
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CHANGE_MOU;
-      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
-      // this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];

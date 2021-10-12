@@ -1430,6 +1430,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.appCollateralDoc.IsReceived = this.AssetDataForm.value.ListDoc[i].IsReceived;
       }
       this.appCollateralDoc.DocCode = this.AssetDataForm.value.ListDoc[i].DocCode;
+      this.appCollateralDoc.DocName = this.AssetDataForm.value.ListDoc[i].AssetDocName;
       this.appCollateralDoc.DocNo = this.AssetDataForm.value.ListDoc[i].DocNo;
       this.appCollateralDoc.ExpiredDt = this.AssetDataForm.value.ListDoc[i].ACDExpiredDt;
       this.appCollateralDoc.DocNotes = this.AssetDataForm.value.ListDoc[i].DocNotes;

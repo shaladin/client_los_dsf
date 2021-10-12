@@ -11,8 +11,8 @@
       </div> 
       <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
       <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:10px">
-        <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()" translate>
-          <i class="fa fa-arrow-left"></i> Back
+        <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()">
+          <i class="fa fa-arrow-left"></i>&nbsp;<span translate>Back</span>
         </button>
       </div>
       <div class="px-3">
@@ -46,13 +46,11 @@
         </div>
         <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj"></lib-ucgridview>
         <div class="text-right py-2">
-          <button *ngIf="ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-primary"
-            (click)="buttonSubmitOnClick()" translate>
-            Submit
+          <button *ngIf="ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()">
+            &nbsp;<span translate>Submit</span>
           </button>
-          <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary" translate>
-            <i class="far fa-check-square"></i> Submit
+          <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
           </button>
         </div>
       </div>

@@ -247,8 +247,8 @@
                   </div>
                 </div>
                 <div class="form-actions right">
-                  <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance()" translate>
-                    <i class="fa fa-check-square-o"></i> Generate Insurance
+                  <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance()">
+                    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Generate Insurance</span>
                   </button>
                 </div>
               </div>
@@ -295,8 +295,8 @@
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <button type="button" class="btn btn-raised btn-primary" (click)="ApplyToCoverage()" translate>
-                      <i class="fa fa-check-square-o"></i> Apply To All
+                    <button type="button" class="btn btn-raised btn-primary" (click)="ApplyToCoverage()">
+                      <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Apply To All</span>
                     </button>
                   </div>
                 </div>
@@ -316,8 +316,8 @@
                   </div>
                 </div>
                 <div class="form-actions right">
-                  <button type="button" class="btn btn-raised btn-primary" (click)="CalculateInsurance()" translate>
-                    <i class="fa fa-check-square-o"></i> Calculate Insurance
+                  <button type="button" class="btn btn-raised btn-primary" (click)="CalculateInsurance()">
+                    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Calculate Insurance</span>
                   </button>
                 </div>
                 <div formArrayName="AppInsMainCvgs">
@@ -585,15 +585,15 @@
           </div>
           <div class="form-actions right">
             <button [hidden]="IsMultiAsset == 'true' || showCancel == false" type="button"
-              class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-              <i class="ft-x"></i> Cancel
+              class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
             <button style="margin-right: 10px;" [hidden]="IsMultiAsset == 'false'" type="button" (click)="back()"
-              class="btn btn-raised btn-warning" translate>
-              <i class="ft-x"></i> Cancel
+              class="btn btn-raised btn-warning">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Save
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
           </div>
         </form>

@@ -23,8 +23,7 @@ import { ArchwizardComponent } from './archwizard/archwizard.component';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { ReportComponent } from './report/report.component';
 import { AdInsModule } from 'app/components/adins-module/adins.module';
-import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
-import { TranslateModule } from '@ngx-translate/core';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
     imports: [
@@ -37,7 +36,7 @@ import { TranslateModule } from '@ngx-translate/core';
         NgbModule,
         SharingComponentModule,
         AdInsModule,
-        TranslateModule
+        AdInsSharedModule,
     ],
     declarations: [
         ValidationFormsComponent,

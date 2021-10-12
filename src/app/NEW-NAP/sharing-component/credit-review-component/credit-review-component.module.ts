@@ -35,6 +35,7 @@ import { ViewMainInfoComponentModule } from "../view-main-info-component/view-ma
 import { CrdRvwSurveyDataXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-survey-data-x/crd-rvw-survey-data-x.component";
 import { CrdRvwThirdPartyCheckingXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-third-party-checking-x/crd-rvw-third-party-checking-x.component";
 import { SharedModule } from "app/shared/shared.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     exports: [
@@ -63,8 +64,8 @@ import { SharedModule } from "app/shared/shared.module";
     imports: [
         CommonModule,
         AdInsModule,
-        MatRadioModule,
         ViewMainInfoComponentModule,
+        AdInsSharedModule,
         SharedModule,
         MatRadioModule
     ],

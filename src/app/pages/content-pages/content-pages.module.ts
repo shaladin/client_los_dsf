@@ -26,6 +26,7 @@ import { PagesComponent } from './pages/pages.component';
 import { RequestNewPasswordComponent } from "./request-new-password/request-new-password.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {     
     align: "right",
@@ -49,6 +50,7 @@ export const customCurrencyMaskConfig = {
         UcgridfooterModule,
         UcpagingModule,
         NgbModule,
+        AdInsSharedModule,
         SharingModule, 
         ReactiveFormsModule,
         UcaddressModule,

@@ -140,6 +140,7 @@ import {SingleInstDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input
 import {SchmRegularFixDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn-x.component';
 import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn-x.component';
 import { LoanObjectXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/loan-object-x/loan-object-x.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -289,6 +290,7 @@ export const customCurrencyMaskConfig = {
   imports: [
     CommonModule,
     AdInsModule,
+    AdInsSharedModule,
     TcSharingComponentModule,
     MatCheckboxModule,
     MatRadioModule,

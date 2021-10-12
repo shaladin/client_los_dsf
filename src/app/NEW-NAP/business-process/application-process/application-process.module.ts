@@ -27,6 +27,7 @@ import { ApplicationReviewDetailComponent } from "./application-review/applicati
 import { ApplicationProcessSharingRoutingModule } from "./application-process-routing.module";
 import { ApplicationApprovalDetailComponent } from "./application-approval/application-approval-detail/application-approval-detail.component";
 import { ApplicationApprovalPagingComponent } from "./application-approval/application-approval-paging/application-approval-paging.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 
@@ -57,6 +58,7 @@ export const customCurrencyMaskConfig = {
     ReactiveFormsModule,
     HttpModule,
     RouterModule,
+    AdInsSharedModule,
     MatTabsModule,
     MatCheckboxModule,
     MatRadioModule,

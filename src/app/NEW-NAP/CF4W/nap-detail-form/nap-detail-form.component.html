@@ -2,9 +2,8 @@
   <div class="card">
     <div class="px-3">
       <div class="form-action pull-right">
-        <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'CF4W'}" translate>
-          <i class="ft-x"></i> Cancel
+        <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'CF4W'}">
+          <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
         </button>
       </div>
     </div>
@@ -254,9 +253,8 @@
     <div class="card-body">
       <div class="px-3">
         <div class="form-action pull-right">
-          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary" translate>
-            <i class="far fa-check-square"></i> Submit
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
           </button>
         </div>
       </div>
