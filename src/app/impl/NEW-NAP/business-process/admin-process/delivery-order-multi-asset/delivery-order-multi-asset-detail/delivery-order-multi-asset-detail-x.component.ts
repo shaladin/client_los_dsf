@@ -63,7 +63,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   agrNo: string;
   custNo: string;
   appNo: string;
-  dmsAppObj: DMSObj;
   mouCustNo: string;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
@@ -204,15 +203,10 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
-      this.dmsAppObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
-
-      this.dmsAppObj.User = currentUserContext.UserName;
-      this.dmsAppObj.Role = currentUserContext.RoleCode;
-      this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
       var agrObj = { Id: this.agrmntId };
       var appObj = { Id: this.appId };
@@ -229,15 +223,9 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
 
           if (this.custNo != null && this.custNo != '') {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-            this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-          }
-          else {
-            this.dmsAppObj.MetadataParent = null;
           }
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
-
-          this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
 
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           if (mouId != null && mouId != "") {
@@ -245,7 +233,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
               (result: MouCustObj) => {
                 this.mouCustNo = result.MouCustNo;
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
-                this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.isDmsReady = true;
               }
             )

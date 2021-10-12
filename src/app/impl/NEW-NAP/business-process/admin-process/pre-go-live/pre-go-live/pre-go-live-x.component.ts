@@ -82,7 +82,6 @@ export class PreGoLiveXComponent implements OnInit {
   agrNo: string;
   custNo: string;
   appNo: string;
-  dmsAppObj: DMSObj;
   mouCustNo: string;
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
@@ -225,32 +224,21 @@ export class PreGoLiveXComponent implements OnInit {
   async InitDms() { 
     if (this.SysConfigResultObj.ConfigValue == '1') {
       this.dmsObj = new DMSObj();
-      this.dmsAppObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
 
-      this.dmsAppObj.User = currentUserContext.UserName;
-      this.dmsAppObj.Role = currentUserContext.RoleCode;
-      this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
-
       if (this.custNo != '') {
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-        this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
-      } else {
-        this.dmsAppObj.MetadataParent = null;
       }
       this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
       this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
-
-      this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
 
       this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
 
       if (this.AppObj.MouCustId == 0) {
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
-        this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
       }
       this.isDmsReady = true;
     }
