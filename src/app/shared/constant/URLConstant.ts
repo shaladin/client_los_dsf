@@ -1846,7 +1846,7 @@ export class URLConstant {
   //Application Source
   public static AddRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/AddRefAppSrc";
   public static AddRefAppSrcOfficeMbr = environment.losUrl + "/v1" + "/RefAppSrc/AddRefAppSrcOfficeMbr";
-  public static DeleteRefAppSrcOfficeMbr = "/RefAppSrc/DeleteRefAppSrcOfficeMbr";
+  public static DeleteRefAppSrcOfficeMbr = environment.losUrl + "/v1" + "/RefAppSrc/DeleteRefAppSrcOfficeMbr";
   public static EditRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/EditRefAppSrc";
   public static GetRefAppSrcByRefAppSrcId = environment.losUrl + "/v1" + "/RefAppSrc/GetRefAppSrcByRefAppSrcId";
   public static GetListRefAppSrcOfficeMbrByRefAppSrcId = environment.losUrl + "/v1" + "/RefAppSrc/GetListRefAppSrcOfficeMbrByRefAppSrcId";
