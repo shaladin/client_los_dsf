@@ -43,11 +43,14 @@ import { ViewInsuranceDataXComponent } from "app/impl/view-enhancing/agr-view/vi
 import { ViewInsuranceDataDetailXComponent } from "app/impl/view-enhancing/agr-view/view-insurance-data/view-insurance-data-detail-x/view-insurance-data-detail-x.component";
 import { AgrMainInfoXComponent } from "app/impl/view-enhancing/agr-main-info/agr-main-info-x.component";
 import { AgreementViewContainerXComponent } from "app/impl/view-enhancing/agr-view/agreement-view-container-x.component";
+import { ViewAgrmntTcComponent } from "./view-agrmnt-tc/view-agrmnt-tc.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     imports: [
         AgrViewRoutingModule,
         CommonModule,
+        AdInsSharedModule,
         FormsModule,
         HttpModule,
         UCSearchModule,
@@ -91,7 +94,8 @@ import { AgreementViewContainerXComponent } from "app/impl/view-enhancing/agr-vi
         ViewAssetCollateralDetailComponent, 
         ViewInsuranceDetailComponent,
         ViewInsuranceDataXComponent,
-        ViewInsuranceDataDetailXComponent
+        ViewInsuranceDataDetailXComponent,
+        ViewAgrmntTcComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

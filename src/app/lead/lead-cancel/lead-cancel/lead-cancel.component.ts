@@ -44,7 +44,6 @@ export class LeadCancelComponent implements OnInit {
       this.tempPagingObj.isJoinExAPI = true
       
       this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CODE_LEAD,CommonConstant.WF_CODE_SIMPLE_LEAD];
-      this.RequestTaskModel.RoleCode = UserAccess[CommonConstant.ROLE_CODE];
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE],

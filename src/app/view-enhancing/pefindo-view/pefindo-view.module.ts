@@ -11,13 +11,7 @@ import { PefindoOtherDataViewComponent } from './pefindo-other-data/pefindo-othe
 import { PefindoDashboardViewComponent } from './pefindo-dashboard/pefindo-dashboard-view/pefindo-dashboard-view.component';
 import { PefindoPersonalInfoViewComponent } from './pefindo-personal-info/pefindo-personal-info-view/pefindo-personal-info-view.component';
 import { PefindoPersonalInfoCoyViewComponent } from './pefindo-personal-info/pefindo-personal-info-coy-view/pefindo-personal-info-coy-view.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
   declarations: [PefindoViewComponent, PefindoScoreViewComponent, PefindoContractsViewComponent, PefindoContractSummaryViewComponent, PefindoOtherDataViewComponent, PefindoDashboardViewComponent, PefindoPersonalInfoViewComponent, PefindoPersonalInfoCoyViewComponent],
@@ -25,13 +19,7 @@ export function createTranslateLoader(http: HttpClient) {
     CommonModule,
     PefindoViewRoutingModule,
     AdInsModule,
-    TranslateModule.forRoot({
-      loader: {
-          provide: TranslateLoader,
-          useFactory: (createTranslateLoader),
-          deps: [HttpClient]
-      }
-  }),
+    AdInsSharedModule
     
   ]
 })

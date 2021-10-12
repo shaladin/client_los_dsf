@@ -6,9 +6,7 @@ import { UcSubsectionModule } from '@adins/uc-subsection';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsModule } from 'app/components/adins-module/adins.module';
 import { MatTabsModule } from '@angular/material';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { createTranslateLoader } from 'app/app.module';
-import { HttpClient } from '@angular/common/http';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
   declarations: [ProdOfferingViewComponent],
@@ -19,13 +17,7 @@ import { HttpClient } from '@angular/common/http';
     UcSubsectionModule,
     NgbModule,
     MatTabsModule,
-    TranslateModule.forRoot({
-      loader: {
-          provide: TranslateLoader,
-          useFactory: (createTranslateLoader),
-          deps: [HttpClient]
-      }
-  })
+    AdInsSharedModule
   ]
 })
 export class ProdOfferingViewModule { }

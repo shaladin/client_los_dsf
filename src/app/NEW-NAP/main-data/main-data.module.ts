@@ -14,6 +14,7 @@ import { CustMainDataPagingXComponent } from "app/impl/NEW-NAP/main-data/cust-ma
 import { CustMainDataAddXComponent } from "app/impl/NEW-NAP/main-data/cust-main-data/cust-main-data-add-x/cust-main-data-add-x.component";
 import { CustMainDataAddXDsfComponent } from "../DSF/main-data-dsf/cust-main-data-x-dsf/cust-main-data-add-x-dsf/cust-main-data-add-x-dsf.component";
 import { CustMainDataPagingXDsfComponent } from "../DSF/main-data-dsf/cust-main-data-x-dsf/cust-main-data-paging-x-dsf/cust-main-data-paging-x-dsf.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { CustMainDataPagingXDsfComponent } from "../DSF/main-data-dsf/cust-main-
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         UcSubsectionModule,
         MainDataRoutingModule,
     ],

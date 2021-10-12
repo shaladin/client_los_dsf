@@ -49,6 +49,7 @@ import { createTranslateLoader } from "app/app.module";
 import { HttpClient } from "@angular/common/http";
 import { ViewSumamryAppCfnaDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/view-app-component-dsf/view-sumamry-app-cfna-dsf/view-sumamry-app-cfna-dsf.component";
 import { ViewAppScoreGradeDatarobotDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/view-app-component-dsf/view-app-score-grade-datarobot-dsf/view-app-score-grade-datarobot-dsf.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
   exports: [
@@ -103,13 +104,7 @@ import { ViewAppScoreGradeDatarobotDsfComponent } from "app/NEW-NAP/DSF/credit-r
     UcSubsectionModule,
     UcapprovalhistModule,
     UcapprovalHistoryModule,
-    TranslateModule.forRoot({
-      loader: {
-          provide: TranslateLoader,
-          useFactory: (createTranslateLoader),
-          deps: [HttpClient]
-      }
-  }),
+    AdInsSharedModule,
   ],
   declarations: [
     InvoiceDataFctrComponent,

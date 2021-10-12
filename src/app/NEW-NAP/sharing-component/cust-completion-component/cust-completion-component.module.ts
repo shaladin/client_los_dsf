@@ -28,6 +28,7 @@ import { CustBankAccDetailSectionFindataXComponent } from "app/impl/NEW-NAP/shar
 import { BankSectionXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/financial-tab/bank-section-x/bank-section-x.component";
 import { JobTabXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/job-tab-x/job-tab-x.component";
 import { CustDetailCompanyXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/cust-detail-tab/cust-detail-company-x/cust-detail-company-x.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -65,6 +66,7 @@ export const customCurrencyMaskConfig = {
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         MatRadioModule,
         MainDataComponentModule,
         NgMultiSelectDropDownModule,

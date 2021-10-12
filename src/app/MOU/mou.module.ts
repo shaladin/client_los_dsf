@@ -139,6 +139,7 @@ import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-rev
 import { MouDetailFinancingXComponent } from 'app/impl/MOU/mou-customer-request/mou-detail-financing/mou-detail-financing/mou-detail-financing-x.component';
 import { ChangeMouDetailDealerFinancingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing-x.component';
 import { ChangeMouDetailFactoringXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring-x.component';
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -161,6 +162,7 @@ export const customCurrencyMaskConfig = {
     ShrCompMouModule,
     MouRoutingModule,
     SharingModule,
+    AdInsSharedModule,
     ArchwizardModule,
     MatTabsModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),

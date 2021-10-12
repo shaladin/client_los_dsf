@@ -19,6 +19,9 @@ import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { environment } from 'environments/environment';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'cessie-sharing-pre-go-live',
@@ -32,7 +35,7 @@ export class CessiePreGoLiveComponent implements OnInit {
   TaskListId: any;
   ReqByIdObj: GenericObj = new GenericObj();
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   IsCheckedAll: boolean = false;
 
   FormObj = this.fb.group({
@@ -48,7 +51,6 @@ export class CessiePreGoLiveComponent implements OnInit {
   CessieNo: string;
   ApvAmt: number = 0;
   AppObj: AppObj;
-  AppId: number;
   isReadyToLoadTC: boolean;
 
   readonly CancelLink: string = NavigationConstant.CESSIE_PGL_PAGING;
@@ -76,6 +78,12 @@ export class CessiePreGoLiveComponent implements OnInit {
       });
 
 
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, {Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response;
+      });
+
+
     this.businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     // this.claimTaskService.ClaimTask(this.TaskListId);  
     if (environment.isCore) {
@@ -90,6 +98,7 @@ export class CessiePreGoLiveComponent implements OnInit {
 
     await this.BindDDLReason();
     await this.initInputApprovalObj();
+    await this.InitDms();
   }
 
   GetCallBack(ev) {
@@ -102,9 +111,9 @@ export class CessiePreGoLiveComponent implements OnInit {
       };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         (response) => {
-          if(response['MrCustTypeCode'] == CommonConstant.CustTypePersonal) {
+          if (response['MrCustTypeCode'] == CommonConstant.CustTypePersonal) {
             AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
-          } else if(response['MrCustTypeCode'] == CommonConstant.CustTypeCompany) {
+          } else if (response['MrCustTypeCode'] == CommonConstant.CustTypeCompany) {
             AdInsHelper.OpenCustomerCoyViewByCustId(response['CustId']);
           }
         }
@@ -212,4 +221,32 @@ export class CessiePreGoLiveComponent implements OnInit {
       });
   }
 
+  isDmsReady: boolean = false;
+  dmsObj: DMSObj;
+  mouCustNo: string;
+  initDmsObj: any;
+  async InitDms() {
+    await this.http.post(URLConstantX.GetInitForDmsDataByCessieHXId, { Id: this.CessieHXId }).toPromise().then(
+      (response) => {
+        this.initDmsObj = response;
+      });
+    console.log(this.initDmsObj);
+    if (this.SysConfigResultObj.ConfigValue == '1' && this.initDmsObj.AppNo != '' && this.initDmsObj.AgrmntNo != '') {
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
+
+
+      if (this.initDmsObj.CustNo != '') {
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.initDmsObj.CustNo));
+      }
+      this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.initDmsObj.AppNo));
+      this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.initDmsObj.AgrmntNo));
+
+      this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+      this.isDmsReady = true;
+    }
+  }
 }

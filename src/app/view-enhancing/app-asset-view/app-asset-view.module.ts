@@ -24,9 +24,7 @@ import { AppAssetViewAssetDetailComponent } from './app-asset-view-asset-detail/
 import { AppAssetViewAssetExpenseComponent } from './app-asset-view-asset-expense/app-asset-view-asset-expense.component';
 import { AppAssetViewAssetInfoComponent } from './general/app-asset-view-asset-info/app-asset-view-asset-info.component';
 import { AppAssetViewFinancialDataComponent } from './app-asset-view-financial-data/app-asset-view-financial-data.component';
-import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
-import { createTranslateLoader } from "app/app.module";
-import { HttpClient } from "@angular/common/http";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     imports: [
@@ -51,13 +49,7 @@ import { HttpClient } from "@angular/common/http";
         AppCustViewComponentsModule,
         AppViewComponentsModule,
         SharedModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-        }),        
+        AdInsSharedModule
     ],
     declarations: [
         AppAssetViewComponent,

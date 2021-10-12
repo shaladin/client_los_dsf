@@ -624,6 +624,8 @@ export const ROUTES: RouteInfo[] = [
     { Path: NavigationConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN, Title: 'Surat Konfirmasi Persetujuan', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []}
   ], Params: [] },
 
+  { Path: NavigationConstant.DASHBOARD_SUPERSET, Title: 'Dashboard Superset', Icon: 'ft-home', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+
   { Path: '', Title: 'Report', Icon: 'fa fa-print', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false, 
     Submenu: [
       { Path: NavigationConstant.FORMS_REPORT, Title: 'Report', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []  },

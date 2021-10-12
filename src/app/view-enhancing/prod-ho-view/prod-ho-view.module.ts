@@ -6,12 +6,14 @@ import { UcSubsectionModule } from '@adins/uc-subsection';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTabsModule } from '@angular/material';
 import { AdInsModule } from 'app/components/adins-module/adins.module';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
   declarations: [ProdHoViewComponent],
   imports: [
     CommonModule,
     AdInsModule,
+    AdInsSharedModule,
     ProdHoViewRoutingModule,
     UcSubsectionModule,
     NgbModule,

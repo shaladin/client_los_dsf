@@ -3,11 +3,11 @@
     <div class="card-body">
       <div class="px-3"> 
           <div class="ucSearch-Button-Right">
-            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
-              <i class="fa fa-arrow-left"></i> Back
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
+              <i class="fa fa-arrow-left"></i>&nbsp;<span translate>Back</span>
             </button>
-            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Save()"  translate>
-              <i class="fa fa-check-square-o"></i> Submit
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="Save()">
+              <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Submit</span>
             </button>
           </div>
           <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" #viewMainInfo> </lib-ucviewgeneric> 

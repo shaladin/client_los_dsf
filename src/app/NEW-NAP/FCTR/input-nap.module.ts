@@ -18,12 +18,14 @@ import { NapCustMainDataDsfComponent } from "../DSF/FCTR-dsf/nap-cust-main-data-
 import { NapDetailFormDsfComponent } from "../DSF/FCTR-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component";
 import { NapDetailFormXComponent } from 'app/impl/NEW-NAP/FCTR/nap-detail-form/nap-detail-form-x.component';
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/FCTR/nap-cust-main-data/nap-cust-main-data-x.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
   imports: [
     CommonModule,
     InputNapFCTRRoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     InputNapComponentModule,
     ArchwizardModule,
     MainDataComponentModule,

@@ -18,8 +18,8 @@
             [identifier]="'CopyAddrFrom'" [genericList]="copyAddressFromObj"></lib-ucdropdownlist>
           <div class="input-group-append ml-1">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-raised btn-primary" (click)="CopyAddress()" translate>
-                <i class="fa fa-files-o"></i> Copy
+              <button type="button" class="btn btn-raised btn-primary" (click)="CopyAddress()">
+                <i class="fa fa-files-o"></i>&nbsp;<span translate>Copy</span>
               </button>
             </span>
           </div>
@@ -30,12 +30,12 @@
       [identifier]="'Address'" [UCAddrForm]="AddressForm"></lib-ucaddress>
   </div>
   <div class="pull-right margin-15">
-    <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1" translate>
-      <i class="ft-x"></i> Cancel
+    <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
+      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
     </button>
-    <button type="submit" class="btn btn-raised btn-primary mr-1" translate
+    <button type="submit" class="btn btn-raised btn-primary mr-1"
       (click)=formValidate.scrollIfFormHasErrors(AddressForm)>
-      <i class="far fa-check-square"></i> Save
+      <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
     </button>
   </div>
 </form>

@@ -31,6 +31,7 @@ import { SurveyViewModule } from "./survey-view-prototype/survey-view.module";
 import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 import {MouMainInfoXComponent} from 'app/impl/view-enhancing/mou-main-info/mou-main-info-x.component';
 import { CessieViewComponent } from "app/impl/view-enhancing/cessie-view/cessie-view.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { CessieViewComponent } from "app/impl/view-enhancing/cessie-view/cessie-
     ViewRoutingModule,
     CommonModule,
     FormsModule,
+    AdInsSharedModule,
     HttpModule,
     UCSearchModule,
     UcgridfooterModule,

@@ -47,11 +47,11 @@
             </div>
             <lib-ucapprovalcreate [InputObj]="InputObj" [parentForm]="CrdApvRestExtForm" [enjiForm]="enjiForm" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
-                <i class="ft-x"></i> Cancel
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
-              <button type="submit" class="btn btn-raised btn-primary" translate>
-                <i class="far fa-check-square"></i> Save
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
               </button>
             </div>
           </form>

@@ -17,6 +17,7 @@ import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapproval
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { PurchaseTrackingViewRoutingModule } from "./purchase-tracking-view-routing.module";
 import { PurchaseTrackingViewComponent } from './purchase-tracking-view.component';
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { PurchaseTrackingViewComponent } from './purchase-tracking-view.componen
         UcviewgenericModule,
         UcgridviewModule,
         NgbModule,
+        AdInsSharedModule,
         SharingModule,
         ArchwizardModule,
         ReactiveFormsModule,

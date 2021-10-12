@@ -7,14 +7,28 @@
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="FormObj" #enjiForm="ngForm"
             (ngSubmit)="FormObj.valid && SaveForm()">
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>
+                  <app-term-conditions *ngIf="isReadyToLoadTC" [AppId]="AppObj?.AppId" [parentForm]="FormObj" [enjiForm]="enjiForm"
+                  (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+                </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
 
-            <lib-ucSubsection [id]="'TermAndConditionId'" [title]="'Term And Condition'" [panel]="'tc'">
+            <!-- <lib-ucSubsection [id]="'TermAndConditionId'" [title]="'Term And Condition'" [panel]="'tc'">
             </lib-ucSubsection>
             <div id="tc">
               <app-term-conditions *ngIf="isReadyToLoadTC" [AppId]="AppObj?.AppId" [parentForm]="FormObj" [enjiForm]="enjiForm"
                 (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
               </app-term-conditions>
-            </div>
+            </div> -->
 
             <lib-ucapprovalcreate [parentForm]= "FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent>
             </lib-ucapprovalcreate>

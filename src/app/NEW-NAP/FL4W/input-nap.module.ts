@@ -55,6 +55,7 @@ import { NapDetailFormXComponent } from "app/impl/NEW-NAP/FL4W/nap-detail-form/n
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/FL4W/nap-cust-main-data/nap-cust-main-data-x.component";
 import { NapCustMainDataXDsfComponent } from "../DSF/FL4W-dsf/nap-cust-main-data-x-dsf/nap-cust-main-data-x-dsf.component";
 import { NapDetailFormXDsfComponent } from "../DSF/FL4W-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 export const customCurrencyMaskConfig = {
@@ -76,6 +77,7 @@ export const customCurrencyMaskConfig = {
     CommonModule,
     InputNapFL4WRoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     InputNapComponentModule,
     ArchwizardModule,
     UcShowErrorsModule,

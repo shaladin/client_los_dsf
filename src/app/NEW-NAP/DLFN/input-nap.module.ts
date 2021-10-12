@@ -20,6 +20,7 @@ import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/DLFN/nap-cust-main-d
 import { MatRadioModule } from '@angular/material';
 import { NapCustMainDataXDsfComponent } from '../DSF/DLFN-dsf/nap-cust-main-data-x-dsf/nap-cust-main-data-x-dsf.component';
 import { NapDetailFormXDsfComponent } from '../DSF/DLFN-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
   declarations: [
@@ -35,16 +36,17 @@ import { NapDetailFormXDsfComponent } from '../DSF/DLFN-dsf/nap-detail-form-x-ds
     NapCustMainDataXDsfComponent,
     NapDetailFormXDsfComponent
   ],
-  imports: [
-    CommonModule,
-    InputNapDLFNRoutingModule,
-    AdInsModule,
-    InputNapComponentModule,
-    ArchwizardModule,
-    MainDataComponentModule,
-    SharedModule,
-    MatRadioModule,
-  ],
+    imports: [
+        CommonModule,
+        InputNapDLFNRoutingModule,
+        AdInsModule,
+        AdInsSharedModule,
+        InputNapComponentModule,
+        ArchwizardModule,
+        MainDataComponentModule,
+        SharedModule,
+        MatRadioModule,
+    ],
   providers: [
     NGXToastrService
   ]

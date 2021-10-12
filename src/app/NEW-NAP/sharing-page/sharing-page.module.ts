@@ -16,11 +16,13 @@ import { UclookupgenericComponent } from "@adins/uclookupgeneric";
 import { NapFromSimpleLeadDetailDsfComponent } from "../DSF/sharing-page-dsf/nap-from-simple-lead-detail-dsf/nap-from-simple-lead-detail-dsf.component";
 import { NapFromSimpleLeadDsfComponent } from "../DSF/sharing-page-dsf/nap-from-simple-lead-dsf/nap-from-simple-lead-dsf.component";
 import { NapFromSimpleLeadDetailXComponent } from "app/impl/NEW-NAP/sharing-page/nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail-x.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
   imports: [
     CommonModule,
     AdInsModule,
+    AdInsSharedModule,
     ArchwizardModule,
     SharingPageRoutingModule
   ],

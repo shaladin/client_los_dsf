@@ -16,11 +16,13 @@ import { UcgridviewModule } from "@adins/ucgridview";
 import { PhoneVerifViewRoutingModule } from "./phone-verif-view-routing.module";
 import { PhoneVerifComponent } from "./phone-verif.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     imports: [
         PhoneVerifViewRoutingModule,
         CommonModule,
+        AdInsSharedModule,
         FormsModule,
         HttpModule,
         UCSearchModule,

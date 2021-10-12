@@ -88,7 +88,9 @@
  
     <div class="px-3">
         <div class="pull-right">
-            <button *ngIf="IsShowDetailCustFin" type="button" class="backButton" translate (click)="hideDetailCustFinData()"><i class="fa fa-arrow-left"></i> Back</button>
+            <button *ngIf="IsShowDetailCustFin" type="button" class="backButton" (click)="hideDetailCustFinData()">
+                <i class="fa fa-arrow-left"></i>&nbsp;<span translate>Back</span>
+            </button>
         </div>
         <lib-ucSubsection [id]="'MainInfo'" [title]="'Financial Data '+TitleCustFinSuffix" [panel]="'FinId'">
         </lib-ucSubsection>

@@ -692,6 +692,14 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
         InsAssetCoverPeriod: this.appInsObjObj.InsAssetCoverPeriod,
         InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy
       };
+    }else{
+      this.AppAssetRelatedOutput.AppInsObj =
+      {
+        InscoBranchCode: "",
+        InscoBranchName: "",
+        InsAssetCoverPeriod: '-',
+        InsAssetCoveredBy: '-',
+      };
     }
 
     this.outputPage.emit({ AppAssetRelatedOutput: this.AppAssetRelatedOutput, pageType: "submitAssetData" });

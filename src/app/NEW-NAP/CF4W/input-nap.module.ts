@@ -20,12 +20,14 @@ import { NapDetailFormXComponent } from "app/impl/NEW-NAP/CF4W/nap-detail-form/n
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/CF4W/nap-cust-main-data/nap-cust-main-data-x.component";
 import { NapCustMainDataXDsfComponent } from "../DSF/CF4W-dsf/nap-cust-main-data-x-dsf/nap-cust-main-data-x-dsf.component";
 import { NapDetailFormXDsfComponent } from "../DSF/CF4W-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
   imports: [
     CommonModule,
     InputNapCF4WRoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     InputNapComponentModule,
     ArchwizardModule,
     MainDataComponentModule,

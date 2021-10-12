@@ -143,6 +143,7 @@ import { ApplicationDataXDsfComponent } from "app/NEW-NAP/DSF/input-nap-componen
 import { ApplicationDataXFL4WDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-x-FL4W-dsf/application-data-x-FL4W-dsf.component";
 import { ApplicationDataDlfnXDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-dlfn-x-dsf/application-data-dlfn-x-dsf.component";
 import { LoanObjectXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/loan-object-x/loan-object-x.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -300,6 +301,7 @@ export const customCurrencyMaskConfig = {
   imports: [
     CommonModule,
     AdInsModule,
+    AdInsSharedModule,
     TcSharingComponentModule,
     MatCheckboxModule,
     MatRadioModule,

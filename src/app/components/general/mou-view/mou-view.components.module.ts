@@ -16,12 +16,14 @@ import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-v
 import { MouViewDetailXComponent } from 'app/impl/components/general/mou-view/mou-view-detail/mou-view-detail-x.component';
 import { ShrCompMouModule } from 'app/components/sharing-components/shr-comp-mou/shr-comp-mou.module';
 import { MouTabViewAddcollXComponent } from 'app/impl/components/general/mou-view/mou-tab-view-addcoll/mou-tab-view-addcoll-x.component';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 @NgModule({
     imports: [
         CommonModule,
         UcSubsectionModule,
         UcviewgenericModule,
+        AdInsSharedModule,
         UcgridviewModule,
         ShrCompMouModule,
         UcapprovalgeneralinfoModule
