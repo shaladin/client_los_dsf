@@ -170,7 +170,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2" for="jobPosition" translate>Job Position</label>
+                <label class="col-md-2 adins-required-label" for="jobPosition" translate>Job Position</label>
                 <div class="col-md-4">
                   <select class="form-control" id="jobPosition" formControlName="MrJobPositionCode" (change)="JobPositionChanged($event)"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrJobPositionCode.invalid }">
