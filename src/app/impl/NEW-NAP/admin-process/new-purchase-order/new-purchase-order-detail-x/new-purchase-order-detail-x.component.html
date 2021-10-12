@@ -83,8 +83,8 @@
             <mat-tab-group>
               <mat-tab label="Term & Conditions">
                 <ng-template matTabContent>           
-                  <app-term-conditions [AppId]="AppId" [parentForm]="TcForm" [enjiForm]="enjiForm">
-                  </app-term-conditions>
+                  <app-agrmnt-tc [AgrmntId]="AgrmntId" [parentForm]="TcForm" [enjiForm]="enjiForm">
+                  </app-agrmnt-tc>
                 </ng-template>
               </mat-tab>
               <mat-tab label="App Document">
@@ -101,11 +101,11 @@
 
             <div class="form-body">
               <div class="form-actions right" style="text-align: right;">
-                <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()" translate>
-                  <i class="ft-x"></i> Cancel
+                <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()">
+                  <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="far fa-check-square"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
             </div>

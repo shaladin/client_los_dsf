@@ -331,6 +331,12 @@ export class LtkmRequestXComponent implements OnInit {
         }
       }
 
+    resetForm(){
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate([NavigationConstant.LTKM_REQ]);
+          });
+    }
+
     SaveForm() {
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             //comment urs-los-057, tidak perlu cek per komponent, karna hanya perlu liat cust no saja.

@@ -367,8 +367,8 @@
                 <div class="input-group-append">
                   <span class="input-group-btn">
                     <button [disabled]="isExisting ? 'true' : null" type="button" class="btn btn-raised btn-primary"
-                      (click)="CopyAddress()" translate>
-                      <i class="fa fa-files-o"></i> Copy
+                      (click)="CopyAddress()">
+                      <i class="fa fa-files-o"></i>&nbsp;<span translate>Copy</span>
                     </button>
                   </span>
                 </div>
@@ -381,12 +381,12 @@
       </div>
       <div class="form-actions right">
         <button *ngIf="custMainDataMode != 'CUST'" type="button" class="btn btn-raised btn-warning mr-1"
-          (click)="cancel()" translate>
-          <i class="ft-x"></i> Cancel
+          (click)="cancel()">
+          <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
         </button>
-        <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm) translate
+        <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm)
           class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square"></i> Save
+          <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
         </button>
       </div>
     </form>

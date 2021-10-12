@@ -17,9 +17,9 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ToastrService } from 'ngx-toastr';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { environment } from 'environments/environment';
+import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
 
 @Component({
   selector: 'app-purchase-order-x',
@@ -151,44 +151,42 @@ export class PurchaseOrderXComponent implements OnInit {
     return flag;
   }
 
-  SetTcForm(): ListAppTCObj{    
+  SetTcForm(): Array<AgrmntTcObj>{    
     let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
-    let listAppTCObj: ListAppTCObj = new ListAppTCObj();
-    listAppTCObj.AppTCObj = new Array();
+    let listAgrmntTcObj: Array<AgrmntTcObj> = new Array<AgrmntTcObj>();
     for (var i = 0; i < this.tcForm.value.TCList["length"]; i++) {
-      const tempAppTc = this.tcForm.getRawValue().TCList[i];
-      let appTC = new AppTCObj();
-      appTC.AppId = tempAppTc.AppId;
-      appTC.AppTcId = tempAppTc.AppTcId;
-      appTC.TcCode = tempAppTc.TcCode;
-      appTC.TcName = tempAppTc.TcName;
-      appTC.PriorTo = tempAppTc.PriorTo;
-      appTC.IsChecked = tempAppTc.IsChecked;
-      appTC.ExpiredDt = tempAppTc.ExpiredDt;
-      appTC.IsMandatory = tempAppTc.IsMandatory;
-      appTC.PromisedDt = tempAppTc.PromisedDt;
-      appTC.CheckedDt = tempAppTc.CheckedDt;
-      appTC.IsWaived = tempAppTc.IsWaived;
-      appTC.IsExpDtMandatory = tempAppTc.IsExpDtMandatory;
-      appTC.IsWaivable = tempAppTc.IsWaivable;
-      appTC.Notes = tempAppTc.Notes;
-      appTC.IsAdditional = tempAppTc.IsAdditional;
-      appTC.RowVersion = tempAppTc.RowVersion;
+      const tempAgrmntTc = this.tcForm.getRawValue().TCList[i];
+      let agrmntTc = new AgrmntTcObj();
+      agrmntTc.AgrmntId = tempAgrmntTc.AgrmntId;
+      agrmntTc.AgrmntTcId = tempAgrmntTc.AgrmntTcId;
+      agrmntTc.TcCode = tempAgrmntTc.TcCode;
+      agrmntTc.TcName = tempAgrmntTc.TcName;
+      agrmntTc.PriorTo = tempAgrmntTc.PriorTo;
+      agrmntTc.IsChecked = tempAgrmntTc.IsChecked;
+      agrmntTc.ExpiredDt = tempAgrmntTc.ExpiredDt;
+      agrmntTc.IsMandatory = tempAgrmntTc.IsMandatory;
+      agrmntTc.PromisedDt = tempAgrmntTc.PromisedDt;
+      agrmntTc.CheckedDt = tempAgrmntTc.CheckedDt;
+      agrmntTc.IsWaived = tempAgrmntTc.IsWaived;
+      agrmntTc.IsExpDtMandatory = tempAgrmntTc.IsExpDtMandatory;
+      agrmntTc.IsWaivable = tempAgrmntTc.IsWaivable;
+      agrmntTc.Notes = tempAgrmntTc.Notes;
+      agrmntTc.IsAdditional = tempAgrmntTc.IsAdditional;
 
-      var prmsDt = new Date(appTC.PromisedDt);
-      var prmsDtForm = tempAppTc.PromisedDt;
-      if (appTC.IsChecked == false) {
+      var prmsDt = new Date(agrmntTc.PromisedDt);
+      var prmsDtForm = tempAgrmntTc.PromisedDt;
+      if (agrmntTc.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
-            this.toastr.warningMessage("Promise Date for " + appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + agrmntTc.TcName + " can't be lower than Business Date");
             return;
           }
         }
       }
-      listAppTCObj.AppTCObj.push(appTC);
+      listAgrmntTcObj.push(agrmntTc);
     }
 
-    return listAppTCObj;
+    return listAgrmntTcObj;
   }
   async SaveForm() {
     var IsSave = false;
@@ -210,9 +208,12 @@ export class PurchaseOrderXComponent implements OnInit {
       this.toastr.typeErrorCustom("Please submit purchase order first!");
     }
 
-    let listAppTCObj: ListAppTCObj = this.SetTcForm();
+    let listAgrmntTcObj: Array<AgrmntTcObj> = this.SetTcForm();
     if (IsSave) {
-      await this.http.post(URLConstant.EditAppTc, {ListAppTcObj: listAppTCObj.AppTCObj}).toPromise().then(
+      var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+      reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
+      reqSubmitAgrmntTcObj.ListAgrmntTcObj = listAgrmntTcObj;
+      await this.http.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).toPromise().then(
         (response) => {
           // this.toastr.successMessage(response["Message"]);
           if(response["StatusCode"] != 200){
