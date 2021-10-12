@@ -263,20 +263,23 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   }
 
   createDOHandler() {
-    this.isCreateDOInvalid = true;
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
+    var formArraySelected : FormArray = new FormArray([]);
+
     for (var i = 0; i < formArray.length; i++) {
       if (formArray.at(i).get("IsSelected").value == true) {
-        this.isCreateDOInvalid = false;
-        break;
+        formArraySelected.push(formArray.at(i));
       }
     }
+
+    this.isCreateDOInvalid = formArraySelected.length == 0;
+
     if (this.isCreateDOInvalid) {
       this.createDOInvalidMsg = "At Least 1 Asset Must Be Selected";
       return false;
     }
     else {
-      this.showModalDO(formArray, "add", 0);
+      this.showModalDO(formArraySelected, "add", 0);
     }
   }
 

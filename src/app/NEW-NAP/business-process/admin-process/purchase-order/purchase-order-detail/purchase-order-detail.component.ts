@@ -12,6 +12,7 @@ import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetOb
 import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CookieService } from 'ngx-cookie';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -146,14 +147,18 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
   
   async SaveForm() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.purchaseOrderHObj.MouNo = this.MouNo;
     this.purchaseOrderHObj.Notes = this.Notes;
-
+    this.purchaseOrderHObj.PurchaseOrderDt = new Date(formatDate(context[CommonConstant.BUSINESS_DT], 'yyyy-MM-dd', 'en-US'));
     // this.listPurchaseOrderD = new Array();
     // this.purchaseOrderDObj = new PurchaseOrderDObj();
 
+    console.log(this.purchaseOrderHObj.PurchaseOrderDt);
+
     var ListPORefMasterObj = await this.GetFromRule();
     var listPurchaseOrderD = this.GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj);
+    
     var POObj = {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: listPurchaseOrderD
@@ -179,7 +184,9 @@ export class PurchaseOrderDetailComponent implements OnInit {
     }
   }
   async AddEditPO(POObj: any) {
+    console.log("First Date : " + POObj.requestPurchaseOrderHObj.PurchaseOrderDt);
     this.checkValidExpDt();
+    console.log("Second Date : " + POObj.requestPurchaseOrderHObj.PurchaseOrderDt);
     if(!this.isDataExist){      
       this.http.post(URLConstant.AddPurchaseOrder, POObj).subscribe(
         (response) => {

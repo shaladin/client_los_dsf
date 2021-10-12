@@ -29,6 +29,10 @@ export class CommonConstant {
   public static InputTypeAmt = 'AMT';
   public static InputTypePrcnt = 'PRCNT';
 
+  // BOOLEAN CONDITION
+  public static TRUE = "true";
+  public static FALSE = "false";
+
   // REF CHANGE ITEM STAT
   public static ChangeItemCodeAssetDataSerialNo1 = 'ASSET_DATA_SERIAL_NO_1';
   public static ChangeItemCodeAssetDataSerialNo2 = 'ASSET_DATA_SERIAL_NO_2';
@@ -917,6 +921,7 @@ export class CommonConstant {
 
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";
+  public static PRD_OFR_DEACT_APV = "PRD_OFR_DEACT_APV";
 
   //APP STAT
   public static AppStatCancel = "CAN";

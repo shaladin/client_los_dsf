@@ -7,7 +7,7 @@
             "name": "TL.TRX_NO",
             "id": "TrxNo",
             "value": "",
-            "label": "Application No",
+            "label": "Agreement No",
             "placeholder": "Placeholder"
         }
     ],
@@ -18,7 +18,7 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Application No",
+            "label": "Agreement No",
             "name": "TrxNo"
         },
         {
@@ -69,9 +69,10 @@
     ],
     "bodyList": [
         {
-            "type": "text",
+            "type": "callback",
             "position": "center",
-            "property": "TrxNo"
+            "property": "TrxNo",
+            "key": "application"
         },
         {
             "type": "text",

@@ -499,7 +499,7 @@ export class URLConstant {
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
   public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
-  public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
+  public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = environment.ApprovalR3Url + "/Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode";
 
   // SERVICE TASK
   public static GetListOSWfTaskListByActCode = "ServiceTask/GetListOSWfTaskListByActCode/";
@@ -670,6 +670,7 @@ export class URLConstant {
   public static ReturnMouReviewV2 = environment.losUrl + "/v2" + "/MouCust/ReturnMouReview";
   public static EditMouForCancelByMouId = environment.losUrl + "/v1" + "/MouCust/EditMouForCancelByMouId";
   public static EditMouForCancelByMouIdV2 = environment.losUrl + "/v2" + "/MouCust/EditMouForCancelByMouId";
+  public static EditMouForCancelByMouIdV2_1 = environment.losUrl + "/v2.1" + "/MouCust/EditMouForCancelByMouId";
   public static GetListMouByAppIdAndMouType = environment.losUrl + "/v1" + "/MouCust/GetListMouByAppIdAndMouType";
   public static GetListMouByAppIdAndMouTypeDF = environment.losUrl + "/v1" + "/MouCust/GetListMouByAppIdAndMouTypeDF";
   public static GetListMouCustByCustNo = environment.losUrl + "/v1" + "/MouCust/GetListMouCustByCustNo";

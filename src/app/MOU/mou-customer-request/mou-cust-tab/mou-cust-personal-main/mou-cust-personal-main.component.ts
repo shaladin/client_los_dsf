@@ -91,7 +91,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       NoOfDependents: ['', [Validators.maxLength(4)]],
     }));
 
-    await this.bindAllRefMasterObj();
+    this.bindAllRefMasterObj();
     await this.initLookup();
     await this.initLookupCountry();
     await this.bindCustData();
