@@ -76,7 +76,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
     SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
-    MrJobPositionCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     IsOwner: [false],
     IsActive: [false],
@@ -497,6 +497,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
       this.CustShareholderForm.controls.EstablishmentDt.clearValidators();
       this.CustShareholderForm.controls.EstablishmentDt.updateValueAndValidity();
+      this.CustShareholderForm.controls.MrJobPositionCode.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.CustShareholderForm.controls.MrJobPositionCode.updateValueAndValidity();
     }
 
     if (custType == CommonConstant.CustTypeCompany) {
@@ -504,6 +506,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
       this.CustShareholderForm.controls.EstablishmentDt.setValidators(Validators.required);
       this.CustShareholderForm.controls.EstablishmentDt.updateValueAndValidity();
+      this.CustShareholderForm.controls.MrJobPositionCode.clearValidators();
+      this.CustShareholderForm.controls.MrJobPositionCode.updateValueAndValidity();
     }
   }
 
