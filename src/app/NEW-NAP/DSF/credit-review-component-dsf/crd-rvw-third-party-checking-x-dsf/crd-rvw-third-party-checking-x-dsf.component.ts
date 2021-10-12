@@ -89,7 +89,8 @@ export class CrdRvwThirdPartyCheckingXDsfComponent implements OnInit {
         }
       }
     )
-
+    
+    this.dataRobotInfoObj.AppNo = this.AppNo;
     await this.http.post<ThirdPartyDataRobotObj>(URLConstantDsf.GetCrdRvwDataRobot, this.dataRobotInfoObj).toPromise().then(
       (response) => {
         this.dataRobotInfoObj = response;

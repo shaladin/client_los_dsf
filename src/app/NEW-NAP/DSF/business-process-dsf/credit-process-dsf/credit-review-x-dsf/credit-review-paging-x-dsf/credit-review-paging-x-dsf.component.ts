@@ -42,8 +42,8 @@ export class CreditReviewPagingXDsfComponent implements OnInit {
 
     let arrCrit = new Array();
     if(environment.isCore){
-      this.inputPagingObj._url = "./assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
-      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
+      this.inputPagingObj._url = "./assets/dsf/ucpaging/searchCreditReviewCrV2Dsf.json";
+      this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchCreditReviewCrV2Dsf.json";
       this.inputPagingObj.isJoinExAPI = true
   
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
