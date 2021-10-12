@@ -55,7 +55,7 @@ export class ViewLtkmCustHistoryDataComponent implements OnInit {
     }
 
     GetLtkmAppRjcByCustNoAndAppStat() {
-        this.http.post(URLConstant.GetLtkmAppRjcByCustNoAndAppStat, { CustNo: this.CustNo, AppStat: CommonConstant.Reject }).subscribe(
+        this.http.post(URLConstant.GetLtkmAppRjcByCustNoAndAppStat, { CustNo: this.CustNo, AppStat: CommonConstant.AppStatReject }).subscribe(
             (response: GenericListObj) => {
                 this.ListAppRjct = response.ReturnObject;
             });
