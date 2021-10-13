@@ -37,10 +37,10 @@
     </tbody>
     <tbody *ngIf = "listShareholder?.length > 0">
       <tr *ngFor="let item of listShareholder; let i = index">
-        <td style="text-align: center;">{{item.MgmntShrholderName}}</td>
+        <td style="text-align: center;">{{item.MrCustTypeCode == 'PUBLIC' ? item.PublicName : item.MgmntShrholderName}}</td>
         <td style="text-align: center;">{{item.JobPositionName}}</td>
-        <td style="text-align: center;">{{item.CustTypeName}}</td>
-        <td style="text-align: center;">{{item.TaxIdNo}}</td>
+        <td style="text-align: center;">{{dictCustType[item.MrCustTypeCode]}}</td>
+        <td style="text-align: center;">{{item.MrCustTypeCode == 'PUBLIC' ? item.PublicIdentityNo : item.TaxIdNo}}</td>
         <td style="text-align: center;">{{item.IsActive}}</td>
         <td style="text-align: center;">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
         <td>
@@ -134,6 +134,14 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-md-2 adins-required-label" translate> Position SLIK </label>
+                <div class="col-md-4">
+                  <lib-uclookupgeneric [lookupInput]="positionSlikLookUpObj" [parentForm]="CustShareholderForm"
+                    [enjiForm]="enjiForm" [identifier]="'PositionSlikCode'" (lookup)=getLookUpSlik($event)>
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-md-2" for="idExpDt" translate>Id Expired Date</label>
                 <div class="col-md-4">
                   <input *ngIf="CustShareholderForm.controls.MrIdTypeCode.value == 'EKTP'" readonly type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
@@ -162,7 +170,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2" for="jobPosition" translate>Job Position</label>
+                <label class="col-md-2 adins-required-label" for="jobPosition" translate>Job Position</label>
                 <div class="col-md-4">
                   <select class="form-control" id="jobPosition" formControlName="MrJobPositionCode" (change)="JobPositionChanged($event)"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrJobPositionCode.invalid }">
@@ -201,10 +209,9 @@
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj" [parentForm]="CustShareholderForm" [identifier]="'lookupCustomerShareholder'" (lookup)="CopyCustomer($event)"></lib-uclookupgeneric>
                 </div>
                 <label class="col-md-2" for="industryType" translate>Industry Type</label>
-                <div class="col-md-4" [hidden]="isCust == true">
+                <div class="col-md-4">
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="CustShareholderForm" [identifier]="'lookupIndustryTypeShareholder'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
                 </div>
-                <label [hidden]="isCust == false" class="col-md-4" translate>{{industryTypeName}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2" for="companyType" translate>Company Type</label>
@@ -240,6 +247,14 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-md-2 adins-required-label" translate> Position SLIK </label>
+                <div class="col-md-4">
+                  <lib-uclookupgeneric [lookupInput]="positionSlikLookUpObj" [parentForm]="CustShareholderForm"
+                    [enjiForm]="enjiForm" [identifier]="'PositionSlikCode'" (lookup)=getLookUpSlik($event)>
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-md-2" for="IsOwner" translate>Owner</label>
                 <div class="col-md-4">
                   <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsOwner" />
@@ -256,8 +271,9 @@
                 </div>
               </div>
             </div>
+            <app-mou-cust-mgmnt-shrholder-public *ngIf="CustShareholderForm.controls.MrCustTypeCode.value == 'PUBLIC'" [tempExisting]="tempExisting" (outputCancel)="SavePublicType($event)"></app-mou-cust-mgmnt-shrholder-public>
           </div>
-          <div class="form-actions right">
+          <div class="form-actions right" *ngIf="CustShareholderForm.controls.MrCustTypeCode.value != 'PUBLIC'">
             <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()">
               <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
