@@ -169,6 +169,16 @@ export class AdInsHelper {
     window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_EDIT_MAIN_DATA_COY + "?CustId=" + CustId + "&From=" + From, "_blank");
   }
 
+  public static EditCustomerMainDataXDSFPersonalByCustId(CustId, From) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_NEW_FORM_DSF + "?CustId=" + CustId + "&CustType=PERSONAL" + "&From=" + From, "_blank");
+  }
+
+  public static EditCustomerMainDataXDSFCompanyByCustId(CustId, From) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_NEW_FORM_DSF + "?CustId=" + CustId + "&CustType=COMPANY" + "&From=" + From, "_blank");
+  }
+
   public static OpenPefindoView(CustNo: string, IsLos: boolean) {
     window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos);
   }

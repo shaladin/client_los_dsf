@@ -29,6 +29,7 @@ export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
   @Input() CrdRvwCustInfoId: number;
   @Input() CrdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   @Input() AppNo: string = "";
+  readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   IsUseDigitalization: string;
   IsSvcExist: boolean = false;
   IsUseTs: boolean = false;
