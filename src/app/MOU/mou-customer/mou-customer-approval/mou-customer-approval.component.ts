@@ -160,5 +160,4 @@ export class MouCustomerApprovalComponent implements OnInit {
       }
     }
   }
-  
 }
