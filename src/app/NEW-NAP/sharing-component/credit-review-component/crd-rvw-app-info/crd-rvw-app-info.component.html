@@ -137,7 +137,7 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-10">
-                <label class="label-control" translate> TAC Commission + Reserve Fund </label>
+                <label class="label-control" translate> Total Acquisition Cost Commission + Reserve Fund </label>
               </div>
               <div class="col-md-2">
                 <span id="TacIndicator" style="float: right;">
@@ -153,7 +153,7 @@
             </div>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{crdRvwAppObj.Tac}}% </label>
+            <label class="label-control"> {{crdRvwAppObj.Tac | number:'.6':'en-US'}}% </label>
           </div>
         </div>
       </div>
