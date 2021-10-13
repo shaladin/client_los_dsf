@@ -13,6 +13,10 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { environment } from 'environments/environment';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-mou-customer-approval',
@@ -24,16 +28,27 @@ export class MouCustomerApprovalComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
-  user: CurrentUserContext;
+  user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService) { }
 
   ngOnInit() {
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
+
+      // this.InpuinputPagingObjtPagingObj.isJoinExAPI = true;
+
+      // this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_PRD_OFR_APV;
+      // this.apvReqObj.Username = this.UserContext.UserName;
+      // this.apvReqObj.RoleCode = this.UserContext.RoleCode;
+      // this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
+      // this.integrationObj.requestObj = this.apvReqObj;
+      // this.integrationObj.leftColumnToJoin = "ProdOfferingCode";
+      // this.integrationObj.rightColumnToJoin = "TransactionNo";
+      // this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+      // this.inputPagingObj.integrationObj = this.integrationObj; 
 
       this.arrCrit = new Array();
       var critObj = new CriteriaObj();
@@ -94,5 +109,12 @@ export class MouCustomerApprovalComponent implements OnInit {
           }
         });
     }
+    // else if (event.Key == "UnClaim") {
+    //   if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
+    //     this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_UNCLAIM);
+    //   } else {
+    //     this.apvTaskService.UnclaimApvTask(event.RowObj.TaskId);
+    //   }
+    // }
   }
 }
