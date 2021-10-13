@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
@@ -30,7 +31,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   AppId: number;
   AgrmntId: number;
   CrdApvMainDataObj: ResCreditApvResultExtObj;
-
+  IsRoleAssignment: string = "";
   ApvReqId: number; 
   InputApvObj : UcInputApprovalObj;
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
@@ -50,6 +51,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
         this.taskId = params["TaskId"];
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
@@ -62,7 +64,10 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.taskId
 
-    this.HoldTask(ApvHoldObj);
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
+    
     this.initInputApprovalObj();
   }
 

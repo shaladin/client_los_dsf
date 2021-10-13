@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -17,6 +17,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-customer-approval',
@@ -28,6 +29,8 @@ export class MouCustomerApprovalComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
+  apvReqObj: ApprovalReqObj = new ApprovalReqObj();
+  integrationObj: IntegrationObj = new IntegrationObj();
   user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService) { }
@@ -38,41 +41,17 @@ export class MouCustomerApprovalComponent implements OnInit {
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
 
-      // this.InpuinputPagingObjtPagingObj.isJoinExAPI = true;
+      this.inputPagingObj.isJoinExAPI = true;
 
-      // this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_PRD_OFR_APV;
-      // this.apvReqObj.Username = this.UserContext.UserName;
-      // this.apvReqObj.RoleCode = this.UserContext.RoleCode;
-      // this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
-      // this.integrationObj.requestObj = this.apvReqObj;
-      // this.integrationObj.leftColumnToJoin = "ProdOfferingCode";
-      // this.integrationObj.rightColumnToJoin = "TransactionNo";
-      // this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
-      // this.inputPagingObj.integrationObj = this.integrationObj; 
-
-      this.arrCrit = new Array();
-      var critObj = new CriteriaObj();
-      critObj.DataType = 'text';
-      critObj.restriction = AdInsConstant.RestrictionIn;
-      critObj.propName = 'TL.CATEGORY_CODE';
-      critObj.listValue = ['MOUC_GEN_APV', 'MOUC_FCTR_APV', 'MOUC_DLFN_APV'];
-      this.arrCrit.push(critObj);
-  
-      critObj = new CriteriaObj();
-      critObj.DataType = 'text';
-      critObj.restriction = AdInsConstant.RestrictionEq;
-      critObj.propName = 'TL.CURRENT_USER_ID';
-      critObj.value = this.user.UserName;
-      this.arrCrit.push(critObj);
-  
-      critObj = new CriteriaObj();
-      critObj.DataType = 'text';
-      critObj.restriction = AdInsConstant.RestrictionOr;
-      critObj.propName = 'TL.MAIN_USER_ID';
-      critObj.value = this.user.UserName;
-      this.arrCrit.push(critObj);
-  
-      this.inputPagingObj.addCritInput = this.arrCrit
+      this.apvReqObj.CategoryCodes = [CommonConstant.CAT_CODE_MOU_APV_GENERAL, CommonConstant.CAT_CODE_MOU_APV_FACTORING, CommonConstant.CAT_CODE_MOU_APV_DLFN]
+      this.apvReqObj.Username = this.user.UserName;
+      this.apvReqObj.RoleCode = this.user.RoleCode;
+      this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
+      this.integrationObj.requestObj = this.apvReqObj;
+      this.integrationObj.leftColumnToJoin = "MouCustNo";
+      this.integrationObj.rightColumnToJoin = "TransactionNo";
+      this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+      this.inputPagingObj.integrationObj = this.integrationObj; 
     }
     else{
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
@@ -93,6 +72,7 @@ export class MouCustomerApprovalComponent implements OnInit {
   getEvent(event) {
     let custId: number;
     let mrCustTypeCode: string;
+    var isRoleAssignment = event.RowObj.IsRoleAssignment.toString();
     if (event.Key == "customer") {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
@@ -109,12 +89,75 @@ export class MouCustomerApprovalComponent implements OnInit {
           }
         });
     }
-    // else if (event.Key == "UnClaim") {
-    //   if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
-    //     this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_UNCLAIM);
-    //   } else {
-    //     this.apvTaskService.UnclaimApvTask(event.RowObj.TaskId);
-    //   }
-    // }
+    if (event.Key == "Process") {
+      if(isRoleAssignment != CommonConstant.TRUE){
+        if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
+          this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+        } else {
+          switch (event.RowObj.MouType) {
+            case CommonConstant.MOU_TYPE_FACTORING:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+            case CommonConstant.MOU_TYPE_GENERAL:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+            case CommonConstant.MOU_TYPE_DLFN:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+          }
+        }
+      }
+      else{
+        if (event.RowObj.CurrentUser == "-") {
+          this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
+          switch (event.RowObj.MouType) {
+            case CommonConstant.FACTORING:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+            case CommonConstant.GENERAL:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+            case CommonConstant.FINANCING:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+          }
+        }
+        else{
+          switch (event.RowObj.MouType) {
+            case CommonConstant.FACTORING:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+            case CommonConstant.GENERAL:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+            case CommonConstant.FINANCING:
+                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+                break;
+          }
+        }
+      }      
+    }
+    else if (event.Key == "HoldTask") {
+      if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
+      } 
+      else {
+        this.apvTaskService.HoldApvTask(event.RowObj.TaskId);
+      }
+    }
+    else if (event.Key == "TakeBack") {
+      if (String.Format("{0:L}", event.RowObj.MainUser) != String.Format("{0:L}", this.user.UserName)) {
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
+      } else {
+        this.apvTaskService.TakeBackApvTask(event.RowObj.TaskId, event.RowObj.MainUser);
+      }
+    }
+    else if (event.Key == "UnClaim") {
+      if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_UNCLAIM);
+      } else {
+        this.apvTaskService.UnclaimApvTask(event.RowObj.TaskId);
+      }
+    }
   }
 }

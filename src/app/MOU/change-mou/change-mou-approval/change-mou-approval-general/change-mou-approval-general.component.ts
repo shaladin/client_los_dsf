@@ -37,6 +37,7 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
+  IsRoleAssignment: string = "";
 
   pageTitle: string;
   ChangeMouCustId: number;
@@ -61,6 +62,7 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
         this.MouCustId = params["MouCustId"];
         this.MouType = params["MouType"];
         this.TrxType = params["TrxType"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -78,7 +80,10 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.taskId
 
-    this.HoldTask(ApvHoldObj);
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
+    
     this.initInputApprovalObj();
   }
 

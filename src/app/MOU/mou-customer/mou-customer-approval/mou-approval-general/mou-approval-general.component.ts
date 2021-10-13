@@ -16,6 +16,8 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 @Component({
   selector: 'app-mou-approval-general',
   templateUrl: './mou-approval-general.component.html'
@@ -38,6 +40,7 @@ export class MouApprovalGeneralComponent implements OnInit {
   IsReady: boolean = false;
   dmsObj: DMSObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsRoleAssignment: string = "";
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
@@ -46,12 +49,17 @@ export class MouApprovalGeneralComponent implements OnInit {
       }
       this.ApvReqId = params["ApvReqId"];
       this.taskId = params["TaskId"];
-
+      this.IsRoleAssignment = params["IsRoleAssignment"];
     });
   }
 
 
   async ngOnInit() : Promise<void> {
+    let ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.taskId;
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -89,6 +97,13 @@ export class MouApprovalGeneralComponent implements OnInit {
 
   }
 
+  HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{
+      }
+    )
+  }
+  
   onApprovalSubmited(event) {
     let ReqMouApvCustomObj = {
       Tasks: event.Tasks

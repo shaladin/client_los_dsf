@@ -34,6 +34,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   arrValue = [];
   isViewReady: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+  IsRoleAssignment: string = "";
 
   constructor(private router: Router, 
     private route: ActivatedRoute, 
@@ -45,6 +46,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
         this.taskId = params["TaskId"];
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -53,7 +55,9 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.taskId;
 
-    await this.HoldTask(ApvHoldObj);
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      await this.HoldTask(ApvHoldObj);
+    }
 
     await this.getData();
     this.IsReadySummary = true;
