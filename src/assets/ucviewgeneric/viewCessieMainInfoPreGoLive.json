@@ -46,11 +46,6 @@
           },
           {
             "type": "text",
-            "label": "Virtual Account",
-            "property": "VirtualAccount"
-          },
-          {
-            "type": "text",
             "label": "Cessie Last Step",
             "property": "CessieLastStep"
           },
