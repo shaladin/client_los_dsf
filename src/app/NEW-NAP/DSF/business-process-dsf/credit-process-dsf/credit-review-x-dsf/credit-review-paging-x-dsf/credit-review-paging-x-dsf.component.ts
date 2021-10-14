@@ -45,7 +45,8 @@ export class CreditReviewPagingXDsfComponent implements OnInit {
       this.inputPagingObj._url = "./assets/dsf/ucpaging/searchCreditReviewCrV2Dsf.json";
       this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchCreditReviewCrV2Dsf.json";
       this.inputPagingObj.isJoinExAPI = true
-  
+      
+      this.RequestTaskModel.UserName = this.userAccess[CommonConstant.USER_NAME];
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RVW + this.BizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
