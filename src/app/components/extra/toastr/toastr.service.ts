@@ -109,14 +109,14 @@ export class NGXToastrService {
     }
 
     typeErrorCopyOnClick(msg, status){
-        const toastr = this.toastr.error(msg, status, { "tapToDismiss": false, "timeOut": 20000, "closeButton": true });
+        const toastr = this.toastr.error(msg, status, { "tapToDismiss": false, "timeOut": 7000, "closeButton": true, "extendedTimeOut": 5000 });
         toastr.onTap.subscribe(() => {
             this.clipboard.copyFromContent(msg);
         });
     }
 
     typeWarningCopyOnClick(msg, status) {
-        const toastr = this.toastr.warning(msg, status, { "tapToDismiss": false, "timeOut": 20000, "closeButton": true });
+        const toastr = this.toastr.warning(msg, status, { "tapToDismiss": false, "timeOut": 7000, "closeButton": true, "extendedTimeOut": 5000 });
         toastr.onTap.subscribe(() => {
             this.clipboard.copyFromContent(msg);
         });

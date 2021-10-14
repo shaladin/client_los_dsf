@@ -11,6 +11,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-prod-offering-deact-apv-detail',
@@ -22,6 +23,7 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   ProdOfferingId: number;
   ProdOfferingHId: number;
   IsReady: boolean = false;
+  IsRoleAssignment: string = "";
   GenericByIdObj: GenericObj = new GenericObj();
   ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   InputApvObj: UcInputApprovalObj = new UcInputApprovalObj();
@@ -36,6 +38,7 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
         this.TaskId = params["TaskId"];
         this.ApvReqId = params["ApvReqId"];
         this.ProdOfferingId = params["ProdOfferingId"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -46,7 +49,9 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
     let ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.TaskId
 
-    this.HoldTask(ApvHoldObj);
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
     this.initInputApprovalObj();
   }
 

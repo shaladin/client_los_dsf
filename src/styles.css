@@ -452,3 +452,7 @@ input[type=date].form-control.is-invalid {
 .app-sidebar .navigation li a, .off-canvas-sidebar .navigation li a {
     white-space: pre-wrap;
 }
+
+mat-dialog-container#role-modal {
+    height: auto;
+}

@@ -9,6 +9,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { CustHighlightCommentObj } from 'app/shared/model/CustHighlightCommentObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -90,6 +91,11 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
+  }
+
+  crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
+  getCrdRvwAppObj(ev: CrdRvwAppObj) {
+    this.crdRvwAppObj = ev;
   }
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();

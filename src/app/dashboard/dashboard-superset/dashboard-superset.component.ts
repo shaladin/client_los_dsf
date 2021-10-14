@@ -15,8 +15,7 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './dashboard-superset.component.html'
 })
 export class DashboardSupersetComponent implements OnInit {
-  @Input() inRoleCode: string;
-
+  inRoleCode: string = "";
   url: string = "";
   dashboard: string ="";
   param: string ="";
@@ -41,6 +40,7 @@ export class DashboardSupersetComponent implements OnInit {
   async ngOnInit() {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.user = context[CommonConstant.USER_NAME];
+    this.inRoleCode = context[CommonConstant.ROLE_CODE];
     this.officeCode = context[CommonConstant.OFFICE_CODE];
     
     var datePipe = new DatePipe("en-US");

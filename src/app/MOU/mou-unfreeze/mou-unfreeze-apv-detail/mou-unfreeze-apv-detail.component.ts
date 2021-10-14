@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsConstant } from "app/shared/AdInstConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { ApprovalObj } from "app/shared/model/Approval/ApprovalObj.Model";
@@ -29,6 +30,7 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   ApvReqId: number;
+  IsRoleAssignment: string = "";
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -42,6 +44,7 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
         this.TrxNo = params["TrxNo"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -52,7 +55,9 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.taskId;
 
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
     this.HoldTask(ApvHoldObj);
+    }
     this.initInputApprovalObj();
   }
 
