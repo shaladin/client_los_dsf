@@ -80,6 +80,42 @@
     {
       "type": "dropdown",
       "datatype": "text",
+      "name": "A.APP_CURR_STEP",
+      "id": "appStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Current Application Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "APP_STEP"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "B.AGRMNT_CURR_STEP",
+      "id": "agrmntStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Current Agreement Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "APP_STEP"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
       "name": "A.APP_STAT",
       "id": "appStatId",
       "value": "",
@@ -94,24 +130,6 @@
       "itemsUrl": [],
       "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STAT"
-    },
-    {
-      "type": "dropdown",
-      "datatype": "text",
-      "name": "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
-      "id": "appStepId",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": true,
-      "ddlType": "all",
-      "url": "",
-      "environment": "FOU",
-      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-      "label": "Current Application Step",
-      "items": [],
-      "itemsUrl": [],
-      "criteriaPropName": "Code",
-      "criteriaPropValue": "APP_STEP"
     },
     {
       "type": "dropdown",
@@ -198,6 +216,12 @@
     },
     {
       "type": "sort",
+      "position": "left",
+      "label": "Agreement Step",
+      "name": "B.AGRMNT_CURR_STEP"
+    },
+    {
+      "type": "sort",
       "position": "center",
       "label": "Contract Status",
       "name": "B.AGRMNT_STAT"
@@ -206,7 +230,7 @@
       "type": "sort",
       "position": "left",
       "label": "Application Step",
-      "name": "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)"
+      "name": "A.APP_CURR_STEP"
     },
     {
       "type": "sort",
@@ -260,6 +284,11 @@
       "type": "boolean",
       "position": "center",
       "property": "isNapSub"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "agrmntStep"
     },
     {
       "type": "text",
