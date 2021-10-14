@@ -53,7 +53,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 adins-required-label" translate>Bank Branch</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" formControlName="BankBranch" required
+                                    <input type="text" readonly class="form-control" formControlName="BankBranch" required
                                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.BankBranch.invalid }">
                                     <lib-uc-show-errors [control]="InvoiceForm.controls.BankBranch"
                                         [submit]="enjiForm.submitted">
@@ -64,7 +64,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 adins-required-label" translate>Account No</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" formControlName="AccNo" required
+                                    <input type="text" readonly class="form-control" formControlName="AccNo" required
                                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.AccNo.invalid }">
                                     <lib-uc-show-errors [control]="InvoiceForm.controls.AccNo"
                                         [submit]="enjiForm.submitted">
@@ -75,7 +75,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 adins-required-label" translate>Account Name</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" formControlName="AccName" required
+                                    <input type="text" readonly class="form-control" formControlName="AccName" required
                                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.AccName.invalid }">
                                     <lib-uc-show-errors [control]="InvoiceForm.controls.AccName"
                                         [submit]="enjiForm.submitted">

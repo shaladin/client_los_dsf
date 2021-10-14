@@ -73,6 +73,7 @@ export class FactoringReviewDetailComponent implements OnInit {
         this.InputLookupBankObj.pagingJson = "./assets/uclookup/lookupBank.json";
         this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
         this.InputLookupBankObj.isRequired = true;
+        this.InputLookupBankObj.isDisable = true;
 
         var CessieObj = {
             Id: this.CessieHXId
