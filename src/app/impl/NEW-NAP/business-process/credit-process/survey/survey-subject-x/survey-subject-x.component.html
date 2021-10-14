@@ -104,7 +104,7 @@
             <div id="summary" class="row">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-md-4  adInsLabel" translate>Skip Survey</label>
+                  <label class="col-md-4 adInsLabel adins-required-label" translate>Skip Survey</label>
                   <div class="col-md-8">
                     <select (change)="onChangeSkipSurvey()" class="form-control" id="isAnyUpdate" formControlName="IsAnyUpdate"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.IsAnyUpdate.invalid }" style="width:50%">
