@@ -25,6 +25,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
+import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -66,18 +67,19 @@ export class CreditReviewCrDetailComponent implements OnInit {
     CreditScoring: ['']
   });
 
-  FormReturnObj  =this.fb.group({
+  FormReturnObj = this.fb.group({
     Reason: [''],
     Notes: ['']
   });
 
+  crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   constructor(
     private route: ActivatedRoute,
     private ref: ApplicationRef,
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: ToastrService, 
+    public toastr: ToastrService,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService
   ) {
@@ -112,9 +114,13 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.initInputApprovalObj();
   }
 
+  getCrdRvwAppObj(ev: CrdRvwAppObj) {
+    this.crdRvwAppObj = ev;
+  }
+
   responseListTypeCodes: Array<TypeResultObj> = new Array();
-  async GetListDeviation(){    
-    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {TrxNo: this.appNo}).toPromise().then(
+  async GetListDeviation() {
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, { TrxNo: this.appNo }).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
       });
@@ -342,8 +348,8 @@ export class CreditReviewCrDetailComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
 
     if (!this.isReturnOn) {
-      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
-      
+      this.RFAInfo = { RFAInfo: this.FormObj.controls.RFAInfo.value };
+
     }
 
     let apiObj = {
@@ -361,7 +367,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -375,11 +381,11 @@ export class CreditReviewCrDetailComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId
     }
-    
+
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
   }
 
@@ -389,7 +395,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     let CrdRvwDataReCaptureUrl = environment.isCore ? URLConstant.CrdRvwDataReCaptureV2 : URLConstant.CrdRvwDataReCapture;
     this.http.post(CrdRvwDataReCaptureUrl, workflowApiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -418,7 +424,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   }
   //#endregion
 
-  ClaimTask(){
+  ClaimTask() {
     if (environment.isCore) {
       if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
         this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
