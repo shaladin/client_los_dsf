@@ -365,7 +365,7 @@ export class NavigationConstant {
   public static LEAD_UPLOAD = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_MONITORING; //'/Lead/Monitoring'
   public static LEAD_REVIEW_MONITORING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_RVW_MONITORING_PAGING; //'/Lead/ReviewMonitoring/Paging'
   public static SIMPLE_LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLead/Paging'
-  public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLeadDsf/Detail'
+  public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLeadDsf/Detail'
   public static SIMPLE_LEAD_MAIN_INFO = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLead/MainInfo'
   public static SIMPLE_LEAD_FRAUD_VERIF_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING; //'/Lead/SimpleLeadFraudVerif/Paging'
   public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_DETAIL; //'/Lead/SimpleLeadFraudVerif/Detail'
@@ -378,8 +378,10 @@ export class NavigationConstant {
   public static LEAD_POTENTIAL_RO_TEL_OFFER_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_PAGING; //'/Lead/PotentialRo/RoTelemkOffer/Paging'
   public static LEAD_POTENTIAL_RO_TEL_OFFER_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_DETAIL; //'/Lead/PotentialRo/RoTelemkOffer/Detail'
   public static LEAD_POTENTIAL_RO_TEL_OFFER_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_VERIF; //'/Lead/PotentialRo/RoTelemkOffer/Verif'
+  public static SIMPLE_LEAD_PAGING_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLeadDsf/Paging'
   public static SIMPLE_LEAD_DETAIL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLeadDsf/Detail'
-
+  public static SIMPLE_LEAD_UPD_PAGING_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_UPD_PAGING; //'/Lead/SimpleLeadUpdateDsf/Paging'
+  public static SIMPLE_LEAD_MAIN_INFO_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLeadDsf/MainInfo'
   //#endregion
 
   //#region LTKM

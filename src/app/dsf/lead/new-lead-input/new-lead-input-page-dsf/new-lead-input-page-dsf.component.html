@@ -61,8 +61,8 @@
         </app-new-lead-input-cust-data-dsf>
       </div>
       <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-        <app-new-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue">
-        </app-new-lead-input-lead-data>
+        <app-new-lead-input-lead-data-x *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue">
+        </app-new-lead-input-lead-data-x>
       </div>
       <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
         <app-dms-iframe *ngIf="isDmsData && AppStepIndex == 3 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>

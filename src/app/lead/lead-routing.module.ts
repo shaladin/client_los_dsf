@@ -40,6 +40,9 @@ import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitor
 import { NewLeadInputPageDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input-page-dsf/new-lead-input-page-dsf.component';
 import { NewLeadInputPageXComponent } from 'app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { NewLeadUpdateDsfComponent } from 'app/dsf/lead/new-lead-update-dsf/new-lead-update-dsf.component';
+import { NewLeadInputDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input.component';
+import { NewLeadInputMainInfoDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input-main-info-dsf/new-lead-input-main-info-dsf.component';
 
 
 const routes: Routes = [
@@ -243,6 +246,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.SIMPLE_LEAD_PAGING,
+        component: NewLeadInputDsfComponent,
+        data: {
+          title: 'Lead Input Paging Dsf'
+        }
+      },
+      {
         path: PathConstant.SIMPLE_LEAD_DETAIL,
         component: NewLeadInputPageComponent,
         data: {
@@ -266,6 +276,13 @@ const routes: Routes = [
       {
         path: PathConstant.SIMPLE_LEAD_MAIN_INFO,
         component: NewLeadInputMainInfoComponent,
+        data: {
+          title: 'Lead Input Main Info'
+        }
+      },
+      {
+        path: PathConstantDsf.SIMPLE_LEAD_MAIN_INFO,
+        component: NewLeadInputMainInfoDsfComponent,
         data: {
           title: 'Lead Input Main Info'
         }
@@ -310,6 +327,13 @@ const routes: Routes = [
         component: NewLeadUpdateComponent,
         data: {
           title: 'Lead Update Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.SIMPLE_LEAD_UPD_PAGING,
+        component: NewLeadUpdateDsfComponent,
+        data: {
+          title: 'Lead Update Paging Dsf'
         }
       }
     ]

@@ -145,15 +145,15 @@ export class NewLeadInputPageDsfComponent implements OnInit {
     else {
       modeName = this.pageType;
     }
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_MAIN_INFO], { LeadId: this.LeadId, mode: modeName });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_MAIN_INFO_DSF], { LeadId: this.LeadId, mode: modeName });
   }
 
   cancelHandler() {
     if (this.pageType == "update") {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING_DSF], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING_DSF], {});
     }
   }
 

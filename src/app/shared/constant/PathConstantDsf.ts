@@ -84,7 +84,11 @@ export class PathConstantDsf {
     
     //#region simple lead
     public static SIMPLE_LEAD = "SimpleLeadDsf";
+    public static SIMPLE_LEAD_UPD = "SimpleLeadUpdateDsf";
+    public static SIMPLE_LEAD_PAGING = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstant.PAGING;
     public static SIMPLE_LEAD_DETAIL = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstantDsf.DETAIL;
+    public static SIMPLE_LEAD_MAIN_INFO = PathConstantDsf.SIMPLE_LEAD + "/MainInfo";
+    public static SIMPLE_LEAD_UPD_PAGING = PathConstantDsf.SIMPLE_LEAD_UPD + "/" + PathConstant.PAGING;
     //#endregion
     public static REPORT_APP_STATUS = "ReportAppStatus";
     public static PRINT_REPORT_APP_STATUS = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_APP_STATUS;
