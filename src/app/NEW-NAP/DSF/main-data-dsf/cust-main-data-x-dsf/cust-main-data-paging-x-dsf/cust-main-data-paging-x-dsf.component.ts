@@ -99,20 +99,20 @@ export class CustMainDataPagingXDsfComponent implements OnInit {
         this.inputPagingObj.integrationObj = this.IntegrationObj;
       }
 
-      // if (this.userAccess[CommonConstant.ROLE_CODE] == 'DPC')
-      // {
-      //   this.isDPC = true;
-      //   this.ReqSpvDPCDsfObj.userName = this.userAccess.UserName;
-      //   this.http.post(URLConstantDsf.GetSpvDPCDSF, this.ReqSpvDPCDsfObj).subscribe(
-      //     (response) => {
-      //       this.SpvDPCDsfObj.userName = response["userName"];
-      //       if (this.SpvDPCDsfObj.userName != null && this.SpvDPCDsfObj.userName != '')
-      //       {
-      //         this.isSpvDPC = true;
-      //       }
-      //     }
-      //   )
-      // }
+      if (this.userAccess[CommonConstant.ROLE_CODE] == 'DPC')
+      {
+        this.isDPC = true;
+        this.ReqSpvDPCDsfObj.userName = this.userAccess.UserName;
+        this.http.post(URLConstantDsf.GetSpvDPCDSF, this.ReqSpvDPCDsfObj).subscribe(
+          (response) => {
+            this.SpvDPCDsfObj.userName = response["userName"];
+            if (this.SpvDPCDsfObj.userName != null && this.SpvDPCDsfObj.userName != '')
+            {
+              this.isSpvDPC = true;
+            }
+          }
+        )
+      }
   }
 
   AddApp(addType = '') {
@@ -121,10 +121,10 @@ export class CustMainDataPagingXDsfComponent implements OnInit {
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
 
-          // if (this.isDPC)
-          // {
-          //   if (this.isSpvDPC)
-          //   {
+          if (this.isDPC)
+          {
+            if (this.isSpvDPC)
+            {
               if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
               {
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode, "addType": addType });
@@ -133,23 +133,23 @@ export class CustMainDataPagingXDsfComponent implements OnInit {
               {
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode });
               }
-          //   }
-          //   else
-          //   {
-          //     this.toastr.warningMessage(ExceptionConstantDsf.SPV_DPC_NOT_AVAILABLE);
-          //   }
-          // }
-          // else
-          // {
-          //   if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
-          //   {
-          //     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode, "addType": addType });
-          //   }
-          //   else
-          //   {
-          //     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode });
-          //   }
-          // }
+            }
+            else
+            {
+              this.toastr.warningMessage(ExceptionConstantDsf.SPV_DPC_NOT_AVAILABLE);
+            }
+          }
+          else
+          {
+            if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
+            {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode, "addType": addType });
+            }
+            else
+            {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode });
+            }
+          }
 
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');

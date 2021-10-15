@@ -38,8 +38,8 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
 
   ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    if (this.userAccess.RoleCode == 'MKT-MAO' || this.userAccess.RoleCode == 'DPC' || this.userAccess.RoleCode == 'MKT-MO')
-    {
+    // if (this.userAccess.RoleCode == 'MKT-MAO' || this.userAccess.RoleCode == 'DPC' || this.userAccess.RoleCode == 'MKT-MO')
+    // {
     
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url="./assets/ucpaging/searchAppFromSimpleLead.json";
@@ -60,11 +60,11 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
           environment: environment.FoundationR3Url + "/v1"
         }
       ];
-    }
-    else
-    {
-      this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
-    }
+    // }
+    // else
+    // {
+    //   this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
+    // }
   }
 
   AddApp(ev){
