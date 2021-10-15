@@ -37,10 +37,10 @@
     </tbody>
     <tbody *ngIf = "listShareholder?.length > 0">
       <tr *ngFor="let item of listShareholder; let i = index">
-        <td style="text-align: center;">{{item.MrCustTypeCode == 'PUBLIC' ? item.PublicName : item.MgmntShrholderName}}</td>
+        <td style="text-align: center;">{{item.MrShrholderTypeCode == 'PUBLIC' ? item.PublicName : item.MgmntShrholderName}}</td>
         <td style="text-align: center;">{{item.JobPositionName}}</td>
-        <td style="text-align: center;">{{dictCustType[item.MrCustTypeCode]}}</td>
-        <td style="text-align: center;">{{item.MrCustTypeCode == 'PUBLIC' ? item.PublicIdentityNo : item.TaxIdNo}}</td>
+        <td style="text-align: center;">{{dictCustType[item.MrShrholderTypeCode]}}</td>
+        <td style="text-align: center;">{{item.MrShrholderTypeCode == 'PUBLIC' ? item.PublicIdentityNo : item.TaxIdNo}}</td>
         <td style="text-align: center;">{{item.IsActive}}</td>
         <td style="text-align: center;">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
         <td>
