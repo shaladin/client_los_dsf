@@ -36,8 +36,7 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    private http: HttpClient,
-    private apvTaskService: ApprovalTaskService
+    private http: HttpClient
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["TrxId"] != null) {
@@ -54,12 +53,20 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
 
+    var ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.taskId;
+
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.apvTaskService.HoldApvTask(this.taskId);
+      this.HoldTask(ApvHoldObj);
     }
     this.initInputApprovalObj();
   }
 
+  HoldTask(obj: ApprovalObj) {
+    this.http
+      .post(AdInsConstant.ApvHoldTaskUrl, obj)
+      .subscribe((response) => { });
+  }
 
   onAvailableNextTask(event) { }
 

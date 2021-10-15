@@ -52,8 +52,7 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-    private apvTaskService: ApprovalTaskService
+    private toastr: NGXToastrService
   ) {
 
     this.route.queryParams.subscribe(params => {
@@ -93,8 +92,11 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
     this.inputObj = obj;
 
 
+    var ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = obj.taskId
+
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.apvTaskService.HoldApvTask(this.taskId);
+      this.HoldTask(ApvHoldObj);
     }
     this.initInputApprovalObj();
   }
@@ -116,6 +118,12 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
     this.IsReady = true;
   }
 
+  HoldTask(obj) {
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      }
+    )
+  }
 
   onApprovalSubmited(event) {
     let ReqMouApvCustomObj = {

@@ -40,8 +40,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   constructor(private router: Router, 
     private route: ActivatedRoute, 
     private toastr: NGXToastrService,
-    private http: HttpClient,
-    private apvTaskService: ApprovalTaskService) { 
+    private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       if (params["EditAppAftApvTrxHId"] != null) {
         this.EditAppAftApvTrxHId = params["EditAppAftApvTrxHId"];
@@ -54,12 +53,23 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    var ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.taskId;
+
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.apvTaskService.HoldApvTask(this.taskId);
+      await this.HoldTask(ApvHoldObj);
     }
 
     await this.getData();
     this.IsReadySummary = true;
+  }
+
+  async HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{      
+    
+      }
+    )
   }
 
   async getData()

@@ -31,8 +31,7 @@ export class ProdOfferingApvDetailComponent implements OnInit {
 
   constructor(private router: Router, 
     private route: ActivatedRoute, 
-    private http: HttpClient,
-    private apvTaskService: ApprovalTaskService) {
+    private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdOfferingHId"] != null) {
         this.ProdOfferingHId = params["ProdOfferingHId"];
@@ -44,10 +43,20 @@ export class ProdOfferingApvDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    let ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.TaskId;
+
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.apvTaskService.HoldApvTask(this.TaskId);
+      this.HoldTask(ApvHoldObj);
     }
     this.initInputApprovalObj();
+  }
+
+  HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{
+      }
+    )
   }
 
   initInputApprovalObj(){

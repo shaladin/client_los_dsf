@@ -93,6 +93,7 @@ export class MouCustomerApprovalComponent implements OnInit {
       if(isRoleAssignment != CommonConstant.TRUE){
         if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
           this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+          return;
         } 
       }
       else if (event.RowObj.CurrentUser == "-") {

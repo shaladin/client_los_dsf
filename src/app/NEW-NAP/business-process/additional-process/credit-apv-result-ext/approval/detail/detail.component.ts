@@ -42,8 +42,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   constructor(private router: Router, 
      private route: ActivatedRoute,
      private toastr: NGXToastrService,
-     private http: HttpClient,
-     private apvTaskService: ApprovalTaskService
+     private http: HttpClient
      ) {
 
     this.route.queryParams.subscribe(params => {
@@ -63,9 +62,11 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   async ngOnInit() {
    await this.GetMainData();
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.apvTaskService.HoldApvTask(this.taskId);
-    }
+   var ApvHoldObj = new ApprovalObj();
+   ApvHoldObj.TaskId = this.taskId;
+   if(this.IsRoleAssignment != CommonConstant.TRUE){
+    this.HoldTask(ApvHoldObj);
+   }
     
     this.initInputApprovalObj();
   }
@@ -86,7 +87,13 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
     );
   }
 
-
+  HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{
+      }
+    )
+  }
+  
   onAvailableNextTask(event)
   {
   }

@@ -49,8 +49,7 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-    private apvTaskService: ApprovalTaskService
+    private toastr: NGXToastrService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["ChangeMouTrxId"] != null) {
@@ -79,8 +78,11 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
     ];
     this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
+    var ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.taskId;
+
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.apvTaskService.HoldApvTask(this.taskId);
+      this.HoldTask(ApvHoldObj);
     }
     
     this.initInputApprovalObj();
@@ -104,7 +106,13 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
     this.IsReady = true;
   }
 
-
+  HoldTask(obj) {
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      }
+    )
+  }
+  
   onApprovalSubmited(event) {
     let ReqMouApvCustomObj = {
       Tasks: event.Tasks

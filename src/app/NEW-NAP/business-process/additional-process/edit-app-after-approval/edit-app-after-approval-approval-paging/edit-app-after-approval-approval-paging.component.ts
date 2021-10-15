@@ -88,6 +88,7 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
       if(isRoleAssignment != CommonConstant.TRUE){
         if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.UserAccess.UserName)) {
           this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+          return;
         }
       }
       else if (ev.RowObj.CurrentUser == "-") {

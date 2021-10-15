@@ -63,8 +63,7 @@ export class LtkmApprovalDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder,
-        private http: HttpClient,
-        private apvTaskService: ApprovalTaskService) {
+        private http: HttpClient) {
         this.route.queryParams.subscribe(params => {
             if (params["LtkmNo"] != null) {
                 this.LtkmNo = params["LtkmNo"];
@@ -90,8 +89,11 @@ export class LtkmApprovalDetailComponent implements OnInit {
         });
     }
     async ngOnInit(): Promise<void> {
+        var ApvHoldObj = new ApprovalObj()
+        ApvHoldObj.TaskId = this.taskId;
+
         if(this.IsRoleAssignment != CommonConstant.TRUE){
-            this.apvTaskService.HoldApvTask(this.taskId);
+            this.HoldTask(ApvHoldObj);
         }
 
         this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
@@ -137,6 +139,16 @@ export class LtkmApprovalDetailComponent implements OnInit {
             (response) => {
                 this.DDLReasonReturn = response[CommonConstant.ReturnObj];
             });
+    }
+
+    HoldTask(obj) {
+        this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
+            (response) => {
+            },
+            (error) => {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_APV_PAGING], {});
+            }
+        )
     }
 
     onApprovalSubmited(event) {

@@ -42,7 +42,7 @@ export class MouApprovalGeneralComponent implements OnInit {
   dmsObj: DMSObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   IsRoleAssignment: string = "";
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService, private apvTaskService: ApprovalTaskService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
       if (params["MouCustId"] != null) {
@@ -56,8 +56,11 @@ export class MouApprovalGeneralComponent implements OnInit {
 
 
   async ngOnInit() : Promise<void> {
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.taskId;
+
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.apvTaskService.HoldApvTask(this.taskId);
+      this.HoldTask(ApvHoldObj);
     }
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
@@ -87,6 +90,13 @@ export class MouApprovalGeneralComponent implements OnInit {
       }
     );
     this.initInputApprovalObj();
+  }
+
+  HoldTask(obj) {
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      }
+    )
   }
 
   MouApprovalDataForm = this.fb.group({

@@ -60,8 +60,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private cookieService: CookieService,
-    private apvTaskService: ApprovalTaskService) {
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -82,8 +81,11 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       }
       this.inputObj = obj;
 
+      var ApvHoldObj = new ApprovalObj()
+      ApvHoldObj.TaskId = obj.taskId
+
       if(this.IsRoleAssignment != CommonConstant.TRUE){
-        this.apvTaskService.HoldApvTask(obj.taskId);
+        this.HoldTask(ApvHoldObj);
       }
     });
   }
