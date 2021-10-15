@@ -43,6 +43,8 @@ export class MouCustomerApprovalComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
+      this.inputPagingObj.isJoinExAPI = true;
+
       this.apvReqObj.CategoryCodes = [CommonConstant.CAT_CODE_MOU_APV_GENERAL, CommonConstant.CAT_CODE_MOU_APV_FACTORING, CommonConstant.CAT_CODE_MOU_APV_DLFN]
       this.apvReqObj.Username = this.user.UserName;
       this.apvReqObj.RoleCode = this.user.RoleCode;
