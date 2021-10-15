@@ -17,6 +17,7 @@ import { UcInputApprovalGeneralInfoObj } from "app/shared/model/UcInputApprovalG
 import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
+import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 
 @Component({
   selector: "app-change-mou-approval-factoring",
@@ -51,7 +52,8 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private apvTaskService: ApprovalTaskService
   ) {
 
     this.route.queryParams.subscribe(params => {
@@ -90,11 +92,9 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
 
     this.inputObj = obj;
 
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = obj.taskId
 
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-    this.HoldTask(ApvHoldObj);
+      this.apvTaskService.HoldApvTask(this.taskId);
     }
     this.initInputApprovalObj();
   }
@@ -116,12 +116,6 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
     this.IsReady = true;
   }
 
-  HoldTask(obj) {
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response) => {
-      }
-    )
-  }
 
   onApprovalSubmited(event) {
     let ReqMouApvCustomObj = {

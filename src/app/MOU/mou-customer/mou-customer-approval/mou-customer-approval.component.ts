@@ -43,8 +43,6 @@ export class MouCustomerApprovalComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.inputPagingObj.isJoinExAPI = true;
-
       this.apvReqObj.CategoryCodes = [CommonConstant.CAT_CODE_MOU_APV_GENERAL, CommonConstant.CAT_CODE_MOU_APV_FACTORING, CommonConstant.CAT_CODE_MOU_APV_DLFN]
       this.apvReqObj.Username = this.user.UserName;
       this.apvReqObj.RoleCode = this.user.RoleCode;
@@ -91,53 +89,27 @@ export class MouCustomerApprovalComponent implements OnInit {
           }
         });
     }
-    if (event.Key == "Process") {
+    else if (event.Key == "Process") {
       if(isRoleAssignment != CommonConstant.TRUE){
         if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
           this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
-        } else {
-          switch (event.RowObj.MouType) {
-            case CommonConstant.MOU_TYPE_FACTORING:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-            case CommonConstant.MOU_TYPE_GENERAL:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-            case CommonConstant.MOU_TYPE_DLFN:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-          }
-        }
+        } 
       }
-      else{
-        if (event.RowObj.CurrentUser == "-") {
+      else if (event.RowObj.CurrentUser == "-") {
           this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
-          switch (event.RowObj.MouType) {
-            case CommonConstant.FACTORING:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-            case CommonConstant.GENERAL:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-            case CommonConstant.FINANCING:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-          }
-        }
-        else{
-          switch (event.RowObj.MouType) {
-            case CommonConstant.FACTORING:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-            case CommonConstant.GENERAL:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-            case CommonConstant.FINANCING:
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
-                break;
-          }
-        }
-      }      
+      }
+        
+      switch (event.RowObj.MouType) {
+        case CommonConstant.FACTORING:
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            break;
+        case CommonConstant.GENERAL:
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            break;
+        case CommonConstant.FINANCING:
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            break;
+      }  
     }
     else if (event.Key == "HoldTask") {
       if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {

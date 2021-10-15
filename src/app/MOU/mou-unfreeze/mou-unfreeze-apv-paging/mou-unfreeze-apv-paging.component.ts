@@ -66,19 +66,13 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
       if(isRoleAssignment != CommonConstant.TRUE){
         if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
           this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
-        } else {
-          this.router.navigate([NavigationConstant.MOU_FREEZE_APV_DETAIL], { queryParams: { "MouCustId":ev.RowObj.MouCustId,"TrxId": ev.RowObj.TrxId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment } });
         }
       }
-      else{
-        if (ev.RowObj.CurrentUser == "-") {
-          this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
-          this.router.navigate([NavigationConstant.MOU_FREEZE_APV_DETAIL], { queryParams: { "MouCustId":ev.RowObj.MouCustId,"TrxId": ev.RowObj.TrxId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment } });
-        }
-        else{
-          this.router.navigate([NavigationConstant.MOU_FREEZE_APV_DETAIL], { queryParams: { "MouCustId":ev.RowObj.MouCustId,"TrxId": ev.RowObj.TrxId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment } });
-        }
+      else if (ev.RowObj.CurrentUser == "-") {
+        this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
+  
+      this.router.navigate([NavigationConstant.MOU_FREEZE_APV_DETAIL], { queryParams: { "MouCustId":ev.RowObj.MouCustId,"TrxId": ev.RowObj.TrxId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment } });
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {

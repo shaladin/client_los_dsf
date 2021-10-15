@@ -12,6 +12,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -39,7 +40,8 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   constructor(private router: Router, 
     private route: ActivatedRoute, 
     private toastr: NGXToastrService,
-    private http: HttpClient) { 
+    private http: HttpClient,
+    private apvTaskService: ApprovalTaskService) { 
     this.route.queryParams.subscribe(params => {
       if (params["EditAppAftApvTrxHId"] != null) {
         this.EditAppAftApvTrxHId = params["EditAppAftApvTrxHId"];
@@ -52,11 +54,8 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.taskId;
-
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-      await this.HoldTask(ApvHoldObj);
+      this.apvTaskService.HoldApvTask(this.taskId);
     }
 
     await this.getData();
@@ -93,14 +92,6 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
 
     this.InputApvObj.TrxNo = this.ChangeSummaryObj.EditAppAftApvTrxHObj.EditAppAftApvTrxNo;
     this.IsReady = true;
-  }
-
-  async HoldTask(obj){
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response)=>{      
-    
-      }
-    )
   }
 
   onApprovalSubmited(event)

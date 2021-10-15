@@ -18,6 +18,7 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { forkJoin } from 'rxjs';
@@ -59,7 +60,8 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private apvTaskService: ApprovalTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -80,11 +82,8 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       }
       this.inputObj = obj;
 
-      var ApvHoldObj = new ApprovalObj()
-      ApvHoldObj.TaskId = obj.taskId
-
       if(this.IsRoleAssignment != CommonConstant.TRUE){
-        this.HoldTask(ApvHoldObj);
+        this.apvTaskService.HoldApvTask(obj.taskId);
       }
     });
   }

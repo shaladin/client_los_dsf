@@ -12,6 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqUpdateProductPostApprovalObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 @Component({
   selector: 'app-prod-ho-apv-detail',
   templateUrl: './prod-ho-apv-detail.component.html'
@@ -31,7 +32,8 @@ export class ProdHoApvDetailComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private apvTaskService: ApprovalTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdHId"] != null) {
         this.ProdHId = params["ProdHId"];
@@ -43,11 +45,8 @@ export class ProdHoApvDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    let ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.TaskId;
-
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-    this.HoldTask(ApvHoldObj);
+      this.apvTaskService.HoldApvTask(this.TaskId);
     }
     this.initInputApprovalObj();
   }
@@ -65,13 +64,6 @@ export class ProdHoApvDetailComponent implements OnInit {
         this.InputApvObj.TrxNo = response.Code;
         this.IsReady = true;
       });
-  }
-
-  HoldTask(obj) {
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response) => {
-      }
-    )
   }
 
   onApprovalSubmited(event)

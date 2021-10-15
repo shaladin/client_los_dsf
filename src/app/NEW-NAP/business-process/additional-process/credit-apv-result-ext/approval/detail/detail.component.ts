@@ -15,6 +15,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -42,6 +43,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
      private route: ActivatedRoute,
      private toastr: NGXToastrService,
      private http: HttpClient,
+     private apvTaskService: ApprovalTaskService
      ) {
 
     this.route.queryParams.subscribe(params => {
@@ -61,11 +63,8 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   async ngOnInit() {
    await this.GetMainData();
 
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.taskId
-
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
+      this.apvTaskService.HoldApvTask(this.taskId);
     }
     
     this.initInputApprovalObj();
@@ -87,12 +86,6 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
     );
   }
 
-  HoldTask(obj){
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response)=>{
-      }
-    )
-  }
 
   onAvailableNextTask(event)
   {

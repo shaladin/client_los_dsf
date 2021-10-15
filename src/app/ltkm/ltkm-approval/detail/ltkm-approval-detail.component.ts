@@ -20,6 +20,7 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { LtkmReqObj } from 'app/shared/model/LTKM/LtkmReqObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
     selector: 'app-ltkm-approval-detail',
@@ -62,7 +63,8 @@ export class LtkmApprovalDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder,
-        private http: HttpClient) {
+        private http: HttpClient,
+        private apvTaskService: ApprovalTaskService) {
         this.route.queryParams.subscribe(params => {
             if (params["LtkmNo"] != null) {
                 this.LtkmNo = params["LtkmNo"];
@@ -88,11 +90,8 @@ export class LtkmApprovalDetailComponent implements OnInit {
         });
     }
     async ngOnInit(): Promise<void> {
-        var ApvHoldObj = new ApprovalObj()
-        ApvHoldObj.TaskId = this.taskId;
-
         if(this.IsRoleAssignment != CommonConstant.TRUE){
-            this.HoldTask(ApvHoldObj);
+            this.apvTaskService.HoldApvTask(this.taskId);
         }
 
         this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
@@ -138,16 +137,6 @@ export class LtkmApprovalDetailComponent implements OnInit {
             (response) => {
                 this.DDLReasonReturn = response[CommonConstant.ReturnObj];
             });
-    }
-
-    HoldTask(obj) {
-        this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
-            (response) => {
-            },
-            (error) => {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_APV_PAGING], {});
-            }
-        )
     }
 
     onApprovalSubmited(event) {
