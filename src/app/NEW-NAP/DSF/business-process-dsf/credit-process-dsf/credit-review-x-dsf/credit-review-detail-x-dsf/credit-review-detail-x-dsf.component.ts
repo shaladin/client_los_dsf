@@ -67,7 +67,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   readonly CaptureStatScs: string = CommonConstant.CaptureStatScs;
   readonly CaptureStatFail: string = CommonConstant.CaptureStatFail;
 
-  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING + 'X';
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],

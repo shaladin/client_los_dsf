@@ -89,5 +89,7 @@ export class NavigationConstantDsf {
      public static NAP_CRD_PRCS_CRD_REVIEW_CR_DETAIL_X = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantDsf.CRD_REVIEW_DETAIL_X; //"Nap/CreditProcess/CreditReviewCr/DetailX"
 
      public static NAP_CRD_PRCS_CRD_APPRV_DETAIL_X = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantDsf.CRD_APPRV_DETAIL_X; //"/Nap/CreditProcess/CreditApproval/Paging"
+
+     public static CUST_NEW_FORM_DSF = "/" + PathConstantDsf.LR_CUST + "/" + PathConstantDsf.NEW_CUST; //'/Customer/NewCustomerX'
 }
  

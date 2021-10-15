@@ -50,6 +50,8 @@ import { CustAttrFormComponent } from 'app/NEW-NAP/sharing-component/main-data-c
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { AgrParentObjX } from 'app/impl/shared/model/Response/AgrParentObjX.model';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
 
 @Component({
   selector: 'app-cust-main-data-x',
@@ -543,7 +545,7 @@ export class CustMainDataXComponent implements OnInit {
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustCoyObj.addCritInput = this.ArrAddCrit;
 
-    if (this.bizTemplateCode == CommonConstant.CFNA) 
+    if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust) 
     {
       let intR2ObjPer: IntegrationObj = new IntegrationObj();
       intR2ObjPer.baseUrl = URLConstantX.R2ApiAgrmntGetListCustNoHaveAgrmntMaster;
@@ -552,9 +554,7 @@ export class CustMainDataXComponent implements OnInit {
       intR2ObjPer.rightColumnToJoin = "CustNo";
 
       this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v2";
-      this.InputLookupCustObj.isJoinExAPI = true
-      this.InputLookupCustObj.integrationObj = intR2ObjPer;
-
+      
       let intR2ObjCoy: IntegrationObj = new IntegrationObj();
       intR2ObjCoy.baseUrl = URLConstantX.R2ApiAgrmntGetListCustNoHaveAgrmntMaster;
       intR2ObjCoy.requestObj = { "CustType": "C" };
@@ -562,8 +562,14 @@ export class CustMainDataXComponent implements OnInit {
       intR2ObjCoy.rightColumnToJoin = "CustNo";
 
       this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v2";
+      
+      /*
+      //Didisable dulu karena kebanyakan data dari sisi R2 nya
+      this.InputLookupCustObj.isJoinExAPI = true
+      this.InputLookupCustObj.integrationObj = intR2ObjPer;
       this.InputLookupCustCoyObj.isJoinExAPI = true;
       this.InputLookupCustCoyObj.integrationObj = intR2ObjCoy;
+      */
       
       this.disableInput();
     }
@@ -1529,7 +1535,21 @@ export class CustMainDataXComponent implements OnInit {
       BizTemplateCode: this.bizTemplateCode
     };
 
-    if (this.bizTemplateCode == CommonConstant.CFNA) {
+    
+    if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust) 
+    {
+      let isHaveAgrmntParent : boolean = false;
+      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+        (response) => {
+          if (response && response.length > 0) isHaveAgrmntParent = true;
+        }
+      );
+      if(!isHaveAgrmntParent)
+      {
+        this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
+        return;
+      }
+
       this.http.post(URLConstantX.CheckIfCustHasOngoingAppX, obj).subscribe(
         (response) => {
           this.SaveCustomer();

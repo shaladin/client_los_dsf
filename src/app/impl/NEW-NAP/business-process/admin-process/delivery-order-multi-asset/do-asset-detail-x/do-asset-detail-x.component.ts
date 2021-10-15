@@ -137,7 +137,7 @@ export class DoAssetDetailXComponent implements OnInit {
   GenerateDefaultAssetDocs(AssetTypeCode: string)
   {
     var assetDocs = [];
-    var assetDocListobj = { AssetTypeCode: AssetTypeCode }
+    var assetDocListobj = { Code: AssetTypeCode }
     this.http.post(URLConstant.GetRefAssetDocList, assetDocListobj).subscribe(
       (response) => {
         if (response[CommonConstant.ReturnObj].length > 0)

@@ -52,12 +52,12 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
 
           if (ev.RowObj.CustType == "PERSONAL")
           {
-          AdInsHelper.EditCustomerMainDataPersonalByCustId(this.CustId, "EditMainData");
+          AdInsHelper.EditCustomerMainDataXDSFPersonalByCustId(this.CustId, "EditMainData");
           // AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
           }
           else
           {
-            AdInsHelper.EditCustomerMainDataCompanyByCustId(this.CustId, "EditMainData");
+            AdInsHelper.EditCustomerMainDataXDSFCompanyByCustId(this.CustId, "EditMainData");
           }
 
         }

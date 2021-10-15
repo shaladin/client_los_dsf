@@ -122,4 +122,6 @@ export class PathConstantDsf {
     public static CRD_REVIEW_PAGING_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstant.PAGING;
     public static CRD_REVIEW_DETAIL_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstant.DETAIL;
     public static CRD_APPRV_DETAIL_X = PathConstant.CRD_APPRV_CR + "/" + PathConstantDsf.DETAIL_X;
+
+    public static NEW_CUST = "NewCustomerXDsf";
 }
