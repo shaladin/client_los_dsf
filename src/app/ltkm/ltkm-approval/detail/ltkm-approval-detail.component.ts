@@ -20,6 +20,7 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { LtkmReqObj } from 'app/shared/model/LTKM/LtkmReqObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
     selector: 'app-ltkm-approval-detail',
