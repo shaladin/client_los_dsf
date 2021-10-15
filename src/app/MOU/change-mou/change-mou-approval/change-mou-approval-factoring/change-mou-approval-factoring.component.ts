@@ -17,6 +17,7 @@ import { UcInputApprovalGeneralInfoObj } from "app/shared/model/UcInputApprovalG
 import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
+import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 
 @Component({
   selector: "app-change-mou-approval-factoring",
@@ -40,7 +41,7 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
-
+  IsRoleAssignment: string = "";
   pageTitle: string;
   ChangeMouCustId: number;
   TrxType: string;
@@ -66,6 +67,7 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
         this.pageTitle = params["PageTitle"];
         this.ChangeMouCustId = params["ChangeMouCustId"];
         this.TrxType = params["TrxType"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -89,10 +91,13 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
 
     this.inputObj = obj;
 
+
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = obj.taskId
 
-    this.HoldTask(ApvHoldObj);
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
     this.initInputApprovalObj();
   }
 

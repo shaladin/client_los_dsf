@@ -13,6 +13,7 @@ import { UcInputApprovalGeneralInfoObj } from "app/shared/model/UcInputApprovalG
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
+import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 
 @Component({
   selector: "app-change-mou-approval-financing",
@@ -31,7 +32,7 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsReady: boolean = false;
-
+  IsRoleAssignment: string = "";
   pageTitle: string;
   ChangeMouCustId: number;
   MouCustId: number;
@@ -56,6 +57,7 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
         this.MouCustId = params["MouCustId"];
         this.MouType = params["MouType"];
         this.TrxType = params["TrxType"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -74,7 +76,10 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.taskId; 
 
-    this.HoldTask(ApvHoldObj);
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
+    
     this.initInputApprovalObj();
   }
 
