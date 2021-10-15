@@ -360,7 +360,7 @@
                 (change)="OnCheckIsAddressKnown($event.target.checked)" />
             </div>
           </div>
-          <div class="form-group row" *ngIf="!isExisting && checkIsAddressKnown">
+          <div class="form-group row" [hidden]="isCopyBtnLock" *ngIf="!isExisting && checkIsAddressKnown">
             <label class="col-md-2" translate>Copy Address From Legal Customer</label>
             <div class="col-md-4">
               <div class="input-group">
