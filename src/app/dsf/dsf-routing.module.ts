@@ -23,6 +23,7 @@ import { PlafondFactoringDsfComponent } from './report/factoring/plafond-factori
 import { PlafondDfDsfComponent } from './report/factoring/plafond-df-dsf/plafond-df-dsf.component';
 import { DisbursementDetailDsfComponent } from './report/disbursement-dsf/disbursement-detail-dsf/disbursement-detail-dsf.component';
 import { DisbursementPagingDsfComponent } from './report/disbursement-dsf/disbursement-paging-dsf/disbursement-paging-dsf.component';
+import { MonthlyPaymentScheduleSummaryComponent } from './report/factoring/monthly-payment-schedule-summary/monthly-payment-schedule-summary.component';
 
 const routes: Routes = [
   {
@@ -285,6 +286,18 @@ const routes: Routes = [
         component: PlafondDfDsfComponent,
         data: {
           title: "Report DF Plafond Dsf"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY,
+        component: MonthlyPaymentScheduleSummaryComponent,
+        data: {
+          title: "Report Monthly Payment Schedule Summary"
         }
       }
     ]

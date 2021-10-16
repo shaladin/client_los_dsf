@@ -1,0 +1,47 @@
+{ 
+    "title" : "REPORT FACTORING MONTHLY PAYMENT SCHEDULE SUMMARY ",
+    "reportName": "Report Factoring Monthly Payment Schedule Summary",
+    "reportTemplateCode": "FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY",
+    "component": [ 
+        {
+            "type" : "datepicker",
+            "label" : "Date As Of",
+            "name" : "LeadDtGte",
+            "value" : "BD",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        } ,
+        {
+            "type" : "dropdown",
+            "label" : "Currency",
+            "name" : "Currency",
+            "datatype" : "text",
+            "isSelectOne" : true,
+            "items" : [
+                {
+                "key": "Rupiah",
+                "value": "Rupiah"
+            },
+            {
+                "key": "Dollar",
+                "value": "Dollar"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        }      
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+
