@@ -38,7 +38,7 @@
       "type": "dropdown",
       "name": "EAAATH.EDIT_APP_AFT_APV_TRX_STAT",
       "id": "StatusId",
-      "value": "Status",
+      "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",

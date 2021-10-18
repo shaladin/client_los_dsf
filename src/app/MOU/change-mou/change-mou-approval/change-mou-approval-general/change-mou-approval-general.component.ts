@@ -15,6 +15,7 @@ import { UcInputApprovalHistoryObj } from "app/shared/model/UcInputApprovalHisto
 import { UcInputApprovalGeneralInfoObj } from "app/shared/model/UcInputApprovalGeneralInfoObj.model";
 import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 
 @Component({
   selector: "app-change-mou-approval-general",
@@ -37,6 +38,7 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
+  IsRoleAssignment: string = "";
 
   pageTitle: string;
   ChangeMouCustId: number;
@@ -61,6 +63,7 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
         this.MouCustId = params["MouCustId"];
         this.MouType = params["MouType"];
         this.TrxType = params["TrxType"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -75,10 +78,13 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
     ];
     this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.taskId
+    var ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.taskId;
 
-    this.HoldTask(ApvHoldObj);
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
+    
     this.initInputApprovalObj();
   }
 
@@ -106,7 +112,7 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
       }
     )
   }
-
+  
   onApprovalSubmited(event) {
     let ReqMouApvCustomObj = {
       Tasks: event.Tasks

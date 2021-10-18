@@ -5,7 +5,7 @@
     <div class="card">
       <div class="card-body">
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm" #enjiForm="ngForm"
+          <form class="form form-horizontal" [formGroup]="MainInfoForm" #enjiForm="ngForm"
             (ngSubmit)="MainInfoForm.valid && SaveForm()">
             <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Pre Go Live Information'" [panel]="'MainInfoForm'">
             </lib-ucSubsection>
@@ -15,7 +15,7 @@
                 <div *ngIf = "checkPOReady" class="col-md-4">
                   <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <input *ngIf = "isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
-                  <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="MainInfoReqForm.submitted">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
@@ -23,7 +23,7 @@
                   <input type="date" id="EffectiveDt" class="form-control adInsInput name"
                     formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.EffectiveDt"
-                    [submit]="MainInfoReqForm.submitted">
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -35,7 +35,7 @@
                 <div class="col-md-4">
                   <textarea class="form-control adInsInput width-75-per" formControlName="Notes"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.Notes.invalid }"></textarea>  
-                  <lib-uc-show-errors [control]="MainInfoForm.controls.Notes" [submit]="MainInfoReqForm.submitted">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.Notes" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
 
@@ -55,7 +55,7 @@
                     <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="MainInfoForm.controls.AdditionalInterestPaidBy"
-                    [submit]="MainInfoReqForm.submitted">
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -72,7 +72,7 @@
               <mat-tab-group>
                 <mat-tab label="Term & Conditions">
                   <ng-template matTabContent>
-                    <app-agrmnt-tc [AgrmntId]="AgrmntId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                    <app-agrmnt-tc [AgrmntId]="AgrmntId" [parentForm]="MainInfoForm" [enjiForm]="enjiForm"
                     (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
                   </app-agrmnt-tc>
                   </ng-template>

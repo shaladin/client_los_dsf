@@ -71,7 +71,7 @@
             <span class="col-md-10">
               <span> {{DictCrdRvwExposure[item.CustNo+CustType].TotalAgrmntOverdue}} /
                 {{DictCrdRvwExposure[item.CustNo+CustType].MaxOverdueDays}} /
-                {{DictCrdRvwExposure[item.CustNo+CustType].MaxOverdueAmt}} </span>
+                {{DictCrdRvwExposure[item.CustNo+CustType].MaxOverdueAmt | number:'.2':'en-US'}} </span>
             </span>
           </span>
         </span>

@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "TL.TRX_NO",
+            "name": "CMT.CHANGE_MOU_TRX_NO",
             "id": "TrxNoId",
             "value": "",
             "label": "Transaction No",
@@ -28,53 +28,59 @@
         },
         {
             "type": "textbox",
-            "name": "TL.APV_NO",
+            "name": "RequestNo",
             "id": "ApvNoId",
             "value": "",
             "label": "Approval No",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "textbox",
-            "name": "TL.REQUEST_BY",
+            "name": "RequestBy",
             "id": "ReqById",
             "value": "",
             "label": "Request By",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "textbox",
-            "name": "TL.CURRENT_USER_ID",
+            "name": "MainUser",
             "id": "TaskOwnerId",
             "value": "",
             "label": "Task Owner",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "textbox",
-            "name": "TL.CURRENT_USER_ID",
+            "name": "CurrentUser",
             "id": "CurrentUserId",
             "value": "",
             "label": "Current User",
-            "placeholder": "Placeholder"
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "datepicker",
-            "name": "TL.REQUEST_DATE",
+            "name": "RequestDate",
             "id": "ReqDtFromId",
             "value": "",
             "label": "Request Date From",
             "restriction": "gte",
-            "datatype": "date"
+            "datatype": "date",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "datepicker",
-            "name": "TL.REQUEST_DATE",
+            "name": "RequestDate",
             "id": "ReqDtFromId",
             "value": "",
             "label": "Request Date To",
             "restriction": "lte",
-            "datatype": "date"
+            "datatype": "date",
+            "isCriteriaDataTable" : true
         }
     ],
     "querystring": {
@@ -85,13 +91,13 @@
             "type": "sort",
             "position": "center",
             "label": "TRANSACTION NO",
-            "name": "TL.TRX_NO"
+            "name": "CMT.CHANGE_MOU_TRX_NO"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "APPROVAL NO",
-            "name": "TL.APV_NO"
+            "name": "RequestNo"
         },
         {
             "type": "sort",
@@ -115,13 +121,13 @@
             "type": "sort",
             "position": "left",
             "label": "TASK OWNER",
-            "name": "MainUserId"
+            "name": "MainUser"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "CURRENT USER",
-            "name": "CurrentUserId"
+            "name": "CurrentUser"
         },
         {
             "type": "sort",
@@ -133,6 +139,21 @@
             "type": "label",
             "position": "center",
             "label": "ACTION"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Hold"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Take Back"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Unclaim"
         }
     ],
     "bodyList": [
@@ -144,7 +165,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "ApvNo"
+            "property": "RequestNo"
         },
         {
             "type": "callback",
@@ -173,12 +194,12 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MainUserId"
+            "property": "MainUser"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "CurrentUserId"
+            "property": "CurrentUser"
         },
         {
             "type": "date",
@@ -189,182 +210,91 @@
             "type": "action",
             "position": "center",
             "action": [
-                {
-                    "type": "switch",
-                    "case": [
-                        {
-                            "conditions": [
-                                {
-                                    "property": "MouType",
-                                    "value": "FACTORING",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "CHANGE_MOU_APV_DETAIL_FCTR",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
-                                    },
-                                    {
-                                        "type": "ChangeMouTrxId",
-                                        "property": "ChangeMouTrxId"
-                                    },
-                                    {
-                                        "type": "TaskId",
-                                        "property": "TaskId"
-                                    },
-                                    {
-                                        "type": "TrxNo",
-                                        "property": "TrxNo"
-                                    },
-                                    {
-                                        "type": "InstanceId",
-                                        "property": "InstanceId"
-                                    },
-                                    {
-                                        "type": "ApvReqId",
-                                        "property": "ApvReqId"
-                                    },
-                                    {
-                                        "type": "PageTitle",
-                                        "property": "MouTypeDescr"
-                                    },
-                                    {
-                                        "type": "ChangeMouCustId",
-                                        "property": "ChangeMouCustId"
-                                    },
-                                    {
-                                        "type": "MouType",
-                                        "property": "MouType"
-                                    },
-                                    {
-                                        "type": "TrxType",
-                                        "property": "TrxType"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "MouType",
-                                    "value": "GENERAL",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "CHANGE_MOU_APV_DETAIL_GEN",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
-                                    },
-                                    {
-                                        "type": "ChangeMouTrxId",
-                                        "property": "ChangeMouTrxId"
-                                    },
-                                    {
-                                        "type": "TaskId",
-                                        "property": "TaskId"
-                                    },
-                                    {
-                                        "type": "TrxNo",
-                                        "property": "TrxNo"
-                                    },
-                                    {
-                                        "type": "InstanceId",
-                                        "property": "InstanceId"
-                                    },
-                                    {
-                                        "type": "ApvReqId",
-                                        "property": "ApvReqId"
-                                    },
-                                    {
-                                        "type": "PageTitle",
-                                        "property": "MouTypeDescr"
-                                    },
-                                    {
-                                        "type": "ChangeMouCustId",
-                                        "property": "ChangeMouCustId"
-                                    },
-                                    {
-                                        "type": "MouType",
-                                        "property": "MouType"
-                                    },
-                                    {
-                                        "type": "TrxType",
-                                        "property": "TrxType"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "MouType",
-                                    "value": "FINANCING",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "CHANGE_MOU_APV_DETAIL_FIN",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
-                                    },
-                                    {
-                                        "type": "ChangeMouTrxId",
-                                        "property": "ChangeMouTrxId"
-                                    },
-                                    {
-                                        "type": "TaskId",
-                                        "property": "TaskId"
-                                    },
-                                    {
-                                        "type": "TrxNo",
-                                        "property": "TrxNo"
-                                    },
-                                    {
-                                        "type": "InstanceId",
-                                        "property": "InstanceId"
-                                    },
-                                    {
-                                        "type": "ApvReqId",
-                                        "property": "ApvReqId"
-                                    },
-                                    {
-                                        "type": "PageTitle",
-                                        "property": "MouTypeDescr"
-                                    },
-                                    {
-                                        "type": "ChangeMouCustId",
-                                        "property": "ChangeMouCustId"
-                                    },
-                                    {
-                                        "type": "MouType",
-                                        "property": "MouType"
-                                    },
-                                    {
-                                        "type": "TrxType",
-                                        "property": "TrxType"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        }
-                    ]
-                }
+              {
+                "type": "callback",
+                "key": "Process"
+              }
+            ]
+        },
+        {
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [ 
+                      {
+                          "isUser": false,
+                          "property" : "IsRoleAssignment", 
+                          "value" : false, 
+                          "restriction" : "EQ" 
+                      }
+                    ],
+                    "result" : { 
+                      "type": "callback",
+                      "key": "HoldTask",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
+            ]
+        },
+        {
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [ 
+                      {
+                          "isUser": false,
+                          "property" : "IsRoleAssignment", 
+                          "value" : false, 
+                          "restriction" : "EQ" 
+                      }
+                    ],
+                    "result" : { 
+                      "type": "callback",
+                      "key": "TakeBack",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
+            ]
+        },
+        {
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [ 
+                      {
+                          "isUser": false,
+                          "property" : "IsRoleAssignment", 
+                          "value" : true, 
+                          "restriction" : "EQ" 
+                      }
+                    ],
+                    "result" : { 
+                      "type": "callback",
+                      "key": "UnClaim",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
             ]
         }
     ]

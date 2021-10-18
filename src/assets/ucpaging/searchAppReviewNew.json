@@ -6,7 +6,7 @@
             "type": "dropdown",
             "name": "A.ORI_OFFICE_CODE",
             "id": "OfficeNameId",
-            "value": "Office Name",
+            "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
             "ddlType": "all",

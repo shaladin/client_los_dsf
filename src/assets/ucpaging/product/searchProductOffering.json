@@ -37,7 +37,7 @@
         "type": "dropdown",
         "name": "A.Prod_Offering_Stat",
         "id": "ProdOfferingStat",
-        "value": "Product Offering Status",
+        "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
         "ddlType": "all",

@@ -352,6 +352,7 @@ export class PathConstant {
     public static MOU_CUST_REQ_ADD_COLL = PathConstant.MOU_CUST + "/RequestAddColl";
     public static MOU_CUST_INQUIRY = PathConstant.MOU_CUST + "/Inquiry";
     public static MOU_CUST_CANCEL = PathConstant.MOU_CUST + "/Cancel";
+    public static MOU_CUST_CANCEL_DETAIL = PathConstant.MOU_CUST_CANCEL + "/" + PathConstant.DETAIL;
     public static MOU_CUST_OUTSTANDING_TC = PathConstant.MOU_CUST + "/OutstandingTC";
     public static MOU_CUST_OUTSTANDING_TC_PAGING = PathConstant.MOU_CUST_OUTSTANDING_TC + "/" + PathConstant.PAGING;
     public static MOU_CUST_OUTSTANDING_TC_DETAIL = PathConstant.MOU_CUST_OUTSTANDING_TC + "/" + PathConstant.DETAIL;

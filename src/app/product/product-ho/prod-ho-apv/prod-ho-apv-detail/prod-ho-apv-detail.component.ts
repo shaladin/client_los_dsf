@@ -12,6 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqUpdateProductPostApprovalObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 @Component({
   selector: 'app-prod-ho-apv-detail',
   templateUrl: './prod-ho-apv-detail.component.html'
@@ -47,7 +48,7 @@ export class ProdHoApvDetailComponent implements OnInit {
     ApvHoldObj.TaskId = this.TaskId;
 
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-    this.HoldTask(ApvHoldObj);
+      this.HoldTask(ApvHoldObj);
     }
     this.initInputApprovalObj();
   }

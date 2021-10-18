@@ -104,7 +104,7 @@
         <div class="px-3">
           <div class="row">
             <div class="col-md-6">
-              <label class="label-control" translate> TAC </label>
+              <label class="label-control" translate> Total Expense </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
               <label class="label-control" style="text-align: right;"> {{tacAmt | number:'.2':'en-US' }} </label>
@@ -112,10 +112,10 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-              <label class="label-control" translate> TAC Percentage </label>
+              <label class="label-control" translate> Total Acquisition Cost (%) </label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="label-control" style="text-align: right;"> {{tacAmt/totalIncomeAmt | number:'.2':'en-US' }}%
+              <label class="label-control" style="text-align: right;"> {{tacAmt/totalIncomeAmt*100 | number:'.6':'en-US' }}%
               </label>
             </div>
           </div>
@@ -151,9 +151,9 @@
           <tbody>
             <tr *ngFor="let item of crdRvwCustInfoIncomeAndExpenseDetailsObj.ListCrdRvwAllocObj; let i = index">
               <td style="text-align: left;">{{item.AllocSource}}</td>
-              <td style="text-align: left;">{{item.MaxAllocAmt}}</td>
-              <td style="text-align: left;">{{item.CommissionAmt}}</td>
-              <td style="text-align: left;">{{item.ReservedFundAmt}}</td>
+              <td style="text-align: right;">{{item.MaxAllocAmt | number:'.2':'en-US'}}</td>
+              <td style="text-align: right;">{{item.CommissionAmt | number:'.2':'en-US'}}</td>
+              <td style="text-align: right;">{{item.ReservedFundAmt | number:'.2':'en-US'}}</td>
             </tr>
           </tbody>
         </table>

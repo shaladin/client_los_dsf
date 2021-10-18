@@ -60,6 +60,7 @@ import { MouUnfreezeInquiryComponent } from './mou-unfreeze/mou-unfreeze-inquiry
 import { MouUnfreezeViewComponent } from './mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component';
 import { MouUnfreezeDetailComponent } from './mou-unfreeze/mou-unfreeze-detail/mou-unfreeze-detail.component';
 import { MouUnfreezePagingComponent } from './mou-unfreeze/mou-unfreeze-paging/mou-unfreeze-paging.component';
+import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
 
 const routes: Routes = [
   {
@@ -210,6 +211,13 @@ const routes: Routes = [
         component: MouCancelComponent,
         data: {
           title: "MOU Cancel"
+        }
+      },
+      {
+        path: PathConstant.MOU_CUST_CANCEL_DETAIL,
+        component: MouCancelDetailComponent,
+        data: {
+          title: "MOU Cancel Detail"
         }
       },
       {
