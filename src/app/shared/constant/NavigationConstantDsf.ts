@@ -45,6 +45,7 @@ export class NavigationConstantDsf {
     public static REPORT_INS_COMPANY_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_INS_COMP_DETAIL;
     public static REPORT_PLAFOND_FACTORING = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_PLAFOND_FACTORING;
     public static REPORT_PLAFOND_DF = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_PLAFOND_DSF;
+    public static REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY;
    //#endregion
 
      //#region CUSTOMER GROUP PLAFOND

@@ -33,6 +33,7 @@ import { PlafondFactoringDsfComponent } from './report/factoring/plafond-factori
 import { PlafondDfDsfComponent } from './report/factoring/plafond-df-dsf/plafond-df-dsf.component';
 import { DisbursementPagingDsfComponent } from './report/disbursement-dsf/disbursement-paging-dsf/disbursement-paging-dsf.component';
 import { DisbursementDetailDsfComponent } from './report/disbursement-dsf/disbursement-detail-dsf/disbursement-detail-dsf.component';
+import { MonthlyPaymentScheduleSummaryComponent } from './report/factoring/monthly-payment-schedule-summary/monthly-payment-schedule-summary.component';
 export const customCurrencyMaskConfig = {     
 
   align: "right",     
@@ -58,7 +59,7 @@ export const customCurrencyMaskConfig = {
 };
 
 @NgModule({
-  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent, CustomerGroupPlafondPagingComponent, CustomerGroupPlafondDetailComponent, CustomerGroupPlafondApvPagingDsfComponent, CustomerGroupPlafondApvDetailDsfComponent, CustomerGroupPlafondApvInquiryDsfComponent, AppStatusDsfComponent, InsCompSummaryDsfComponent, InsCompDetailDsfComponent, PlafondDfDsfComponent, PlafondFactoringDsfComponent, SuratkonfirmasipersetujuanComponent, LtkmReportDsfComponent, DisbursementPagingDsfComponent, DisbursementDetailDsfComponent],
+  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent, CustomerGroupPlafondPagingComponent, CustomerGroupPlafondDetailComponent, CustomerGroupPlafondApvPagingDsfComponent, CustomerGroupPlafondApvDetailDsfComponent, CustomerGroupPlafondApvInquiryDsfComponent, AppStatusDsfComponent, InsCompSummaryDsfComponent, InsCompDetailDsfComponent, PlafondDfDsfComponent, PlafondFactoringDsfComponent, SuratkonfirmasipersetujuanComponent, LtkmReportDsfComponent, DisbursementPagingDsfComponent, DisbursementDetailDsfComponent,MonthlyPaymentScheduleSummaryComponent],
   imports: [
     CommonModule,
     FormsModule,
