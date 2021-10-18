@@ -126,7 +126,7 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.isEndOfTab == '0' ? this.textButton = 'Save' : this.textButton = 'Save and Continue'
     this.items = this.LeadDataForm.get('items') as FormArray;
 
@@ -230,7 +230,7 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
       let obj = {
         Id: this.reqLeadAssetObj.LeadId
       }
-      this.http.post(URLConstant.GetLeadAssetByLeadId, obj).subscribe(
+      await this.http.post(URLConstant.GetLeadAssetByLeadId, obj).toPromise().then(
         (response: LeadAssetObj) => {
           this.resLeadAssetObj = response;
           if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
@@ -327,7 +327,7 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
       obj = {
         Id: this.reqLeadAppObj.LeadId
       }
-      this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
+      await this.http.post(URLConstant.GetLeadAppByLeadId, obj).toPromise().then(
         (response: LeadAppObj) => {
           this.resLeadAppObj = response;
           if (this.resLeadAppObj.LeadAppId != 0) {
@@ -345,8 +345,8 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
     this.reqLeadAssetObj = new LeadAssetObj();
     this.reqLeadAssetObj.LeadId = this.LeadId;
     let reqLeadAssetObj = { Id: this.LeadId.toString() };
-    this.http.post(URLConstant.GetLeadAssetByLeadId, reqLeadAssetObj).subscribe(
-      (response: LeadAssetObj) => {
+    await this.http.post(URLConstant.GetLeadAssetByLeadId, reqLeadAssetObj).toPromise().then(
+      async (response: LeadAssetObj) => {
         this.resLeadAssetObj = response;
         if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
@@ -441,23 +441,24 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
                     });
                 });
             });
-          this.reqLeadAppObj = new LeadAppObj();
-          this.reqLeadAppObj.LeadId = this.LeadId;
-          let obj = {
-            Id: this.reqLeadAppObj.LeadId
-          }
-          this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
-            (response: LeadAppObj) => {
-              this.resLeadAppObj = response;
-              this.LeadDataForm.patchValue({
-                Tenor: this.resLeadAppObj.Tenor,
-                MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
-                NTFAmt: this.resLeadAppObj.NtfAmt,
-                TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
-                InstallmentAmt: this.resLeadAppObj.InstAmt,
-              });
-            });
+
         }
+        this.reqLeadAppObj = new LeadAppObj();
+        this.reqLeadAppObj.LeadId = this.LeadId;
+        let obj = {
+          Id: this.reqLeadAppObj.LeadId
+        }
+        await this.http.post(URLConstant.GetLeadAppByLeadId, obj).toPromise().then(
+          (response: LeadAppObj) => {
+            this.resLeadAppObj = response;
+            this.LeadDataForm.patchValue({
+              Tenor: this.resLeadAppObj.Tenor,
+              MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
+              NTFAmt: this.resLeadAppObj.NtfAmt,
+              TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
+              InstallmentAmt: this.resLeadAppObj.InstAmt,
+            });
+          });
       });
 
   }
