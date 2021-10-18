@@ -526,10 +526,10 @@ export class InvoiceDataDlfnComponent implements OnInit {
     this.negativeAssetCheckObj.SerialNo5 = this.InvoiceForm.controls.SerialNo5.value;
 
     this.httpClient.post(URLConstant.GetDoubleFinancingCheckAppAssetV2, this.negativeAssetCheckObj).subscribe(
-      (response) => {
-        this.ResultDuplicateDoubleFinancing = response[CommonConstant.ReturnObj];
+      (response: {IsDoubleFinancing: boolean}) => {
+        let IsDoubleFinancing: boolean = response.IsDoubleFinancing;
 
-        if (this.ResultDuplicateDoubleFinancing["length"] > 0) {
+        if (IsDoubleFinancing) {
           this.toastr.errorMessage(ExceptionConstant.DOUBLE_FINANCING);
         }
         else {
