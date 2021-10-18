@@ -28,6 +28,8 @@ export class TabApplicationXComponent implements OnInit {
   ListCrossAppData: any;
   isDF: boolean = false;
   AppAttrContentObjs: Array<AppAttrContentObj> = new Array<AppAttrContentObj>();
+  isWopAD: boolean = false;
+  viewCustomerBankDetail: UcViewGenericObj = new UcViewGenericObj();
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {      
@@ -44,7 +46,15 @@ export class TabApplicationXComponent implements OnInit {
     if(this.appId == null) {
       await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
         (response) => {
-          this.appId = response["AppId"];        
+          this.appId = response["AppId"];
+          this.isWopAD = response["MrWopCode"] == CommonConstant.WopAutoDebit ? true : false;
+        }
+      )
+    }else{
+      await this.http.post(URLConstant.GetAppById, {Id: this.appId}).toPromise().then(
+        (response) => {
+          this.AppNo = response["AppNo"];
+          this.isWopAD = response["MrWopCode"] == CommonConstant.WopAutoDebit ? true : false;
         }
       )
     }
@@ -78,6 +88,11 @@ export class TabApplicationXComponent implements OnInit {
     }
     else {
       this.viewProdMainInfoObj.viewInput = "./assets/impl/ucviewgeneric/viewTabApplicationInfoX.json";
+    }
+
+    if(this.isWopAD){
+      this.viewCustomerBankDetail.viewInput = "./assets/impl/ucviewgeneric/viewTabApplicationInfo_BankDetailAcc_X.json";
+      this.viewCustomerBankDetail.whereValue = [this.AppNo];
     }
 
     await this.GetCrossAppData();

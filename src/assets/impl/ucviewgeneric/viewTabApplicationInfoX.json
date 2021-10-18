@@ -96,6 +96,43 @@
             "property": "MouCustId"
           }]
         },
+		    {            
+          "type" : "switch",
+          "isHide": true,
+          "property": "BankAccNo",
+          "case" : [ 
+            {
+              "conditions": [                  
+                {
+                  "property" : "WopCode",
+                  "value" : "AD",
+                  "restriction" : "EQ"
+                }
+              ],
+              "result": {
+                "type": "concat",
+                "label": "Customer Bank Info",
+                "propertyList": [
+                        {
+                        "property": "BankName",
+                        "prefix": "",
+                        "suffix": " - "
+                        },
+                        {
+                        "property": "BankAccNo",
+                        "prefix": "",
+                        "suffix": " - "
+                        },
+                        {
+                        "property": "BankAccName",
+                        "prefix": "",
+                        "suffix": ""
+                        }
+                      ]
+              }
+            }
+          ]
+        },
         {
           "type": "text",
           "label": "Credit Scoring",
