@@ -11,6 +11,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
+import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 import { environment } from "environments/environment";
 
 @Component({
@@ -56,7 +57,7 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     ApvHoldObj.TaskId = this.taskId;
 
     if(this.IsRoleAssignment != CommonConstant.TRUE){
-    this.HoldTask(ApvHoldObj);
+      this.HoldTask(ApvHoldObj);
     }
     this.initInputApprovalObj();
   }

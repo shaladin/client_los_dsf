@@ -22,7 +22,7 @@
       "type": "dropdown",
       "name": "A.PROD_STAT",
       "id": "ProdStatId",
-      "value": "Product Status",
+      "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",

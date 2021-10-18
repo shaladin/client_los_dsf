@@ -76,10 +76,12 @@ export class EnvisObj {
 export class ApprovalReqObj {
     Username: string;
     CategoryCode: string;
+    CategoryCodes: Array<string>;
     RoleCode: string;
     constructor() {
         this.Username = "";
         this.CategoryCode = "";
+        this.CategoryCodes = new Array<string>();
         this.RoleCode = "";
     }
 }
