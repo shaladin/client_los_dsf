@@ -38,6 +38,21 @@
           "property": "ProdOfferingName"
         },
         {
+          "type": "link",
+          "label": "Lead No.",
+          "property": "LeadNo",
+          "name": "LeadNo",
+          "isHide": true,
+          "environment": "LOSR3WEB",
+          "position": "left",
+          "path": "VIEW_LEAD",
+          "target": "_blank",
+          "param": [{
+            "type": "LeadId",
+            "property": "LeadId"
+          }]
+        },
+        {
           "type": "text",
           "label": "Tenor",
           "property": "Tenor"
