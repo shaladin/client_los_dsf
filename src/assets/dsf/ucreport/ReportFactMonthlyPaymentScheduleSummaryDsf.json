@@ -17,15 +17,23 @@
             "label" : "Currency",
             "name" : "Currency",
             "datatype" : "text",
-            "isSelectOne" : true,
+            "ddlType": "all",
             "items" : [
                 {
-                "key": "Rupiah",
+                "key": "IDR",
                 "value": "Rupiah"
             },
             {
-                "key": "Dollar",
-                "value": "Dollar"
+                "key": "USD",
+                "value": "US Dollar"
+            },
+            {
+                "key": "SGD",
+                "value": "Singapore Dollar"
+            },
+            {
+                "key": "YEN",
+                "value": "Yen"
             }
             ],
             "isFromURL" : false,

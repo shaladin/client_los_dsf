@@ -66,7 +66,7 @@ export class PathConstantDsf {
     public static PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING;
     public static PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
     public static PRINT_REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY;
-    public static PRINT_REPORT_FACT_MONTHLY_DISB = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY;
+    public static PRINT_REPORT_FACT_MONTHLY_DISB = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONTHLY_DISB;
     //#endregion report factoring
 
     //#region customer-plafond

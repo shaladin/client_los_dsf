@@ -26,7 +26,7 @@
             "label" : "Currency",
             "name" : "CurrCode",
             "datatype" : "text",
-            "isSelectOne" : true,
+            "ddlType": "all",
             "items" : [
                 {
                 "key": "IDR",

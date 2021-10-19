@@ -328,11 +328,11 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
           this.NapObj = response;
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
           this.lobCode = this.NapObj.LobCode;          
-          if(this.lobCode == CommonConstantX.CFNA_LOB_CODE_FD ||
-             this.lobCode == CommonConstantX.CFNA_LOB_CODE_MPF)
-          {      
+          // if(this.lobCode == CommonConstantX.CFNA_LOB_CODE_FD ||
+          //    this.lobCode == CommonConstantX.CFNA_LOB_CODE_MPF)
+          // {      
             
-          }
+          // }
         }
       }
     )
