@@ -44,7 +44,7 @@ export class EmergencyContactTabComponent implements OnInit {
   MrCustRelationshipObj: Array<KeyValueObj> = new Array();
   ArrAddCrit: Array<CriteriaObj> = new Array();
   copyAddressFromObj: any;
-  tempCustEmgncyName : string = "";
+  tempCustEmgncyName: string = "";
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
   BusinessDt: Date;
   IsCustRelationshipReady: boolean = false;
@@ -152,13 +152,13 @@ export class EmergencyContactTabComponent implements OnInit {
         if (response.AppCustEmrgncCntctId != 0) {
           this.isDataExist = true;
           this.EmergencyContactForm.patchValue({
-            MrIdTypeCode: response.MrIdTypeCode == null? "" : response.MrIdTypeCode,
-            MrGenderCode: response.MrGenderCode == null? "" : response.MrGenderCode,
+            MrIdTypeCode: response.MrIdTypeCode == null ? "" : response.MrIdTypeCode,
+            MrGenderCode: response.MrGenderCode == null ? "" : response.MrGenderCode,
             IdNo: response.IdNo,
             BirthPlace: response.BirthPlace,
             IdExpiredDt: response.IdExpiredDt != null ? formatDate(response.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
-            BirthDt:  response.BirthDt != null ? formatDate(response.BirthDt, 'yyyy-MM-dd', 'en-US') : "",
-            MrCustRelationshipCode: response.MrCustRelationshipCode == null? "" : response.MrCustRelationshipCode,
+            BirthDt: response.BirthDt != null ? formatDate(response.BirthDt, 'yyyy-MM-dd', 'en-US') : "",
+            MrCustRelationshipCode: response.MrCustRelationshipCode == null ? "" : response.MrCustRelationshipCode,
             MobilePhnNo1: response.MobilePhnNo1,
             MobilePhnNo2: response.MobilePhnNo2,
             Email: response.Email
@@ -337,7 +337,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.PhnExt3 = this.UcAddrObj.PhnExt3;
     this.appCustEmrgncCntctObj.Zipcode = this.EmergencyContactForm.controls["AddressZipcode"]["controls"].value.value;
 
-    if(this.checkEmergencyCustContactPerson() == false){
+    if (this.checkEmergencyCustContactPerson() == false) {
       return;
     }
 
@@ -372,12 +372,11 @@ export class EmergencyContactTabComponent implements OnInit {
     this.regexService.getListPattern().subscribe(
       response => {
         this.resultPattern = response[CommonConstant.ReturnObj];
-        if(this.resultPattern != undefined)
-        {
+        if (this.resultPattern != undefined) {
           for (let i = 0; i < this.resultPattern.length; i++) {
             let patternObj: CustomPatternObj = new CustomPatternObj();
             let pattern: string = this.resultPattern[i].Value;
-    
+
             patternObj.pattern = pattern;
             patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
             this.customPattern.push(patternObj);
@@ -409,7 +408,7 @@ export class EmergencyContactTabComponent implements OnInit {
   }
   //END OF URS-LOS-041
 
-  checkEmergencyCustContactPerson(){
+  checkEmergencyCustContactPerson() {
     var isValid: boolean = true;
 
     let max17Yodt = new Date(this.BusinessDt);
@@ -423,17 +422,17 @@ export class EmergencyContactTabComponent implements OnInit {
       isValid = false;
     }
 
-    if(birthDt > tempBusinessDt){
+    if (birthDt > tempBusinessDt) {
       this.toastr.warningMessage(ExceptionConstant.BIRTH_DATE_CANNOT_MORE_THAN + 'Business Date');
       isValid = false;
     }
 
-    if(tempBusinessDt > idExpiredDt || tempBusinessDt.getDate() === idExpiredDt.getDate()){
+    if (tempBusinessDt >= idExpiredDt) {
       let checkIdType = this.EmergencyContactForm.controls.MrIdTypeCode.value;
-      if(checkIdType == CommonConstant.MrIdTypeCodeEKTP || checkIdType == CommonConstant.MrIdTypeCodeNPWP || checkIdType == CommonConstant.MrIdTypeCodeAKTA){
+      if (checkIdType == CommonConstant.MrIdTypeCodeEKTP || checkIdType == CommonConstant.MrIdTypeCodeNPWP || checkIdType == CommonConstant.MrIdTypeCodeAKTA) {
         isValid = true;
       }
-      else{
+      else {
         this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + 'Equal Business Date');
         isValid = false;
       }
@@ -442,9 +441,9 @@ export class EmergencyContactTabComponent implements OnInit {
     return isValid;
   }
 
-  setDisableForm(MobilePhone1 : string){
+  setDisableForm(MobilePhone1: string) {
 
-    if(MobilePhone1 != null && MobilePhone1 != ""){
+    if (MobilePhone1 != null && MobilePhone1 != "") {
       this.EmergencyContactForm.controls.MobilePhnNo1.disable();
       this.EmergencyContactForm.controls.MobilePhnNo2.disable();
       this.EmergencyContactForm.controls.Email.disable();
@@ -459,9 +458,9 @@ export class EmergencyContactTabComponent implements OnInit {
     this.InputUcAddressObj.inputField.inputLookupObj.isReadonly = true;
   }
 
-  onTypeName(ev : string){
-    if(ev != ""){
-      if(this.tempCustEmgncyName != ev){
+  onTypeName(ev: string) {
+    if (ev != "") {
+      if (this.tempCustEmgncyName != ev) {
         this.EmergencyContactForm.controls.MobilePhnNo1.enable();
         this.EmergencyContactForm.controls.MobilePhnNo2.enable();
         this.EmergencyContactForm.controls.Email.enable();
@@ -473,16 +472,16 @@ export class EmergencyContactTabComponent implements OnInit {
         this.EmergencyContactForm.controls.MrGenderCode.enable();
 
         this.EmergencyContactForm.patchValue({
-          MrIdTypeCode: "" ,
-          MrGenderCode: "" ,
+          MrIdTypeCode: "",
+          MrGenderCode: "",
           IdNo: "",
-          BirthPlace:"" ,
-          IdExpiredDt: "" ,
-          BirthDt:  "" ,
-          MrCustRelationshipCode: "" ,
-          MobilePhnNo1:"" ,
-          MobilePhnNo2:"" ,
-          Email: ""         
+          BirthPlace: "",
+          IdExpiredDt: "",
+          BirthDt: "",
+          MrCustRelationshipCode: "",
+          MobilePhnNo1: "",
+          MobilePhnNo2: "",
+          Email: ""
         });
 
         this.UcAddrObj = new AddrObj();
