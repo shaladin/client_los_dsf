@@ -393,6 +393,7 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstantDsf.REPORT_PLAFOND_DF, Title: 'Print Plafond DF', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_DISBURSEMENR_ORDER_PAGING, Title: 'Factoring Disbursement Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY, Title: 'Monthly Payment Schedule Summary', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_FACT_MONTHLY_DISB, Title: 'Factoring Monthly Disbursement', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
         ], Params: [] 
       }
     ], Params: []

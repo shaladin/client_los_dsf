@@ -1,0 +1,64 @@
+{ 
+    "title" : "FACTORING MONTHLY DISBURSEMENT REPORT",
+    "reportName": "Report Fact Monthly Dirbursement",
+    "reportTemplateCode": "DSF_FactMonthlyDisb",
+    "component": [ 
+        {
+            "type" : "datepicker",
+            "label" : "Period From",
+            "name" : "LeadDtGte",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Period To",
+            "name" : "LeadDtLte",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "dropdown",
+            "label" : "Currency",
+            "name" : "CurrCode",
+            "datatype" : "text",
+            "isSelectOne" : true,
+            "items" : [
+                {
+                "key": "IDR",
+                "value": "Rupiah"
+            },
+            {
+                "key": "USD",
+                "value": "US Dollar"
+            },
+            {
+                "key": "SGD",
+                "value": "Singapore Dollar"
+            },
+            {
+                "key": "YEN",
+                "value": "Yen"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        }
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+
