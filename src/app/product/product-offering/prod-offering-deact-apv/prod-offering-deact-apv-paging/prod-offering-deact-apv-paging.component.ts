@@ -68,7 +68,7 @@ export class ProdOfferingDeactApvPagingComponent implements OnInit {
     this.InputPagingObj.addCritInput = this.ArrCrit;
   }
 
-  CallBackHandler(ev) {
+  async CallBackHandler(ev) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if (ev.Key == "Process") {
       if(isRoleAssignment != CommonConstant.TRUE){
@@ -78,10 +78,10 @@ export class ProdOfferingDeactApvPagingComponent implements OnInit {
         }
       }
       else if (ev.RowObj.CurrentUser == "-") {
-          this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
       
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV_DETAIL],{ "ProdOfferingHId": ev.RowObj.ProdOfferingHId, "ProdOfferingId": ev.RowObj.ProdOfferingId,"TaskId": ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV_DETAIL],{ "ProdOfferingHId": ev.RowObj.ProdOfferingHId, "ProdOfferingId": ev.RowObj.ProdOfferingId,"TaskId": ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId });
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.UserContext.UserName)) {

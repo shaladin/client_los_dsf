@@ -35,7 +35,6 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   arrValue = [];
   isViewReady: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-  IsRoleAssignment: string = "";
 
   constructor(private router: Router, 
     private route: ActivatedRoute, 
@@ -47,7 +46,6 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
         this.taskId = params["TaskId"];
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -56,9 +54,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.taskId;
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      await this.HoldTask(ApvHoldObj);
-    }
+    await this.HoldTask(ApvHoldObj);
 
     await this.getData();
     this.IsReadySummary = true;
@@ -68,6 +64,9 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response)=>{      
     
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING],{BizTemplateCode: this.BizTemplateCode});
       }
     )
   }

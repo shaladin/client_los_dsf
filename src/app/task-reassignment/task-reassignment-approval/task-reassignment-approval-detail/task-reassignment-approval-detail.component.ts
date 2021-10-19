@@ -30,7 +30,6 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
   trxNo: string;
   TaskReassignmentTrxId: number;
   TaskReassignmentObj: ResponseTaskReassignmentDetailPageObj;
-  IsRoleAssignment: string = "";
 
   constructor(
     private router: Router,
@@ -63,7 +62,6 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
       var ApvHoldObj = new ApprovalObj()
       ApvHoldObj.TaskId = obj.taskId
 
-      
       this.HoldTask(ApvHoldObj);
     });
   }

@@ -23,7 +23,6 @@ export class ProdOfferingApvDetailComponent implements OnInit {
   TaskId: number;
   ApvReqId: number;
   IsReady: boolean = false;
-  IsRoleAssignment: string = "";
   GenericByIdObj: GenericObj = new GenericObj();
   InputApvObj : UcInputApprovalObj = new UcInputApprovalObj();
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj= new UcInputApprovalGeneralInfoObj();

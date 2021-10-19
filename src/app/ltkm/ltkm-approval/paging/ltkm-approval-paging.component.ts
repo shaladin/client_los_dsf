@@ -65,8 +65,7 @@ export class LtkmApprovalPagingComponent implements OnInit {
     }
   }
 
-  GetCallBack(ev: any) {
-    var ApvReqObj = new ApprovalObj();
+  async GetCallBack(ev: any) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if(ev.Key == "customer"){
       this.CustNoObj.CustNo = ev.RowObj.CustNo;      
@@ -92,9 +91,9 @@ export class LtkmApprovalPagingComponent implements OnInit {
         }
       }
       else if (ev.RowObj.CurrentUser == "-") {
-        this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_DETAIL],{ "LtkmCustId": ev.RowObj.LtkmCustId, "LtkmNo": ev.RowObj.LtkmNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsRoleAssignment": isRoleAssignment });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_DETAIL],{ "LtkmCustId": ev.RowObj.LtkmCustId, "LtkmNo": ev.RowObj.LtkmNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId, "WfTaskListId": ev.RowObj.WfTaskListId});
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
