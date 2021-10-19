@@ -64,7 +64,8 @@ export class CommissionV2Component implements OnInit {
     TotalCommisionAmount: 0,
     TotalTaxAmmount: 0,
     TotalVATAmount: 0,
-    GrossYield: 0
+    GrossYield: 0,
+    totalExpenseAmount: 0
   };
   RemainingAllocAmt: number = 0;
   IsCalculated: boolean = false;
@@ -395,6 +396,7 @@ export class CommissionV2Component implements OnInit {
     this.Summary.TotalVATAmount = 0;
     this.Summary.GrossYield = 0;
     this.totalExpenseAmt = 0;
+    this.Summary.totalExpenseAmount = 0;
     for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
       this.DictTotalIncomeForm[this.ListAllocFromForDict[i]] = 0;
     }
@@ -547,6 +549,7 @@ export class CommissionV2Component implements OnInit {
       this.totalExpenseAmt += totalExpenseAmount;
       idxStart++;
     }
+    this.Summary.totalExpenseAmount = this.totalExpenseAmt;
     return idxStart;
   }
 

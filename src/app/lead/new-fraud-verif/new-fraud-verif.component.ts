@@ -60,7 +60,7 @@ export class NewFraudVerifComponent implements OnInit {
       },
       {
         name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url + "/v1"
+        environment: environment.losUrl + "/v1"
       },
       {
         name: "L.MR_CUST_TYPE_CODE",
