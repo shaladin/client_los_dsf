@@ -8,7 +8,7 @@
             "label" : "Product Type",
             "name" : "ProductType",
             "datatype" : "text",
-            "isSelectOne" : true,
+            "ddlType": "all",
             "items" : [
                 {
                 "key": "UN",
