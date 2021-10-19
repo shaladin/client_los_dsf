@@ -1050,6 +1050,7 @@ export class URLConstant {
   public static AddNewLeadFraudVerfV2 = environment.losUrl + "/v2" + "/LeadFraudVerf/AddNewLeadFraudVerf";
   public static GetListLeadForLeadVerfObj = environment.losUrl + "/v1" + "/LeadVerf/GetListLeadForLeadVerfObj";
   public static GetDoubleFinancingCheckAppAsset = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
+  public static GetDoubleFinancingCheckAppAssetV2 = environment.losUrl + "/v2" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
 
   //LEAD VERF
   public static AddRangeLeadVerf = environment.losUrl + "/v1" + "/LeadVerf/AddRangeLeadVerf";
