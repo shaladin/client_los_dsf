@@ -468,8 +468,8 @@
           <div class="form-group row">
             <label class="col-md-4 adins-required-label" for="FullAssetName" translate>Collateral Name </label>
             <div class="col-md-8">
-              <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='AddCollForm' [enjiForm]='enjiForm'
-                [identifier]="'FullAssetName'" #LookupCollateral (lookup)="getLookupCollateralTypeResponse($event)">
+              <lib-uclookupgeneric [lookupInput]="inputLookupObjExisting" [parentForm]='AddCollForm' [enjiForm]='enjiForm' 
+              [identifier]="'FullAssetName'" #LookupCollateralExisting (lookup)="getLookupCollateralTypeResponse($event)">
               </lib-uclookupgeneric>
             </div>
           </div>
