@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResAppCustForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -24,7 +26,7 @@ export class AppCustDataPersonalOplComponent implements OnInit {
   isDataAlreadyLoaded: boolean = false;
   isSpouseExists: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   async ngOnInit(): Promise<void> {
     await this.getCustData();
@@ -65,7 +67,12 @@ export class AppCustDataPersonalOplComponent implements OnInit {
       this.CustNoObj.CustNo = event.RowObj.custNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
     }

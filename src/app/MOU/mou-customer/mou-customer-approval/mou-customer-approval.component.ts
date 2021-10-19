@@ -18,6 +18,7 @@ import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-customer-approval',
@@ -33,7 +34,7 @@ export class MouCustomerApprovalComponent implements OnInit {
   integrationObj: IntegrationObj = new IntegrationObj();
   user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService) { }
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService, private AdInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
 
@@ -70,22 +71,16 @@ export class MouCustomerApprovalComponent implements OnInit {
   }
   
   getEvent(event) {
-    let custId: number;
-    let mrCustTypeCode: string;
     var isRoleAssignment = event.RowObj.IsRoleAssignment.toString();
     if (event.Key == "customer") {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          
-          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

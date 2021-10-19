@@ -17,6 +17,7 @@ import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-edit-app-after-approval-approval-paging',
@@ -38,7 +39,8 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
               private router: Router,
               private cookieService: CookieService,
               private route: ActivatedRoute,
-              private apvTaskService: ApprovalTaskService) {
+              private apvTaskService: ApprovalTaskService,
+              private adInsHelperService: AdInsHelperService) {
                 
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -127,10 +129,10 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
       this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

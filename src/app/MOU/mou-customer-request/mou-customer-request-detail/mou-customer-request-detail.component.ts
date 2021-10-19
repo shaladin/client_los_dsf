@@ -20,6 +20,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { environment } from 'environments/environment';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -66,7 +67,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     private toastr: NGXToastrService,
     private http: HttpClient,
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService
+    private claimTaskService: ClaimTaskService,
+    private AdInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
@@ -215,7 +217,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     if (key == "mou") {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.mouCustId);
     } else if (key == "cust") {
-      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+      this.AdInsHelperService.OpenCustomerViewByCustId(this.custId);
     }
   }
 

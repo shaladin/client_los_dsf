@@ -16,6 +16,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { String } from 'typescript-string-operations';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service'
 
 @Component({
   selector: 'app-change-mou-approval-paging',
@@ -30,7 +31,13 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
   integrationObj: IntegrationObj = new IntegrationObj();
   UserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService) { }
+  constructor(
+    private router: Router, 
+    private http: HttpClient, 
+    private cookieService: CookieService, 
+    private toastr: NGXToastrService, 
+    private apvTaskService: ApprovalTaskService, 
+    private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -56,22 +63,16 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
   }
 
   getEvent(event) {
-    let custId: number;
-    let mrCustTypeCode: string;
     var isRoleAssignment = event.RowObj.IsRoleAssignment.toString();
     if (event.Key == "customer") {
       let CustNoObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-
-          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

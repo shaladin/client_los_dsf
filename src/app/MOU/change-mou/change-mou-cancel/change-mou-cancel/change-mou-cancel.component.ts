@@ -13,6 +13,7 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CookieService } from "ngx-cookie";
 import { RequestTaskModelObj } from "app/shared/model/Workflow/V2/RequestTaskModelObj.model";
 import { IntegrationObj } from "app/shared/model/library/IntegrationObj.model";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-change-mou-cancel",
@@ -29,7 +30,8 @@ export class ChangeMouCancelComponent implements OnInit {
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private adInsHelperService: AdInsHelperService
   ) { }
 
   ngOnInit() {
@@ -66,26 +68,19 @@ export class ChangeMouCancelComponent implements OnInit {
   }
 
   getEvent(event) {
-    let custId: number;
-    let mrCustTypeCode: string;
     if (event.Key == "customer") {
       let CustNoObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-
-          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     } else if (event.Key == "cancel") {
       if (confirm("Are you sure to cancel this?")) {
-        console.log(event)
         var mouCancel = new ChangeMouCustConfirmCancelObj();
         let urlPost = environment.isCore ? URLConstant.EditChangeMouForCancelByChangeMouTrxIdV2 : URLConstant.EditChangeMouForCancelByChangeMouTrxId;
 

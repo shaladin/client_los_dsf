@@ -18,6 +18,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 @Component({
   selector: 'app-ltkm-approval-paging',
   templateUrl: './ltkm-approval-paging.component.html',
@@ -36,7 +37,8 @@ export class LtkmApprovalPagingComponent implements OnInit {
     private httpClient: HttpClient, 
     private router: Router,
     private cookieService: CookieService,
-    private apvTaskService: ApprovalTaskService) {
+    private apvTaskService: ApprovalTaskService,
+    private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
      
     });
@@ -73,10 +75,10 @@ export class LtkmApprovalPagingComponent implements OnInit {
       this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

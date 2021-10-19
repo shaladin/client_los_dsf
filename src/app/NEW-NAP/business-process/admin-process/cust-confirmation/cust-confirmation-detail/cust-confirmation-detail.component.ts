@@ -17,6 +17,7 @@ import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/sh
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -42,7 +43,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   readonly DetailLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient,
-    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
+    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService, private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
@@ -184,7 +185,12 @@ export class CustConfirmationDetailComponent implements OnInit {
       this.CustNoObj.CustNo = event.ViewObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         });
     }
   }

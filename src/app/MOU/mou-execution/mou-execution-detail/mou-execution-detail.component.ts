@@ -17,6 +17,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-execution-detail',
@@ -51,8 +52,10 @@ export class MouExecutionDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router, private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService) {
+    private router: Router, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService,
+    private AdInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
@@ -193,7 +196,12 @@ export class MouExecutionDetailComponent implements OnInit {
       let custObj = { CustNo: this.resultData["CustNo"] };
       this.httpClient.post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         });
     }
   }

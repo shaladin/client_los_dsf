@@ -15,6 +15,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { environment } from 'environments/environment';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -29,7 +30,7 @@ export class EditMouCustomerComponent implements OnInit {
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
 
-  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -66,21 +67,15 @@ export class EditMouCustomerComponent implements OnInit {
   }
 
   getEvent(event) {
-    let custId: number;
-    let mrCustTypeCode: string;
     if (event.Key == "customer") {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          
-          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

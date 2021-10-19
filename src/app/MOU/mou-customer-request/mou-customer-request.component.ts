@@ -12,6 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -26,7 +27,7 @@ export class MouCustomerRequestComponent implements OnInit {
   user: CurrentUserContext;
 
   readonly AddLink: string = NavigationConstant.MOU_REQ_DETAIL;
-  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -37,20 +38,14 @@ export class MouCustomerRequestComponent implements OnInit {
   }
 
   customerView(ev) {
-    let custId: number;
-    let mrCustTypeCode: string;
     this.CustNoObj.CustNo = ev.RowObj.CustNo;
     this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       (response) => {
-        custId = response['CustId'];
-        mrCustTypeCode = response['MrCustTypeCode'];
-        
-        if(mrCustTypeCode == CommonConstant.CustTypeCompany){
-          AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+          this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
         }
-        
-        if(mrCustTypeCode == CommonConstant.CustTypePersonal){
-          AdInsHelper.OpenCustomerViewByCustId(custId);
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
         }
       });
   }

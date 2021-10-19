@@ -8,6 +8,7 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { Router } from "@angular/router";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-change-mou-request-paging",
@@ -20,7 +21,8 @@ export class ChangeMouRequestPagingComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router
+    private router: Router,
+    private AdInsHelperService: AdInsHelperService
   ) {}
 
   ngOnInit() {
@@ -60,10 +62,10 @@ export class ChangeMouRequestPagingComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

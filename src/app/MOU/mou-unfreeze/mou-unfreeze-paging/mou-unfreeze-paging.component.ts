@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj  } from "app/shared/model/UcPagingObj.Model";
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-unfreeze-paging',
@@ -16,7 +17,7 @@ export class MouUnfreezePagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();;
 
   constructor(private http: HttpClient,
-    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
+    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService, private adInsHelperService: AdInsHelperService) {
       this.route.queryParams.subscribe((params) => {});
   }
 
@@ -33,10 +34,10 @@ export class MouUnfreezePagingComponent implements OnInit {
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           response => {
             if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-              AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+              this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
             }
             if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-              AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+              this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
             }
           }
         );

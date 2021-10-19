@@ -11,6 +11,7 @@ import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/Response/MOU/MouCu
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -56,7 +57,7 @@ export class MouViewDetailComponent implements OnInit {
   LinkSupplier:any = "-";
   MouCustDlrFindData: ResGetMouCustDlrFindByIdObj = new ResGetMouCustDlrFindByIdObj();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.ReqByIdObj.Id = this.MouCustId ;
@@ -201,11 +202,11 @@ export class MouViewDetailComponent implements OnInit {
     this.ReqByIdObj.CustNo = custNo;
     this.http.post(URLConstant.GetCustByCustNo, this.ReqByIdObj).subscribe(
       response => {
-        if(response["MrCustTypeCode"] == 'PERSONAL'){
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+          this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
         }
-        else if(response["MrCustTypeCode"] == 'COMPANY'){
-          AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
         }
       }
     );

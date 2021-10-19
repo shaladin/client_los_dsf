@@ -18,6 +18,7 @@ import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
 import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { ClaimTaskService } from "app/shared/claimTask.service";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-change-mou-review-factoring",
@@ -58,7 +59,8 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService
+    private claimTaskService: ClaimTaskService,
+    private AdInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe((params) => {
       this.ChangeMouTrxId = params["ChangeMouTrxId"];
@@ -189,16 +191,15 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
 
   GetCallBack(event) {
     if (event.Key == "customer") {
-      console.log(event)
       var custObj = { CustNo: event.ViewObj["CustNo"] };
       this.http
         .post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

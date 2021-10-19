@@ -13,6 +13,7 @@ import { CookieService } from 'ngx-cookie';
 import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-existing-mou-personal',
@@ -48,7 +49,9 @@ export class ExistingMouPersonalComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService
+    private toastr: NGXToastrService,
+    private cookieService: CookieService,
+    private AdInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
@@ -259,7 +262,7 @@ export class ExistingMouPersonalComponent implements OnInit {
     if (key == "app") {
       AdInsHelper.OpenAppViewByAppId(value);
     } else if (key == "cust") {
-      AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+      this.AdInsHelperService.OpenCustomerViewByCustId(this.cust.CustId);
     }
   }
 }

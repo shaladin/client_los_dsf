@@ -12,6 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-existing-mou-company',
@@ -39,7 +40,8 @@ export class ExistingMouCompanyComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private AdInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
@@ -193,7 +195,7 @@ export class ExistingMouCompanyComponent implements OnInit {
     if (key == "app") {
       AdInsHelper.OpenAppViewByAppId(value);
     } else if (key == "cust") {
-      AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+      this.AdInsHelperService.OpenCustomerViewByCustId(this.cust.CustId);
     }
   }
 }
