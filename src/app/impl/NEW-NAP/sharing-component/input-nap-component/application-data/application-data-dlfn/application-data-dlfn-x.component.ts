@@ -65,7 +65,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     SalesOfficerName: [''],
     MrInstTypeCode: [''],
     TopDays: ['', [Validators.pattern('^[0-9]+$')]],
-    Tenor: ['', [Validators.pattern('^[0-9]+$')]],
+    Tenor: ['', [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
     NumOfInst: [1],
     MrInstSchemeCode: [''],
     IsDisclosed: [false],
