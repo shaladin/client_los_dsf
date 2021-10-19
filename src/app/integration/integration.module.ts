@@ -6,12 +6,14 @@ import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { LOSErrorDataMonitoringComponent } from "./los-error-data-monitoring/los-error-data-monitoring.component";
 import { IntegrationRoutingModule } from "./integration-routing.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     imports: [
         CommonModule,
         MatRadioModule,
         AdInsModule,
+        AdInsSharedModule,
         UcSubsectionModule,
         IntegrationRoutingModule,
     ],

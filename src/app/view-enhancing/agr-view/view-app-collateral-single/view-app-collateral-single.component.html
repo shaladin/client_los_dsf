@@ -2,7 +2,9 @@
   <div class="card-body">
     <div class="px-3 mt-3">
       <div *ngIf="isMulti">
-        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate><i class="ft-arrow-left"></i> Back</button>
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
+          <i class="ft-arrow-left"></i>&nbsp;<span translate>Back</span>
+        </button>
       </div>
     </div>
     <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>

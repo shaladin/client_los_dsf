@@ -25,6 +25,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 import { environment } from 'environments/environment';
+import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -37,8 +38,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
   deliveryOrderObj: any = new DeliveryOrderObj();
   appCollateralDoc: AppCollateralDocObj;
   listAppCollateralDocObj: ListAppCollateralDocObj;
-  appTC: AppTCObj;
-  listAppTCObj: ListAppTCObj;
+  agrmntTcObj: AgrmntTcObj;
+  listAgrmntTcObj: Array<AgrmntTcObj>;
   itemType: Array<KeyValueObj>;
 
   AppAssetId: number;
@@ -328,40 +329,38 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
 
-    this.listAppTCObj = new ListAppTCObj();
-    this.listAppTCObj.AppTCObj = new Array();
+    this.listAgrmntTcObj = new Array<AgrmntTcObj>();
 
     for (var i = 0; i < this.DeliveryOrderForm.value.TCList["length"]; i++) {
-      const tempAppTc = this.DeliveryOrderForm.getRawValue().TCList[i];
-      this.appTC = new AppTCObj();
-      this.appTC.AppId = tempAppTc.AppId;
-      this.appTC.AppTcId = tempAppTc.AppTcId;
-      this.appTC.TcCode = tempAppTc.TcCode;
-      this.appTC.TcName = tempAppTc.TcName;
-      this.appTC.PriorTo = tempAppTc.PriorTo;
-      this.appTC.IsChecked = tempAppTc.IsChecked;
-      this.appTC.ExpiredDt = tempAppTc.ExpiredDt;
-      this.appTC.IsMandatory = tempAppTc.IsMandatory;
-      this.appTC.PromisedDt = tempAppTc.PromisedDt;
-      this.appTC.CheckedDt = tempAppTc.CheckedDt;
-      this.appTC.IsWaived = tempAppTc.IsWaived;
-      this.appTC.Notes = tempAppTc.Notes;
-      this.appTC.IsExpDtMandatory = tempAppTc.IsExpDtMandatory;
-      this.appTC.IsWaivable = tempAppTc.IsWaivable;
-      this.appTC.IsAdditional = tempAppTc.IsAdditional;
-      this.appTC.RowVersion = tempAppTc.RowVersion;
+      const tempAgrmntTc = this.DeliveryOrderForm.getRawValue().TCList[i];
+      this.agrmntTcObj = new AgrmntTcObj();
+      this.agrmntTcObj.AgrmntId = tempAgrmntTc.AgrmntId;
+      this.agrmntTcObj.AgrmntTcId = tempAgrmntTc.AgrmntTcId;
+      this.agrmntTcObj.TcCode = tempAgrmntTc.TcCode;
+      this.agrmntTcObj.TcName = tempAgrmntTc.TcName;
+      this.agrmntTcObj.PriorTo = tempAgrmntTc.PriorTo;
+      this.agrmntTcObj.IsChecked = tempAgrmntTc.IsChecked;
+      this.agrmntTcObj.ExpiredDt = tempAgrmntTc.ExpiredDt;
+      this.agrmntTcObj.IsMandatory = tempAgrmntTc.IsMandatory;
+      this.agrmntTcObj.PromisedDt = tempAgrmntTc.PromisedDt;
+      this.agrmntTcObj.CheckedDt = tempAgrmntTc.CheckedDt;
+      this.agrmntTcObj.IsWaived = tempAgrmntTc.IsWaived;
+      this.agrmntTcObj.Notes = tempAgrmntTc.Notes;
+      this.agrmntTcObj.IsExpDtMandatory = tempAgrmntTc.IsExpDtMandatory;
+      this.agrmntTcObj.IsWaivable = tempAgrmntTc.IsWaivable;
+      this.agrmntTcObj.IsAdditional = tempAgrmntTc.IsAdditional;
 
-      var prmsDt = new Date(this.appTC.PromisedDt);
-      var prmsDtForm = tempAppTc.PromisedDt;
-      if (this.appTC.IsChecked == false) {
+      var prmsDt = new Date(this.agrmntTcObj.PromisedDt);
+      var prmsDtForm = tempAgrmntTc.PromisedDt;
+      if (this.agrmntTcObj.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
-            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            this.toastr.warningMessage("Promise Date for " + this.agrmntTcObj.TcName + " can't be lower than Business Date");
             return;
           }
         }
       }
-      this.listAppTCObj.AppTCObj.push(this.appTC);
+      this.listAgrmntTcObj.push(this.agrmntTcObj);
     }
 
     this.deliveryOrderObj.AgrmntId = this.AgrmntId;
@@ -369,7 +368,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.AppAssetObj = appAsset;
     this.deliveryOrderObj.DeliveryOrderHObj = deliveryOrderH;
     this.deliveryOrderObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
-    this.deliveryOrderObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
+    this.deliveryOrderObj.ListAgrmntTcObj = this.listAgrmntTcObj;
 
     let submitDeliveryOrderUrl = environment.isCore? URLConstant.SubmitDeliveryOrderDataV2 : URLConstant.SubmitDeliveryOrderData;
     this.http.post(submitDeliveryOrderUrl, this.deliveryOrderObj).subscribe(

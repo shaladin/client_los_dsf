@@ -126,7 +126,7 @@
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Country</label>
                   <div class="col-md-8">
-                    <label *ngIf="isLocal">{{LocalCountry?.CountryName}}</label>
+                    <label *ngIf="isLocal">{{LocalCountry}}</label>
                     <div [hidden]="isLocal" *ngIf="lookupCountryObj.isReady">
                       <lib-uclookupgeneric [lookupInput]="lookupCountryObj" [parentForm]="CustDetailForm" [enjiForm]="enjiForm"
                         [identifier]="'WNACountry'" (lookup)=GetCountryData($event)>
@@ -169,8 +169,8 @@
           </div>
           <div class="form-actions right">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(CustDetailForm)"
-              class="btn btn-raised btn-primary" translate>
-              <i class="fa fa-check-square"></i> Save & Continue
+              class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square"></i>&nbsp;<span translate>Save & Continue</span>
             </button>
           </div>
         </form>

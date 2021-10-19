@@ -12,6 +12,7 @@ import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { UcShowErrorsModule } from '@adins/uc-show-errors';
 import { MatTabsModule } from '@angular/material';
 import { UcthingstodoModule } from '@adins/ucthingstodo';
+import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { UcthingstodoModule } from '@adins/ucthingstodo';
         ReactiveFormsModule,
         FormsModule,
         NgbModule,
+        AdInsSharedModule,
         RouterModule,
         HttpModule,
         CommonModule,

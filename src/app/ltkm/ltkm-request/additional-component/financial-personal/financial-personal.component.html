@@ -163,10 +163,12 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" id="closemodalid" class="btn btn-warning btn-raised" (click)="CloseModal()" translate><i
-                      class="far fa-window-close"></i> Cancel</button>
-                  <button *ngIf="!isLockMode" #btnclosemodal (click)="SaveModal()"  data-dismiss="modal" type="button" class="btn btn-raised btn-primary" translate><i class="far fa-check-square"></i>
-                    Save</button>
+                  <button type="button" id="closemodalid" class="btn btn-warning btn-raised" (click)="CloseModal()">
+                    <i class="far fa-window-close"></i>&nbsp;<span translate>Cancel</span>
+                  </button>
+                  <button *ngIf="!isLockMode" #btnclosemodal (click)="SaveModal()"  data-dismiss="modal" type="button" class="btn btn-raised btn-primary">
+                    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+                  </button>
                 </div>
               <!-- </form> -->
             </ng-template>

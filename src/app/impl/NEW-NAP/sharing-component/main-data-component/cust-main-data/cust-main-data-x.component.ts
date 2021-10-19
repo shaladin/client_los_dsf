@@ -50,6 +50,8 @@ import { CustAttrFormComponent } from 'app/NEW-NAP/sharing-component/main-data-c
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { AgrParentObjX } from 'app/impl/shared/model/Response/AgrParentObjX.model';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
 
 @Component({
   selector: 'app-cust-main-data-x',
@@ -100,6 +102,8 @@ export class CustMainDataXComponent implements OnInit {
 
   LeadId: number;
   LeadNo: string;
+  CountryCode: string = "";
+  CountryName: string = "";
   AppNo: string;
 
   agrmntParentNo: string = "";
@@ -315,16 +319,17 @@ export class CustMainDataXComponent implements OnInit {
         this.lookUpObjCountry.genericJson = "./assets/uclookup/lookupCustomerCountry.json";
         this.lookUpObjCountry.isRequired = false;
 
-        this.CountryCode = response.GsValue;
+        let splitCodeDesc = response.GsValue.split(';');
+        this.CountryCode = splitCodeDesc[0];
+        this.CountryName = splitCodeDesc[1];
         let criteriaList = new Array();
         let criteriaObj = new CriteriaObj();
         criteriaObj.restriction = AdInsConstant.RestrictionNeq;
         criteriaObj.propName = 'COUNTRY_CODE';
-        criteriaObj.value = response.GsValue;
+        criteriaObj.value = this.CountryCode;
         criteriaList.push(criteriaObj);
         this.lookUpObjCountry.addCritInput = criteriaList;
-
-        this.GetRefCountry(response.GsValue, true);
+        this.IsLocal = true;
       }
     );
   }
@@ -338,8 +343,6 @@ export class CustMainDataXComponent implements OnInit {
     );
   }
 
-  CountryCode: string = "";
-  CountryName: string = "";
   GetRefCountry(code: string, isLocal: boolean = false) {
     this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: code }).subscribe(
       (response) => {
@@ -367,15 +370,8 @@ export class CustMainDataXComponent implements OnInit {
     if (event.selectedValue == CommonConstant.NationalityLocal) {
       this.IsLocal = true;
       this.lookUpObjCountry.isRequired = false;
-      this.CustMainDataForm.get("WnaCountryCode").patchValue(this.CountryCode);
     } else {
       this.IsLocal = false;
-      let foreign = this.ListNationality.find(x => x.MasterCode == event.selectedValue);
-      let setCountry = foreign.DefaultValue.split(';');
-      let selectedValue = setCountry[1] ? setCountry[1] : setCountry[0];
-      this.lookUpObjCountry.nameSelect = selectedValue;
-      this.lookUpObjCountry.jsonSelect = { CountryName: selectedValue };
-      this.CustMainDataForm.get("WnaCountryCode").patchValue(setCountry[0]);
       this.lookUpObjCountry.isRequired = true;
     }
   }
@@ -549,7 +545,7 @@ export class CustMainDataXComponent implements OnInit {
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustCoyObj.addCritInput = this.ArrAddCrit;
 
-    if (this.bizTemplateCode == CommonConstant.CFNA) 
+    if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust) 
     {
       let intR2ObjPer: IntegrationObj = new IntegrationObj();
       intR2ObjPer.baseUrl = URLConstantX.R2ApiAgrmntGetListCustNoHaveAgrmntMaster;
@@ -558,9 +554,7 @@ export class CustMainDataXComponent implements OnInit {
       intR2ObjPer.rightColumnToJoin = "CustNo";
 
       this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v2";
-      this.InputLookupCustObj.isJoinExAPI = true
-      this.InputLookupCustObj.integrationObj = intR2ObjPer;
-
+      
       let intR2ObjCoy: IntegrationObj = new IntegrationObj();
       intR2ObjCoy.baseUrl = URLConstantX.R2ApiAgrmntGetListCustNoHaveAgrmntMaster;
       intR2ObjCoy.requestObj = { "CustType": "C" };
@@ -568,8 +562,14 @@ export class CustMainDataXComponent implements OnInit {
       intR2ObjCoy.rightColumnToJoin = "CustNo";
 
       this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v2";
+      
+      /*
+      //Didisable dulu karena kebanyakan data dari sisi R2 nya
+      this.InputLookupCustObj.isJoinExAPI = true
+      this.InputLookupCustObj.integrationObj = intR2ObjPer;
       this.InputLookupCustCoyObj.isJoinExAPI = true;
       this.InputLookupCustCoyObj.integrationObj = intR2ObjCoy;
+      */
       
       this.disableInput();
     }
@@ -1535,7 +1535,21 @@ export class CustMainDataXComponent implements OnInit {
       BizTemplateCode: this.bizTemplateCode
     };
 
-    if (this.bizTemplateCode == CommonConstant.CFNA) {
+    
+    if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust) 
+    {
+      let isHaveAgrmntParent : boolean = false;
+      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+        (response) => {
+          if (response && response.length > 0) isHaveAgrmntParent = true;
+        }
+      );
+      if(!isHaveAgrmntParent)
+      {
+        this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
+        return;
+      }
+
       this.http.post(URLConstantX.CheckIfCustHasOngoingAppX, obj).subscribe(
         (response) => {
           this.SaveCustomer();

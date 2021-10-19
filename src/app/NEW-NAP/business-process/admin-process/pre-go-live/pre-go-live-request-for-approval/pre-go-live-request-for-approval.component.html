@@ -11,11 +11,11 @@
                   <div class="form-body">
                     <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent ></lib-ucapprovalcreate>
                     <div class="form-actions right">
-                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
-                        <i class="ft-x"></i> Cancel
+                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]">
+                        <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                       </button>
-                      <button type="submit" class="btn btn-raised btn-primary" translate>
-                        <i class="far fa-check-square"></i> Save
+                      <button type="submit" class="btn btn-raised btn-primary">
+                        <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                       </button>
                     </div>
                   </div>

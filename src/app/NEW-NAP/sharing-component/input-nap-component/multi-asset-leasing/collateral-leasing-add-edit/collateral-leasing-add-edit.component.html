@@ -147,8 +147,8 @@
                       </div>
                       <div class="input-group-append">
                         <span class="input-group-btn">
-                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()" translate>
-                            <i class="fa fa-check-square-o"></i>Copy
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()">
+                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                           </button>
                         </span>
                       </div>
@@ -240,8 +240,8 @@
                       </div>
                       <div class="input-group-append">
                         <span class="input-group-btn">
-                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()" translate>
-                            <i class="fa fa-check-square-o"></i>Copy
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                           </button>
                         </span>
                       </div>
@@ -267,11 +267,11 @@
                 </div>
         
                 <div class="form-actions right">
-                    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-                    <i class="fa fa-times "></i> Cancel
+                    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()">
+                    <i class="fa fa-times "></i>&nbsp;<span translate>Cancel</span>
                     </button>
-                    <button type="submit" (click)="SaveNewCollateral()" class="btn btn-raised btn-primary" translate>
-                    <i class="fa fa-check"></i> Save
+                    <button type="submit" (click)="SaveNewCollateral()" class="btn btn-raised btn-primary">
+                    <i class="fa fa-check"></i>&nbsp;<span translate>Save</span>
                     </button>
                 </div>
               </div>
@@ -326,7 +326,7 @@
                     <div class="card-header">
                       <div class="text-right">
                         <button type="button" (click)="addToTemp()" class="btn btn-raised btn-warning mr-1">
-                          <i class="fa ft-plus"></i> Add Selected Item
+                          <i class="fa ft-plus"></i>&nbsp;<span translate>Add Selected Item</span>
                         </button>
                       </div>
                     </div>
@@ -369,12 +369,11 @@
         
                     <div class="card-header">
                       <div class="text-right">
-                        <button type="button" class="btn btn-raised btn-warning mr-1"
-                         (click)="back()" translate>
-                          <i class="fa fa-arrow-circle-left"></i> Cancel
+                        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()">
+                          <i class="fa fa-arrow-circle-left"></i>&nbsp;<span translate>Cancel</span>
                         </button>
-                        <button type="submit" (click)="SaveExistingCollateral()" class="btn btn-raised btn-primary" translate>
-                          <i class="fa fa-check"></i> Save
+                        <button type="submit" (click)="SaveExistingCollateral()" class="btn btn-raised btn-primary">
+                          <i class="fa fa-check"></i>&nbsp;<span translate>Save</span>
                         </button>
                       </div>
                     </div>

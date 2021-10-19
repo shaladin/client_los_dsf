@@ -3,8 +3,9 @@
     <div class="card-body">
       <div class="px-3">
         <div class="pull-right">
-          <button type="button" class="addButton" translate
-            (click)="showModalCustFinData(ListAppCustPersonalFinData.length)"><i class="ft-plus-circle"></i> Add</button>
+          <button type="button" class="addButton" (click)="showModalCustFinData(ListAppCustPersonalFinData.length)">
+            <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
+          </button>
         </div>
         <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Data'" [panel]="'Financial'">
         </lib-ucSubsection>
@@ -164,11 +165,12 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning btn-raised" (click)="modal.dismiss()" translate><i
-                  class="far fa-window-close"></i> Cancel</button>
-
-              <button type="submit" class="btn btn-raised btn-primary" translate><i class="far fa-check-square"></i>
-                Save</button>
+              <button type="button" class="btn btn-warning btn-raised" (click)="modal.dismiss()">
+                <i class="far fa-window-close"></i>&nbsp;<span translate>Cancel</span>
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+              </button>
             </div>
           </form>
         </ng-template>

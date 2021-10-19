@@ -20,9 +20,11 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ToastrService } from 'ngx-toastr';
+import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
+import { environment } from 'environments/environment';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { PoEntryXComponent } from './po-entry-x/po-entry-x.component';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-new-purchase-order-detail-x',
@@ -36,9 +38,8 @@ export class NewPurchaseOrderDetailXComponent implements OnInit {
   TaskListId: any;
   arrValue: Array<number>;
   POList: Array<Object>;
-  outstandingTcObj: any;
-  listAppTCObj: ListAppTCObj;
-  appTC: AppTCObj;
+  listAgrmntTcObj: Array<AgrmntTcObj>;
+  agrmntTcObj: AgrmntTcObj;
   AppAssetList = [];
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   isDmsReady: boolean = false;
@@ -186,29 +187,33 @@ export class NewPurchaseOrderDetailXComponent implements OnInit {
       workflowModel.TaskListId = this.TaskListId;
       workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
 
-      this.outstandingTcObj = new OutstandingTcObj();
-      this.listAppTCObj = new ListAppTCObj();
-      this.listAppTCObj.AppTCObj = new Array();
+      this.listAgrmntTcObj = new Array<AgrmntTcObj>();
 
-      for (var i = 0; i < this.TcForm.value.TCList["length"]; i++) {
-        this.appTC = new AppTCObj();
-        this.appTC.AppId = this.TcForm.value.TCList[i].AppId;
-        this.appTC.AppTcId = this.TcForm.value.TCList[i].AppTcId;
-        this.appTC.TcCode = this.TcForm.value.TCList[i].TcCode;
-        this.appTC.TcName = this.TcForm.value.TCList[i].TcName;
-        this.appTC.PriorTo = this.TcForm.value.TCList[i].PriorTo;
-        this.appTC.IsChecked = this.TcForm.getRawValue().TCList[i].IsChecked;
-        this.appTC.IsWaived = this.TcForm.getRawValue().TCList[i].IsWaived;
-        this.appTC.ExpiredDt = this.TcForm.getRawValue().TCList[i].ExpiredDt;
-        this.appTC.IsMandatory = this.TcForm.value.TCList[i].IsMandatory;
-        this.appTC.PromisedDt = this.TcForm.getRawValue().TCList[i].PromisedDt;
-        this.appTC.CheckedDt = this.TcForm.value.TCList[i].CheckedDt;
-        this.appTC.Notes = this.TcForm.value.TCList[i].Notes;
-        this.listAppTCObj.AppTCObj.push(this.appTC);
-      }
-      this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
+    for (var i = 0; i < this.TcForm.value.TCList["length"]; i++) {
+      this.agrmntTcObj = new AgrmntTcObj();
+      this.agrmntTcObj.AgrmntId = this.TcForm.value.TCList[i].AgrmntId;
+      this.agrmntTcObj.AgrmntTcId = this.TcForm.value.TCList[i].AgrmntTcId;
+      this.agrmntTcObj.TcCode = this.TcForm.value.TCList[i].TcCode;
+      this.agrmntTcObj.TcName = this.TcForm.value.TCList[i].TcName;
+      this.agrmntTcObj.PriorTo = this.TcForm.value.TCList[i].PriorTo;
+      this.agrmntTcObj.IsChecked = this.TcForm.getRawValue().TCList[i].IsChecked;
+      this.agrmntTcObj.ExpiredDt = this.TcForm.getRawValue().TCList[i].ExpiredDt;
+      this.agrmntTcObj.IsMandatory = this.TcForm.value.TCList[i].IsMandatory;
+      this.agrmntTcObj.PromisedDt = this.TcForm.getRawValue().TCList[i].PromisedDt;
+      this.agrmntTcObj.IsWaived = this.TcForm.getRawValue().TCList[i].IsWaived;
+      this.agrmntTcObj.IsExpDtMandatory = this.TcForm.getRawValue().TCList[i].IsExpDtMandatory;
+      this.agrmntTcObj.IsWaivable = this.TcForm.getRawValue().TCList[i].IsWaivable;
+      this.agrmntTcObj.CheckedDt = this.TcForm.value.TCList[i].CheckedDt;
+      this.agrmntTcObj.Notes = this.TcForm.value.TCList[i].Notes;
+      this.agrmntTcObj.IsAdditional = this.TcForm.value.TCList[i].IsAdditional;
+      this.listAgrmntTcObj.push(this.agrmntTcObj);
+    }
 
-      await this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).toPromise().then(
+    var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+    reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
+    reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.listAgrmntTcObj;
+
+      await this.http.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).toPromise().then(
         response => {
         }).catch(
           (error) => {

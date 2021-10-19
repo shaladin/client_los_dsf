@@ -265,8 +265,8 @@
                     </select>
                     <div class="input-group-append">
                       <span class="input-group-btn">
-                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()" translate>
-                          <i class="fa fa-check-square-o"></i>Copy
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()">
+                          <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                         </button>
                       </span>
                     </div>
@@ -296,7 +296,7 @@
                     <div class="input-group-append">
                       <span class="input-group-btn">
                         <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
-                          <i class="fa fa-check-square-o"></i>Copy
+                          <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                         </button>
                       </span>
                     </div>
@@ -311,11 +311,11 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{AppId: AppId, ReturnHandlingHId: returnHandlingHId, WfTaskListId: wfTaskListId}" translate>
-                <i class="ft-x"></i> Cancel
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{AppId: AppId, ReturnHandlingHId: returnHandlingHId, WfTaskListId: wfTaskListId}">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
-              <button type="submit" class="btn btn-raised btn-primary" translate>
-                <i class="far fa-check-square"></i> Save
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
                 <i class="fa fa-check-square-o"></i> Check Value

@@ -68,6 +68,8 @@ import { CopyCancelledApplicationXComponent } from "app/impl/NEW-NAP/business-pr
 import { CopyCanAppMultiBlDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/copy-can-app-multi-bl-detail/copy-can-app-multi-bl-detail-x.component";
 import { ReturnHandlingPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-paging-x/return-handling-paging-x.component";
 import { ReturnHandlingDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-detail-x/return-handling-detail-x.component";
+import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 
 
@@ -89,6 +91,7 @@ export const customCurrencyMaskConfig = {
     CommonModule,
     AdditionalProcessSharingRoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     TcSharingComponentModule,
     ViewMainInfoComponentModule,
     MatCheckboxModule,
@@ -99,7 +102,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalR3Module,
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
-    MatTabsModule
+    MatTabsModule,
+    ProcessComponentModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,

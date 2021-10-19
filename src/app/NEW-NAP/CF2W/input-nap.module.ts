@@ -12,6 +12,7 @@ import { AppAddFixedComponent } from "./app-add-fixed/app-add-fixed.component";
 import { AppAddDetailComponent } from "./app-add-detail/app-add-detail.component";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {     
     align: "right",     
@@ -31,6 +32,7 @@ export const customCurrencyMaskConfig = {
         CommonModule,
         InputNapCF2WRoutingModule,
         AdInsModule,
+        AdInsSharedModule,
         InputNapComponentModule,
         ArchwizardModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),

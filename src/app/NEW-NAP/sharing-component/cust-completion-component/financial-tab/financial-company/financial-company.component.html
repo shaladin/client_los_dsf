@@ -332,10 +332,12 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning btn-raised" (click)="modal.dismiss()" translate><i
-                  class="far fa-window-close"></i> Cancel</button>
-              <button type="submit" class="btn btn-raised btn-primary" translate><i class="far fa-check-square"></i>
-                Save</button>
+              <button type="button" class="btn btn-warning btn-raised" (click)="modal.dismiss()">
+                <i class="far fa-window-close"></i>&nbsp;<span translate>Cancel</span>
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+              </button>
             </div>
           </form>
         </ng-template>
@@ -351,8 +353,8 @@
 
           <div class="form-actions right" *ngIf="!IsDetail">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(AppCustAttrListForm)"
-              class="btn btn-raised btn-primary" translate>
-              <i class="fa fa-check-square"></i> Save & Continue
+              class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square"></i>&nbsp;<span translate>Save & Continue</span>
             </button>
           </div>
 

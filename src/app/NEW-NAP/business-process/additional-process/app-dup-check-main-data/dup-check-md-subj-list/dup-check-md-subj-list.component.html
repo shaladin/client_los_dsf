@@ -1,8 +1,8 @@
 <div class="card">
   <lib-ucviewgeneric [viewGenericObj]="viewMainInfoObj" (callback)="viewMainInfoCallback($event)" #viewMainProd> </lib-ucviewgeneric>
   <div class="ucSearch-Button-Right pr-3" style="right:0px">
-    <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()" translate>
-      <i class="fa fa-arrow-left"></i> Back
+    <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()">
+      <i class="fa fa-arrow-left"></i>&nbsp;<span translate>Back</span>
     </button>
   </div>
 
@@ -11,8 +11,8 @@
     <div id="ListSubjId">
       <lib-ucgridview [gridInput]="gridSubjectObj" [additionalObj]="addObj"></lib-ucgridview>
       <div class="text-right py-2">
-        <button type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()" translate>
-          Submit
+        <button type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()">
+          &nbsp;<span translate>Submit</span>
         </button>
       </div>
     </div>

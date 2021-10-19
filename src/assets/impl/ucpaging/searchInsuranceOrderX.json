@@ -21,7 +21,7 @@
           "type": "dropdown",
           "name": "AIO.INSCO_BRANCH_CODE",
           "id": "InscoBranchCode",
-          "value": "InscoBranchName",
+          "value": "",
           "placeholder": "Placeholder",
           "isFromURL": true,
           "ddlType": "all",

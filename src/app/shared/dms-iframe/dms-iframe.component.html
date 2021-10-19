@@ -13,12 +13,11 @@
               </div>
 
               <div *ngIf="showButton" class="form-actions right">
-                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
-                  translate>
-                  <i class="ft-x"></i> Cancel
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                  <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                 </button>
                 <button type="button" class="btn btn-raised btn-primary" (click)="Save()">
-                  <i class="far fa-check-square"></i> Save
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
             </div>

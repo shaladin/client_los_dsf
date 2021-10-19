@@ -10,6 +10,7 @@ import { LeadDataComponent } from 'app/lead/verification/customer-self-verificat
 import { MatCheckboxModule, MatRadioModule, MatSelectModule } from "@angular/material";
 import { NgxCurrencyModule } from "ngx-currency";
 import { customCurrencyMaskConfig } from "app/MOU/mou.module";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 @NgModule({
     exports: [
@@ -22,6 +23,7 @@ import { customCurrencyMaskConfig } from "app/MOU/mou.module";
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         MatCheckboxModule,
         MatRadioModule,
         MatSelectModule,

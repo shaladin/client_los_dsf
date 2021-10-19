@@ -17,6 +17,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
+import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
 
 @Component({
   selector: 'app-po-entry-x',
@@ -38,6 +40,16 @@ export class PoEntryXComponent implements OnInit {
   BusinessDt: Date;
   vendorBankAccList: Array<Object>;
   custBankAccList: Array<Object>;
+  AssetObj: ResGetAllAssetDataForPOByAsset = new ResGetAllAssetDataForPOByAsset();
+  isDataExist: boolean = false;
+
+  ProportionalValue: number;
+  TotalInsCustAmt: number;
+  TotalLifeInsCustAmt: number;
+  TotalPurchaseOrderAmt: number;
+  DiffRateAmt : number;
+  Notes: string = "";
+  purchaseOrderHObj: PurchaseOrderHObj;
 
   Date: Date;
   ExpirationDate: string;
@@ -86,17 +98,27 @@ export class PoEntryXComponent implements OnInit {
             let reqAppLoanPurposeObj : GenericObj = new GenericObj();
             reqAppLoanPurposeObj.Id = this.AppId;
             reqAppLoanPurposeObj.Code = this.SupplCode;
+            let reqAppLoanPurposeObjForPOByLoan : GenericObj = new GenericObj();
+            reqAppLoanPurposeObjForPOByLoan.Id = this.AgrmntId;
+            reqAppLoanPurposeObjForPOByLoan.Code = this.SupplCode;
             let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, reqAppLoanPurposeObj).toPromise();
+            let getAppLoanPurposeForPOByLoan = this.httpClient.post(URLConstantX.GetAppLoanPurposeForPOByLoan, reqAppLoanPurposeObjForPOByLoan).toPromise();
             let getListBankAcc = this.httpClient.post(URLConstant.GetListAppCustBankAccByAppCustId, { Id: this.AppCust.AppCustId }).toPromise();
-            let getFirstInstAMt = this.httpClient.post(URLConstantX.GetFirstInstAmtForAppLoanPurpose, { Id: this.AgrmntId , Code: MrFistInstTypeCode }).toPromise();
-            forkJoin([getAppLoanPurpose, getListBankAcc, getFirstInstAMt]).toPromise().then(
+            forkJoin([getAppLoanPurpose, getListBankAcc, getAppLoanPurposeForPOByLoan]).toPromise().then(
               (response) => {
                 this.AppLoanPurposeList = response[0]["listResponseAppLoanPurpose"] as Array<AppLoanPurposeObj>;
+
+                this.AssetObj = response[2]["ReturnObject"];
+                this.ProportionalValue = this.AssetObj.ProportionalValue;
+                this.TotalInsCustAmt = this.AssetObj.TotalInsCustAmt;
+                this.TotalLifeInsCustAmt = this.AssetObj.TotalLifeInsCustAmt;
+                this.TotalPurchaseOrderAmt = this.AssetObj.TotalPurchaseOrderAmt;
+                this.DiffRateAmt = this.AssetObj.DiffRateAmt;
+
                 this.custBankAccList = response[1]["ReturnObject"]['AppCustBankAccObjs'];
                 this.custBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
                 var isDefaultFound = false;
                 var totalDisburse = 0;
-                var firstInstAmt = 0;
                 for (const item of this.custBankAccList) {
                   if (item["IsDefault"]) {
                     this.CustBankAcc = item as AppCustBankAccObj;
@@ -107,14 +129,8 @@ export class PoEntryXComponent implements OnInit {
                 if (isDefaultFound) {
                   this.CustBankAcc = this.custBankAccList[0] as AppCustBankAccObj;
                 }
-                for (const loan of this.AppLoanPurposeList) {
-                  totalDisburse += loan.FinancingAmt;
-                }
 
-                if (MrFistInstTypeCode == CommonConstant.FirstInstTypeAdvance)
-                {
-                  totalDisburse = totalDisburse - response[2]["Result"];
-                }
+                totalDisburse = this.AssetObj.TotalPurchaseOrderAmt;
 
                 this.PODetailForm.patchValue({
                   SupplName: this.AppCust.CustName,
@@ -165,12 +181,18 @@ export class PoEntryXComponent implements OnInit {
         let reqAppLoanPurposeObj : GenericObj = new GenericObj();
         reqAppLoanPurposeObj.Id = this.AppId;
         reqAppLoanPurposeObj.Code = this.SupplCode;
+        let reqAppLoanPurposeObjForPOByLoan : GenericObj = new GenericObj();
+        reqAppLoanPurposeObjForPOByLoan.Id = this.AgrmntId;
+        reqAppLoanPurposeObjForPOByLoan.Code = this.SupplCode;
         let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, reqAppLoanPurposeObj).toPromise();
+        let getAppLoanPurposeForPOByLoan = this.httpClient.post(URLConstantX.GetAppLoanPurposeForPOByLoan, reqAppLoanPurposeObjForPOByLoan).toPromise();
         let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise();
-        let getFirstInstAMt = this.httpClient.post(URLConstantX.GetFirstInstAmtForAppLoanPurpose, { Id: this.AgrmntId , Code: MrFistInstTypeCode }).toPromise();
-        forkJoin([getAppLoanPurpose, getListBankAcc, getFirstInstAMt]).toPromise().then(
+        forkJoin([getAppLoanPurpose, getListBankAcc, getAppLoanPurposeForPOByLoan]).toPromise().then(
           (response) => {
             this.AppLoanPurposeList = response[0]["listResponseAppLoanPurpose"] as Array<AppLoanPurposeObj>;
+            
+            this.AssetObj = response[2]["ReturnObject"];
+
             this.vendorBankAccList = response[1]["ReturnObject"];
             this.vendorBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
             console.log("vendorBankAccList: " + JSON.stringify(this.vendorBankAccList));
@@ -186,14 +208,8 @@ export class PoEntryXComponent implements OnInit {
             if (isDefaultFound) {
               this.VendorBankAcc = this.vendorBankAccList[0] as VendorBankAccObj;
             }
-            for (const loan of this.AppLoanPurposeList) {
-              totalDisburse += loan.FinancingAmt;
-            }
 
-            if (MrFistInstTypeCode == CommonConstant.FirstInstTypeAdvance)
-            {
-              totalDisburse = totalDisburse - response[2]["Result"];
-            }
+            totalDisburse = this.AssetObj.TotalPurchaseOrderAmt;
 
             this.PODetailForm.patchValue({
               SupplName: this.AppLoanPurposeList[0].SupplName,
@@ -338,7 +354,7 @@ export class PoEntryXComponent implements OnInit {
     }
   }
 
-  Save() {
+  async Save() {
     this.checkValidExpDt();
     var formValue = this.PODetailForm.value;
     var requestPurchaseOrderH = new PurchaseOrderHObj();
@@ -367,12 +383,9 @@ export class PoEntryXComponent implements OnInit {
       requestPurchaseOrderH.NumOfExtension = 0;
       requestPurchaseOrderH.MouNo = this.MouNo;
 
-      for (const item of this.AppLoanPurposeList) {
-        var purchaseOrderDObj = new PurchaseOrderDObj();
-        purchaseOrderDObj.MrPoItemCode = item.MrLoanPurposeCode;
-        purchaseOrderDObj.PurchaseOrderAmt = item.FinancingAmt;
-        requestListPurchaseOrderD.push(purchaseOrderDObj);
-      }
+      var ListPORefMasterObj = await this.GetFromRule();
+      requestListPurchaseOrderD = this.GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj);
+
     }
     else {
       requestPurchaseOrderH.PurchaseOrderHId = this.PurchaseOrderH.PurchaseOrderHId;
@@ -423,4 +436,34 @@ export class PoEntryXComponent implements OnInit {
 
   }
 
+  async GetFromRule() {
+    var tempRefMasterObj = new Array();
+    await this.httpClient.post(URLConstant.GetPurchaseOrderDPoItemCodeFromRuleByType, {}).toPromise().then(
+      (response) => {
+        console.log(response);
+        tempRefMasterObj = response["ListPoItems"];
+
+      });
+    return tempRefMasterObj;
+  }
+
+  GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj) {
+    var TempListPurchaseOrderD = new Array();
+    for (var i = 0; i < ListPORefMasterObj.length; i++) {
+      if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeNonFee) {
+        var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+        tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
+        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
+        TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
+      }
+      if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeFee) {
+        let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
+        var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+        tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
+        tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
+        TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
+      }
+    }
+    return TempListPurchaseOrderD;
+  }
 }

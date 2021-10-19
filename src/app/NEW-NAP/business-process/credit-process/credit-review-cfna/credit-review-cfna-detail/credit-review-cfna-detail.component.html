@@ -86,19 +86,19 @@
           </div>
 
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-              <i *ngIf="!isReturnOn" class="ft-x"> Return</i>
-              <i *ngIf="isReturnOn" class="ft-x"> Cancel Return</i>
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+              <i *ngIf="!isReturnOn" class="ft-x">&nbsp;<span translate>Return</span></i>
+              <i *ngIf="isReturnOn" class="ft-x">&nbsp;<span translate>Cancel Return</span></i>
             </button>
             <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-              [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
-              <i class="ft-x"></i> Cancel
+              [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
             <!-- <button type="button" (click)="CheckDeviationData()" class="btn btn-raised btn-primary" translate>
               <i class="fa fa-check-square-o"></i> Check
             </button> -->
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Save
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
           </div>
         </form>
@@ -139,11 +139,11 @@
               </div>
 
               <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-                  <i *ngIf="isReturnOn" class="ft-x"> Cancel Return</i>
+                <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+                  <i *ngIf="isReturnOn" class="ft-x">&nbsp;<span translate>Cancel Return</span></i>
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="far fa-check-square"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
 

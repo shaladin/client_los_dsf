@@ -2,9 +2,8 @@
   #enjiForm="ngForm"> -->
   <div formGroupName="{{identifier}}">
     <span class="mr-1 pull-right" *ngIf="!IsDetail && !isLockMode">
-      <button type="button" class="addButton" (click)="CustBankHandler(ModeConstAdd)" style="margin-right: 0!important;"
-        translate>
-        <i class="ft-plus-circle"></i> Add
+      <button type="button" class="addButton" (click)="CustBankHandler(ModeConstAdd)" style="margin-right: 0!important;">
+        <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
       </button>
     </span>
     <lib-ucSubsection [id]="'CustBankAccId'" [title]="'Customer Bank Account'" [panel]="'CustBankAccSection'">
@@ -252,10 +251,10 @@
             </table>
             <div class="form-actions right">
               <button type="button" (click)="CustBankHandler(ModeConstCan)" class="btn btn-raised btn-warning mr-1">
-                <i class="ft-x"></i> Cancel
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
               <button type="submit" (click)="SaveForm(enjiForm)" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square"></i> Save
+                <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
               </button>
             </div>
           </div>

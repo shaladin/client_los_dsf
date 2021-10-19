@@ -60,8 +60,8 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-primary" (click)="calculated()" translate>
-              <i class="fa fa-check-square-o"></i> Calculate
+            <button type="button" class="btn btn-raised btn-primary" (click)="calculated()">
+              <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Calculate</span>
             </button>
           </div>
           <lib-ucSubsection [id]="'bottomSideId'" [title]="'Summary'" [panel]="'bottomSide'">
@@ -78,14 +78,14 @@
                   <label class="col-md-6">{{grossYield | number:'.6':'en-US'}}%</label>
                 </div>
                 <div *ngIf="!isReturnOn" class="form-actions right">
-                  <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-                    <i  class="ft-x"></i> Return 
+                  <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+                    <i class="ft-x"></i>&nbsp;<span translate>Return</span>
                   </button>                 
-                  <button *ngIf="showCancel" type="button"  class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-                    <i class="ft-x"></i> Cancel
+                  <button *ngIf="showCancel" type="button"  class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                   </button>
-                  <button type="submit" class="btn btn-raised btn-primary" *ngIf="ReturnHandlingHObj.ReturnHandlingHId <= 0" translate>
-                    <i class="far fa-check-square"></i> Save
+                  <button type="submit" class="btn btn-raised btn-primary" *ngIf="ReturnHandlingHObj.ReturnHandlingHId <= 0">
+                    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                   </button>
                   <!--<button type="button" class="btn btn-raised btn-primary" (click)="test()">
       <i class="fa fa-check-square-o"></i> Check Value
@@ -145,11 +145,11 @@
           </div>
 
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-              <i  class="ft-x"></i> Cancel Return 
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel Return </span>
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Save
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
             </button>
           </div>
         </div>

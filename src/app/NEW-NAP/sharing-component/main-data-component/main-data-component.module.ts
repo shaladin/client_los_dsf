@@ -15,6 +15,7 @@ import { CustMainDataXComponent } from "app/impl/NEW-NAP/sharing-component/main-
 import { GuarantorMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/guarantor-main-data/guarantor-main-data-paging-x.component";
 import { FamilyMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/family-main-data/family-main-data-paging-x.component";
 import { MngmntShrhldrMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/mngmnt-shrhldr-main-data-paging-x/mngmnt-shrhldr-main-data-paging-x.component";
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -45,6 +46,7 @@ export const customCurrencyMaskConfig = {
     imports: [
         CommonModule,
         AdInsModule,
+        AdInsSharedModule,
         MatRadioModule,
         NgMultiSelectDropDownModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig)

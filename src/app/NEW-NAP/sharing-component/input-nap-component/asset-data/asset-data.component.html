@@ -348,8 +348,8 @@
               <div id="accessoriesData">
                 <div class="form-actions right">
                   <button type="button" name="add" id="add" (click)="addAccessories()"
-                    class="btn btn-raised btn-primary" translate>
-                    <i class="ft-plus-circle"></i> Add
+                    class="btn btn-raised btn-primary">
+                    <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
                   </button>
                 </div>
                 <div formArrayName="AssetAccessoriesObjs" class="table-responsive" *ngIf="IsReady">
@@ -558,8 +558,8 @@
                     </select>
                     <div class="input-group-append">
                       <span class="input-group-btn" *ngIf="!AssetDataForm.controls.SelfOwner.value">
-                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()" translate>
-                          <i class="fa fa-check-square-o"></i>Copy
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()">
+                          <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                         </button>
                       </span>
                     </div>
@@ -591,8 +591,8 @@
                       </select>
                       <div class="input-group-append">
                         <span class="input-group-btn">
-                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()" translate>
-                            <i class="fa fa-check-square-o"></i>Copy
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                           </button>
                         </span>
                       </div>
@@ -607,12 +607,11 @@
                 </div>
               </div>
               <div class="form-actions right">
-                <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
-                  (click)="Cancel()" translate>
-                  <i class="ft-x"></i> Cancel
+                <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                  <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" translate>
-                  <i class="fa fa-check-square"></i> Save
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
                 </button>
               </div>
             </div>
@@ -633,8 +632,8 @@
 
             <div *ngIf="isListAsset">
               <div class="ucSearch-Button-Right">
-                <button type="button" class="addButton" (click)="AddAsset()" translate>
-                  <i class="ft-plus-circle"></i> Add Asset
+                <button type="button" class="addButton" (click)="AddAsset()">
+                  <i class="ft-plus-circle"></i>&nbsp;<span translate>Add Asset</span>
                 </button>
               </div>
 
@@ -699,17 +698,17 @@
                     <input class="form-control" type="number" [(ngModel)]="units" name="unit">
                   </div>
                   <label class="col-md-1" translate>Unit</label>
-                  <button type="button" class="btn btn-raised btn-primary" (click)="CopyAsset()" translate>
-                    Copy
+                  <button type="button" class="btn btn-raised btn-primary" (click)="CopyAsset()">
+                    &nbsp;<span translate>Copy</span>
                   </button>
                 </div>
               
                 <div class="form-actions right">
-                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-                    <i class="ft-x"></i> Cancel
+                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                   </button>
-                  <button type="button" class="btn btn-raised btn-primary" (click)="Save()" translate>
-                    <i class="far fa-check-square"></i> Save
+                  <button type="button" class="btn btn-raised btn-primary" (click)="Save()">
+                    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                   </button>
                 </div>
               </form>
@@ -978,7 +977,7 @@
                   <div class="form-actions right">
                     <button type="button" name="add" id="add" (click)="addAccessories()"
                       class="btn btn-raised btn-primary">
-                      <i class="ft-plus-circle"></i> Add
+                      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
                     </button>
                   </div>
                   <div formArrayName="AssetAccessoriesObjs">
@@ -1059,7 +1058,7 @@
                         <div class="input-group-append">
                           <span class="input-group-btn">
                             <button class="btn btn-raised btn-primary" type="button" (click)="copyToDelivAddr()">
-                              <i class="fa fa-check-square-o"></i>Copy
+                              <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                             </button>
                           </span>
                         </div>
@@ -1092,7 +1091,7 @@
                         <div class="input-group-append">
                           <span class="input-group-btn">
                             <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
-                              <i class="fa fa-check-square-o"></i>Copy
+                              <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                             </button>
                           </span>
                         </div>
@@ -1108,12 +1107,11 @@
                 </div>
                 
                 <div class="form-actions right">
-                  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
-                    (click)="Back()" translate>
-                    <i class="ft-x"></i> Cancel
+                  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
+                    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                   </button>
                   <button type="submit" class="btn btn-raised btn-primary">
-                    <i class="far fa-check-square"></i> Save
+                    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
                   </button>
                 </div>
               </div>

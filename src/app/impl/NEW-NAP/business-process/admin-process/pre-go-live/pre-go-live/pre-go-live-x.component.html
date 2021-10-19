@@ -94,14 +94,9 @@
               <mat-tab-group>
                 <mat-tab label="Term & Conditions">
                   <ng-template matTabContent>
-                    <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                    <app-agrmnt-tc [AgrmntId]="AgrmntId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
                     (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
-                  </app-term-conditions>
-                  </ng-template>
-                </mat-tab>
-                <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="App Document">
-                  <ng-template matTabContent>
-                    <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                  </app-agrmnt-tc>
                   </ng-template>
                 </mat-tab>
                 <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">
@@ -125,20 +120,19 @@
           </div>
 
           <div class="form-actions right">
-            <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
-              translate>
-              <i class="fa fa-check-square-o"></i> Request For Approval
+            <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()">
+              <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Request For Approval</span>
             </button>
             <button type="button" class="btn btn-raised btn-warning mr-1"
-              [routerLink]="[CancelLink]" translate>
-              <i class="ft-x"></i> Cancel
+              [routerLink]="[CancelLink]">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
             <button *ngIf="IsCheckedAll && BizTemplateCode != 'DLFN'" type="submit"
-              class="btn btn-raised btn-primary mr-1" translate>
-              <i class="far fa-check-square"></i> Submit
+              class="btn btn-raised btn-primary mr-1">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
             </button>
-            <button *ngIf="BizTemplateCode == 'DLFN'" type="submit" class="btn btn-raised btn-primary mr-1" translate>
-              <i class="far fa-check-square"></i> Submit
+            <button *ngIf="BizTemplateCode == 'DLFN'" type="submit" class="btn btn-raised btn-primary mr-1">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
             </button>
           </div>
         </form>

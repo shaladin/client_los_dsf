@@ -47,26 +47,26 @@
         </div>
 
         <div class="form-actions right" *ngIf="!isReturnOn">
-          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatFail" (click)="ReCaptureDataR2()" class="btn btn-raised btn-warning mr-1" translate>
-            <i class="far fa-check-square"></i> Re-Captured Data R2
+          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatFail" (click)="ReCaptureDataR2()" class="btn btn-raised btn-warning mr-1">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Re-Captured Data R2</span>
           </button>
-          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1" translate>
-            <i class="far fa-check-square"></i> Re-Captured Data
+          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Re-Captured Data</span>
           </button>
-          <button type="button" class="btn btn-raised btn-primary" (click)="OpenPefindoView()" translate>
-            <i class="far fa-check-square"></i> View Pefindo
+          <button type="button" class="btn btn-raised btn-primary" (click)="OpenPefindoView()">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>View Pefindo</span>
           </button>
         </div>
         <div class="form-actions right" *ngIf="!isReturnOn">
-          <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-            <i class="ft-x"></i> Return
+          <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+            <i class="ft-x"></i>&nbsp;<span translate>Return</span>
           </button>
           <button type="button" class="btn btn-raised btn-warning mr-1"
-              [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
-            <i class="ft-x"></i> Cancel
+              [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:BizTemplateCode}">
+            <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
           </button>
-          <button type="submit" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" class="btn btn-raised btn-primary" translate>
-            <i class="far fa-check-square"></i> Save
+          <button type="submit" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
           </button>
         </div>
       </form>
@@ -103,22 +103,22 @@
         </div>
 
         <div class="form-actions right">
-          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatFail" (click)="ReCaptureDataR2()" class="btn btn-raised btn-warning mr-1" translate>
-            <i class="far fa-check-square"></i> Re-Captured Data R2
+          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatFail" (click)="ReCaptureDataR2()" class="btn btn-raised btn-warning mr-1">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Re-Captured Data R2</span>
           </button>
-          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1" translate>
-            <i class="far fa-check-square"></i> Re-Captured Data
+          <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Re-Captured Data</span>
           </button>
-          <button type="button" class="btn btn-raised btn-primary" (click)="OpenPefindoView()" translate>
-            <i class="far fa-check-square"></i> View Pefindo
+          <button type="button" class="btn btn-raised btn-primary" (click)="OpenPefindoView()">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>View Pefindo</span>
           </button>
         </div>
         <div class="form-actions right">
-          <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-            <i class="ft-x"></i> Cancel Return
+          <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+            <i class="ft-x"></i>&nbsp;<span translate>Cancel Return</span>
           </button>
-          <button type="submit" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" class="btn btn-raised btn-primary" translate>
-            <i class="far fa-check-square"></i> Save
+          <button type="submit" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
           </button>
         </div>
       </form>

@@ -65,8 +65,8 @@
           </div>
         </div>
         <div class="form-actions text-right">
-          <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickShowData()" translate>
-            <i class="fa fa-check-square-o"></i> Show Data
+          <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickShowData()">
+            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Show Data</span>
           </button>
         </div>
 
@@ -76,11 +76,11 @@
 
 
         <div class="form-actions right text-right" *ngIf="IsHasData">
-          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="onChangeFilterForm()" translate>
-            <i class="ft-x"></i> Clear Filter
+          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="onChangeFilterForm()">
+            <i class="ft-x"></i>&nbsp;<span translate>Clear Filter</span>
           </button>
-          <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickGenerate()" translate>
-            <i class="fa fa-check-square-o"></i> Generate Potential RO
+          <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickGenerate()">
+            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Generate Potential RO</span>
           </button>
         </div>
       </form>

@@ -24,6 +24,7 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
 import { NapDetailFormXComponent } from "app/impl/NEW-NAP/CFNA/nap-detail-form/nap-detail-form-x.component";
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/CFNA/nap-cust-main-data/nap-cust-main-data-x.component";
 
+import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -43,6 +44,7 @@ export const customCurrencyMaskConfig = {
     CommonModule,
     InputNapCFNARoutingModule,
     AdInsModule,
+    AdInsSharedModule,
     InputNapComponentModule,
     ArchwizardModule,
     MatCheckboxModule,

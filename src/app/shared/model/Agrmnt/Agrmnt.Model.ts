@@ -45,6 +45,7 @@ export class AgrmntObj {
     DocPrintNeedsStat: string;
     RowVersion: string;
     FirstInstTypeName: string;
+    BizTemplateCode: string;
 
     constructor() {
         this.AgrmntId = 0;
@@ -93,5 +94,6 @@ export class AgrmntObj {
         this.DocPrintNeedsStat = "";
         this.RowVersion = "";
         this.FirstInstTypeName = "";
+        this.BizTemplateCode = "";
     }
 }

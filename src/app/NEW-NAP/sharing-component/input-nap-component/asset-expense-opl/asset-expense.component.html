@@ -6,11 +6,11 @@
       <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
     </div>
     <div class="form-actions right" style="text-align: right;">
-      <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-        <i class="ft-x"></i> Cancel
+      <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+        <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
       </button>
-      <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
-        <i class="far fa-check-square"></i> Save
+      <button type="submit" class="btn btn-raised btn-primary" (click)="next()">
+        <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
       </button>
     </div>
   </div>

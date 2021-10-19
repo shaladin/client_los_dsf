@@ -38,7 +38,7 @@ export class CessieMonitoringComponent implements OnInit {
         }
       ],
       url: URLConstantX.UploadFileV2,
-      isDownloadTmplt : false
+      isDownloadTmplt : true
     }
     console.log(this.uploadObj)
   }

@@ -1,13 +1,13 @@
 import { AgrmntObj } from "app/shared/model/Agrmnt/Agrmnt.Model";
 import { PreGoLiveMainObj } from "app/shared/model/PreGoLiveMainObj.Model";
-import { AppTCObj } from "app/shared/model/AppTCObj.Model";
+import { AgrmntTcObj } from "app/shared/model/AgrmntTc/AgrmntTcObj.Model";
 
 
 export class PreGoLiveObjX {
     TaskListId : number;
     rAgrmntTC : AgrmntObj;
     preGoLiveObj : PreGoLiveMainObj;
-    rAppTcObj: AppTCObj[];
+    ListAgrmntTcObj: Array<AgrmntTcObj>;
     FlagResume : boolean;
     AdditionalInterestPaidBy : string;
     RequestRFAEndDateObj: any;
@@ -17,7 +17,7 @@ export class PreGoLiveObjX {
     constructor() {
         this.rAgrmntTC = new AgrmntObj();
         this.preGoLiveObj = new PreGoLiveMainObj();
-        this.rAppTcObj = [];
+        this.ListAgrmntTcObj = new Array<AgrmntTcObj>();
         this.AdditionalInterestPaidBy = null;
         this.FlagResume = false;
         this.IsNeedEndDateApv = false;

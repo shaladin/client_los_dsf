@@ -498,7 +498,7 @@ export class URLConstant {
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
   public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
-  public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
+  public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = environment.ApprovalR3Url + "/Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode";
 
   // SERVICE TASK
   public static GetListOSWfTaskListByActCode = "ServiceTask/GetListOSWfTaskListByActCode/";
@@ -607,6 +607,7 @@ export class URLConstant {
 
   //ChangeMOu
   public static AddChangeMou = environment.losUrl + "/v1" + "/ChangeMou/AddChangeMou";
+  public static AddChangeMouV2 = environment.losUrl + "/v2" + "/ChangeMou/AddChangeMou";
   public static EditChangeMou = environment.losUrl + "/v1" + "/ChangeMou/EditChangeMou";
   public static AddChangeMouCustAssets = environment.losUrl + "/v1" + "/ChangeMou/AddChangeMouCustAsset";
   public static AddEditChangeMouCustClause = environment.losUrl + "/v1" + "/ChangeMou/AddEditChangeMouCustClause";
@@ -846,6 +847,7 @@ export class URLConstant {
   public static GetPurchaseOrderByPurchaseOrderHIdForNewPO = environment.losUrl + "/v1" + "/PurchaseOrderH/GetPurchaseOrderByPurchaseOrderHIdForNewPO";
   public static GetPurchaseOrderDPoItemCodeFromRuleByType = environment.losUrl + "/v1" + "/PurchaseOrderH/GetPurchaseOrderDPoItemCodeFromRuleByType";
   public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
+  public static ResumeWorkflowNewPurchaseOrderV2 = environment.losUrl + "/v2" + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
   public static GetBankDsfbyGeneralSettingR2 = environment.losUrl + "/v1" + "/PurchaseOrderH/GetBankDsfbyGeneralSettingR2";
 
   // LEAD
@@ -856,7 +858,7 @@ export class URLConstant {
   public static EditSimpleLeadCustTypeUpdate = environment.losUrl + "/v1" + "/LeadCust/EditSimpleLeadCustTypeUpdate";
   public static AddLeadData = environment.losUrl + "/v1" + "/Lead/AddLeadData";
   public static EditLeadData = environment.losUrl + "/v1" + "/Lead/EditLeadData";
-  public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/v1" + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
+  public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/v2" + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
   public static AddLeadDataKta = environment.losUrl + "/v1" + "/Lead/AddLeadDataKta";
   public static EditLeadDataKta = environment.losUrl + "/v1" + "/Lead/EditLeadDataKta";
 
@@ -1252,6 +1254,7 @@ export class URLConstant {
   public static AddAppFraudVerf = environment.losUrl + "/v1" + "/FraudDetection/AddAppFraudVerf";
   public static GetListAppNegativeCheckCustByAppId = environment.losUrl + "/v1" + "/AppDupCheck/GetListAppNegativeCheckCustByAppId";
   public static GetAppFraudVerificationByAppId = environment.losUrl + "/v1" + "/FraudDetection/GetAppFraudVerificationByAppId";
+  public static GetDoubleFinancingCheckInvoiceDlrFncngD = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckInvoiceDlrFncngD";
 
   //Fraud Verif
   public static SurveyFraudAppCheckingValidationForFraudVerif = environment.losUrl + "/v1" + "/Application/SurveyFraudAppCheckingValidationForFraudVerif";
@@ -1452,8 +1455,8 @@ export class URLConstant {
   public static UploadFileV2 = environment.FoundationR3Url + "/v2" + "/Upload/UploadFile";
 
   // Download
-  public static DownloadTemplate = environment.FoundationR3Url + "/v1" + '/Download/DownloadTemplate';
-  public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + "/v1" + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
+  public static DownloadTemplate = environment.FoundationR3Url + "/v2" + '/Download/DownloadTemplate';
+  public static GetUploadAssetMasterByUploadMonitoringNoAndTrxType = environment.FoundationR3Url + "/v2" + '/AssetMaster/GetUploadAssetMasterByUploadMonitoringNoAndTrxType';
 
   // Report
   public static GenerateReportSync = environment.FoundationR3Url + "/v1" + '/Report/GenerateReportSync';
@@ -1857,6 +1860,10 @@ export class URLConstant {
   //Dashboard
   public static GetAppCountAndMappingStep = environment.losUrl + "/v1" + "/Dashboard/GetAppCountAndMappingStep";
   public static HitSuperset = environment.Superset + "api/v1" + "/security/login";
+
+  //Agrmnt Tc
+  public static GetListAgrmntTcbyAgrmntId = environment.losUrl + "/v1" + "/AgrmntTc/GetListAgrmntTcbyAgrmntId";
+  public static SubmitAgrmntTc = environment.losUrl + "/v1" + "/AgrmntTc/SubmitAgrmntTc";
 
 }
 
