@@ -8,7 +8,7 @@
             "label" : "Client Name",
             "name" : "CrtClientName",
             "datatype" : "text",
-            "isSelectOne" : true,
+            "ddlType": "all",
             "items" : [
                 {
                 "key": "PT KRAMA YUDHA TIGA BERLIAN",
@@ -32,7 +32,7 @@
             "label" : "Product Type",
             "name" : "CrtProductType",
             "datatype" : "text",
-            "isSelectOne" : true,
+            "ddlType": "all",
             "items" : [
                 {
                 "key": "UN",
