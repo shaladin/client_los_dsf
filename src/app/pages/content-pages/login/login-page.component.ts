@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-login-page',
@@ -36,6 +37,7 @@ export class LoginPageComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['token'] != null) {
         this.token = params['token'];
+        AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, this.token);
       }
     });
 
@@ -50,7 +52,20 @@ export class LoginPageComponent implements OnInit {
       this.http.post(AdInsConstant.LoginWithToken, { ModuleCode: environment.Module }).subscribe(
         (response) => {
           AdInsHelper.CreateUserAccess(response);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
+
+          var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+          AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, response['Token']);
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDateRaw", formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US'));
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
+          AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
+          AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
+          AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
+
+          this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: response["Identity"].RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
+            (response) => {
+              AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.ReturnObj]));
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
+            });
         });
     }
   }
