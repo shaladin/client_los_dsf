@@ -98,8 +98,6 @@
         },
 		    {            
           "type" : "switch",
-          "isHide": true,
-          "property": "BankAccNo",
           "case" : [ 
             {
               "conditions": [                  
@@ -128,7 +126,8 @@
                         "prefix": "",
                         "suffix": ""
                         }
-                      ]
+                      ],
+                "hideIfEmpty": true
               }
             }
           ]
