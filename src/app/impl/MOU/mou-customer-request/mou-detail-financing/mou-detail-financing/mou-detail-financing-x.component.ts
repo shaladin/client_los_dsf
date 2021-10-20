@@ -402,11 +402,17 @@ export class MouDetailFinancingXComponent implements OnInit {
     if (insType == CommonConstant.SINGLE_INST_TYPE) {
       this.IsSingleIns = true;
       this.listSelectedItem = new Array<any>();
+      this.MouDetailFinancingForm.controls['TopDays'].clearValidators();
+      this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(1)]);
+      this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
       // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].enable();
     }
     else if (insType == CommonConstant.MULTIPLE_INST_TYPE) {
       this.IsSingleIns = false;
       // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].disable();
+      this.MouDetailFinancingForm.controls['TopDays'].clearValidators();
+      this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(0)]);
+      this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
     }
   }
 
