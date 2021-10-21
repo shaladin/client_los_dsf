@@ -179,7 +179,9 @@ export class CreditReviewCrDetailComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
       response => {
-        this.apvSchmCode = response["CompntValue"];
+        if(response != undefined){
+          this.apvSchmCode = response["CompntValue"];
+        }
       }
     );
   }
