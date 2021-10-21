@@ -39,7 +39,6 @@ export class MouApprovalFactoringComponent implements OnInit {
   IsReady: boolean = false;
   dmsObj: DMSObj;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-  IsRoleAssignment: string = "";
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
@@ -48,7 +47,6 @@ export class MouApprovalFactoringComponent implements OnInit {
       }
       this.ApvReqId = params["ApvReqId"];
       this.taskId = params["TaskId"];
-      this.IsRoleAssignment = params["IsRoleAssignment"];
     });
   }
 
@@ -57,9 +55,8 @@ export class MouApprovalFactoringComponent implements OnInit {
     let ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.taskId;
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
-    }
+
+    this.HoldTask(ApvHoldObj);
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -93,6 +90,9 @@ export class MouApprovalFactoringComponent implements OnInit {
   HoldTask(obj) {
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_APPRV], {});
       }
     )
   }

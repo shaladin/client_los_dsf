@@ -111,6 +111,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   GetBankInfo: any;
   appCustId: number;
   IsMouSelect: boolean = false;
+  wopCodeAutoDebit:string = CommonConstant.WopAutoDebit;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
@@ -159,6 +160,11 @@ export class ApplicationDataDlfnComponent implements OnInit {
         IntrstRatePrcnt: this.resultData.InterestRatePrcnt,
         TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt
       });
+    }
+
+    if (this.SalesAppInfoForm.controls['MrWopCode'].value == this.wopCodeAutoDebit) {
+      this.GetBankAccCust();
+      this.setBankAcc(this.SalesAppInfoForm.controls['MrWopCode'].value)
     }
   }
 
@@ -222,10 +228,10 @@ export class ApplicationDataDlfnComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).toPromise().then(
       (response) => {
         this.allInType = response[CommonConstant.ReturnObj];
-        if (this.mode != 'edit') {
+        if (this.mode != 'edit' && !this.mouCustDlrFinObj) {
           this.SalesAppInfoForm.patchValue({
             MrInstTypeCode: this.allInType[0].Key,
             MrInstSchemeCode: CommonConstant.InstSchmEvenPrincipal
@@ -327,7 +333,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     } else {
       payFreqCode = this.mouCustDlrFinObj.PayFreqCode
     }
-    if (!isInit) {
+    if (!isInit || this.mode =='add') {
       this.SalesAppInfoForm.patchValue({
         TopDays: this.mouCustDlrFinObj.TopDays,
         PayFreqCode: payFreqCode,
@@ -381,10 +387,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.isSingle = false;
-      // this.SalesAppInfoForm.controls.TopDays.disable();
-      // this.SalesAppInfoForm.controls.TopBased.disable();
       this.SalesAppInfoForm.controls.Tenor.enable();
-      this.SalesAppInfoForm.controls.TopDays.setValue(0);
       this.SalesAppInfoForm.controls['TopDays'].clearValidators();
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
       if (this.mode != 'edit') {
@@ -392,8 +395,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
       }
     } else {
       this.isSingle = true;
-      // this.SalesAppInfoForm.controls.TopDays.enable();
-      // this.SalesAppInfoForm.controls.TopBased.enable();
       this.SalesAppInfoForm.controls['TopDays'].setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
 
@@ -536,11 +537,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
         IntrstRatePrcnt: this.resultData.InterestRatePrcnt,
         TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt
       });
-
-      if (this.resultData.MrWopCode == 'AUTOCOLLECTION') {
-        this.GetBankAccCust();
-        this.setBankAcc(this.resultData.MrWopCode)
-      }
     }
     await this.setDropdown();
   }
@@ -598,7 +594,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng['MouCustDlrFncngId'];
 
-        if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+        if (this.SalesAppInfoForm.controls.MrWopCode.value == this.wopCodeAutoDebit) {
           this.SaveAppOtherInfo();
         }
 
@@ -732,7 +728,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   }
 
   selectedBank(event) {
-    if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+    if (this.SalesAppInfoForm.controls.MrWopCode.value == this.wopCodeAutoDebit) {
       this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.SalesAppInfoForm.controls['CustBankAcc'].updateValueAndValidity()
       this.selectedBankAcc = this.listCustBankAcc.find(x => x.AppCustBankAccId == event);
@@ -776,7 +772,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   }
 
   setBankAcc(event) {
-    if (event == 'AUTOCOLLECTION') {
+    if (event == this.wopCodeAutoDebit) {
       this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
     } else {
       this.SalesAppInfoForm.controls['CustBankAcc'].clearValidators();

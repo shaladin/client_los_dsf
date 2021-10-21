@@ -52,7 +52,6 @@ export class LtkmApprovalDetailComponent implements OnInit {
     appNo: string;
     rootServer: string;
     isDmsReady: boolean = false;
-    IsRoleAssignment: string = "";
     ltkmReq: LtkmReqObj;
     ltkmAnalysisNotes: string = "";
     DDLReason;
@@ -83,18 +82,13 @@ export class LtkmApprovalDetailComponent implements OnInit {
             if (params["WfTaskListId"] != null) {
                 this.WfTaskListId = params["WfTaskListId"];
             }
-            if (params["IsRoleAssignment"] != null) {
-                this.IsRoleAssignment = params["IsRoleAssignment"];
-            }
         });
     }
     async ngOnInit(): Promise<void> {
         var ApvHoldObj = new ApprovalObj()
         ApvHoldObj.TaskId = this.taskId;
 
-        if(this.IsRoleAssignment != CommonConstant.TRUE){
-            this.HoldTask(ApvHoldObj);
-        }
+        this.HoldTask(ApvHoldObj);
 
         this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
         this.arrValue.push(this.LtkmCustId);

@@ -70,7 +70,7 @@ export class MouCustomerApprovalComponent implements OnInit {
     
   }
   
-  getEvent(event) {
+  async getEvent(event) {
     var isRoleAssignment = event.RowObj.IsRoleAssignment.toString();
     if (event.Key == "customer") {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
@@ -92,18 +92,18 @@ export class MouCustomerApprovalComponent implements OnInit {
         } 
       }
       else if (event.RowObj.CurrentUser == "-") {
-          this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
       }
         
       switch (event.RowObj.MouType) {
         case CommonConstant.FACTORING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
         case CommonConstant.GENERAL:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
         case CommonConstant.FINANCING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
       }  
     }

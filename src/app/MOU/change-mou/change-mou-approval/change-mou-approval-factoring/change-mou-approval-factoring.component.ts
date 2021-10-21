@@ -42,7 +42,6 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
-  IsRoleAssignment: string = "";
   pageTitle: string;
   ChangeMouCustId: number;
   TrxType: string;
@@ -69,7 +68,6 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
         this.pageTitle = params["PageTitle"];
         this.ChangeMouCustId = params["ChangeMouCustId"];
         this.TrxType = params["TrxType"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -97,9 +95,7 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = obj.taskId
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
-    }
+    this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
   }
 
@@ -123,6 +119,9 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
   HoldTask(obj) {
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
       }
     )
   }

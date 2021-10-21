@@ -67,7 +67,7 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
 
 
 
-  CallBackHandler(ev) {
+  async CallBackHandler(ev) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if (ev.Key == "Process") {
       if(isRoleAssignment != CommonConstant.TRUE){
@@ -77,10 +77,10 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
         } 
       }
       else if (ev.RowObj.CurrentUser == "-") {
-        this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
 
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV_DETAIL],{ "ProdHId": ev.RowObj.ProdHId, "TaskId" : ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId , "IsRoleAssignment": isRoleAssignment});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV_DETAIL],{ "ProdHId": ev.RowObj.ProdHId, "TaskId" : ev.RowObj.TaskId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId });
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.UserContext.UserName)) {

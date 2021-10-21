@@ -33,7 +33,6 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsReady: boolean = false;
-  IsRoleAssignment: string = "";
   pageTitle: string;
   ChangeMouCustId: number;
   MouCustId: number;
@@ -59,7 +58,6 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
         this.MouCustId = params["MouCustId"];
         this.MouType = params["MouType"];
         this.TrxType = params["TrxType"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -78,9 +76,7 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.taskId; 
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
-    }
+    this.HoldTask(ApvHoldObj);
     
     this.initInputApprovalObj();
   }
@@ -103,9 +99,13 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
   }
 
   HoldTask(obj) {
-    this.http
-      .post(AdInsConstant.ApvHoldTaskUrl, obj)
-      .subscribe((response) => { });
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+        (response) => { 
+        },
+        (error) => {
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
+        }
+      );
   }
 
   onApprovalSubmited(event) {

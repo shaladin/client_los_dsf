@@ -84,7 +84,7 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
-  CallBackHandler(ev) {
+  async CallBackHandler(ev) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if(ev.Key == "Process"){
       if(isRoleAssignment != CommonConstant.TRUE){
@@ -94,10 +94,10 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
         }
       }
       else if (ev.RowObj.CurrentUser == "-") {
-        this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
         
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_DETAIL],{ "EditAppAftApvTrxHId": ev.RowObj.EditAppAftApvTrxHId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_DETAIL],{ "EditAppAftApvTrxHId": ev.RowObj.EditAppAftApvTrxHId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId });
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.UserAccess.UserName)) {
