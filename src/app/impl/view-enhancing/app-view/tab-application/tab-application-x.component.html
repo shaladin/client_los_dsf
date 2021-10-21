@@ -1,6 +1,7 @@
 <div class="col-md-12 text-left">
   <div class="card">
     <lib-ucviewgeneric *ngIf="isReady" [viewGenericObj]="viewProdMainInfoObj"> </lib-ucviewgeneric>
+    <lib-ucviewgeneric *ngIf="isReady && isWopAD" [viewGenericObj]="viewCustomerBankDetail"> </lib-ucviewgeneric>
     <div class="px-3">
     <lib-ucSubsection *ngIf="ListCrossAppData?.length > 0" [id]="'formListCrossAppsId'" [title]="'Cross Application'" [panel]="'formListCrossApps'">
     </lib-ucSubsection>

@@ -288,6 +288,7 @@ export class NavigationConstant {
 
   //#region MOU
   public static MOU_CUST_CANCEL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_CANCEL; //'/Mou/Cust/Cancel'
+  public static MOU_CUST_CANCEL_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_CANCEL_DETAIL; //'/Mou/Cust/Cancel/Detail'
   public static MOU_CUST_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_INQUIRY; //'/Mou/Cust/Inquiry'
   public static MOU_CUST_DOC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_DOC_PAGING; //'/Mou/CustomerDoc/Paging'
   public static MOU_CUST_DOC_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_DOC_DETAIL; //'/Mou/CustomerDoc/Detail'

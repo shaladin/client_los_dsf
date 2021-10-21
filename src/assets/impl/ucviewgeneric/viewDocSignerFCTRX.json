@@ -38,25 +38,6 @@
           ]
         },
         {
-          "type": "switch",
-          "case": [
-            {
-              "conditions": [
-                {
-                "property": "BizTemplateCode",
-                "value": "FCTR",
-                "restriction": "NEQ"
-                }
-              ],
-              "result": {
-                "type": "text",
-                "label": "Number Of Asset",
-                "property": "NumOfAsset"
-              }
-            }
-          ]
-        },
-        {
           "type": "callback",
           "label": "Agreement No",
           "property": "AgrmntNo",

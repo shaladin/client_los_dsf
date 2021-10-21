@@ -4,10 +4,10 @@
     "component": [
         {
             "type": "textbox",
-            "name": "TL.TRX_NO",
-            "id": "TrxNo",
+            "name": "AG.AGRMNT_NO",
+            "id": "AgrmntNo",
             "value": "",
-            "label": "Application No",
+            "label": "Agreement No",
             "placeholder": "Placeholder"
         }
     ],
@@ -18,14 +18,14 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Application No",
-            "name": "TrxNo"
+            "label": "Agreement No",
+            "name": "AgrmntNo"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Apv No",
-            "name": "ApvNo"
+            "name": "RequestNo"
         },
         {
             "type": "sort",
@@ -43,13 +43,13 @@
             "type": "sort",
             "position": "center",
             "label": "Main User Id",
-            "name": "MainUserId"
+            "name": "MainUser"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Current User Id",
-            "name": "CurrentUserId"
+            "name": "CurrentUser"
         },
         {
             "type": "label",
@@ -65,19 +65,24 @@
             "type": "label",
             "position": "center",
             "label": "Take Back"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Unclaim"
         }
     ],
     "bodyList": [
         {
             "type": "callback",
             "position": "center",
-            "property": "TrxNo",
+            "property": "AgrmntNo",
             "key": "application"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "ApvNo"
+            "property": "RequestNo"
         },
         {
             "type": "text",
@@ -92,12 +97,12 @@
         {
             "type": "text",
             "position": "center",
-            "property": "MainUserId"
+            "property": "MainUser"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "CurrentUserId"
+            "property": "CurrentUser"
         },
         {
             "type": "action",
@@ -110,24 +115,85 @@
             ]
         },
         {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback",
-                    "key": "HoldTask"
-                }
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [ 
+                      {
+                          "isUser": false,
+                          "property" : "IsRoleAssignment", 
+                          "value" : false, 
+                          "restriction" : "EQ" 
+                      }
+                    ],
+                    "result" : { 
+                      "type": "callback",
+                      "key": "HoldTask",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
             ]
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback",
-                    "key": "TakeBack"
-                }
+          },
+          {
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [ 
+                      {
+                          "isUser": false,
+                          "property" : "IsRoleAssignment", 
+                          "value" : false, 
+                          "restriction" : "EQ" 
+                      }
+                    ],
+                    "result" : { 
+                      "type": "callback",
+                      "key": "TakeBack",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
             ]
-        }
+          },
+          {
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [ 
+                      {
+                          "isUser": false,
+                          "property" : "IsRoleAssignment", 
+                          "value" : true, 
+                          "restriction" : "EQ" 
+                      }
+                    ],
+                    "result" : { 
+                      "type": "callback",
+                      "key": "UnClaim",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
+            ]
+          }
     ]
 }

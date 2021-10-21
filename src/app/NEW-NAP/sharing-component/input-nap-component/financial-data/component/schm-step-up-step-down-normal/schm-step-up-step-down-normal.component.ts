@@ -37,6 +37,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
   ListExistingAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  readonly BhvLock = CommonConstant.ProductBehaviourLock;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }

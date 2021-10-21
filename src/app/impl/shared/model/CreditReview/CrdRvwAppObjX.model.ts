@@ -29,6 +29,10 @@ export class CrdRvwAppObjX {
     Tac: number;
     TacIndicator: string;
     TacIndicatorDescr: string;
+    AppSbmt: number;
+    AppRjc: number;
+    AppInPrc: number;
+    AppLiv: number;
     CrdScoreRating: number;
     constructor() {
         this.CreditScoreIndicator = CommonConstant.WhiteIndicator;
@@ -49,6 +53,10 @@ export class CrdRvwAppObjX {
         this.TotalIncome = 0;
         this.TotalExpense = 0;
         this.Tac = 0;
+        this.AppSbmt = 0;
+        this.AppRjc = 0;
+        this.AppInPrc = 0;
+        this.AppLiv = 0;
         this.CrdScoreRating = 0;
     }
 }

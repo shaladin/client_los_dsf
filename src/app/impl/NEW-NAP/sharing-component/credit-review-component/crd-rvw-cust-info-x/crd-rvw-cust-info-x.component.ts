@@ -5,6 +5,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
 import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
@@ -18,6 +19,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 })
 export class CrdRvwCustInfoXComponent implements OnInit {
   ReqCustNo: GenericObj = new GenericObj();
+  @Input() crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   @Input() appId: number = 0;
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   @Input() captureStat: string = "";

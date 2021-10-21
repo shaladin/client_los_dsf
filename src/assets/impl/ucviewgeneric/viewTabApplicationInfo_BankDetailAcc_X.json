@@ -1,0 +1,81 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "CustBankAccDetailId",
+            "subSectionTitle": "Customer Bank Account Detail",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Bank Account Name Type",
+                    "property": "CustType"
+                },  
+                {
+                    "type": "text",
+                    "label": "ID Type",
+                    "property": "IdType"
+                },
+                {
+                    "type": "text",
+                    "label": "ID No",
+                    "property": "IdNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Birth Place",
+                    "property": "BirthPlace"
+                },
+                {
+                    "type": "date",
+                    "label": "Birth Date",
+                    "property": "BirthDt"
+                },
+                {
+                    "type": "text",
+                    "label": "Address",
+                    "property": "Addr"
+                },
+                {
+                    "type": "concat",
+                    "label": "RT / RW",
+                    "propertyList": [
+                        {
+                            "property": "RT",
+                            "prefix": "",
+                            "suffix": " / "
+                        },
+                        {
+                            "property": "RW",
+                            "prefix": "",
+                            "suffix": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "label": "Zipcode",
+                    "property": "Zipcode"
+                },
+                {
+                    "type": "text",
+                    "label": "Kelurahan",
+                    "property": "Kelurahan"
+                },
+                {
+                    "type": "text",
+                    "label": "Kecamatan",
+                    "property": "Kecamatan"
+                },
+                {
+                    "type": "text",
+                    "label": "City",
+                    "property": "City"
+                }
+            ],
+            "querystring": {
+                "name": "viewTabApplicationInfo_BankDetailAcc_X"
+            }
+        }
+    ]
+}

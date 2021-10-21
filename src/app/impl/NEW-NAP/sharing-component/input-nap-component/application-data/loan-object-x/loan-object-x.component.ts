@@ -299,8 +299,9 @@ export class LoanObjectXComponent implements OnInit {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
       if (this.isCFNA) {
-        this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
-          (response) => {
+        //INTERNAL-0142 X: Sengaja di disable karena sudah ada penjagaan dari Max Plafond dari Agreement Parent
+        //this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+          //(response) => {
             this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
               (response) => {
                 this.modal.close();
@@ -308,10 +309,8 @@ export class LoanObjectXComponent implements OnInit {
                 enjiForm.reset();
                 this.loadDataTable();
               });
-          },
-          (error) => {
-            return;
-          });
+          //},
+          //(error) => { return; });
       } else {
         this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
@@ -324,8 +323,9 @@ export class LoanObjectXComponent implements OnInit {
     }
     else {
       if (this.isCFNA) {
-        this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
-          (response) => {
+        //INTERNAL-0142 X: Sengaja di disable karena sudah ada penjagaan dari Max Plafond dari Agreement Parent
+        //this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+          //(response) => {
             this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
               (response) => {
                 this.modal.close();
@@ -333,10 +333,7 @@ export class LoanObjectXComponent implements OnInit {
                 enjiForm.reset();
                 this.loadDataTable();
               });
-          },
-          (error) => {
-            return;
-          });
+          //},(error) => { return; });
       } else {
         this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {

@@ -372,7 +372,7 @@ export class MouCustTabComponent implements OnInit {
     let flag: boolean = false;
     for(let i = 0; i < this.listShareholder.length; i++){
       console.log(this.listShareholder[i]);
-      if(this.listShareholder[i]['MrJobPositionCode'] == null || this.listShareholder[i]['MrJobPositionCode'] == ''){
+      if((this.listShareholder[i]['MrJobPositionCode'] == null || this.listShareholder[i]['MrJobPositionCode'] == '') && this.listShareholder[i]['MrCustTypeCode'] == CommonConstant.CustTypePersonal){
         this.toastr.warningMessage(String.Format(ExceptionConstant.JOB_POSITION_CANT_BE_EMPTY, this.listShareholder[i]['MgmntShrholderName']))
         flag = true;
       }

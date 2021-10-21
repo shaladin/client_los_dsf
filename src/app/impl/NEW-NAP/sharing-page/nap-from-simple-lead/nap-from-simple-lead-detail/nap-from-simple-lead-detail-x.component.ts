@@ -85,8 +85,7 @@ export class NapFromSimpleLeadDetailXComponent implements OnInit {
     RsvField5: [''],
   });
 
-  inputLookupObjCopyProduct;
-  inputLookupObjName;
+  inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems;
   user: CurrentUserContext;
 
@@ -169,12 +168,14 @@ export class NapFromSimpleLeadDetailXComponent implements OnInit {
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
     this.prodOfrLookup.clear();
-    const component = this.prodOfrLookup.createComponent(componentFactory);
-    component.instance.lookupInput = this.inputLookupObjName;
-    component.instance.parentForm = this.NapAppForm;
-    component.instance.enjiForm = this.parentForm;
-    component.instance.identifier = "ProductOfferingNameIdentifier";
-    component.instance.lookup.subscribe((e) => { this.getLookupAppResponseName(e) });
+    if(this.NapAppForm.controls["LobCode"].value) {
+      const component = this.prodOfrLookup.createComponent(componentFactory);
+      component.instance.lookupInput = this.inputLookupObjName;
+      component.instance.parentForm = this.NapAppForm;
+      component.instance.enjiForm = this.parentForm;
+      component.instance.identifier = "ProductOfferingNameIdentifier";
+      component.instance.lookup.subscribe((e) => { this.getLookupAppResponseName(e) });
+    }
   }
 
   openView() {

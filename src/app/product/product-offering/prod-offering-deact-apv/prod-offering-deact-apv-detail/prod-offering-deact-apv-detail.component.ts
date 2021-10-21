@@ -12,6 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
   selector: 'app-prod-offering-deact-apv-detail',
@@ -46,13 +47,20 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   ngOnInit() {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationForDeactApv.json";
 
-    let ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.TaskId
+    let ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.TaskId;
 
     if(this.IsRoleAssignment != CommonConstant.TRUE){
       this.HoldTask(ApvHoldObj);
     }
     this.initInputApprovalObj();
+  }
+
+  HoldTask(obj) {
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      }
+    )
   }
 
   initInputApprovalObj() {
@@ -69,13 +77,6 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
         this.InputApvObj.TrxNo = response["ProdOfferingCode"];
         this.IsReady = true;
       });
-  }
-
-  HoldTask(obj) {
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response) => {
-      }
-    )
   }
 
   onApprovalSubmited(event) {
