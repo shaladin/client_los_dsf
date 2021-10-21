@@ -13,12 +13,12 @@ export class ApprovalTaskService{
 
     constructor(private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService) { }
   
-    ClaimApvTask(TaskId: number){
+    async ClaimApvTask(TaskId: number){
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         var claimTaskObj = new ApvClaimTaskObj();
         claimTaskObj.TaskId = TaskId;
         claimTaskObj.Username = currentUserContext[CommonConstant.USER_NAME];
-        this.http.post(AdInsConstant.ApvClaimTask, claimTaskObj).subscribe(
+        await this.http.post(AdInsConstant.ApvClaimTask, claimTaskObj).toPromise().then(
             (response) => {
                 if (response["StatusCode"] != 200) {
                     this.toastr.errorMessage(response["Message"]);
