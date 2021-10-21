@@ -1,5 +1,5 @@
 {
-    "title": "Report Daily Pending App After Approval",
+    "title": "Report Daily Pending Pre Go Live App After Approval",
     "reportName": "Report Daily Pending App After Approval",
     "reportTemplateCode": "DAILY_PENDING_APP_AFT_APV",
     "component": [
