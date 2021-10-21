@@ -88,13 +88,13 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
       
       switch (event.RowObj.MouType) {
         case CommonConstant.MOU_TYPE_FACTORING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_FCTR],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_FCTR],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
             break;
         case CommonConstant.MOU_TYPE_GENERAL:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_GEN],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_GEN],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
             break;
         case CommonConstant.MOU_TYPE_DLFN:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_FIN],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_FIN],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
             break;
       }   
     }

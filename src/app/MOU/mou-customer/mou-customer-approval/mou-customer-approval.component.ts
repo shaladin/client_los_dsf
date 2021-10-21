@@ -102,13 +102,13 @@ export class MouCustomerApprovalComponent implements OnInit {
         
       switch (event.RowObj.MouType) {
         case CommonConstant.FACTORING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
         case CommonConstant.GENERAL:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
         case CommonConstant.FINANCING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
       }  
     }
