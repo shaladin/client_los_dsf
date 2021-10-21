@@ -12,11 +12,13 @@ import { DocSignerMainInfoComponent } from './doc-signer-main-info/doc-signer-ma
 import { AppMainInfoComponentXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/app-main-info-component-x/app-main-info-component-x.component";
 import { DocSignerMainInfoXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/doc-signer-main-info/doc-signer-main-info-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AppMainInfoXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info-x.component";
 
 @NgModule({
   exports: [
     AgrMainInfoComponent,
     AppMainInfoComponent,
+    AppMainInfoXComponent,
     DocSignerMainInfoComponent,
     DocSignerMainInfoXComponent,
     AppMainInfoComponentXComponent
@@ -34,6 +36,7 @@ import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Modul
   declarations: [ 
     AgrMainInfoComponent,
     AppMainInfoComponent,
+    AppMainInfoXComponent,
     DocSignerMainInfoComponent,
     DocSignerMainInfoXComponent,
     AppMainInfoComponentXComponent
