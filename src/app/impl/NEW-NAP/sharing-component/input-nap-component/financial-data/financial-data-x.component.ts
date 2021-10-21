@@ -176,8 +176,6 @@ export class FinancialDataXComponent implements OnInit {
           TotalAssetPriceAmt: this.appFinDataObj.TotalAssetPriceAmt,
           TotalAccessoryPriceAmt: this.appFinDataObj.TotalAccessoryPriceAmt,
           TotalAssetPriceAmtOnly: this.appFinDataObj.TotalAssetPriceAmtOnly,
-          TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
-          TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
           InsCptlzAmt: this.appFinDataObj.InsCptlzAmt,
           TotalInsInscoAmt: this.appFinDataObj.TotalInsInscoAmt,

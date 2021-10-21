@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -19,6 +19,7 @@ export class CrdRvwAppInfoXComponent implements OnInit {
   @Input() CrdRvwCustInfoId: number = 0;
   @Input() appId: number = 0;
   @Input() BizTemplateCode: string = "";
+  @Output() callbackCrdRvwAppObj: EventEmitter<CrdRvwAppObj> = new EventEmitter();
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
 
   constructor(
@@ -37,6 +38,7 @@ export class CrdRvwAppInfoXComponent implements OnInit {
     await this.http.post<CrdRvwAppObjX>(URLConstantX.GetCrdRvwAppByCrdRvwCustInfoId, { Id: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.crdRvwAppObj = response;
+        this.callbackCrdRvwAppObj.emit(response);
       }
     );
   }

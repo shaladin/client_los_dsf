@@ -7,9 +7,9 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { formatDate } from '@angular/common';
+import { formatDate, KeyValue } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
+import { MouCustCompanyMgmntShrholderObj } from 'app/shared/model/MouCustCompanyMgmntShrholderObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -17,6 +17,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CustSetData } from 'app/NEW-NAP/sharing-component/main-data-component/components/CustSetData.Service';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-mou-cust-mgmnt-shrholder',
@@ -27,9 +30,9 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 export class MouCustMgmntShrholderComponent implements OnInit {
 
-  @Input() listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
+  @Input() listShareholder: Array<MouCustCompanyMgmntShrholderObj> = new Array<MouCustCompanyMgmntShrholderObj>();
 
-  @Output() callbackSubmit: EventEmitter<Array<AppCustCompanyMgmntShrholderObj>> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<MouCustCompanyMgmntShrholderObj>> = new EventEmitter();
 
   mode: string;
   currentEditedIndex: number;
@@ -37,7 +40,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   selectedIndustryTypeCode: string;
 
   closeResult: any;
-  appCustCompanyMgmntShrholderObj: AppCustCompanyMgmntShrholderObj;
+  appCustCompanyMgmntShrholderObj: MouCustCompanyMgmntShrholderObj;
 
   InputLookupCustomerObj: InputLookupObj;
   InputLookupIndustryTypeObj: InputLookupObj;
@@ -52,7 +55,6 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   defaultJobPosition: string;
   CompanyTypeObj: Array<KeyValueObj>;
   defaultCompanyType: string;
-  industryTypeName: string;
   isCust: boolean = false;
   selectedCustTypeName: string;
   selectedJobPositionName: string;
@@ -64,6 +66,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   CustShareholderForm = this.fb.group({
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrPositionSlikCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     BirthPlace: ['', Validators.maxLength(200)],
     BirthDt: ['', Validators.required],
@@ -73,7 +76,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
     SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
-    MrJobPositionCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     IsOwner: [false],
     IsActive: [false],
@@ -95,6 +98,9 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   MaxDate: Date;
   Max17YO: Date;
   ngOnInit() {
+    if (this.listShareholder == undefined) {
+      this.listShareholder = new Array<MouCustCompanyMgmntShrholderObj>();
+    }
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
@@ -103,12 +109,17 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.initLookup();
     this.bindAllRefMasterObj();
   }
-
-  SaveForm() {
-    this.appCustCompanyMgmntShrholderObj = new AppCustCompanyMgmntShrholderObj();
-    if (this.listShareholder == undefined) {
-      this.listShareholder = new Array<AppCustCompanyMgmntShrholderObj>();
+  SavePublicType(ev: { Key: string, Value: MouCustCompanyMgmntShrholderObj }) {
+    if (ev.Key == "save") {
+      if (this.mode == "add") this.listShareholder.push(ev.Value);
+      else this.listShareholder[this.currentEditedIndex] = ev.Value;
     }
+    this.callbackSubmit.emit(this.listShareholder);
+    this.modalService.dismissAll();
+    this.clearForm();
+  }
+  SaveForm() {
+    this.appCustCompanyMgmntShrholderObj = new MouCustCompanyMgmntShrholderObj();
     if (this.setAppCustCompanyMgmntShrholder() == false) return;
     if (this.mode == "add") {
       if (this.checkSharePrcnt(-1) == false) {
@@ -184,10 +195,12 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   add(content) {
     this.mode = "add";
     this.clearForm();
+    this.tempExisting = new MouCustCompanyMgmntShrholderObj();
     this.setCriteriaLookupCustomer(this.defaultCustType);
     this.open(content);
   }
 
+  tempExisting: MouCustCompanyMgmntShrholderObj = new MouCustCompanyMgmntShrholderObj();
   edit(i: number, content) {
     this.clearForm();
     this.mode = "edit";
@@ -199,10 +212,10 @@ export class MouCustMgmntShrholderComponent implements OnInit {
         MrGenderCode: this.listShareholder[i].MrGenderCode,
         MrIdTypeCode: this.listShareholder[i].MrIdTypeCode,
         BirthPlace: this.listShareholder[i].BirthPlace,
-        BirthDt: this.listShareholder[i].BirthDt != undefined && this.listShareholder[i].BirthDt != "" ? formatDate(this.listShareholder[i].BirthDt, 'yyyy-MM-dd', 'en-US') : '',
+        BirthDt: this.listShareholder[i].BirthDt ? formatDate(this.listShareholder[i].BirthDt, 'yyyy-MM-dd', 'en-US') : null,
         IdNo: this.listShareholder[i].IdNo,
         TaxIdNo: this.listShareholder[i].TaxIdNo,
-        IdExpiredDt: this.listShareholder[i].IdExpiredDt != undefined && this.listShareholder[i].IdExpiredDt != "" ? formatDate(this.listShareholder[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : '',
+        IdExpiredDt: this.listShareholder[i].IdExpiredDt ? formatDate(this.listShareholder[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : null,
         MobilePhnNo: this.listShareholder[i].MobilePhnNo,
         Email: this.listShareholder[i].Email,
         SharePrcnt: this.listShareholder[i].SharePrcnt,
@@ -210,7 +223,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
         IsSigner: this.listShareholder[i].IsSigner,
         IsOwner: this.listShareholder[i].IsOwner,
         IsActive: this.listShareholder[i].IsActive,
-        IsGuarantor: this.listShareholder[i].IsGuarantor
+        IsGuarantor: this.listShareholder[i].IsGuarantor,
+        MrPositionSlikCode: this.listShareholder[i].MrPositionSlikCode,
       });
       if (this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != "") {
         this.InputLookupCustomerObj.isReadonly = true;
@@ -233,12 +247,13 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrCompanyTypeCode: this.listShareholder[i].MrCompanyTypeCode,
-        EstablishmentDt: this.listShareholder[i].EstablishmentDt != undefined && this.listShareholder[i].EstablishmentDt != "" ? formatDate(this.listShareholder[i].EstablishmentDt, 'yyyy-MM-dd', 'en-US') : '',
+        EstablishmentDt: this.listShareholder[i].EstablishmentDt ? formatDate(this.listShareholder[i].EstablishmentDt, 'yyyy-MM-dd', 'en-US') : null,
         TaxIdNo: this.listShareholder[i].TaxIdNo,
         SharePrcnt: this.listShareholder[i].SharePrcnt,
         IsSigner: this.listShareholder[i].IsSigner,
         IsOwner: this.listShareholder[i].IsOwner,
         IsActive: this.listShareholder[i].IsActive,
+        MrPositionSlikCode: this.listShareholder[i].MrPositionSlikCode,
         IsGuarantor: this.listShareholder[i].IsGuarantor
       });
       this.selectedCustTypeName = this.listShareholder[i].CustTypeName;
@@ -255,6 +270,26 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       }
     }
 
+    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePublic) {
+      this.CustShareholderForm.patchValue({
+        MrCustTypeCode: CommonConstant.CustTypePublic,
+      });
+      this.tempExisting = this.listShareholder[i];
+    }else{
+      //#region patch positionSlik    
+      let reqMasterObj: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+          MasterCode: this.listShareholder[i].MrPositionSlikCode,
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodePositionSlik
+      };
+      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqMasterObj).subscribe(
+          (response: RefMasterObj) => {
+              this.positionSlikLookUpObj.nameSelect = response.Descr;
+              this.positionSlikLookUpObj.jsonSelect = { Jabatan: response.Descr };
+              this.positionSlikLookUpObj.isReady = true;
+          }
+      )
+      //#endregion
+    }
     this.InputLookupCustomerObj.nameSelect = this.listShareholder[i].MgmntShrholderName;
     this.InputLookupCustomerObj.jsonSelect = { CustName: this.listShareholder[i].MgmntShrholderName };
     this.selectedCustNo = this.listShareholder[i].CustNo;
@@ -281,6 +316,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       IsActive: [false],
       MrCompanyTypeCode: [this.defaultCompanyType, Validators.maxLength(50)],
       EstablishmentDt: ['', Validators.required],
+      MrPositionSlikCode: ['', Validators.required],
       IsGuarantor: [false]
     });
     this.selectedCustNo = "";
@@ -305,7 +341,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
-    this.http.post(url, {Id : event.CustId}).subscribe(
+    this.http.post(url, { Id: event.CustId }).subscribe(
       (response) => {
         if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
           if (response["CustObj"] != undefined) {
@@ -314,7 +350,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
               MrIdTypeCode: response["CustObj"].MrIdTypeCode,
               IdNo: response["CustObj"].IdNo,
               TaxIdNo: response["CustObj"].TaxIdNo,
-              IdExpiredDt: response["CustObj"].IdExpiredDt != undefined ? formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : ''
+              IdExpiredDt: response["CustObj"].IdExpiredDt != undefined ? formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : null
             });
             this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == response["CustObj"].MrCustTypeCode).Value;
           }
@@ -323,7 +359,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
             this.CustShareholderForm.patchValue({
               MrGenderCode: response["CustPersonalObj"].MrGenderCode,
               BirthPlace: response["CustPersonalObj"].BirthPlace,
-              BirthDt: response["CustPersonalObj"].BirthDt != undefined ? formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US') : '',
+              BirthDt: response["CustPersonalObj"].BirthDt != undefined ? formatDate(response["CustPersonalObj"].BirthDt, 'yyyy-MM-dd', 'en-US') : null,
               MobilePhnNo: response["CustPersonalObj"].MobilePhnNo1,
               Email: response["CustPersonalObj"].Email1
             });
@@ -392,11 +428,13 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.TaxIdNo = this.CustShareholderForm.controls.TaxIdNo.value;
       this.appCustCompanyMgmntShrholderObj.IdExpiredDt = this.CustShareholderForm.controls.IdExpiredDt.value;
       this.appCustCompanyMgmntShrholderObj.IsGuarantor = this.CustShareholderForm.controls.IsGuarantor.value;
+      this.appCustCompanyMgmntShrholderObj.MrPositionSlikCode = this.CustShareholderForm.controls.MrPositionSlikCode.value;
+      this.appCustCompanyMgmntShrholderObj.MrShrholderTypeCode = CommonConstant.CustTypePersonal;
       let d1 = new Date(this.appCustCompanyMgmntShrholderObj.IdExpiredDt);
       let d2 = new Date(this.MaxDate);
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
-      if (d1 < d2) {
+      if (d1 > d2) {
         this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
         flag = false;
       }
@@ -429,6 +467,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.IsSigner = this.CustShareholderForm.controls.IsSigner.value;
       this.appCustCompanyMgmntShrholderObj.IsOwner = this.CustShareholderForm.controls.IsOwner.value;
       this.appCustCompanyMgmntShrholderObj.IsActive = this.CustShareholderForm.controls.IsActive.value;
+      this.appCustCompanyMgmntShrholderObj.MrPositionSlikCode = this.CustShareholderForm.controls.MrPositionSlikCode.value;
+      this.appCustCompanyMgmntShrholderObj.MrShrholderTypeCode = CommonConstant.CustTypeCompany;
     }
 
     return flag;
@@ -439,10 +479,10 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   setIndustryTypeName(industryTypeCode: string) {
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
+    if(!industryTypeCode) return;
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, { Code: industryTypeCode }).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
-        this.industryTypeName = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;
       },
       (error) => {
@@ -457,6 +497,8 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
       this.CustShareholderForm.controls.EstablishmentDt.clearValidators();
       this.CustShareholderForm.controls.EstablishmentDt.updateValueAndValidity();
+      this.CustShareholderForm.controls.MrJobPositionCode.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.CustShareholderForm.controls.MrJobPositionCode.updateValueAndValidity();
     }
 
     if (custType == CommonConstant.CustTypeCompany) {
@@ -464,9 +506,12 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
       this.CustShareholderForm.controls.EstablishmentDt.setValidators(Validators.required);
       this.CustShareholderForm.controls.EstablishmentDt.updateValueAndValidity();
+      this.CustShareholderForm.controls.MrJobPositionCode.clearValidators();
+      this.CustShareholderForm.controls.MrJobPositionCode.updateValueAndValidity();
     }
   }
 
+  positionSlikLookUpObj: InputLookupObj = new InputLookupObj();
   initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
@@ -482,6 +527,11 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.isRequired = false;
 
+    this.positionSlikLookUpObj = CustSetData.BindLookupPositionSlik();
+  }
+  getLookUpSlik(ev: { Code: string, Jabatan: string }) {
+    let tempMrPositionSlikCode = this.CustShareholderForm.get("MrPositionSlikCode");
+    tempMrPositionSlikCode.patchValue(ev.Code);
   }
 
   bindAllRefMasterObj() {
@@ -492,11 +542,16 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.bindCompanyTypeObj();
   }
 
+  dictCustType: { [id: string]: string } = {};
   bindCustTypeObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeShareholderCustType }).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
+          for (let index = 0; index < this.CustTypeObj.length; index++) {
+            const element = this.CustTypeObj[index];
+            this.dictCustType[element.Key] = element.Value;
+          }
           this.defaultCustType = this.CustTypeObj[0].Key;
           this.defaultCustTypeName = this.CustTypeObj[0].Value;
           this.setValidator(this.CustTypeObj[0].Key);
@@ -551,13 +606,13 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   onChangeIdType() {
-    if(this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeNPWP){
+    if (this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeNPWP) {
       this.CustShareholderForm.controls.IdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
     }
-    else if(this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP){
+    else if (this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
       this.CustShareholderForm.controls.IdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
     }
-    else{
+    else {
       this.CustShareholderForm.controls.IdNo.setValidators(Validators.maxLength(50));
     }
     this.CustShareholderForm.controls.IdNo.updateValueAndValidity();
@@ -589,7 +644,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   clearExpDt() {
     if (this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
       this.CustShareholderForm.patchValue({
-        IdExpiredDt: ''
+        IdExpiredDt: null
       });
     }
     this.onChangeIdType();

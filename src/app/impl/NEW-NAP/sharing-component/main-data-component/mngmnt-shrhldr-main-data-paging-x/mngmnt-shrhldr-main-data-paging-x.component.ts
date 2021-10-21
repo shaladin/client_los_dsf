@@ -210,7 +210,9 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
     reqByIdObj.Id = this.appId;
     await this.http.post(URLConstant.GetAppCustMainDataByAppId, reqByIdObj).toPromise().then(
       (response: ResponseAppCustMainDataObj) => {
-        this.critCustCompany.push(response.AppCustObj.CustNo);
+        if(response.AppCustObj.CustNo != null){
+          this.critCustCompany.push(response.AppCustObj.CustNo);
+        }
       }
     ).catch(
       (error) => {

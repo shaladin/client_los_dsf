@@ -16,6 +16,9 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 @Component({
   selector: 'app-mou-approval-general-x',
   templateUrl: './mou-approval-general-x.component.html'
@@ -38,6 +41,7 @@ export class MouApprovalGeneralXComponent implements OnInit {
   IsReady: boolean = false;
   dmsObj: DMSObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsRoleAssignment: string = "";
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
@@ -46,12 +50,18 @@ export class MouApprovalGeneralXComponent implements OnInit {
       }
       this.ApvReqId = params["ApvReqId"];
       this.taskId = params["TaskId"];
-
+      this.IsRoleAssignment = params["IsRoleAssignment"];
     });
   }
 
 
   async ngOnInit() : Promise<void> {
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.taskId;
+
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -82,6 +92,13 @@ export class MouApprovalGeneralXComponent implements OnInit {
     this.initInputApprovalObj();
   }
 
+  HoldTask(obj) {
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      }
+    )
+  }
+
   MouApprovalDataForm = this.fb.group({
   })
 
@@ -89,6 +106,7 @@ export class MouApprovalGeneralXComponent implements OnInit {
 
   }
 
+  
   onApprovalSubmited(event) {
     let ReqMouApvCustomObj = {
       Tasks: event.Tasks
@@ -104,7 +122,7 @@ export class MouApprovalGeneralXComponent implements OnInit {
   onCancelClick() {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
   }
-
+  
   initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";

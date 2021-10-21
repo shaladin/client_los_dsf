@@ -669,6 +669,7 @@ export class URLConstant {
   public static ReturnMouReviewV2 = environment.losUrl + "/v2" + "/MouCust/ReturnMouReview";
   public static EditMouForCancelByMouId = environment.losUrl + "/v1" + "/MouCust/EditMouForCancelByMouId";
   public static EditMouForCancelByMouIdV2 = environment.losUrl + "/v2" + "/MouCust/EditMouForCancelByMouId";
+  public static EditMouForCancelByMouIdV2_1 = environment.losUrl + "/v2.1" + "/MouCust/EditMouForCancelByMouId";
   public static GetListMouByAppIdAndMouType = environment.losUrl + "/v1" + "/MouCust/GetListMouByAppIdAndMouType";
   public static GetListMouByAppIdAndMouTypeDF = environment.losUrl + "/v1" + "/MouCust/GetListMouByAppIdAndMouTypeDF";
   public static GetListMouCustByCustNo = environment.losUrl + "/v1" + "/MouCust/GetListMouCustByCustNo";
@@ -1048,6 +1049,7 @@ export class URLConstant {
   public static AddNewLeadFraudVerfV2 = environment.losUrl + "/v2" + "/LeadFraudVerf/AddNewLeadFraudVerf";
   public static GetListLeadForLeadVerfObj = environment.losUrl + "/v1" + "/LeadVerf/GetListLeadForLeadVerfObj";
   public static GetDoubleFinancingCheckAppAsset = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
+  public static GetDoubleFinancingCheckAppAssetV2 = environment.losUrl + "/v2" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
 
   //LEAD VERF
   public static AddRangeLeadVerf = environment.losUrl + "/v1" + "/LeadVerf/AddRangeLeadVerf";
@@ -1845,7 +1847,7 @@ export class URLConstant {
   //Application Source
   public static AddRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/AddRefAppSrc";
   public static AddRefAppSrcOfficeMbr = environment.losUrl + "/v1" + "/RefAppSrc/AddRefAppSrcOfficeMbr";
-  public static DeleteRefAppSrcOfficeMbr = "/RefAppSrc/DeleteRefAppSrcOfficeMbr";
+  public static DeleteRefAppSrcOfficeMbr = environment.losUrl + "/v1" + "/RefAppSrc/DeleteRefAppSrcOfficeMbr";
   public static EditRefAppSrc = environment.losUrl + "/v1" + "/RefAppSrc/EditRefAppSrc";
   public static GetRefAppSrcByRefAppSrcId = environment.losUrl + "/v1" + "/RefAppSrc/GetRefAppSrcByRefAppSrcId";
   public static GetListRefAppSrcOfficeMbrByRefAppSrcId = environment.losUrl + "/v1" + "/RefAppSrc/GetListRefAppSrcOfficeMbrByRefAppSrcId";

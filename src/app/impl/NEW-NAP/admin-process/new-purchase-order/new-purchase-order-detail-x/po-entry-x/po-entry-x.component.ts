@@ -14,6 +14,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
@@ -38,6 +39,7 @@ export class PoEntryXComponent implements OnInit {
   CustBankAcc: AppCustBankAccObj;
   PurchaseOrderH: PurchaseOrderHObj;
   BusinessDt: Date;
+  UserContext : CurrentUserContext;
   vendorBankAccList: Array<Object>;
   custBankAccList: Array<Object>;
   AssetObj: ResGetAllAssetDataForPOByAsset = new ResGetAllAssetDataForPOByAsset();
@@ -80,8 +82,8 @@ export class PoEntryXComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     var datePipe = new DatePipe("en-US");
-    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.BusinessDt = new Date(context["BusinessDt"]);
+    this.UserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.BusinessDt = new Date(this.UserContext[CommonConstant.BUSINESS_DT]);
     var MrFistInstTypeCode : string = "";
     await this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
@@ -374,7 +376,7 @@ export class PoEntryXComponent implements OnInit {
     if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
       requestPurchaseOrderH.PurchaseOrderHId = 0;
       requestPurchaseOrderH.PurchaseOrderNo = "";
-      requestPurchaseOrderH.PurchaseOrderDt = new Date();
+      requestPurchaseOrderH.PurchaseOrderDt = new Date(formatDate(this.UserContext[CommonConstant.BUSINESS_DT], 'yyyy-MM-dd', 'en-US'));
       requestPurchaseOrderH.PurchaseOrderExpiredDt = new Date(this.ExpirationDate);
       requestPurchaseOrderH.TotalPurchaseOrderAmt = formValue["TotalDisburse"];
       requestPurchaseOrderH.AgrmntId = this.AgrmntId;

@@ -43,7 +43,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   isNeedCheckBySystem: string;
   latestReqDtCheckRapindo: string;
   leadNo: string;
-  latestCheckChassisNo: string;
+  latestCheckChassisNo: string = "";
   isAssetReady: boolean = false;
   InputLookupAssetObj: InputLookupObj;
   assetTypeId: string;
@@ -824,7 +824,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   }
 
   confirmFraudCheck() {
-    if (this.isNeedCheckBySystem == "0" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo) {
+    if (this.isNeedCheckBySystem == "0" && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 != this.latestCheckChassisNo && this.leadInputLeadDataObj.LeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
       if (confirm("Recent Chassis No different with previous Chassis No. Are you sure want to submit without fraud check again?")) {
         return true;
       }
