@@ -19,11 +19,11 @@ import { CookieService } from 'ngx-cookie';
 export class ContentLayoutComponent {  
     
     unsubscribe: any;
-    token: string;
+    token: string = null;
     constructor(public translate: TranslateService, private strService: StorageService, private route: ActivatedRoute, private cookieService: CookieService, private http: HttpClient) {
         const browserLang: string = translate.getBrowserLang();
         this.route.queryParams.subscribe(params => {
-            if (params['Token'] != null) {
+            if (params['Token'] != null && params['Token'] != "null") {
                 this.token = params['Token'];
                 AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, this.token);
             }

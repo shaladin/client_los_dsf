@@ -108,7 +108,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     
     changeModul() {
         var token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-        var url = environment.FoundationR3Web + NavigationConstant.PAGES_LOGIN + "?token=" + token;
+        var url = environment.FoundationR3Web + "/" + NavigationConstant.PAGES_LOGIN + "?token=" + token;
         window.open(url, "_blank");
     }
 
