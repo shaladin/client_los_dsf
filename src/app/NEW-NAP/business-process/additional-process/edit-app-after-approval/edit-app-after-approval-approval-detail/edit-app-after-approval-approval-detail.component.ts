@@ -12,6 +12,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -34,6 +35,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   arrValue = [];
   isViewReady: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+  IsRoleAssignment: string = "";
 
   constructor(private router: Router, 
     private route: ActivatedRoute, 
@@ -45,6 +47,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
         this.taskId = params["TaskId"];
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -53,10 +56,20 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.taskId;
 
-    await this.HoldTask(ApvHoldObj);
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      await this.HoldTask(ApvHoldObj);
+    }
 
     await this.getData();
     this.IsReadySummary = true;
+  }
+
+  async HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{      
+    
+      }
+    )
   }
 
   async getData()
@@ -89,14 +102,6 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
 
     this.InputApvObj.TrxNo = this.ChangeSummaryObj.EditAppAftApvTrxHObj.EditAppAftApvTrxNo;
     this.IsReady = true;
-  }
-
-  async HoldTask(obj){
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response)=>{      
-    
-      }
-    )
   }
 
   onApprovalSubmited(event)

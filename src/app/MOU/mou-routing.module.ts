@@ -86,6 +86,7 @@ import { MouExecutionPagingXComponent } from 'app/impl/MOU/mou-execution/mou-exe
 import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-review-detail/legal-review-detail-x.component';
 import { ChangeMouDetailDealerFinancingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing-x.component';
 import { ChangeMouDetailFactoringXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring-x.component';
+import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
 
 const routes: Routes = [
   {
@@ -292,6 +293,13 @@ const routes: Routes = [
         component: MouCancelComponent,
         data: {
           title: "MOU Cancel"
+        }
+      },
+      {
+        path: PathConstant.MOU_CUST_CANCEL_DETAIL,
+        component: MouCancelDetailComponent,
+        data: {
+          title: "MOU Cancel Detail"
         }
       },
       {

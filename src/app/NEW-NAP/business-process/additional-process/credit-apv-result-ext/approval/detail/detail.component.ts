@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
@@ -14,6 +15,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -30,7 +32,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   AppId: number;
   AgrmntId: number;
   CrdApvMainDataObj: ResCreditApvResultExtObj;
-
+  IsRoleAssignment: string = "";
   ApvReqId: number; 
   InputApvObj : UcInputApprovalObj;
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
@@ -40,7 +42,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   constructor(private router: Router, 
      private route: ActivatedRoute,
      private toastr: NGXToastrService,
-     private http: HttpClient,
+     private http: HttpClient
      ) {
 
     this.route.queryParams.subscribe(params => {
@@ -50,6 +52,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
         this.taskId = params["TaskId"];
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
+        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
@@ -59,10 +62,12 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   async ngOnInit() {
    await this.GetMainData();
 
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.taskId
-
+   var ApvHoldObj = new ApprovalObj();
+   ApvHoldObj.TaskId = this.taskId;
+   if(this.IsRoleAssignment != CommonConstant.TRUE){
     this.HoldTask(ApvHoldObj);
+   }
+    
     this.initInputApprovalObj();
   }
 
@@ -88,7 +93,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
       }
     )
   }
-
+  
   onAvailableNextTask(event)
   {
   }

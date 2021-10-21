@@ -40,6 +40,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
   FlatRateAfterCalc: number = 0;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  readonly BhvLock = CommonConstant.ProductBehaviourLock;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }
@@ -101,10 +102,20 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmStepUpStepDownCummulative) !== -1);
 
         if (this.CalcBaseOptions.length > 0) {
-          this.ParentForm.patchValue({
-            CalcBase: this.CalcBaseOptions[0].MasterCode
-          });
-          this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+          if (this.ParentForm.get("EffectiveRateBhv").value == this.BhvLock) {
+            this.ParentForm.patchValue({
+              CalcBase: CommonConstant.FinDataCalcBaseOnRate
+            });
+            this.ParentForm.get("RateType").disable();
+            this.ParentForm.get("EffectiveRatePrcnt").disable();
+            this.ParentForm.get("FlatRatePrcnt").disable();
+            this.ParentForm.get("InstAmt").disable();
+          } else {
+            this.ParentForm.patchValue({
+              CalcBase: this.CalcBaseOptions[0].MasterCode
+            });
+            this.SetEnableDisableInputByCalcBase(this.CalcBaseOptions[0].MasterCode);
+          }
           if (this.ParentForm.getRawValue().ExistingFinData) {
             this.ParentForm.patchValue({
               IsReCalculate: true

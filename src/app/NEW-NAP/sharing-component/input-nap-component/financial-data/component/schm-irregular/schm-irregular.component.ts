@@ -35,6 +35,7 @@ export class SchmIrregularComponent implements OnInit {
   FlatRateAfterCalc: number = 0;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  readonly BhvLock = CommonConstant.ProductBehaviourLock;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService) { }

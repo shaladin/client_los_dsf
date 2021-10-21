@@ -25,30 +25,44 @@ export class MouCustCompanyMgmntShrholderObj {
     MrCustTypeCode: string;
     CustTypeName: string;
     CustNo: string;
-  IsGuarantor: boolean;
+    IsGuarantor: boolean;
+    MrPositionSlikCode: string;
+    MrPublicTypeCode: string;
+    PublicName: string;
+    PublicIdentityNo: string;
+    MrShrholderTypeCode: string;
 
-constructor() { 
-        this.MouCustCompanyId = 0;
-        this.MouCustCompanyId = 0;
-        this.MgmntShrholderName = "";
-        this.MrJobPositionCode = "";
-        this.SharePrcnt = 0;
-        this.IsSigner = false;
-        this.IsOwner = false;
-        this.IsActive = false;
-        this.MrIdTypeCode = "";
-        this.IdNo = "";
-        this.BirthPlace = "";
-        this.MrGenderCode = "";
-        this.MrNationalityCode = "";
-        this.NationalityCountryCode = "";
-        this.TaxIdNo = "";
-        this.MobilePhnNo = "";
-        this.Email = "";
-        this.IndustryTypeCode = "";
-        this.MrCompanyTypeCode = "";
-        this.MrCustTypeCode = "";
-  this.CustNo = "";
-  this.IsGuarantor = false;
+    constructor() {
+      this.MouCustCompanyId = 0;
+      this.MouCustCompanyId = 0;
+      this.MgmntShrholderName = "";
+      this.MrJobPositionCode = "";
+      this.SharePrcnt = 0;
+      this.IsSigner = false;
+      this.IsOwner = false;
+      this.IsActive = false;
+      this.MrIdTypeCode = "";
+      this.IdNo = "";
+      this.BirthPlace = "";
+      this.MrGenderCode = "";
+      this.MrNationalityCode = "";
+      this.NationalityCountryCode = "";
+      this.TaxIdNo = "";
+      this.MobilePhnNo = "";
+      this.Email = "";
+      this.IndustryTypeCode = "";
+      this.MrCompanyTypeCode = "";
+      this.MrCustTypeCode = "";
+      this.CustNo = "";
+
+      this.MrPositionSlikCode = "";
+      this.MrPublicTypeCode = "";
+      this.PublicName = "";
+      this.PublicIdentityNo = "";
+      this.MrShrholderTypeCode = "";
+      this.BirthDt = null;
+      this.IdExpiredDt = null;
+      this.EstablishmentDt = null;
+      this.IsGuarantor = false;
     }
 }
