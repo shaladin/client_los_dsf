@@ -15,6 +15,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -43,7 +44,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerificationDt: Date;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService, private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
         this.VerfResultHId = params["VerfResultHId"];
@@ -164,7 +165,12 @@ export class CustConfirmationSubjViewComponent implements OnInit {
       this.CustNoObj.CustNo = this.AgrmntObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         });
     }
   }

@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-main-info',
@@ -37,7 +38,7 @@ export class MainInfoComponent implements OnInit {
   mouCustStatView: string;
   CustNoObj: GenericObj = new GenericObj();
 
-  constructor(private fb: FormBuilder, private http: HttpClient, public datepipe: DatePipe) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, public datepipe: DatePipe, private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     var mouCustObj = { Id: this.MouCustId }
@@ -80,7 +81,7 @@ export class MainInfoComponent implements OnInit {
     if (key == "mou") {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
     } else if (key == "cust") {
-      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+      this.adInsHelperService.OpenCustomerViewByCustId(this.custId);
     }
   }
 }

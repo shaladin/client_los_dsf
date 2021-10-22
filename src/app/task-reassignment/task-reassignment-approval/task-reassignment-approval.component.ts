@@ -108,7 +108,7 @@ export class TaskReassignmentApprovalComponent implements OnInit {
         else if (ev.RowObj.CurrentUser == "-") {
           await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
         }
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.TASK_REASSIGN_APV_DETAIL],{ "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "TaskReassignmentTrxId": ev.RowObj.TaskReassignmentTrxId});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.TASK_REASSIGN_APV_DETAIL],{ "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId, "TaskReassignmentTrxId": ev.RowObj.TaskReassignmentTrxId});
       }
       else if (ev.Key == "HoldTask") {
         if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {

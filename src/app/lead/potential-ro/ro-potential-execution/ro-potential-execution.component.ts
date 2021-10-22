@@ -7,6 +7,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import * as XLSX from 'xlsx';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-ro-potential-execution',
@@ -16,7 +17,8 @@ export class RoPotentialExecutionComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private toastr: NGXToastrService) { }
+    private toastr: NGXToastrService,
+    private adInsHelperService: AdInsHelperService) { }
 
   TempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   ListSelectedRo: Array<any>;
@@ -44,10 +46,10 @@ export class RoPotentialExecutionComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.RowObj.CustNo}).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );
