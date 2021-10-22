@@ -21,6 +21,8 @@ import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { forkJoin } from 'rxjs';
+import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
   selector: 'app-credit-approval-detail-x-dsf',
@@ -42,6 +44,7 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
   IsViewReady: boolean = false;
   getEvent: Array<any> = new Array();
   custHighlightCommentObj: CustHighlightCommentObj = null;
+  IsRoleAssignment: string = "";
   IsFD: boolean = false;
 
   private viewHighlightCommentComponent: ViewHighlightCommentComponent;
@@ -72,6 +75,9 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
       if (params["ApvReqId"] != null) {
         this.ApvReqId = params["ApvReqId"];
       }
+      if (params["IsRoleAssignment"] != null) {
+        this.IsRoleAssignment = params["IsRoleAssignment"];
+      }
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
@@ -82,7 +88,9 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
       var ApvHoldObj = new ApprovalObj()
       ApvHoldObj.TaskId = obj.taskId
 
-      this.HoldTask(ApvHoldObj);
+      if(this.IsRoleAssignment != CommonConstant.TRUE){
+        this.HoldTask(ApvHoldObj);
+      }
     });
   }
 
@@ -93,6 +101,11 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
+  }
+
+  crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
+  getCrdRvwAppObj(ev: CrdRvwAppObj) {
+    this.crdRvwAppObj = ev;
   }
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();

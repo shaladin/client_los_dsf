@@ -88,9 +88,10 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
   });
 
   inputLookupObjCopyProduct;
-  inputLookupObjName;
+  inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems;
   user: CurrentUserContext;
+  lobCode: string;
 
   leadObj: LeadObj;
   leadNo: string;
@@ -139,8 +140,10 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
     let refLob = this.listRefLobObj.find((x) => x.LobCode == this.NapAppForm.controls["LobCode"].value);
     if (refLob == undefined) {
       this.bizTemplateCode = null;
+      this.lobCode = null;
     } else {
       this.bizTemplateCode = refLob.BlCode;
+      this.lobCode = refLob.LobCode;
     }
     this.arrAddCrit = new Array();
 
@@ -160,14 +163,23 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
 
+    let addCritLob = new CriteriaObj();
+    addCritLob.DataType = "text";
+    addCritLob.propName = "rlob.LOB_CODE";
+    addCritLob.restriction = AdInsConstant.RestrictionEq;
+    addCritLob.value = this.lobCode;
+    this.arrAddCrit.push(addCritLob);
+
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
     this.prodOfrLookup.clear();
-    const component = this.prodOfrLookup.createComponent(componentFactory);
-    component.instance.lookupInput = this.inputLookupObjName;
-    component.instance.parentForm = this.NapAppForm;
-    component.instance.enjiForm = this.parentForm;
-    component.instance.identifier = "ProductOfferingNameIdentifier";
-    component.instance.lookup.subscribe((e) => { this.getLookupAppResponseName(e) });
+    if(this.NapAppForm.controls["LobCode"].value) {
+      const component = this.prodOfrLookup.createComponent(componentFactory);
+      component.instance.lookupInput = this.inputLookupObjName;
+      component.instance.parentForm = this.NapAppForm;
+      component.instance.enjiForm = this.parentForm;
+      component.instance.identifier = "ProductOfferingNameIdentifier";
+      component.instance.lookup.subscribe((e) => { this.getLookupAppResponseName(e) });
+    }
   }
 
   openView() {

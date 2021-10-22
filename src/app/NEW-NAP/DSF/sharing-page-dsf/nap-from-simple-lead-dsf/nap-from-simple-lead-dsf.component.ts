@@ -38,33 +38,26 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
 
   ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    // if (this.userAccess.RoleCode == 'MKT-MAO' || this.userAccess.RoleCode == 'DPC' || this.userAccess.RoleCode == 'MKT-MO')
-    // {
-    
-      this.inputPagingObj = new UcPagingObj();
-      this.inputPagingObj._url="./assets/ucpaging/searchAppFromSimpleLead.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromSimpleLead.json";
-  
-      if(environment.isCore){
-        this.inputPagingObj._url="./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
-        this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+
+    this.inputPagingObj = new UcPagingObj();
+    this.inputPagingObj._url="./assets/ucpaging/searchAppFromSimpleLead.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromSimpleLead.json";
+
+    if(environment.isCore){
+      this.inputPagingObj._url="./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+    }
+
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "RO.OFFICE_CODE",
+        environment: environment.FoundationR3Url + "/v1"
+      },
+      {
+        name: "L.MR_LEAD_SOURCE_CODE",
+        environment: environment.losUrl + "/v1"
       }
-  
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "RO.OFFICE_CODE",
-          environment: environment.FoundationR3Url + "/v1"
-        },
-        {
-          name: "L.MR_LEAD_SOURCE_CODE",
-          environment: environment.FoundationR3Url + "/v1"
-        }
-      ];
-    // }
-    // else
-    // {
-    //   this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
-    // }
+    ];
   }
 
   AddApp(ev){

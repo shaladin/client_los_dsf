@@ -29,6 +29,7 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
 
 @Component({
   selector: 'app-credit-review-detail-x-dsf',
@@ -67,7 +68,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   readonly CaptureStatScs: string = CommonConstant.CaptureStatScs;
   readonly CaptureStatFail: string = CommonConstant.CaptureStatFail;
 
-  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING + 'X';
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
@@ -78,6 +79,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     Reason: [''],
     Notes: ['']
   });
+  crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   IsFD: boolean = false;
 
   constructor(
@@ -119,6 +121,10 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
+  }
+
+  getCrdRvwAppObj(ev: CrdRvwAppObj) {
+    this.crdRvwAppObj = ev;
   }
 
   responseListTypeCodes: Array<TypeResultObj> = new Array();
@@ -320,22 +326,22 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
 
   PlafondAmt: number = 0;
   initInputApprovalObj(manualDevList = null) {
-    this.NapObj.AppId = this.appId;
-    var appObj = { Id: this.appId };
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
-      (response: AppObj) => {
-        if (response) {
-          this.NapObj = response;
-          this.bizTemplateCode = this.NapObj.BizTemplateCode;
-          this.lobCode = this.NapObj.LobCode;          
-          // if(this.lobCode == CommonConstantX.CFNA_LOB_CODE_FD ||
-          //    this.lobCode == CommonConstantX.CFNA_LOB_CODE_MPF)
-          // {      
+    // this.NapObj.AppId = this.appId;
+    // var appObj = { Id: this.appId };
+    // this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    //   (response: AppObj) => {
+    //     if (response) {
+    //       this.NapObj = response;
+    //       this.bizTemplateCode = this.NapObj.BizTemplateCode;
+    //       this.lobCode = this.NapObj.LobCode;          
+    //       // if(this.lobCode == CommonConstantX.CFNA_LOB_CODE_FD ||
+    //       //    this.lobCode == CommonConstantX.CFNA_LOB_CODE_MPF)
+    //       // {      
             
-          // }
-        }
-      }
-    )
+    //       // }
+    //     }
+    //   }
+    // )
     var Attributes: Array<ResultAttrObj> = new Array();
     var attribute1: ResultAttrObj = {
       AttributeName: "Approval Amount",
