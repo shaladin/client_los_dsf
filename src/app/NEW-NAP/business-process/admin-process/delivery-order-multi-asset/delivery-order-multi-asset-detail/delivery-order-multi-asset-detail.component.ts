@@ -263,20 +263,23 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   }
 
   createDOHandler() {
-    this.isCreateDOInvalid = true;
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
+    var formArraySelected : FormArray = new FormArray([]);
+
     for (var i = 0; i < formArray.length; i++) {
       if (formArray.at(i).get("IsSelected").value == true) {
-        this.isCreateDOInvalid = false;
-        break;
+        formArraySelected.push(formArray.at(i));
       }
     }
+
+    this.isCreateDOInvalid = formArraySelected.length == 0;
+
     if (this.isCreateDOInvalid) {
       this.createDOInvalidMsg = "At Least 1 Asset Must Be Selected";
       return false;
     }
     else {
-      this.showModalDO(formArray, "add", 0);
+      this.showModalDO(formArraySelected, "add", 0);
     }
   }
 
@@ -364,44 +367,27 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     }
   }
 
-  DOSubmitHandler() {
+  async DOSubmitHandler() {
     if (!this.isFinal) {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
     else {
-      var valid: boolean = true;
-
-      for (let index = 0; index < this.doAssetList.length; index++) {
-        if (this.doAssetList[index].SerialNo1 == '' || this.doAssetList[index].SerialNo1 == null || this.doAssetList[index].SerialNo1 == undefined) {
-          valid = false;
+      var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+      reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
+      reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
+      let urlApi: string = environment.isCore ? URLConstant.SubmitDeliveryOrderMultiAssetV2 : URLConstant.SubmitDeliveryOrderMultiAsset;
+      await this.httpClient.post(urlApi, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId }).toPromise().then(
+        async (response) => {
+          if (response["StatusCode"] != "200") return;
+          await this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).toPromise().then(
+            (response2) => {
+              if (response2["StatusCode"] != "200") return;
+              this.toastr.successMessage(response2["Message"]);
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": 'FL4W' });
+            }
+          )
         }
-        if (this.doAssetList[index].SerialNo2 == '' || this.doAssetList[index].SerialNo2 == null || this.doAssetList[index].SerialNo2 == undefined) {
-          valid = false;
-        }
-      }
-
-      if (valid) {
-        var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
-        reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
-        reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
-        let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
-        var submitDO = null;
-        if(environment.isCore){
-          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
-        }
-        else{
-          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
-        }
-        forkJoin([editTc, submitDO]).subscribe(
-          (response) => {
-            this.toastr.successMessage(response[1]["Message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING],{ "BizTemplateCode": 'FL4W'});
-          }
-        );
-      }
-      else {
-        this.toastr.warningMessage(ExceptionConstant.COMPLETE_SERIAL_NO_1_And_2_ALL_ASSET);
-      }
+      );
     }
   }
 

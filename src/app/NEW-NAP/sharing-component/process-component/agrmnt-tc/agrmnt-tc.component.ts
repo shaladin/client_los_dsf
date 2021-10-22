@@ -96,6 +96,7 @@ export class AgrmntTcComponent implements OnInit {
                 else {
                   TCDetail.controls.PromisedDt.disable();
                   TCDetail.controls.IsChecked.disable();
+                  TCDetail.controls.IsWaived.disable();
                   if(!this.AgrmntTcList[i].IsExpDtMandatory){
                     TCDetail.controls.ExpiredDt.disable();
                   }

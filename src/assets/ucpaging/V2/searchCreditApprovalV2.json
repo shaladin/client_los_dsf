@@ -30,7 +30,7 @@
         "type": "dropdown",
         "name": "a.ORI_OFFICE_CODE",
         "id": "OfficeNameId",
-        "value": "Office",
+        "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
         "ddlType": "all",
@@ -44,11 +44,12 @@
       },
       {
         "type": "textbox",
-        "name": "ATL.CURRENT_USER_ID",
+        "name": "CurrentUser",
         "id": "CurrentUserId",
         "value": "",
         "label": "Claim By",
-        "placeholder": "Placeholder"
+        "placeholder": "Placeholder",
+        "isCriteriaDataTable" : true
       }
     ],
     "headerList": [
@@ -96,6 +97,11 @@
         "type": "label",
         "position": "center",
         "label": "Take Back"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Unclaim"
       }
     ],
   "querystring": {
@@ -151,22 +157,83 @@
         ]
       },
       {
-        "type": "action",
-        "position": "center",
-        "action": [
+        "type" : "action",
+        "position" : "center",
+        "action" : [
           {
-            "type": "callback",
-            "key": "HoldTask"
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [ 
+                  {
+                      "isUser": false,
+                      "property" : "IsRoleAssignment", 
+                      "value" : false, 
+                      "restriction" : "EQ" 
+                  }
+                ],
+                "result" : { 
+                  "type": "callback",
+                  "key": "HoldTask",
+                  "icon" : "ft-edit-2"
+                },
+                "isHide" : false
+              }
+            ]
           }
         ]
       },
       {
-        "type": "action",
-        "position": "center",
-        "action": [
+        "type" : "action",
+        "position" : "center",
+        "action" : [
           {
-            "type": "callback",
-            "key": "TakeBack"
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [ 
+                  {
+                      "isUser": false,
+                      "property" : "IsRoleAssignment", 
+                      "value" : false, 
+                      "restriction" : "EQ" 
+                  }
+                ],
+                "result" : { 
+                  "type": "callback",
+                  "key": "TakeBack",
+                  "icon" : "ft-edit-2"
+                },
+                "isHide" : false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type" : "action",
+        "position" : "center",
+        "action" : [
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [ 
+                  {
+                      "isUser": false,
+                      "property" : "IsRoleAssignment", 
+                      "value" : true, 
+                      "restriction" : "EQ" 
+                  }
+                ],
+                "result" : { 
+                  "type": "callback",
+                  "key": "UnClaim",
+                  "icon" : "ft-edit-2"
+                },
+                "isHide" : false
+              }
+            ]
           }
         ]
       }

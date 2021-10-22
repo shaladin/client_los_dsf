@@ -9,6 +9,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { CustHighlightCommentObj } from 'app/shared/model/CustHighlightCommentObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -17,6 +18,7 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { forkJoin } from 'rxjs';
@@ -40,7 +42,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   IsViewReady: boolean = false;
   getEvent: Array<any> = new Array();
   custHighlightCommentObj: CustHighlightCommentObj = null;
-
+  IsRoleAssignment: string = "";
   private viewHighlightCommentComponent: ViewHighlightCommentComponent;
   @ViewChild(ViewHighlightCommentComponent) set content(
     content: ViewHighlightCommentComponent
@@ -69,6 +71,9 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       if (params["ApvReqId"] != null) {
         this.ApvReqId = params["ApvReqId"];
       }
+      if (params["IsRoleAssignment"] != null) {
+        this.IsRoleAssignment = params["IsRoleAssignment"];
+      }
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
@@ -79,7 +84,9 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       var ApvHoldObj = new ApprovalObj()
       ApvHoldObj.TaskId = obj.taskId
 
-      this.HoldTask(ApvHoldObj);
+      if(this.IsRoleAssignment != CommonConstant.TRUE){
+        this.HoldTask(ApvHoldObj);
+      }
     });
   }
 
@@ -91,6 +98,11 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
+  }
+
+  crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
+  getCrdRvwAppObj(ev: CrdRvwAppObj) {
+    this.crdRvwAppObj = ev;
   }
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
