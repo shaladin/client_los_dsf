@@ -27,6 +27,7 @@ import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
 import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import {ProdOfferingDObj} from 'app/shared/model/Product/ProdOfferingDObj.model';
 
 @Component({
   selector: 'app-credit-review-cr-detail-x',
@@ -67,7 +68,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     CreditScoring: ['']
   });
 
-  FormReturnObj = this.fb.group({
+  FormReturnObj  =this.fb.group({
     Reason: [''],
     Notes: ['']
   });
@@ -75,6 +76,9 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   lobCode: string;
   IsFD: boolean = false;
+
+  ProdOfferingCode:string;
+  ProdOfferingVersion:number;
 
   constructor(
     private route: ActivatedRoute,
@@ -122,15 +126,15 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   }
 
   responseListTypeCodes: Array<TypeResultObj> = new Array();
-  async GetListDeviation() {
-    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, { TrxNo: this.appNo }).toPromise().then(
+  async GetListDeviation(){
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {TrxNo: this.appNo}).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
       });
   }
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
-  BindManualDeviationData(ev) {
+  async BindManualDeviationData(ev) {
     this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
@@ -153,7 +157,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
         manualDevList.push(TypeCode);
       }
     }
-    this.initInputApprovalObj(manualDevList);
+    await this.initInputApprovalObj(manualDevList);
   }
 
   onChangeApprover(ev) {
@@ -178,6 +182,8 @@ export class CreditReviewCrDetailXComponent implements OnInit {
         if (response != undefined) {
           this.appNo = response.AppNo;
           this.lobCode = response.LobCode;
+          this.ProdOfferingCode = response.ProdOfferingCode;
+          this.ProdOfferingVersion = response.ProdOfferingVersion;
           await this.GetCreditScoring(response.AppNo);
         }
       });
@@ -320,16 +326,16 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   }
 
   PlafondAmt: number = 0;
-  initInputApprovalObj(manualDevList = null) {
-    var Attributes: Array<ResultAttrObj> = new Array();
-    var attribute1: ResultAttrObj = {
+  async initInputApprovalObj(manualDevList = null) {
+    let Attributes: Array<ResultAttrObj> = new Array();
+    const attribute1: ResultAttrObj = {
       AttributeName: "Approval Amount",
       AttributeValue: this.PlafondAmt.toString()
     };
     Attributes.push(attribute1);
 
-    var listTypeCode: Array<TypeResultObj> = new Array();
-    var TypeCode: TypeResultObj = {
+    let listTypeCode: Array<TypeResultObj> = new Array();
+    const TypeCode: TypeResultObj = {
       TypeCode: "CRD_APV_CF_TYPE",
       Attributes: Attributes,
     };
@@ -341,9 +347,19 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     if (manualDevList != null) {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
+
+    const obj = {
+      ProdOfferingCode: this.ProdOfferingCode,
+      RefProdCompntCode: 'CRD_APV',
+      ProdOfferingVersion: this.ProdOfferingVersion
+    };
+    await this.http.post<ProdOfferingDObj>(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      (resp)=>{
+        this.InputObj.CategoryCode = resp.RefProdCompntCode;
+        this.InputObj.SchemeCode = resp.CompntValue;
+      }
+    )
     this.InputObj.ApvTypecodes = listTypeCode;
-    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
     this.IsReady = true;
@@ -396,7 +412,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId
     }
-    
+
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstantX.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
