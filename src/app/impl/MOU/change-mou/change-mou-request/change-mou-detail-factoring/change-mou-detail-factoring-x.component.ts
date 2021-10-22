@@ -242,7 +242,7 @@ export class ChangeMouDetailFactoringXComponent implements OnInit {
       }
       this.MouDetailFactoringForm.updateValueAndValidity();
 
-      // this.instTypeHandler();
+      this.instTypeHandler();
       this.shouldComponentLoad = true;
       if (this.paidByList != null) {
         if (this.paidByList != null) {
@@ -300,9 +300,6 @@ export class ChangeMouDetailFactoringXComponent implements OnInit {
       this.MouDetailFactoringForm.controls["PayFreqCode"].disable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].enable();
-      this.MouDetailFactoringForm.patchValue({
-        SingleInstCalcMthd: this.singleInstCalcMthdList[0].Key,
-      });
     } else if (value == CommonConstant.MULTIPLE_INST_TYPE) {
       this.IsSingleIns = false;
       this.MouDetailFactoringForm.controls["PayFreqCode"].enable();

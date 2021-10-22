@@ -52,7 +52,18 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   @Output() UpdateCollateral: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
-  @ViewChild("LookupCollateral") ucLookupCollateral: UclookupgenericComponent;
+  private ucLookupCollateral: UclookupgenericComponent;
+  @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
+    if (content) {
+      this.ucLookupCollateral = content;
+    }
+  }
+  private ucLookupCollateralExisting: UclookupgenericComponent;
+  @ViewChild('LookupCollateralExisting') set contentExisting(contentExisting: UclookupgenericComponent) {
+    if (contentExisting) {
+      this.ucLookupCollateralExisting = contentExisting;
+    }
+  }
 
   listSelectedId: Array<number> = new Array<number>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
@@ -64,6 +75,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
   listCollateralData: Array<any> = new Array();
   inputLookupObj: InputLookupObj;
+  inputLookupObjExisting: InputLookupObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
 
@@ -160,6 +172,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   inputAddressObjForLocAddr: InputAddressObj;
   dealerGrading: string;
   dealerRating: number;
+  firstBindLookup:boolean = true;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
@@ -186,6 +199,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
     this.items = this.AddCollForm.get("items") as FormArray;
     this.bindUcLookup();
+    this.bindUcLookupExisting();
     this.initAddrObj();
     this.GetMouCustListAddrByMouCustId();
     await this.getInitPattern();
@@ -256,7 +270,13 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           AssetTypeCode: this.CollTypeList[0].Key,
         });
         this.onItemChange(this.CollTypeList[0].Key);
-        this.updateUcLookup(this.CollTypeList[0].Value, true, this.type);
+        if(this.firstBindLookup == true){
+          this.updateUcLookup(this.CollTypeList[0].Value, true, "AddEdit");
+          this.updateUcLookup(this.CollTypeList[0].Value, true, "AddExisting");
+          this.firstBindLookup = false;
+        }else{
+          this.updateUcLookup(this.CollTypeList[0].Value, true, this.type);
+        }
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType, }).subscribe(
@@ -312,13 +332,13 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   }
 
   bindUcLookupExisting() {
-    this.inputLookupObj = new InputLookupObj();
-    this.inputLookupObj.isReady = false;
-    this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
-    this.inputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
-    this.inputLookupObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
-    this.inputLookupObj.genericJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
-    this.inputLookupObj.isReady = true;
+    this.inputLookupObjExisting = new InputLookupObj();
+    this.inputLookupObjExisting.isReady = false;
+    this.inputLookupObjExisting.urlJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
+    this.inputLookupObjExisting.urlEnviPaging = environment.losUrl + "/v1";
+    this.inputLookupObjExisting.pagingJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
+    this.inputLookupObjExisting.genericJson = "./assets/uclookup/Collateral/lookupCollateralExisting.json";
+    this.inputLookupObjExisting.isReady = true;
   }
 
   updateUcLookup(value, firstBind, type) {
@@ -341,6 +361,14 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       this.criteriaObj.propName = "B.ASSET_TYPE_CODE";
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
+
+      this.inputLookupObj.nameSelect = "";
+      this.inputLookupObj.addCritInput = this.criteriaList;
+
+      if (this.ucLookupCollateral != undefined) {
+        if (!firstBind) this.ucLookupCollateral.setAddCritInput();
+      }
+
     } else {
       let arrMemberList = new Array();
       for (let index = 0; index < this.listCollateralData.length; index++) {
@@ -358,13 +386,13 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
       this.criteriaObj = new CriteriaObj();
       this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-      this.criteriaObj.propName = "MCC.ASSET_TYPE_CODE";
+      this.criteriaObj.propName = 'MCC.ASSET_TYPE_CODE';
       this.criteriaObj.value = value;
       this.criteriaList.push(this.criteriaObj);
 
       const criteriaMouCustIdObj = new CriteriaObj();
       criteriaMouCustIdObj.restriction = AdInsConstant.RestrictionNeq;
-      criteriaMouCustIdObj.propName = "MC.MOU_CUST_ID";
+      criteriaMouCustIdObj.propName = 'MC.MOU_CUST_ID';
       criteriaMouCustIdObj.value = this.MouCustId.toString();
       this.criteriaList.push(criteriaMouCustIdObj);
 
@@ -381,12 +409,12 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       addMouActive.restriction = AdInsConstant.RestrictionEq;
       addMouActive.value = CommonConstant.STAT_CODE_ACT;
       this.criteriaList.push(addMouActive);
-    }
 
-    this.inputLookupObj.nameSelect = "";
-    this.inputLookupObj.addCritInput = this.criteriaList;
-    if (this.ucLookupCollateral != undefined) {
-      if (!firstBind) this.ucLookupCollateral.setAddCritInput();
+      this.inputLookupObjExisting.nameSelect = "";
+      this.inputLookupObjExisting.addCritInput = this.criteriaList;
+      if (this.ucLookupCollateralExisting != undefined) {
+        if (!firstBind) this.ucLookupCollateralExisting.setAddCritInput();
+      }
     }
   }
 
@@ -614,6 +642,9 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
+
+          this.inputLookupObjExisting.nameSelect = this.collateralObj.FullAssetName;
+          this.inputLookupObjExisting.jsonSelect = this.collateralObj;
 
           this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
             Code: this.collateralObj.AssetTypeCode
@@ -970,6 +1001,9 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
 
         this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
         this.inputLookupObj.jsonSelect = this.collateralObj;
+
+        this.inputLookupObjExisting.nameSelect = this.collateralObj.FullAssetName;
+        this.inputLookupObjExisting.jsonSelect = this.collateralObj;
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.collateralObj.AssetTypeCode }).subscribe(
           (response: GenericListObj) => {
@@ -1485,13 +1519,13 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   }
 
   ChangeCollStat() {
-    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED') {
+    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       this.AddCollForm.controls.CollateralReceivedDt.enable();
 
       this.AddCollForm.controls.CollateralReleasedDt.disable();
       this.AddCollForm.controls.CollateralReleasedDt.clearValidators();
       this.AddCollForm.controls.CollateralReleasedDt.updateValueAndValidity();
-    } else {
+    } else if (this.AddCollForm.controls.CollateralStatus.value == 'RELEASED' && this.AddCollForm.controls.IsRequiredStatus.value == true){
       this.AddCollForm.controls.CollateralReleasedDt.enable();
 
       this.AddCollForm.controls.CollateralReceivedDt.disable();
@@ -1503,15 +1537,18 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   CollateralReceive() {
     let temp: AbstractControl;
 
-    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED') {
+    if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       temp = this.AddCollForm.controls.CollateralReceivedDt;
-    } else {
+    } else if(this.AddCollForm.controls.CollateralStatus.value == 'RELEASED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       temp = this.AddCollForm.controls.CollateralReleasedDt;
     }
 
     if (this.AddCollForm.controls.IsRequiredStatus.value) {
+      temp.enable();
       temp.setValidators([Validators.required]);
     } else {
+      this.AddCollForm.controls.CollateralReceivedDt.disable();
+      this.AddCollForm.controls.CollateralReleasedDt.disable();
       temp.clearValidators();
     }
     temp.updateValueAndValidity();

@@ -56,11 +56,10 @@ export class FamilyMainDataPagingXComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_SPOUSE_DATA)
         return;
       }
-
-      if(this.listFamily.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") != null){
-        this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_FAMILY_DATA)
-        return;
-      }
+    }
+    if(this.listFamily.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") != null){
+      this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_FAMILY_DATA)
+      return;
     }
     this.outputTab.emit();
   }
