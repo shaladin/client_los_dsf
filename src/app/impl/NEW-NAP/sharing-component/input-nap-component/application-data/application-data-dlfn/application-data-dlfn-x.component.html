@@ -98,7 +98,7 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <div class="form-group row" *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
+                      <div class="form-group row">
                         <label class="col-md-3 adins-required-label" translate>TOP Type</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="TopBased"
@@ -111,7 +111,7 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
+                      <div>
                         <div class="form-group row">
                           <label class="col-md-3 adins-required-label" translate>Term Of Payment (In Days)</label>
                           <div class="col-md-9">
@@ -200,11 +200,11 @@
                       <div class="form-group row adins-required">
                         <!-- Customer Bank Account -->
                         <label class="col-md-3 adInsLabel"
-                          *ngIf="this.SalesAppInfoForm.controls.MrWopCode.value == 'AD'"> Customer Bank
+                          *ngIf="this.SalesAppInfoForm.controls.MrWopCode.value == wopCodeAutoDebit"> Customer Bank
                           Account
                         </label>
                         <div class="col-md-9"
-                          *ngIf="this.SalesAppInfoForm.controls.MrWopCode.value == 'AD'">
+                          *ngIf="this.SalesAppInfoForm.controls.MrWopCode.value == wopCodeAutoDebit">
                           <select class="form-control adInsInput" style="width: 50%" formControlName="CustBankAcc"
                             (change)="selectedBank($event.target.value)"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.CustBankAcc.invalid }">
