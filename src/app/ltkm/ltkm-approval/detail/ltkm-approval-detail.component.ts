@@ -20,6 +20,7 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { LtkmReqObj } from 'app/shared/model/LTKM/LtkmReqObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
     selector: 'app-ltkm-approval-detail',
@@ -51,7 +52,6 @@ export class LtkmApprovalDetailComponent implements OnInit {
     appNo: string;
     rootServer: string;
     isDmsReady: boolean = false;
-
     ltkmReq: LtkmReqObj;
     ltkmAnalysisNotes: string = "";
     DDLReason;
@@ -82,20 +82,14 @@ export class LtkmApprovalDetailComponent implements OnInit {
             if (params["WfTaskListId"] != null) {
                 this.WfTaskListId = params["WfTaskListId"];
             }
-            var obj = {
-                taskId: params["TaskId"],
-                instanceId: params["InstanceId"],
-                approvalBaseUrl: environment.ApprovalR3Url
-            }
-            this.inputObj = obj;
-
-            var ApvHoldObj = new ApprovalObj()
-            ApvHoldObj.TaskId = obj.taskId
-
-            this.HoldTask(ApvHoldObj);
         });
     }
     async ngOnInit(): Promise<void> {
+        var ApvHoldObj = new ApprovalObj()
+        ApvHoldObj.TaskId = this.taskId;
+
+        this.HoldTask(ApvHoldObj);
+
         this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
         this.arrValue.push(this.LtkmCustId);
         this.InitData();

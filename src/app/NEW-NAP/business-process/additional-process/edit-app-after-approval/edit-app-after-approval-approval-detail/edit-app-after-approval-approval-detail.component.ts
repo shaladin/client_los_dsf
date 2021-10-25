@@ -12,6 +12,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -59,6 +60,17 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
     this.IsReadySummary = true;
   }
 
+  async HoldTask(obj){
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response)=>{      
+    
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING],{BizTemplateCode: this.BizTemplateCode});
+      }
+    )
+  }
+
   async getData()
   {
     let reqGetEditAppAftApv : GenericObj = new GenericObj();
@@ -89,14 +101,6 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
 
     this.InputApvObj.TrxNo = this.ChangeSummaryObj.EditAppAftApvTrxHObj.EditAppAftApvTrxNo;
     this.IsReady = true;
-  }
-
-  async HoldTask(obj){
-    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response)=>{      
-    
-      }
-    )
   }
 
   onApprovalSubmited(event)

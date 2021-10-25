@@ -167,6 +167,7 @@ export const ROUTES: RouteInfo[] = [
       Submenu: [
         { Path: NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING, Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
         { Path: NavigationConstant.NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING, Title: 'Credit Approval Result Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+        { Path: NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING, Title: 'Credit Approval Result Extension Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
         { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING, Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }]},
         { Path: NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING, Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }]},
         // { Path: NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP, Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] }
@@ -227,6 +228,7 @@ export const ROUTES: RouteInfo[] = [
         Submenu: [
           { Path: NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING, Title: 'Outstanding TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING, Title: 'Credit Approval Result Extension', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+          { Path: NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING, Title: 'Credit Approval Result Extension Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING, Title: 'Application / Agreement Cancelation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING, Title: 'Offering Validity Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP, Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] }
@@ -539,12 +541,12 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT, Title: 'Report Daily Pre Go Live By Product', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_PRE_GO_LIVE_BY_CMO, Title: 'Report Daily Pre Go Live By CMO', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_MONTHLY_INPROCESS_APP, Title: 'Report Monthly InProcess App', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: NavigationConstant.REPORT_DAILY_PENDING_APP_AFT_APV, Title: 'Report Daily Pending App Aft Apv', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_DAILY_PENDING_APP_AFT_APV, Title: 'Report Daily Pending Pre Go Live App Aft Apv', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_MONTHLY_PENDING_LEAD, Title: 'Report Monthly Pending Lead', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_CMO, Title: 'Report Monthly Pre Go Live By CMO', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_PRODUCT, Title: 'Report Monthly Pre Go Live By Product', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV, Title: 'Report Monthly Pending Pre Go Live Aft Apv', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: NavigationConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER, Title: 'Report Monthly Pre Go Live By Supplier', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER, Title: 'Report Monthly Pre Go Live Application By Supplier', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_MONTHLY_TOP_SUPPLIER, Title: 'Report Monthly Top Supplier', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: [] 
   },

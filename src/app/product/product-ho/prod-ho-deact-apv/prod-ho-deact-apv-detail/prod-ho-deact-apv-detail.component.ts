@@ -11,6 +11,8 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
   selector: 'app-prod-ho-deact-apv-detail',
@@ -42,8 +44,8 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
   ngOnInit() {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationForDeactApv.json";
   
-    let ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.TaskId
+    let ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.TaskId;
 
     this.HoldTask(ApvHoldObj);
     this. initInputApprovalObj();
@@ -64,14 +66,16 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
       });
   }
 
-
   HoldTask(obj){
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response)=>{
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV],{ });
       }
     )
   }
-
+  
   onApprovalSubmited(event)
   {
     let reqProdHoApvCustomObj = {

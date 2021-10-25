@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsConstant } from "app/shared/AdInstConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { ApprovalObj } from "app/shared/model/Approval/ApprovalObj.Model";
@@ -10,6 +11,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
+import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 import { environment } from "environments/environment";
 
 @Component({
@@ -52,14 +54,19 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.taskId;
 
+
     this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
   }
 
   HoldTask(obj: ApprovalObj) {
-    this.http
-      .post(AdInsConstant.ApvHoldTaskUrl, obj)
-      .subscribe((response) => { });
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      },
+      (error) => {
+        this.router.navigate([NavigationConstant.MOU_FREEZE_APV_PAGING]);
+      }
+    );
   }
 
   onAvailableNextTask(event) { }

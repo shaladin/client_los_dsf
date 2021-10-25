@@ -30,7 +30,7 @@
       "type": "dropdown",
       "name": "a.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
-      "value": "Office",
+      "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",

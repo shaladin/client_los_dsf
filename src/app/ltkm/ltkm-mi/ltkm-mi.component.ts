@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model'; 
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 @Component({
   selector: 'app-ltkm-mi',
   templateUrl: './ltkm-mi.component.html'
@@ -17,7 +18,7 @@ export class LtkMainInfoComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = []; //ltkmcustid
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLtkmMainInfo.json";
@@ -34,11 +35,11 @@ export class LtkMainInfoComponent implements OnInit {
         if(ev.ViewObj.CustId != 0)
         {
           if (ev.ViewObj.MrCustTypeCode == "PERSONAL") {
-            AdInsHelper.OpenCustomerViewByCustId(ev.ViewObj.CustId);
+            this.adInsHelperService.OpenCustomerViewByCustId(ev.ViewObj.CustId);
           } else {
-            AdInsHelper.OpenCustomerCoyViewByCustId(ev.ViewObj.CustId);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(ev.ViewObj.CustId);
           }
-      }
+        }
       } else if (ev.Key == "ViewApp") {
         if (ev.ViewObj.AppId != 0) {
           AdInsHelper.OpenAppViewByAppId(ev.ViewObj.AppId);

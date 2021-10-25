@@ -11,6 +11,8 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqUpdateProductPostApprovalObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 @Component({
   selector: 'app-prod-ho-apv-detail',
   templateUrl: './prod-ho-apv-detail.component.html'
@@ -65,6 +67,9 @@ export class ProdHoApvDetailComponent implements OnInit {
   HoldTask(obj) {
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV], {});
       }
     )
   }

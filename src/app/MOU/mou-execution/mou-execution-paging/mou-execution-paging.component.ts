@@ -9,6 +9,7 @@ import { environment } from 'environments/environment';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { CookieService } from 'ngx-cookie';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-execution-paging',
@@ -19,7 +20,7 @@ export class MouExecutionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
-  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -34,7 +35,7 @@ export class MouExecutionPagingComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true;
 
       this.requestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
-      this.requestTaskModel.TaskDefinitionKeys = [CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_GENERAL, CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_FACTORING,, CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_DLFN];
+      this.requestTaskModel.TaskDefinitionKeys = [CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_GENERAL, CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_FACTORING,CommonConstant.MOU_EXECUTION + CommonConstant.MOU_TYPE_DLFN];
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE], 
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
@@ -61,21 +62,14 @@ export class MouExecutionPagingComponent implements OnInit {
         }
       );
     } else if (event.Key == "customer") {
-      let custNo = event.RowObj.CustNo;
-      let custObj = { CustNo: custNo };
-      let custId: number;
-      let mrCustTypeCode: string;
+      let custObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          
-          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

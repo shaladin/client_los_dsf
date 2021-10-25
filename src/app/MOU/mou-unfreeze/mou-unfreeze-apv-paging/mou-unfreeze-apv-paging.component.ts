@@ -9,11 +9,14 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { String } from 'typescript-string-operations';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { environment } from 'environments/environment';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
   selector: 'app-mou-unfreeze-apv-paging',
@@ -23,13 +26,16 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
+  apvReqObj: ApprovalReqObj = new ApprovalReqObj();
+  integrationObj: IntegrationObj = new IntegrationObj();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(
     private toastr: NGXToastrService, 
     private httpClient: HttpClient, 
     private router: Router,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private apvTaskService: ApprovalTaskService) { }
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchMouFeezeUnfreezeApvPaging.json";
@@ -38,66 +44,56 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouFeezeUnfreezeApvPagingV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouFeezeUnfreezeApvPagingV2.json";
+
+      this.inputPagingObj.isJoinExAPI = true;
+
+      this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_MOU_FREEZE_UNFREEZE;
+      this.apvReqObj.Username = this.userContext.UserName;
+      this.apvReqObj.RoleCode = this.userContext.RoleCode;
+      this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
+      this.integrationObj.requestObj = this.apvReqObj;
+      this.integrationObj.leftColumnToJoin = "MouFreezeTrxNo";
+      this.integrationObj.rightColumnToJoin = "TransactionNo";
+      this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+      this.inputPagingObj.integrationObj = this.integrationObj; 
     }
 
-    this.arrCrit = new Array();
-    var critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'CATEGORY_CODE';
-    critObj.value = 'MOU_FREEZE_UNFREEZE';
-    this.arrCrit.push(critObj);
-
-    critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'CURRENT_USER_ID';
-    critObj.value = this.userContext.UserName;
-    this.arrCrit.push(critObj);
-
-
-    critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionOr;
-    critObj.propName = 'MAIN_USER_ID';
-    critObj.value = this.userContext.UserName;
-    this.arrCrit.push(critObj);
-
-    this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
-  CallBackHandler(ev) {
-    var ApvReqObj = new ApprovalObj();
+  async CallBackHandler(ev) {
+    var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if (ev.Key == "Process") {
-      if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
-      } else {
-        this.router.navigate([NavigationConstant.MOU_FREEZE_APV_DETAIL], { queryParams: { "MouCustId":ev.RowObj.MouCustId,"TrxId": ev.RowObj.TrxId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId } });
+      if(isRoleAssignment != CommonConstant.TRUE){
+        if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
+          this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+          return;
+        }
       }
+      else if (ev.RowObj.CurrentUser == "-") {
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+      }
+  
+      this.router.navigate([NavigationConstant.MOU_FREEZE_APV_DETAIL], { queryParams: { "MouCustId":ev.RowObj.MouCustId,"TrxId": ev.RowObj.TrxId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId } });
     }
     else if (ev.Key == "HoldTask") {
-      if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
-        ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["Message"]);
-          }
-        )
+        this.apvTaskService.HoldApvTask(ev.RowObj.TaskId);
       }
     }
     else if (ev.Key == "TakeBack") {
-      if (String.Format("{0:L}", ev.RowObj.MAIN_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.MainUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
-        ApvReqObj.TaskId = ev.RowObj.TaskId;
-        ApvReqObj.Username = ev.RowObj.MAIN_USER_ID;
-        this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["Message"]);
-          }
-        )
+        this.apvTaskService.TakeBackApvTask(ev.RowObj.TaskId, ev.RowObj.MainUser);
+      }
+    }
+    else if (ev.Key == "UnClaim") {
+      if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_UNCLAIM);
+      } else {
+        this.apvTaskService.UnclaimApvTask(ev.RowObj.TaskId);
       }
     }
     else {

@@ -7,6 +7,7 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-main-info',
@@ -26,7 +27,7 @@ export class MouMainInfoComponent implements OnInit {
   MouCustObj: MouCustObj = new MouCustObj();
   CustNoObj: GenericObj = new GenericObj();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private AdInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.whereValue.push(this.MouCustId);
@@ -50,13 +51,12 @@ export class MouMainInfoComponent implements OnInit {
       } else {
         this.CustNoObj.CustNo = ev.ViewObj.CustNo;
         this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-          responseCust => {
-            if(responseCust['MrCustTypeCode'] == CommonConstant.CustTypeCompany){
-              AdInsHelper.OpenCustomerCoyViewByCustId(responseCust["CustId"]);
+          response => {
+            if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+              this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
             }
-            
-            if(responseCust['MrCustTypeCode'] == CommonConstant.CustTypePersonal){
-              AdInsHelper.OpenCustomerViewByCustId(responseCust["CustId"]);
+            if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+              this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
             }
           });
       }

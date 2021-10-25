@@ -70,7 +70,7 @@
             "isFromURL": true,
             "ddlType": "all",
             "url": "",
-            "path": "/RefAppSrc/GetListKeyValueActive",
+            "path": "/RefAppSrc/GetListKvpRefAppSrc",
             "label": "Lead Source",
             "items": [],
             "itemsUrl": []

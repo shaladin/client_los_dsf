@@ -16,7 +16,6 @@ export class ProdOfferingPagingComponent implements OnInit {
 
   ngOnInit() {
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOffering.json";
-    this.InputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOffering.json";
 
     let WVTrxTypeCodeObj = new WhereValueObj();

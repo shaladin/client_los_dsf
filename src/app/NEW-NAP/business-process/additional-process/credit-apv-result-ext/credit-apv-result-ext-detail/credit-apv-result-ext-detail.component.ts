@@ -32,6 +32,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   UserAccess: CurrentUserContext;
   InputObj: UcInputRFAObj;
   AppNo: string;
+  AgrmntNo: string;
   IsReady: boolean;
   listReason: Array<KeyValueObj>;
   selected: String;
@@ -73,11 +74,12 @@ export class CreditApvResultExtDetailComponent implements OnInit {
 
       let obj = {
         AppId: this.AppId,
-        NewCrdApvResultExpDt: this.CrdApvRestExtForm.controls.NewCrdApvResultExpDt.value
+        NewCrdApvResultExpDt: this.CrdApvRestExtForm.controls.NewCrdApvResultExpDt.value,
+        AgrmntId : this.AgrmntId
       }
 
       let sendObj = {
-        RequestPurchaseOrderExtensionObj: obj,
+        ReqSubmitReqNewExpDateApv: obj,
         RequestRFAObj: this.RFAInfo
       }
 
@@ -92,10 +94,11 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   async GetMainData() {
-    this.http.post(URLConstant.GetCreditApvResultExtMainData, { AppId: this.AppId, AgrmntId: this.AgrmntId }).toPromise().then(
+    await this.http.post(URLConstant.GetCreditApvResultExtMainData, { AppId: this.AppId, AgrmntId: this.AgrmntId }).toPromise().then(
       (response: CreditApvResultExtObj) => {
         console.log(response);
         this.CrdApvMainDataObj = response;
+        this.AgrmntNo = this.CrdApvMainDataObj.AgrmntNo;
         this.CrdApvRestExtForm.patchValue({
           NewCrdApvResultExpDt: formatDate(this.CrdApvMainDataObj.CrdApvResultExpDt, 'yyyy-MM-dd', 'en-US')
         });
@@ -151,7 +154,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APV_RES_EXP_D;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CR_APV_RES_EXP_D;
     this.InputObj.Reason = this.listReason;
-    this.InputObj.TrxNo = this.AppNo
+    this.InputObj.TrxNo = this.AgrmntNo
     this.IsReady = true;
   }
 }

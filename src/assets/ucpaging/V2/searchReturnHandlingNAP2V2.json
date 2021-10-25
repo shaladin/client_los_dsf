@@ -1,5 +1,5 @@
 {
-    "title": "Return Handling - Edit NAP2",
+    "title": "Return Handling - Edit Application Data",
     "exportExcel": false,
     "component": [
       {
@@ -30,7 +30,7 @@
         "type": "dropdown",
         "name": "a.ORI_OFFICE_CODE",
         "id": "OfficeNameId",
-        "value": "Office",
+        "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
         "ddlType": "all",

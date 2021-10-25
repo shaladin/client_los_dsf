@@ -29,6 +29,10 @@ export class CommonConstant {
   public static InputTypeAmt = 'AMT';
   public static InputTypePrcnt = 'PRCNT';
 
+  // BOOLEAN CONDITION
+  public static TRUE = "true";
+  public static FALSE = "false";
+
   // REF CHANGE ITEM STAT
   public static ChangeItemCodeAssetDataSerialNo1 = 'ASSET_DATA_SERIAL_NO_1';
   public static ChangeItemCodeAssetDataSerialNo2 = 'ASSET_DATA_SERIAL_NO_2';
@@ -251,6 +255,7 @@ export class CommonConstant {
   public static RefProdCompntCodeCrApvResExpDays = "CR_APV_RES_EXP_DAYS";
   public static CollateralNeeded = "COLLATERALNEEDED";
   public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
+  public static REF_PROD_COMPNT_CODE_CRD_APV = "CRD_APV";
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
@@ -770,7 +775,7 @@ export class CommonConstant {
   public static SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL = "EDIT_APP_AFT_APV_APV_SCHM_NORMAL";
   public static SCHM_CODE_CHG_MOU_APV = "CHG_MOU_APV";
   public static SCHM_CODE_CHG_MOU_DLFN_APV = "CHG_MOU_DLFN_APV";
-  public static SCHM_CODE_CHG_MOU_FCTR_APV  = "CHG_MOU_FCTR_APV ";
+  public static SCHM_CODE_CHG_MOU_FCTR_APV  = "CHG_MOU_FCTR_APV";
   public static SCHM_CODE_MOU_FRZ_UNFRZ_DLFN = "MOU_FRZ_UNFRZ_DLFN";
   public static SCHM_CODE_MOU_FRZ_UNFRZ_FCTR = "MOU_FRZ_UNFRZ_FCTR";
   public static SCHM_CODE_CHG_MOU_EXP_APV = "CHG_MOU_EXP_APV";
@@ -917,6 +922,7 @@ export class CommonConstant {
 
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";
+  public static PRD_OFR_DEACT_APV = "PRD_OFR_DEACT_APV";
 
   //APP STAT
   public static AppStatCancel = "CAN";

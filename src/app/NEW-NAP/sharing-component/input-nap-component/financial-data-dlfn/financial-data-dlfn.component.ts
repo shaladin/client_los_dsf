@@ -151,8 +151,6 @@ export class FinancialDataDlfnComponent implements OnInit {
 
         this.FinDataForm.patchValue({
           TotalAssetPriceAmt: this.appFinDataObj.TotalInvcAmt - this.appFinDataObj.TotalRetentionAmt,
-          TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
-          TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
           InsCptlzAmt: this.appFinDataObj.InsCptlzAmt,
           TotalInsInscoAmt: this.appFinDataObj.TotalInsInscoAmt,

@@ -10,6 +10,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-change-mou-view',
@@ -27,7 +28,7 @@ export class ChangeMouViewComponent implements OnInit {
   arrValue = [];
   MouCustId: number;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["ChangeMouTrxId"] != null)
         this.ChangeMouTrxId = params["ChangeMouTrxId"];
@@ -55,10 +56,10 @@ export class ChangeMouViewComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

@@ -55,7 +55,7 @@ export class AgrmntActivationPagingComponent implements OnInit {
       var critCurrStep = new CriteriaObj();
       critCurrStep.restriction = AdInsConstant.RestrictionIn;
       critCurrStep.propName = 'A.APP_CURR_STEP';
-      critCurrStep.listValue = [CommonConstant.AppStepAgr, CommonConstant.AppStepLiv];
+      critCurrStep.listValue = [CommonConstant.AppStepAgr];
       this.inputPagingObj.addCritInput.push(critCurrStep);
     }
     else {

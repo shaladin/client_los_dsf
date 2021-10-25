@@ -16,6 +16,9 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 @Component({
   selector: 'app-mou-approval-general',
   templateUrl: './mou-approval-general.component.html'
@@ -46,12 +49,15 @@ export class MouApprovalGeneralComponent implements OnInit {
       }
       this.ApvReqId = params["ApvReqId"];
       this.taskId = params["TaskId"];
-
     });
   }
 
 
   async ngOnInit() : Promise<void> {
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.taskId;
+
+    this.HoldTask(ApvHoldObj);
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -82,6 +88,16 @@ export class MouApprovalGeneralComponent implements OnInit {
     this.initInputApprovalObj();
   }
 
+  HoldTask(obj) {
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
+      }
+    )
+  }
+
   MouApprovalDataForm = this.fb.group({
   })
 
@@ -89,6 +105,7 @@ export class MouApprovalGeneralComponent implements OnInit {
 
   }
 
+  
   onApprovalSubmited(event) {
     let ReqMouApvCustomObj = {
       Tasks: event.Tasks

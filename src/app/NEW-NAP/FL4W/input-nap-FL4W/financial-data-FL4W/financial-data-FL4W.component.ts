@@ -134,8 +134,6 @@ export class FinancialDataFL4WComponent implements OnInit {
 
         this.FinDataForm.patchValue({
           TotalAssetPriceAmt: this.appFinDataObj.TotalAssetPriceAmt,
-          TotalFeeAmt: this.appFinDataObj.TotalFeeAmt,
-          TotalFeeCptlzAmt: this.appFinDataObj.TotalFeeCptlzAmt,
           TotalInsCustAmt: this.appFinDataObj.TotalInsCustAmt,
           InsCptlzAmt: this.appFinDataObj.InsCptlzAmt,
           TotalInsInscoAmt: this.appFinDataObj.TotalInsInscoAmt,

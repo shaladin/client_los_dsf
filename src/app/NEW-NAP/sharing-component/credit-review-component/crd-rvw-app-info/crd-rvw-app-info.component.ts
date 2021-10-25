@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -18,6 +18,7 @@ export class CrdRvwAppInfoComponent implements OnInit {
   @Input() CrdRvwCustInfoId: number = 0;
   @Input() appId: number = 0;
   @Input() BizTemplateCode: string = "";
+  @Output() callbackCrdRvwAppObj: EventEmitter<CrdRvwAppObj> = new EventEmitter();
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
 
   constructor(
@@ -36,6 +37,7 @@ export class CrdRvwAppInfoComponent implements OnInit {
     await this.http.post<CrdRvwAppObj>(URLConstant.GetCrdRvwAppByCrdRvwCustInfoId, { Id: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.crdRvwAppObj = response;
+        this.callbackCrdRvwAppObj.emit(response);
       }
     );
   }
@@ -52,7 +54,7 @@ export class CrdRvwAppInfoComponent implements OnInit {
   scoringResultHObj: ScoringResultHObj = new ScoringResultHObj();
   ListScoringResultDObj: Array<ScoringResultDObj> = new Array<ScoringResultDObj>();
   async GetLatestListScoringResultHAndResultDByTrxSourceNo() {
-    await this.http.post<{ ScoringResultHObj: ScoringResultHObj, ListScoringResultDObj: Array<ScoringResultDObj> }>(URLConstant.GetLatestListScoringResultHAndResultDByTrxSourceNo, { TrxNo: this.crdRvwAppObj.AppNo }).toPromise().then(
+    await this.http.post<{ ScoringResultHObj: ScoringResultHObj, ListScoringResultDObj: Array<ScoringResultDObj> }>(URLConstant.GetLatestListScoringResultHAndResultDByTrxSourceNo, { TrxSourceNo: this.crdRvwAppObj.AppNo, TrxSourceType: "LOS" }).toPromise().then(
       (response) => {
         this.scoringResultHObj = response.ScoringResultHObj;
         this.ListScoringResultDObj = response.ListScoringResultDObj;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -16,6 +16,9 @@ import { String } from 'typescript-string-operations';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 @Component({
   selector: 'app-ltkm-approval-paging',
   templateUrl: './ltkm-approval-paging.component.html',
@@ -26,12 +29,16 @@ export class LtkmApprovalPagingComponent implements OnInit {
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
+  apvReqObj: ApprovalReqObj = new ApprovalReqObj();
+  integrationObj: IntegrationObj = new IntegrationObj();
   constructor(
     private route: ActivatedRoute, 
     private toastr: NGXToastrService, 
     private httpClient: HttpClient, 
     private router: Router,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private apvTaskService: ApprovalTaskService,
+    private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
      
     });
@@ -45,37 +52,32 @@ export class LtkmApprovalPagingComponent implements OnInit {
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchLtkmApprovalV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLtkmApprovalV2.json";
+
+      this.inputPagingObj.isJoinExAPI = true;
+
+      this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_AML_APV;
+      this.apvReqObj.Username = this.userContext.UserName;
+      this.apvReqObj.RoleCode = this.userContext.RoleCode;
+      this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
+      this.integrationObj.requestObj = this.apvReqObj;
+      this.integrationObj.leftColumnToJoin = "LtkmNo";
+      this.integrationObj.rightColumnToJoin = "TransactionNo";
+      this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+      this.inputPagingObj.integrationObj = this.integrationObj; 
     }
-    var arrCrit = new Array();
-    var critObj = new CriteriaObj();
-
-    critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'ATL.CURRENT_USER_ID';
-    critObj.value = this.userContext.UserName;
-    arrCrit.push(critObj);
-
-    critObj = new CriteriaObj();
-    critObj.DataType = 'text';
-    critObj.restriction = AdInsConstant.RestrictionOr;
-    critObj.propName = 'ATL.MAIN_USER_ID';
-    critObj.value = this.userContext.UserName;
-    arrCrit.push(critObj);
-
-    this.inputPagingObj.addCritInput = arrCrit;
   }
-  GetCallBack(ev: any) {
-    var ApvReqObj = new ApprovalObj();
+
+  async GetCallBack(ev: any) {
+    var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if(ev.Key == "customer"){
       this.CustNoObj.CustNo = ev.RowObj.CustNo;      
       this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );
@@ -84,35 +86,36 @@ export class LtkmApprovalPagingComponent implements OnInit {
         AdInsHelper.OpenLtkmViewByLtkmCustId(ev.RowObj.LtkmCustId);
     }
     else if(ev.Key == "Process"){
-      if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
-        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
-      } else {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_DETAIL],{ "LtkmCustId": ev.RowObj.LtkmCustId, "LtkmNo": ev.RowObj.LtkmNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId, "WfTaskListId": ev.RowObj.WfTaskListId });
+      if(isRoleAssignment != CommonConstant.TRUE){
+        if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
+          this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
+          return;
+        }
       }
+      else if (ev.RowObj.CurrentUser == "-") {
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+      }
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_DETAIL],{ "LtkmCustId": ev.RowObj.LtkmCustId, "LtkmNo": ev.RowObj.LtkmNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId, "WfTaskListId": ev.RowObj.WfTaskListId});
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
-        ApvReqObj.TaskId = ev.RowObj.TaskId;
-        this.httpClient.post(URLConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["Message"]);
-          }
-        )
+        this.apvTaskService.HoldApvTask(ev.RowObj.TaskId);
       }
     }
     else if (ev.Key == "TakeBack") {
       if (String.Format("{0:L}", ev.RowObj.MainUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
-        ApvReqObj.TaskId = ev.RowObj.TaskId;
-        ApvReqObj.Username = ev.RowObj.MainUser;
-        this.httpClient.post(URLConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["Message"]);
-          }
-        )
+        this.apvTaskService.TakeBackApvTask(ev.RowObj.TaskId, ev.RowObj.MainUser);
+      }
+    }
+    else if (ev.Key == "UnClaim") {
+      if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
+        this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_UNCLAIM);
+      } else {
+        this.apvTaskService.UnclaimApvTask(ev.RowObj.TaskId);
       }
     }
     else {

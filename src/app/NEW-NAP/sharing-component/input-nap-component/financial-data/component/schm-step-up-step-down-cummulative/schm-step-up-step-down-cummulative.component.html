@@ -178,7 +178,8 @@
               <label translate>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
+              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)"
+              [attr.disabled]="ParentForm.controls.EffectiveRateBhv.value == BhvLock">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of RateTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -209,7 +210,7 @@
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
+                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == BhvLock"
                     (focusout)="EffectiveRatePrcntInput_FocusOut()"
                     [options]="CurrencyMaskPrct"
                     currencyMask>
@@ -219,7 +220,7 @@
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
+                    [readonly]="ParentForm.controls.RateType.value != 'FLT' || ParentForm.controls.EffectiveRateBhv.value == BhvLock" (keyup)="SetNeedReCalculate(true)"
                     [options]="CurrencyMaskPrct"
                     currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
@@ -324,7 +325,8 @@
               <label translate>Calculate Base</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="CalcBase" class="form-control full-width" (change)="CalcBaseChanged($event)">
+              <select formControlName="CalcBase" class="form-control full-width" (change)="CalcBaseChanged($event)"
+              [attr.disabled]="ParentForm.controls.EffectiveRateBhv.value == BhvLock">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
               </select>
