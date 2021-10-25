@@ -54,7 +54,7 @@
             <label class="label-control" translate> Customer </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{CustCrdRvwExposureObj.ActiveAgrmnt}} / {{CustCrdRvwExposureObj.OsPrincipalAmt}} / {{CustCrdRvwExposureObj.OsArBalance}} </label>
+            <label class="label-control"> {{CustCrdRvwExposureObj.ActiveAgrmnt}} / {{CustCrdRvwExposureObj.OsPrincipalAmt | number:'.2':'en-US'}} / {{CustCrdRvwExposureObj.OsArBalance | number:'.2':'en-US'}} </label>
           </div>
         </div>
         <div class="row">
@@ -62,7 +62,7 @@
             <label class="label-control" translate> Customer Group </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{CustGroupCrdRvwExposureObj.ActiveAgrmnt}} / {{CustGroupCrdRvwExposureObj.OsPrincipalAmt}} / {{CustGroupCrdRvwExposureObj.OsArBalance}} </label>
+            <label class="label-control"> {{CustGroupCrdRvwExposureObj.ActiveAgrmnt}} / {{CustGroupCrdRvwExposureObj.OsPrincipalAmt | number:'.2':'en-US'}} / {{CustGroupCrdRvwExposureObj.OsArBalance | number:'.2':'en-US'}} </label>
           </div>
         </div>
         <div class="row">
@@ -70,7 +70,7 @@
             <label class="label-control" translate> Obligor </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{ObligorCrdRvwExposureObj.ActiveAgrmnt}} / {{ObligorCrdRvwExposureObj.OsPrincipalAmt}} / {{ObligorCrdRvwExposureObj.OsArBalance}} </label>
+            <label class="label-control"> {{ObligorCrdRvwExposureObj.ActiveAgrmnt}} / {{ObligorCrdRvwExposureObj.OsPrincipalAmt | number:'.2':'en-US'}} / {{ObligorCrdRvwExposureObj.OsArBalance | number:'.2':'en-US'}} </label>
           </div>
         </div>
         <div class="row">
@@ -80,11 +80,10 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control" translate> #App Submit / Reject / Approved / In Process </label>
+            <label class="label-control" translate> #App Submit / Reject / In Process / Live</label>
           </div>
           <div class="col-md-6">
-            <!-- <label class="label-control"> {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} /
-              {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} </label> -->
+            <label class="label-control"> {{crdRvwAppObj.AppSbmt}} / {{crdRvwAppObj.AppRjc}} / {{crdRvwAppObj.AppInPrc}} / {{crdRvwAppObj.AppLiv}} </label>
           </div>
         </div>
         <div class="row">

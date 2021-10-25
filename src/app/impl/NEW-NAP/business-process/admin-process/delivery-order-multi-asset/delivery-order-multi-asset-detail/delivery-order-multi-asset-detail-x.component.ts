@@ -329,20 +329,23 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   createDOHandler() {
-    this.isCreateDOInvalid = true;
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
+    var formArraySelected : FormArray = new FormArray([]);
+
     for (var i = 0; i < formArray.length; i++) {
       if (formArray.at(i).get("IsSelected").value == true) {
-        this.isCreateDOInvalid = false;
-        break;
+        formArraySelected.push(formArray.at(i));
       }
     }
+
+    this.isCreateDOInvalid = formArraySelected.length == 0;
+
     if (this.isCreateDOInvalid) {
       this.createDOInvalidMsg = "At Least 1 Asset Must Be Selected";
       return false;
     }
     else {
-      this.showModalDO(formArray, "add", 0);
+      this.showModalDO(formArraySelected, "add", 0);
     }
   }
 
@@ -459,20 +462,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
     else {
-      var valid: boolean = true;
-
-      if (this.LobCode != CommonConstantX.CF4W_LOB_CODE_CF) {
-        for (let index = 0; index < this.doAssetList.length; index++) {
-          if (this.doAssetList[index].SerialNo1 == '' || this.doAssetList[index].SerialNo1 == null || this.doAssetList[index].SerialNo1 == undefined) {
-            valid = false;
-          }
-          if (this.doAssetList[index].SerialNo2 == '' || this.doAssetList[index].SerialNo2 == null || this.doAssetList[index].SerialNo2 == undefined) {
-            valid = false;
-          }
-        }
-      }
-
-      if (valid) {
         var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
         reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
         reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
@@ -496,10 +485,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
           }
         );
-      }
-      else {
-        this.toastr.warningMessage(ExceptionConstant.COMPLETE_SERIAL_NO_1_And_2_ALL_ASSET);
-      }
     }
   }
 

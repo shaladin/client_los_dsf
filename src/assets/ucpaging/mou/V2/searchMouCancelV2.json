@@ -146,7 +146,7 @@
         {
             "type": "label",
             "position": "center",
-            "label": "ACTION"
+            "label": "Action"
         }
     ],
     "bodyList": [
@@ -199,9 +199,19 @@
             "position": "center",
             "action": [
                 {
-                    "type": "callback",
-                    "key": "cancel",
-                    "icon": "ft-x-circle"
+                    "type": "edit",
+                    "path": "Detail",
+                    "icon": "ft-edit-2",
+                    "param": [
+                        {
+                            "type": "MouCustId",
+                            "property": "MouCustId"
+                        },
+                        {
+                            "type": "WfTaskListId",
+                            "property": "Id"
+                        }
+                    ]
                 }
             ]
         }

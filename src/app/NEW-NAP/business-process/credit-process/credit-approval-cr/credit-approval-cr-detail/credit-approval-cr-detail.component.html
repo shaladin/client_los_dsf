@@ -7,7 +7,7 @@
     <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
     <div class="card-body">
       <div class="px-3" *ngIf="isShow">
-        <app-crd-rvw-cust-info [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [captureStat]="captureStat">
+        <app-crd-rvw-cust-info *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
         </app-crd-rvw-cust-info>
         <app-crd-rvw-fam-guar [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-fam-guar>
@@ -16,7 +16,7 @@
 
         <app-crd-rvw-third-party-checking *ngIf="AppObj.AppNo != ''" [AppNo]="AppObj.AppNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-third-party-checking>
-        <app-crd-rvw-app-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
+        <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
         </app-crd-rvw-app-info>
         <app-crd-rvw-asset [hidden]="BizTemplateCode==bizCfna" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
         <app-crd-rvw-asset-acc [hidden]="BizTemplateCode==bizCfna" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-asset-acc>

@@ -16,6 +16,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
   selector: 'app-mou-approval-factoring-x',
@@ -36,7 +39,7 @@ export class MouApprovalFactoringXComponent implements OnInit {
   IsReady: boolean = false;
   dmsObj: DMSObj;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-
+  IsRoleAssignment: string = "";
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
@@ -45,11 +48,18 @@ export class MouApprovalFactoringXComponent implements OnInit {
       }
       this.ApvReqId = params["ApvReqId"];
       this.taskId = params["TaskId"];
+      this.IsRoleAssignment = params["IsRoleAssignment"];
     });
   }
 
 
   async ngOnInit(): Promise<void> {
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.taskId;
+
+    if(this.IsRoleAssignment != CommonConstant.TRUE){
+      this.HoldTask(ApvHoldObj);
+    }
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -80,13 +90,20 @@ export class MouApprovalFactoringXComponent implements OnInit {
     this.initInputApprovalObj();
   }
 
+  HoldTask(obj) {
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      }
+    )
+  }
+
   MouApprovalDataForm = this.fb.group({
   })
 
   onAvailableNextTask(event) { }
-
+  
   onApprovalSubmited(event)
-  {
+  { 
     let ReqMouApvCustomObj = {
       Tasks: event.Tasks
     }

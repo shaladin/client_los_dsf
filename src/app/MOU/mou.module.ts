@@ -140,6 +140,8 @@ import { MouDetailFinancingXComponent } from 'app/impl/MOU/mou-customer-request/
 import { ChangeMouDetailDealerFinancingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing-x.component';
 import { ChangeMouDetailFactoringXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring-x.component';
 import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
+import { MouCustMgmntShrholderPublicComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -237,6 +239,7 @@ export const customCurrencyMaskConfig = {
     MouCustCompanyMainComponent,
     MouCustLegalDocComponent,
     MouCustMgmntShrholderComponent,
+    MouCustMgmntShrholderPublicComponent,
     SimilarMouPersonalDataComponent,
     SimilarMouCompanyDataComponent,
     MouDupCheckPagingComponent,
@@ -309,7 +312,8 @@ export const customCurrencyMaskConfig = {
     MouDetailGeneralXComponent,
     LegalReviewDetailXComponent,
     ChangeMouDetailDealerFinancingXComponent,
-    ChangeMouDetailFactoringXComponent
+    ChangeMouDetailFactoringXComponent,
+    MouCancelDetailComponent
   ],
   exports: [],
   providers: [NGXToastrService],

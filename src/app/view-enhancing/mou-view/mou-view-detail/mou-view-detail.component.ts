@@ -144,6 +144,14 @@ export class MouViewDetailComponent implements OnInit {
               this.MouCustDlrFindData.DealerCustNo = responses["DealerCustNo"];
               this.MouCustDlrFindData.Notes = responses["Notes"];
               this.MouCustDlrFindData.MaximumExtendTimes = responses["MaximumExtendTimes"];
+
+              if(responses["MrInstTypeCode"] == 'MULTIPLE'){
+                this.MouCustDlrFindData.PayFreqCode = this.setPayFreqMultipleInstallment(this.MouCustDlrFindData.PayFreqCode);
+              }
+              else{
+                this.MouCustDlrFindData.PayFreqCode = this.dictRefPayFreq[this.MouCustDlrFindData.PayFreqCode];
+              }
+
               var ObjectRefMaster = {
                 RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInstType,
                 MasterCode: responses["MrInstTypeCode"]
@@ -151,7 +159,6 @@ export class MouViewDetailComponent implements OnInit {
               this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, ObjectRefMaster).subscribe(
                 (responseRefMaster) => {
                   this.MrInstTypeCode = responseRefMaster["Descr"];
-
                 });
               this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.MouCustDlrFindData.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);
             })
@@ -175,6 +182,14 @@ export class MouViewDetailComponent implements OnInit {
       });
 
     this.IsReady = true;
+  }
+
+  setPayFreqMultipleInstallment(PayFreqCode: string){
+    let PayFreq =  PayFreqCode.split(';');
+    for(let i = 0; i < PayFreq.length; i++){
+      PayFreq[i] = this.dictRefPayFreq[PayFreq[i]]
+    }
+    return PayFreq.join(', ');
   }
 
   dictMasterCode: { [id: string]: string } = {};

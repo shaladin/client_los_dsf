@@ -12,6 +12,7 @@ import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetOb
 import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CookieService } from 'ngx-cookie';
+import { formatDate } from '@angular/common';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
@@ -228,9 +229,10 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   }
   
   async SaveForm() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.purchaseOrderHObj.MouNo = this.MouNo;
     this.purchaseOrderHObj.Notes = this.Notes;
-
+    this.purchaseOrderHObj.PurchaseOrderDt = new Date(formatDate(context[CommonConstant.BUSINESS_DT], 'yyyy-MM-dd', 'en-US'));
     // this.listPurchaseOrderD = new Array();
     // this.purchaseOrderDObj = new PurchaseOrderDObj();
 
@@ -243,6 +245,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
 
     var ListPORefMasterObj = await this.GetFromRule();
     var listPurchaseOrderD = this.GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj);
+    
     var POObj = {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: listPurchaseOrderD
