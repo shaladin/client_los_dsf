@@ -30,6 +30,7 @@ import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
+import {ProdOfferingDObj} from 'app/shared/model/Product/ProdOfferingDObj.model';
 
 @Component({
   selector: 'app-credit-review-detail-x-dsf',
@@ -82,6 +83,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   IsFD: boolean = false;
 
+  ProdOfferingCode:string;
+  ProdOfferingVersion:number;
+
   constructor(
     private route: ActivatedRoute,
     private ref: ApplicationRef,
@@ -128,7 +132,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   }
 
   responseListTypeCodes: Array<TypeResultObj> = new Array();
-  async GetListDeviation(){    
+  async GetListDeviation(){
     await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {TrxNo: this.appNo}).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
@@ -136,7 +140,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   }
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
-  BindManualDeviationData(ev) {
+  async BindManualDeviationData(ev) {
     this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
@@ -159,7 +163,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
         manualDevList.push(TypeCode);
       }
     }
-    this.initInputApprovalObj(manualDevList);
+    await this.initInputApprovalObj(manualDevList);
   }
 
   onChangeApprover(ev) {
@@ -184,6 +188,8 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
         if (response != undefined) {
           this.appNo = response.AppNo;
           this.lobCode = response.LobCode;
+          this.ProdOfferingCode = response.ProdOfferingCode;
+          this.ProdOfferingVersion = response.ProdOfferingVersion;
           await this.GetCreditScoring(response.AppNo);
         }
       });
@@ -325,7 +331,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   }
 
   PlafondAmt: number = 0;
-  initInputApprovalObj(manualDevList = null) {
+  async initInputApprovalObj(manualDevList = null) {
     // this.NapObj.AppId = this.appId;
     // var appObj = { Id: this.appId };
     // this.http.post(URLConstant.GetAppById, appObj).subscribe(
@@ -342,15 +348,15 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     //     }
     //   }
     // )
-    var Attributes: Array<ResultAttrObj> = new Array();
-    var attribute1: ResultAttrObj = {
+    let Attributes: Array<ResultAttrObj> = new Array();
+    const attribute1: ResultAttrObj = {
       AttributeName: "Approval Amount",
       AttributeValue: this.PlafondAmt.toString()
     };
     Attributes.push(attribute1);
 
-    var listTypeCode: Array<TypeResultObj> = new Array();
-    var TypeCode: TypeResultObj = {
+    let listTypeCode: Array<TypeResultObj> = new Array();
+    const TypeCode: TypeResultObj = {
       TypeCode: "CRD_APV_CF_TYPE",
       Attributes: Attributes,
     };
@@ -362,6 +368,19 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     if (manualDevList != null) {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
+
+    const obj = {
+      ProdOfferingCode: this.ProdOfferingCode,
+      RefProdCompntCode: 'CRD_APV',
+      ProdOfferingVersion: this.ProdOfferingVersion
+    };
+    await this.http.post<ProdOfferingDObj>(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      (resp)=>{
+        this.InputObj.CategoryCode = resp.RefProdCompntCode;
+        this.InputObj.SchemeCode = resp.CompntValue;
+      }
+    )
+
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
