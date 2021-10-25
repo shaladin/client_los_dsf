@@ -131,10 +131,10 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();
-    this.InputLookupAssetObj.urlJson = "./assets/uclookup/Lead/lookupAsset.json";
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/Lead/lookupSimpleLeadAsset.json";
     this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupAsset.json";
-    this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupSimpleLeadAsset.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupSimpleLeadAsset.json";
     this.InputLookupAssetObj.isRequired = false;
 
     this.generalSettingObj = new GenericListByCodeObj();
