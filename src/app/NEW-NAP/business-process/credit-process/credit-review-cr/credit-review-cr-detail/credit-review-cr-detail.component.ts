@@ -139,7 +139,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
         var Attributes = []
         var attribute1 = {
-          "AttributeName": "ApvAt",
+          "AttributeName": "APPROVAL AT",
           "AttributeValue": this.ManualDeviationData[this.ManualDeviationData.length - 1].ApvAt
         };
         Attributes.push(attribute1);
