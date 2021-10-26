@@ -68,12 +68,6 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsFinancial" label="Financial">
-              <ng-template matTabContent>
-                <app-agrmnt-financial [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></app-agrmnt-financial>
-              </ng-template>
-            </mat-tab>
-
             <mat-tab *ngIf="IsTC" label="Term and Conditions">
               <ng-template matTabContent >
                 <app-view-agrmnt-tc [AgrmntId]="AgrmntId"></app-view-agrmnt-tc>
