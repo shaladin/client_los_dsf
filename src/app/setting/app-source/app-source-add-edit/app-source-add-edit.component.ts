@@ -8,6 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { RefAppSrcObj } from 'app/shared/model/RefAppSrcObj.Model';
 import { formatDate } from '@angular/common';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-app-source-add-edit',
@@ -32,7 +33,7 @@ export class AppSourceAddEditComponent implements OnInit {
     IsActive:[true]
   });
 
-
+  readonly CancelLink: string = NavigationConstant.SETTING_APP_SOURCE_PAGING;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
@@ -98,7 +99,7 @@ export class AppSourceAddEditComponent implements OnInit {
         response => {
           this.toastr.successMessage(response["Message"]);
           //this.router.navigate(["/Setting/AppSource/Paging"], { queryParams: { "RefAppSrcId": this.rasObj.RefAppSrcId } });
-          AdInsHelper.RedirectUrl(this.router,["/Setting/AppSource/Paging"],{ "RefAppSrcId": this.rasObj.RefAppSrcId});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SETTING_APP_SOURCE_PAGING], {});
         }
       );
     } else {
@@ -114,7 +115,7 @@ export class AppSourceAddEditComponent implements OnInit {
         response => {
           this.toastr.successMessage(response["Message"]);
           //this.router.navigate(["/Setting/AppSource/Paging"], { queryParams: { "RefAppSrcId": this.rasObj.RefAppSrcId } });
-          AdInsHelper.RedirectUrl(this.router,["/Setting/AppSource/Paging"],{ "RefAppSrcId": this.rasObj.RefAppSrcId});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SETTING_APP_SOURCE_PAGING], {});
         }
       );
     }
