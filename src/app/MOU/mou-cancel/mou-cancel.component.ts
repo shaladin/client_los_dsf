@@ -48,11 +48,8 @@ export class MouCancelComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchMouCancelV2.json";
       this.inputPagingObj.isJoinExAPI = true;
       
-      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
-      this.RequestTaskModel.OfficeRoleCodes = [this.user[CommonConstant.ROLE_CODE],
-                                               this.user[CommonConstant.OFFICE_CODE],
-                                               this.user[CommonConstant.ROLE_CODE] + "-" + this.user[CommonConstant.OFFICE_CODE]];
-      
+      this.RequestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
+
       this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "MouCustNo";

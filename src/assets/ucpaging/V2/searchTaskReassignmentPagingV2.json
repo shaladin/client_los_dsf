@@ -13,7 +13,8 @@
             "isFromURL": true,
             "environment": "LOSV2",
             "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
-            "label": "Activity Name"
+            "label": "Activity Name",
+            "wfKeyFilter" : "TaskDefinitionKey"
         },
         {
             "type": "textbox",
