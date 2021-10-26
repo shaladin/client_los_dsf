@@ -206,7 +206,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.mode = "edit";
     this.currentEditedIndex = i;
 
-    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePersonal) {
+    if (this.listShareholder[i].MrShrholderTypeCode == CommonConstant.CustTypePersonal) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrGenderCode: this.listShareholder[i].MrGenderCode,
@@ -243,7 +243,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
     }
 
-    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypeCompany) {
+    if (this.listShareholder[i].MrShrholderTypeCode == CommonConstant.CustTypeCompany) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrCompanyTypeCode: this.listShareholder[i].MrCompanyTypeCode,
@@ -270,7 +270,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       }
     }
 
-    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePublic) {
+    if (this.listShareholder[i].MrShrholderTypeCode == CommonConstant.CustTypePublic) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: CommonConstant.CustTypePublic,
       });
