@@ -460,7 +460,7 @@ export class LtkmRequestXComponent implements OnInit {
     }
 
     Cancel() {
-        this.router.navigate(["/dashboard/dash-board"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
     }
 
     setCustPersonalObjForSave() {

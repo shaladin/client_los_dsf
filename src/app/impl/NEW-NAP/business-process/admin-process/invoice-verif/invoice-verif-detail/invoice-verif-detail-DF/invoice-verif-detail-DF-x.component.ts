@@ -40,8 +40,8 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
     IsReady: boolean = false;
     appTC: AppTCObj;
     RlistAppTCObj: {
-      ListAppTcObj: Array<AppTCObj>,
-      AppId: number
+        ListAppTcObj: Array<AppTCObj>,
+        AppId: number
     };
 
     InvoiceForm = this.fb.group({
@@ -50,17 +50,17 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
     StepperIndex: number = 1;
     IsReturnOn: boolean;
 
-    constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, 
-                private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
+    constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router,
+        private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
         this.route.queryParams.subscribe(params => {
             if (params["AppId"] != null) {
-            this.AppId = params["AppId"];
+                this.AppId = params["AppId"];
             }
             if (params["TaskListId"] != null) {
-              this.WfTaskListId = params["TaskListId"];
+                this.WfTaskListId = params["TaskListId"];
             }
             if (params["TrxNo"] != null) {
-              this.TrxNo = params["TrxNo"];
+                this.TrxNo = params["TrxNo"];
             }
         });
     }
@@ -76,7 +76,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
 
         this.RlistAppTCObj = {
             ListAppTcObj: [],
-            AppId : this.AppId
+            AppId: this.AppId
         }
         this.RlistAppTCObj.ListAppTcObj = new Array();
 
@@ -178,15 +178,15 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
     }
 
-    claimTask(){
-        if(environment.isCore){
-            if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
-              this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+    claimTask() {
+        if (environment.isCore) {
+            if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
+                this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
             }
-          }else if (this.WfTaskListId > 0) {
+        } else if (this.WfTaskListId > 0) {
             this.claimTaskService.ClaimTask(this.WfTaskListId);
-          }
-      }
+        }
+    }
 
     GetCallBack(ev) {
         if (ev.Key == "ViewProdOffering") {
@@ -196,21 +196,21 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
 
     ResumeWf() {
         let requestObj;
-        if(environment.isCore){
+        if (environment.isCore) {
             requestObj = new CompleteTaskModel();
             requestObj.TaskId = this.WfTaskListId;
             requestObj.ReturnValue = this.IsReturnOn ? AdInsConstant.TextTrue : AdInsConstant.TextFalse;
-        }else{
+        } else {
             requestObj = new WorkflowApiObj();
             requestObj.TaskListId = this.WfTaskListId;
             requestObj.ListValue["pBookmarkValue"] = CommonConstant.BOOKMARK_DONE;
         }
-        
+
         let ResumeWorkflowUrl = environment.isCore ? URLConstant.CompleteTask : URLConstant.ResumeWorkflow;
         this.httpClient.post(ResumeWorkflowUrl, requestObj).subscribe(
             response => {
                 this.toastr.successMessage(response["message"]);
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
             }
         );
     }

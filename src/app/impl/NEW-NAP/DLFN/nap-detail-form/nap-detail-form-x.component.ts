@@ -50,7 +50,7 @@ export class NapDetailFormXComponent implements OnInit {
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  BizTemplateCode: string = CommonConstant.DF;
+  BizTemplateCode: string;
   readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
@@ -72,6 +72,7 @@ export class NapDetailFormXComponent implements OnInit {
   appNo: string;
   isDmsReady: boolean = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -144,6 +145,7 @@ export class NapDetailFormXComponent implements OnInit {
               this.initDms();
             }
           }
+          this.BizTemplateCode = this.NapObj.BizTemplateCode;
         } else {
           this.AppStepIndex = 0;
           this.stepper.to(this.AppStepIndex);
@@ -383,7 +385,7 @@ export class NapDetailFormXComponent implements OnInit {
       this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.DF });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: this.BizTemplateCode });
         }
       )
     }

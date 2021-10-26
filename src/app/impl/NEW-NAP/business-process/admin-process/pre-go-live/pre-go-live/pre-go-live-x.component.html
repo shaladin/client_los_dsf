@@ -124,7 +124,7 @@
               <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Request For Approval</span>
             </button>
             <button type="button" class="btn btn-raised btn-warning mr-1"
-              [routerLink]="[CancelLink]">
+              [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: BizTemplateCode}">
               <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
             </button>
             <button *ngIf="IsCheckedAll && BizTemplateCode != 'DLFN'" type="submit"

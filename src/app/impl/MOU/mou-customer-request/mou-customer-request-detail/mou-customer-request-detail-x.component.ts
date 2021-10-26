@@ -198,7 +198,7 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
   }
 
   Back(): void {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
+    this.location.back();
   }
 
   Save() {
