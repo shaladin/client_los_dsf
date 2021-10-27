@@ -7,6 +7,7 @@ import { IntegrationObj } from "../library/IntegrationObj.model";
 export class UcTempPagingObj {
     urlJson: string;
     enviromentUrl: string;
+    title: string;
     apiQryPaging: string;
     pagingJson: string;
     isReady: boolean;
@@ -24,6 +25,7 @@ export class UcTempPagingObj {
     constructor() {
         this.urlJson = "";
         this.enviromentUrl = environment.isCore ? environment.losUrl + "/v2" : environment.losUrl + "/v1";
+        this.title = "";
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.pagingJson = "";
         this.isReady = false;

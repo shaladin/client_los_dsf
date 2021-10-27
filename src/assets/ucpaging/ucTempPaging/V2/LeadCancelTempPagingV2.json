@@ -109,22 +109,6 @@
             "criteriaPropValue": "LEAD_STAT",
             "items": [],
             "itemsUrl": []
-        },
-        {
-            "type": "processKey",
-            "datatype": "text",
-            "name": "ProcessKey",
-            "id": "processKeyId",
-            "value": "",
-            "ddlType": "one",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "environment": "FOU",
-            "path": "/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Workflow Code",
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "PRCS_KEY_LEAD_CANCEL",
-            "wfKeyFilter" : "ProcessKey"
         }
     ],
   "querystring": {
