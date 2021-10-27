@@ -65,6 +65,7 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_EDIT_APP_AFT_APV_APV;
       this.apvReqObj.Username = this.UserAccess.UserName;
       this.apvReqObj.RoleCode = this.UserAccess.RoleCode;
+      this.apvReqObj.OfficeCode = this.UserAccess.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "EditAppAftApvTrxNo";

@@ -45,6 +45,7 @@ export class ProdOfferingApvPagingComponent implements OnInit {
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_PRD_OFR_APV;
       this.apvReqObj.Username = this.UserContext.UserName;
       this.apvReqObj.RoleCode = this.UserContext.RoleCode;
+      this.apvReqObj.OfficeCode = this.UserContext.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "ProdOfferingCode";
