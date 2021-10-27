@@ -42,9 +42,9 @@ export class CrdRvwAppInfoXComponent implements OnInit {
       }
     );
   }
-  
+
   crdRvwCustInfoIncomeAndExpenseDetailsObj: CrdRvwCustInfoIncomeAndExpenseDetailsObj = new CrdRvwCustInfoIncomeAndExpenseDetailsObj();
-  async GetCrdRvwCustInfoIncomeAndExpenseDetails(){
+  async GetCrdRvwCustInfoIncomeAndExpenseDetails() {
     await this.http.post<CrdRvwCustInfoIncomeAndExpenseDetailsObj>(URLConstant.GetCrdRvwCustInfoIncomeAndExpenseDetails, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoIncomeAndExpenseDetailsObj = response;
@@ -55,7 +55,8 @@ export class CrdRvwAppInfoXComponent implements OnInit {
   scoringResultHObj: ScoringResultHObj = new ScoringResultHObj();
   ListScoringResultDObj: Array<ScoringResultDObj> = new Array<ScoringResultDObj>();
   async GetLatestListScoringResultHAndResultDByTrxSourceNo() {
-    await this.http.post<{ ScoringResultHObj: ScoringResultHObj, ListScoringResultDObj: Array<ScoringResultDObj> }>(URLConstant.GetLatestListScoringResultHAndResultDByTrxSourceNo, { TrxNo: this.crdRvwAppObj.AppNo }).toPromise().then(
+    console.log(this.scoringResultHObj);
+    await this.http.post<{ ScoringResultHObj: ScoringResultHObj, ListScoringResultDObj: Array<ScoringResultDObj> }>(URLConstant.GetLatestListScoringResultHAndResultDByTrxSourceNo, { TrxSourceNo: this.crdRvwAppObj.AppNo ,TrxSourceType: CommonConstant.LOAN_ORIGINATION}).toPromise().then(
       (response) => {
         this.scoringResultHObj = response.ScoringResultHObj;
         this.ListScoringResultDObj = response.ListScoringResultDObj;
