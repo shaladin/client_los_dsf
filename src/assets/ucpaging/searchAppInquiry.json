@@ -111,7 +111,7 @@
       "items": [],
       "itemsUrl": [],
       "criteriaPropName": "Code",
-      "criteriaPropValue": "APP_STEP"
+      "criteriaPropValue": "AGR_STEP"
     },
     {
       "type": "dropdown",
