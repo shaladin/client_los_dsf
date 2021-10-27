@@ -27,7 +27,7 @@
       "ddlType": "all",
       "items": [],
       "isFromURL": true,
-      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/AssetType/GetListKeyValueActiveByCode",
+      "url": "http://r3app-server.ad-ins.com/FOUNDATION_DEV/AssetType/GetListKeyValueActiveByCode",
       "itemsUrl": []
     }
   ],

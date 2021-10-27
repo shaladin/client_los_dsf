@@ -31,6 +31,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   viewVendorBranchObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
+  BizTemplateCode: string; 
   CrdApvMainDataObj: ResCreditApvResultExtObj;
   ApvReqId: number; 
   InputApvObj : UcInputApprovalObj;
@@ -54,6 +55,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
       }
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
+      this.BizTemplateCode = params["BizTemplateCode"]; 
     });
   }
 
@@ -115,7 +117,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
 
   onCancelClick()
   {
-    this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING]);
+    this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING], {queryParams: {"BizTemplateCode": this.BizTemplateCode}});
   }
 
   GetCallBack(e){

@@ -78,6 +78,7 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
       critObjBizTmpl.restriction = AdInsConstant.RestrictionEq;
       critObjBizTmpl.value = this.BizTemplateCode;
       this.arrCrit.push(critObjBizTmpl);  
+      this.inputPagingObj.addCritInput = this.arrCrit; 
     }
 
   }
@@ -95,7 +96,7 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
         await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
 
-      this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL], { queryParams: { "CrdApvResultExtId": ev.RowObj.CrdApvResultExtId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "AppId": ev.RowObj.AppId, "AgrmntId": ev.RowObj.AgrmntId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId } });
+      this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL], { queryParams: { "CrdApvResultExtId": ev.RowObj.CrdApvResultExtId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "AppId": ev.RowObj.AppId, "AgrmntId": ev.RowObj.AgrmntId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId, "BizTemplateCode": this.BizTemplateCode} });
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.UserAccess.UserName)) {

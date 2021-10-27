@@ -155,7 +155,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
     this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_FRAUD_VERIF_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
       });
   }
 
@@ -170,7 +170,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
     this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_FRAUD_VERIF_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
       });
   }
 

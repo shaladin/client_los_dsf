@@ -95,6 +95,22 @@
             "itemsUrl": [],
             "criteriaPropName": "Code",
             "criteriaPropValue": "MOUC_STAT"
+        },
+        {
+            "type": "processKey",
+            "datatype": "text",
+            "name": "ProcessKey",
+            "id": "processKeyId",
+            "value": "",
+            "ddlType": "one",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "environment": "FOU",
+            "path": "/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Workflow Code",
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "PRCS_KEY_MOU_CANCEL",
+            "wfKeyFilter" : "ProcessKey"
         }
     ],
   "querystring": {

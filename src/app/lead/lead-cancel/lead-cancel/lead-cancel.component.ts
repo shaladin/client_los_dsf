@@ -43,12 +43,8 @@ export class LeadCancelComponent implements OnInit {
       this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/V2/LeadCancelTempPagingV2.json";
       this.tempPagingObj.isJoinExAPI = true
       
-      this.RequestTaskModel.ProcessKeys = [CommonConstant.WF_CODE_LEAD,CommonConstant.WF_CODE_SIMPLE_LEAD];
-      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
-                                               UserAccess[CommonConstant.OFFICE_CODE],
-                                               UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE],
-                                              ];
-      
+      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
+
       this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "LeadNo";
