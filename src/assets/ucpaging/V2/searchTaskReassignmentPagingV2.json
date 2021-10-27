@@ -76,19 +76,13 @@
             "type": "sort",
             "position": "center",
             "label": "Created Date",
-            "name": "Created"
+            "name": "startTime"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Username",
             "name": "Assignee"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "User Role",
-            "name": "TaskRoleCode"
         },
         {
             "type": "label",
@@ -110,17 +104,12 @@
         {
             "type": "date",
             "position": "center",
-            "property": "Created"
+            "property": "startTime"
         },
         {
             "type": "text",
             "position": "left",
             "property": "Assignee"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "TaskRoleCode"
         },
         {
             "type": "action",

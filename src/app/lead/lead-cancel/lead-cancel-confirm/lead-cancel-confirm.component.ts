@@ -32,9 +32,12 @@ export class LeadCancelConfirmComponent implements OnInit {
   tempLeadIds: string;
   tempLeadArr: Array<string>;
   WfTaskListIds: string;
+  MrLeadTypeCode: string;
+  title: string;
   reqIdListObj: GenericListByIdObj = new GenericListByIdObj();
 
-  readonly CancelLink: string = NavigationConstant.LEAD_CANCEL;
+  PagingLink: string;
+
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -55,7 +58,13 @@ export class LeadCancelConfirmComponent implements OnInit {
         this.WfTaskListIds = params['WfTaskListIds'];
         this.tempWfTaskListArr = this.WfTaskListIds.split(',');
       }
+
+      if (params["MrLeadTypeCode"] != null) {
+        this.MrLeadTypeCode = params["MrLeadTypeCode"];
+      }
     });
+    this.title = this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeLead ? CommonConstant.LeadCancelTitle : CommonConstant.SimpleLeadCancelTitle;
+    this.PagingLink = this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeLead ? NavigationConstant.LEAD_CANCEL : NavigationConstant.SIMPLE_LEAD_CANCEL;
     this.reqIdListObj = { 'Ids': this.tempLeadArr.map(Number) };
     this.http.post(URLConstant.GetListLeadForLeadCancelByListLeadId, this.reqIdListObj).subscribe(
       response => {
@@ -103,10 +112,11 @@ export class LeadCancelConfirmComponent implements OnInit {
       leadObj.ListWfTaskListId = this.tempWfTaskListArr;
 
       let urlPost = environment.isCore ? URLConstant.EditListLeadForCancelByListLeadIdV2 : URLConstant.EditListLeadForCancelByListLeadId;
+      
       this.http.post(urlPost, leadObj).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_CANCEL], {});
+          AdInsHelper.RedirectUrl(this.router, [this.PagingLink], {"MrLeadTypeCode" : this.MrLeadTypeCode});
         }
       );
     }

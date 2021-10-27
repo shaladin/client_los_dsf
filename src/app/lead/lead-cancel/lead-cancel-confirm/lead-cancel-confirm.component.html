@@ -5,10 +5,10 @@
         <div class="card-header">
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate>LEAD CANCEL</h4>
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>{{title}}</h4>
             </div>
             <div class="col-md-4" style="text-align-last: right">
-              <button type="button" [routerLink]="[CancelLink]" class="btn btn-raised btn-warning mr-1"
+              <button type="button" [routerLink]="[PagingLink]" [queryParams]="{MrLeadTypeCode : MrLeadTypeCode}" class="btn btn-raised btn-warning mr-1"
                 translate><i class="ft-x"></i>&nbsp;<span translate>Back</span>
               </button>
             </div>
