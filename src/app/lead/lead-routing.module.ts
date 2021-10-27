@@ -283,7 +283,7 @@ const routes: Routes = [
         path: PathConstant.SIMPLE_LEAD_CANCEL_PAGING,
         component: LeadCancelComponent,
         data: {
-          title: 'Lead Cancel'
+          title: 'Simple Lead Cancel'
         }
       }
     ]
