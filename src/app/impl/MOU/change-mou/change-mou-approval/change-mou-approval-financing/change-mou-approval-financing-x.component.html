@@ -11,15 +11,17 @@
                         </div>
                     </div>
                 </div>
-                <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
-                </lib-ucviewgeneric>
+                <app-mou-main-info-x [MouCustId]="MouCustId" [ChangeMouTrxId]= "changeMouTrxId"></app-mou-main-info-x>
                 <div class="px-3">
                     <mat-tab-group>
                         <mat-tab label="MOU Detail">
                             <ng-template matTabContent>
-                                <div class="px-3">
-                                <app-change-mou-detail-x [ChangeMouTrxId]="changeMouTrxId" [MouCustId]="MouCustId"
-                                    [MouType]="MouType" [TrxType]="TrxType"></app-change-mou-detail-x>
+                                <div class="px-3" *ngIf="TrxType != TrxTypeReqExp">
+                                  <app-change-mou-detail-x [ChangeMouTrxId]="changeMouTrxId" [MouCustId]="MouCustId"
+                                      [MouType]="MouType" [TrxType]="TrxType"></app-change-mou-detail-x>
+                                </div>
+                                <div class="px-3" *ngIf="TrxType == TrxTypeReqExp">
+                                  <app-mou-view-detail-x [MouCustId]="MouCustId" [MouType]="MouType"></app-mou-view-detail-x>
                                 </div>
                             </ng-template>
                         </mat-tab>

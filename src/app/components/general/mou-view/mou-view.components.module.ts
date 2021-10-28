@@ -13,10 +13,10 @@ import { MouViewTcComponent } from './mou-view-tc/mou-view-tc.component';
 import { MouViewThirdPartyComponent } from 'app/view/mou-view/mou-view-third-party/mou-view-third-party.component';
 import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
 import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-view-analysis-result.component';
-import { MouViewDetailXComponent } from 'app/impl/components/general/mou-view/mou-view-detail/mou-view-detail-x.component';
 import { ShrCompMouModule } from 'app/components/sharing-components/shr-comp-mou/shr-comp-mou.module';
 import { MouTabViewAddcollXComponent } from 'app/impl/components/general/mou-view/mou-tab-view-addcoll/mou-tab-view-addcoll-x.component';
 import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import {MouViewModule} from 'app/view-enhancing/mou-view/mou-view.module';
 
 @NgModule({
     imports: [
@@ -26,7 +26,8 @@ import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Modul
         AdInsSharedModule,
         UcgridviewModule,
         ShrCompMouModule,
-        UcapprovalgeneralinfoModule
+        UcapprovalgeneralinfoModule,
+        MouViewModule
     ],
     declarations: [
         MouTabViewAddcollComponent,
@@ -38,7 +39,6 @@ import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Modul
         MouViewSurveyComponent,
         MouViewTcComponent,
         MouViewAnalysisResultComponent,
-        MouViewDetailXComponent,
         MouTabViewAddcollXComponent
     ],
     exports: [
@@ -51,7 +51,6 @@ import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Modul
         MouViewSurveyComponent,
         MouViewTcComponent,
         MouViewAnalysisResultComponent,
-        MouViewDetailXComponent,
         MouTabViewAddcollXComponent
     ]
 })

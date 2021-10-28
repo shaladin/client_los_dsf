@@ -93,7 +93,8 @@ import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Modul
         UcapprovalhistComponent,
     ],
     exports: [
-        MouViewAddcollXComponent
+        MouViewAddcollXComponent,
+        MouViewDetailXComponent
     ]
 
 })
