@@ -185,8 +185,8 @@ export class DoAssetDetailXComponent implements OnInit {
         AppCollateralId: [item.AppCollateralId],
         DocCode: [item.DocCode],
         DocName: [item.DocName],
-        DocNo: [item.DocNo, isMandatory ? [Validators.required] : []],
-        IsReceived: [item.IsReceived],
+        DocNo: [item.DocNo],
+        IsReceived: [item.IsReceived, isMandatory ? [Validators.requiredTrue] : []],
         ExpiredDt: [item.ExpiredDt],
         DocNotes: [item.DocNotes],
         IsValueNeeded: [item.IsValueNeeded],
@@ -198,6 +198,23 @@ export class DoAssetDetailXComponent implements OnInit {
     }
   }
 
+  ReceiveDocument(idx)
+  {
+    var listDoc = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
+    var DocReceived = listDoc.at(idx);
+
+    if(DocReceived['controls']['IsReceived'].value){
+      if(DocReceived['controls']['IsValueNeeded'].value){
+        DocReceived['controls']['DocNo'].setValidators(Validators.required);
+        DocReceived['controls']['DocNo'].updateValueAndValidity();
+      }
+    }
+    else{
+      DocReceived['controls']['DocNo'].clearValidators();
+      DocReceived['controls']['DocNo'].updateValueAndValidity();
+    }
+  }
+  
   Save(){
     var formData = this.DOAssetDetail.value;
     var appAssetData = {
