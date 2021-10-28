@@ -11,24 +11,6 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "MC.MR_MOU_TYPE_CODE",
-            "id": "MrMouTypeCode",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "ddlType": "all",
-            "url": "",
-            "environment": "FOU",
-            "path": "/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Mou Type",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_TYPE"
-        },
-        {
             "type": "textbox",
             "name": "MC.CUST_NAME",
             "id": "CustNameId",
@@ -95,22 +77,6 @@
             "itemsUrl": [],
             "criteriaPropName": "Code",
             "criteriaPropValue": "MOUC_STAT"
-        },
-        {
-            "type": "processKey",
-            "datatype": "text",
-            "name": "ProcessKey",
-            "id": "processKeyId",
-            "value": "",
-            "ddlType": "one",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "environment": "FOU",
-            "path": "/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Workflow Code",
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "PRCS_KEY_MOU_CANCEL",
-            "wfKeyFilter" : "ProcessKey"
         }
     ],
   "querystring": {
@@ -226,6 +192,10 @@
                         {
                             "type": "WfTaskListId",
                             "property": "Id"
+                        },
+                        {
+                            "type": "MrMouTypeCode",
+                            "property": "MrMouTypeCode"
                         }
                     ]
                 }

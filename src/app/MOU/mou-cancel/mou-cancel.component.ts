@@ -16,6 +16,7 @@ import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskMod
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -27,6 +28,7 @@ export class MouCancelComponent implements OnInit {
   user: CurrentUserContext;
   RequestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj : IntegrationObj = new IntegrationObj();
+  MrMouTypeCode :string;
 
   constructor(
     private http: HttpClient,
@@ -35,7 +37,13 @@ export class MouCancelComponent implements OnInit {
     private router: Router, 
     private cookieService: CookieService,
     private AdInsHelperService: AdInsHelperService
-  ) { }
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if (params['MrMouTypeCode'] != null) {
+        this.MrMouTypeCode = params['MrMouTypeCode'];
+      }
+     });
+  }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -48,13 +56,31 @@ export class MouCancelComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchMouCancelV2.json";
       this.inputPagingObj.isJoinExAPI = true;
       
+      this.RequestTaskModel.ProcessKey = this.getMouWorkflowCode();
       this.RequestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
-
+      
       this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "MouCustNo";
       this.IntegrationObj.rightColumnToJoin = "BusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
+      
+      let critLobObj = new CriteriaObj();
+      critLobObj.restriction = AdInsConstant.RestrictionEq;
+      critLobObj.propName = 'MC.MR_MOU_TYPE_CODE';
+      critLobObj.value = this.MrMouTypeCode;
+      this.inputPagingObj.addCritInput.push(critLobObj);
+    }
+  }
+
+  getMouWorkflowCode() {
+    switch(this.MrMouTypeCode) {
+      case CommonConstant.MOU_TYPE_GENERAL:
+        return CommonConstant.WF_MOU_GENERAL;
+      case CommonConstant.MOU_TYPE_FACTORING:
+        return CommonConstant.WF_MOU_FACTORING;
+      default:
+        return CommonConstant.WF_MOU_DLFN;
     }
   }
 
@@ -66,7 +92,7 @@ export class MouCancelComponent implements OnInit {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
             this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          else if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
             this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
@@ -84,7 +110,7 @@ export class MouCancelComponent implements OnInit {
           response => {
             this.toastr.successMessage(response["Message"]);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_CANCEL], {});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_CANCEL], {"MrMouTypeCode" : this.MrMouTypeCode});
             });
           }
         );
