@@ -957,8 +957,8 @@ export class CommonConstant {
   public static LEGAL_RVW = "LEGAL_RVW_{0}";
   public static MOU_RETURN = "MOU_RETURN_{0}";
   public static MOU_APV = "MOU_APV";
-  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER_";
-  public static MOU_EXECUTION = "MOU_EXECUTION_";
+  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER_{0}";
+  public static MOU_EXECUTION = "MOU_EXECUTION_{0}";
   public static WF_UPL_SMPL_LEAD = "WF_UPL_SMPL_LEAD";
   public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
   public static PROD_OFF_APV = "PROD_OFF_APV";

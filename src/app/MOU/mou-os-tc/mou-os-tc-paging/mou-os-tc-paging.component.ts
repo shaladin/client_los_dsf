@@ -10,6 +10,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { ActivatedRoute } from '@angular/router';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-mou-os-tc-paging',
@@ -21,14 +23,27 @@ export class MouOsTcPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   CustNoObj: GenericObj = new GenericObj();
   user: CurrentUserContext;
+  MrMouTypeCode: string;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService) { }
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {    
+    this.route.queryParams.subscribe(params => {
+    if (params["MrMouTypeCode"] != null) {
+      this.MrMouTypeCode = params["MrMouTypeCode"];
+    }});
+  }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
+    
+    const addCritMouType = new CriteriaObj();
+    addCritMouType.DataType = "text";
+    addCritMouType.propName = "MOU.MR_MOU_TYPE_CODE";
+    addCritMouType.restriction = AdInsConstant.RestrictionEq;
+    addCritMouType.value = this.MrMouTypeCode;
+    this.inputPagingObj.addCritInput.push(addCritMouType);
   }
 
   getEvent(event) {

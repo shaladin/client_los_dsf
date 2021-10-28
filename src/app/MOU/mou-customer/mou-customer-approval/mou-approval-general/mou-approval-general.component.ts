@@ -93,7 +93,7 @@ export class MouApprovalGeneralComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MouType});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MrMouTypeCode});
       }
     )
   }
@@ -113,13 +113,13 @@ export class MouApprovalGeneralComponent implements OnInit {
 
     this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
       () => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MouType});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MrMouTypeCode});
       }
     );
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MouType});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MrMouTypeCode});
   }
   
   initInputApprovalObj() {

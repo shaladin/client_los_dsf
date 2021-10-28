@@ -22,6 +22,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   responseObj: Array<MouCustDocPrintForViewObj> = new Array<MouCustDocPrintForViewObj>();
   mouCustObj: MouCustObj;
   RdlcReport: RdlcReportObj = new RdlcReportObj();
+  MrMouTypeCode: string;
   readonly CancelLink: string = NavigationConstant.MOU_CUST_DOC_PAGING;
 
   constructor(
@@ -34,6 +35,9 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
+      }
+      if (params['MrMouTypeCode'] != null) {
+        this.MrMouTypeCode = params['MrMouTypeCode'];
       }
     });
   }

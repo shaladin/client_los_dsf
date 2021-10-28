@@ -51,7 +51,7 @@ export class MouOsTcDetailComponent implements OnInit {
   }
 
   redirect() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_OUTSTANDING_TC_PAGING],{});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_OUTSTANDING_TC_PAGING],{MrMouTypeCode : this.mouType});
   }
 
   saveMouTc() {

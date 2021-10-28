@@ -122,7 +122,7 @@ export class MouExecutionDetailComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {MrMouTypeCode : this.MouType});
   }
 
   SaveForm() {
@@ -146,7 +146,7 @@ export class MouExecutionDetailComponent implements OnInit {
       this.httpClient.post(mouCustExecutionHumanActivityUrl, request).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {MrMouTypeCode : this.MouType});
       });
     }
   }

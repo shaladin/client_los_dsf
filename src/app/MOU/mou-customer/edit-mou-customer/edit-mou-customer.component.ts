@@ -56,8 +56,8 @@ export class EditMouCustomerComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, this.MrMouTypeCode);
-      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.MOU_RETURN, (this.MrMouTypeCode != CommonConstant.DF ? this.MrMouTypeCode : CommonConstant.MOU_TYPE_DLFN));
+      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, (this.MrMouTypeCode != CommonConstant.MOU_TYPE_DLFN ? this.MrMouTypeCode : CommonConstant.DF));
+      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.MOU_RETURN, this.MrMouTypeCode);
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE], 
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];

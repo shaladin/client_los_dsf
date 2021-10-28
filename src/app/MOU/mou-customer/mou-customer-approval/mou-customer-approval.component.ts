@@ -43,7 +43,6 @@ export class MouCustomerApprovalComponent implements OnInit {
   }
 
   ngOnInit() {
-
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
@@ -58,7 +57,7 @@ export class MouCustomerApprovalComponent implements OnInit {
         case CommonConstant.MOU_TYPE_GENERAL :
           CategoryCode = CommonConstant.CAT_CODE_MOU_APV_GENERAL;
           break;
-        case CommonConstant.DF :
+        case CommonConstant.MOU_TYPE_DLFN :
           CategoryCode = CommonConstant.CAT_CODE_MOU_APV_DLFN;
           break;
       }

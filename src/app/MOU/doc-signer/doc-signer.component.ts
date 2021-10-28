@@ -3,7 +3,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-doc-signer',
@@ -28,8 +29,14 @@ export class DocSignerComponent implements OnInit {
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   user: CurrentUserContext;
+  MrMouTypeCode: string;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService) { }
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {    
+      this.route.queryParams.subscribe(params => {
+      if (params["MrMouTypeCode"] != null) {
+        this.MrMouTypeCode = params["MrMouTypeCode"];
+      }
+    });}
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -51,8 +58,8 @@ export class DocSignerComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
-      this.requestTaskModel.TaskDefinitionKeys = [CommonConstant.MOU_DOC_SIGNER + CommonConstant.MOU_TYPE_GENERAL, CommonConstant.MOU_DOC_SIGNER + CommonConstant.MOU_TYPE_FACTORING, CommonConstant.MOU_DOC_SIGNER + CommonConstant.MOU_TYPE_DLFN];
+      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, (this.MrMouTypeCode != CommonConstant.MOU_TYPE_DLFN ? this.MrMouTypeCode : CommonConstant.DF));
+      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.MOU_DOC_SIGNER, this.MrMouTypeCode);
       this.requestTaskModel.OfficeRoleCodes = [this.user[CommonConstant.ROLE_CODE],
                                                this.user[CommonConstant.OFFICE_CODE], 
                                                this.user[CommonConstant.ROLE_CODE] + "-" + this.user[CommonConstant.OFFICE_CODE]];

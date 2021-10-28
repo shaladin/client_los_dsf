@@ -13,6 +13,7 @@ import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskMod
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { String } from 'typescript-string-operations';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-mou-review-paging',
@@ -41,14 +42,21 @@ export class MouReviewPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouReview.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouReview.json";
 
+    const addCritMouType = new CriteriaObj();
+    addCritMouType.DataType = "text";
+    addCritMouType.propName = "MR_MOU_TYPE_CODE";
+    addCritMouType.restriction = AdInsConstant.RestrictionEq;
+    addCritMouType.value = this.MrMouTypeCode;
+    this.inputPagingObj.addCritInput.push(addCritMouType);
+    
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouReviewV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouReviewV2.json";
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, this.MrMouTypeCode);
-      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.MOU_REVIEW, (this.MrMouTypeCode != CommonConstant.DF ? this.MrMouTypeCode : CommonConstant.MOU_TYPE_DLFN));
+      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, (this.MrMouTypeCode != CommonConstant.MOU_TYPE_DLFN ? this.MrMouTypeCode : CommonConstant.DF));
+      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.MOU_REVIEW, this.MrMouTypeCode);
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE], 
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];

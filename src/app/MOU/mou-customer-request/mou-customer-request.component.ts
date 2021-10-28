@@ -44,12 +44,12 @@ export class MouCustomerRequestComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchMouCustomerRequest.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustomerRequest.json";
 
-    let AddCrit = new CriteriaObj();
-    AddCrit.DataType = "text";
-    AddCrit.propName = "MR_MOU_TYPE_CODE";
-    AddCrit.restriction = AdInsConstant.RestrictionEq;
-    AddCrit.value = this.MrMouTypeCode;
-    this.inputPagingObj.addCritInput.push(AddCrit);
+    let addCritMouType = new CriteriaObj();
+    addCritMouType.DataType = "text";
+    addCritMouType.propName = "M.MR_MOU_TYPE_CODE";
+    addCritMouType.restriction = AdInsConstant.RestrictionEq;
+    addCritMouType.value = this.MrMouTypeCode;
+    this.inputPagingObj.addCritInput.push(addCritMouType);
   }
 
   customerView(ev) {

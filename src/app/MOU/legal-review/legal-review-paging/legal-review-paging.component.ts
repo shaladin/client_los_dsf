@@ -52,15 +52,22 @@ export class LegalReviewPagingComponent implements OnInit {
     addCritMouStat.restriction = AdInsConstant.RestrictionEq;
     addCritMouStat.value = "LRV";
     this.arrCrit.push(addCritMouStat);
-
+    
+    const addCritMouType = new CriteriaObj();
+    addCritMouType.DataType = "text";
+    addCritMouType.propName = "MC.MR_MOU_TYPE_CODE";
+    addCritMouType.restriction = AdInsConstant.RestrictionEq;
+    addCritMouType.value = this.MrMouTypeCode;
+    this.arrCrit.push(addCritMouType);
+    
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchLegalReviewV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchLegalReviewV2.json";
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, this.MrMouTypeCode);
-      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.LEGAL_RVW, (this.MrMouTypeCode != CommonConstant.DF ? this.MrMouTypeCode : CommonConstant.MOU_TYPE_DLFN));
+      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, (this.MrMouTypeCode != CommonConstant.MOU_TYPE_DLFN ? this.MrMouTypeCode : CommonConstant.DF));
+      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.LEGAL_RVW, this.MrMouTypeCode);
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE], 
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
