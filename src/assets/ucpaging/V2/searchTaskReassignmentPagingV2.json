@@ -76,7 +76,7 @@
             "type": "sort",
             "position": "center",
             "label": "Created Date",
-            "name": "startTime"
+            "name": "StartTime"
         },
         {
             "type": "sort",
@@ -104,7 +104,7 @@
         {
             "type": "date",
             "position": "center",
-            "property": "startTime"
+            "property": "StartTime"
         },
         {
             "type": "text",
