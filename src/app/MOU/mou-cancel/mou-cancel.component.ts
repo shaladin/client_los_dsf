@@ -29,6 +29,8 @@ export class MouCancelComponent implements OnInit {
   RequestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj : IntegrationObj = new IntegrationObj();
   MrMouTypeCode :string;
+  HeadOfficeCode : string;
+  IsReady: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -45,7 +47,13 @@ export class MouCancelComponent implements OnInit {
      });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    await this.http.post(URLConstant.GetHeadOffice,{}).toPromise().then(
+      (response) => {
+        this.HeadOfficeCode = response["OfficeCode"];
+      });
+    
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
@@ -57,7 +65,9 @@ export class MouCancelComponent implements OnInit {
       this.inputPagingObj.isJoinExAPI = true;
       
       this.RequestTaskModel.ProcessKey = this.getMouWorkflowCode();
-      this.RequestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
+      this.RequestTaskModel.OfficeCode = "";
+      if(this.user[CommonConstant.OFFICE_CODE] != this.HeadOfficeCode)
+        this.RequestTaskModel.OfficeCode = this.user[CommonConstant.OFFICE_CODE];
       
       this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
@@ -71,6 +81,8 @@ export class MouCancelComponent implements OnInit {
       critLobObj.value = this.MrMouTypeCode;
       this.inputPagingObj.addCritInput.push(critLobObj);
     }
+
+    this.IsReady = true;
   }
 
   getMouWorkflowCode() {

@@ -177,6 +177,7 @@ export class URLConstant {
   public static GetRefOfficeObj = "/RefOffice/GetRefOfficeObj";
   public static GetRefOfficeActiveAndNonVirtualKeyValue = "/RefOffice/GetRefOfficeActiveAndNonVirtualKeyValue";
   public static GetAllRefOffice = "/RefOffice/GetAllRefOffice";
+  public static GetHeadOffice = environment.FoundationR3Url + "/v1" + "/RefOffice/GetHeadOffice";
   public static GetListUpperHierarchyRefOfficeByRefOrgId = "/RefOffice/GetListUpperHierarchyRefOfficeByRefOrgId";
   public static AddRefOffice = "/RefOffice/AddRefOffice";
   public static EditRefOffice = "/RefOffice/EditRefOffice";
