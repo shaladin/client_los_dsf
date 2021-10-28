@@ -371,6 +371,7 @@ export class CollateralAddEditComponent implements OnInit {
 
         this.SerialNoList = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.SerialNoList.length; i++) {
+          console.log(this.SerialNoList);
           let eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
             SerialNoValue: ['', [Validators.pattern(this.SerialNoRegex)]],
@@ -1108,22 +1109,6 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   SaveNewCollateral() {
-    const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
-    const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
-    var serialNoForm = this.items.controls[0] as FormGroup;
-    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
-    if (!fullAssetCode) {
-      this.toastr.warningMessage("Full Asset Code Must be Filled");
-      return false;
-    }
-    if (!assetType) {
-      this.toastr.warningMessage("Asset Type Code Must be Filled");
-      return false;
-    }
-    if (!serialNo1) {
-      this.toastr.warningMessage("Serial No 1 Must be Filled");
-      return false;
-    }
     if (this.AddCollForm.controls["OutstandingCollPrcnt"].value < 0) {
       this.toastr.warningMessage("Collateral Portion Usage Cannot Exceed Outstanding Collateral Percentage");
       return false;
