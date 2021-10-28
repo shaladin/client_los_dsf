@@ -60,6 +60,7 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
       this.apvReqObj.Username = this.userContext.UserName;
       this.apvReqObj.RoleCode = this.userContext.RoleCode;
+      this.apvReqObj.OfficeCode = this.userContext.OfficeCode;
       this.IntegrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.IntegrationObj.requestObj = this.apvReqObj;
       this.IntegrationObj.leftColumnToJoin = "AgrmntNo";

@@ -50,6 +50,7 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_MOU_FREEZE_UNFREEZE;
       this.apvReqObj.Username = this.userContext.UserName;
       this.apvReqObj.RoleCode = this.userContext.RoleCode;
+      this.apvReqObj.OfficeCode = this.userContext.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "MouFreezeTrxNo";

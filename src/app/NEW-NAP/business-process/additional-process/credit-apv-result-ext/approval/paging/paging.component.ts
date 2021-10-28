@@ -59,6 +59,7 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_APV_RES_EXP_D;
       this.apvReqObj.Username = this.UserAccess.UserName;
       this.apvReqObj.RoleCode = this.UserAccess.RoleCode;
+      this.apvReqObj.OfficeCode = this.UserAccess.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "AgrmntNo";

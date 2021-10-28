@@ -405,6 +405,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     obj.CmoUsername = this.tempCmoUsername;
     obj.SurveyorUsername = this.tempSurveyorUsername;
     obj.TeleMarketingUsername = this.tempSalesUsername;
+    obj.MrLeadTypeCode = CommonConstant.MrLeadTypeCodeLead;
   }
 
   SaveForm(isNext: boolean = false) {

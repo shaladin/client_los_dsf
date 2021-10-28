@@ -440,6 +440,7 @@ export class PathConstant {
     public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL = PathConstant.SIMPLE_LEAD_FRAUD_VERIF + "/" + PathConstant.DETAIL;
     public static SIMPLE_LEAD_UPD = "SimpleLeadUpdate";
     public static SIMPLE_LEAD_UPD_PAGING = PathConstant.SIMPLE_LEAD_UPD + "/" + PathConstant.PAGING;
+    public static SIMPLE_LEAD_CANCEL_PAGING = PathConstant.SIMPLE_LEAD + "/" + PathConstant.CANCEL;
     public static POTENTIAL_RO = "PotentialRo";
     public static POTENTIAL_RO_PAGING = PathConstant.POTENTIAL_RO + "/" + PathConstant.PAGING;
     public static POTENTIAL_RO_INQUIRY = PathConstant.POTENTIAL_RO + "/" + PathConstant.INQUIRY;

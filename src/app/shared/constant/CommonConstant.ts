@@ -976,6 +976,12 @@ export class CommonConstant {
   public static CustAddrTypePreJob = "PREV_JOB";
   public static CustAddrTypeBiz = "BIZ";
 
+  // LEAD
+  public static MrLeadTypeCodeLead = "LEAD";
+  public static MrLeadTypeCodeSimpleLead = "SIMPLE_LEAD";
+  public static LeadCancelTitle = "Lead Cancel";
+  public static SimpleLeadCancelTitle = "Simple Lead Cancel";
+
   //WORFKLOW LEAD
   public static WF_CODE_LEAD = "WF_LEAD";
   public static WF_CODE_SIMPLE_LEAD = "WF_SIMPLE_LEAD";
