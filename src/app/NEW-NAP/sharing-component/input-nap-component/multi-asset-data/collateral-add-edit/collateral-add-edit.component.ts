@@ -371,7 +371,6 @@ export class CollateralAddEditComponent implements OnInit {
 
         this.SerialNoList = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.SerialNoList.length; i++) {
-          console.log(this.SerialNoList);
           let eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
             SerialNoValue: ['', [Validators.pattern(this.SerialNoRegex)]],
