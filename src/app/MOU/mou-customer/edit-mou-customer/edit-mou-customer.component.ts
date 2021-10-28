@@ -5,17 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { environment } from 'environments/environment';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -29,8 +29,14 @@ export class EditMouCustomerComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
+  MrMouTypeCode: string;
 
-  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService) { }
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {   
+    this.route.queryParams.subscribe(params => {
+    if (params["MrMouTypeCode"] != null) {
+      this.MrMouTypeCode = params["MrMouTypeCode"];
+    }});
+  }
 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -50,8 +56,8 @@ export class EditMouCustomerComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
-      this.requestTaskModel.TaskDefinitionKeys = [CommonConstant.MOU_RETURN + CommonConstant.MOU_TYPE_GENERAL, CommonConstant.MOU_RETURN + CommonConstant.MOU_TYPE_FACTORING, CommonConstant.MOU_RETURN + CommonConstant.MOU_TYPE_DLFN];
+      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, this.MrMouTypeCode);
+      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.MOU_RETURN, (this.MrMouTypeCode != CommonConstant.DF ? this.MrMouTypeCode : CommonConstant.MOU_TYPE_DLFN));
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE], 
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];

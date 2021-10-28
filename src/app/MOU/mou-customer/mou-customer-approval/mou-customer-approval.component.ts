@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -32,9 +32,15 @@ export class MouCustomerApprovalComponent implements OnInit {
   IntegrationObj: IntegrationObj = new IntegrationObj();
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   integrationObj: IntegrationObj = new IntegrationObj();
-  user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));;
+  user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  MrMouTypeCode: string;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService, private AdInsHelperService: AdInsHelperService) { }
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {   
+    this.route.queryParams.subscribe(params => {
+    if (params["MrMouTypeCode"] != null) {
+      this.MrMouTypeCode = params["MrMouTypeCode"];
+    }});
+  }
 
   ngOnInit() {
 
@@ -44,7 +50,20 @@ export class MouCustomerApprovalComponent implements OnInit {
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.apvReqObj.CategoryCodes = [CommonConstant.CAT_CODE_MOU_APV_GENERAL, CommonConstant.CAT_CODE_MOU_APV_FACTORING, CommonConstant.CAT_CODE_MOU_APV_DLFN]
+      let CategoryCode;
+      switch(this.MrMouTypeCode){
+        case CommonConstant.MOU_TYPE_FACTORING :
+          CategoryCode = CommonConstant.CAT_CODE_MOU_APV_FACTORING;
+          break;
+        case CommonConstant.MOU_TYPE_GENERAL :
+          CategoryCode = CommonConstant.CAT_CODE_MOU_APV_GENERAL;
+          break;
+        case CommonConstant.DF :
+          CategoryCode = CommonConstant.CAT_CODE_MOU_APV_DLFN;
+          break;
+      }
+
+      this.apvReqObj.CategoryCode = CategoryCode;
       this.apvReqObj.Username = this.user.UserName;
       this.apvReqObj.RoleCode = this.user.RoleCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;

@@ -174,7 +174,11 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   Back(): void {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});
+    if(this.pageType == "return"){
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_EDIT_CUST_PAGING],{MrMouTypeCode : this.mouType});
+    }else{
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{MrMouTypeCode : this.mouType});
+    }
   }
 
   Save() {

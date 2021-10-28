@@ -949,12 +949,13 @@ export class CommonConstant {
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static WF_MOU = "WF_MOU_{0}";
   public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
   public static WF_MOU_FACTORING = "WF_MOU_FACTORING";
   public static WF_MOU_DLFN = "WF_MOU_DLFN";
-  public static MOU_REVIEW = "MOU_REVIEW_";
-  public static LEGAL_RVW = "LEGAL_RVW_";
-  public static MOU_RETURN = "MOU_RETURN_";
+  public static MOU_REVIEW = "MOU_REVIEW_{0}";
+  public static LEGAL_RVW = "LEGAL_RVW_{0}";
+  public static MOU_RETURN = "MOU_RETURN_{0}";
   public static MOU_APV = "MOU_APV";
   public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER_";
   public static MOU_EXECUTION = "MOU_EXECUTION_";

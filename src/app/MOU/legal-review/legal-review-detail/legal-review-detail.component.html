@@ -47,7 +47,7 @@
             </div>
             <div class="float-right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="[CancelLink]">
+                [routerLink]="[CancelLink]" [queryParams]="{MrMouTypeCode : MouType}">
                 <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
               <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, false)">

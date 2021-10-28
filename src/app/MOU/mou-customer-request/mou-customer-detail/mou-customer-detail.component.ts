@@ -220,10 +220,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   cancelHandler() {
     if (this.pageType == "return") {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {MrMouTypeCode : this.mouType});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {MrMouTypeCode : this.mouType});
     }
   }
 
@@ -237,10 +237,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         () => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {MrMouTypeCode : this.mouType});
           }
           else {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {MrMouTypeCode : this.mouType});
           }
       });      
     }
