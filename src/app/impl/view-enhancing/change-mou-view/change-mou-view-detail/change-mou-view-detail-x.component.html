@@ -187,11 +187,12 @@
 
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" translate>Term Of Payment (in Days)</label>
-        <label class="col-md-3 adInsLabel" translate>{{TopDays}}</label>
+        <label *ngIf="TopDays != null" class="col-md-3 adInsLabel" translate>{{TopDays}}</label>
+        <label *ngIf="TopDays == null" class="col-md-3 adInsLabel" translate>-</label>
 
         <label class="col-md-3 adInsLabel" translate>Term Of Payment Interest Rate Percent (%) (in Years)</label>
-        <label style="align-items: left;" class="col-md-3 adInsLabel" translate>{{TopDaysRatePercent |
-          number:'.6':'en-US'}}% </label>
+        <label *ngIf="TopDaysRatePercent != null" style="align-items: left;" class="col-md-3 adInsLabel" translate>{{TopDaysRatePercent | number:'.6':'en-US'}}% </label>
+        <label *ngIf="TopDaysRatePercent == null" class="col-md-3 adInsLabel" translate>-</label>
       </div>
 
       <div class="form-group row">
@@ -199,28 +200,34 @@
         <label class="col-md-3 adInsLabel" translate>{{PayFreqCode}}</label>
 
         <label class="col-md-3 adInsLabel" translate>Interest Rate (%) (in Years)</label>
-        <label class="col-md-3 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}}%</label>
+        <label *ngIf="InterestRatePrcnt != null" class="col-md-3 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}}%</label>
+        <label *ngIf="InterestRatePrcnt == null" class="col-md-3 adInsLabel" translate>-</label>
       </div>
 
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" translate>Extend Rate Percent (%) (in Years)</label>
-        <label class="col-md-3 adInsLabel" translate>{{ExtendRate | number:'.6':'en-US'}}%</label>
+        <label *ngIf="ExtendRate != null" class="col-md-3 adInsLabel" translate>{{ExtendRate | number:'.6':'en-US'}}%</label>
+        <label *ngIf="ExtendRate == null" class="col-md-3 adInsLabel" translate>-</label>
 
         <label class="col-md-3 adInsLabel" translate>Maximum Months For Extend</label>
-        <label class="col-md-3 adInsLabel" translate>{{MaxMonths}}</label>
+        <label *ngIf="MaxMonths != null" class="col-md-3 adInsLabel" translate>{{MaxMonths}}</label>
+        <label *ngIf="MaxMonths == null" class="col-md-3 adInsLabel" translate>-</label>
       </div>
 
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" translate>Maximum Extend Times</label>
-        <label class="col-md-3 adInsLabel" translate>{{MaxExtendTimes}}</label>
+        <label *ngIf="MaxExtendTimes != null" class="col-md-3 adInsLabel" translate>{{MaxExtendTimes}}</label>
+        <label *ngIf="MaxExtendTimes == null" class="col-md-3 adInsLabel" translate>-</label>
 
         <label class="col-md-3 adInsLabel" translate>Principal Paid For Extend (%)</label>
-        <label class="col-md-3 adInsLabel" translate>{{PrincipalPaid | number:'.6':'en-US'}}%</label>
+        <label *ngIf="PrincipalPaid != null" class="col-md-3 adInsLabel" translate>{{PrincipalPaid | number:'.6':'en-US'}}%</label>
+        <label *ngIf="PrincipalPaid == null" class="col-md-3 adInsLabel" translate>-</label>
       </div>
 
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" translate>Spare Day To Pay</label>
-        <label class="col-md-3 adInsLabel" translate>{{SpareDay}}</label>
+        <label *ngIf="SpareDay != null" class="col-md-3 adInsLabel" translate>{{SpareDay}}</label>
+        <label *ngIf="SpareDay == null" class="col-md-3 adInsLabel" translate>-</label>
 
         <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
         <label class="col-md-3 adInsLabel" translate>{{AssetCondition}}</label>
@@ -235,7 +242,8 @@
         </label>
 
         <label class="col-md-3 adInsLabel" translate>Manufacturer</label>
-        <label class="col-md-3 adInsLabel" translate>{{Manufacturer}}</label>
+        <label *ngIf="Manufacturer != null && Manufacturer == ''" class="col-md-3 adInsLabel" translate>{{Manufacturer}}</label>
+        <label *ngIf="Manufacturer == null || Manufacturer == ''" class="col-md-3 adInsLabel" translate>-</label>
       </div>
 
       <div class="form-group row">
@@ -247,12 +255,14 @@
         </label>
 
         <label class="col-md-3 adInsLabel" translate>Customer</label>
-        <label class="col-md-3 adInsLabel" translate>{{Customer}}</label>
+        <label *ngIf="Customer != null && Customer == ''" class="col-md-3 adInsLabel" translate>{{Customer}}</label>
+        <label *ngIf="Customer == null || Customer == ''" class="col-md-3 adInsLabel" translate>-</label>
       </div>
 
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" translate>LC Rate (%) (in Days)</label>
-        <label class="col-md-3 adInsLabel" translate>{{LcRate | number:'.6':'en-US'}}%</label>
+        <label *ngIf="LcRate != null" class="col-md-3 adInsLabel" translate>{{LcRate | number:'.6':'en-US'}}%</label>
+        <label *ngIf="LcRate == null" class="col-md-3 adInsLabel" translate>-</label>
 
         <label class="col-md-3 adInsLabel" translate>Notes</label>
         <label *ngIf="Notes == '' || Notes == null" class="col-md-3 adInsLabel" translate>-</label>
