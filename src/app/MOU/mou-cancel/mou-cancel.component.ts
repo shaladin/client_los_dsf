@@ -49,11 +49,6 @@ export class MouCancelComponent implements OnInit {
 
   async ngOnInit() {
 
-    await this.http.post(URLConstant.GetHeadOffice,{}).toPromise().then(
-      (response) => {
-        this.HeadOfficeCode = response["OfficeCode"];
-      });
-    
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
@@ -66,6 +61,12 @@ export class MouCancelComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critLobObj);
     
     if(environment.isCore) {
+
+      await this.http.post(URLConstant.GetHeadOffice,{}).toPromise().then(
+        (response) => {
+          this.HeadOfficeCode = response["OfficeCode"];
+        });
+
       this.inputPagingObj._url = "./assets/ucpaging/mou/V2/searchMouCancelV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchMouCancelV2.json";
       this.inputPagingObj.isJoinExAPI = true;

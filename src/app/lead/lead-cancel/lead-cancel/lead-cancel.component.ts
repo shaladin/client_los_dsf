@@ -15,6 +15,7 @@ import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskMod
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CookieService } from 'ngx-cookie';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-lead-cancel',
@@ -28,9 +29,10 @@ export class LeadCancelComponent implements OnInit {
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   allowedStat = ['INP', 'NEW', 'NEW_SMPL'];
   tempLeadCancelObj: LeadCancelObj;
+  HeadOfficeCode : string;
   MrLeadTypeCode: string;
 
-  constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private router: Router, private cookieService: CookieService) 
+  constructor(private http: HttpClient, private toastr: NGXToastrService, private route: ActivatedRoute, private router: Router, private cookieService: CookieService) 
   { 
     this.route.queryParams.subscribe(params => {
       if (params["MrLeadTypeCode"] != null) {
@@ -39,27 +41,39 @@ export class LeadCancelComponent implements OnInit {
     });
   }
  
-  ngOnInit() {
+  async ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/LeadCancelTempPaging.json";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/LeadCancelTempPaging.json";
-    this.tempPagingObj.title = this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeLead ? CommonConstant.LeadCancelTitle : CommonConstant.SimpleLeadCancelTitle;
+    this.tempPagingObj.title = CommonConstant.LeadCancelTitle;
+
+    if(this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeSimpleLead) {
+      this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/SimpleLeadCancelTempPaging.json";
+      this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/SimpleLeadCancelTempPaging.json";
+      this.tempPagingObj.title = CommonConstant.SimpleLeadCancelTitle;;
+    }
 
     if(environment.isCore) {
+
+      await this.http.post(URLConstant.GetHeadOffice,{}).toPromise().then(
+        (response) => {
+          this.HeadOfficeCode = response["OfficeCode"];
+        });
+
       this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/V2/LeadCancelTempPagingV2.json";
       this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/V2/LeadCancelTempPagingV2.json";
+      
+      if(this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeSimpleLead) {
+        this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/V2/SimpleLeadCancelTempPagingV2.json";
+        this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/V2/SimpleLeadCancelTempPagingV2.json";
+      }
+      
       this.tempPagingObj.isJoinExAPI = true
       
       this.RequestTaskModel.ProcessKey = this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeLead ? CommonConstant.WF_CODE_LEAD : CommonConstant.WF_CODE_SIMPLE_LEAD;
-      this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
-
-      let AddCrit = new CriteriaObj();
-      AddCrit.DataType = "text";
-      AddCrit.propName = "L.MR_LEAD_TYPE_CODE";
-      AddCrit.restriction = AdInsConstant.RestrictionEq;
-      AddCrit.value = this.MrLeadTypeCode;
-      this.tempPagingObj.addCritInput.push(AddCrit);
+      if(UserAccess[CommonConstant.OFFICE_CODE] != this.HeadOfficeCode)
+        this.RequestTaskModel.OfficeCode = UserAccess[CommonConstant.OFFICE_CODE];
 
       this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
@@ -75,6 +89,13 @@ export class LeadCancelComponent implements OnInit {
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = this.allowedStat;
     this.tempPagingObj.addCritInput.push(addCrit);
+
+    let addCrit2 = new CriteriaObj();
+    addCrit2.DataType = "text";
+    addCrit2.propName = "L.MR_LEAD_TYPE_CODE";
+    addCrit2.restriction = AdInsConstant.RestrictionEq;
+    addCrit2.value = this.MrLeadTypeCode;
+    this.tempPagingObj.addCritInput.push(addCrit2);
 
     this.tempPagingObj.isReady = true;
   }
