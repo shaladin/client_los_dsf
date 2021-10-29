@@ -50,6 +50,13 @@ export class EditMouCustomerComponent implements OnInit {
     critObj.value = 'RTN';
     this.arrCrit.push(critObj);
     
+    const addCritMouType = new CriteriaObj();
+    addCritMouType.DataType = "text";
+    addCritMouType.propName = "MOU.MR_MOU_TYPE_CODE";
+    addCritMouType.restriction = AdInsConstant.RestrictionEq;
+    addCritMouType.value = this.MrMouTypeCode;
+    this.arrCrit.push(addCritMouType);
+
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchEditMouCustomerV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchEditMouCustomerV2.json";

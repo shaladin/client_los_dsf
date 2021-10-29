@@ -58,7 +58,13 @@ export class MouCancelComponent implements OnInit {
 
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCancel.json";
-
+      
+    let critLobObj = new CriteriaObj();
+    critLobObj.restriction = AdInsConstant.RestrictionEq;
+    critLobObj.propName = 'MC.MR_MOU_TYPE_CODE';
+    critLobObj.value = this.MrMouTypeCode;
+    this.inputPagingObj.addCritInput.push(critLobObj);
+    
     if(environment.isCore) {
       this.inputPagingObj._url = "./assets/ucpaging/mou/V2/searchMouCancelV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchMouCancelV2.json";
@@ -74,12 +80,6 @@ export class MouCancelComponent implements OnInit {
       this.IntegrationObj.leftColumnToJoin = "MouCustNo";
       this.IntegrationObj.rightColumnToJoin = "BusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
-      
-      let critLobObj = new CriteriaObj();
-      critLobObj.restriction = AdInsConstant.RestrictionEq;
-      critLobObj.propName = 'MC.MR_MOU_TYPE_CODE';
-      critLobObj.value = this.MrMouTypeCode;
-      this.inputPagingObj.addCritInput.push(critLobObj);
     }
 
     this.IsReady = true;
