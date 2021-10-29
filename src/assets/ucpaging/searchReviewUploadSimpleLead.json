@@ -150,16 +150,6 @@
       "property": "UploadDt"
     },
     {
-      "type": "text",
-      "position": "right",
-      "property": "TotalRecord"
-    },
-    {
-      "type": "text",
-      "position": "right",
-      "property": "TotalRecordProcessed"
-    },
-    {
       "type": "action",
       "position": "center",
       "action": [

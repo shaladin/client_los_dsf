@@ -76,24 +76,6 @@
         },
         {
             "type": "sort",
-            "position": "right",
-            "label": "TOTAL RECORD",
-            "name": "UMH.TOTAL_RECORD"
-        },
-        {
-            "type": "sort",
-            "position": "right",
-            "label": "TOTAL RECORD PROCESSED",
-            "name": "UMH.TOTAL_RECORD_PROCESSED"
-        },
-        {
-            "type": "sort",
-            "position": "right",
-            "label": "TOTAL RECORD ERROR",
-            "name": "UMH.TOTAL_RECORD_ERROR"
-        },
-        {
-            "type": "sort",
             "position": "center",
             "label": "UPLOAD STATUS",
             "name": "STAT.DESCR"
@@ -125,21 +107,6 @@
             "type": "text",
             "position": "left",
             "property": "FileName"
-        },
-        {
-            "type": "text",
-            "position": "right",
-            "property": "TotalRecord"
-        },
-        {
-            "type": "text",
-            "position": "right",
-            "property": "TotalRecordProcessed"
-        },
-        {
-            "type": "text",
-            "position": "right",
-            "property": "TotalRecordError"
         },
         {
             "type": "text",
