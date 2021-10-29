@@ -724,6 +724,7 @@ export class CommonConstant {
   public static GSCodeRoleDashboardLosOperational = "ROLE_DASHBOARD_LOS_OPERATIONAL";
   public static GSCodeDashboardUsr = "DASHBOARD_USR";
   public static GSCodeDashboardPwd = "DASHBOARD_PWD";
+  public static GSCodeFilterAddr = "FILTER_ADDR";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
