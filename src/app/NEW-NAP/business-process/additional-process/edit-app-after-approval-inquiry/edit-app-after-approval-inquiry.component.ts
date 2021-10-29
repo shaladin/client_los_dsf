@@ -38,16 +38,6 @@ export class EditAppAfterApprovalInquiryComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchEditAppAfterApprovalInquiry.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditAppAfterApprovalInquiry.json";
 
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "EAAATH.EDIT_APP_AFT_APV_TRX_NO",
-        environment: environment.FoundationR3Url + "/v1"
-      },
-      {
-        name: "EAAATH.EDIT_APP_AFT_APV_TRX_STAT",
-        environment: environment.FoundationR3Url + "/v1"
-      }
-    ];
     this.inputPagingObj.addCritInput = new Array();
 
     var critLobObj = new CriteriaObj();
