@@ -439,7 +439,7 @@ export class PreGoLiveXComponent implements OnInit {
 
   calculateAddInterest() {
     let diffDays = 0;
-    let diffTimes = new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime() - new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime();
+    const diffTimes = new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime() - new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime();
     if (diffTimes > 0) {
       diffDays = diffTimes / (1000 * 3600 * 24)
       console.log(diffDays);
