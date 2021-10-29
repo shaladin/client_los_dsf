@@ -171,6 +171,7 @@ export class CcContactInformationTabComponent implements OnInit {
             this.inputFieldCcObj.inputLookupObj.jsonSelect = { Zipcode: response.AppCustAddrObj.Zipcode };
             this.inputAddressObjForCc.default = this.CcAddrObj;
             this.inputAddressObjForCc.inputField = this.inputFieldCcObj;
+            this.inputAddressObjForCc.inputField.inputLookupObj.isRequired = false;
           }
           this.ChangeIdType(true);
         }
@@ -183,6 +184,8 @@ export class CcContactInformationTabComponent implements OnInit {
     this.inputAddressObjForCc = new InputAddressObj();
     this.inputAddressObjForCc.showSubsection = true;
     this.inputAddressObjForCc.showPhn3 = false;
+    this.inputAddressObjForCc.isRequired = false;
+    this.inputAddressObjForCc.inputField.inputLookupObj.isRequired = false;
   }
 
   ChangeIdType(FirstInit: boolean = false) {
