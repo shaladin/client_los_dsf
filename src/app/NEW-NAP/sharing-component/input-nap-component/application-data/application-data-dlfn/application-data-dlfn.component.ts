@@ -693,12 +693,13 @@ export class ApplicationDataDlfnComponent implements OnInit {
       (responseAppCust) => {
         this.appCustId = responseAppCust['AppCustId']
         const obj = {
-          AppCustId: this.appCustId
+          Id: this.appCustId
         };
 
         this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
           (response) => {
-            this.listCustBankAcc = response.AppCustBankAccObjs;
+            let Responses = response['ReturnObject'];
+            this.listCustBankAcc = Responses.AppCustBankAccObjs;
           });
       });
   }

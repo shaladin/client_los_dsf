@@ -6,6 +6,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputCustomAddrCustCmpltObj } from 'app/shared/model/InputCustomAddrCustCmpltObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
@@ -76,6 +77,7 @@ export class CcAddressDetailComponent implements OnInit {
         let tempAddressType = response[CommonConstant.ReturnObj];
         let filterTempAddr = tempAddressType.filter(x => x.Key != CommonConstant.AddrTypeCompany && x.Key != CommonConstant.AddrTypeEmergency);
         this.AddressTypeObj = filterTempAddr;
+        this.AddressTypeObj = await this.FilterAddr(this.AddressTypeObj);
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key
         })
@@ -103,6 +105,22 @@ export class CcAddressDetailComponent implements OnInit {
       this.isAddrObjReady = true;
     }
     await this.setOwnership(this.AddressForm.controls.MrCustAddrTypeCode.value);
+  }
+
+  async FilterAddr(listAddr: Array<KeyValueObj>): Promise<Array<KeyValueObj>>{
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeFilterAddr }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          let listAddrToFilter: Array<string> = result.GsValue.split(';');
+          for (let index = 0; index < listAddrToFilter.length; index++) {
+            const element = listAddrToFilter[index];
+            let idxFound = listAddr.findIndex(x => x.Key == element);
+            if (idxFound >= 0) listAddr.splice(idxFound, 1);
+          }
+        }
+      }
+    );
+    return listAddr;
   }
 
   async getEvent(event){

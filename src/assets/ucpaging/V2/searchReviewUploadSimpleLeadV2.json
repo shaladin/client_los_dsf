@@ -88,18 +88,6 @@
         "name": "UMH.UPLOAD_DT"
       },
       {
-        "type": "sort",
-        "position": "right",
-        "label": "TOTAL RECORD",
-        "name": "UMH.TOTAL_RECORD"
-      },
-      {
-        "type": "sort",
-        "position": "right",
-        "label": "TOTAL RECORD PROCESSED",
-        "name": "UMH.TOTAL_RECORD_PROCESSED"
-      },
-      {
         "type": "label",
         "position": "center",
         "label": "REVIEW"
@@ -135,16 +123,6 @@
         "type": "date",
         "position": "center",
         "property": "UploadDt"
-      },
-      {
-        "type": "text",
-        "position": "right",
-        "property": "TotalRecord"
-      },
-      {
-        "type": "text",
-        "position": "right",
-        "property": "TotalRecordProcessed"
       },
       {
         "type": "action",
