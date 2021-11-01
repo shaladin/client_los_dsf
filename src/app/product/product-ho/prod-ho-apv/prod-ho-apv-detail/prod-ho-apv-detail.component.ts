@@ -23,7 +23,6 @@ export class ProdHoApvDetailComponent implements OnInit {
   TaskId: number;
   ApvReqId: number;
   IsReady: boolean = false;
-  IsRoleAssignment: string = "";
   GenericByIdObj : GenericObj = new GenericObj();
   InputApvObj : UcInputApprovalObj = new UcInputApprovalObj();
   ReqUpdateProdPostApvObj : ReqUpdateProductPostApprovalObj = new ReqUpdateProductPostApprovalObj();
@@ -38,7 +37,6 @@ export class ProdHoApvDetailComponent implements OnInit {
         this.ProdHId = params["ProdHId"];
         this.TaskId = params["TaskId"];
         this.ApvReqId = params["ApvReqId"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -47,9 +45,7 @@ export class ProdHoApvDetailComponent implements OnInit {
     let ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.TaskId;
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
-    }
+    this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
   }
 
@@ -71,6 +67,9 @@ export class ProdHoApvDetailComponent implements OnInit {
   HoldTask(obj) {
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV], {});
       }
     )
   }

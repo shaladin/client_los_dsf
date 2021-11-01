@@ -21,6 +21,7 @@ import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -58,7 +59,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder, private http: HttpClient,
     private router: Router, private toastr: NGXToastrService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
         this.VerfResultHId = params["VerfResultHId"];
@@ -394,7 +396,12 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       this.CustNoObj.CustNo = this.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
     }

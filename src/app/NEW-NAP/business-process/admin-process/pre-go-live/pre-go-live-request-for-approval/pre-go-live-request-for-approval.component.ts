@@ -15,6 +15,7 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { environment } from 'environments/environment';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
@@ -44,7 +45,13 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   }
   ApprovalCreateOutput: any;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
-  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
+  constructor(
+    private router: Router, 
+    private fb: FormBuilder, 
+    private route: ActivatedRoute, 
+    private http: HttpClient, 
+    private cookieService: CookieService,
+    private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
@@ -79,10 +86,10 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.ViewObj.CustNo}).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

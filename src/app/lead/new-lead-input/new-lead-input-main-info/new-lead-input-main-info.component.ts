@@ -434,6 +434,7 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     this.leadObj.CmoUsername = this.tempCmoUsername;
     this.leadObj.SurveyorUsername = this.tempSurveyorUsername;
     this.leadObj.TeleMarketingUsername = this.tempSalesUsername;
+    this.leadObj.MrLeadTypeCode = CommonConstant.MrLeadTypeCodeSimpleLead;
   }
 
   SaveForm() {

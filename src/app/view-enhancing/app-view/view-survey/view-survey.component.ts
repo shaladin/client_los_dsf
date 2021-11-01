@@ -4,6 +4,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -21,7 +22,7 @@ export class ViewSurveyComponent implements OnInit {
 
   custTypeCode: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.http.post(URLConstant.GetListSrvyTaskByRefNoForView,{TrxNo: this.AppNo}).subscribe(
@@ -36,11 +37,11 @@ export class ViewSurveyComponent implements OnInit {
     this.http.post(URLConstant.GetCustByCustId, {Id: CustId}).subscribe(
       (response) => {
         this.custTypeCode = response['MrCustTypeCode'];
-        console.log(this.custTypeCode);
-        if(this.custTypeCode == "PERSONAL"){
-          AdInsHelper.OpenCustomerViewByCustId(CustId);
-        }else{
-          AdInsHelper.OpenCustomerCoyViewByCustId(CustId);
+        if(this.custTypeCode == CommonConstant.CustTypePersonal){
+          this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+        }
+        if(this.custTypeCode == CommonConstant.CustTypeCompany){
+          this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
         }
       }
     )

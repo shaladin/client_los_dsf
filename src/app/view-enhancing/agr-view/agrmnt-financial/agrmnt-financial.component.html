@@ -1,5 +1,5 @@
 <div class="px-3">
-  <lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_Subsidy'">
+  <!-- <lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_Subsidy'">
   </lib-ucSubsection>
   <div id="FinData_Subsidy">
     <table class="table table-responsive-md text-center table-hover">
@@ -51,19 +51,19 @@
           <div class="col-md-3">
             <label class="adInsLabel"> {{item.FeeTypeName}} </label>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" style="text-align: right;">
             <label class="adInsLabel"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
           </div>
           <div class="col-md-3" *ngIf="BizTemplateCode != 'DLFN'">
             <label class="adInsLabel"> {{item.FeeTypeName + ' Capitalized Amount'}} </label>
           </div>
-          <div class="col-md-3" *ngIf="BizTemplateCode != 'DLFN'">
+          <div class="col-md-3" style="text-align: right;" *ngIf="BizTemplateCode != 'DLFN'">
             <label class="adInsLabel"> {{item.FeeCapitalizeAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
   </lib-ucSubsection>
   <div class="form-body" id="financialData">
@@ -73,7 +73,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Invoice Amount </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -91,7 +91,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Fee </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalFeeAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -101,7 +101,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Fee Capitalized </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalFeeCptlzAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -111,7 +111,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Insurance Premi </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalInsCustAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -121,7 +121,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Insurance Premi Capitalized </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.InsCptlzAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -131,7 +131,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Life Insurance Premi </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalLifeInsCustAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -141,7 +141,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Life Insurance Premi Capitalized </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.LifeInsCptlzAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -155,7 +155,7 @@
             <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'" translate> DP Asset </label>
             <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'" translate> Security Deposit </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.DownPaymentGrossAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -165,7 +165,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> TDP </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalDownPaymentNettAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -176,7 +176,7 @@
             <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'" translate> DP Asset - Subsidy DP </label>
             <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'" translate> Security Deposit  - Subsidy DP </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.DownPaymentNettAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -186,7 +186,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> TDP Paid at MF </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -199,7 +199,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> NTF </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.NtfAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -219,7 +219,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Effective Rate to Customer </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.EffectiveRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
@@ -229,7 +229,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Effective Rate to Supplier </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.SupplEffectiveRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
@@ -239,7 +239,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Flat Rate to Customer </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.FlatRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
@@ -249,7 +249,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Flat Rate to Supplier </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.SupplFlatRatePrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>
@@ -259,7 +259,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Installment Amount </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.InstAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -291,7 +291,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Rounding </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.RoundingAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -325,7 +325,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total Interest </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalInterestAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -335,7 +335,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Diff Rate Amount</label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.DiffRateAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -345,7 +345,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Total AR </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalAr | number:'.2':'en-US'}} </label>
           </div>
         </div>
@@ -355,7 +355,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Gross Yield </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.GrossYieldPrcnt | number:'.6':'en-US'}} %</label>
           </div>
         </div>

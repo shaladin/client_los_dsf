@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -23,7 +24,7 @@ export class AppListViewComponent implements OnInit {
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["CustId"] != null) {
         this.CustId = params["CustId"];
@@ -65,7 +66,7 @@ export class AppListViewComponent implements OnInit {
 
   GetCallBack(event) {
     if(event.Key === "Customer") {
-      AdInsHelper.OpenCustomerViewByCustId(this.CustId);
+      this.adInsHelperService.OpenCustomerViewByCustId(this.CustId);
     }
   }
 

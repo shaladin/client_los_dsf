@@ -169,10 +169,9 @@
             {
               "conditions" : [ 
                 {
-                    "isUser": false,
-                    "property" : "IsRoleAssignment", 
-                    "value" : false, 
-                    "restriction" : "EQ" 
+                  "property" : "CurrentUser", 
+                  "value" : "-", 
+                  "restriction" : "NEQ" 
                 }
               ],
               "result" : { 

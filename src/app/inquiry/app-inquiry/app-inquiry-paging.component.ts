@@ -8,6 +8,8 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { CookieService } from "ngx-cookie";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -20,7 +22,7 @@ export class AppInquiryPagingComponent implements OnInit {
   isReady: boolean = false;
 
   constructor(private http: HttpClient,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private cookieService: CookieService, private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -56,10 +58,10 @@ export class AppInquiryPagingComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

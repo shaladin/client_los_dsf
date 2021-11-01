@@ -8,6 +8,7 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: 'app-purchase-tracking-inquiry',
@@ -20,7 +21,7 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
   CustNoObj: GenericObj = new GenericObj();
   isReady: boolean = false;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private AdInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -54,7 +55,7 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
         }
       );
     }

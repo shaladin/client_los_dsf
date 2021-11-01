@@ -9,6 +9,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { ActivatedRoute } from '@angular/router';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-mou-os-tc-paging',
@@ -20,32 +23,39 @@ export class MouOsTcPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   CustNoObj: GenericObj = new GenericObj();
   user: CurrentUserContext;
+  MrMouTypeCode: string;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {    
+    this.route.queryParams.subscribe(params => {
+    if (params["MrMouTypeCode"] != null) {
+      this.MrMouTypeCode = params["MrMouTypeCode"];
+    }});
+  }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
+    
+    const addCritMouType = new CriteriaObj();
+    addCritMouType.DataType = "text";
+    addCritMouType.propName = "MOU.MR_MOU_TYPE_CODE";
+    addCritMouType.restriction = AdInsConstant.RestrictionEq;
+    addCritMouType.value = this.MrMouTypeCode;
+    this.inputPagingObj.addCritInput.push(addCritMouType);
   }
 
   getEvent(event) {
-    let custId: number;
-    let mrCustTypeCode: string;
     if (event.Key == "customer") {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          
-          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

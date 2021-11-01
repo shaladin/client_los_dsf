@@ -28,7 +28,7 @@ export class URLConstant {
   public static AddNewApplication = environment.losUrl + "/v1" + "/Application/AddNewApplication";
   public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/Application/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationFromCopy";
-  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2" + "/Application/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2.1" + "/Application/AddNewApplicationFromCopy";
   public static AddNewApplicationOplFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationOplFromCopy";
 
   // APP Application
@@ -176,6 +176,7 @@ export class URLConstant {
   public static GetRefOfficeObj = "/RefOffice/GetRefOfficeObj";
   public static GetRefOfficeActiveAndNonVirtualKeyValue = "/RefOffice/GetRefOfficeActiveAndNonVirtualKeyValue";
   public static GetAllRefOffice = "/RefOffice/GetAllRefOffice";
+  public static GetHeadOffice = environment.FoundationR3Url + "/v1" + "/RefOffice/GetHeadOffice";
   public static GetListUpperHierarchyRefOfficeByRefOrgId = "/RefOffice/GetListUpperHierarchyRefOfficeByRefOrgId";
   public static AddRefOffice = "/RefOffice/AddRefOffice";
   public static EditRefOffice = "/RefOffice/EditRefOffice";

@@ -15,6 +15,7 @@ import { RFADocChecklist } from 'app/shared/model/DocChecklist/RFADocChecklist.M
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-doc-checklist-request-for-approval',
@@ -38,7 +39,14 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
     }
   }
   ApprovalCreateOutput: any;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private http: HttpClient, 
+    private toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.TaskListId = params["TaskListId"];
@@ -56,7 +64,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
     if (ev.Key == "customer") {
-      AdInsHelper.OpenCustomerViewByCustId(ev.ViewObj.AppCustId);
+      this.adInsHelperService.OpenCustomerViewByCustId(ev.ViewObj.AppCustId);
     }
   }
 

@@ -10,6 +10,7 @@ import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskMod
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { HttpClient } from '@angular/common/http';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
     selector: 'app-ltkm-verify-paging',
@@ -23,7 +24,11 @@ export class LtkmVerifyPagingComponent implements OnInit {
     RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
     CustNoObj: GenericObj = new GenericObj();
     
-    constructor(private route: ActivatedRoute, private cookieService: CookieService, private http: HttpClient) {
+    constructor(
+        private route: ActivatedRoute, 
+        private cookieService: CookieService, 
+        private http: HttpClient, 
+        private adInsHelperService: AdInsHelperService) {
         this.route.queryParams.subscribe(params => {
             if (params["BizTemplateCode"] != null) {
                 this.BizTemplateCode = params["BizTemplateCode"];
@@ -62,12 +67,12 @@ export class LtkmVerifyPagingComponent implements OnInit {
         this.CustNoObj.CustNo = ev.RowObj.CustNo;      
         this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
             response => {
-            if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-                AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-            }
-            if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-                AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
-            }
+                if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+                    this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+                }
+                if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+                    this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+                }
             }
         );
         }

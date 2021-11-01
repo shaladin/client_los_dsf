@@ -5,6 +5,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-app-main-info',
@@ -24,7 +25,7 @@ export class AppMainInfoComponent implements OnInit {
   @Input() AppId: number;
   @Input() BizTemplateCode: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     if (this.BizTemplateCode == CommonConstant.CF4W) {
@@ -57,7 +58,12 @@ export class AppMainInfoComponent implements OnInit {
       var custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
     }

@@ -53,6 +53,7 @@ export class CreditApprovalCrPagingComponent implements OnInit {
       this.apvReqObj.CategoryCode = CommonConstant.ApvCategoryCreditApproval;
       this.apvReqObj.Username = this.userContext.UserName;
       this.apvReqObj.RoleCode = this.userContext.RoleCode;
+      this.apvReqObj.OfficeCode = this.userContext.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "AppNo";
@@ -71,7 +72,8 @@ export class CreditApprovalCrPagingComponent implements OnInit {
 
     this.inputPagingObj.addCritInput = arrCrit;
   }
-  GetCallBack(ev: any) {
+
+  async GetCallBack(ev: any) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
@@ -84,10 +86,10 @@ export class CreditApprovalCrPagingComponent implements OnInit {
         }
       }
       else if (ev.RowObj.CurrentUser == "-") {
-        this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
         
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_DETAIL], { "AppId": ev.RowObj.AppId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_DETAIL], { "AppId": ev.RowObj.AppId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId });
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
