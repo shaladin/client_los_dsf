@@ -70,7 +70,7 @@ export class SimpleLeadMonitoringReviewComponent implements OnInit {
 
   cancel(ev) {
     let urlPost = environment.isCore? URLConstant.CancelUploadV2 : URLConstant.CancelUpload;
-    let tempTaskListId = environment.isCore? ev.RowObj.ExecutionId : ev.RowObj.TaskListId;
+    let tempTaskListId = environment.isCore? ev.RowObj.ProcessInstanceId : ev.RowObj.TaskListId;
     let wfObj = new WorkflowApiObj();
     wfObj.TaskListId = tempTaskListId;
     wfObj.TransactionNo = ev.RowObj.UploadNo;
