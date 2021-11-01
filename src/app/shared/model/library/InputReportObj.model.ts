@@ -4,11 +4,13 @@ export class InputReportObj {
     JsonPath: string;
     EnvironmentUrl: string;
     ApiReportPath: string;
+    ModuleCode: string;
     ddlEnvironments: Array<EnviObj>;
     listEnvironments: Array<EnvisObj>;
     
     constructor() {
         this.JsonPath = "",
+        this.ModuleCode = environment.Module,
         this.EnvironmentUrl = environment.FoundationR3Url + "/v1",
         this.ApiReportPath = "/Report/GenerateReportR3",
         this.ddlEnvironments = new Array<EnviObj>();
