@@ -40,7 +40,7 @@
         "label": "Period From >=",
         "name": "PeriodFrom",
         "datatype": "date",
-        "value": "BD-10",
+        "value": "BD-7",
         "restriction": "gte",
         "paramAssignment": 0
       },
