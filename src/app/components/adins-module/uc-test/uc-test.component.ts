@@ -8,7 +8,7 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from 'app/shared/excel-service/excel-service';
 import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
-import { KeyValueReportObj } from '@adins/ucsearch/lib/model/KeyValueReport.model';
+import { KeyValueReportObj } from '@adins/ucsearch/lib/model/key-value-report.model';
 import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';

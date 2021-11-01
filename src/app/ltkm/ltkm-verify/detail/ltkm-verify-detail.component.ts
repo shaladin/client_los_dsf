@@ -14,7 +14,6 @@ import { LtkmReqObj } from 'app/shared/model/LTKM/LtkmReqObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { RFAObj } from '@adins/ucapprovalcreate/lib/shared/model/RFAObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
