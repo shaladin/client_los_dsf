@@ -255,7 +255,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
 
   calculateAddInterest(){
     var diffDays = 0;
-    var diffTimes = new Date(this.CustConfirmForm.controls.GoLiveEstimated.value).getTime()- new Date(this.CustConfirmForm.controls.EffectiveDt.value).getTime();
+    var diffTimes = new Date(this.CustConfirmForm.controls.EffectiveDt.value).getTime() - new Date(this.CustConfirmForm.controls.GoLiveEstimated.value).getTime();
     if(diffTimes>0){
       diffDays = diffTimes / (1000*3600*24)
       console.log(diffDays);

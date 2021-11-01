@@ -260,6 +260,7 @@ export class LtkmCustJobDataXComponent implements OnInit {
       this.jobDataAddrObj.PhnArea2 = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnArea2;
       this.jobDataAddrObj.PhnExt1 = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnExt1;
       this.jobDataAddrObj.PhnExt2 = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnExt2;
+      this.jobDataAddrObj.Zipcode = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Zipcode;
 
       this.jobDataAddrObj.MrHouseOwnershipCode = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.MrHouseOwnershipCode;
 
@@ -320,6 +321,14 @@ export class LtkmCustJobDataXComponent implements OnInit {
       this.SetRefSectorEconomySlikCode(this.ltkmCustPersonalJobDataObj.RefSectorEconomySlikCode)
       this.IsInitJobData = false
       this.IsCopy = false
+      
+      if (this.isLockMode){
+        this.inputAddressObjForJobData.isReadonly = true;
+        this.inputAddressObjForJobData.isRequired = false;
+        this.inputAddressObjForJobData.inputField.inputLookupObj.isReadonly = true;
+        this.inputAddressObjForJobData.inputField.inputLookupObj.isDisable = true;
+        this.inputAddressObjForJobData.inputField.inputLookupObj.isRequired = false;
+      }
     }
   }
 

@@ -135,8 +135,8 @@ export class NapFromSimpleLeadDetailXComponent implements OnInit {
   LobChanged() {
     let refLob = this.listRefLobObj.find((x) => x.LobCode == this.NapAppForm.controls["LobCode"].value);
     if (refLob == undefined) {
-      this.bizTemplateCode = null;
-      this.lobCode = null;
+      this.bizTemplateCode = "";
+      this.lobCode = "";
     } else {
       this.bizTemplateCode = refLob.BlCode;
       this.lobCode = refLob.LobCode;

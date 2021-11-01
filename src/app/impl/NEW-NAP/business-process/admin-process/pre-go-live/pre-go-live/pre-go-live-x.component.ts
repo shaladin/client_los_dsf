@@ -157,9 +157,9 @@ export class PreGoLiveXComponent implements OnInit {
         this.AppId = this.AgrmntResult.AppId;
       });
 
-    const agrObj = {Id: this.AgrmntId};
-    const appObj = {Id: this.AppId};
-    const sysConfigCodeObj = {Code: CommonConstant.ConfigCodeIsUseDms};
+    const agrObj = { Id: this.AgrmntId };
+    const appObj = { Id: this.AppId };
+    const sysConfigCodeObj = { Code: CommonConstant.ConfigCodeIsUseDms };
 
     const getAgr = this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     const getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj)
@@ -174,26 +174,26 @@ export class PreGoLiveXComponent implements OnInit {
 
         this.appNo = this.AppObj.AppNo;
         const mouId = this.AppObj.MouCustId;
-        if(this.BizTemplateCode == CommonConstant.DF){
-          this.http.post(URLConstant.GetMouCustById, {Id: mouId}).subscribe(
+        if (this.BizTemplateCode == CommonConstant.DF) {
+          this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
             async (result: MouCustObj) => {
               this.mouCustNo = result.MouCustNo;
               const endDt = new Date(result.EndDt);
               this.MaxEffDt = new Date(result.EndDt);
               let Tenor = this.AgrmntResult.Tenor;
               if (this.AppObj.MrFirstInstTypeCode == CommonConstant.FirstInstTypeAdvance) {
-                await this.http.post<RefPayFreqObj>(URLConstant.GetRefPayFreqByPayFreqCode, {Code: this.AppObj.PayFreqCode}).toPromise().then(
+                await this.http.post<RefPayFreqObj>(URLConstant.GetRefPayFreqByPayFreqCode, { Code: this.AppObj.PayFreqCode }).toPromise().then(
                   (response) => {
                     Tenor -= response.PayFreqVal;
                   }
                 );
               }
-  
+
               this.MaxEffDt.setMonth(endDt.getMonth() - Tenor)
               if (this.MaxEffDt.getDate() != endDt.getDate()) { //untuk perhitungan bulan kabisat / tgl 31 ke tgl 30
                 this.MaxEffDt.setDate(0);
               }
-  
+
             }
           )
         }
@@ -222,7 +222,7 @@ export class PreGoLiveXComponent implements OnInit {
     this.checkPOReady = true;
   }
 
-  async InitDms() { 
+  async InitDms() {
     if (this.SysConfigResultObj.ConfigValue == '1') {
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -305,7 +305,7 @@ export class PreGoLiveXComponent implements OnInit {
 
     this.http.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_REQ_APPRVL],{ "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_REQ_APPRVL], { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
         this.toastr.successMessage(response['message']);
 
       });
@@ -313,7 +313,7 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   SaveForm(flag = true) {
-    if(this.BizTemplateCode == CommonConstant.DF){
+    if (this.BizTemplateCode == CommonConstant.DF) {
       const effDate = new Date(this.MainInfoForm.controls.EffectiveDt.value);
       if (effDate.getTime() > this.MaxEffDt.getTime()) {
         this.toastr.warningMessage('Maturity Date must be lower than MOU Expired Date');
@@ -341,10 +341,10 @@ export class PreGoLiveXComponent implements OnInit {
         this.agrmntTcObj.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
         this.agrmntTcObj.Notes = this.MainInfoForm.value.TCList[i].Notes;
         this.agrmntTcObj.IsAdditional = this.MainInfoForm.value.TCList[i].IsAdditional;
-  
+
         var prmsDt = new Date(this.agrmntTcObj.PromisedDt);
         var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
-  
+
         if (this.agrmntTcObj.IsChecked == false) {
           if (prmsDtForm != null) {
             if (prmsDt < businessDt) {
@@ -354,7 +354,7 @@ export class PreGoLiveXComponent implements OnInit {
           }
         }
         this.listAgrmntTcObj.push(this.agrmntTcObj);
-  
+
       }
 
     }
@@ -378,9 +378,9 @@ export class PreGoLiveXComponent implements OnInit {
     if (this.IsNeedApv) {
       this.PreGoLiveObj.IsNeedApv = true;
       this.PreGoLiveObj.FlagResume = flag;
-      this.PreGoLiveObj.RequestRFAGoLiveObj = {RFAInfo: this.GoLiveApvForm.controls.RFAInfo.value};
+      this.PreGoLiveObj.RequestRFAGoLiveObj = { RFAInfo: this.GoLiveApvForm.controls.RFAInfo.value };
       if (this.isNeedEndDateApv) {
-        this.PreGoLiveObj.RequestRFAEndDateObj = {RFAInfo: this.MainInfoForm.controls.RFAInfo.value};
+        this.PreGoLiveObj.RequestRFAEndDateObj = { RFAInfo: this.MainInfoForm.controls.RFAInfo.value };
         this.PreGoLiveObj.IsNeedEndDateApv = true;
       }
     }
@@ -391,7 +391,7 @@ export class PreGoLiveXComponent implements OnInit {
 
     this.http.post(AddPreGoLiveXUrl, this.PreGoLiveObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[this.CancelLink],{});
+        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
         this.toastr.successMessage(response['message']);
 
       });
@@ -399,7 +399,7 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   async getAddInterestPaidBy() {
-    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GsDiffdaysglveff}).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsDiffdaysglveff }).toPromise().then(
       (response) => {
         if (response['GsValue']) {
           this.IsGSAddInerestExists = true;
@@ -413,7 +413,7 @@ export class PreGoLiveXComponent implements OnInit {
 
     this.MainInfoForm.controls['AdditionalInterestPaidBy'].setValidators([Validators.required]);
     this.MainInfoForm.controls['AdditionalInterestPaidBy'].updateValueAndValidity();
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAdditionalInterestPaidBy}).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAdditionalInterestPaidBy }).toPromise().then(
       (response) => {
         this.ListRmAddInterestPaidByCode = response[CommonConstant.ReturnObj];
         if (this.BizTemplateCode === CommonConstant.CFNA) {
@@ -426,25 +426,25 @@ export class PreGoLiveXComponent implements OnInit {
     );
   }
 
-  claimTask(){
-    if(environment.isCore){
-        if(this.TaskListId != "" && this.TaskListId!= undefined){
-            this.claimTaskService.ClaimTaskV2(this.TaskListId);
-        }
+  claimTask() {
+    if (environment.isCore) {
+      if (this.TaskListId != "" && this.TaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.TaskListId);
       }
-      else if (this.TaskListId > 0) {
-         this.claimTaskService.ClaimTask(this.TaskListId);
-      }
+    }
+    else if (this.TaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.TaskListId);
+    }
   }
 
   calculateAddInterest() {
     let diffDays = 0;
-    let diffTimes = new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime() - new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime();
+    let diffTimes = new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime() - new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime();
     if (diffTimes > 0) {
       diffDays = diffTimes / (1000 * 3600 * 24)
       console.log(diffDays);
 
-      this.http.post(URLConstantX.CalculateAdditionalInterestX, {AgrmntId: this.AgrmntId, DiffDays: diffDays}).subscribe(
+      this.http.post(URLConstantX.CalculateAdditionalInterestX, { AgrmntId: this.AgrmntId, DiffDays: diffDays }).subscribe(
         (response) => {
           this.MainInfoForm.patchValue({
             AddIntrstAmt: response['Result']
@@ -485,13 +485,13 @@ export class PreGoLiveXComponent implements OnInit {
             if (NowDt <= LastDt) {
               this.isNeedEndDateApv = false;
             } else {
-              var diffTimes = NowDt.getTime()- LastDt.getTime();
-              let Days = diffTimes / (1000*3600*24)
-              if(Days>0){
+              var diffTimes = NowDt.getTime() - LastDt.getTime();
+              let Days = diffTimes / (1000 * 3600 * 24)
+              if (Days > 0) {
                 this.DiffDay = Days;
               }
-              
-              let AttributesEndDateEmpty : Array<ResultAttrObj> = new Array();
+
+              let AttributesEndDateEmpty: Array<ResultAttrObj> = new Array();
               var attribute1: ResultAttrObj = {
                 AttributeName: "Approval Amount",
                 AttributeValue: this.DiffDay.toString()
@@ -546,7 +546,7 @@ export class PreGoLiveXComponent implements OnInit {
           this.InputGoLiveObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
           this.InputGoLiveObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
           this.InputGoLiveObj.ApvTypecodes = [TypeCode];
-          this.InputGoLiveObj.CategoryCode = CommonConstantX.CAT_CODE_GO_LIVE_APV; 
+          this.InputGoLiveObj.CategoryCode = CommonConstantX.CAT_CODE_GO_LIVE_APV;
           this.InputGoLiveObj.SchemeCode = response['CompntValue'];
           this.InputGoLiveObj.Reason = this.itemReasonGoLive;
           this.InputGoLiveObj.TrxNo = this.AgrmntNo
