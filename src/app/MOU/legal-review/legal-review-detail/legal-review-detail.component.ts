@@ -132,28 +132,35 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   SaveData(formObj: FormGroup, isSubmit: boolean) {
-    if (this.LegalForm.valid) {
-      let addMouLglRvwUrl = environment.isCore ? URLConstant.AddRangeMouCustLglReviewV2 : URLConstant.AddRangeMouCustLglReview;
-      let mouLglRvwObj = new ReqListMouCustLglReviewObj();
-      for (let index = 0; index < this.responseRefMasterObj.length; index++) {
-        let tempMouObj = {
-          MouCustId: this.MouCustId,
-          MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
-          LglReviewResult: formObj.value.items[index].values,
-          RowVersion: formObj.value.items[index].RowVersion
-        }
-        mouLglRvwObj.MouCustLglReviewObjs.push(tempMouObj);
-      }
-      mouLglRvwObj.WfTaskListId = this.WfTaskListId;
-      mouLglRvwObj.IsSubmit = isSubmit;
-      this.http.post(addMouLglRvwUrl, mouLglRvwObj).subscribe(
-        response => {
-          this.toastr.successMessage(response['message']);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{ MrMouTypeCode : this.resultData.MrMouTypeCode});
-
-        });
-      this.mouTc.Save();
+    if (this.LegalForm.valid && isSubmit) {
+      this.inputSave(formObj,isSubmit);
     }
+    else if(!isSubmit){
+      this.inputSave(formObj,isSubmit);
+    }
+  }
+
+  inputSave(formObj: FormGroup, isSubmit: boolean){
+    let addMouLglRvwUrl = environment.isCore ? URLConstant.AddRangeMouCustLglReviewV2 : URLConstant.AddRangeMouCustLglReview;
+    let mouLglRvwObj = new ReqListMouCustLglReviewObj();
+    for (let index = 0; index < this.responseRefMasterObj.length; index++) {
+      let tempMouObj = {
+        MouCustId: this.MouCustId,
+        MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
+        LglReviewResult: formObj.value.items[index].values,
+        RowVersion: formObj.value.items[index].RowVersion
+      }
+      mouLglRvwObj.MouCustLglReviewObjs.push(tempMouObj);
+    }
+    mouLglRvwObj.WfTaskListId = this.WfTaskListId;
+    mouLglRvwObj.IsSubmit = isSubmit;
+    this.http.post(addMouLglRvwUrl, mouLglRvwObj).subscribe(
+      response => {
+        this.toastr.successMessage(response['message']);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{ MrMouTypeCode : this.resultData.MrMouTypeCode});
+
+      });
+    this.mouTc.Save();
   }
 
   claimTask() {
