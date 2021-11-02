@@ -53,7 +53,6 @@ export class ApplicationApprovalPagingComponent implements OnInit {
     this.apvReqObj.RoleCode = this.userContext.RoleCode;
 
     this.integrationObj.baseUrl = environment.ApprovalR3OplUrl;
-    this.integrationObj.apiPath = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCodeDistinctByTransaction;
     this.integrationObj.requestObj = this.apvReqObj;
     this.integrationObj.leftColumnToJoin = "AppNo";
     this.integrationObj.rightColumnToJoin = "TransactionNo";

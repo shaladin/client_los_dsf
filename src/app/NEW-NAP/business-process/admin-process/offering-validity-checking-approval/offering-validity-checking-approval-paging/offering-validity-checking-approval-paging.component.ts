@@ -64,7 +64,6 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
       this.apvReqObj.Username = this.userContext.UserName;
       this.apvReqObj.RoleCode = this.userContext.RoleCode;
       this.apvReqObj.OfficeCode = this.userContext.OfficeCode;
-      this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCodeDistinctByTransaction;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "AgrmntNo";
       this.integrationObj.rightColumnToJoin = "TransactionNo";
