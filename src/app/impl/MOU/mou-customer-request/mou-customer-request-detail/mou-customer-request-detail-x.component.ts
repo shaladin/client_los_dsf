@@ -22,6 +22,7 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMast
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { environment } from 'environments/environment';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-customer-request-detail-x',
@@ -70,7 +71,8 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     private toastr: NGXToastrService,
     private http: HttpClient,
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService
+    private claimTaskService: ClaimTaskService,
+    private AdInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
@@ -198,7 +200,11 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
   }
 
   Back(): void {
-    this.location.back();
+    if(this.pageType == "return"){
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_EDIT_CUST_PAGING],{MrMouTypeCode : this.mouType});
+    }else{
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{MrMouTypeCode : this.mouType});
+    }
   }
 
   Save() {
@@ -246,7 +252,7 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     if (key == "mou") {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.mouCustId);
     } else if (key == "cust") {
-      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+      this.AdInsHelperService.OpenCustomerViewByCustId(this.custId);
     }
   }
 

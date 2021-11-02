@@ -5,6 +5,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-view-listed-cust-factoring',
@@ -14,7 +15,7 @@ export class MouViewListedCustFactoringComponent implements OnInit {
   responseCustListed: Array<any>;
   CustNoObj: GenericObj = new GenericObj();
   @Input() MouCustId : number;
-  constructor(private http : HttpClient) { } 
+  constructor(private http : HttpClient, private adInsHelperService: AdInsHelperService) { } 
 
   ngOnInit() {
     var mouObj = new MouCustObj();
@@ -31,10 +32,10 @@ export class MouViewListedCustFactoringComponent implements OnInit {
     this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       response => {
         if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
         }
         if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-          AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
         }
       }
     );

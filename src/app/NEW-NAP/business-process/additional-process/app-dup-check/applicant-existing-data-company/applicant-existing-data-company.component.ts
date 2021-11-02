@@ -15,6 +15,7 @@ import { ReqGetCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/Req
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -38,7 +39,8 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService, 
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService
+    private claimTaskService: ClaimTaskService,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -153,7 +155,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     if (key == "app") {
       AdInsHelper.OpenAppViewByAppId(value);
     } else if (key == "cust") {
-      AdInsHelper.OpenCustomerViewByCustId(this.cust.CustId);
+      this.adInsHelperService.OpenCustomerViewByCustId(this.cust.CustId);
     }
   }
 }

@@ -12,12 +12,13 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { environment } from 'environments/environment';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { environment } from 'environments/environment';
-import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-mou-execution-detail-x',
@@ -29,7 +30,7 @@ export class MouExecutionDetailXComponent implements OnInit {
   WfTaskListId: any;
   MouType: string = "";
   MrCustTypeCode: string = "";
-  businessDtYesterday: Date;
+  businessDtYesterday: Date; 
   StartDt: Date;
   EndDt: Date;
   MouCustDt: Date;
@@ -50,7 +51,10 @@ export class MouExecutionDetailXComponent implements OnInit {
     private route: ActivatedRoute,
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
+    private router: Router, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService,
+    private AdInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
@@ -65,7 +69,6 @@ export class MouExecutionDetailXComponent implements OnInit {
 
   readonly MouTypeGeneral: string = CommonConstant.GENERAL;
   isReady: boolean = false;
-
   async ngOnInit() {
     await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
@@ -121,7 +124,7 @@ export class MouExecutionDetailXComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {MrMouTypeCode : this.MouType});
   }
 
   SaveForm() {
@@ -145,8 +148,8 @@ export class MouExecutionDetailXComponent implements OnInit {
       this.httpClient.post(mouCustExecutionHumanActivityUrl, request).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
-        });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {MrMouTypeCode : this.MouType});
+      });
     }
   }
 
@@ -195,7 +198,12 @@ export class MouExecutionDetailXComponent implements OnInit {
       let custObj = { CustNo: this.resultData["CustNo"] };
       this.httpClient.post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         });
     }
   }

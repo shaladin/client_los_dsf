@@ -138,8 +138,9 @@ export class MouReviewGeneralXComponent implements OnInit {
     this.http.post(SubmitMouRvwUrl, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
-      })
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {MrMouTypeCode : this.MouType});
+    })
+    
   }
 
   Return() {
@@ -149,8 +150,8 @@ export class MouReviewGeneralXComponent implements OnInit {
     this.http.post(ReturnMouUrl, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
-      })
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {MrMouTypeCode : this.MouType});
+    })  
   }
 
   initInputApprovalObj() {

@@ -3,8 +3,7 @@
     <h4 class="card-title" translate> Customer Confirmation Detail </h4>
   </div>
   <div class="card-body">
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
-
+    <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode"></app-app-main-info>
     <div class="px-3">
       <lib-ucSubsection [id]="'SubjectListId'" [title]="'Subject List'" [panel]="'SubjectList'">
       </lib-ucSubsection>

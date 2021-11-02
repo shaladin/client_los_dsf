@@ -4,6 +4,8 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { HttpClient } from '@angular/common/http';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-ro-telemk-offer-paging',
@@ -11,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RoTelemkOfferPagingComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
 
@@ -39,7 +41,12 @@ export class RoTelemkOfferPagingComponent implements OnInit {
     if (ev.Key == "customer") {
       this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.RowObj.CustNo }).subscribe(
         (response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       )
     }

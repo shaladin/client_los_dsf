@@ -78,9 +78,8 @@
                 <div class="px-3">
                     <div class="form-actions right">
 
-                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/Cust/ReviewPaging']"
-                      translate>
-                      <i class="ft-x"></i> Cancel
+                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/Cust/ReviewPaging']" [queryParams]="{MrMouTypeCode : MouType}">
+                      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                     </button>
                     <button type="button" (click)="Return()" class="btn btn-raised btn-primary mr-1" translate>
                       <i class="fa fa-reply"></i> Return

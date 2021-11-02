@@ -18,6 +18,7 @@ import { ReqMouForEditConfirmCancelObjV2_1 } from 'app/shared/model/Request/MOU/
 export class MouCancelDetailComponent implements OnInit {
   MouCustId: number = 0;
   WfTaskListId: string = '';
+  MrMouTypeCode:string;
   MouCancelObj: ReqMouForEditConfirmCancelObjV2_1 = new ReqMouForEditConfirmCancelObjV2_1();
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
@@ -36,6 +37,10 @@ export class MouCancelDetailComponent implements OnInit {
 
       if(params["WfTaskListId"] != null){
         this.WfTaskListId = params["WfTaskListId"];
+      }
+
+      if (params['MrMouTypeCode'] != null) {
+        this.MrMouTypeCode = params['MrMouTypeCode'];
       }
     });
   }
@@ -69,7 +74,7 @@ export class MouCancelDetailComponent implements OnInit {
     this.http.post(URLConstant.EditMouForCancelByMouIdV2_1, this.MouCancelObj).subscribe(
       (response) => {
         this.toastr.successMessage(response['message']);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_CANCEL]);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_CANCEL],{"MrMouTypeCode" : this.MrMouTypeCode});
       }
     )
   }

@@ -59,6 +59,7 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_APV_RES_EXP_D;
       this.apvReqObj.Username = this.UserAccess.UserName;
       this.apvReqObj.RoleCode = this.UserAccess.RoleCode;
+      this.apvReqObj.OfficeCode = this.UserAccess.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "AgrmntNo";
@@ -83,7 +84,7 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
 
   }
 
-  CallBackHandler(ev) {
+  async CallBackHandler(ev) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if (ev.Key == "Process") {
       if(isRoleAssignment != CommonConstant.TRUE){
@@ -93,10 +94,10 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
         }
       }
       else if (ev.RowObj.CurrentUser == "-") {
-        this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
 
-      this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL], { queryParams: { "CrdApvResultExtId": ev.RowObj.CrdApvResultExtId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "AppId": ev.RowObj.AppId, "AgrmntId": ev.RowObj.AgrmntId, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment, "BizTemplateCode": this.BizTemplateCode} });
+      this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL], { queryParams: { "CrdApvResultExtId": ev.RowObj.CrdApvResultExtId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "AppId": ev.RowObj.AppId, "AgrmntId": ev.RowObj.AgrmntId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId, "BizTemplateCode": this.BizTemplateCode} });
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.UserAccess.UserName)) {

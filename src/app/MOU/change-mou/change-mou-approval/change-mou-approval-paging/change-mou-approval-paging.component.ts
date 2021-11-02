@@ -16,6 +16,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { String } from 'typescript-string-operations';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service'
 
 @Component({
   selector: 'app-change-mou-approval-paging',
@@ -30,7 +31,13 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
   integrationObj: IntegrationObj = new IntegrationObj();
   UserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService) { }
+  constructor(
+    private router: Router, 
+    private http: HttpClient, 
+    private cookieService: CookieService, 
+    private toastr: NGXToastrService, 
+    private apvTaskService: ApprovalTaskService, 
+    private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -46,6 +53,7 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
       this.apvReqObj.Username = this.UserContext.UserName;
       this.apvReqObj.RoleCode = this.UserContext.RoleCode;
+      this.apvReqObj.OfficeCode = this.UserContext.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "TrxNo";
@@ -55,23 +63,17 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
     }
   }
 
-  getEvent(event) {
-    let custId: number;
-    let mrCustTypeCode: string;
+  async getEvent(event) {
     var isRoleAssignment = event.RowObj.IsRoleAssignment.toString();
     if (event.Key == "customer") {
       let CustNoObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-
-          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }
@@ -83,18 +85,18 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
         } 
       }
       else if (event.RowObj.CurrentUser == "-") {
-          this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
       }
       
       switch (event.RowObj.MouType) {
         case CommonConstant.MOU_TYPE_FACTORING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_FCTR],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_FCTR],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
             break;
         case CommonConstant.MOU_TYPE_GENERAL:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_GEN],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_GEN],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
             break;
         case CommonConstant.MOU_TYPE_DLFN:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_FIN],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_APV_DETAIL_FIN],{ "MouCustId": event.RowObj.MouCustId, "ChangeMouTrxId" : event.RowObj.ChangeMouTrxId, "TaskId": event.RowObj.TaskId , "TrxNo": event.RowObj.TrxNo, "InstanceId": event.RowObj.InstanceId, "ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId, "PageTitle": event.RowObj.MouTypeDescr, "ChangeMouCustId": event.RowObj.ChangeMouCustId, "MouType": event.RowObj.MouType, "TrxType": event.RowObj.TrxType});
             break;
       }   
     }

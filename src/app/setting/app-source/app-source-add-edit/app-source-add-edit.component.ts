@@ -34,7 +34,7 @@ export class AppSourceAddEditComponent implements OnInit {
   });
 
   readonly CancelLink: string = NavigationConstant.SETTING_APP_SOURCE_PAGING;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
         this.mode = params["mode"];

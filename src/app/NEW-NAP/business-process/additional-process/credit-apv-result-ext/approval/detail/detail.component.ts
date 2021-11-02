@@ -33,7 +33,6 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   AgrmntId: number;
   BizTemplateCode: string; 
   CrdApvMainDataObj: ResCreditApvResultExtObj;
-  IsRoleAssignment: string = "";
   ApvReqId: number; 
   InputApvObj : UcInputApprovalObj;
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
@@ -53,7 +52,6 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
         this.taskId = params["TaskId"];
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
@@ -62,13 +60,11 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   }
 
   async ngOnInit() {
-   await this.GetMainData();
+    await this.GetMainData();
 
-   var ApvHoldObj = new ApprovalObj();
-   ApvHoldObj.TaskId = this.taskId;
-   if(this.IsRoleAssignment != CommonConstant.TRUE){
+    var ApvHoldObj = new ApprovalObj();
+    ApvHoldObj.TaskId = this.taskId;
     this.HoldTask(ApvHoldObj);
-   }
     
     this.initInputApprovalObj();
   }
@@ -92,6 +88,9 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   HoldTask(obj){
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response)=>{
+      },
+      (error) => {
+        this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING]);
       }
     )
   }

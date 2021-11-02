@@ -9,6 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-tab-application',
@@ -29,7 +30,7 @@ export class TabApplicationComponent implements OnInit {
   isDF: boolean = false;
   AppAttrContentObjs: Array<AppAttrContentObj> = new Array<AppAttrContentObj>();
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {      
       if(params["AppId"] == "undefined") {
         this.AppNo = params["AppNo"];
@@ -175,7 +176,12 @@ export class TabApplicationComponent implements OnInit {
     var custObj = { TrxNo: custNo };
     this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       (response) => {
-        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+          this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+        }
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+        }
       });
   }
 }

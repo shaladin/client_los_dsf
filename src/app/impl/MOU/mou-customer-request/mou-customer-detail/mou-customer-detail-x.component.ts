@@ -220,10 +220,10 @@ export class MouCustomerDetailXComponent implements OnInit, AfterViewInit {
 
   cancelHandler() {
     if (this.pageType == "return") {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {MrMouTypeCode : this.mouType});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {MrMouTypeCode : this.mouType});
     }
   }
 
@@ -231,19 +231,18 @@ export class MouCustomerDetailXComponent implements OnInit, AfterViewInit {
     if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex >= 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex >= 5) || (this.mouType == CommonConstant.FINANCING && this.currentStepIndex >= 5)) {
 
       var mouObj = { Id: this.mouCustId }
-      
+
       let SubmitMouRequestUrl = environment.isCore ? URLConstant.SubmitWorkflowMouRequestV2 : URLConstant.SubmitWorkflowMouRequest;
-      
       this.httpClient.post(SubmitMouRequestUrl, mouObj).subscribe(
         () => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {MrMouTypeCode : this.mouType});
           }
           else {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING], {MrMouTypeCode : this.mouType});
           }
-        });
+      });      
     }
     else {
       this.toastr.warningMessage("Please follow the steps first");

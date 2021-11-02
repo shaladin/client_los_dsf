@@ -241,6 +241,7 @@ export class DocSignerDetailComponent implements OnInit {
   GetMouTypeDesc(code: string){
     let reqByCode: GenericObj = new GenericObj();
     reqByCode.Code = code;
+    this.MouType = code;
     this.http.post(URLConstant.GetRefMasterByMasterCode, reqByCode).subscribe(
       (response: RefMasterObj) => {
         this.mouTypeDesc = response.Descr;
@@ -256,7 +257,7 @@ export class DocSignerDetailComponent implements OnInit {
     this.http.post(addMouCustSignerUrl, this.mouCustSignerObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DOC_SIGNER_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DOC_SIGNER_PAGING], {MrMouTypeCode : this.MouType});
     });    
   }
 

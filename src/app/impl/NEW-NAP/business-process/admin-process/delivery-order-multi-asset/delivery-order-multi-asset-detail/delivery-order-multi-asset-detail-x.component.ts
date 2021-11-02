@@ -489,8 +489,8 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   calculateAddInterest() {
-    var diffDays = 0;
-    var diffTimes = new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime() - new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime()
+    let diffDays = 0;
+    const diffTimes =new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime() - new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime()
     if (diffTimes > 0) {
       diffDays = diffTimes / (1000 * 3600 * 24)
       console.log(diffDays);
@@ -520,8 +520,8 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
   }
-  
-  SetTcForm(): Array<AgrmntTcObj>{    
+
+  SetTcForm(): Array<AgrmntTcObj>{
     let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     let listAgrmntTcObj: Array<AgrmntTcObj> = new Array<AgrmntTcObj>();
     for (var i = 0; i < this.AppTcForm.value.TCList["length"]; i++) {

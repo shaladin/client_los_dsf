@@ -53,12 +53,12 @@ export class CustConfirmationDetailXComponent implements OnInit {
   checkPOReady: boolean = false;
   PODt: Date = new Date();
   isHasPO: boolean = false;
-  
+
   readonly ViewLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW;
   readonly DetailLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient,
-    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService, 
+    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService,
     private claimTaskService: ClaimTaskService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
@@ -95,7 +95,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
       this.CustConfirmForm.patchValue({
         GoLiveEstimated: formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'),
       });
-      
+
       this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, {Id: this.AgrmntId}).subscribe(
         (response) => {
           if(response["PurchaseOrderHId"] != 0){
@@ -254,8 +254,8 @@ export class CustConfirmationDetailXComponent implements OnInit {
   }
 
   calculateAddInterest(){
-    var diffDays = 0;
-    var diffTimes = new Date(this.CustConfirmForm.controls.EffectiveDt.value).getTime() - new Date(this.CustConfirmForm.controls.GoLiveEstimated.value).getTime();
+    let diffDays = 0;
+    const diffTimes = new Date(this.CustConfirmForm.controls.GoLiveEstimated.value).getTime() - new Date(this.CustConfirmForm.controls.EffectiveDt.value).getTime();
     if(diffTimes>0){
       diffDays = diffTimes / (1000*3600*24)
       console.log(diffDays);
@@ -274,7 +274,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
       });
     }
   }
-  
+
   claimTask(){
     if (environment.isCore){
       if (this.TaskListId != "" && this.TaskListId != undefined){
@@ -296,13 +296,13 @@ export class CustConfirmationDetailXComponent implements OnInit {
         AgrmntCreatedDt: formatDate(AgrmntCreatedDt, 'yyyy-MM-dd', 'en-US'),
       });
     }
-    
+
     if (EffectiveDt != null && EffectiveDt != "") {
       this.CustConfirmForm.patchValue({
         EffectiveDt: formatDate(EffectiveDt, 'yyyy-MM-dd', 'en-US'),
       });
     }
-    
+
     if (GoLiveEstimated != null && GoLiveEstimated != "") {
       this.CustConfirmForm.patchValue({
         GoLiveEstimated: formatDate(GoLiveEstimated, 'yyyy-MM-dd', 'en-US'),
