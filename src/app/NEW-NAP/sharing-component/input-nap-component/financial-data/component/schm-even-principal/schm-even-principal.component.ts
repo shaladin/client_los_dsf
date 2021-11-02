@@ -12,6 +12,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { CalcEvenPrincipleObjForTrialCalc } from 'app/shared/model/AppFinData/CalcEvenPrincipleObjForTrialCalc.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-schm-even-principal',
@@ -145,6 +146,21 @@ export class SchmEvenPrincipalComponent implements OnInit {
   Calculate() {
     if (this.ParentForm.getRawValue().CalcBase == '') {
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
+      return;
+    }
+
+    if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
+      && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+      && this.ParentForm.controls.IsSubsidyRateExist.value == false
+      && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
+      this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE, this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt));
+    }
+
+    if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
+      && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+      && this.ParentForm.controls.IsSubsidyRateExist.value == true
+      && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
+      this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
       return;
     }
 

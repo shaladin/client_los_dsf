@@ -137,13 +137,6 @@ export class SchmRegulerFixComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
     }
-    // if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-    //     && this.ParentForm.controls.IsSubsidyRateExist.value == false 
-    //     && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt)
-    // {
-    //   this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
-    //   return;  
-    // }
 
     if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
       && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
