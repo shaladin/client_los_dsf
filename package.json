@@ -74,7 +74,7 @@
     "@types/crypto-js": "^4.0.2",
     "@types/d3-shape": "1.2.4",
     "@types/dragula": "2.1.33",
-    "@types/jquery": "^3.5.7",
+    "@types/jquery": "^3.5.8",
     "angular-archwizard": "^5.0.1",
     "angular-calendar": "0.26.3",
     "angular-file-uploader": "^5.0.2",
