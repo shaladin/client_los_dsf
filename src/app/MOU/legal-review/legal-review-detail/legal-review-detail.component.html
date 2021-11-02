@@ -50,7 +50,7 @@
                 [routerLink]="[CancelLink]" [queryParams]="{MrMouTypeCode : resultData.MrMouTypeCode}">
                 <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
-              <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, false)">
+              <button type="button" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, false)">
                 <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
               </button>
               <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, true)">
