@@ -167,10 +167,17 @@ export class ReturnHandlingDetailComponent implements OnInit {
           });
           this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
         }else if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.VerfTrxTypeCodeInvoice) {
-          this.ReturnHandlingForm.patchValue({
-            MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
-          });
-          this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
+          if(this.lobCode == CommonConstant.FCTR){
+            this.ReturnHandlingForm.patchValue({
+              MrReturnTaskCode: this.taskObj[0].Key
+            });
+          }
+          else{
+            this.ReturnHandlingForm.patchValue({
+              MrReturnTaskCode: this.taskObj[0].Key
+            });
+            this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
+          }
         }else if(this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.AppStepComm || this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.AppStepRSVFund){        
           this.taskObj = this.taskObj.filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
 
@@ -204,6 +211,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
         break;
       case CommonConstant.FCTR:
         refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFCTR;
+        break;
+      case CommonConstant.DF:
+      refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskDF;
         break;
     }
     if (!refMasterTypeCode) return;
