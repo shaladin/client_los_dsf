@@ -12,24 +12,6 @@
         "datatype": "text"
       },
       {
-        "type": "dropdown",
-        "name": "MC.MR_MOU_TYPE_CODE",
-        "id": "MouTypeId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "datatype": "text",
-        "isFromURL": true,
-        "ddlType": "all",
-        "url": "",
-        "environment": "FOU",
-        "path":"/RefMaster/GetListKeyValueActiveByCode",
-        "label": "Mou Type",
-        "items": [],
-        "itemsUrl": [],   
-        "criteriaPropName": "RefMasterTypeCode",
-        "criteriaPropValue": "MOU_TYPE"
-      },
-      {
         "type": "textbox",
         "name": "MC.CUST_NAME",
         "id": "CustNameId",
@@ -223,6 +205,10 @@
                     {
                       "type": "WfTaskListId",
                       "property": "Id"
+                    },
+                    {
+                      "type": "MrMouTypeCode",
+                      "property": "MrMouTypeCode"
                     }
                   ]
                 },
@@ -249,6 +235,10 @@
                     {
                       "type": "WfTaskListId",
                       "property": "Id"
+                    },
+                    {
+                      "type": "MrMouTypeCode",
+                      "property": "MrMouTypeCode"
                     }
                   ]
                 },

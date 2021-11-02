@@ -44,6 +44,7 @@
       "ddlType": "all",
       "isQueryIn": true,
       "url": "",
+      "environment": "FOU",
       "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
       "label": "Status",
       "items": [],

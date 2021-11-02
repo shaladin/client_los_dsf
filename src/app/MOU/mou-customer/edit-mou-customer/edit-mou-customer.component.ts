@@ -5,16 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { environment } from 'environments/environment';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -28,8 +29,14 @@ export class EditMouCustomerComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
+  MrMouTypeCode: string;
 
-  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {   
+    this.route.queryParams.subscribe(params => {
+    if (params["MrMouTypeCode"] != null) {
+      this.MrMouTypeCode = params["MrMouTypeCode"];
+    }});
+  }
 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -43,14 +50,21 @@ export class EditMouCustomerComponent implements OnInit {
     critObj.value = 'RTN';
     this.arrCrit.push(critObj);
     
+    const addCritMouType = new CriteriaObj();
+    addCritMouType.DataType = "text";
+    addCritMouType.propName = "MOU.MR_MOU_TYPE_CODE";
+    addCritMouType.restriction = AdInsConstant.RestrictionEq;
+    addCritMouType.value = this.MrMouTypeCode;
+    this.arrCrit.push(addCritMouType);
+
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchEditMouCustomerV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchEditMouCustomerV2.json";
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.requestTaskModel.ProcessKeys = [CommonConstant.WF_MOU_GENERAL, CommonConstant.WF_MOU_FACTORING, CommonConstant.WF_MOU_DLFN];
-      this.requestTaskModel.TaskDefinitionKeys = [CommonConstant.MOU_RETURN + CommonConstant.MOU_TYPE_GENERAL, CommonConstant.MOU_RETURN + CommonConstant.MOU_TYPE_FACTORING, CommonConstant.MOU_RETURN + CommonConstant.MOU_TYPE_DLFN];
+      this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, (this.MrMouTypeCode != CommonConstant.MOU_TYPE_DLFN ? this.MrMouTypeCode : CommonConstant.DF));
+      this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.MOU_RETURN, this.MrMouTypeCode);
       this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE], 
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
@@ -66,21 +80,15 @@ export class EditMouCustomerComponent implements OnInit {
   }
 
   getEvent(event) {
-    let custId: number;
-    let mrCustTypeCode: string;
     if (event.Key == "customer") {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          
-          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

@@ -17,6 +17,7 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CookieService } from "ngx-cookie";
 import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-mou-unfreeze-detail",
@@ -56,7 +57,8 @@ export class MouUnfreezeDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["MouCustId"] != 0) {
@@ -178,10 +180,10 @@ export class MouUnfreezeDetailComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.ViewObj.CustNo }).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

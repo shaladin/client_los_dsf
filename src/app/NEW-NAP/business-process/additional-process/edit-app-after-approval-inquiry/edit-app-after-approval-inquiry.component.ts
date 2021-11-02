@@ -8,6 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -19,8 +20,10 @@ export class EditAppAfterApprovalInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
 
-  constructor(    private http: HttpClient, 
+  constructor(
+    private http: HttpClient, 
     private route: ActivatedRoute,
+    private adInsHelperService: AdInsHelperService
     ) {
       this.route.queryParams.subscribe(params => {
         if (params["BizTemplateCode"] != null) {
@@ -35,16 +38,6 @@ export class EditAppAfterApprovalInquiryComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchEditAppAfterApprovalInquiry.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditAppAfterApprovalInquiry.json";
 
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "EAAATH.EDIT_APP_AFT_APV_TRX_NO",
-        environment: environment.FoundationR3Url + "/v1"
-      },
-      {
-        name: "EAAATH.EDIT_APP_AFT_APV_TRX_STAT",
-        environment: environment.FoundationR3Url + "/v1"
-      }
-    ];
     this.inputPagingObj.addCritInput = new Array();
 
     var critLobObj = new CriteriaObj();
@@ -56,20 +49,14 @@ export class EditAppAfterApprovalInquiryComponent implements OnInit {
 
   getEvent(event) {
     if(event.Key == "customer"){
-      let custId: number;
-      let mrCustTypeCode: string;
       let CustNoObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-
-          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

@@ -18,6 +18,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 @Component({
   selector: 'app-ltkm-approval-paging',
   templateUrl: './ltkm-approval-paging.component.html',
@@ -36,7 +37,8 @@ export class LtkmApprovalPagingComponent implements OnInit {
     private httpClient: HttpClient, 
     private router: Router,
     private cookieService: CookieService,
-    private apvTaskService: ApprovalTaskService) {
+    private apvTaskService: ApprovalTaskService,
+    private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
      
     });
@@ -56,6 +58,7 @@ export class LtkmApprovalPagingComponent implements OnInit {
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_AML_APV;
       this.apvReqObj.Username = this.userContext.UserName;
       this.apvReqObj.RoleCode = this.userContext.RoleCode;
+      this.apvReqObj.OfficeCode = this.userContext.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "LtkmNo";
@@ -65,18 +68,17 @@ export class LtkmApprovalPagingComponent implements OnInit {
     }
   }
 
-  GetCallBack(ev: any) {
-    var ApvReqObj = new ApprovalObj();
+  async GetCallBack(ev: any) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if(ev.Key == "customer"){
       this.CustNoObj.CustNo = ev.RowObj.CustNo;      
       this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );
@@ -92,9 +94,9 @@ export class LtkmApprovalPagingComponent implements OnInit {
         }
       }
       else if (ev.RowObj.CurrentUser == "-") {
-        this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_DETAIL],{ "LtkmCustId": ev.RowObj.LtkmCustId, "LtkmNo": ev.RowObj.LtkmNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsRoleAssignment": isRoleAssignment });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_DETAIL],{ "LtkmCustId": ev.RowObj.LtkmCustId, "LtkmNo": ev.RowObj.LtkmNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId, "WfTaskListId": ev.RowObj.WfTaskListId});
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {

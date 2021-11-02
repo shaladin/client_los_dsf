@@ -15,6 +15,7 @@ import { first } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-ro-telemk-offer-detail',
@@ -42,7 +43,8 @@ export class RoTelemkOfferDetailComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe(params => {
       this.roPotentialNo = params['RoPotentialNo'];
@@ -162,10 +164,10 @@ export class RoTelemkOfferDetailComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, { CustNo: event.ViewObj.CustNo}).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );
@@ -176,10 +178,10 @@ export class RoTelemkOfferDetailComponent implements OnInit {
     this.http.post(URLConstant.GetCustByCustNo, { CustNo: custNo}).subscribe(
       response => {
         if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
         }
         if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-          AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
         }
       }
     );

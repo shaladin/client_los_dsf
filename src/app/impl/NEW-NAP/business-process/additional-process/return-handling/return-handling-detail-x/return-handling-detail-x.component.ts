@@ -210,6 +210,9 @@ export class ReturnHandlingDetailXComponent implements OnInit {
       case CommonConstant.FCTR:
         refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFCTR;
         break;
+      case CommonConstant.DF:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskDLFN;
+        break;
     }
     if (!refMasterTypeCode) return;
 

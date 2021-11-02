@@ -11,24 +11,6 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
-            "datatype": "text",
-            "name": "MC.MR_MOU_TYPE_CODE",
-            "id": "MrMouTypeCode",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": true,
-            "ddlType": "all",
-            "url": "",
-            "environment": "FOU",
-            "path": "/RefMaster/GetListKeyValueActiveByCode",
-            "label": "Mou Type",
-            "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "RefMasterTypeCode",
-            "criteriaPropValue": "MOU_TYPE"
-        },
-        {
             "type": "textbox",
             "name": "MC.CUST_NAME",
             "id": "CustNameId",

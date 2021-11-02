@@ -68,8 +68,8 @@
               </div>
               <br><br>
               <div id="mou-cust-tab" class="content" role="tabpanel" aria-labelledby="mou-cust-tab-trigger">
-                <app-mou-cust-tab *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
-                  (ResponseMouCust)="stepHandlerGeneral($event)"></app-mou-cust-tab>
+                <app-mou-cust-tab-x *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
+                  (ResponseMouCust)="stepHandlerGeneral($event)"></app-mou-cust-tab-x>
               </div>
               <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
                 <app-mou-detail-general-x *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [Mode]="mode"
@@ -157,8 +157,8 @@
               </div>
               <br><br>
               <div id="mou-cust-tab" class="content" role="tabpanel" aria-labelledby="mou-cust-tab-trigger">
-                <app-mou-cust-tab *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
-                  (ResponseMouCust)="stepHandlerFactoring($event)"></app-mou-cust-tab>
+                <app-mou-cust-tab-x *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
+                  (ResponseMouCust)="stepHandlerFactoring($event)"></app-mou-cust-tab-x>
               </div>
               <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
                 <app-mou-detail-factoring-x *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
@@ -251,8 +251,8 @@
               </div>
               <br><br>
               <div id="mou-cust-tab" class="content" role="tabpanel" aria-labelledby="mou-cust-tab-trigger">
-                <app-mou-cust-tab *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
-                  (ResponseMouCust)="stepHandlerFinancing($event)"></app-mou-cust-tab>
+                <app-mou-cust-tab-x *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
+                  (ResponseMouCust)="stepHandlerFinancing($event)"></app-mou-cust-tab-x>
               </div>
               <div id="mou-detail-tab" class="content" role="tabpanel" aria-labelledby="mou-detail-tab-trigger">
                 <app-mou-detail-financing-x *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"

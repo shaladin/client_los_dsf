@@ -37,7 +37,7 @@
                 (ngSubmit)="ProdOfferingHDeactForm.valid && SaveForm()" #enjiForm="ngForm">
                 <div class="form-body">
                   <div class="form-group row">
-                    <label class="col-md-3  adInsLabel" translate>Effective Date </label>
+                    <label class="col-md-3  adins-required-label" translate>Effective Date </label>
                     <div class="col-md-3">
                       <input type="date" class="form-control adInsInput" formControlName="EffectiveDate"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdOfferingHDeactForm.controls.EffectiveDate.invalid }">
@@ -52,7 +52,7 @@
                   <div class="card-body">
                     <div class="px-3"> 
                         <div class="form-actions right">
-                          <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" skipLocationChange>
+                          <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]">
                             <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                           </button>
                           <button type="submit" class="btn btn-raised btn-primary">

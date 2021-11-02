@@ -7,6 +7,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-app-main-info',
@@ -25,7 +26,11 @@ export class AppMainInfoComponent implements OnInit {
   AppNo: number;
   AppObj: any;
 
-  constructor(private http: HttpClient, private translateService: TranslateService, private route: ActivatedRoute) {
+  constructor(
+    private http: HttpClient, 
+    private translateService: TranslateService, 
+    private route: ActivatedRoute,
+    private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if(params["AppId"] == "undefined"){
         this.AppNo = params["AppNo"]
@@ -75,7 +80,12 @@ export class AppMainInfoComponent implements OnInit {
       var custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
     }

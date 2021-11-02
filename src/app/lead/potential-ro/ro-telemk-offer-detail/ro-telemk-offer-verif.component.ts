@@ -15,6 +15,7 @@ import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultD.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-ro-telemk-offer-verif',
@@ -52,7 +53,8 @@ export class RoTelemkOfferVerifComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe(params => {
       this.roPotentialNo = params['RoPotentialNo'];
@@ -330,10 +332,10 @@ export class RoTelemkOfferVerifComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.TelemkOfferSubj.CustNo}).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

@@ -31,7 +31,6 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   ApvReqId: number;
-  IsRoleAssignment: string = "";
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -45,7 +44,6 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
         this.TrxNo = params["TrxNo"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -56,16 +54,19 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.taskId;
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
-    }
+
+    this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
   }
 
   HoldTask(obj: ApprovalObj) {
-    this.http
-      .post(AdInsConstant.ApvHoldTaskUrl, obj)
-      .subscribe((response) => { });
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+      (response) => {
+      },
+      (error) => {
+        this.router.navigate([NavigationConstant.MOU_FREEZE_APV_PAGING]);
+      }
+    );
   }
 
   onAvailableNextTask(event) { }

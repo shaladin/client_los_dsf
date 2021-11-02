@@ -18,6 +18,7 @@ import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-change-mou-approval-factoring-x",
@@ -41,7 +42,6 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
-  IsRoleAssignment: string = "";
   pageTitle: string;
   ChangeMouCustId: number;
   TrxType: string;
@@ -52,7 +52,8 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private adInsHelperService: AdInsHelperService
   ) {
 
     this.route.queryParams.subscribe(params => {
@@ -67,7 +68,6 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
         this.pageTitle = params["PageTitle"];
         this.ChangeMouCustId = params["ChangeMouCustId"];
         this.TrxType = params["TrxType"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -95,9 +95,7 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = obj.taskId
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
-    }
+    this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
   }
 
@@ -121,6 +119,9 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
   HoldTask(obj) {
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
       }
     )
   }
@@ -147,10 +148,10 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

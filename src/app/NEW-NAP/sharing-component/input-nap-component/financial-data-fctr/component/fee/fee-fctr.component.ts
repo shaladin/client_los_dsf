@@ -238,7 +238,7 @@ export class FeeFctrComponent implements OnInit {
     calcObj.Fee = this.ParentForm.get(this.identifier).value;
 
 
-    this.http.post(environment.losUrl + "/AppFee/CalculateProvisionFee", calcObj).subscribe(
+    this.http.post(URLConstant.CalculateProvisionFee, calcObj).subscribe(
       (response) => {
         response["ProvisionFeePercentage"];
         var fb_provision = this.GetProvisionFormGroup();

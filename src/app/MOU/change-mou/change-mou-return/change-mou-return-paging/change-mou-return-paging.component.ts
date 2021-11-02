@@ -14,6 +14,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
 import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-change-mou-return-paging',
@@ -31,7 +32,8 @@ export class ChangeMouReturnPagingComponent implements OnInit {
     private http: HttpClient, 
     private toastr: NGXToastrService, 
     private router: Router, 
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private AdInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -80,10 +82,10 @@ export class ChangeMouReturnPagingComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

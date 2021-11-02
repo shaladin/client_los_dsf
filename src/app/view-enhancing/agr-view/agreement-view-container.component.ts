@@ -43,7 +43,6 @@ export class AgreementViewContainerComponent implements OnInit {
 
   IsInsuranceFL4W: boolean = true;
   IsLifeInsurance: boolean = true;
-  IsFinancial: boolean = true;
   IsTC: boolean = true;
   IsReservedFund: boolean = true;
   IsComplainHandling: boolean = true;
@@ -173,7 +172,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsAsset = false;
           this.IsInsuranceFL4W = false;
           this.IsLifeInsurance = false;
-          this.IsFinancial = false;
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
           this.IsPurchaseOrder = false;
@@ -186,7 +184,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsAsset = false;
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
-          this.IsFinancial = false;
           this.IsReservedFund = false;
           this.IsPurchaseOrder = false;
           this.IsDeliveryOrder = false;
@@ -200,7 +197,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsMultiInsurance = this.NumOfAsset > 1 ? true : false;
           this.IsCollateral = false;
           this.IsInsuranceFL4W = false;
-          this.IsFinancial = false;
           this.IsReservedFund = false;
           this.IsAppCollateral = false;
           this.IsLoanData = false;
@@ -220,7 +216,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
           this.IsLifeInsurance = true;
-          this.IsFinancial = false;
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
           this.IsCollateral = false;

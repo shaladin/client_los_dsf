@@ -149,7 +149,7 @@ export class LegalReviewDetailXComponent implements OnInit {
       this.http.post(addMouLglRvwUrl, mouLglRvwObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{ MrMouTypeCode : this.resultData.MrMouTypeCode});
 
         });
       this.mouTc.Save();

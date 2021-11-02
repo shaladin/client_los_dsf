@@ -13,7 +13,8 @@
             "isFromURL": true,
             "environment": "LOSV2",
             "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
-            "label": "Activity Name"
+            "label": "Activity Name",
+            "wfKeyFilter" : "TaskDefinitionKey"
         },
         {
             "type": "textbox",
@@ -75,19 +76,13 @@
             "type": "sort",
             "position": "center",
             "label": "Created Date",
-            "name": "Created"
+            "name": "StartTime"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Username",
             "name": "Assignee"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "User Role",
-            "name": "TaskRoleCode"
         },
         {
             "type": "label",
@@ -109,17 +104,12 @@
         {
             "type": "date",
             "position": "center",
-            "property": "Created"
+            "property": "StartTime"
         },
         {
             "type": "text",
             "position": "left",
             "property": "Assignee"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "TaskRoleCode"
         },
         {
             "type": "action",

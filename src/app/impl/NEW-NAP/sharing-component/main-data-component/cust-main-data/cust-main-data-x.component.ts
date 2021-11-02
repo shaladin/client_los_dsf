@@ -429,11 +429,13 @@ export class CustMainDataXComponent implements OnInit {
         this.subjectTitle = 'Shareholder';
         this.CustMainDataForm.controls.MrPositionSlikCode.setValidators([Validators.required]);
         this.CustMainDataForm.controls.MrPositionSlikCode.updateValueAndValidity();
+        /*START X DSF Issue Non Jira, Syafiudin : Disamakan dengan FSD DSF bagian Shareholder => START WORKING DATE tidak mandatory
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
           this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
         }
+        END X DSF Issue Non Jira */
         await this.GetAppCustMainDataByAppId();
         this.BindLookupJobPosition();
         this.BindLookupProfession();
@@ -789,11 +791,13 @@ export class CustMainDataXComponent implements OnInit {
           this.custTypeChange(CommonConstant.CustTypePersonal, true);
         }
 
+        /*START X DSF Issue Non Jira, Syafiudin : Disamakan dengan FSD DSF bagian Shareholder => START WORKING DATE tidak mandatory
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal && this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
           this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
         }
+        END X DSF Issue Non Jira*/
       }
     );
   }
@@ -892,12 +896,14 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
     }
 
+    /*START X DSF Issue Non Jira, Syafiudin : Disamakan dengan FSD DSF bagian Shareholder => START WORKING DATE tidak mandatory
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       if (custType == CommonConstant.CustTypePersonal) {
         this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
         this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
       }
     }
+    END X DSF Issue Non Jira*/
 
     this.CustMainDataForm.controls.MotherMaidenName.updateValueAndValidity();
     this.CustMainDataForm.controls.BirthDt.updateValueAndValidity();
@@ -1018,6 +1024,7 @@ export class CustMainDataXComponent implements OnInit {
       });
     }
 
+    /*START X DSF Issue Non Jira, Syafiudin : Disamakan dengan FSD DSF bagian Shareholder => START WORKING DATE tidak mandatory
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
         //note: dari html cmn company yang ditampilkan
@@ -1027,6 +1034,7 @@ export class CustMainDataXComponent implements OnInit {
       }
       this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
     }
+    END X DSF Issue Non Jira*/
 
     this.enableInput();
 

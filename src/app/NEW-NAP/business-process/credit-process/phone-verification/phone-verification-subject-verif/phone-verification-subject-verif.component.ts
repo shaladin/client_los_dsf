@@ -23,6 +23,7 @@ import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { PhoneNumberObj } from 'app/shared/model/Request/PhoneVerification/PhoneNumberObj.Model';
 import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer/VerfQuestionAnswerCustom.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 
 
@@ -82,7 +83,14 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   isQuestionLoaded: boolean = true;
   subjectRelation: string = "";
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(
+    private route: ActivatedRoute, 
+    private http: HttpClient, 
+    private toastr: NGXToastrService, 
+    private fb: FormBuilder, 
+    private router: Router, 
+    private cookieService: CookieService,
+    private adInsHelperService: AdInsHelperService) {
 
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
@@ -126,7 +134,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     if (key == 'app') {
       AdInsHelper.OpenAppViewByAppId(this.appId);
     } else if (key == 'cust') {
-      AdInsHelper.OpenCustomerViewByCustId(this.custId);
+      this.adInsHelperService.OpenCustomerViewByCustId(this.custId);
     }
   }
 
