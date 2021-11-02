@@ -1,4 +1,5 @@
 import { AdInsConstant } from "app/shared/AdInstConstant";
+import { URLConstant } from "app/shared/constant/URLConstant";
 
 export class IntegrationObj {
     baseUrl: string;
@@ -9,7 +10,7 @@ export class IntegrationObj {
     joinType: string;
     
     constructor() {
-        this.baseUrl = "";
+        this.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCodeDistinctByTransaction;
         this.apiPath = "";
         this.requestObj = new Object();
         this.leftColumnToJoin = "";

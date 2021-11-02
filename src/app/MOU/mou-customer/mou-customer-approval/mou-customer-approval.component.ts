@@ -65,7 +65,6 @@ export class MouCustomerApprovalComponent implements OnInit {
       this.apvReqObj.CategoryCode = CategoryCode;
       this.apvReqObj.Username = this.user.UserName;
       this.apvReqObj.RoleCode = this.user.RoleCode;
-      this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "MouCustNo";
       this.integrationObj.rightColumnToJoin = "TransactionNo";
