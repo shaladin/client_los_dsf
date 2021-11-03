@@ -151,8 +151,16 @@ export class PreGoLiveXComponent implements OnInit {
         this.AgrmntResult = response;
         this.MainInfoForm.patchValue({
           AgrmntCreatedDt: formatDate(this.AgrmntResult.AgrmntCreatedDt, 'yyyy-MM-dd', 'en-US'),
-          EffectiveDt: formatDate(this.AgrmntResult.EffectiveDt, 'yyyy-MM-dd', 'en-US'),
         })
+        if(this.AgrmntResult.EffectiveDt==null){
+          this.MainInfoForm.patchValue({
+            EffectiveDt: formatDate(this.businessDt, 'yyyy-MM-dd', 'en-US'),
+          })
+        }else{
+          this.MainInfoForm.patchValue({
+            EffectiveDt: formatDate(this.AgrmntResult.EffectiveDt, 'yyyy-MM-dd', 'en-US'),
+          })
+        }
         this.AgrmntId = this.AgrmntResult.AgrmntId;
         this.AppId = this.AgrmntResult.AppId;
       });
