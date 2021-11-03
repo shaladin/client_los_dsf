@@ -105,11 +105,6 @@
             "position": "left",
             "label": "ERROR MESSAGE",
             "name": "UL.ERROR_MESSAGE"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "DOWNLOAD"
         }
     ],
     "bodyList": [
@@ -152,74 +147,6 @@
             "type": "text",
             "position": "left",
             "property": "ErrorMessage"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "switch",
-                    "case": [
-                        {
-                            "conditions": [
-                                {
-                                    "property": "UploadStatus",
-                                    "value": "CAN",
-                                    "restriction": "EQ"
-                                },
-                                {
-                                    "property": "ErrorMessage",
-                                    "value": "",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "callback",
-                                "property": "UploadMonitoringNo"
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "UploadStatus",
-                                    "value": "ERR",
-                                    "restriction": "EQ"
-                                },
-                                {
-                                    "property": "ErrorMessage",
-                                    "value": "",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "callback",
-                                "property": "UploadMonitoringNo"
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "UploadStatus",
-                                    "value": "RJC",
-                                    "restriction": "EQ"
-                                },
-                                {
-                                    "property": "ErrorMessage",
-                                    "value": "",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "callback",
-                                "property": "UploadMonitoringNo"
-                            },
-                            "isHide": false
-                        }
-                    ]
-                }
-            ]
         }
     ]
 }
