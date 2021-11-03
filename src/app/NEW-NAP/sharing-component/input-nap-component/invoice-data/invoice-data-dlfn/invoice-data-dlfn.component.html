@@ -5,7 +5,8 @@
         <div class="card-header header-title">
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate> INVOICE DATA </h4>
+              <h4 *ngIf="!ToInvoiceDetail" class="card-title" id="horz-layout-colored-controls" translate> Invoice Data </h4>
+              <h4 *ngIf="ToInvoiceDetail" class="card-title" id="horz-layout-colored-controls" translate> Invoice Asset Data </h4>
             </div>
           </div>
         </div>
@@ -115,7 +116,7 @@
 
               <!-- bagian detail -->
               <div class="form-group row">
-                <label class="col-md-3 adins-required-label" translate>Invoice Name </label>
+                <label class="col-md-3 adins-required-label" translate>Asset Name </label>
                 <div class="col-md-9">
                   <lib-uclookupgeneric [lookupInput]="CollateralNameLookupObj" [parentForm]="InvoiceForm"
                     [enjiForm]="enjiForm" [identifier]="'LookupCollateralName '" (lookup)=GetCollateralName($event)>
@@ -123,7 +124,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adins-required-label" translate>Invoice Price</label>
+                <label class="col-md-3 adins-required-label" translate>Asset Price</label>
                 <div class="col-md-9">
                   <input type="text" currencyMask class="form-control" formControlName="CollateralPrice"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.CollateralPrice.invalid }">
