@@ -846,6 +846,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
         this.calcInsObj = response["Result"];
         this.subsidyRuleObj = response["ResultSubsidy"];
         var custDiscAmt = 0;
+        var capitalised = 0;
         // cek ins paid by AtCost to calculate DiscountAmt
         if (this.calcInsObj.InsCoverage.length) {
           if (this.InsuranceDataForm.controls.PayPeriodToInsco.value == CommonConstantX.PayPeriodAnnualy) {
@@ -858,8 +859,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
             for (let resInsCovItem of this.calcInsObj.InsCoverage) {
               let currReq = this.InsuranceDataForm.controls['AppInsMainCvgs']['controls'].find(i => i['controls']['YearNo'].value === resInsCovItem.YearNo);
               let mrInsPaidByCode = currReq ? currReq['controls']['MrInsPaidByCode'].value : this.defInsPaidBy;
+              let isCapitalized = this.isYearlyCapitalized && currReq ? currReq['controls']['IsCapitalized'].value : false;
               if (mrInsPaidByCode == CommonConstant.InsPaidByAtCost) {
                 custDiscAmt += resInsCovItem.MainPremiAmt + resInsCovItem.AdditionalPremiAmt;
+              } else if (isCapitalized) {
+                capitalised += resInsCovItem.MainPremiAmt + resInsCovItem.AdditionalPremiAmt;
               }
             }
           }
@@ -872,9 +876,8 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
           TotalInscoMainPremiAmt: this.calcInsObj.TotalMainPremiToInscoAmt,
           TotalInscoAddPremiAmt: this.calcInsObj.TotalAdditionalPremiToInscoAmt,
           TotalCustDiscAmt: custDiscAmt,
-          InsCpltzAmt: 0,
+          InsCpltzAmt: capitalised,
         });
-        console.log(this.calcInsObj)
         // if (this.InsuranceDataForm.controls.PayPeriodToInsco.value == CommonConstantX.PayPeriodAnnualy) {
         //   this.InsuranceDataForm.patchValue({
         //     TotalCustFeeAmt: this.calcInsObj.TotalFeeAmt,

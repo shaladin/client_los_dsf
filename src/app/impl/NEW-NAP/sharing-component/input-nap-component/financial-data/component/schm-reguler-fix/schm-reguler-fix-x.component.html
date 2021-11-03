@@ -373,7 +373,8 @@
               <label translate>Calculate Base</label>
             </div>
             <div class="col-md-3 form-inline">
-              <select formControlName="CalcBase" class="form-control full-width" (change)="CalcBaseChanged($event)">
+              <select formControlName="CalcBase" class="form-control full-width" (change)="CalcBaseChanged($event)"
+                [attr.disabled]="ParentForm.controls.EffectiveRateBhv.value == BhvLock">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
               </select>
