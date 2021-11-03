@@ -16,6 +16,7 @@ import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-nap-cust-main-data-dsf',
@@ -67,7 +68,8 @@ export class NapCustMainDataDsfComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService,
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService) {
+    private claimTaskService: ClaimTaskService,
+    private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -244,7 +246,12 @@ export class NapCustMainDataDsfComponent implements OnInit {
       let custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
     } else {

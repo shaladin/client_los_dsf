@@ -87,7 +87,6 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
     RsvField5: [''],
   });
 
-  inputLookupObjCopyProduct;
   inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems;
   user: CurrentUserContext;
@@ -139,8 +138,8 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
   LobChanged() {
     let refLob = this.listRefLobObj.find((x) => x.LobCode == this.NapAppForm.controls["LobCode"].value);
     if (refLob == undefined) {
-      this.bizTemplateCode = null;
-      this.lobCode = null;
+      this.bizTemplateCode = "";
+      this.lobCode = "";
     } else {
       this.bizTemplateCode = refLob.BlCode;
       this.lobCode = refLob.LobCode;
@@ -161,14 +160,14 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
     addCritBizTemplate.value = this.bizTemplateCode;
     this.arrAddCrit.push(addCritBizTemplate);
 
-    this.inputLookupObjName.addCritInput = this.arrAddCrit;
-
     let addCritLob = new CriteriaObj();
     addCritLob.DataType = "text";
     addCritLob.propName = "rlob.LOB_CODE";
     addCritLob.restriction = AdInsConstant.RestrictionEq;
     addCritLob.value = this.lobCode;
     this.arrAddCrit.push(addCritLob);
+
+    this.inputLookupObjName.addCritInput = this.arrAddCrit;
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UclookupgenericComponent);
     this.prodOfrLookup.clear();
