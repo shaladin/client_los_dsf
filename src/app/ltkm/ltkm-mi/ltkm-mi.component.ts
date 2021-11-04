@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model'; 
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model'; 
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 @Component({

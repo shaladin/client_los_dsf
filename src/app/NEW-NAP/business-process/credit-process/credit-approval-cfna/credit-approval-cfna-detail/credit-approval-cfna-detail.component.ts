@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { forkJoin } from 'rxjs';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({

@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-app-asset-data-detail',

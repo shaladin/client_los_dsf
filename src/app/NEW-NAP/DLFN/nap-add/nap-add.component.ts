@@ -3,18 +3,18 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({

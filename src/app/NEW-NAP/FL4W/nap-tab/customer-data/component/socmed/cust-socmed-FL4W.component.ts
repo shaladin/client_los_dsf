@@ -2,12 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
+import { AppCustSocmedObj } from 'app/shared/model/app-cust-socmed-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-cust-socmed-FL4W',

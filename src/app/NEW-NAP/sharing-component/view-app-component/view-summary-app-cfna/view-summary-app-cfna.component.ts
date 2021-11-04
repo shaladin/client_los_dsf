@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SummaryAppObj } from 'app/shared/model/App/SummaryAppObj.Model';
-import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
+import { SummaryAppObj } from 'app/shared/model/app/summary-app-obj.model';
+import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 
 @Component({
   selector: 'app-view-summary-app-cfna',

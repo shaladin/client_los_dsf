@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RefAttrGenerateObj } from 'app/shared/model/RefAttrGenerate.Model';
+import { RefAttrGenerateObj } from 'app/shared/model/ref-attr-generate.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
     selector: 'app-ref-attr-view-generate',

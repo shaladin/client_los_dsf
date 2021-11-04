@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { ViewAssetCollateralDetailComponent } from './view-asset-collateral-detail/view-asset-collateral-detail.component';
 
 @Component({

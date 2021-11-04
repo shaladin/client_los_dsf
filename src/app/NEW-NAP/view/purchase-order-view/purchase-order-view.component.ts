@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { ReqGetPurchaseOrderHDetailObj } from 'app/shared/model/Request/PurchaseOrder/ReqPOObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ReqGetPurchaseOrderHDetailObj } from 'app/shared/model/request/purchase-order/req-po-obj.model';
 
 @Component({
   selector: 'app-purchase-order-view',

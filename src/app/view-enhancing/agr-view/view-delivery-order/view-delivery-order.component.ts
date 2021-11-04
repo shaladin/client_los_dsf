@@ -7,8 +7,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe, formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 
 @Component({
   selector: "agrmnt-view-delivery-order",

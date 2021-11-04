@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
-import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
-import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
+import { AppAssetSupplEmpObj } from 'app/shared/model/app-asset-suppl-emp-obj.model';
 
 @Component({
   selector: 'app-app-asset-data-detail-fl4w',

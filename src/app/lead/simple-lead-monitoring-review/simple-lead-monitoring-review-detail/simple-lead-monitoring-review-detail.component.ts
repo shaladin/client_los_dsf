@@ -4,16 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { UploadReviewCustomObj } from 'app/shared/model/V2/UploadReviewObj.model';
+import { UploadReviewCustomObj } from 'app/shared/model/v2/upload-review-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
 
 @Component({
   selector: 'app-simple-lead-monitoring-review-detail',

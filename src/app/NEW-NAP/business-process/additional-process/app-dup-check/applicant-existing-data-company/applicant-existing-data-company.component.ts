@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCust/RequestSubmitAppDupCheckCustObj.Model';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/app-dup-check-cust/request-submit-app-dup-check-cust-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqGetCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { ReqGetCustDupCheckObj } from 'app/shared/model/request/nap/dup-check/req-get-cust-dup-check-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { CustObj } from 'app/shared/model/CustObj.Model';
+import { CustObj } from 'app/shared/model/cust-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

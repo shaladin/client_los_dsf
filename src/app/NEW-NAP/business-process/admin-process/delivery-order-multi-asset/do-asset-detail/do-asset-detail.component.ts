@@ -6,8 +6,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
 
 @Component({
   selector: 'app-do-asset-detail',

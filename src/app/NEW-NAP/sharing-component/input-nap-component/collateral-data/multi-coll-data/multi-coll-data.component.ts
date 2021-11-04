@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 
 @Component({
   selector: 'app-multi-coll-data',

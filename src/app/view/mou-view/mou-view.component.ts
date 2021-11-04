@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({

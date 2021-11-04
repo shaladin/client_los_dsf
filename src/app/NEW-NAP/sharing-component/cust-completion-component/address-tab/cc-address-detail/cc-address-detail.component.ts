@@ -4,16 +4,16 @@ import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputCustomAddrCustCmpltObj } from 'app/shared/model/InputCustomAddrCustCmpltObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { InputCustomAddrCustCmpltObj } from 'app/shared/model/input-custom-addr-cust-cmplt-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({

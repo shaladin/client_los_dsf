@@ -2,19 +2,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
+import { RFAPreGoLiveObj } from 'app/shared/model/rfa-pre-go-live-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { environment } from 'environments/environment';
-import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
+import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

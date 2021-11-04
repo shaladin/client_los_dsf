@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Sort } from '@angular/material';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
+import { DeviationResultObj } from 'app/shared/model/deviation-result-obj.model';
 
 @Component({
   selector: 'app-tab-deviation',

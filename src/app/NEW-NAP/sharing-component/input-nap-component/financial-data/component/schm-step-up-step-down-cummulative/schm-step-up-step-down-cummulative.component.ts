@@ -1,18 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
-import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
+import { CalcStepUpStepDownObj } from 'app/shared/model/app-fin-data/calc-step-up-step-down-obj.model';
+import { AppInstStepSchmObj } from 'app/shared/model/app-inst-step-schm/app-inst-step-schm-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/AppFinData/CalcStepUpStepDownObjForTrialCalc.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
-import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-step-up-step-down-obj-for-trial-calc.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-cummulative',

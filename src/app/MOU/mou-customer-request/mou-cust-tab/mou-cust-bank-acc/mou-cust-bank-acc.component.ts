@@ -2,17 +2,17 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { FormBuilder, Validators, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
+import { AppCustBankStmntObj } from 'app/shared/model/app-cust-bank-stmnt-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { MouCustBankAccObj } from 'app/shared/model/MouCustBankAccObj.Model';
+import { MouCustBankAccObj } from 'app/shared/model/mou-cust-bank-acc-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-mou-cust-bank-acc',
