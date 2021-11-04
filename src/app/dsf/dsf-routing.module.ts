@@ -25,6 +25,7 @@ import { DisbursementDetailDsfComponent } from './report/disbursement-dsf/disbur
 import { DisbursementPagingDsfComponent } from './report/disbursement-dsf/disbursement-paging-dsf/disbursement-paging-dsf.component';
 import { MonthlyPaymentScheduleSummaryComponent } from './report/factoring/monthly-payment-schedule-summary/monthly-payment-schedule-summary.component';
 import { MonthlyDisbDsfComponent } from './report/factoring/monthly-disb-dsf/monthly-disb-dsf.component';
+import { ListOutstandingComponent } from './report/factoring/list-outstanding/list-outstanding.component';
 
 const routes: Routes = [
   {
@@ -311,6 +312,18 @@ const routes: Routes = [
         component: MonthlyDisbDsfComponent,
         data: {
           title: "Report Fact Monthly Dirbursement"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_FACT_LIST_OUTSTANDING,
+        component: ListOutstandingComponent,
+        data: {
+          title: "Report Fact List Outstanding"
         }
       }
     ]

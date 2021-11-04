@@ -56,6 +56,7 @@ export class PathConstantDsf {
     public static REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = "ReportInvoiceKwitansiTandaTerimaDetail";
     public static REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY = "ReportMonthlyPaymentScheduleSummary";
     public static REPORT_FACT_MONTHLY_DISB = "ReportMonthlyDisb";
+    public static REPORT_FACT_LIST_OUTSTANDING = "ReportListOutstanding";
     public static PRINT_REPORT_FACT_MONITORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONITORING;
     public static PRINT_REPORT_FACT_MORNING_MONITORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MORNING_MONITORING;
     public static PRINT_REPORT_FACT_AFTERNOON_MONITORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_AFTERNOON_MONITORING;
@@ -67,6 +68,7 @@ export class PathConstantDsf {
     public static PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
     public static PRINT_REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY;
     public static PRINT_REPORT_FACT_MONTHLY_DISB = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONTHLY_DISB;
+    public static PRINT_REPORT_FACT_LIST_OUTSTANDING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_LIST_OUTSTANDING;
     //#endregion report factoring
 
     //#region customer-plafond
