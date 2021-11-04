@@ -176,12 +176,10 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   //#endregion
 
   //#region GET Approval Scheme Code
-  prodOfferingCode: string = "";
-  prodOfferingVersion: string = "";
   async GetApvSchemeFromRefProdCompnt() {
     let obj = {
-      prodOfferingCode: this.prodOfferingCode,
-      prodOfferingVersion: this.prodOfferingVersion,
+      prodOfferingCode: this.ProdOfferingCode,
+      prodOfferingVersion: this.ProdOfferingVersion,
       refProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CRD_APV
     };
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
