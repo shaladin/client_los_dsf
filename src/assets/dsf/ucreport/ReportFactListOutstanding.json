@@ -1,0 +1,79 @@
+{ 
+    "title" : "REPORT FACT LIST OUTSTANDING",
+    "reportName": "Report of List Outstanding",
+    "reportTemplateCode": "FACT_LIST_OUTSTANDING",
+    "component": [ 
+        {
+            "type" : "dropdown",
+            "label" : "Client Name",
+            "name" : "CrtClientName",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+                {
+                "key": "PT KRAMA YUDHA TIGA BERLIAN",
+                "value": "PT KRAMA YUDHA TIGA BERLIAN"
+            },
+            {
+                "key": "PT MITSUBISHI MOTOR",
+                "value": "PT MITSUBISHI MOTOR"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "dropdown",
+            "label" : "Product Type",
+            "name" : "CrtProductType",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+                {
+                "key": "UN",
+                "value": "Unit"
+            },
+            {
+                "key": "SP",
+                "value": "Sparepart"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Period From",
+            "name" : "LeadDtGte",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Period To",
+            "name" : "LeadDtLte",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }      
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
