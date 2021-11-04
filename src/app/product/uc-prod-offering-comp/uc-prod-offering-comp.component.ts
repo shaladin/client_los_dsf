@@ -7,6 +7,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
 import { ReqGetProdOffCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { String } from 'typescript-string-operations';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'uc-prod-offering-comp',
@@ -163,11 +166,28 @@ export class UcProdOfferingCompComponent implements OnInit {
                               : offeringMrProdBehaviour
     })
   }
+
+  async getPayload(obj) {
+    let reqObj = {
+      ProdOfferingHId: this.ProdOfferingHId,
+      RefProdCompntCode: obj.ProdCompntAddCrit
+    }
+    let payload: GenericObj = new GenericObj();
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, reqObj).toPromise().then(
+      (response: ProdOfferingDObj) => {
+        payload.Code = response.CompntValue;
+      }
+    );
+    return payload;
+  }
   
-  async PopulateDDL(obj)
-  {
+  async PopulateDDL(obj) {
     var url = obj.ProdCompntDtaSrcApi;
     var payload = JSON.parse(obj.ProdCompntDtaValue);
+    if(obj.ProdCompntAddCrit != null){
+      payload = await this.getPayload(obj);
+    }
+
     await this.http.post(url, payload).toPromise().then(
       (response) => {
         this.dictOptions[obj.RefProdCompntCode] = response["ReturnObject"];
