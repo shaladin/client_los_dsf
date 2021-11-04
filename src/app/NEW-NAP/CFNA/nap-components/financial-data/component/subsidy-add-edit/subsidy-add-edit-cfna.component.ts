@@ -9,7 +9,7 @@ import { AppFeeObj } from 'app/shared/model/app-fee-obj.model';
 import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/subsidy-schm/result-subsidy-schm-max-rule-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { forkJoin } from 'rxjs';
 import { ReqGetListSubsidyDataByAppIdAndSubsidyFromTypeObj } from 'app/shared/model/app-subsidy/req-get-list-subsidy-data-by-app-id-and-subsidy-from-type-obj.model';
 import { ReqGetSubsidySourceObj } from 'app/shared/model/app-subsidy/req-get-subsidy-source-obj.model';

@@ -1,6 +1,6 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';

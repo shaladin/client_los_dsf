@@ -16,7 +16,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { forkJoin } from 'rxjs';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';

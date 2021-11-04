@@ -9,7 +9,7 @@ import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';

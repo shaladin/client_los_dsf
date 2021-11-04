@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SummaryAppObj } from 'app/shared/model/app/summary-app-obj.model';
+import { SummaryAppObj } from 'app/shared/model/apps/summary-app-obj.model';
 import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';

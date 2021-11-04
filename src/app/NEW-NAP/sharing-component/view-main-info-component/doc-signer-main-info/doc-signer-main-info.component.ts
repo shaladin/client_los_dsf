@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 
 @Component({

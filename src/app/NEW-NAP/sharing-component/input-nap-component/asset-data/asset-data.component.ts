@@ -36,7 +36,7 @@ import { AssetTypeSerialNoLabelObj } from 'app/shared/model/serial-no/asset-type
 import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
 import { VendorEmpObj } from 'app/shared/model/vendor-emp.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { VendorObj } from 'app/shared/model/vendor.model';
 import { RefProvDistrictObj } from 'app/shared/model/ref-prov-district-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';

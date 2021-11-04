@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

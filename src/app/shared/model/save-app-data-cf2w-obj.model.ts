@@ -1,6 +1,6 @@
 import { AppCollateralObj } from "./app-collateral-obj.model";
 import { AppAssetObj } from "./app-asset-obj.model";
-import { AppObj } from "./app/app.model";
+import { AppObj } from "./apps/apps.model";
 import { AppFixedObj } from "./app-fixed-obj.model";
 import { AppFixedFeeObj } from "./app-fixed-fee-obj.model";
 import { AppFixedInsObj } from "./app-fixed-ins-obj.model";

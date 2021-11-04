@@ -6,7 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
 import { CalcStepUpStepDownObj } from 'app/shared/model/app-fin-data/calc-step-up-step-down-obj.model';
 import { AppInstStepSchmObj } from 'app/shared/model/app-inst-step-schm/app-inst-step-schm-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';

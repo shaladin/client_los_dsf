@@ -7,7 +7,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { CookieService } from 'ngx-cookie';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';

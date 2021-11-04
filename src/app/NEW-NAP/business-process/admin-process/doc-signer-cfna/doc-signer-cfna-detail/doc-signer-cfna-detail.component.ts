@@ -13,7 +13,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
-import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { AgrmntObj } from 'app/shared/model/agrmnts/agrmnts.model';
 import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/res-app-cust-personal-and-spouse-data-obj.model';
 
 @Component({

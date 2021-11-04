@@ -20,7 +20,7 @@ import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling
 import { ReqGetVerfResultObj } from 'app/shared/model/verf-result/req-get-verf-result-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { PhoneVerifObj } from 'app/shared/model/phone-verif-obj.model';
 import { ScoringResultHObj } from 'app/shared/model/scoring-result-h-obj.model';
 

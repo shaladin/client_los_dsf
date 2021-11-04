@@ -21,7 +21,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResGetListMouByAppAndTypeObj } from 'app/shared/model/response/mou/mou-cust/res-get-list-mou-by-app-and-type-obj.model';
 import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
 import { RefEmpObj } from 'app/shared/model/ref-emp-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
 import { AppDataObj } from 'app/shared/model/app-data-obj.model';

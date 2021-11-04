@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { formatDate } from '@angular/common';
-import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { AgrmntObj } from 'app/shared/model/agrmnts/agrmnts.model';
 import { ListAppTCObj } from 'app/shared/model/list-app-tc-obj.model';
 import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
 import { PreGoLiveMainObj } from 'app/shared/model/pre-go-live-main-obj.model';

@@ -19,7 +19,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { environment } from 'environments/environment';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';

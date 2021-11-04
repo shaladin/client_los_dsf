@@ -9,7 +9,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';

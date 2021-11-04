@@ -6,7 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
 import { AllAppReservedFundObj } from 'app/shared/model/all-app-reserved-fund-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 import { ResultRefundObj } from 'app/shared/model/app-fin-data/result-refund.model';
 import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';

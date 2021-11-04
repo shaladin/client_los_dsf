@@ -13,7 +13,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-hand
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { environment } from 'environments/environment';

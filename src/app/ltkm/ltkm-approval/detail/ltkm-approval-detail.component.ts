@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

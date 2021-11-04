@@ -25,7 +25,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { MatRadioChange } from '@angular/material/radio/typings/public-api';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/app-cust-personal-fin-data-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';

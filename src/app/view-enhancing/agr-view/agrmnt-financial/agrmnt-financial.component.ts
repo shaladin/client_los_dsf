@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { AgrmntObj } from 'app/shared/model/agrmnts/agrmnts.model';
 import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
 import { AgrmntFeeObj } from 'app/shared/model/agrmnt-fee-obj.model';
 import { AgrmntSubsidyObj } from 'app/shared/model/agrmnt-subsidy-obj.model';

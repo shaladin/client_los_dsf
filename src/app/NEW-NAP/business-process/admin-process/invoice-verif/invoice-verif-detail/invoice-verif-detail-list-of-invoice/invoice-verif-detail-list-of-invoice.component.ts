@@ -6,7 +6,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { AppInvoiceFctrObj } from 'app/shared/model/app-invoice-fctr-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';

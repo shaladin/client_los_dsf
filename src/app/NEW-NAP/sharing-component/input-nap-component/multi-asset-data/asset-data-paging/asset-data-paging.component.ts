@@ -13,7 +13,7 @@ import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-c
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/response/general-setting/res-general-setting-obj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/response/third-party-result/res-third-party-rslt-h-obj.model';
 import { ReqCopyAssetObj } from 'app/shared/model/request/app-asset/req-copy-asset-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';

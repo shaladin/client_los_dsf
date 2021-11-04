@@ -1,4 +1,4 @@
-import { AgrmntCommissionHObj } from "../agrmnt/agrmnt-commission-h-obj.model";
+import { AgrmntCommissionHObj } from "../agrmnts/agrmnt-commission-h-obj.model";
 import { AppAssetObj } from "../app-asset-obj.model";
 import { AppCollateralObj } from "../app-collateral-obj.model";
 import { AppCollateralRegistrationObj } from "../app-collateral-registration-obj.model";

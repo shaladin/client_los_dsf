@@ -20,7 +20,7 @@ import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe, formatDate } from '@angular/common';
 import { map, mergeMap, first } from 'rxjs/operators';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';

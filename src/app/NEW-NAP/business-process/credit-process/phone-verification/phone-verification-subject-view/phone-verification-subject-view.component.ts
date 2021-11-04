@@ -8,7 +8,7 @@ import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/verf
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.model';
 import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 
 
 

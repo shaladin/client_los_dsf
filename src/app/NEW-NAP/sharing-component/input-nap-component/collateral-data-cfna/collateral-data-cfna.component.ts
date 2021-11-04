@@ -4,7 +4,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { map, mergeMap } from 'rxjs/operators';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/apps/apps.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 

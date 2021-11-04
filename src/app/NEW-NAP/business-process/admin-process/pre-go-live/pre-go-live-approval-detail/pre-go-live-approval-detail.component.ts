@@ -21,7 +21,7 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/request/nap/pre-go-live/req-get-rfa-log-by-trx-no-and-apv-category-obj.model';
 import { AgrmntMasterXObj } from 'app/shared/model/agrmnt-master-x-obj.model';
 import { RfaObj } from 'app/shared/model/approval/rfa-obj.model';
-import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { AgrmntObj } from 'app/shared/model/agrmnts/agrmnts.model';
 import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
 import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
