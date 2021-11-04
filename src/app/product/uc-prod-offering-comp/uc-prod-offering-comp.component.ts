@@ -9,6 +9,7 @@ import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownload
 import { ReqGetProdOffCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { String } from 'typescript-string-operations';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'uc-prod-offering-comp',
@@ -171,13 +172,13 @@ export class UcProdOfferingCompComponent implements OnInit {
       ProdOfferingHId: this.ProdOfferingHId,
       RefProdCompntCode: obj.ProdCompntAddCrit
     }
-    let payload = '{"code": "{0}"}';
+    let payload: GenericObj = new GenericObj();
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, reqObj).toPromise().then(
       (response: ProdOfferingDObj) => {
-        payload = String.Format(payload, response.CompntValue)
+        payload.Code = response.CompntValue;
       }
     );
-    return JSON.parse(payload);
+    return payload;
   }
   
   async PopulateDDL(obj) {
