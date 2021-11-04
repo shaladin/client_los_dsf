@@ -3,7 +3,7 @@ import { Component, Input,EventEmitter, OnInit, Output } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from '../AdInsHelper';
 import { CommonConstant } from '../constant/CommonConstant';
-import { DMSObj } from '../model/DMS/DMSObj.model';
+import { DMSObj } from '../model/dms/dms-obj.model';
 
 @Component({
   selector: 'app-dms-iframe',

@@ -4,9 +4,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
-import { UcPagingObj, WorkflowReqObj } from 'app/shared/model/UcPagingObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { UcPagingObj, WorkflowReqObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

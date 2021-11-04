@@ -9,12 +9,12 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { String } from 'typescript-string-operations';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj, WorkflowReqObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj, WorkflowReqObj } from 'app/shared/model/uc-paging-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,9 +8,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 @Component({
   selector: 'app-requisition-decision-paging',

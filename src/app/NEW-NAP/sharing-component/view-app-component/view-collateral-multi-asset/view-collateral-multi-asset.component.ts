@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

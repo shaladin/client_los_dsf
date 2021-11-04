@@ -7,18 +7,18 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
+import { CustDataPersonalObj } from 'app/shared/model/cust-data-personal-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { RegexService } from 'app/shared/services/regex.services';
-import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-cust-personal-main-data',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
-import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
-import { CriteriaObj } from "app/shared/model/CriteriaObj.Model";
+import { UcPagingObj } from "app/shared/model/uc-paging-obj.model";
+import { CriteriaObj } from "app/shared/model/criteria-obj.model";
 @Component({
   selector: 'app-prod-ho-deact-paging',
   templateUrl: './prod-ho-deact-paging.component.html'

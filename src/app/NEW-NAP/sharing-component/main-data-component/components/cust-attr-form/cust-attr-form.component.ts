@@ -4,13 +4,13 @@ import { ControlContainer, FormArray, FormBuilder, FormGroup, FormGroupDirective
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustAttrContent } from 'app/shared/model/AppCust/CustAttrContent/AppCustAttrContent.Model';
-import { ReqGetListAppCustAttr2ContentObj, ReqGetListAppCustAttrContentObj } from 'app/shared/model/AppCust/CustAttrContent/ReqGetListAppCustAttrContentObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { AppCustAttrContent } from 'app/shared/model/app-cust/cust-attr-content/app-cust-attr-content.model';
+import { ReqGetListAppCustAttr2ContentObj, ReqGetListAppCustAttrContentObj } from 'app/shared/model/app-cust/cust-attr-content/req-get-list-app-cust-attr-content-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({

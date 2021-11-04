@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppScoreGradeObj } from 'app/shared/model/AppScoreGrade/AppScoreGradeObj.Model';
+import { AppScoreGradeObj } from 'app/shared/model/app-score-grade/app-score-grade-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResAppScoreGradeObj } from 'app/shared/model/Response/AppScore/ResGetAppScore.model';
+import { ThirdPartyRsltHObj } from 'app/shared/model/third-party-rslt-h-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResAppScoreGradeObj } from 'app/shared/model/response/app-score/res-get-app-score.model';
 
 @Component({
   selector: "view-app-score-grade-dukcapil",

@@ -1,18 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
-import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/SubsidySchm/ResultSubsidySchmMaxRuleObj.Model';
+import { AppFeeObj } from 'app/shared/model/app-fee-obj.model';
+import { ResultSubsidySchmMaxRuleObj } from 'app/shared/model/subsidy-schm/result-subsidy-schm-max-rule-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ReqGetListSubsidyDataByAppIdAndSubsidyFromTypeObj } from 'app/shared/model/AppSubsidy/ReqGetListSubsidyDataByAppIdAndSubsidyFromTypeObj.Model';
-import { ReqGetSubsidySourceObj } from 'app/shared/model/AppSubsidy/ReqGetSubsidySourceObj.Model';
-import { ReqGetSubsidyValueTypeObj } from 'app/shared/model/AppSubsidy/ReqGetSubsidyValueTypeObj.Model';
+import { ReqGetListSubsidyDataByAppIdAndSubsidyFromTypeObj } from 'app/shared/model/app-subsidy/req-get-list-subsidy-data-by-app-id-and-subsidy-from-type-obj.model';
+import { ReqGetSubsidySourceObj } from 'app/shared/model/app-subsidy/req-get-subsidy-source-obj.model';
+import { ReqGetSubsidyValueTypeObj } from 'app/shared/model/app-subsidy/req-get-subsidy-value-type-obj.model';
 
 @Component({
   selector: 'app-subsidy-add-edit-FL4W',

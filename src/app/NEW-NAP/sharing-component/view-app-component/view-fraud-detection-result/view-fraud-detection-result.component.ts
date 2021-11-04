@@ -3,21 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
-import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
-import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
-import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { FraudDukcapilObj } from 'app/shared/model/fraud-dukcapil-obj.model';
+import { NegativeCustObj } from 'app/shared/model/negative-cust.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/negative-asset-check-for-multi-asset-obj.model';
+import { NegativeAssetCheckObj } from 'app/shared/model/negative-asset-check-obj.model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
+import { NegativeAssetObj } from 'app/shared/model/negative-asset-obj.model';
+import { ResDuplicateCustomerObj } from 'app/shared/model/lead/res-duplicate-customer-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 
 @Component({
   selector: 'app-view-fraud-detection-result',

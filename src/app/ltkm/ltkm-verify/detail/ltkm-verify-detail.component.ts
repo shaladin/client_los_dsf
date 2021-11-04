@@ -3,17 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/workflow/claim-workflow-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { LtkmReqObj } from 'app/shared/model/LTKM/LtkmReqObj.Model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { LtkmReqObj } from 'app/shared/model/ltkm/ltkm-req-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({

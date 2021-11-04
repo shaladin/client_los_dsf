@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailFl4wComponent } from './app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 
 @Component({
   selector: 'app-app-asset-data-fl4w',

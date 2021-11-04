@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { ApvViewInfo } from 'app/shared/model/ApvViewInfo.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ApvViewInfo } from 'app/shared/model/apv-view-info.model';
 
 @Component({
   selector: 'app-mou-view-analysis-result',

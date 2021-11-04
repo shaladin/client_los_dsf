@@ -4,15 +4,15 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { MouCustPersonalObj } from 'app/shared/model/MouCustPersonalObj.Model';
-import { RequestSubmitMouCustDupCheckObj } from 'app/shared/model/MouCustDupCheck/RequestSubmitMouCustDupCheckObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { MouCustPersonalObj } from 'app/shared/model/mou-cust-personal-obj.model';
+import { RequestSubmitMouCustDupCheckObj } from 'app/shared/model/mou-cust-dup-check/request-submit-mou-cust-dup-check-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
-import { CustObj } from 'app/shared/model/CustObj.Model';
+import { ReqGetMouCustDuplicateObj } from 'app/shared/model/request/mou/req-get-mou-cust-duplicate-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { CustObj } from 'app/shared/model/cust-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

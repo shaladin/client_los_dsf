@@ -5,8 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailComponent } from './app-asset-data-detail/app-asset-data-detail.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
-import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
+import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
 
 @Component({
   selector: 'app-app-asset-data',

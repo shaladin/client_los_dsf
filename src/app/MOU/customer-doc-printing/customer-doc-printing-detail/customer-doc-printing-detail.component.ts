@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { MouCustDocPrintForViewObj } from 'app/shared/model/MouCustDocPrintForViewObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { MouCustDocPrintForViewObj } from 'app/shared/model/mou-cust-doc-print-for-view-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CookieService } from 'ngx-cookie';
-import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcReportObj.model';
+import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/rdlc-report-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({

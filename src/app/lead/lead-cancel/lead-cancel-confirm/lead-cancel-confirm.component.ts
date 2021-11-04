@@ -3,7 +3,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LeadConfirmCancelObj } from 'app/shared/model/Request/LEAD/LeadConfirmCancelObj.model';
+import { LeadConfirmCancelObj } from 'app/shared/model/request/lead/lead-confirm-cancel-obj.model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -11,8 +11,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericListByIdObj } from 'app/shared/model/Generic/GenericListByIdObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { GenericListByIdObj } from 'app/shared/model/generic/generic-list-by-id-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-lead-cancel-confirm',

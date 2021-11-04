@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { Sort } from '@angular/material';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
-import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
+import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
 
 @Component({
   selector: 'app-tab-app-data',

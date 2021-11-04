@@ -11,7 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { RefUserObj } from 'app/shared/model/RefUserObj.Model';
+import { RefUserObj } from 'app/shared/model/ref-user-obj.model';
 
 
 
