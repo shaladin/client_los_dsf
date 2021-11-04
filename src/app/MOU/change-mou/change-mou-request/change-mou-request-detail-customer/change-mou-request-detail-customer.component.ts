@@ -12,6 +12,7 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import {UcviewgenericComponent} from '@adins/ucviewgeneric';
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-change-mou-request-detail-customer",
@@ -49,7 +50,8 @@ export class ChangeMouRequestDetailCustomerComponent
     private router: Router,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       if (params.get("MOUType") != null) {
@@ -348,10 +350,10 @@ export class ChangeMouRequestDetailCustomerComponent
         .post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

@@ -13,6 +13,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
@@ -40,7 +41,8 @@ export class MouCustListedCustFctrComponent implements OnInit {
     private toastr: NGXToastrService,
     private spinner: NgxSpinnerService,
     private fb: FormBuilder,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private AdInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.MouCustIsListedForm.patchValue({
@@ -107,7 +109,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     this.CustNoObj.CustNo = custNo;
     this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       response => {
-        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
       }
     );
   }

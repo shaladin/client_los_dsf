@@ -1,0 +1,67 @@
+{
+    "title": "Lookup Asset",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "FULL_ASSET_CODE",
+        "id": "assetCode",
+        "value": "",
+        "label": "Full Asset Code",
+        "placeholder": "Asset Code"
+      },
+      {
+        "type": "textbox",
+        "name": "FULL_ASSET_NAME",
+        "id": "assetName",
+        "value": "",
+        "label": "Full Asset Name",
+        "placeholder": "Asset Name"
+      }
+    ],
+  "querystring": {
+    "name": "lookupSimpleLeadAsset"
+  },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Full Asset Code",
+        "name": "FullAssetCode"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Full Asset Name",
+        "name": "FullAssetName"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Select"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "FullAssetCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "FullAssetName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "FullAssetCode"
+          }
+        ]
+      }
+    ],
+    "propertyId": "FullAssetCode",
+    "propertyName": "FullAssetName"
+  }

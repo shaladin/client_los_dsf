@@ -13,7 +13,7 @@
         <label class="col-md-4 adInsLabel" *ngIf="CurrCode == ''" translate>-</label>
         <label class="col-md-4 adInsLabel" *ngIf="CurrCode != ''" translate>{{CurrCode}}</label>
 
-        <label class="col-md-2 adInsLabel" translate>Plafond Amount</label>
+        <label class="col-md-2 adInsLabel" translate>Original Plafond Amount</label>
         <label class="col-md-4 adInsLabel" translate>{{PlafondAmt | number}} </label>
       </div>
       <div class="form-group row">
@@ -84,7 +84,9 @@
 
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Link Supplier</label>
-        <label class="col-md-4 adInsLabel" translate>{{LinkSupplier}}</label>
+        <label class="col-md-4 adInsLabel" translate>          
+          <a class="link" (click)="ClickLinkManufacturer(mouCustFctr.VendorCode)"> {{LinkSupplier}} </a>
+        </label>
       </div>
     </div>
   </div>
@@ -190,6 +192,9 @@
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" translate>Dealer Grading</label>
         <label class="col-md-3 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
+     
+        <label class="col-md-3 adInsLabel" translate>Original Plafond Amount</label>
+        <label class="col-md-3 adInsLabel" translate>{{PlafondAmt | number}} </label>
       </div>
       
     </div>

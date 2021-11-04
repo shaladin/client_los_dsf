@@ -97,7 +97,9 @@
                   {{DOAssetDetail.get('DOAssetDocList').at(i).controls.MrCollateralConditionCode.value == 'NEW' ? (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryNew.value ? "YES" : "NO") : (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryUsed.value ? "YES" : "NO")}}
                 </td>
                 <td class="text-center">
-                  <input type="checkbox" formControlName="IsReceived" />
+                  <input type="checkbox" class="border-primary" formControlName="IsReceived" (change)="ReceiveDocument(i)"/>
+                  <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </td>
                 <td style="text-align: left;">
                   <input type="text" class="form-control adInsInput" formControlName="DocNo"

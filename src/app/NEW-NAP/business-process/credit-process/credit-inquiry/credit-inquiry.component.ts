@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-credit-inquiry',
@@ -13,7 +15,7 @@ export class CreditInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditProcessInquiry.json";
@@ -27,7 +29,12 @@ export class CreditInquiryComponent implements OnInit {
       this.CustNoObj.CustNo = ev.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         (response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       )
     }

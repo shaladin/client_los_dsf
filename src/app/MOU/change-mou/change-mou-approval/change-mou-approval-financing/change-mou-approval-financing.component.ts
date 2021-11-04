@@ -14,6 +14,7 @@ import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-change-mou-approval-financing",
@@ -32,7 +33,6 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsReady: boolean = false;
-  IsRoleAssignment: string = "";
   pageTitle: string;
   ChangeMouCustId: number;
   MouCustId: number;
@@ -43,7 +43,8 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["ChangeMouTrxId"] != null) {
@@ -57,7 +58,6 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
         this.MouCustId = params["MouCustId"];
         this.MouType = params["MouType"];
         this.TrxType = params["TrxType"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -76,9 +76,7 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
     var ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.taskId; 
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
-    }
+    this.HoldTask(ApvHoldObj);
     
     this.initInputApprovalObj();
   }
@@ -101,9 +99,13 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
   }
 
   HoldTask(obj) {
-    this.http
-      .post(AdInsConstant.ApvHoldTaskUrl, obj)
-      .subscribe((response) => { });
+    this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
+        (response) => { 
+        },
+        (error) => {
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
+        }
+      );
   }
 
   onApprovalSubmited(event) {
@@ -128,10 +130,10 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

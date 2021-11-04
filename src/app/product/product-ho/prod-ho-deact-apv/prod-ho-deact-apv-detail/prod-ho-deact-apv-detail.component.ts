@@ -28,7 +28,6 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
   InputApvObj : UcInputApprovalObj = new UcInputApprovalObj();
   ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
-  IsRoleAssignment: string = "";
 
   constructor(private router: Router, 
               private route: ActivatedRoute,
@@ -38,7 +37,6 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
         this.ProdHId = params["ProdHId"];
         this.TaskId = params["TaskId"];
         this.ApvReqId = params["ApvReqId"];
-        this.IsRoleAssignment = params["IsRoleAssignment"];
       }
     });
   }
@@ -49,9 +47,7 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
     let ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.TaskId;
 
-    if(this.IsRoleAssignment != CommonConstant.TRUE){
-      this.HoldTask(ApvHoldObj);
-    }
+    this.HoldTask(ApvHoldObj);
     this. initInputApprovalObj();
   }
 
@@ -73,6 +69,9 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
   HoldTask(obj){
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response)=>{
+      },
+      (error) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV],{ });
       }
     )
   }

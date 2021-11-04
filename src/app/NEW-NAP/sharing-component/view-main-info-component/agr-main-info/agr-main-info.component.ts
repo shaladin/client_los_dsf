@@ -5,6 +5,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-agr-main-info',
@@ -17,7 +18,7 @@ export class AgrMainInfoComponent implements OnInit {
   isViewReady: boolean = false;
  
   constructor(
-    private router: Router, private http: HttpClient ) { }
+    private router: Router, private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
@@ -45,20 +46,14 @@ export class AgrMainInfoComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }
     if(ev.Key == "Customer"){
-      let custId: number;
-      let mrCustTypeCode: string;
       let CustNoObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-
-          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

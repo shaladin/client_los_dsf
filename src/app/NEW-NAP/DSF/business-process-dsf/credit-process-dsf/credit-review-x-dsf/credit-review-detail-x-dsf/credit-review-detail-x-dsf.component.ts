@@ -60,6 +60,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   lobCode: string;
   NapObj: AppObj = new AppObj();
   bizTemplateCode: string;
+  apvSchmCode: string = "";
   
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -117,6 +118,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     this.initData();
     this.ClaimTask();
     await this.GetAppNo();
+    await this.GetApvSchemeFromRefProdCompnt();
     await this.GetListDeviation();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
@@ -150,7 +152,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
 
         var Attributes = []
         var attribute1 = {
-          "AttributeName": "ApvAt",
+          "AttributeName": "APPROVAL AT",
           "AttributeValue": this.ManualDeviationData[this.ManualDeviationData.length - 1].ApvAt
         };
         Attributes.push(attribute1);
@@ -176,6 +178,25 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     this.FormObj.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
     });
+  }
+  //#endregion
+
+  //#region GET Approval Scheme Code
+  prodOfferingCode: string = "";
+  prodOfferingVersion: string = "";
+  async GetApvSchemeFromRefProdCompnt() {
+    let obj = {
+      prodOfferingCode: this.prodOfferingCode,
+      prodOfferingVersion: this.prodOfferingVersion,
+      refProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CRD_APV
+    };
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      response => {
+        if(response != undefined){
+          this.apvSchmCode = response["CompntValue"];
+        }
+      }
+    );
   }
   //#endregion
 
@@ -383,7 +404,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
 
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
+    this.InputObj.SchemeCode = this.apvSchmCode;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
     this.IsReady = true;

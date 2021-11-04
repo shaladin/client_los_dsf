@@ -32,4 +32,5 @@ export class LeadObj {
     CmoName: string;
     SurveyorName: string;
     TeleMarketingName: string;
+    MrLeadTypeCode: string;
 }

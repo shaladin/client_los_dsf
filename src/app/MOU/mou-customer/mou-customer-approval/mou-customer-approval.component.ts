@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -18,6 +18,7 @@ import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-mou-customer-approval',
@@ -31,19 +32,37 @@ export class MouCustomerApprovalComponent implements OnInit {
   IntegrationObj: IntegrationObj = new IntegrationObj();
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   integrationObj: IntegrationObj = new IntegrationObj();
-  user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));;
+  user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  MrMouTypeCode: string;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService) { }
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {   
+    this.route.queryParams.subscribe(params => {
+    if (params["MrMouTypeCode"] != null) {
+      this.MrMouTypeCode = params["MrMouTypeCode"];
+    }});
+  }
 
   ngOnInit() {
-
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
 
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.apvReqObj.CategoryCodes = [CommonConstant.CAT_CODE_MOU_APV_GENERAL, CommonConstant.CAT_CODE_MOU_APV_FACTORING, CommonConstant.CAT_CODE_MOU_APV_DLFN]
+      let CategoryCode;
+      switch(this.MrMouTypeCode){
+        case CommonConstant.MOU_TYPE_FACTORING :
+          CategoryCode = CommonConstant.CAT_CODE_MOU_APV_FACTORING;
+          break;
+        case CommonConstant.MOU_TYPE_GENERAL :
+          CategoryCode = CommonConstant.CAT_CODE_MOU_APV_GENERAL;
+          break;
+        case CommonConstant.MOU_TYPE_DLFN :
+          CategoryCode = CommonConstant.CAT_CODE_MOU_APV_DLFN;
+          break;
+      }
+
+      this.apvReqObj.CategoryCode = CategoryCode;
       this.apvReqObj.Username = this.user.UserName;
       this.apvReqObj.RoleCode = this.user.RoleCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
@@ -69,23 +88,17 @@ export class MouCustomerApprovalComponent implements OnInit {
     
   }
   
-  getEvent(event) {
-    let custId: number;
-    let mrCustTypeCode: string;
+  async getEvent(event) {
     var isRoleAssignment = event.RowObj.IsRoleAssignment.toString();
     if (event.Key == "customer") {
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         (response) => {
-          custId = response['CustId'];
-          mrCustTypeCode = response['MrCustTypeCode'];
-
-          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          
-          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(custId);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }
@@ -97,18 +110,18 @@ export class MouCustomerApprovalComponent implements OnInit {
         } 
       }
       else if (event.RowObj.CurrentUser == "-") {
-          this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
       }
         
       switch (event.RowObj.MouType) {
         case CommonConstant.FACTORING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
         case CommonConstant.GENERAL:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
         case CommonConstant.FINANCING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": event.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
             break;
       }  
     }

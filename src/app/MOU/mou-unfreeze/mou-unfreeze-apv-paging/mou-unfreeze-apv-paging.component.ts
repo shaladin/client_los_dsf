@@ -50,6 +50,7 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
       this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_MOU_FREEZE_UNFREEZE;
       this.apvReqObj.Username = this.userContext.UserName;
       this.apvReqObj.RoleCode = this.userContext.RoleCode;
+      this.apvReqObj.OfficeCode = this.userContext.OfficeCode;
       this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "MouFreezeTrxNo";
@@ -60,7 +61,7 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
 
   }
 
-  CallBackHandler(ev) {
+  async CallBackHandler(ev) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
     if (ev.Key == "Process") {
       if(isRoleAssignment != CommonConstant.TRUE){
@@ -70,10 +71,10 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
         }
       }
       else if (ev.RowObj.CurrentUser == "-") {
-        this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
+        await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
   
-      this.router.navigate([NavigationConstant.MOU_FREEZE_APV_DETAIL], { queryParams: { "MouCustId":ev.RowObj.MouCustId,"TrxId": ev.RowObj.TrxId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId, "IsRoleAssignment": isRoleAssignment } });
+      this.router.navigate([NavigationConstant.MOU_FREEZE_APV_DETAIL], { queryParams: { "MouCustId":ev.RowObj.MouCustId,"TrxId": ev.RowObj.TrxId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId } });
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {

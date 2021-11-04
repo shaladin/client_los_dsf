@@ -17,6 +17,7 @@ import { CookieService } from "ngx-cookie";
 import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { ClaimTaskService } from "app/shared/claimTask.service";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
   selector: "app-change-mou-review-financing",
@@ -57,7 +58,8 @@ export class ChangeMouReviewFinancingComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService
+    private claimTaskService: ClaimTaskService,
+    private AdInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe((params) => {
       this.ChangeMouTrxId = params["ChangeMouTrxId"];
@@ -189,10 +191,10 @@ export class ChangeMouReviewFinancingComponent implements OnInit {
         .post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.AdInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.AdInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
     }

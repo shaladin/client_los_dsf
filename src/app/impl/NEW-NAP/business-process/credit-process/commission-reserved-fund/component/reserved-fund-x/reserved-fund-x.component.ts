@@ -94,31 +94,38 @@ export class ReservedFundXComponent implements OnInit {
 
   //Save
   SaveForm() {
-    if (this.isCalculated == false) {
-      this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_FIRST);
-    }
-    else {
-      this.calculating()
-      if (this.totalRsvFundAmtWhenSave != this.totalRsvFundAmt)
-      {
-        this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
-      }
-      else if (this.remainingAllocatedAmt < 0) {
-        this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
-      }
-      else if (this.maxAllocAmt < this.totalRsvFundAmt) {
-        this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Max Allocated Amount");
+    if (this.totalRsvFundAmt > 0) {
+      if (this.isCalculated == false) {
+        this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_FIRST);
       }
       else {
-        this.http.post(URLConstantX.AddAppReservedFund, this.allAppReservedFundObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.lockAppCommTab = false;
-            this.outputCommCondition.emit(this.lockAppCommTab);
-            this.outputTab.emit();
-          }
-        );
+        this.calculating()
+        if (this.totalRsvFundAmtWhenSave != this.totalRsvFundAmt)
+        {
+          this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
+        }
+        else if (this.remainingAllocatedAmt < 0) {
+          this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
+        }
+        else if (this.maxAllocAmt < this.totalRsvFundAmt) {
+          this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Max Allocated Amount");
+        }
+        else {
+          this.http.post(URLConstantX.AddAppReservedFund, this.allAppReservedFundObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.lockAppCommTab = false;
+              this.outputCommCondition.emit(this.lockAppCommTab);
+              this.outputTab.emit();
+            }
+          );
+        }
       }
+    } else {
+      this.toastr.successMessage("Success");
+      this.lockAppCommTab = false;
+      this.outputCommCondition.emit(this.lockAppCommTab);
+      this.outputTab.emit();
     }
   }
 

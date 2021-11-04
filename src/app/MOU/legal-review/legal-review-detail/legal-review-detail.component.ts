@@ -149,7 +149,7 @@ export class LegalReviewDetailComponent implements OnInit {
       this.http.post(addMouLglRvwUrl, mouLglRvwObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{ MrMouTypeCode : this.resultData.MrMouTypeCode});
 
         });
       this.mouTc.Save();
@@ -165,5 +165,9 @@ export class LegalReviewDetailComponent implements OnInit {
     else if (this.WfTaskListId > 0) {	
         this.claimTaskService.ClaimTask(this.WfTaskListId);	
     }	
+  }
+
+  Cancel(){
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{ MrMouTypeCode : this.resultData.MrMouTypeCode});
   }
 }

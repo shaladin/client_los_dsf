@@ -14,6 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -41,7 +42,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   isAppLock: boolean = false;
   IsReady: boolean = false;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location, private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) this.AppId = params['AppId'];
       if (params['AppCustId'] != null) this.appCustId = params['AppCustId'];
@@ -192,7 +193,12 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
       this.CustNoObj.CustNo = event.ViewObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
     }

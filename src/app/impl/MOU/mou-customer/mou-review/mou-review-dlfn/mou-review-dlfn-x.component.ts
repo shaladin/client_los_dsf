@@ -143,7 +143,7 @@ export class MouReviewDlfnXComponent implements OnInit {
     this.http.post(SubmitMouReviewNewUrl, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {MrMouTypeCode : this.MouType});
       })
   }
 
@@ -153,7 +153,7 @@ export class MouReviewDlfnXComponent implements OnInit {
     this.http.post(ReturnMouReviewUrl, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {MrMouTypeCode : this.MouType});
       })
   }
 

@@ -335,6 +335,13 @@ const routes: Routes = [
         data: {
           title: 'Lead Update Paging Dsf'
         }
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_CANCEL_PAGING,
+        component: LeadCancelComponent,
+        data: {
+          title: 'Simple Lead Cancel'
+        }
       }
     ]
   }

@@ -21,6 +21,7 @@ export class AddrObj {
     SubZipcode: string;
     StayLength: number;
     RowVersion: string;
+    Zipcode:string;
 
 constructor() { 
     this.Addr = '';
@@ -44,5 +45,6 @@ constructor() {
     this.SubZipcode = '';
     this.StayLength = 0;
     this.RowVersion = '';
+    this.Zipcode = '';
  }
 }

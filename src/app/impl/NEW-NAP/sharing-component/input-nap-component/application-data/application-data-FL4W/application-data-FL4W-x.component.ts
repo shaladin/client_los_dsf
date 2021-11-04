@@ -722,17 +722,23 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     this.inputLookupEconomicSectorObj.pagingJson = './assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json';
     this.inputLookupEconomicSectorObj.genericJson = './assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json';
 
-    if (this.resultResponse['MrSlikSecEcoDescr'] != null && this.resultResponse['MrSlikSecEcoDescr'] != '') {
-      this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse['MrSlikSecEcoDescr'];
-      this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: this.resultResponse['MrSlikSecEcoDescr'] };
-    } else {
-      this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, { Code: this.defaultSlikSecEcoCode }).subscribe(
-        (response) => {
-          this.slikSecDescr = response['SectorEconomySlikName'];
-          this.inputLookupEconomicSectorObj.nameSelect = response['SectorEconomySlikName'];
-          this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: response['SectorEconomySlikName'] };
-        });
+    let slikReqCode = {
+      Code: this.defaultSlikSecEcoCode
     }
+
+    if (this.resultResponse["MrSlikSecEcoCode"] != null && this.resultResponse["MrSlikSecEcoCode"] != "") {
+      slikReqCode.Code = this.resultResponse["MrSlikSecEcoCode"];
+    }
+
+    this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, slikReqCode).subscribe(
+      (response: any) => {
+        this.slikSecDescr = response.SectorEconomySlikName;
+        this.inputLookupEconomicSectorObj.nameSelect = response.SectorEconomySlikName;
+        this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: response.SectorEconomySlikName };
+        this.NapAppModelForm.patchValue({
+          MrSlikSecEcoCode: response.SectorEconomySlikCode
+        });
+      });
 
       // Lookup Commodity
       this.inputLookupCommodityObj = new InputLookupObj();

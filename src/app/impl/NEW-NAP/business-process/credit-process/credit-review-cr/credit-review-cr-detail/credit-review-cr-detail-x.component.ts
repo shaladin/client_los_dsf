@@ -52,6 +52,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   IsReady: boolean = false;
   IsViewReady: boolean = false;
   RFAInfo: Object = new Object();
+  apvSchmCode: string = "";
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -111,6 +112,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     this.initData();
     this.ClaimTask();
     await this.GetAppNo();
+    await this.GetApvSchemeFromRefProdCompnt();
     await this.GetListDeviation();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
@@ -144,7 +146,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
 
         var Attributes = []
         var attribute1 = {
-          "AttributeName": "ApvAt",
+          "AttributeName": "APPROVAL AT",
           "AttributeValue": this.ManualDeviationData[this.ManualDeviationData.length - 1].ApvAt
         };
         Attributes.push(attribute1);
@@ -170,6 +172,25 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     this.FormObj.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
     });
+  }
+  //#endregion
+
+  //#region GET Approval Scheme Code
+  prodOfferingCode: string = "";
+  prodOfferingVersion: string = "";
+  async GetApvSchemeFromRefProdCompnt() {
+    let obj = {
+      prodOfferingCode: this.prodOfferingCode,
+      prodOfferingVersion: this.prodOfferingVersion,
+      refProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CRD_APV
+    };
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      response => {
+        if(response != undefined){
+          this.apvSchmCode = response["CompntValue"];
+        }
+      }
+    );
   }
   //#endregion
 
@@ -347,19 +368,9 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     if (manualDevList != null) {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
-
-    const obj = {
-      ProdOfferingCode: this.ProdOfferingCode,
-      RefProdCompntCode: 'CRD_APV',
-      ProdOfferingVersion: this.ProdOfferingVersion
-    };
-    await this.http.post<ProdOfferingDObj>(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
-      (resp)=>{
-        this.InputObj.CategoryCode = resp.RefProdCompntCode;
-        this.InputObj.SchemeCode = resp.CompntValue;
-      }
-    )
     this.InputObj.ApvTypecodes = listTypeCode;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
+    this.InputObj.SchemeCode = this.apvSchmCode;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
     this.IsReady = true;
@@ -416,7 +427,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstantX.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
   }
 

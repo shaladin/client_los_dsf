@@ -137,7 +137,7 @@
               <app-tc-data *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="ReturnHandlingHId == 0" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -227,7 +227,7 @@
               <app-tc-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="ReturnHandlingHId == 0" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

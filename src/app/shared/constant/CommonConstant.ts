@@ -255,6 +255,7 @@ export class CommonConstant {
   public static RefProdCompntCodeCrApvResExpDays = "CR_APV_RES_EXP_DAYS";
   public static CollateralNeeded = "COLLATERALNEEDED";
   public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
+  public static REF_PROD_COMPNT_CODE_CRD_APV = "CRD_APV";
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
@@ -949,15 +950,16 @@ export class CommonConstant {
   public static ACT_CODE_AST_ALO = "AST_ALO_";
   public static WF_UPL_LEAD = "WF_UPL_LEAD";
   public static UPLOAD_LEAD_REVIEW = "UPLOAD_LEAD_REVIEW";
+  public static WF_MOU = "WF_MOU_{0}";
   public static WF_MOU_GENERAL = "WF_MOU_GENERAL";
   public static WF_MOU_FACTORING = "WF_MOU_FACTORING";
   public static WF_MOU_DLFN = "WF_MOU_DLFN";
-  public static MOU_REVIEW = "MOU_REVIEW_";
-  public static LEGAL_RVW = "LEGAL_RVW_";
-  public static MOU_RETURN = "MOU_RETURN_";
+  public static MOU_REVIEW = "MOU_REVIEW_{0}";
+  public static LEGAL_RVW = "LEGAL_RVW_{0}";
+  public static MOU_RETURN = "MOU_RETURN_{0}";
   public static MOU_APV = "MOU_APV";
-  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER_";
-  public static MOU_EXECUTION = "MOU_EXECUTION_";
+  public static MOU_DOC_SIGNER = "MOU_DOC_SIGNER_{0}";
+  public static MOU_EXECUTION = "MOU_EXECUTION_{0}";
   public static WF_UPL_SMPL_LEAD = "WF_UPL_SMPL_LEAD";
   public static UPLOAD_SMPL_LEAD_REVIEW = "UPLOAD_SMPL_LEAD_REVIEW";
   public static PROD_OFF_APV = "PROD_OFF_APV";
@@ -974,6 +976,12 @@ export class CommonConstant {
   public static CustAddrTypeOthBiz = "OTH_BIZ";
   public static CustAddrTypePreJob = "PREV_JOB";
   public static CustAddrTypeBiz = "BIZ";
+
+  // LEAD
+  public static MrLeadTypeCodeLead = "LEAD";
+  public static MrLeadTypeCodeSimpleLead = "SIMPLE_LEAD";
+  public static LeadCancelTitle = "Lead Cancel";
+  public static SimpleLeadCancelTitle = "Simple Lead Cancel";
 
   //WORFKLOW LEAD
   public static WF_CODE_LEAD = "WF_LEAD";

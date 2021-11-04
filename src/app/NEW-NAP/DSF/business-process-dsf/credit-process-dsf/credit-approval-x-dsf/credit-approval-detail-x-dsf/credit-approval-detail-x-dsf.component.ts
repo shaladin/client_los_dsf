@@ -44,7 +44,6 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
   IsViewReady: boolean = false;
   getEvent: Array<any> = new Array();
   custHighlightCommentObj: CustHighlightCommentObj = null;
-  IsRoleAssignment: string = "";
   IsFD: boolean = false;
 
   private viewHighlightCommentComponent: ViewHighlightCommentComponent;
@@ -75,9 +74,6 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
       if (params["ApvReqId"] != null) {
         this.ApvReqId = params["ApvReqId"];
       }
-      if (params["IsRoleAssignment"] != null) {
-        this.IsRoleAssignment = params["IsRoleAssignment"];
-      }
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
@@ -88,9 +84,7 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
       var ApvHoldObj = new ApprovalObj()
       ApvHoldObj.TaskId = obj.taskId
 
-      if(this.IsRoleAssignment != CommonConstant.TRUE){
-        this.HoldTask(ApvHoldObj);
-      }
+      this.HoldTask(ApvHoldObj);
     });
   }
 

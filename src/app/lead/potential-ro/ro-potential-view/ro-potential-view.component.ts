@@ -11,6 +11,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class RoPotentialViewComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe(params => {
       this.roPotentialNo = params['RoPotentialNo'];
@@ -130,10 +132,10 @@ export class RoPotentialViewComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, { CustNo: event.ViewObj.CustNo}).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );
