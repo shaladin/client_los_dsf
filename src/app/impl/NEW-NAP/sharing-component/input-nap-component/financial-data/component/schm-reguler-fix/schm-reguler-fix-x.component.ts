@@ -257,6 +257,7 @@ export class SchmRegulerFixXComponent implements OnInit {
             this.ParentForm.get("FlatRatePrcnt").disable();
             this.ParentForm.get("InstAmt").disable();
           }else {
+            this.ParentForm.get("CalcBase").enable();
             this.ParentForm.patchValue({
               CalcBase: this.CalcBaseOptions[0].MasterCode
             });
