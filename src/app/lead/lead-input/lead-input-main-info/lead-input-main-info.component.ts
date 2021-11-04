@@ -25,6 +25,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { LeadForLookupObj } from 'app/shared/model/LeadForLookupObj.Model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -392,10 +393,13 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   setLeadObj(obj: any) {
+    let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE));;
+    let datePipe = new DatePipe("en-US");
+
     obj.LeadCopyId = this.leadIdExist;
     obj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     obj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
-    obj.LeadDt = new Date();
+    obj.LeadDt = datePipe.transform(businessDt, "yyyy-MM-dd");
     obj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
     obj.LobCode = this.MainInfoForm.controls["LobCode"].value;
     obj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
