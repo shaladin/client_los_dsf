@@ -3,7 +3,7 @@ import { AppCustPersonalObj } from "../app-cust-personal-obj.model";
 import { AppCustAddrObj } from "../app-cust-addr-obj.model";
 import { AppCustPersonalJobDataObj } from "../app-cust-personal-job-data-obj.model";
 import { AppGuarantorObj } from "../app-guarantor-obj.model";
-import { AppObj } from "./apps.model";
+import { AppObj } from "./app.model";
 import { AppAssetObj } from "../app-asset-obj.model";
 import { AppFinDataObj } from "../app-fin-data/app-fin-data.model";
 import { AssetTypeSerialNoLabelObj } from "../serial-no/asset-type-serial-no-label-obj.model";

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGr
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { AppTCObj } from 'app/shared/model/app-tc-obj.model';

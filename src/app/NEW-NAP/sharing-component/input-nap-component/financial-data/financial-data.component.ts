@@ -11,7 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
 import { SubsidyComponent } from './component/subsidy/subsidy.component';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 
 
 @Component({

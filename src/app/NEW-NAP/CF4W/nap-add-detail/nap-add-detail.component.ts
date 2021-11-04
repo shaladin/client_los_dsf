@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';

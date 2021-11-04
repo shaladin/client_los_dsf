@@ -7,7 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { ReqCreditApvResultExtObj } from 'app/shared/model/request/nap/business-process/req-credit-aproval-result-obj.model';
 import { ResCreditApvResultExtObj } from 'app/shared/model/response/nap/business-process/res-credit-aproval-result-obj.model';

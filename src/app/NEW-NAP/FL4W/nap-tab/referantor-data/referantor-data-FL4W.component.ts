@@ -7,7 +7,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { NapAppReferantorModel } from 'app/shared/model/nap-app-referantor.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 

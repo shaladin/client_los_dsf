@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { NegativeCustObj } from 'app/shared/model/negative-cust.model';
 import { NegativeAssetObj } from 'app/shared/model/negative-asset-obj.model';

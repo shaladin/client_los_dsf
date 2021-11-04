@@ -8,7 +8,7 @@ import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustCompanyDataObj } from 'app/shared/model/mou-cust-company-data-obj.model';

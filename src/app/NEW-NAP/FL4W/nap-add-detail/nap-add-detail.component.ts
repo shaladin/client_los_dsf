@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';

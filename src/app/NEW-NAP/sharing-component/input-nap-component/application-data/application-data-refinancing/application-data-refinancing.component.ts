@@ -21,7 +21,7 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-mas
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 
 @Component({
   selector: 'app-application-data-refinancing',

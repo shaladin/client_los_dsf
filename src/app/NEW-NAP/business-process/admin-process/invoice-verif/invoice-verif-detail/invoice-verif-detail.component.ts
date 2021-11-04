@@ -13,7 +13,7 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ResDisbInfo } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
 import { AppInvoiceFctrObj } from 'app/shared/model/app-invoice-fctr-obj.model';
 import { environment } from 'environments/environment';

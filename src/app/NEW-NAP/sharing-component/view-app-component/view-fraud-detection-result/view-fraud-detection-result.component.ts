@@ -9,7 +9,7 @@ import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { FraudDukcapilObj } from 'app/shared/model/fraud-dukcapil-obj.model';
 import { NegativeCustObj } from 'app/shared/model/negative-cust.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/negative-asset-check-for-multi-asset-obj.model';
 import { NegativeAssetCheckObj } from 'app/shared/model/negative-asset-check-obj.model';
 import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';

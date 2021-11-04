@@ -18,7 +18,7 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-m
 import { ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
-import { AgrmntObj } from 'app/shared/model/agrmnts/agrmnts.model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/res-app-cust-personal-and-spouse-data-obj.model';
 
 @Component({

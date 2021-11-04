@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.model';
 import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { CustCnfrmObj } from 'app/shared/model/cust-cnfrm/cust-cnfrm.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';

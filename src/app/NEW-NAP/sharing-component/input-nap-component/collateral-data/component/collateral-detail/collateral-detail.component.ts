@@ -14,7 +14,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppCollateralDataObj } from 'app/shared/model/app-collateral-data-obj.model';
 import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-doc-obj.model';
 import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';

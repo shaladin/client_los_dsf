@@ -1,4 +1,4 @@
-import { AgrmntObj } from "./agrmnts/agrmnts.model";
+import { AgrmntObj } from "./agrmnt/agrmnt.model";
 import { PreGoLiveMainObj } from "./pre-go-live-main-obj.model";
 import { ListAppTCObj } from "./list-app-tc-obj.model";
 import { AppTCObj } from "./app-tc-obj.model";

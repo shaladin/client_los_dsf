@@ -14,7 +14,7 @@ import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/request/nap/agr-act/
 import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/response/nap/agr-act/res-agrmnt-activation-fin-data-and-fee-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ToastrService } from 'ngx-toastr';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';

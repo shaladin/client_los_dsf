@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

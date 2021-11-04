@@ -12,7 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { map, mergeMap } from 'rxjs/operators';
-import { AgrmntObj } from 'app/shared/model/agrmnts/agrmnts.model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 import { forkJoin } from 'rxjs';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { AgrmntSignerObj } from 'app/shared/model/agrmnt-signer-obj.model';

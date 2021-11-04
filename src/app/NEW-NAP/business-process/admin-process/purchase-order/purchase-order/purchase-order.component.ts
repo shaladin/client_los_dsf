@@ -14,7 +14,7 @@ import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ToastrService } from 'ngx-toastr';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { environment } from 'environments/environment';

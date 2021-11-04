@@ -11,7 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/request/verification/req-verf-question-answer-obj.model';
 import { ReqPhoneNumberObj } from 'app/shared/model/request/phone-verification/req-phone-number-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';

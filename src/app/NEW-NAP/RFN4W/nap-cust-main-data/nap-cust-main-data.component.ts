@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
 import Stepper from 'bs-stepper';
 import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';

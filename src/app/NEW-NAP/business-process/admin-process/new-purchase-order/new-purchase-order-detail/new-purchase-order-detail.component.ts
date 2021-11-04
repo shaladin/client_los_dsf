@@ -20,7 +20,7 @@ import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { forkJoin } from 'rxjs';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ToastrService } from 'ngx-toastr';
 import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';

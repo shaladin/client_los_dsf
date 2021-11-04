@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DeviationResultObj } from 'app/shared/model/deviation-result-obj.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 

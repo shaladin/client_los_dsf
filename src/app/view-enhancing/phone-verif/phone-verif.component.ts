@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/verf-result/req-get-verf-result-obj.model';
 import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';

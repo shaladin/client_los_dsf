@@ -21,7 +21,7 @@ import { ResGetListMouByAppAndTypeObj } from 'app/shared/model/response/mou/mou-
 import { ResApplicationDataObj } from 'app/shared/model/response/application-data/res-application-data-obj.model';
 import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
 import { RefEmpObj } from 'app/shared/model/ref-emp-obj.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';

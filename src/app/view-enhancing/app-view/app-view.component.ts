@@ -13,7 +13,7 @@ import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { formatDate } from '@angular/common';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
-import { AppObj } from 'app/shared/model/apps/apps.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 
 @Component({
   selector: 'app-app-view',
