@@ -27,8 +27,8 @@ export class MouExecutionPagingXComponent implements OnInit {
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   MrMouTypeCode: string;
-  
-  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {    
+
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
     if (params["MrMouTypeCode"] != null) {
       this.MrMouTypeCode = params["MrMouTypeCode"];
@@ -37,13 +37,7 @@ export class MouExecutionPagingXComponent implements OnInit {
 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    const addCritMouType = new CriteriaObj();
-    addCritMouType.DataType = "text";
-    addCritMouType.propName = "MOU.MR_MOU_TYPE_CODE";
-    addCritMouType.restriction = AdInsConstant.RestrictionEq;
-    addCritMouType.value = this.MrMouTypeCode;
-    this.inputPagingObj.addCritInput.push(addCritMouType);
-    
+
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/impl/ucpaging/mou/V2/searchMouRequestForExecXV2.json";
       this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/V2/searchMouRequestForExecXV2.json";
@@ -52,10 +46,10 @@ export class MouExecutionPagingXComponent implements OnInit {
 
       this.requestTaskModel.ProcessKey = String.Format(CommonConstant.WF_MOU, (this.MrMouTypeCode != CommonConstant.MOU_TYPE_DLFN ? this.MrMouTypeCode : CommonConstant.DF));
       this.requestTaskModel.TaskDefinitionKey = String.Format(CommonConstant.MOU_EXECUTION, this.MrMouTypeCode);
-      this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.OFFICE_CODE],
-                                               UserAccess[CommonConstant.OFFICE_CODE], 
+      this.requestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
+                                               UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
-      
+
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.requestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "MouCustNo";
