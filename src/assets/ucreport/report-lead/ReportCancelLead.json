@@ -1,5 +1,5 @@
 {
-    "title": "Report Cancel Lead",
+    "title": "Report Lead Cancel",
     "reportName": "Cancel Lead",
     "reportTemplateCode": "CANCEL_LEAD",
     "component": [
