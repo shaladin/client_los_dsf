@@ -362,11 +362,11 @@
             <div class="col-md-3 form-inline" *ngIf="BizTemplateCode != 'FL4W'">
             </div>
             <div class="col-md-3 form-inline">
-              <label translate>Calculate Base</label>
+              <label translate>Calculate Base behavior: {{ParentForm.controls.EffectiveRateBhv.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="CalcBase" class="form-control full-width" (change)="CalcBaseChanged($event)"
-                [attr.disabled]="ParentForm.controls.EffectiveRateBhv.value == BhvLock">
+                [attr.disabled]="ParentForm.controls.EffectiveRateBhv.value == BhvLock ? '' : null">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of CalcBaseOptions" value={{m.MasterCode}}>{{m.Descr}}</option>
               </select>
