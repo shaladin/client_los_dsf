@@ -3,21 +3,21 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
-import { DataTableFixedNAPObj } from 'app/shared/model/DataTableFixedNAPObj.Model';
-import { SaveAppDataCF2WObj } from 'app/shared/model/SaveAppDataCF2WObj.Model';
-import { AppFixedFeeObj } from 'app/shared/model/AppFixedFeeObj.Model';
-import { AppFixedInsObj } from 'app/shared/model/AppFixedInsObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
+import { DataTableFixedNAPObj } from 'app/shared/model/data-table-fixed-nap-obj.model';
+import { SaveAppDataCF2WObj } from 'app/shared/model/save-app-data-cf2w-obj.model';
+import { AppFixedFeeObj } from 'app/shared/model/app-fixed-fee-obj.model';
+import { AppFixedInsObj } from 'app/shared/model/app-fixed-ins-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-app-add-fixed',

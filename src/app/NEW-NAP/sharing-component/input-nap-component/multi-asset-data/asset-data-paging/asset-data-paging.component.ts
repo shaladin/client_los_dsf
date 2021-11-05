@@ -2,22 +2,22 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { String } from 'typescript-string-operations';
-import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
-import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
-import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
-import { ReqCopyAssetObj } from 'app/shared/model/Request/AppAsset/ReqCopyAssetObj.model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/response/general-setting/res-general-setting-obj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/response/third-party-result/res-third-party-rslt-h-obj.model';
+import { ReqCopyAssetObj } from 'app/shared/model/request/app-asset/req-copy-asset-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 
 @Component({
   selector: 'app-asset-data-paging',

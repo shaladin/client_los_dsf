@@ -5,8 +5,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { environment } from 'environments/environment';
 import { PreGoLiveOplService } from '../pre-go-live-opl.service';
 

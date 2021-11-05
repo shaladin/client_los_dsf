@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
-import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({

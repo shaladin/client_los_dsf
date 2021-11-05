@@ -9,9 +9,9 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

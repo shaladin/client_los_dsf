@@ -6,16 +6,16 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
 import { environment } from 'environments/environment';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-application-approval-detail',

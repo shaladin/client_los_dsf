@@ -4,12 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
-import { ReqGetProdCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
-import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
-import { ResGetProdDCompntInfoObj, ResProdDCompntObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
-import { ResGetProdBranchMbrObj, ResProdBranchMbrObj } from "app/shared/model/Response/Product/ResGetProdBranchMbrObj.model";
+import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
+import { ReqDownloadRuleObj } from "app/shared/model/request/product/req-download-rule-obj.model";
+import { ReqGetProdCompntObj } from "app/shared/model/request/product/req-get-prod-compnt-obj.model";
+import { GenericObj } from "app/shared/model/generic/generic-obj.model";
+import { ResGetProdDCompntInfoObj, ResProdDCompntObj, ResProdHVersionObj } from "app/shared/model/response/product/res-get-prod-obj.model";
+import { ResGetProdBranchMbrObj, ResProdBranchMbrObj } from "app/shared/model/response/product/res-get-prod-branch-mbr-obj.model";
 
 @Component({
   selector: 'app-prod-ho-view',

@@ -13,18 +13,18 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/request/delivery-order/req-get-do-multi-asset-information-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
-import { AssetListForDOMultiAssetObj } from 'app/shared/model/AssetListForDOMultiAssetObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
+import { AssetListForDOMultiAssetObj } from 'app/shared/model/asset-list-for-do-multi-asset-obj.model';
 import { environment } from 'environments/environment';
-import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
-import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
+import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',

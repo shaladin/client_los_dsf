@@ -3,12 +3,12 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { MouCustCompanyObj } from 'app/shared/model/MouCustCompanyObj.Model';
-import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { MouCustCompanyObj } from 'app/shared/model/mou-cust-company-obj.model';
+import { MouCustAddrObj } from 'app/shared/model/mou-cust-addr-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
+import { DuplicateCustObj } from 'app/shared/model/duplicate-cust-obj.model';
 
 @Component({
   selector: 'app-similar-mou-company-data',

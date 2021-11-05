@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 

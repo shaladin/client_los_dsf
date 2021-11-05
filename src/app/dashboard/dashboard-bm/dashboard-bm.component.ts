@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResGetAppCountAndMappingStepObj } from 'app/shared/model/Response/Dashboard/ResGetAppCountAndMappingStepObj';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResGetAppCountAndMappingStepObj } from 'app/shared/model/response/dashboard/res-get-app-count-and-mapping-step-obj.model';
 
 @Component({
   selector: 'app-dashboard-bm',

@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
-import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
+import { AppFeeObj } from 'app/shared/model/app-fee-obj.model';
+import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppDlrFncng } from 'app/shared/model/AppData/AppDlrFncng.Model';
+import { AppDlrFncng } from 'app/shared/model/app-data/app-dlr-fncng.model';
 
 @Component({
   selector: "view-financial",

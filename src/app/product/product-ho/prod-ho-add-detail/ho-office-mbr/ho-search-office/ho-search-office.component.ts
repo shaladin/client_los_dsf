@@ -1,13 +1,13 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { ReqListProdBranchMbrObj, ReqProdBranchMbrDomainObj } from 'app/shared/model/Request/Product/ReqAddProdBranchMbrObj.model';
+import { ReqListProdBranchMbrObj, ReqProdBranchMbrDomainObj } from 'app/shared/model/request/product/req-add-prod-branch-mbr-obj.model';
 import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 @Component({
   selector: 'app-ho-search-office',

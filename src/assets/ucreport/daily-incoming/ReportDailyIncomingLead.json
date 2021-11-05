@@ -58,7 +58,7 @@
         "label": "Period To <=",
         "name": "PeriodTo",
         "datatype": "date",
-        "value": "BD+10",
+        "value": "BD",
         "restriction": "lte",
         "paramAssignment": 0
       }

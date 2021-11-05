@@ -7,11 +7,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 

@@ -7,9 +7,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import { ReqMouForEditConfirmCancelObjV2_1 } from 'app/shared/model/Request/MOU/ReqMouForEditConfirmCancelObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { ReqMouForEditConfirmCancelObjV2_1 } from 'app/shared/model/request/mou/req-mou-for-edit-confirm-cancel-obj.model';
 
 @Component({
   selector: 'app-mou-cancel-detail',

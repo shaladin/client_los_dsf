@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 

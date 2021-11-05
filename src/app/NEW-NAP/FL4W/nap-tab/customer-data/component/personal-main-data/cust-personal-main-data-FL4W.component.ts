@@ -3,20 +3,20 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CustDataPersonalObj } from 'app/shared/model/cust-data-personal-obj.model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
 import { formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { RegexService } from 'app/shared/services/regex.services';
-import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 
 @Component({
   selector: 'app-cust-personal-main-data-FL4W',

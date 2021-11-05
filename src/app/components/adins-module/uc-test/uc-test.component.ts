@@ -7,10 +7,10 @@ import { DOCUMENT } from '@angular/platform-browser';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from 'app/shared/excel-service/excel-service';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
+import { InputSearchObj } from 'app/shared/model/input-search-obj.model';
 import { KeyValueReportObj } from '@adins/ucsearch/lib/model/key-value-report.model';
-import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { RequestCriteriaObj } from 'app/shared/model/request-criteria-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CookieService } from 'ngx-cookie';
 

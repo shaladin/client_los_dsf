@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { ControlContainer, FormGroupDirective } from '@angular/forms';
-import { LtkmCustCompanyMgmntShrholderObj } from 'app/shared/model/LTKM/LtkmCustCompanyMgmntShrholderObj.Model';
+import { LtkmCustCompanyMgmntShrholderObj } from 'app/shared/model/ltkm/ltkm-cust-company-mgmnt-shrholder-obj.model';
 
 @Component({
   selector: 'app-ltkm-mgmnt-shrholder',

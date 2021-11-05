@@ -2,16 +2,16 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
+import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
+import { CalcRegularFixObj } from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-financial-data-dlfn',

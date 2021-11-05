@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ScoringResultDObj } from 'app/shared/model/ScoringResultDObj.Model';
-import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
+import { ScoringResultDObj } from 'app/shared/model/scoring-result-d-obj.model';
+import { ScoringResultHObj } from 'app/shared/model/scoring-result-h-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-credit-scoring',

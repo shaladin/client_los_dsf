@@ -5,11 +5,11 @@ import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { ThingsToDoIntegrationObj, ThingsToDoIntegrationV2Obj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
+import { ThingsToDoIntegrationObj, ThingsToDoIntegrationV2Obj, UcThingsToDoObj } from 'app/shared/model/library/uc-things-to-do-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 export interface Chart {
   type: ChartType;
   data: Chartist.IChartistData;

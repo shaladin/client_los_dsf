@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { ThirdPartyRsltHObj } from 'app/shared/model/third-party-rslt-h-obj.model';
 
 @Component({
   selector: 'app-mou-view-third-party',

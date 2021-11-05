@@ -5,11 +5,11 @@ import { CookieService } from "ngx-cookie";
 import { AdInsHelper } from "./AdInsHelper";
 import { CommonConstant } from "./constant/CommonConstant";
 import { URLConstant } from "./constant/URLConstant";
-import { AppObj } from "./model/App/App.Model";
-import { ClaimWorkflowObj } from "./model/Workflow/ClaimWorkflowObj.Model";
-import { ClaimTaskModel } from "./model/Workflow/V2/ClaimTaskModelObj.model";
+import { AppObj } from "./model/app/app.model";
+import { ClaimWorkflowObj } from "./model/workflow/claim-workflow-obj.model";
+import { ClaimTaskModel } from "./model/workflow/v2/claim-task-model-obj.model";
 import { AdInsConstant } from "./AdInstConstant";
-import { ReqSubmitNAPDataObj } from "./model/App/ReqSubmitNAPDataV2Obj.model";
+import { ReqSubmitNAPDataObj } from "./model/app/req-submit-nap-data-v2-obj.model";
 
 @Injectable()
 export class ClaimTaskService{

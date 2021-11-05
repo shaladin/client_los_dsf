@@ -593,6 +593,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
   public static RefMasterTypeCodeReturnTaskOPL = "RETURN_TASK_OPL";
   public static RefMasterTypeCodeReturnTaskFCTR = "RETURN_TASK_FCTR";
+  public static RefMasterTypeCodeReturnTaskDF = "RETURN_TASK_DLFN";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";

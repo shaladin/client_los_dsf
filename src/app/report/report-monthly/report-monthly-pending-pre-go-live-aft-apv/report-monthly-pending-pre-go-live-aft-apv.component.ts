@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
+import { InputReportObj } from 'app/shared/model/library/input-report-obj.model';
 
 @Component({
   selector: 'app-report-monthly-pending-pre-go-live-aft-apv',

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CrdRvwCmoObj } from 'app/shared/model/CreditReview/CrdRvwCmoObj.Model';
+import { CrdRvwCmoObj } from 'app/shared/model/credit-review/crd-rvw-cmo-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-cmo-info',

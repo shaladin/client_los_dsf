@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 
 @Component({
   selector: 'app-app-add-detail',
