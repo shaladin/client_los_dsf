@@ -37,6 +37,12 @@ export class MouExecutionPagingXComponent implements OnInit {
 
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    const addCritMouType = new CriteriaObj();
+    addCritMouType.DataType = "text";
+    addCritMouType.propName = "MOU.MR_MOU_TYPE_CODE";
+    addCritMouType.restriction = AdInsConstant.RestrictionEq;
+    addCritMouType.value = this.MrMouTypeCode;
+    this.inputPagingObj.addCritInput.push(addCritMouType);
 
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/impl/ucpaging/mou/V2/searchMouRequestForExecXV2.json";
