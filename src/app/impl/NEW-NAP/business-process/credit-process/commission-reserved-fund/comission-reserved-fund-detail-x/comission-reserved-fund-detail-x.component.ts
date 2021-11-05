@@ -144,10 +144,10 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
           this.NapObj = response;
           if (this.ReturnHandlingHObj.ReturnHandlingHId == 0) {
             if (this.NapObj.AppCurrStep != CommonConstant.AppStepComm && this.NapObj.AppCurrStep != CommonConstant.AppStepRSVFund) {
-              this.NapObj.AppCurrStep = CommonConstant.AppStepRSVFund;
+              this.NapObj.AppCurrStep = CommonConstant.AppStepComm;
               this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
                 () => {
-                  this.ChangeTab(CommonConstant.AppStepRSVFund);
+                  this.ChangeTab(CommonConstant.AppStepComm);
                 }
               )
             }
@@ -156,7 +156,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
       });
   }
 
-  //DATA 
+  //DATA
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
       let ReqByIdAndCodeObj = new GenericObj();
