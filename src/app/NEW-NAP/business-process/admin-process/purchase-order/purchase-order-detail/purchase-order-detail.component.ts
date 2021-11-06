@@ -139,7 +139,12 @@ export class PurchaseOrderDetailComponent implements OnInit {
         let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
-        tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
+        
+        if(tempAgrmntFeeObj != undefined)
+          tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
+        else
+          tempPurchaseOrderDObj.PurchaseOrderAmt = 0;
+
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
     }
