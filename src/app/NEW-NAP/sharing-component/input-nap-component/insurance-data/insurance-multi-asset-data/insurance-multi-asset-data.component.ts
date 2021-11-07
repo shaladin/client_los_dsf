@@ -994,7 +994,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           });
           await this.GenerateMainAndAddCvgTable();
         } else {
-          this.GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj);
+          await this.GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj);
         }
         this.isGenerate = true;
         this.bindInsFeeBehaviorRuleObj();
@@ -1010,23 +1010,29 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
     (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray) = this.fb.array([]);
 
+    let loadingFeeCountType: string = await this.GetLoadingFeeCountType();
+    switch (loadingFeeCountType) {
+      case CommonConstant.LoadingFeeCountType_CountingYear:
+        this.CountTypeCountingYear();
+        break;
+      case CommonConstant.LoadingFeeCountType_FirstYear:
+        this.CountTypeFirstYear();
+        break;
+      case CommonConstant.LoadingFeeCountType_LastYear:
+        this.CountTypeLastYear();
+        break;
+    }
+  }
+
+  async GetLoadingFeeCountType(): Promise<string> {
+    let loadingFeeCountType: string = "";
     await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeLoadingFeeCountType }).toPromise().then(
       (response: GeneralSettingObj) => {
-        let loadingFeeCountType = response.GsValue ? response.GsValue : CommonConstant.LoadingFeeCountType_CountingYear;
-        switch (loadingFeeCountType) {
-          case CommonConstant.LoadingFeeCountType_CountingYear:
-            this.CountTypeCountingYear();
-            break;
-          case CommonConstant.LoadingFeeCountType_FirstYear:
-            this.CountTypeFirstYear();
-            break;
-          case CommonConstant.LoadingFeeCountType_LastYear:
-            this.CountTypeLastYear();
-            break;
-        }
+        loadingFeeCountType = response.GsValue ? response.GsValue : CommonConstant.LoadingFeeCountType_CountingYear;
       }
-    )
-
+    );
+    console.log(loadingFeeCountType);
+    return loadingFeeCountType;
   }
 
   CountTypeCountingYear(){
@@ -1104,12 +1110,17 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
   }
 
-  GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj: Array<AppInsMainCvgObj>) {
+  async GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj: Array<AppInsMainCvgObj>) {
     let ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
+    let loadingFeeCountType: string = await this.GetLoadingFeeCountType();
+    if (loadingFeeCountType == CommonConstant.LoadingFeeCountType_LastYear) {
+      let noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
+      ManufYearDiff += noOfYear;
+    }
     (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray) = this.fb.array([]);
     for (let i = 0; i < appInsMainCvgObj.length; i++) {
       (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroupFromDB(appInsMainCvgObj[i], ManufYearDiff));
-      ManufYearDiff++;
+      if (loadingFeeCountType == CommonConstant.LoadingFeeCountType_CountingYear) ManufYearDiff++;
     }
   }
 
@@ -1368,28 +1379,22 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       // }
 
       if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
-        for (let i = 0; i < this.ruleObj["AdditionalCoverageType"].length; i++) {
-          if (this.ruleObj["AdditionalCoverageType"][i] == CommonConstant.MrAddCvgTypeCodeLoading) {
-            let assetAgeMin = this.ruleObj["AssetAgeFrom"][i] ? parseInt(this.ruleObj["AssetAgeFrom"][i], 10) : 0;
-            let assetAgeMax = this.ruleObj["AssetAgeTo"][i] ? parseInt(this.ruleObj["AssetAgeTo"][i], 10) : 0;
-            if (ManufYearDiff >= assetAgeMin && ManufYearDiff <= assetAgeMax) {
-              const control = this.fb.group({
-                MrAddCvgTypeCode: o.Key,
-                AddCvgTypeName: o.Value,
-                Value: check == undefined ? false : true,
-                SumInsuredPercentage: insMainCvg.SumInsuredPrcnt,
-                SumInsuredAmt: check == undefined ? defaultSumInsuredAmt : check.SumInsuredAmt,
-                PremiumType: premiumType,
-                CustAddPremiRate: custAddPremiRate,
-                CustAddPremiAmt: check == undefined ? 0 : check.CustAddPremiAmt,
-                BaseCalculation: this.ruleObj.BaseCalc[index],
-                InscoAddPremiRate: inscoAddPremiRate,
-                InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
-                SeatCount: 0,
-              });
-              (group.controls.AppInsAddCvgs as FormArray).push(control);
-            }
-          }
+        if (check) {
+          const control = this.fb.group({
+            MrAddCvgTypeCode: o.Key,
+            AddCvgTypeName: o.Value,
+            Value: check == undefined ? false : true,
+            SumInsuredPercentage: insMainCvg.SumInsuredPrcnt,
+            SumInsuredAmt: check == undefined ? defaultSumInsuredAmt : check.SumInsuredAmt,
+            PremiumType: premiumType,
+            CustAddPremiRate: custAddPremiRate,
+            CustAddPremiAmt: check == undefined ? 0 : check.CustAddPremiAmt,
+            BaseCalculation: this.ruleObj.BaseCalc[index],
+            InscoAddPremiRate: inscoAddPremiRate,
+            InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
+            SeatCount: 0,
+          });
+          (group.controls.AppInsAddCvgs as FormArray).push(control);
         }
       }
       else {
