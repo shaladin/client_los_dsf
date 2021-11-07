@@ -817,7 +817,7 @@ export class InsuranceDataComponent implements OnInit {
     let loadingFeeCountType: string = await this.GetLoadingFeeCountType();
     if (loadingFeeCountType == CommonConstant.LoadingFeeCountType_LastYear) {
       let noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
-      ManufYearDiff += noOfYear;
+      ManufYearDiff += (noOfYear - 1);
     }
     (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray) = this.fb.array([]);
     for (let i = 0; i < appInsMainCvgObj.length; i++) {
