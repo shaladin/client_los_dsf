@@ -1163,36 +1163,45 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   bindInsFeeBehaviorRuleObj() {
     this.adminFeeLock = false;
     this.stampdutyFeeLock = false;
+    let CustAdminFeeAmt = this.InsuranceDataForm.get("CustAdminFeeAmt");
+    let CustAdminFeeAmtValidator = [Validators.required];
     switch (this.ruleObj.AdminFeeToCustBhv) {
       case CommonConstant.InsFeeBhvDef:
         //set default jika pertama kali create
         if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustAdminFeeAmt: this.ruleObj.AdminFeeToCust });
         break;
       case CommonConstant.InsFeeBhvMin:
-        this.InsuranceDataForm.controls.CustAdminFeeAmt.setValidators([Validators.required, Validators.min(this.ruleObj.AdminFeeToCust)]);
+        CustAdminFeeAmtValidator.push(Validators.min(this.ruleObj.AdminFeeToCust));
         break;
       case CommonConstant.InsFeeBhvMax:
-        this.InsuranceDataForm.controls.CustAdminFeeAmt.setValidators([Validators.required, Validators.max(this.ruleObj.AdminFeeToCust)]);
+        CustAdminFeeAmtValidator.push(Validators.max(this.ruleObj.AdminFeeToCust));
         break;
       case CommonConstant.InsFeeBhvLock:
         this.adminFeeLock = true;
         break;
     }
+    CustAdminFeeAmt.setValidators(CustAdminFeeAmtValidator);
+    CustAdminFeeAmt.updateValueAndValidity();
+
+    let CustStampDutyFeeAmt = this.InsuranceDataForm.get("CustStampDutyFeeAmt");
+    let CustStampDutyFeeAmtValidator = [Validators.required];
     switch (this.ruleObj.CustStampdutyFeeToCustBhv) {
       case CommonConstant.InsFeeBhvDef:
         //set default jika pertama kali create
         if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.AdminFeeToCust });
         break;
       case CommonConstant.InsFeeBhvMin:
-        this.InsuranceDataForm.controls.CustStampDutyFeeAmt.setValidators([Validators.required, Validators.min(this.ruleObj.CustStampdutyFeeToCust)]);
+        CustStampDutyFeeAmtValidator.push(Validators.min(this.ruleObj.CustStampdutyFeeToCust));
         break;
       case CommonConstant.InsFeeBhvMax:
-        this.InsuranceDataForm.controls.CustStampDutyFeeAmt.setValidators([Validators.required, Validators.max(this.ruleObj.CustStampdutyFeeToCust)]);
+        CustStampDutyFeeAmtValidator.push(Validators.max(this.ruleObj.CustStampdutyFeeToCust));
         break;
       case CommonConstant.InsFeeBhvLock:
         this.stampdutyFeeLock = true;
         break;
     }
+    CustStampDutyFeeAmt.setValidators(CustStampDutyFeeAmtValidator);
+    CustStampDutyFeeAmt.updateValueAndValidity();
   }
 
   bindInsPaidByRuleObj() {
