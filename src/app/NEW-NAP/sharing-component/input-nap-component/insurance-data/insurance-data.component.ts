@@ -791,7 +791,7 @@ export class InsuranceDataComponent implements OnInit {
     let ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
     let yearCount = this.InsuranceDataForm.controls.InsLength.value;
     let noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
-    ManufYearDiff += noOfYear;
+    ManufYearDiff += (noOfYear - 1);
     let month: number = 12;
     for (let i = 0; i < noOfYear; i++) {
       let obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0 };
@@ -817,7 +817,7 @@ export class InsuranceDataComponent implements OnInit {
     let loadingFeeCountType: string = await this.GetLoadingFeeCountType();
     if (loadingFeeCountType == CommonConstant.LoadingFeeCountType_LastYear) {
       let noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
-      ManufYearDiff += noOfYear;
+      ManufYearDiff += (noOfYear - 1);
     }
     (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray) = this.fb.array([]);
     for (let i = 0; i < appInsMainCvgObj.length; i++) {
