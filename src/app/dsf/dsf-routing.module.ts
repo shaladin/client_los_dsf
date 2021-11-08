@@ -26,6 +26,7 @@ import { DisbursementPagingDsfComponent } from './report/disbursement-dsf/disbur
 import { MonthlyPaymentScheduleSummaryComponent } from './report/factoring/monthly-payment-schedule-summary/monthly-payment-schedule-summary.component';
 import { MonthlyDisbDsfComponent } from './report/factoring/monthly-disb-dsf/monthly-disb-dsf.component';
 import { ListOutstandingComponent } from './report/factoring/list-outstanding/list-outstanding.component';
+import { VirtualaccountPaymentAllocationunitComponent } from './report/factoring/virtualaccount-payment-allocationunit/virtualaccount-payment-allocationunit.component';
 
 const routes: Routes = [
   {
@@ -324,6 +325,18 @@ const routes: Routes = [
         component: ListOutstandingComponent,
         data: {
           title: "Report Fact List Outstanding"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT,
+        component: VirtualaccountPaymentAllocationunitComponent,
+        data: {
+          title: "Report Fact Virtual Account Payment Allocation Unit"
         }
       }
     ]

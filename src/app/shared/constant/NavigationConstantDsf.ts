@@ -48,6 +48,7 @@ export class NavigationConstantDsf {
     public static REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY;
     public static REPORT_FACT_MONTHLY_DISB = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_MONTHLY_DISB;
     public static REPORT_FACT_LIST_OUTSTANDING = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_LIST_OUTSTANDING;
+    public static REPORT_FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT;
    //#endregion
 
      //#region CUSTOMER GROUP PLAFOND
