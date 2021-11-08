@@ -93,7 +93,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: ToastrService, 
+    public toastr: ToastrService,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService
   ) {
@@ -182,12 +182,10 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   //#endregion
 
   //#region GET Approval Scheme Code
-  prodOfferingCode: string = "";
-  prodOfferingVersion: string = "";
   async GetApvSchemeFromRefProdCompnt() {
     let obj = {
-      prodOfferingCode: this.prodOfferingCode,
-      prodOfferingVersion: this.prodOfferingVersion,
+      prodOfferingCode: this.ProdOfferingCode,
+      prodOfferingVersion: this.ProdOfferingVersion,
       refProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CRD_APV
     };
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
@@ -214,6 +212,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
           await this.GetCreditScoring(response.AppNo);
         }
       });
+
       if(this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "FD"){
         this.IsFD = true;
       }
@@ -424,8 +423,8 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
 
     if (!this.isReturnOn) {
-      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
-      
+      this.RFAInfo = { RFAInfo: this.FormObj.controls.RFAInfo.value };
+
     }
 
     let apiObj = {
