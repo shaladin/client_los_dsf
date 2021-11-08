@@ -58,8 +58,6 @@ export class DoAssetDetailXComponent implements OnInit {
     listItem: this.fb.array([])
   });
 
-  LobCode: string;
-
   constructor(
     private httpClient: HttpClient,
     private fb: FormBuilder,
@@ -68,12 +66,6 @@ export class DoAssetDetailXComponent implements OnInit {
   ){}
 
   async ngOnInit() {
-    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-      (response) => {
-        this.LobCode = response.LobCode;
-      }
-    );
-
     this.listItem = this.DOAssetDetail.get('listItem') as FormArray;
 
     var datePipe = new DatePipe("en-US");
@@ -102,12 +94,10 @@ export class DoAssetDetailXComponent implements OnInit {
               this.listItem.push(eachDataDetail);
             }
 
-            if (this.LobCode != CommonConstantX.CF4W_LOB_CODE_CF) {
-              for (let i = 0; i < this.listItem.length; i++) {
-                if (this.listItem.controls[i]['controls']['IsMandatory'].value == true) {
-                  this.listItem.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-                  this.listItem.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-                }
+            for (let i = 0; i < this.listItem.length; i++) {
+              if (this.listItem.controls[i]['controls']['IsMandatory'].value == true) {
+                this.listItem.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                this.listItem.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
             }
 
