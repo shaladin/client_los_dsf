@@ -12,7 +12,7 @@ import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { AllAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
 import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';

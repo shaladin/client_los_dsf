@@ -17,7 +17,7 @@ import { PurchaseOrderViewComponent } from "./purchase-order-view/purchase-order
 import { UcgridviewModule } from "@adins/ucgridview";
 import { AppMainInfoComponent } from "../sharing-component/view-main-info-component/app-main-info/app-main-info.component";
 import { SharedModule } from "app/shared/shared.module";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
   exports: [

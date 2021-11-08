@@ -20,7 +20,7 @@ import { AppSourceOfficeMemberPagingComponent } from './app-source/app-source-of
 import { AppSourceOfficeMemberAddComponent } from './app-source/app-source-office-member/app-source-office-member-add/app-source-office-member-add.component';
 import { UcaddressModule } from '@adins/ucaddress';
 import { AdInsModule } from 'app/components/adins-module/adins.module';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 
 @NgModule({

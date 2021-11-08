@@ -7,7 +7,7 @@ import { AppTcComponent } from './app-tc/app-tc.component';
 import { ViewAssetDataComponent } from './view-asset-data/view-asset-data.component';
 import { ViewInsuranceComponent } from './view-insurance/view-insurance.component';
 import { ViewCollateralDataComponent } from './view-collateral-data/view-collateral-data.component';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 @NgModule({
     imports: [
