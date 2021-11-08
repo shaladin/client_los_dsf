@@ -52,12 +52,13 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "isSelectOne": false,
+            "environment": "FOU",
             "url": "",
             "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
             "label": "LTKM Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "LTKM"
         }
     ],
