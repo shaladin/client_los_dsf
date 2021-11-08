@@ -713,12 +713,12 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     }
     if (this.typePage == "update") {
 
-      this.CustomerDataForm.controls["CustName"].disable();
-      this.CustomerDataForm.controls["MrIdTypeCode"].disable();
-      this.CustomerDataForm.controls["BirthDate"].disable();
-      this.CustomerDataForm.controls["MotherName"].disable();
-      this.CustomerDataForm.controls["IdNo"].disable();
-      this.CustomerDataForm.controls["Npwp"].disable();
+      // this.CustomerDataForm.controls["CustName"].disable();
+      // this.CustomerDataForm.controls["MrIdTypeCode"].disable();
+      // this.CustomerDataForm.controls["BirthDate"].disable();
+      // this.CustomerDataForm.controls["MotherName"].disable();
+      // this.CustomerDataForm.controls["IdNo"].disable();
+      // this.CustomerDataForm.controls["Npwp"].disable();
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       let obj = {
