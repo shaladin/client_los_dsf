@@ -209,7 +209,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 {{ isNonMandatory ? '' : isFamily ? '' : 'adins-required-label' }}" translate>Mobile Phone</label>
+                <label class="col-md-4 {{ isNonMandatory ? '' : 'adins-required-label' }}" translate>Mobile Phone</label>
                 <div class="col-md-8">
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                     formControlName="MobilePhnNo1"
