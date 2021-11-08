@@ -366,7 +366,11 @@ export class ChangeMouRequestDetailXComponent implements OnInit {
             MasterCode:  response["MrMouCustFctrType"]
           }).subscribe(
             (response)=>{
-              this.mouFctrType = response["Descr"];
+              if(response["Descr"]!=null){
+                  this.mouFctrType = response["Descr"];
+              }else{
+                  this.mouFctrType = "-";
+              }
             }
           );
         });
