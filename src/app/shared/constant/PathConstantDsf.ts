@@ -57,6 +57,7 @@ export class PathConstantDsf {
     public static REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY = "ReportMonthlyPaymentScheduleSummary";
     public static REPORT_FACT_MONTHLY_DISB = "ReportMonthlyDisb";
     public static REPORT_FACT_LIST_OUTSTANDING = "ReportListOutstanding";
+    public static REPORT_FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT = "ReportVirtualAccountPaymentAllocationUnit";
     public static PRINT_REPORT_FACT_MONITORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONITORING;
     public static PRINT_REPORT_FACT_MORNING_MONITORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MORNING_MONITORING;
     public static PRINT_REPORT_FACT_AFTERNOON_MONITORING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_AFTERNOON_MONITORING;
@@ -69,6 +70,7 @@ export class PathConstantDsf {
     public static PRINT_REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY;
     public static PRINT_REPORT_FACT_MONTHLY_DISB = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_MONTHLY_DISB;
     public static PRINT_REPORT_FACT_LIST_OUTSTANDING = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_LIST_OUTSTANDING;
+    public static PRINT_REPORT_FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT;
     //#endregion report factoring
 
     //#region customer-plafond

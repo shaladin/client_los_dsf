@@ -1,0 +1,55 @@
+{ 
+    "title" : "REPORT FACT VIRTUAL ACCOUNT PAYMENT ALLOCATION UNIT",
+    "reportName": "Report of Virtual Account Payment Allocation Unit",
+    "reportTemplateCode": "FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT",
+    "component": [ 
+        {
+            "type" : "dropdown",
+            "label" : "Product Type",
+            "name" : "CrtProductType",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+                {
+                "key": "UN",
+                "value": "Unit"
+            },
+            {
+                "key": "SP",
+                "value": "Sparepart"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Period From",
+            "name" : "LeadDtGte",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Period To",
+            "name" : "LeadDtLte",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }      
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
