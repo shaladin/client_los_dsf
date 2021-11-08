@@ -382,10 +382,11 @@ export class CustMainDataXComponent implements OnInit {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
     if (!this.isNonMandatory) {
-      this.CustMainDataForm.controls.MobilePhnNo1.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required)
     }
     if (this.isFamily) {
+      this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(null);
     }
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
@@ -850,7 +851,7 @@ export class CustMainDataXComponent implements OnInit {
 
     if (custType == CommonConstant.CustTypePersonal) {
       this.isNonMandatory ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.isFamily ? this.CustMainDataForm.controls.MotherMaidenName.setValidators(null) : this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
-      this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      this.isNonMandatory ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.pattern("^[0-9]+$")]) : this.isFamily ? this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.pattern("^[0-9]+$")]) : this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
