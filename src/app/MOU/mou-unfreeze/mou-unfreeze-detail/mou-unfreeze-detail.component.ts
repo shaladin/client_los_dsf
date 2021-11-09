@@ -26,7 +26,6 @@ import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 export class MouUnfreezeDetailComponent implements OnInit {
   MouCustId: number;
   mode: string;
-  title: String;
   businessDt: Date;
   FreezeUnfreezeForm: FormGroup;
   cbIsFreeze: boolean;
@@ -78,7 +77,6 @@ export class MouUnfreezeDetailComponent implements OnInit {
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewMouHeader.json";
     await this.getApv();
-    this.title = "Detail Mou Freeze Unfreeze";
 
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
