@@ -383,6 +383,7 @@ export class URLConstant {
   public static GetRefMasterListKeyValueActiveByCode = environment.FoundationR3Url + "/v1" + "/RefMaster/GetListKeyValueActiveByCode"
   public static GetListActiveRefMaster = environment.FoundationR3Url + "/v1" + "/RefMaster/GetListActiveRefMaster"
   public static GetRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/v1" + "/RefMaster/GetRefMasterByRefMasterTypeCode"
+  public static GetListKeyValueActiveByCodeOrderBySeqNo = environment.FoundationR3Url + "/v1" + "/RefMaster/GetListKeyValueActiveByCodeOrderBySeqNo";
   public static GetListActiveRefMasterWithMappingCodeAll = environment.FoundationR3Url + "/v1" + "/RefMaster/GetListActiveRefMasterWithMappingCodeAll";
   public static GetListRefMasterByRefMasterTypeCodes = environment.FoundationR3Url + "/v1" + "/RefMaster/GetListRefMasterByRefMasterTypeCodes";
   public static GetRefMasterByRefMasterTypeCodeAndMasterCode = environment.FoundationR3Url + "/v1" + "/RefMaster/GetRefMasterByRefMasterTypeCodeAndMasterCode";
