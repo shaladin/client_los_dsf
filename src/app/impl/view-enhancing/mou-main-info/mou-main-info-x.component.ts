@@ -11,11 +11,11 @@ import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import {ResMouMainInfoObjX} from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjX.model';
 import {NavigationConstant} from 'app/shared/constant/NavigationConstant';
 import {Router} from '@angular/router';
-
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-mou-main-info-x',
-  templateUrl: './mou-main-info-x.component.html',
+  templateUrl: './mou-main-info-x.component.html'
 })
 export class MouMainInfoXComponent implements OnInit {
   @Input() MouCustId: number;
@@ -25,7 +25,8 @@ export class MouMainInfoXComponent implements OnInit {
   MouMainInfo: ResMouMainInfoObjX;
 
   constructor(private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private toastr: NGXToastrService) {
   }
 
   ngOnInit() {
@@ -43,6 +44,12 @@ export class MouMainInfoXComponent implements OnInit {
           }else{
             this.MouMainInfo.PlafondType = 'Base On Collateral'
           }
+
+          if(this.MouMainInfo.IsWarning === true)
+          {
+            this.toastr.warningMessage(this.MouMainInfo.WarningMsg);
+          }
+
           console.log(response);
         });
     } else {
@@ -54,6 +61,12 @@ export class MouMainInfoXComponent implements OnInit {
           }else{
             this.MouMainInfo.PlafondType = 'Base On Collateral'
           }
+
+          if(this.MouMainInfo.IsWarning === true)
+          {
+            this.toastr.warningMessage(this.MouMainInfo.WarningMsg);
+          }
+          
           console.log(response);
         });
     }

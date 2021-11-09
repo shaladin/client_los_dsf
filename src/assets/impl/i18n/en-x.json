@@ -144,5 +144,6 @@
   "Sales Office Name": "MO Office Name",
   "Sales Officer Code": "MO Code",
   "Sales Officer Name": "MO Name",
-  "Tenor": "TENOR (IN MONTHS)"
+  "Tenor": "TENOR (IN MONTHS)",
+  "Insurance Length" : "Insurance Length (In Months)"
 }

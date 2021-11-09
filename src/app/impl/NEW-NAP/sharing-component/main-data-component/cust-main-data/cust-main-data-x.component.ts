@@ -382,7 +382,7 @@ export class CustMainDataXComponent implements OnInit {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
     if (!this.isNonMandatory) {
-      this.CustMainDataForm.controls.MobilePhnNo1.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required)
     }
     if (this.isFamily) {
