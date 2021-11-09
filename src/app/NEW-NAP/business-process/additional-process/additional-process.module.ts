@@ -64,7 +64,7 @@ import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 
 

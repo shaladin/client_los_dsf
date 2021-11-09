@@ -9,7 +9,7 @@ import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { LeadObj } from 'app/shared/model/lead.model';
 import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
 import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

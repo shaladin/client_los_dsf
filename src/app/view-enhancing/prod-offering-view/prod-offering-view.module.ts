@@ -6,7 +6,7 @@ import { UcSubsectionModule } from '@adins/uc-subsection';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsModule } from 'app/components/adins-module/adins.module';
 import { MatTabsModule } from '@angular/material';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 @NgModule({
   declarations: [ProdOfferingViewComponent],

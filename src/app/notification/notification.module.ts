@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationComponent } from './notification.component';
 import { NotificationRoutingModule } from './notification-routing.module';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 
 @NgModule({

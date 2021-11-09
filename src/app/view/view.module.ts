@@ -90,7 +90,7 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
 import { TabDeviationComponent } from "./app-view/tab-deviation/tab-deviation.component";
 import { NewApplicationDataComponent } from "./app-view/application-data/new-application-data.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({

@@ -10,7 +10,7 @@ import { ViewAppCustDataCompletionCompanyComponent } from './view-app-cust-data-
 import { ViewAppCustDetailComponent } from './view-app-cust-detail/view-app-cust-detail.component';
 import { GuarantorCompletionComponent } from './view-guarantor/view-guarantor-completion.component';
 import { GuarantorComponent } from './view-guarantor/view-guarantor.component';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 @NgModule({
     imports: [
