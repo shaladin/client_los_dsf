@@ -21,7 +21,7 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
-import { LeadObj } from 'app/shared/model/lead.model';
+import { LeadObj } from 'app/shared/model/lead-obj.model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/third-party-result-h-for-fraud-chck-obj.model';
 import { LeadCustCompareObj } from 'app/shared/model/lead-cust-compare-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';

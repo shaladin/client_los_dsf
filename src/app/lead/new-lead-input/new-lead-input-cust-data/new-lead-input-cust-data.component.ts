@@ -21,7 +21,7 @@ import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { LeadObj } from 'app/shared/model/lead.model';
+import { LeadObj } from 'app/shared/model/lead-obj.model';
 import { LeadCustAddrObj } from 'app/shared/model/lead-cust-addr-obj.model';
 import { LeadCustCompareObj } from 'app/shared/model/lead-cust-compare-obj.model';
 import { LeadCustObj } from 'app/shared/model/lead-cust-obj.model';

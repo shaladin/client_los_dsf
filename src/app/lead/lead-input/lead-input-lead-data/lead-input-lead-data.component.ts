@@ -10,7 +10,7 @@ import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
 import { LeadAppObj } from 'app/shared/model/request/lead/lead-app-obj.model';
 import { LeadAssetObj } from 'app/shared/model/request/lead/lead-asset-obj.model';
 import { AssetMasterObj } from 'app/shared/model/asset-master-obj.model';
-import { LeadObj } from 'app/shared/model/lead.model';
+import { LeadObj } from 'app/shared/model/lead-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';

@@ -6,7 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
-import { LeadObj } from 'app/shared/model/lead.model';
+import { LeadObj } from 'app/shared/model/lead-obj.model';
 import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
 import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
 import { VendorObj } from 'app/shared/model/vendor-obj.model';

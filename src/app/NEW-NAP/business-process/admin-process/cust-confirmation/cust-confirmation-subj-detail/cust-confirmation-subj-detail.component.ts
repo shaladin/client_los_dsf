@@ -8,7 +8,7 @@ import { VerfQuestionAnswerCustomObj } from 'app/shared/model/verf-question-answ
 import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.model';
 import { VerfResultDObj } from 'app/shared/model/verf-result-d/verf-result-d.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { LeadObj } from 'app/shared/model/lead.model';
+import { LeadObj } from 'app/shared/model/lead-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';

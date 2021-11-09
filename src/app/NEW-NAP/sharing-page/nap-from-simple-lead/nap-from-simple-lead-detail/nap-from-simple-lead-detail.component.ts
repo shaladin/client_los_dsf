@@ -12,7 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { LeadObj } from 'app/shared/model/lead.model';
+import { LeadObj } from 'app/shared/model/lead-obj.model';
 import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
