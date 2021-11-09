@@ -6,7 +6,7 @@ import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 import { AppObj } from 'app/shared/model/app/app.model';
 import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
 import { VerfResultDObj } from 'app/shared/model/verf-result-d/verf-result-d.model';
-import { LeadObj } from 'app/shared/model/lead-obj.model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

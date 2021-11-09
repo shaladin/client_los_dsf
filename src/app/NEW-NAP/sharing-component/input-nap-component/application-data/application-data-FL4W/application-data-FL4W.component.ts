@@ -27,7 +27,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { AppObj } from 'app/shared/model/app/app.model';
-import { LeadObj } from 'app/shared/model/lead-obj.model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
 import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';

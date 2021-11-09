@@ -13,7 +13,7 @@ import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-c
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { LeadObj } from 'app/shared/model/lead-obj.model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { LeadAppObj } from 'app/shared/model/lead-app-obj.model';
 import { LeadAssetObj } from 'app/shared/model/lead-asset-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';

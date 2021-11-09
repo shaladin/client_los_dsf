@@ -34,7 +34,7 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResListKeyValueObj } from 'app/shared/model/response/generic/res-list-key-value-obj.model';
 import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/response/nap/cust-main-data/res-get-app-cust-addr-by-app-id-and-addr-type-code-obj.model';
 import { AppObj } from 'app/shared/model/app/app.model';
-import { LeadObj } from 'app/shared/model/lead-obj.model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { LeadCustObj } from 'app/shared/model/request/lead/lead-cust-obj.model';
 import { CustObj } from 'app/shared/model/cust-obj.model';
 import { environment } from 'environments/environment';

@@ -6,7 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { LeadObj } from 'app/shared/model/lead-obj.model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';

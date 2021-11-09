@@ -12,7 +12,7 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { LeadObj } from 'app/shared/model/lead-obj.model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { LeadForLookupObj } from 'app/shared/model/lead-for-lookup-obj.model';
 import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.model';
 import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
