@@ -18,4 +18,6 @@ export class ResMouMainInfoObjX {
   PlafondType: string
   CustNo: string
   MouFctrType: string
+  IsWarning: boolean;
+  WarningMsg: string;
 }
