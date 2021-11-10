@@ -9,7 +9,7 @@ import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { GenericKeyValueListObj } from 'app/shared/model/generic/generic-key-value-list-obj.model';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({

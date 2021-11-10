@@ -37,7 +37,7 @@ import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.m
 import { VendorEmpObj } from 'app/shared/model/vendor-emp.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { AppObj } from 'app/shared/model/app/app.model';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { RefProvDistrictObj } from 'app/shared/model/ref-prov-district-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 import { ResAssetValidationRuleObj } from 'app/shared/model/rule/res-asset-validation-rule-obj.model';

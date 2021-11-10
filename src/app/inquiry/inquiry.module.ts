@@ -11,7 +11,7 @@ import { UcgridfooterModule } from "@adins/ucgridfooter";
 import { InquiryRoutingComponent } from "./inquiry-routing.module";
 import { AppInquiryPagingComponent } from "./app-inquiry/app-inquiry-paging.component";
 import { PurchaseTrackingInquiryComponent } from './purchase-tracking-inquiry/purchase-tracking-inquiry.component';
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
   imports: [

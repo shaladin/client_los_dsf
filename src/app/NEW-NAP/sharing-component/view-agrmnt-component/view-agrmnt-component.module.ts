@@ -19,7 +19,7 @@ import { ViewAppCollateralSingleComponent } from './view-app-collateral-single/v
 import { ViewAppCollateralMultiComponent } from './view-app-collateral-multi/view-app-collateral-multi.component';
 // import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
 import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-commission/list-data-commission.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 
 @NgModule({

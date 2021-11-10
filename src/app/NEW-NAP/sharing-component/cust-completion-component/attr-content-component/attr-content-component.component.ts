@@ -143,7 +143,7 @@ export class AttrContentComponentComponent implements OnInit {
 
 
   SplitAttrListValue(value: string) {
-    return value.split(";");
+    return value.split(";").sort();
   }
 
   getLookUp(e, AttrCode: string) {

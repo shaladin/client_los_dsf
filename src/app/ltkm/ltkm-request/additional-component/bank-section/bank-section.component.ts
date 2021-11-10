@@ -81,7 +81,7 @@ export class LtkmBankSectionComponent implements OnInit {
             BankStmntObjs: this.fb.array([])
         }));
 
-        this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMonth }).subscribe(
+        this.http.post(URLConstant.GetListKeyValueActiveByCodeOrderBySeqNo, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMonth }).subscribe(
             (response) => {
                 this.MonthObj = response[CommonConstant.ReturnObj];
                 if (this.MonthObj.length > 0) {

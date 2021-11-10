@@ -239,6 +239,19 @@ export class PreGoLiveComponent implements OnInit {
     else {
       this.IsCheckedAll = ev;
     }
+
+    if(this.IsCheckedAll){
+      this.MainInfoForm.controls.Notes.setValidators(Validators.required);
+      this.MainInfoForm.controls.Notes.updateValueAndValidity();
+      this.MainInfoForm.controls.AdditionalInterestPaidBy.setValidators(Validators.required);
+      this.MainInfoForm.controls.AdditionalInterestPaidBy.updateValueAndValidity();
+    }
+    else if(!this.IsCheckedAll){
+      this.MainInfoForm.controls.Notes.clearValidators();
+      this.MainInfoForm.controls.Notes.updateValueAndValidity();
+      this.MainInfoForm.controls.AdditionalInterestPaidBy.clearValidators();
+      this.MainInfoForm.controls.AdditionalInterestPaidBy.updateValueAndValidity();
+    }
   }
 
   RFA() {
@@ -288,6 +301,11 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   SaveForm(flag = true) {
+    if(!this.IsCheckedAll && this.BizTemplateCode != CommonConstant.DF){
+      this.RFA();
+      return;
+    }
+
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
 
     this.listAgrmntTcObj = new Array<AgrmntTcObj>();

@@ -52,7 +52,7 @@ import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
 import { AppViewInsuranceDetailComponent } from "./app-insurance/app-insurance-detail/app-insurance-detail.component";
 import { ViewSrvyTaskComponent } from "./view-srvy-task/view-srvy-task.component";
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
     imports: [

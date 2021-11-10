@@ -39,7 +39,7 @@ import { ViewAssetCollateralDetailComponent } from "./view-asset-collateral/view
 import { SharedModule } from "app/shared/shared.module";
 import { ViewInsuranceDetailComponent } from "./view-insurance-detail/view-insurance-detail.component";
 import { ViewAgrmntTcComponent } from "./view-agrmnt-tc/view-agrmnt-tc.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
     imports: [

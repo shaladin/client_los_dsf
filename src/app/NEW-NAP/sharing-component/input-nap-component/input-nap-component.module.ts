@@ -111,7 +111,7 @@ import { SchmStepUpStepDownCummulativeFL4WComponent } from "app/NEW-NAP/FL4W/inp
 import { SchmEvenPrincipalFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
 import { SchmBalloonFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
 import { ApplicationDataOplComponent } from "./application-data/application-data-opl/application-data-opl.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",

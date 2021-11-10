@@ -30,16 +30,6 @@ export class ChangeMouInquiryComponent implements OnInit {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouInquiry.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouInquiry.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url + "/v1"
-        },
-        {
-          name: "STATUS",
-          environment: environment.FoundationR3Url + "/v1"
-        }
-      ];
   }
   getEvent(event){
     if (event.Key == "customer") {
