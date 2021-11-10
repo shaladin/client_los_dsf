@@ -392,11 +392,12 @@
                               [control]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt"
                               [submit]="enjiForm.submitted"></lib-uc-show-errors>
                           </td>
-                          <td class="text-center">
-                            <div class="form-group-row">
+                          <td class="text-left">
+                            <span style="float:left">
                               <select class="form-control" formControlName="MrMainCvgTypeCode"
                                 (change)="MainCvgTypeDetailChanged($event, i)"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrMainCvgTypeCode.invalid }">
+                                <option value="">-Select One-</option>
                                 <option *ngFor="let item of insMainCvgTypeObj" [value]="item.Key">
                                   {{item.Value}}
                                 </option>
@@ -404,7 +405,10 @@
                               <lib-uc-show-errors
                                 [control]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrMainCvgTypeCode"
                                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                            </div>
+                            </span>
+                            <span>
+                              <label class="adins-required-label">&nbsp;</label>
+                            </span>
                           </td>
                           <td></td>
                           <td *ngIf="isUsingSeatCount"></td>

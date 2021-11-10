@@ -67,7 +67,7 @@ export class ExceptionConstant {
     public static ALL_ASSET_MUST_PROCESSED_TO_SUBMIT = "All Asset Must Be Processed to Submit";
     public static NO_RULE_SETTING = "There no rule setting for ";
     public static RESULT_CANNOT_NEW_OR_FAILED = "Result can't be New or Failed";
-    public static SETTING_RULE_FIRST = "Please setting rule first.";
+    public static SETTING_RULE_FIRST = "Please setting {0} rule first.";
     public static STEP_UP_STEP_DOWN_TYPE = "Please choose Step Up Step Down Input Type.";
     public static CHOOSE_INSCO_BRANCH = "Please choose Insco Branch.";
     public static CHOOSE_PAID_BY = "Please choose Paid By.";

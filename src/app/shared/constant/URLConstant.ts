@@ -1102,8 +1102,11 @@ export class URLConstant {
 
   //APP INSURANCE
   public static ExecuteInsRateRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateRule";
+  public static ExecuteInsRateRuleV2 = environment.losUrl + "/v2" + "/AppIns/ExecuteInsRateRule";
   public static CalculateInsurance = environment.losUrl + "/v1" + "/AppIns/CalculateInsurance";
   public static GetCuCoInsLength = environment.losUrl + "/v1" + "/AppIns/GetCuCoInsLength";
+  public static ExecuteInsRateCvgRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateCvgRule";
+  
 
   //AGREEMENT DOC
   public static GetListAgrmntDocByAgrmntId = environment.losUrl + "/v1" + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
