@@ -31,6 +31,9 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-ma
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { AppDlrFncng } from 'app/shared/model/app-data/app-dlr-fncng.model';
 import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 
 @Component({
   selector: 'app-application-data-dlfn-x',
@@ -132,6 +135,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   MouOsPlafond: number;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  MaxEffDt: Date;
   isMrCustTypeCompany: boolean = false;
   MasterCustType: string = "";
   MasterIdNoType: string = "";
@@ -139,7 +143,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   isDdlIdTypeReady: boolean = false;
   isShowAppCustBankAcc: boolean = false;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -748,7 +752,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  SaveForm(): void {
+  async SaveForm(): Promise<void> {
     this.salesAppInfoObj.MouCustId = this.SalesAppInfoForm.controls.MouCustId.value;
     if (this.salesAppInfoObj.MouCustId == 0 || this.salesAppInfoObj.MouCustId == null) {
       this.toastr.errorMessage(ExceptionConstant.NO_MOU);
@@ -765,6 +769,25 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         this.toastr.errorMessage('Tenor Needs to be multiple of ' + this.payFreqObj.PayFreqVal);
         return
       }
+    }
+
+    await this.http.post(URLConstant.GetMouCustById, { Id: this.SalesAppInfoForm.controls.MouCustId.value }).toPromise().then(
+      async (result: MouCustObj) => {
+        const endDt = new Date(result.EndDt);
+        this.MaxEffDt = new Date(result.EndDt);
+        let Tenor = this.SalesAppInfoForm.controls.Tenor.value;
+        //DF selalu arrear
+        this.MaxEffDt.setMonth(endDt.getMonth() - Tenor)
+        if (this.MaxEffDt.getDate() != endDt.getDate()) { //untuk perhitungan bulan kabisat / tgl 31 ke tgl 30
+          this.MaxEffDt.setDate(0);
+        }
+
+      }
+    );
+    const businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    if (businessDt.getTime() > this.MaxEffDt.getTime()) {
+      this.toastr.warningMessage('Tenor Exceeded MOU Expired Date');
+      return;
     }
 
     if (this.SalesAppInfoForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
