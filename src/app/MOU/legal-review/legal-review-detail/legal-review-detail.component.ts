@@ -4,20 +4,20 @@ import { HttpClient } from '@angular/common/http';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { ReqListMouCustLglReviewObj } from 'app/shared/model/request/mou/req-list-mou-cust-lgl-review-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { MouCustLglReviewObj } from 'app/shared/model/mou-cust-lgl-review-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -132,28 +132,35 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   SaveData(formObj: FormGroup, isSubmit: boolean) {
-    if (this.LegalForm.valid) {
-      let addMouLglRvwUrl = environment.isCore ? URLConstant.AddRangeMouCustLglReviewV2 : URLConstant.AddRangeMouCustLglReview;
-      let mouLglRvwObj = new ReqListMouCustLglReviewObj();
-      for (let index = 0; index < this.responseRefMasterObj.length; index++) {
-        let tempMouObj = {
-          MouCustId: this.MouCustId,
-          MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
-          LglReviewResult: formObj.value.items[index].values,
-          RowVersion: formObj.value.items[index].RowVersion
-        }
-        mouLglRvwObj.MouCustLglReviewObjs.push(tempMouObj);
-      }
-      mouLglRvwObj.WfTaskListId = this.WfTaskListId;
-      mouLglRvwObj.IsSubmit = isSubmit;
-      this.http.post(addMouLglRvwUrl, mouLglRvwObj).subscribe(
-        response => {
-          this.toastr.successMessage(response['message']);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{ MrMouTypeCode : this.resultData.MrMouTypeCode});
-
-        });
-      this.mouTc.Save();
+    if (this.LegalForm.valid && isSubmit) {
+      this.inputSave(formObj,isSubmit);
     }
+    else if(!isSubmit){
+      this.inputSave(formObj,isSubmit);
+    }
+  }
+
+  inputSave(formObj: FormGroup, isSubmit: boolean){
+    let addMouLglRvwUrl = environment.isCore ? URLConstant.AddRangeMouCustLglReviewV2 : URLConstant.AddRangeMouCustLglReview;
+    let mouLglRvwObj = new ReqListMouCustLglReviewObj();
+    for (let index = 0; index < this.responseRefMasterObj.length; index++) {
+      let tempMouObj = {
+        MouCustId: this.MouCustId,
+        MrLglReviewCode: formObj.value.items[index].ReviewComponentValue,
+        LglReviewResult: formObj.value.items[index].values,
+        RowVersion: formObj.value.items[index].RowVersion
+      }
+      mouLglRvwObj.MouCustLglReviewObjs.push(tempMouObj);
+    }
+    mouLglRvwObj.WfTaskListId = this.WfTaskListId;
+    mouLglRvwObj.IsSubmit = isSubmit;
+    this.http.post(addMouLglRvwUrl, mouLglRvwObj).subscribe(
+      response => {
+        this.toastr.successMessage(response['message']);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{ MrMouTypeCode : this.resultData.MrMouTypeCode});
+
+      });
+    this.mouTc.Save();
   }
 
   claimTask() {

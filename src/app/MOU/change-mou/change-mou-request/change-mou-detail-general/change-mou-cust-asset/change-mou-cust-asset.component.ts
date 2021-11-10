@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
+import { MouCustAssetObj } from 'app/shared/model/mou-cust-asset-obj.model';
 import { ChangeMouCustAssetDetailComponent } from './change-mou-cust-asset-detail/change-mou-cust-asset-detail.component';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-change-mou-cust-asset',

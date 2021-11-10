@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppScoreGradeDsrObj } from 'app/shared/model/AppScoreGrade/AppScoreGradeDsrObj.Model';
+import { AppScoreGradeDsrObj } from 'app/shared/model/app-score-grade/app-score-grade-dsr-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({

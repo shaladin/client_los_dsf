@@ -5,8 +5,10 @@ import { saveAs } from 'file-saver';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
-import { ReqGetProdOffCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
+import { ReqDownloadRuleObj } from 'app/shared/model/request/product/req-download-rule-obj.model';
+import { ReqGetProdOffCompntObj } from 'app/shared/model/request/product/req-get-prod-compnt-obj.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'uc-prod-offering-comp',
@@ -163,11 +165,28 @@ export class UcProdOfferingCompComponent implements OnInit {
                               : offeringMrProdBehaviour
     })
   }
+
+  async getPayload(obj) {
+    let reqObj = {
+      ProdOfferingHId: this.ProdOfferingHId,
+      RefProdCompntCode: obj.ProdCompntAddCrit
+    }
+    let payload: GenericObj = new GenericObj();
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, reqObj).toPromise().then(
+      (response: ProdOfferingDObj) => {
+        payload.Code = response.CompntValue;
+      }
+    );
+    return payload;
+  }
   
-  async PopulateDDL(obj)
-  {
+  async PopulateDDL(obj) {
     var url = obj.ProdCompntDtaSrcApi;
     var payload = JSON.parse(obj.ProdCompntDtaValue);
+    if(obj.ProdCompntAddCrit != null){
+      payload = await this.getPayload(obj);
+    }
+
     await this.http.post(url, payload).toPromise().then(
       (response) => {
         this.dictOptions[obj.RefProdCompntCode] = response["ReturnObject"];

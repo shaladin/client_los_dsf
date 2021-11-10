@@ -7,12 +7,12 @@ import { CustSetData } from 'app/NEW-NAP/sharing-component/main-data-component/c
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { MouCustCompanyMgmntShrholderObj } from 'app/shared/model/MouCustCompanyMgmntShrholderObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { MouCustCompanyMgmntShrholderObj } from 'app/shared/model/mou-cust-company-mgmnt-shrholder-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { CookieService } from 'ngx-cookie';
 
 @Component({

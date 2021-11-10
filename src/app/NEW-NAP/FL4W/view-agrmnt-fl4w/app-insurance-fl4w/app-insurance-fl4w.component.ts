@@ -6,8 +6,8 @@ import { AppAssetDataDetailComponent } from 'app/NEW-NAP/sharing-component/view-
 import { AppInsuranceDetailComponent } from 'app/NEW-NAP/sharing-component/view-app-component/app-insurance/app-insurance-detail/app-insurance-detail.component';
 import { AppAssetDataDetailFl4wComponent } from '../app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
-import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/AppAssetCollateralForInsurance.Model';
+import { AppInsObjObj } from 'app/shared/model/app-ins-obj-obj.model';
+import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/app-asset-collateral-for-insurance.model';
 
 @Component({
   selector: 'app-app-insurance-fl4w',

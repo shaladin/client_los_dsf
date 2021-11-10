@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 
 @Component({
   selector: 'app-app',

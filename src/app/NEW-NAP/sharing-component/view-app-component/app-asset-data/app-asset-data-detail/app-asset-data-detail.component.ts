@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
+import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
 
 @Component({
   selector: 'app-app-asset-data-detail',

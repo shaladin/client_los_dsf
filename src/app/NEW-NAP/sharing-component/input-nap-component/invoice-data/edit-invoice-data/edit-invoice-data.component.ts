@@ -5,8 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { formatDate } from '@angular/common';
-import { ResGetAppInvoiceDlrFncngHByAppInvoiceDlrFncngHIdObj } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
-import { ReqEditAppINvoiceDlrFncngHObj } from 'app/shared/model/Request/AppInvoice/ReqAppInvoiceObj.model';
+import { ResGetAppInvoiceDlrFncngHByAppInvoiceDlrFncngHIdObj } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
+import { ReqEditAppINvoiceDlrFncngHObj } from 'app/shared/model/request/app-invoice/req-app-invoice-obj.model';
 
 @Component({
   selector: 'app-edit-invoice-data',

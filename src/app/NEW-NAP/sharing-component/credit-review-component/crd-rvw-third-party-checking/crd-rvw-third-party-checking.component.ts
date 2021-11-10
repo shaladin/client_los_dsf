@@ -5,15 +5,15 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ThirdPartyDukcapilRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyDukcapilRsltObj.Model';
-import { ThirdPartyPefindoRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyPefindoRsltObj.Model';
-import { ThirdPartyProfindRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyProfindRsltObj.Model';
-import { ThirdPartyRapindoRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyRapindoRsltObj.Model';
-import { ThirdPartyResultHObj } from 'app/shared/model/ThirdPartyData/ThirdPartyResultH.Model';
-import { ThirdPartySlikRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartySlikRsltObj.Model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { ThirdPartyDukcapilRsltObj } from 'app/shared/model/third-party-data/third-party-dukcapil-rslt-obj.model';
+import { ThirdPartyPefindoRsltObj } from 'app/shared/model/third-party-data/third-party-pefindo-rslt-obj.model';
+import { ThirdPartyProfindRsltObj } from 'app/shared/model/third-party-data/third-party-profind-rslt-obj.model';
+import { ThirdPartyRapindoRsltObj } from 'app/shared/model/third-party-data/third-party-rapindo-rslt-obj.model';
+import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
+import { ThirdPartySlikRsltObj } from 'app/shared/model/third-party-data/third-party-slik-rslt-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

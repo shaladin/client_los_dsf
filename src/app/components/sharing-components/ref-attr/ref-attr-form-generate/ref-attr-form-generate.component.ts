@@ -5,11 +5,11 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
-import { InputLookupObj } from "app/shared/model/InputLookupObj.Model";
-import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
-import { RefAttrGenerateObj } from "app/shared/model/RefAttrGenerate.Model";
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from "app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model";
+import { CriteriaObj } from "app/shared/model/criteria-obj.model";
+import { InputLookupObj } from "app/shared/model/input-lookup-obj.model";
+import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
+import { RefAttrGenerateObj } from "app/shared/model/ref-attr-generate.model";
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from "app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 
 @Component({

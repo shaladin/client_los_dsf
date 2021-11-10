@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewDeliveryOrderAssetDetailComponent } from '../view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 
 @Component({
   selector: 'app-view-delivery-order-detail',

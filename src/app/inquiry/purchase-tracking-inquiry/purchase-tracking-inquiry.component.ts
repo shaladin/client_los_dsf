@@ -1,13 +1,13 @@
 import { environment } from "environments/environment";
 import { Component, OnInit } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
-import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
+import { UcPagingObj } from "app/shared/model/uc-paging-obj.model";
 import { ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({

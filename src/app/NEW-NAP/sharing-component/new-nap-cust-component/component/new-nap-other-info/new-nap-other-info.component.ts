@@ -3,9 +3,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormGroup } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustOtherInfoObj } from 'app/shared/model/AppCustOtherInfoObj.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
+import { AppCustOtherInfoObj } from 'app/shared/model/app-cust-other-info-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { NewCustAttrContentObj } from 'app/shared/model/new-cust-attr-content-obj.model';
 import { environment } from 'environments/environment';
 import { NewNapAttrContentComponent } from './new-nap-attr-content/new-nap-attr-content.component';
 

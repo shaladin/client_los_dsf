@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 @Component({
@@ -59,7 +59,6 @@ export class LtkmApprovalPagingComponent implements OnInit {
       this.apvReqObj.Username = this.userContext.UserName;
       this.apvReqObj.RoleCode = this.userContext.RoleCode;
       this.apvReqObj.OfficeCode = this.userContext.OfficeCode;
-      this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "LtkmNo";
       this.integrationObj.rightColumnToJoin = "TransactionNo";

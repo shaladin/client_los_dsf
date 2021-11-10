@@ -5,19 +5,19 @@ import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, NgForm, V
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
-import { MouCustPersonalDataObj } from 'app/shared/model/MouCustPersonalDataObj.Model';
+import { MouCustPersonalDataObj } from 'app/shared/model/mou-cust-personal-data-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
 import { RegexService } from 'app/shared/services/regex.services';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-mou-cust-personal-main',

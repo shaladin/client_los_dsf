@@ -2,13 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { DatePipe } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

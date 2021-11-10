@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { AppAssetFinancialDataObj } from 'app/shared/model/AppAssetFinancialData,Model';
-import { OutputCalcFinancialCofObj } from 'app/shared/model/OutputCalcFinancialCof.Model';
-import { OutputCalcFinancialOplObj } from 'app/shared/model/OutputCalcFinancialOpl.Model';
-import { ResAssetFinancialRuleObj } from 'app/shared/model/ResAssetFinancialRule.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AppAssetFinancialDataObj } from 'app/shared/model/app-asset-financial-data.model';
+import { OutputCalcFinancialCofObj } from 'app/shared/model/output-calc-financial-cof.model';
+import { OutputCalcFinancialOplObj } from 'app/shared/model/output-calc-financial-opl.model';
+import { ResAssetFinancialRuleObj } from 'app/shared/model/res-asset-financial-rule.model';
 
 @Component({
   selector: 'app-fin-data-opl-detail',

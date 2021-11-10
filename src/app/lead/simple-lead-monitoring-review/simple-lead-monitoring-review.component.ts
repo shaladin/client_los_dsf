@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 
@@ -70,7 +70,7 @@ export class SimpleLeadMonitoringReviewComponent implements OnInit {
 
   cancel(ev) {
     let urlPost = environment.isCore? URLConstant.CancelUploadV2 : URLConstant.CancelUpload;
-    let tempTaskListId = environment.isCore? ev.RowObj.ExecutionId : ev.RowObj.TaskListId;
+    let tempTaskListId = environment.isCore? ev.RowObj.ProcessInstanceId : ev.RowObj.TaskListId;
     let wfObj = new WorkflowApiObj();
     wfObj.TaskListId = tempTaskListId;
     wfObj.TransactionNo = ev.RowObj.UploadNo;

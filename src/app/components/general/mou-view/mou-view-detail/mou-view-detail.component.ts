@@ -2,15 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.Model';
-import { ResMouCustObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustObj.model';
-import { ResMouCustClauseObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustClauseObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { ResMouCustObj } from 'app/shared/model/response/mou/mou-cust/res-mou-cust-obj.model';
+import { ResMouCustClauseObj } from 'app/shared/model/response/mou/mou-cust/res-mou-cust-clause-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/Response/MOU/MouCust/ResGetMouCustDlrFindByIdObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
-import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/response/mou/mou-cust/res-get-mou-cust-dlr-find-by-id-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { GenericKeyValueListObj } from 'app/shared/model/generic/generic-key-value-list-obj.model';
+import { VendorObj } from 'app/shared/model/vendor.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

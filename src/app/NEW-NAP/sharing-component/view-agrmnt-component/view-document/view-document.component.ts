@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
-import { AgrmntDocObj } from 'app/shared/model/AgrmntDocObj.Model';
+import { AgrmntSignerObj } from 'app/shared/model/agrmnt-signer-obj.model';
+import { AgrmntDocObj } from 'app/shared/model/agrmnt-doc-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({

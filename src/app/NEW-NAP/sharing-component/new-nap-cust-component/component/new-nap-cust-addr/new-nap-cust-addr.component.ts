@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { InputCustomAddrCustCmpltObj } from 'app/shared/model/InputCustomAddrCustCmpltObj.Model';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { InputCustomAddrCustCmpltObj } from 'app/shared/model/input-custom-addr-cust-cmplt-obj.model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({

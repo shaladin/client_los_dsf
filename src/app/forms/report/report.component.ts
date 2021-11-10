@@ -1,12 +1,12 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
+import { InputReportObj } from 'app/shared/model/library/input-report-obj.model';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { TranslateService } from '@ngx-translate/core';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
-import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcReportObj.model';
+import { InputSearchObj } from 'app/shared/model/input-search-obj.model';
+import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/rdlc-report-obj.model';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
