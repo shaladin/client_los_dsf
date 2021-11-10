@@ -25,7 +25,7 @@ import { CookieService } from 'ngx-cookie';
 
 @Component({
     selector: 'invoice-verif-detail-DF',
-    templateUrl: './invoice-verif-detail-df.component.html'
+    templateUrl: './invoice-verif-detail-DF.component.html'
 })
 export class InvoiceVerifDetailDFComponent implements OnInit {
     private stepper: Stepper;
