@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { Location} from "@angular/common";
-import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 @Component({
   selector: 'app-insurance-order-paging-x',
@@ -20,13 +17,13 @@ export class InsuranceOrderPagingXComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute
-    ) {
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
-        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.bizTemplateCode);
       }
-      else{
+      else {
         this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
@@ -45,10 +42,10 @@ export class InsuranceOrderPagingXComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critBizTemplate);
   }
 
-  GetCallBack(ev){ 
-    if(ev.Key == "ViewAgrmnt"){
+  GetCallBack(ev) {
+    if (ev.Key == "ViewAgrmnt") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
-    }    
+    }
   }
 
 }

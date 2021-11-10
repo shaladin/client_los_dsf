@@ -4,14 +4,14 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouCustListedCustFctrDetailComponent } from 'app/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr-detail/mou-cust-listed-cust-fctr-detail.component';
+import { MouCustListedCustFctrObj } from 'app/shared/model/mou-cust-listed-cust-fctr-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr-x',

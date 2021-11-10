@@ -7,20 +7,18 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { ResDisbInfo, ResGetAllNtfAppAmt } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CookieService } from 'ngx-cookie';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { environment } from 'environments/environment';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppInvoiceFctrObj } from 'app/shared/model/app-invoice-fctr-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResDisbInfo } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
 
 @Component({
   selector: 'invoice-verif-detail-list-of-invoice-x',

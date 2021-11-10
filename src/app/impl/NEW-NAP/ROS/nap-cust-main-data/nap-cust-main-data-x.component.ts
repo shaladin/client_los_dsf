@@ -9,13 +9,13 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CookieService } from 'ngx-cookie';
-import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
+import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
 
 @Component({
   selector: 'app-nap-cust-main-data-x',

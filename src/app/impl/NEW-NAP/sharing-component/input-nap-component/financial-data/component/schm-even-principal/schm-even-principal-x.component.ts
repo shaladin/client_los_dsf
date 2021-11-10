@@ -1,18 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { CalcEvenPrincipleObjForTrialCalc } from 'app/shared/model/AppFinData/CalcEvenPrincipleObjForTrialCalc.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { CalcEvenPrincipleObjX } from 'app/impl/shared/model/AppFinData/CalcEvenPrincipleObjX.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ResponseCalculateObjX } from 'app/impl/shared/model/AppFinData/ResponseCalculateObjX.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { CalcEvenPrincipleObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-even-principle-obj-for-trial-calc.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 
 @Component({
   selector: 'app-schm-even-principal-x',

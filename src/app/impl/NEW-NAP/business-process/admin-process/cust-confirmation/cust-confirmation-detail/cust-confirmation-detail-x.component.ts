@@ -2,26 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 import { Validators, FormBuilder } from '@angular/forms';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { formatDate } from '@angular/common';
-import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
+import { CustCnfrmObj } from 'app/shared/model/cust-cnfrm/cust-cnfrm.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
 
 @Component({
   selector: 'app-cust-confirmation-detail-x',
@@ -255,7 +254,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
 
   calculateAddInterest(){
     let diffDays = 0;
-    const diffTimes = new Date(this.CustConfirmForm.controls.GoLiveEstimated.value).getTime() - new Date(this.CustConfirmForm.controls.EffectiveDt.value).getTime();
+    const diffTimes = new Date(this.CustConfirmForm.controls.EffectiveDt.value).getTime() - new Date(this.CustConfirmForm.controls.GoLiveEstimated.value).getTime();
     if(diffTimes>0){
       diffDays = diffTimes / (1000*3600*24)
       console.log(diffDays);

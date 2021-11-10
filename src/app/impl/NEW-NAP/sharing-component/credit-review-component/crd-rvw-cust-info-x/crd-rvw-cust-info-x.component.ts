@@ -4,14 +4,14 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
-import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
-import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.model';
-import { ReqGetCrdRvwExposureHObj } from 'app/shared/model/CreditReview/ReqGetCrdRvwExposureHObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { CrdRvwExposureDObj } from 'app/shared/model/credit-review/crd-rvw-exposure-d-obj.model';
+import { ReqGetCrdRvwExposureHObj } from 'app/shared/model/credit-review/req-get-crd-rvw-exposure-h-obj.model';
+import { CrdRvwExposureHObj } from 'app/shared/model/credit-review/crd-rvw-exposure-h-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { NegCustObj } from 'app/shared/model/credit-review/neg-cust-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-cust-info-x',

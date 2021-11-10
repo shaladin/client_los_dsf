@@ -4,42 +4,42 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
-import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
-import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { GenerateAppAttrContentObj } from 'app/shared/model/AppAttrContent/GenerateAppAttrContentObj.Model';
-import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import {ReqRefMasterByTypeCodeAndMappingCodeObj} from '../../../../../../shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import {DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { UcDropdownListObj, UcDropdownListConstant, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -244,12 +244,12 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     this.initMailingAddress();
 
     const user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    await this.http.post(URLConstant.GetAppCustByAppId, {Id: this.AppId}).toPromise().then(
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
       async (response: AppCustObj) => {
         this.CustNo = response.CustNo;
         await this.GetListAppCustBankAcc(response.AppCustId);
 
-        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, { CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL }).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
@@ -265,8 +265,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
 
 
   checkIdNoType() {
-    if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit && this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) 
-    {
+    if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit && this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
       this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
     }
@@ -397,7 +396,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   }
 
   GetCrossInfoData() {
-    this.http.post(URLConstant.GetListAppCross, {Id: this.AppId, RowVersion: ''}).subscribe(
+    this.http.post(URLConstant.GetListAppCross, { Id: this.AppId, RowVersion: '' }).subscribe(
       (response) => {
         this.resultCrossApp = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.resultCrossApp.length; i++) {
@@ -420,7 +419,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   async getAppModelInfo() {
     await this.getAppXData();
 
-    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).toPromise().then(
+    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, { Id: this.AppId }).toPromise().then(
       async (response: AppObj) => {
         this.resultResponse = response;
 
@@ -640,7 +639,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   }
 
   getPayFregData() {
-    this.http.post(URLConstant.GetListActiveRefPayFreq, {RowVersion: ''}).subscribe(
+    this.http.post(URLConstant.GetListActiveRefPayFreq, { RowVersion: '' }).subscribe(
       (response) => {
         const objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems['Pay_Freq'] = objTemp;
@@ -699,7 +698,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       MrSlikSecEcoCode: ev.RefSectorEconomySlikCode
     });
   }
-  
+
   setLookupCommodityData(ev) {
     this.NapAppModelForm.patchValue({
       CommodityCode: ev.MasterCode
@@ -740,17 +739,17 @@ export class ApplicationDataFL4WXComponent implements OnInit {
         });
       });
 
-      // Lookup Commodity
-      this.inputLookupCommodityObj = new InputLookupObj();
-      this.inputLookupCommodityObj.urlJson = './assets/impl/uclookup/lookupCommodity.json';
-      this.inputLookupCommodityObj.pagingJson = './assets/impl/uclookup/lookupCommodity.json';
-      this.inputLookupCommodityObj.genericJson = './assets/impl/uclookup/lookupCommodity.json';
+    // Lookup Commodity
+    this.inputLookupCommodityObj = new InputLookupObj();
+    this.inputLookupCommodityObj.urlJson = './assets/impl/uclookup/lookupCommodity.json';
+    this.inputLookupCommodityObj.pagingJson = './assets/impl/uclookup/lookupCommodity.json';
+    this.inputLookupCommodityObj.genericJson = './assets/impl/uclookup/lookupCommodity.json';
 
-      if (this.NapAppModelForm.controls.CommodityCode.value != '' && this.NapAppModelForm.controls.CommodityCode.value != null) {
-        // this.inputLookupCommodityObj.idSelect = this.NapAppModelForm.controls.CommodityCode.value;
-        this.inputLookupCommodityObj.nameSelect = this.tempCommodityName;
-        this.inputLookupCommodityObj.jsonSelect = { Descr: this.tempCommodityName };
-      }
+    if (this.NapAppModelForm.controls.CommodityCode.value != '' && this.NapAppModelForm.controls.CommodityCode.value != null) {
+      // this.inputLookupCommodityObj.idSelect = this.NapAppModelForm.controls.CommodityCode.value;
+      this.inputLookupCommodityObj.nameSelect = this.tempCommodityName;
+      this.inputLookupCommodityObj.jsonSelect = { Descr: this.tempCommodityName };
+    }
 
     this.isInputLookupObj = true;
   }

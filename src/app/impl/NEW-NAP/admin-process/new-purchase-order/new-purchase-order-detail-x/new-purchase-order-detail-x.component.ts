@@ -6,25 +6,22 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { FormBuilder } from '@angular/forms';
-import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
-import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ToastrService } from 'ngx-toastr';
-import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
-import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
 import { environment } from 'environments/environment';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { PoEntryXComponent } from './po-entry-x/po-entry-x.component';
+import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 
 @Component({
   selector: 'app-new-purchase-order-detail-x',

@@ -4,21 +4,21 @@ import { HttpClient } from '@angular/common/http';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 import { environment } from 'environments/environment';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { MouCustLglReviewObj } from 'app/shared/model/mou-cust-lgl-review-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { ReqListMouCustLglReviewObj } from 'app/shared/model/request/mou/req-list-mou-cust-lgl-review-obj.model';
 
 @Component({
   selector: 'app-legal-review-detail-x',

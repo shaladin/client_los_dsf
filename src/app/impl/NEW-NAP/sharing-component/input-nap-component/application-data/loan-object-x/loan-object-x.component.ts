@@ -1,22 +1,22 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppLoanPurposeObj } from 'app/shared/model/AppLoanPurpose.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { AppLoanPurposeObj } from 'app/shared/model/app-loan-purpose.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-loan-object-x',

@@ -1,10 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 
 @Component({
   selector: 'app-collateral-data-cfna-paging-x',

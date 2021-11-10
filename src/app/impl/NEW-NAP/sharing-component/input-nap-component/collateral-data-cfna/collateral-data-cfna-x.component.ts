@@ -6,7 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { map, mergeMap } from 'rxjs/operators';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 
 @Component({
   selector: 'app-collateral-data-cfna-x',

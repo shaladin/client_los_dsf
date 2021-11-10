@@ -3,12 +3,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
-import { CrdRvwCustInfoIncomeAndExpenseDetailsObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoIncomeAndExpenseDetailsObj.Model';
-import { ScoringResultDObj } from 'app/shared/model/ScoringResultDObj.Model';
-import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { CrdRvwAppObjX } from 'app/impl/shared/model/CreditReview/CrdRvwAppObjX.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
+import { CrdRvwCustInfoIncomeAndExpenseDetailsObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-income-and-expense-details-obj.model';
+import { ScoringResultHObj } from 'app/shared/model/scoring-result-h-obj.model';
+import { ScoringResultDObj } from 'app/shared/model/scoring-result-d-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-app-info-x',

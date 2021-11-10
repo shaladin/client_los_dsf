@@ -4,9 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { formatDate } from '@angular/common';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
-import { PreGoLiveMainObj } from 'app/shared/model/PreGoLiveMainObj.Model';
 import { PreGoLiveObjX } from 'app/impl/shared/model/PreGoLiveObjX.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
@@ -14,28 +11,29 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
-import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
+import { PreGoLiveMainObj } from 'app/shared/model/pre-go-live-main-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RfaObj } from 'app/shared/model/approval/rfa-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/request/nap/pre-go-live/req-get-rfa-log-by-trx-no-and-apv-category-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
+import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-x',
@@ -447,7 +445,7 @@ export class PreGoLiveXComponent implements OnInit {
 
   calculateAddInterest() {
     let diffDays = 0;
-    const diffTimes = new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime() - new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime();
+    const diffTimes = new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime() - new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime();
     if (diffTimes > 0) {
       diffDays = diffTimes / (1000 * 3600 * 24)
       console.log(diffDays);
