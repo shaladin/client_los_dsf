@@ -572,6 +572,7 @@ export class URLConstant {
   public static GetListVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/v1" + "/Vendor/GetListVendorByCategoryCodeAndOfficeCode";
   public static GetListActiveVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/v1" + "/Vendor/GetListActiveVendorByCategoryCodeAndOfficeCode";
   public static GetVendorForLookup = environment.FoundationR3Url + "/v1" + "/Vendor/GetVendorForLookup";
+  public static GetVendorParentByVendorCode = environment.FoundationR3Url + "/v1" + "/Vendor/GetParentVendorByChildVendorCode"
 
   // VendorEmp
   public static GetListVendorBankByVendorEmpNo = "/VendorEmp/GetListVendorBankByVendorEmpNo";

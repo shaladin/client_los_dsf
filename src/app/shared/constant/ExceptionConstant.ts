@@ -81,7 +81,7 @@ export class ExceptionConstant {
     public static DELETE_CONFIRMATION = 'Are you sure to delete this record?';
     public static NO_LEAD_DATA_AVAILABLE = 'No Lead Available to Cancel';
     public static CANNOT_INSURE_SAME_PERSON = "Cannot insure same person";
-
+    public static SETTING_COMPONENT_RULE_FIRST = "Please setting rule {0}, component {1} first.";
 
     public static INSERT_ESTIMATION_EFFECTIVE_DATE = "Insert Estimation Effective Date";
     public static GRACE_PERIOD_MUST_SET = "Grace Period must be set";

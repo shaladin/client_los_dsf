@@ -165,8 +165,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   textTitle: string;
   ManufYearDiff : number;
   RuleRateCvgName : string;
-  isRuleComplete: boolean = true;
-
+  RuleNotComplete: {AddCvg: string, Value: boolean};
+  LoadingFeeCountType: string
+  InscoHOCode: string;
+  
   AppInsForm = this.fb.group({
     // PaidAmtByCust: [0]
   });
@@ -806,11 +808,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       }
     }
 
-    if(!this.isRuleComplete){
-      this.toastr.warningMessage(String.Format(ExceptionConstant.SETTING_RULE_FIRST, this.RuleRateCvgName));
-      return;
-    }
-
     if (!this.InsuranceDataForm.controls["AppInsMainCvgs"].valid) return;
     let reqObj = new RequestCalcInsObj();
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
@@ -826,6 +823,11 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
       for (let j = 0; j < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"].length; j++) {
         if (this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].Value.value == true) {
+          if(!this.RuleNotComplete.Value && this.RuleNotComplete.AddCvg == this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].MrAddCvgTypeCode.value){
+            this.toastr.warningMessage(String.Format(ExceptionConstant.SETTING_COMPONENT_RULE_FIRST, this.RuleRateCvgName, this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].AddCvgTypeName.value));
+            return;
+          }
+
           let addCoverage = new CalcInsAddCvgObj();
 
           addCoverage.BaseCalculation = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].BaseCalculation.value;
@@ -862,6 +864,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           let isCapitalized = this.isYearlyCapitalized && currReq ? currReq['controls']['IsCapitalized'].value : false;
           if (mrInsPaidByCode == CommonConstant.InsPaidByAtCost) {
             custDiscAmt += resInsCovItem.MainPremiAmt + resInsCovItem.AdditionalPremiAmt;
+          }
+          else if (resInsCovItem.YearNo == 1 && currReq['controls']['IsCapitalized'].value){
+            let totalFee = this.InsuranceDataForm.controls.CustAdminFeeAmt.value + this.InsuranceDataForm.controls.CustStampDutyFeeAmt.value
+            capitalised += totalFee + resInsCovItem.MainPremiAmt + resInsCovItem.AdditionalPremiAmt;
           }
           else if (isCapitalized) {
             capitalised += resInsCovItem.MainPremiAmt + resInsCovItem.AdditionalPremiAmt;
@@ -970,6 +976,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       return;
     }
     let reqObj = new InsuranceDataInsRateRuleObj();
+    reqObj.InscoHoCode = this.InscoHOCode;
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.AssetCategory = this.appCollateralObj.AssetCategoryCode;
     reqObj.AssetCondition = this.appCollateralObj.MrCollateralConditionCode;
@@ -1028,11 +1035,37 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   async GenerateMainAndAddCvgTable() {
 
     (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray) = this.fb.array([]);
+    this.GenerateAddCvgForm();
+  }
 
-    let loadingFeeCountType: string = await this.GetLoadingFeeCountType();
-    switch (loadingFeeCountType) {
+  GenerateAddCvgForm(){
+    let yearCount = this.InsuranceDataForm.controls.InsLength.value;
+    let noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
+    let month: number = 12;
+    for (let i = 0; i < noOfYear; i++) {
+      let obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0 };
+
+      if (yearCount - 12 >= 0) {
+        month = 12;
+      } else {
+        month = yearCount;
+      }
+
+      obj.Tenor = month;
+      obj.SumInsuredPrcnt = this.ruleObj.SumInsuredPercentage[i];
+      let index = this.ruleObj.MainCoverageType.findIndex(x => x == this.InsuranceDataForm.controls.InsMainCvgType.value);
+      obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
+      obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
+      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj));
+      yearCount -= 12;
+    }
+  }
+
+  async GetManuDiffYear(index: number) {
+    this.LoadingFeeCountType = await this.GetLoadingFeeCountType();
+    switch (this.LoadingFeeCountType) {
       case CommonConstant.LoadingFeeCountType_CountingYear:
-        this.CountTypeCountingYear();
+        this.CountTypeCountingYear(index);
         break;
       case CommonConstant.LoadingFeeCountType_FirstYear:
         this.CountTypeFirstYear();
@@ -1053,79 +1086,19 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     return loadingFeeCountType;
   }
 
-  CountTypeCountingYear(){
+  CountTypeCountingYear(index: number){
     this.ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
-    let yearCount = this.InsuranceDataForm.controls.InsLength.value;
-    let noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
-    let month: number = 12;
-    for (let i = 0; i < noOfYear; i++) {
-      let obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0 };
-
-      if (yearCount - 12 >= 0) {
-        month = 12;
-      } else {
-        month = yearCount;
-      }
-
-      obj.Tenor = month;
-      obj.SumInsuredPrcnt = this.ruleObj.SumInsuredPercentage[i];
-      let index = this.ruleObj.MainCoverageType.findIndex(x => x == this.InsuranceDataForm.controls.InsMainCvgType.value);
-      obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
-      obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
-      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj, this.ManufYearDiff));
-      this.ManufYearDiff++;
-      yearCount -= 12;
-    }
+    this.ManufYearDiff += index;
   }
 
   CountTypeFirstYear(){
     this.ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
-    let yearCount = this.InsuranceDataForm.controls.InsLength.value;
-    let noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
-    let month: number = 12;
-    for (let i = 0; i < noOfYear; i++) {
-      let obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0 };
-
-      if (yearCount - 12 >= 0) {
-        month = 12;
-      } else {
-        month = yearCount;
-      }
-
-      obj.Tenor = month;
-      obj.SumInsuredPrcnt = this.ruleObj.SumInsuredPercentage[i];
-      let index = this.ruleObj.MainCoverageType.findIndex(x => x == this.InsuranceDataForm.controls.InsMainCvgType.value);
-      obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
-      obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
-      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj, this.ManufYearDiff));
-      yearCount -= 12;
-    }
-
   }
 
   CountTypeLastYear(){
     this.ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
-    let yearCount = this.InsuranceDataForm.controls.InsLength.value;
     let noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
     this.ManufYearDiff += (noOfYear - 1);
-    let month: number = 12;
-    for (let i = 0; i < noOfYear; i++) {
-      let obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0 };
-
-      if (yearCount - 12 >= 0) {
-        month = 12;
-      } else {
-        month = yearCount;
-      }
-
-      obj.Tenor = month;
-      obj.SumInsuredPrcnt = this.ruleObj.SumInsuredPercentage[i];
-      let index = this.ruleObj.MainCoverageType.findIndex(x => x == this.InsuranceDataForm.controls.InsMainCvgType.value);
-      obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
-      obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
-      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj, this.ManufYearDiff));
-      yearCount -= 12;
-    }
   }
 
   async GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj: Array<AppInsMainCvgObj>) {
@@ -1137,7 +1110,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
     (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray) = this.fb.array([]);
     for (let i = 0; i < appInsMainCvgObj.length; i++) {
-      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroupFromDB(appInsMainCvgObj[i], this.ManufYearDiff));
+      (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(await this.addGroupFromDB(appInsMainCvgObj[i], this.ManufYearDiff));
       if (loadingFeeCountType == CommonConstant.LoadingFeeCountType_CountingYear) this.ManufYearDiff++;
     }
   }
@@ -1233,7 +1206,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     });
   }
 
-  addGroup(i, obj, ManufYearDiff) {
+  addGroup(i, obj) {
     let currYear = i + 1
     let currPaidByBhv = this.paidByBhv.find(i => i.PaidByYearNo == currYear);
 
@@ -1340,7 +1313,16 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     if (this.DictInsCustRate[MrAddCvgTypeCode] == null || this.DictInsCustRate[MrAddCvgTypeCode] == undefined || this.DictInsCustRate[MrAddCvgTypeCode] == 0) this.DictInsCustRate[MrAddCvgTypeCode] = rate;
   }
 
-  addGroupFromDB(insMainCvg: AppInsMainCvgObj, ManufYearDiff) {
+  async addGroupFromDB(insMainCvg: AppInsMainCvgObj, ManufYearDiff) {
+    let response : ResInsuranceDataInsRateCvgRuleObj;
+    let reqObj = new InsuranceDataInsRateCvgRuleObj();
+    reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
+    reqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
+    reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
+    reqObj.MainCoverageType = insMainCvg.MrMainCvgTypeCode;
+    reqObj.InsAssetCategory = this.ruleObj.InsAssetCategory;
+    response = await this.ExecuteInstRateCvgRule(reqObj);
+
     let currPaidByBhv = this.paidByBhv.find(i => i.PaidByYearNo == insMainCvg.YearNo);
     let group = this.fb.group({
       MrInsPaidByCode: insMainCvg.MrInsPaidByCode,
@@ -1368,13 +1350,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         check = insMainCvg.AppInsAddCvgObjs.find(x => x.MrAddCvgTypeCode == o.Key);
       }
       let defaultSumInsuredAmt = 0;
-      let index = this.ruleObj.AdditionalCoverageType.findIndex(x => x == o.Key);
-      let premiumType = this.ruleObj.PremiumType[index];
+      let index = response.InsRateAddCvgRuleObjs.findIndex(x => x.AdditionalCoverageType == o.Key);
+      let premiumType = response.InsRateAddCvgRuleObjs[index].PremiumType;
       let custAddPremiRate = 0;
       let inscoAddPremiRate = 0;
 
       if (premiumType == CommonConstant.PremiumTypeAmt) {
-        this.AddDictInsCustRate(o.Key, this.ruleObj.PremiToCust[index]);
+        this.AddDictInsCustRate(o.Key, response.InsRateAddCvgRuleObjs[index].PremiToCust);
         if(this.groupAddCvrSumInsuredDropDown[o.Key] && check == undefined)
         {
           defaultSumInsuredAmt = this.groupAddCvrSumInsuredDropDown[o.Key][0].SumInsuredAmt;
@@ -1383,15 +1365,15 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
         else
         {
-          custAddPremiRate = check == undefined ? this.ruleObj.PremiToCust[index] : check.CustAddPremiAmt;
-          inscoAddPremiRate = check == undefined ? this.ruleObj.PremiToInsco[index] : check.InscoAddPremiAmt;
+          custAddPremiRate = check == undefined ? response.InsRateAddCvgRuleObjs[index].PremiToCust : check.CustAddPremiAmt;
+          inscoAddPremiRate = check == undefined ? response.InsRateAddCvgRuleObjs[index].PremiToInsco : check.InscoAddPremiAmt;
         }
       }
 
       if (premiumType == CommonConstant.PremiumTypePrcnt) {
-        this.AddDictInsCustRate(o.Key, this.ruleObj.RateToCust[index]);
-        custAddPremiRate = check == undefined ? this.ruleObj.RateToCust[index] : check.CustAddPremiRate;
-        inscoAddPremiRate = check == undefined ? this.ruleObj.RateToInsco[index] : check.InscoAddPremiRate;
+        this.AddDictInsCustRate(o.Key, response.InsRateAddCvgRuleObjs[index].RateToCust);
+        custAddPremiRate = check == undefined ? response.InsRateAddCvgRuleObjs[index].RateToCust : check.CustAddPremiRate;
+        inscoAddPremiRate = check == undefined ? response.InsRateAddCvgRuleObjs[index].RateToInsco : check.InscoAddPremiRate;
       }
 
       // if (o.Key == CommonConstant.MrAddCvgTypeCodeTpl) {
@@ -1412,7 +1394,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             PremiumType: premiumType,
             CustAddPremiRate: custAddPremiRate,
             CustAddPremiAmt: check == undefined ? 0 : check.CustAddPremiAmt,
-            BaseCalculation: this.ruleObj.BaseCalc[index],
+            BaseCalculation: response.InsRateAddCvgRuleObjs[index].BaseCalc,
             InscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
             SeatCount: 0,
@@ -1443,7 +1425,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           PremiumType: premiumType,
           CustAddPremiRate: custAddPremiRate,
           CustAddPremiAmt: check == undefined ? 0 : check.CustAddPremiAmt,
-          BaseCalculation: this.ruleObj.BaseCalc[index],
+          BaseCalculation: response.InsRateAddCvgRuleObjs[index].BaseCalc,
           InscoAddPremiRate: inscoAddPremiRate,
           InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
           SeatCount: seatCount
@@ -1469,7 +1451,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       let AppInsAddCvgs = this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][index]["controls"].AppInsAddCvgs["controls"];
       for(var i = 0; i < AppInsAddCvgs.length; i++){
         if(!response.InsRateAddCvgRuleObjs.find(x => x.AdditionalCoverageType == AppInsAddCvgs[i].controls.MrAddCvgTypeCode.value)){
-          this.isRuleComplete = false;
+          this.RuleNotComplete = {
+            AddCvg : AppInsAddCvgs[i].controls.MrAddCvgTypeCode.value, 
+            Value : false
+          };
           break;
         }
       }
@@ -1478,7 +1463,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   async ExecuteInstRateCvgRule(ReqObj){
-    this.isRuleComplete = true;
+    this.RuleNotComplete = {
+      AddCvg : "", 
+      Value : true
+    };
     let resInsuranceDataInsRateCvgRuleObj : ResInsuranceDataInsRateCvgRuleObj;
     await this.http.post(URLConstant.ExecuteInsRateCvgRule, ReqObj).toPromise().then(
       async (response : ResInsuranceDataInsRateCvgRuleObj) => {
@@ -1493,22 +1481,25 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             this.groupAddCvrSumInsuredDropDown[currAddCvrItem.AdditionalCoverageType].push(currAddCvrItem);
           }
         });
+
       });
       return resInsuranceDataInsRateCvgRuleObj;
   }
 
   async PatchInsRateCvg(index: number, MainCvg: any, AddCvg: Array<any>) {
     var AppInsMainCvg = this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][index]
+    await this.GetManuDiffYear(index);
 
     AppInsMainCvg.patchValue({
       CustMainPremiRate: MainCvg.MainRateToCust,
       InscoMainPremiRate: MainCvg.MainRateToInsco,
     });
-  
+    
+    let isLoadingSet = false;
+
     AddCvg.forEach((o) => {
       let defaultSumInsuredAmt = 0;
-      let index = AddCvg.findIndex(x => x.AdditionalCoverageType == o.AdditionalCoverageType);
-      let premiumType = AddCvg[index].PremiumType;
+      let premiumType = o.PremiumType;
       let custAddPremiRate = 0;
       let inscoAddPremiRate = 0;
 
@@ -1518,14 +1509,14 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           custAddPremiRate = this.groupAddCvrSumInsuredDropDown[o.AdditionalCoverageType][0].PremiToCust;
           inscoAddPremiRate = this.groupAddCvrSumInsuredDropDown[o.AdditionalCoverageType][0].PremiToInsco;
         } else {
-          custAddPremiRate = AddCvg[index].PremiToCust;
-          inscoAddPremiRate = AddCvg[index].PremiToInsco;
+          custAddPremiRate = o.PremiToCust;
+          inscoAddPremiRate = o.PremiToInsco;
         }
       }
 
       if (premiumType == CommonConstant.PremiumTypePrcnt) {
-        custAddPremiRate = AddCvg[index].RateToCust;
-        inscoAddPremiRate = AddCvg[index].RateToInsco;
+        custAddPremiRate = o.RateToCust;
+        inscoAddPremiRate = o.RateToInsco;
       }
 
       // if (o.Key == CommonConstant.MrAddCvgTypeCodeTpl) {
@@ -1538,53 +1529,50 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       var AppInsAddCvgs = AppInsMainCvg.controls.AppInsAddCvgs.controls;
       let AppInsAddCvg = AppInsAddCvgs.find(x => x["controls"].MrAddCvgTypeCode.value == o.AdditionalCoverageType);
       if (o.AdditionalCoverageType.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
-        for (let i = 0; i < AddCvg.length; i++) {
-          if (AddCvg[i].AdditionalCoverageType == CommonConstant.MrAddCvgTypeCodeLoading) {
-            let assetAgeMin = AddCvg[i].AssetAgeFrom ? parseInt(AddCvg[i].AssetAgeFrom, 10) : 0;
-            let assetAgeMax = AddCvg[i].AssetAgeTo ? parseInt(AddCvg[i].AssetAgeTo, 10) : 0;
-            if (this.ManufYearDiff >= assetAgeMin && this.ManufYearDiff <= assetAgeMax) {
-              AppInsAddCvg.patchValue({
-                Value: true,
-                SumInsuredAmt: defaultSumInsuredAmt,
-                PremiumType: premiumType,
-                CustAddPremiRate: custAddPremiRate,
-                CustAddPremiAmt: 0,
-                BaseCalculation: AddCvg[index].BaseCalc,
-                InscoAddPremiRate: inscoAddPremiRate,
-                InscoAddPremiAmt: 0,
-                SeatCount: 0
-              });
-            }else{
-              AppInsAddCvg.patchValue({
-                Value: false,
-                SumInsuredAmt: 0,
-                PremiumType: "AMT",
-                CustAddPremiRate: 0,
-                CustAddPremiAmt: 0,
-                BaseCalculation: "",
-                InscoAddPremiRate: 0,
-                InscoAddPremiAmt: 0,
-                SeatCount: 0
-              });
-            }
-            break;
+        if(!isLoadingSet){
+          let assetAgeMin = o.AssetAgeFrom ? parseInt(o.AssetAgeFrom, 10) : 0;
+          let assetAgeMax = o.AssetAgeTo ? parseInt(o.AssetAgeTo, 10) : 0;
+          if (this.ManufYearDiff >= assetAgeMin && this.ManufYearDiff <= assetAgeMax) {
+            AppInsAddCvg.patchValue({
+              Value: true,
+              SumInsuredAmt: o.SumInsuredAmt,
+              PremiumType: premiumType,
+              CustAddPremiRate: custAddPremiRate,
+              CustAddPremiAmt: 0,
+              BaseCalculation: o.BaseCalc,
+              InscoAddPremiRate: inscoAddPremiRate,
+              InscoAddPremiAmt: 0,
+              SeatCount: 0
+            });
+            isLoadingSet = true;
+          } else {
+            AppInsAddCvg.patchValue({
+              Value: false,
+              SumInsuredAmt: 0,
+              PremiumType: "AMT",
+              CustAddPremiRate: 0,
+              CustAddPremiAmt: 0,
+              BaseCalculation: "",
+              InscoAddPremiRate: 0,
+              InscoAddPremiAmt: 0,
+              SeatCount: 0
+            });
           }
         }
       }
       else {
         AppInsAddCvg.patchValue({
-          SumInsuredAmt: defaultSumInsuredAmt,
+          SumInsuredAmt: o.SumInsuredAmt,
           PremiumType: premiumType,
           CustAddPremiRate: custAddPremiRate,
           CustAddPremiAmt: 0,
-          BaseCalculation: AddCvg[index].BaseCalc,
+          BaseCalculation: o.BaseCalc,
           InscoAddPremiRate: inscoAddPremiRate,
           InscoAddPremiAmt: 0,
           SeatCount: 0
         });
       }
     });
-
     this.InsuranceDataForm.updateValueAndValidity();
   }
 
@@ -1675,7 +1663,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
       for(var k = 0; k < AppInsAddCvgs.length; k++){
         if(!response.InsRateAddCvgRuleObjs.find(x => x.AdditionalCoverageType == AppInsAddCvgs[k].controls.MrAddCvgTypeCode.value)){
-          this.isRuleComplete = false;
+          this.RuleNotComplete = {
+            AddCvg : AppInsAddCvgs[i].controls.MrAddCvgTypeCode.value, 
+            Value : false
+          };
           break;
         }
       }
@@ -1709,8 +1700,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           });
         }
       }
-      
-      this.ManufYearDiff++;
     }
     this.cekSeatCount();
     this.isCalculate = false;
@@ -1906,6 +1895,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.InsuranceDataForm.patchValue({
         InscoBranchName: this.inscoBranchObj.find(x => x.Key == event.target.value).Value
       });
+
+      this.http.post(URLConstant.GetVendorParentByVendorCode, {Code : event.target.value}).subscribe(
+        (response) => {
+          this.InscoHOCode = response["VendorCode"];
+        }
+      );
     } else {
       this.InsuranceDataForm.patchValue({
         InscoBranchName: ""
