@@ -167,7 +167,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   RuleRateCvgName : string;
   RuleNotComplete: {AddCvg: string, Value: boolean};
   LoadingFeeCountType: string
-  InscoHOCode: string;
+  InscoHoCode: string;
   
   AppInsForm = this.fb.group({
     // PaidAmtByCust: [0]
@@ -976,7 +976,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       return;
     }
     let reqObj = new InsuranceDataInsRateRuleObj();
-    reqObj.InscoHoCode = this.InscoHOCode;
+    reqObj.InscoHoCode = this.InscoHoCode;
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.AssetCategory = this.appCollateralObj.AssetCategoryCode;
     reqObj.AssetCondition = this.appCollateralObj.MrCollateralConditionCode;
@@ -1316,6 +1316,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   async addGroupFromDB(insMainCvg: AppInsMainCvgObj, ManufYearDiff) {
     let response : ResInsuranceDataInsRateCvgRuleObj;
     let reqObj = new InsuranceDataInsRateCvgRuleObj();
+    reqObj.InscoHoCode = this.InscoHoCode;
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
@@ -1439,6 +1440,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   async MainCvgTypeDetailChanged(event: any, index: number) {    
     if(event.target.value != ''){
       let reqObj = new InsuranceDataInsRateCvgRuleObj();
+      reqObj.InscoHoCode = this.InscoHoCode;
       reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
       reqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
       reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
@@ -1643,6 +1645,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     let MainCoverageType = this.InsuranceDataForm.controls.InsMainCvgType.value;
     
     let reqObj = new InsuranceDataInsRateCvgRuleObj();
+    reqObj.InscoHoCode = this.InscoHoCode;
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
@@ -1898,7 +1901,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
       this.http.post(URLConstant.GetVendorParentByVendorCode, {Code : event.target.value}).subscribe(
         (response) => {
-          this.InscoHOCode = response["VendorCode"];
+          this.InscoHoCode = response["VendorCode"];
         }
       );
     } else {
