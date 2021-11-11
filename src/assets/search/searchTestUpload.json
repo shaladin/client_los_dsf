@@ -32,7 +32,8 @@
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "TrxTypeCode",
-            "criteriaPropValue": "UPLOAD"
+            "criteriaPropValue": "UPLOAD",
+            "environment": "FOU"
         }
     ],
   "querystring": {

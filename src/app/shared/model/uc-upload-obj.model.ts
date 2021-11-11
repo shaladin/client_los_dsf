@@ -35,7 +35,7 @@ export class UcUploadObj {
         this.formatsAllowed = "";
         this.UploadTypeCode = "";
         this.ErrorDownloadUrl = "";
-        this.TemplateUrl = "";
+        this.TemplateUrl = URLConstant.DownloadTemplate;
         this.TemplateName = "";
         this.FileErrorName = "";
         this.environmentUrl = environment.isCore ? environment.losUrl + "/v2" : environment.losUrl + "/v1";
