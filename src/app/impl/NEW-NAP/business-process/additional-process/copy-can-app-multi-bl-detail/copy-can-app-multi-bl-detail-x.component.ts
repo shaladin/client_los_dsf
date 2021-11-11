@@ -9,15 +9,15 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
-import { ReqAddNapFromCopyObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { ReqAddNapFromCopyObj } from 'app/shared/model/request/nap/new-application/req-add-nap-obj.model';
 
 @Component({
   selector: 'app-copy-can-app-multi-bl-detail-x',

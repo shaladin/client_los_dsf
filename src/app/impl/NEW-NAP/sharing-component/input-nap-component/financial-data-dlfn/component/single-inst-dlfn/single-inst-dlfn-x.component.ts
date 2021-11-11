@@ -2,15 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
-import { ResGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CalcSingleInstObj } from 'app/shared/model/app-fin-data/calc-single-inst-obj.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
+import { ResGeneralSettingObj } from 'app/shared/model/response/general-setting/res-general-setting-obj.model';
 
 @Component({
   selector: 'app-single-inst-dlfn-x',
@@ -39,7 +39,7 @@ export class SingleInstDlfnXComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.http.post(URLConstantX.GetMouDfOsPlafondByAppIdX, {Id: this.AppId}).subscribe(
+    this.http.post(URLConstantX.GetMouDfOsPlafondByAppIdX, { Id: this.AppId }).subscribe(
       (response) => {
         this.MouOsPlafond = response['Result'];
       }
@@ -58,13 +58,11 @@ export class SingleInstDlfnXComponent implements OnInit {
           this.ParentForm.patchValue({
             InterestType: this.InterestTypeOptions[0].Key
           });
-          if(this.InterestTypeOptions[0].Key == CommonConstant.InputTypePrcnt)
-          {
+          if (this.InterestTypeOptions[0].Key == CommonConstant.InputTypePrcnt) {
             this.ParentForm.get("TotalInterestAmt").disable();
             this.ParentForm.get("EffectiveRatePrcnt").enable();
           }
-          else if(this.InterestTypeOptions[0].Key == CommonConstant.InputTypeAmt)
-          {
+          else if (this.InterestTypeOptions[0].Key == CommonConstant.InputTypeAmt) {
             this.ParentForm.get("TotalInterestAmt").enable();
             this.ParentForm.get("EffectiveRatePrcnt").disable();
           }
@@ -174,13 +172,11 @@ export class SingleInstDlfnXComponent implements OnInit {
 
   onChangeInterestType(event: any) {
     this.SetNeedReCalculate(true);
-    if(event.target.value == CommonConstant.InputTypePrcnt)
-    {
+    if (event.target.value == CommonConstant.InputTypePrcnt) {
       this.ParentForm.get("TotalInterestAmt").disable();
       this.ParentForm.get("EffectiveRatePrcnt").enable();
     }
-    else if(event.target.value == CommonConstant.InputTypeAmt)
-    {
+    else if (event.target.value == CommonConstant.InputTypeAmt) {
       this.ParentForm.get("TotalInterestAmt").enable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
     }
@@ -263,8 +259,8 @@ export class SingleInstDlfnXComponent implements OnInit {
 
                 var grossyieldObj = {
                   InstAmt: this.ParentForm.get("InstAmt").value,
-                  TotalDisbAmt : this.ParentForm.get("TotalDisbAmt").value,
-                  AppFee : this.ParentForm.get("AppFee").value
+                  TotalDisbAmt: this.ParentForm.get("TotalDisbAmt").value,
+                  AppFee: this.ParentForm.get("AppFee").value
                 };
                 this.http.post(URLConstantX.CalcGrossYieldSingleInstDF, grossyieldObj).subscribe(
                   (response) => {

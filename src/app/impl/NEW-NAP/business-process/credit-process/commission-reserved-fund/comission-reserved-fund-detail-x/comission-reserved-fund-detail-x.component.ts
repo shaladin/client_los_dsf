@@ -4,22 +4,21 @@ import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import Stepper from 'bs-stepper';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
-import { AppCommissionHObjX } from 'app/impl/shared/model/AppCommissionHObjX.Model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
+import { AllAppReservedFundObj } from 'app/shared/model/all-app-reserved-fund-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
+import { ResultRefundObj } from 'app/shared/model/app-fin-data/result-refund.model';
+import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 
 @Component({
   selector: 'app-comission-reserved-fund-detail-x',

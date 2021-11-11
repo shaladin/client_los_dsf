@@ -2,16 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
-import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CalcRegularFixObj } from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
 
 @Component({
   selector: 'app-schm-regular-fix-dlfn-x',
@@ -38,7 +36,7 @@ export class SchmRegularFixDlfnXComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.http.post(URLConstantX.GetMouDfOsPlafondByAppIdX, {Id: this.AppId}).subscribe(
+    this.http.post(URLConstantX.GetMouDfOsPlafondByAppIdX, { Id: this.AppId }).subscribe(
       (response) => {
         this.MouOsPlafond = response['Result'];
       }

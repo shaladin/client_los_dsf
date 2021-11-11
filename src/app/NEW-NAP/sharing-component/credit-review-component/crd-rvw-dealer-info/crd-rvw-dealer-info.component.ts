@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CrdRvwDealerObj } from 'app/shared/model/CreditReview/CrdRvwDealerObj.Model';
+import { CrdRvwDealerObj } from 'app/shared/model/credit-review/crd-rvw-dealer-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-dealer-info',

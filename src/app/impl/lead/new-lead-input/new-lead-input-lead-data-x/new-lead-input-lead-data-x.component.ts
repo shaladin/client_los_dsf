@@ -7,19 +7,19 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
-import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
-import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
-import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
-import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
-import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { environment } from 'environments/environment';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { ReqLeadInputLeadDataObj } from 'app/shared/model/request/lead/req-input-lead-data-obj.model';
+import { LeadAssetObj } from 'app/shared/model/request/lead/lead-asset-obj.model';
+import { LeadAppObj } from 'app/shared/model/request/lead/lead-app-obj.model';
+import { AssetMasterObj } from 'app/shared/model/asset-master-obj.model';
+import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/third-party-result-h-for-fraud-chck-obj.model';
+import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-new-lead-input-lead-data-x',

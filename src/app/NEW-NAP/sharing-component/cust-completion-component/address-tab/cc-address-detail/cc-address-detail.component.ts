@@ -4,15 +4,16 @@ import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputCustomAddrCustCmpltObj } from 'app/shared/model/InputCustomAddrCustCmpltObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { InputCustomAddrCustCmpltObj } from 'app/shared/model/input-custom-addr-cust-cmplt-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
@@ -76,6 +77,7 @@ export class CcAddressDetailComponent implements OnInit {
         let tempAddressType = response[CommonConstant.ReturnObj];
         let filterTempAddr = tempAddressType.filter(x => x.Key != CommonConstant.AddrTypeCompany && x.Key != CommonConstant.AddrTypeEmergency);
         this.AddressTypeObj = filterTempAddr;
+        this.AddressTypeObj = await this.FilterAddr(this.AddressTypeObj);
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key
         })
@@ -103,6 +105,22 @@ export class CcAddressDetailComponent implements OnInit {
       this.isAddrObjReady = true;
     }
     await this.setOwnership(this.AddressForm.controls.MrCustAddrTypeCode.value);
+  }
+
+  async FilterAddr(listAddr: Array<KeyValueObj>): Promise<Array<KeyValueObj>>{
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeFilterAddr }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          let listAddrToFilter: Array<string> = result.GsValue.split(';');
+          for (let index = 0; index < listAddrToFilter.length; index++) {
+            const element = listAddrToFilter[index];
+            let idxFound = listAddr.findIndex(x => x.Key == element);
+            if (idxFound >= 0) listAddr.splice(idxFound, 1);
+          }
+        }
+      }
+    );
+    return listAddr;
   }
 
   async getEvent(event){

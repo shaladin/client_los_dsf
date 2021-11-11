@@ -2,13 +2,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { map, mergeMap } from 'rxjs/operators';
-import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
+import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 

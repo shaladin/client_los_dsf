@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { AllAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 
 @Component({
   selector: "view-asset-data",

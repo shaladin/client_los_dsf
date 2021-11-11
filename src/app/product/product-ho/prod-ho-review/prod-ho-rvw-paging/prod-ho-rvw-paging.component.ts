@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 @Component({

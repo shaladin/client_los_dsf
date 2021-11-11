@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -8,11 +7,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CookieService } from 'ngx-cookie';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 
 @Component({
     selector: 'factoring-review-detail.component',

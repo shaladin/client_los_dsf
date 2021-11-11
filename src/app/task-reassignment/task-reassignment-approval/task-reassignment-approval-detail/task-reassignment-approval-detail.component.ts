@@ -6,11 +6,11 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { ResponseTaskReassignmentDetailPageObj } from 'app/shared/model/TaskReassignment/ResponseTaskReassignmentDetailPageObj.Model';
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { ResponseTaskReassignmentDetailPageObj } from 'app/shared/model/task-reassignment/response-task-reassignment-detail-page-obj.model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

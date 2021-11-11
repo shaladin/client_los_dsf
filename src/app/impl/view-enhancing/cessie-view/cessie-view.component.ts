@@ -6,10 +6,10 @@ import { CookieService } from 'ngx-cookie';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 
 @Component({
     selector: 'app-cessie-view',

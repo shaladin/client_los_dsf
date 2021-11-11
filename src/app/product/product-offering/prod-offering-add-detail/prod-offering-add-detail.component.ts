@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ResGetProdOfferingHObj } from 'app/shared/model/Response/Product/ResGetProdOfferingObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResGetProdOfferingHObj } from 'app/shared/model/response/product/res-get-prod-offering-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 @Component({
   selector: 'app-prod-offering-add-detail',
   templateUrl: './prod-offering-add-detail.component.html'

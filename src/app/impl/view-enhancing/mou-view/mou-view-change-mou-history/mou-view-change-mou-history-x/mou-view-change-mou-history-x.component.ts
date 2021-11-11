@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-mou-view-change-mou-history-x',

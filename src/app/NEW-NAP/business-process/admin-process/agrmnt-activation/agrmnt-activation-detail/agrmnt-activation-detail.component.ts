@@ -4,18 +4,18 @@ import { AdminProcessService, ReqAppAssetAgreementActivationObj } from 'app/NEW-
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
-import { WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
+import { WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model';
-import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
+import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/request/nap/agr-act/req-app-fin-data-and-fee.model';
+import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/response/nap/agr-act/res-agrmnt-activation-fin-data-and-fee-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ToastrService } from 'ngx-toastr';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 

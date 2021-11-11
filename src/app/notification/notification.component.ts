@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NotificationObj } from 'app/shared/model/NotificationObj.Model';
+import { NotificationObj } from 'app/shared/model/notification-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';

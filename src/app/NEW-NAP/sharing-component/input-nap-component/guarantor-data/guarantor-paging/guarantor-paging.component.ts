@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { HttpClient } from '@angular/common/http';
-import { GuarantorObj } from 'app/shared/model/GuarantorObj.Model';
+import { GuarantorObj } from 'app/shared/model/guarantor-obj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppWizardObj } from 'app/shared/model/App/AppWizard.Model';
+import { AppWizardObj } from 'app/shared/model/app/app-wizard.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
+import { AppGuarantorObj } from 'app/shared/model/app-guarantor-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';

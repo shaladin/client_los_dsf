@@ -3,8 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
-import { RequestInsuranceDataObj } from 'app/shared/model/RequestInsuranceDataObj.model';
+import { AppInsObjObj } from 'app/shared/model/app-ins-obj-obj.model';
+import { RequestInsuranceDataObj } from 'app/shared/model/request-insurance-data-obj.model';
 
 @Component({
   selector: 'view-insurance-data-detail-x',

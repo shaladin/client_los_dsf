@@ -1,5 +1,5 @@
-import { EntryInstObj } from "app/shared/model/AppFinData/EntryInstObj.Model";
-import { AppFeeObj } from "app/shared/model/AppFeeObj.Model";
+import { AppFeeObj } from "app/shared/model/app-fee-obj.model";
+import { EntryInstObj } from "app/shared/model/app-fin-data/entry-inst-obj.model";
 
 
 export class CalcStepUpStepDownObjX {

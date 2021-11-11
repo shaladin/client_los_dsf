@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

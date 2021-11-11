@@ -1,18 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { SubsidyComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/financial-data/component/subsidy/subsidy.component';
 import { AppFinDataObjX } from 'app/impl/shared/model/AppFinDataObjX.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CalcRegularFixObj } from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
+import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
 
 
 @Component({

@@ -1,4 +1,4 @@
-import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
+import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
 
 export class RefAttrGenerate {
 

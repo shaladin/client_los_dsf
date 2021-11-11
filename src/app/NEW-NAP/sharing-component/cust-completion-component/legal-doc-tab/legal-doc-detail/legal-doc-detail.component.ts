@@ -5,13 +5,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant'
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/app-cust-company-legal-doc-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { String } from 'typescript-string-operations';
 
 @Component({
@@ -81,14 +81,13 @@ export class LegalDocDetailComponent implements OnInit {
             MrLegalDocTypeCode: this.AppCustCompanyLegalDoc.MrLegalDocTypeCode,
             DocNo: this.AppCustCompanyLegalDoc.DocNo,
             DocDt: formatDate(this.AppCustCompanyLegalDoc.DocDt, 'yyyy-MM-dd', 'en-US'),
-            DocExpiredDt: formatDate(this.AppCustCompanyLegalDoc.DocExpiredDt, 'yyyy-MM-dd', 'en-US'),
+            DocExpiredDt: this.AppCustCompanyLegalDoc.DocExpiredDt != null ? formatDate(this.AppCustCompanyLegalDoc.DocExpiredDt, 'yyyy-MM-dd', 'en-US') : '',
             NotaryName: this.AppCustCompanyLegalDoc.NotaryName,
             NotaryLocation: this.AppCustCompanyLegalDoc.NotaryLocation,
             DocNotes: this.AppCustCompanyLegalDoc.DocNotes,
             RowVersion: this.AppCustCompanyLegalDoc.RowVersion
           })
           temp.selectedValue = this.LegalDocTypeObj[0].Key;
-          this.ChangeLegalDocType(this.LegalDocTypeObj[0].Key, true);
           this.LegalDocForm.controls.MrLegalDocTypeCode.disable();
           this.LegalDocForm.updateValueAndValidity();
         } else {
@@ -104,34 +103,10 @@ export class LegalDocDetailComponent implements OnInit {
             DocNotes: [''],
             RowVersion: ['']
           })
-          this.ChangeLegalDocType(this.LegalDocTypeObj[0].Key);
         }
         this.isDdlMrLegalDocTypeReady = true;
       }
     );
-  }
-
-  ChangeLegalDocType(ev: string, ForEdit: boolean = false) {
-    this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: ev }).subscribe(
-      (response) => {
-        this.IsExpDateMandatory = response["IsExpDtMandatory"];
-        if (!ForEdit) {
-          this.IsExpDateHandler();
-        }
-      }
-    );
-  }
-
-  IsExpDateHandler() {
-    if (this.IsExpDateMandatory) {
-      this.LegalDocForm.controls["DocExpiredDt"].setValidators([Validators.required]);
-      this.LegalDocForm.controls["DocExpiredDt"].enable();
-    }
-    else {
-      this.LegalDocForm.controls["DocExpiredDt"].clearValidators();
-      this.LegalDocForm.controls["DocExpiredDt"].disable();
-    }
-    this.LegalDocForm.controls["DocExpiredDt"].updateValueAndValidity();
   }
 
   Cancel() {
@@ -143,8 +118,9 @@ export class LegalDocDetailComponent implements OnInit {
 
     let bzDt = new Date(this.MaxBusinessDt);
     let issueDt = new Date(this.LegalDocForm.get("DocDt").value);
-    let expDt = new Date(this.LegalDocForm.get("DocExpiredDt").value);
-    if (bzDt > expDt && bzDt != expDt) {
+    let expDt = this.LegalDocForm.get("DocExpiredDt").value != '' ? new Date(this.LegalDocForm.get("DocExpiredDt").value) : null;
+    
+    if (expDt != null && bzDt > expDt && bzDt != expDt) {
       this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.MaxBusinessDt);
       flag = true;
     }
@@ -155,7 +131,7 @@ export class LegalDocDetailComponent implements OnInit {
       flag = true;
     }
 
-    if (issueDt.getTime() > expDt.getTime()) {
+    if (expDt != null && issueDt.getTime() > expDt.getTime()) {
       this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN_EXP_DT);
       flag = true;
     }

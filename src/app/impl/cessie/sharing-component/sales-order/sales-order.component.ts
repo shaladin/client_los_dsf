@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 
 @Component({
     selector: 'cessie-sales-order-grid',

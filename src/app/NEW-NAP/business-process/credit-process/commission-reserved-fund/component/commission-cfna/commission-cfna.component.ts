@@ -5,20 +5,20 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
+import { AppAssetDetailObj } from 'app/shared/model/app-asset/app-asset-detail-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
-import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissionObj.Model';
-import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
-import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Model';
+import { NapAppReferantorModel } from 'app/shared/model/nap-app-referantor.model';
+import { RuleCommissionObj } from 'app/shared/model/rule-commission/rule-commission-obj.model';
+import { AppCommissionHObj } from 'app/shared/model/app-commission-h-obj.model';
+import { ResponseTaxDetailObj } from 'app/shared/model/tax/response-tax-detail.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
-import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
-import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
-import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
-import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
-import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
-import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
+import { ResponseTaxObj } from 'app/shared/model/tax/response-tax.model';
+import { TaxTrxDObj } from 'app/shared/model/tax/tax-trx-d.model';
+import { AppCommissionDObj } from 'app/shared/model/app-commission-d-obj.model';
+import { ResultRefundObj } from 'app/shared/model/app-fin-data/result-refund.model';
+import { ReqGetAppCommissionRuleObj } from 'app/shared/model/app-commission-rsv-fund/req-get-app-commission-rule-obj.model';
+import { ReqTaxObj } from 'app/shared/model/app-commission-rsv-fund/req-tax-obj.model';
+import { AppReservedFundObj } from 'app/shared/model/app-reserved-fund-obj.model';
 
 @Component({
   selector: 'app-commission-cfna',

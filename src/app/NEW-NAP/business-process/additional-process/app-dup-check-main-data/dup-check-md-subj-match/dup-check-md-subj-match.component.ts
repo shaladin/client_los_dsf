@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { ReqDupCheckAppCustObj } from 'app/shared/model/app-dup-check-cust/req-dup-check-app-cust-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
-import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/response/nap/dup-check/res-app-dup-check-cust-main-data-obj.model';
+import { DuplicateCustObj } from 'app/shared/model/duplicate-cust-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

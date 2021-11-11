@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
-import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
+import { AppFeeObj } from 'app/shared/model/app-fee-obj.model';
+import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({

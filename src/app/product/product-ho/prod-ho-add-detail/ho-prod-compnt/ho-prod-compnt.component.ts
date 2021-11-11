@@ -9,13 +9,13 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
-import { ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
-import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
-import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqDownloadRuleObj } from 'app/shared/model/request/product/req-download-rule-obj.model';
+import { ReqListProductDetailObj } from 'app/shared/model/request/product/req-add-edit-product-obj.model';
+import { ReqGetProdCompntObj } from 'app/shared/model/request/product/req-get-prod-compnt-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { GenericKeyValueListObj } from 'app/shared/model/generic/generic-key-value-list-obj.model';
+import { ResGetProdCmpntGroupedObj } from 'app/shared/model/response/product/res-get-prod-compnt-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 @Component({
   selector: 'app-ho-prod-compnt',
   templateUrl: './ho-prod-compnt.component.html'

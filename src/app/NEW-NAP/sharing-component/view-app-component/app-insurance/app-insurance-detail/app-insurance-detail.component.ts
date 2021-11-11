@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
-import { RequestInsuranceDataObj } from 'app/shared/model/RequestInsuranceDataObj.model';
+import { AppInsObjObj } from 'app/shared/model/app-ins-obj-obj.model';
+import { RequestInsuranceDataObj } from 'app/shared/model/request-insurance-data-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 

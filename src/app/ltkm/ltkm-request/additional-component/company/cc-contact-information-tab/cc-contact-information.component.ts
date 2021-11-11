@@ -6,21 +6,21 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompany/AppCustCompanyContactPersonObj.Model';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { AppCustCompanyContactPersonObj } from 'app/shared/model/app-cust-company/app-cust-company-contact-person-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
-import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
 import { RegexService } from 'app/shared/services/regex.services';
-import { LtkmCustCompanyContactPersonObj } from 'app/shared/model/LTKM/LtkmCustCompanyContactPersonObj.Model';
-import { LtkmCustAddrObj } from 'app/shared/model/LTKM/LtkmCustAddrObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { LtkmCustCompanyContactPersonObj } from 'app/shared/model/ltkm/ltkm-cust-company-contact-person-obj.model';
+import { LtkmCustAddrObj } from 'app/shared/model/ltkm/ltkm-cust-addr-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
     selector: 'app-ltkm-cc-contact-information',

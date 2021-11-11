@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj, WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-doc-signer-paging-x',

@@ -1,13 +1,13 @@
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
-import { InputAddressObj } from "app/shared/model/InputAddressObj.Model";
-import { InputFieldObj } from "app/shared/model/InputFieldObj.Model";
-import { InputLookupObj } from "app/shared/model/InputLookupObj.Model";
-import { UcDropdownListObj } from "app/shared/model/library/UcDropdownListObj.model";
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from "app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model";
-import { UcAddressObj } from "app/shared/model/UcAddressObj.Model";
+import { CriteriaObj } from "app/shared/model/criteria-obj.model";
+import { InputAddressObj } from "app/shared/model/input-address-obj.model";
+import { InputFieldObj } from "app/shared/model/input-field-obj.model";
+import { InputLookupObj } from "app/shared/model/input-lookup-obj.model";
+import { UcDropdownListObj } from "app/shared/model/library/uc-dropdown-list-obj.model";
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from "app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model";
+import { UcAddressObj } from "app/shared/model/uc-address-obj.model";
 
 export class CustSetData {
 

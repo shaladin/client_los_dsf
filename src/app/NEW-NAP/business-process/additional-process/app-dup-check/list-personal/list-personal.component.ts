@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
+import { DuplicateCustObj } from 'app/shared/model/duplicate-cust-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({

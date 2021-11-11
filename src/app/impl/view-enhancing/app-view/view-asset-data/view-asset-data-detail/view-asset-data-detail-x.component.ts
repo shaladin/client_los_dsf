@@ -3,9 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 import { forkJoin } from 'rxjs';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { RefProfessionObj } from 'app/shared/model/ref-profession-obj.model';
 
 @Component({
   selector: 'view-asset-data-detail-x',

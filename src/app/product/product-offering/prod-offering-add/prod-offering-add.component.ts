@@ -3,19 +3,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqAddProdOfferingObj, ReqEditProdOfferingObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
-import { ResAddEditProdOfferingObj, ResProdOfferingHObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqAddProdOfferingObj, ReqEditProdOfferingObj } from 'app/shared/model/request/product/req-add-edit-prod-offering-obj.model';
+import { ResAddEditProdOfferingObj, ResProdOfferingHObj } from 'app/shared/model/response/product/res-prod-offering-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({

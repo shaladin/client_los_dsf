@@ -6,17 +6,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
-import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/response-app-cust-completion-personal-data-obj.model';
+import { AppCustCompletionCheckingObj } from 'app/shared/model/app-cust-completion-checking-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 
 @Component({
   selector: 'app-cust-completion-detail-personal-x',
