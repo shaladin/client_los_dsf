@@ -4,11 +4,11 @@ import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@
 import { HttpClient } from '@angular/common/http';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { MouCustCompanyContactPersonObj } from 'app/shared/model/MouCustCompanyContactPersonObj.Model';
+import { MouCustCompanyContactPersonObj } from 'app/shared/model/mou-cust-company-contact-person-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-mou-cust-company-contact-info',

@@ -8,15 +8,15 @@ import { AdInsConstant } from "app/shared/AdInstConstant";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
-import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { ApprovalObj } from "app/shared/model/Approval/ApprovalObj.Model";
-import { UcInputApprovalObj } from "app/shared/model/UcInputApprovalObj.Model";
-import { UcInputApprovalHistoryObj } from "app/shared/model/UcInputApprovalHistoryObj.Model";
-import { UcInputApprovalGeneralInfoObj } from "app/shared/model/UcInputApprovalGeneralInfoObj.model";
-import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
+import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
+import { UcInputApprovalObj } from "app/shared/model/uc-input-approval-obj.model";
+import { UcInputApprovalHistoryObj } from "app/shared/model/uc-input-approval-history-obj.model";
+import { UcInputApprovalGeneralInfoObj } from "app/shared/model/uc-input-approval-general-info-obj.model";
+import { ChangeMouTrxObj } from "app/shared/model/change-mou-trx-obj.model";
+import { ApprovalObj } from "app/shared/model/approval/approval-obj.model";
 
 @Component({
   selector: "app-change-mou-approval-general-x",

@@ -133,7 +133,8 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING, Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING, Title: 'Return Handling - Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING, Title: 'Return Handling - Survey Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING, Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] }
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING, Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] }
         ], Params: []
       },
       {
@@ -276,7 +277,8 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING, Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING, Title: 'Return Handling - Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING, Title: 'Return Handling - Survey Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING, Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] }
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING, Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] }
         ], Params: []
       },
       {
@@ -342,7 +344,8 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING, Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING, Title: 'Return Handling - Commission Reserved Fund', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SRVY, Title: 'Return Handling - Survey', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING, Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] }
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING, Title: 'Return Handling - Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] }
         ], Params: []
       },
     ], Params: []
@@ -434,7 +437,8 @@ export const ROUTES: RouteInfo[] = [
         Submenu: [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING, Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
           // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING, Title: 'Return Handling - Edit NAP2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] }
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING, Title: 'Return Handling - Edit NAP2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] }
         ], Params: []
       },
     ], Params: []

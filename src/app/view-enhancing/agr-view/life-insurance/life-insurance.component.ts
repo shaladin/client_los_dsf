@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AgrmntLifeInsObj } from 'app/shared/model/Agrmnt/AgrmntLifeIns.Model';
+import { AgrmntLifeInsObj } from 'app/shared/model/agrmnt/agrmnt-life-ins.model';
 
 @Component({
   selector: 'agrmnt-life-insurance',

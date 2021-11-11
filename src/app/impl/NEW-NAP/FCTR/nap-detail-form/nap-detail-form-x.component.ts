@@ -8,22 +8,22 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'environments/environment';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 
 @Component({
   selector: 'app-nap-detail-form-x',
@@ -55,7 +55,7 @@ export class NapDetailFormXComponent implements OnInit {
     "APP": 1,
     "INVOICE": 2,
     "COLL": 3,
-    "INS":4,
+    "INS": 4,
     "FIN": 5,
     "TC": 6,
     "UPL_DOC": 7
@@ -102,7 +102,7 @@ export class NapDetailFormXComponent implements OnInit {
           this.NapObj = response;
           if (this.ReturnHandlingHId > 0) {
             this.stepper.to(this.AppStepIndex);
-          }else{
+          } else {
             if (this.NapObj.AppCurrStep == CommonConstant.AppStepNapd) {
               this.NapObj.AppCurrStep = CommonConstant.AppStepApp;
               this.UpdateAppStep(this.NapObj.AppCurrStep);
@@ -293,14 +293,14 @@ export class NapDetailFormXComponent implements OnInit {
 
   async LastStepHandler() {
     let reqObj: SubmitNapObj = new SubmitNapObj();
-    if(this.MouCustId == null){
+    if (this.MouCustId == null) {
       await this.http.post(URLConstant.GetMouCustByAppId, { Id: this.appId }).toPromise().then(
         (response) => {
           this.MouCustId = response["MouCustId"]
         });
     }
     let IsInValid;
-    await this.http.post(URLConstant.CheckIsMouFreeze, {MouCustId : this.MouCustId}).toPromise().then(
+    await this.http.post(URLConstant.CheckIsMouFreeze, { MouCustId: this.MouCustId }).toPromise().then(
       (response) => {
         IsInValid = response["IsFreeze"]
       });
@@ -312,7 +312,7 @@ export class NapDetailFormXComponent implements OnInit {
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
     let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
-      this.http.post(SubmitNAPUrl, reqObj).subscribe(
+    this.http.post(SubmitNAPUrl, reqObj).subscribe(
       () => {
         this.Cancel();
       })
@@ -339,14 +339,14 @@ export class NapDetailFormXComponent implements OnInit {
     }
   }
 
-  claimTask(){
-    if(environment.isCore){
-        if(this.wfTaskListId!="" && this.wfTaskListId!= undefined){
-          this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-        }
+  claimTask() {
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
     }
-    else if (this.wfTaskListId>0){
-        this.claimTaskService.ClaimTask(this.wfTaskListId);
+    else if (this.wfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
   }
 }

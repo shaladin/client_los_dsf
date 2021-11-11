@@ -119,11 +119,6 @@
                             "property" : "AppAssetId", 
                             "value": null,
                             "restriction": "EQ"
-                          },
-                          {
-                            "property" : "CollateralStat", 
-                            "value": "NEW",
-                            "restriction": "EQ"
                           }
                         ],
                           "result" : {

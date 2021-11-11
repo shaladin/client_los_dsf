@@ -3,15 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormArray, FormGroup, FormGroupDirective } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { formatDate } from '@angular/common';
-import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultD.Model';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { VerifResulHDetailObj } from 'app/shared/model/verf-result-h/verif-resul-h-detail-obj.model';
+import { VerfResultDObj } from 'app/shared/model/verf-result-d/verf-result-d.model';
 
 @Component({
   selector: 'app-survey-subject-verif-x',

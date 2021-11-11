@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { PefindoObj } from 'app/shared/model/PefindoObj.model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { PefindoObj } from 'app/shared/model/pefindo-obj.model';
 
 
 

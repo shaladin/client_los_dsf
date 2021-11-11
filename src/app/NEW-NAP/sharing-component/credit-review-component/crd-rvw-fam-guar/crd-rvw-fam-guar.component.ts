@@ -3,15 +3,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
-import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
-import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
-import { CrdRvwOvdObj } from 'app/shared/model/CreditReview/CrdRvwOvdObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { CrdRvwExposureDObj } from 'app/shared/model/credit-review/crd-rvw-exposure-d-obj.model';
+import { CrdRvwExposureHObj } from 'app/shared/model/credit-review/crd-rvw-exposure-h-obj.model';
+import { CrdRvwExposureObj } from 'app/shared/model/credit-review/crd-rvw-exposure-obj.model';
+import { CrdRvwOvdObj } from 'app/shared/model/credit-review/crd-rvw-ovd-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-fam-guar',

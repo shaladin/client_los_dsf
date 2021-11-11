@@ -3,19 +3,19 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
+import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/request/nap/new-application/req-add-nap-obj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-app-add-free',

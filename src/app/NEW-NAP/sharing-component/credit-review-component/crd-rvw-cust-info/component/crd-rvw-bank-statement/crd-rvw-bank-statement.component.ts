@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-bank-statement',

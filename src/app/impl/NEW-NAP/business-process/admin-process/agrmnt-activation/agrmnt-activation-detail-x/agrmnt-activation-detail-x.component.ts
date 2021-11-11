@@ -5,19 +5,20 @@ import { ReqAppAssetAgreementActivationObj } from 'app/NEW-NAP/business-process/
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { UcTempPagingObj, WhereValueObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model';
-import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ToastrService } from 'ngx-toastr';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { ResAppFeeObj, ResponseAppFinDataObj, ResAgrmntActivationFinDataAndFeeObj } from 'app/shared/model/response/nap/agr-act/res-agrmnt-activation-fin-data-and-fee-obj.model';
+import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
+import { WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
+import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/request/nap/agr-act/req-app-fin-data-and-fee.model';
 
 @Component({
   selector: 'app-agrmnt-activation-detail-x',

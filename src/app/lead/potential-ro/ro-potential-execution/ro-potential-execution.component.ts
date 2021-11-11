@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import * as XLSX from 'xlsx';

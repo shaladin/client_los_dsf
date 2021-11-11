@@ -5,14 +5,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { AppCustCompanyFinDataObj } from 'app/shared/model/app-cust-company-fin-data-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+
 @Component({
   selector: 'app-financial-company-x',
   templateUrl: './financial-company-x.component.html'

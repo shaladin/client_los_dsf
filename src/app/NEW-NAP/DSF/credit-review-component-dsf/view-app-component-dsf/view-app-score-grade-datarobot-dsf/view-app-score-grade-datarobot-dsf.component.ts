@@ -4,13 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppScoreGradeDsrObj } from 'app/shared/model/AppScoreGrade/AppScoreGradeDsrObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ThirdPartyDataRobotObj } from 'app/shared/model/ThirdPartyData/ThirdPartyDataRobotObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { forkJoin } from 'rxjs';
-import { GetAppSubsidyByAppIdObj } from 'app/shared/model/GetAppSubsidyByAppIdObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppScoreGradeDsrObj } from 'app/shared/model/app-score-grade/app-score-grade-dsr-obj.model';
+import { ThirdPartyDataRobotObj } from 'app/shared/model/third-party-data/ThirdPartyDataRobotObj.Model';
 
 @Component({
   selector: 'app-view-app-score-grade-datarobot-dsf',

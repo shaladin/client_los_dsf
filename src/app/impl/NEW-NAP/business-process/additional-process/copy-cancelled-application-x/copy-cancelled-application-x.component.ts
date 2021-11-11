@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { environment } from 'environments/environment';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/request/product/req-by-prod-off-code-and-version-obj.model';
 
 
 @Component({

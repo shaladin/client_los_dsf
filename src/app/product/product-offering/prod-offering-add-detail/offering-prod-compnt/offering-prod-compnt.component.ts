@@ -6,8 +6,8 @@ import { WizardComponent } from 'angular-archwizard';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqAddEditProdOfferingDObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
-import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { ReqAddEditProdOfferingDObj } from 'app/shared/model/request/product/req-add-edit-prod-offering-obj.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
 
 @Component({
   selector: 'app-offering-prod-compnt',

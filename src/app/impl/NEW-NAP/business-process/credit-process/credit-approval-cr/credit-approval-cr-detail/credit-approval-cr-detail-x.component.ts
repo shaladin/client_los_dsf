@@ -8,20 +8,18 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { CustHighlightCommentObj } from 'app/shared/model/CustHighlightCommentObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
-import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { forkJoin } from 'rxjs';
+import { CustHighlightCommentObj } from 'app/shared/model/cust-highlight-comment-obj.model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 
 @Component({
   selector: 'app-credit-approval-cr-detail-x',

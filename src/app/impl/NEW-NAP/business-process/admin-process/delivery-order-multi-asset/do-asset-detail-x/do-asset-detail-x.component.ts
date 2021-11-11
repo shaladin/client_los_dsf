@@ -5,11 +5,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-do-asset-detail-x',

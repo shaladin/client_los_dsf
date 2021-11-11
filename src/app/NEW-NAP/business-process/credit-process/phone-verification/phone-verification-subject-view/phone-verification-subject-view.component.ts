@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/verf-result/req-get-verf-result-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.model';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 
 
 

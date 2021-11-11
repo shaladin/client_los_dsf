@@ -4,19 +4,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { environment } from 'environments/environment';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { CreditApvResultExtObj } from 'app/shared/model/CreditApvResultExtObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { CreditApvResultExtObj } from 'app/shared/model/credit-apv-result-ext-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-credit-apv-result-ext-detail',

@@ -2,19 +2,19 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from "@angu
 import { HttpClient } from "@angular/common/http";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { FormBuilder, Validators } from "@angular/forms";
-import { RefMasterObj } from "app/shared/model/RefMasterObj.Model";
+import { RefMasterObj } from "app/shared/model/ref-master-obj.model";
 import { forkJoin } from "rxjs";
-import { MouCustFctrObj } from "app/shared/model/MouCustFctrObj.Model";
+import { MouCustFctrObj } from "app/shared/model/mou-cust-fctr-obj.model";
 import { MouCustListedCustFctrComponent } from "app/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { MouCustListedCustFctrObj } from "app/shared/model/MouCustListedCustFctrObj.Model";
+import { MouCustListedCustFctrObj } from "app/shared/model/mou-cust-listed-cust-fctr-obj.model";
 import { UclookupgenericComponent } from "@adins/uclookupgeneric";
-import { InputLookupObj } from "app/shared/model/InputLookupObj.Model";
+import { InputLookupObj } from "app/shared/model/input-lookup-obj.model";
 import { environment } from "environments/environment";
-import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
-import { RefPayFreqObj } from "app/shared/model/RefPayFreqObj.model";
-import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
+import { RefPayFreqObj } from "app/shared/model/ref-pay-freq-obj.model";
+import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 
 @Component({
   selector: "app-change-mou-detail-factoring",

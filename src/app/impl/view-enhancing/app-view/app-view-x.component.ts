@@ -4,16 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MatTabChangeEvent } from '@angular/material';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { formatDate } from '@angular/common';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { AppMainInfoComponent } from 'app/view-enhancing/app-main-info/app-main-info.component';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-app-view-x',

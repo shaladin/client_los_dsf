@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
+import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SubsidyAddEditFL4WComponent } from '../subsidy-add-edit/subsidy-add-edit-FL4W.component';
-import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
+import { AppFeeObj } from 'app/shared/model/app-fee-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 

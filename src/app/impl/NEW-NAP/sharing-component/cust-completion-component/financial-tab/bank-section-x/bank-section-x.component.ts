@@ -5,10 +5,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CookieService } from 'ngx-cookie';
 import { AppCustBankAccObjX } from 'app/impl/shared/model/AppCustBankAccObjX.model';
@@ -16,6 +12,10 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CustBankAccDetailSectionFindataXComponent } from '../cust-bank-acc-detail-section-findata-x/cust-bank-acc-detail-section-findata-x.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppCustBankStmntObj } from 'app/shared/model/app-cust-bank-stmnt-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 
 @Component({
   selector: 'app-bank-section-x',

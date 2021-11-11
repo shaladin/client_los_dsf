@@ -3,28 +3,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 @Component({
   selector: 'app-nap-detail-form-x-dsf',
   templateUrl: './nap-detail-form-x-dsf.component.html',

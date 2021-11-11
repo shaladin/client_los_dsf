@@ -4,14 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { ProdOfferingCodeVersionObj } from "app/shared/model/Request/Product/ProdOfferingCodeVersionObj.model";
-import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
-import { ReqGetProdOffCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
-import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from "app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model";
-import { ResGetListProdOfferingHVersionObj, ResGetProdOfferingDCompntInfoObj, ResGetProdOfferingHVersionObj } from "app/shared/model/Response/Product/ResGetProdOfferingObj.model";
-import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
-import { ResProdDCompntObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
+import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
+import { ProdOfferingCodeVersionObj } from "app/shared/model/request/product/prod-offering-code-version-obj.model";
+import { ReqDownloadRuleObj } from "app/shared/model/request/product/req-download-rule-obj.model";
+import { ReqGetProdOffCompntObj } from "app/shared/model/request/product/req-get-prod-compnt-obj.model";
+import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from "app/shared/model/response/product/res-get-prod-offering-branch-mbr-obj.model";
+import { ResGetListProdOfferingHVersionObj, ResGetProdOfferingDCompntInfoObj, ResGetProdOfferingHVersionObj } from "app/shared/model/response/product/res-get-prod-offering-obj.model";
+import { GenericObj } from "app/shared/model/generic/generic-obj.model";
+import { ResProdDCompntObj } from "app/shared/model/response/product/res-get-prod-obj.model";
 
 @Component({
   selector: 'app-prod-offering-view',

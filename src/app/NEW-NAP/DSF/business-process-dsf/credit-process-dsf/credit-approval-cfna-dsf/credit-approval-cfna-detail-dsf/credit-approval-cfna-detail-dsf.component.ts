@@ -5,20 +5,19 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
 
 @Component({
   selector: 'app-credit-approval-cfna-detail-dsf',

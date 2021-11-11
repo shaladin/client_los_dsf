@@ -9,15 +9,14 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { String } from 'typescript-string-operations';
 import { environment } from 'environments/environment';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { UcPagingObj, ApprovalReqObj } from 'app/shared/model/uc-paging-obj.model';
 
 @Component({
   selector: 'app-credit-approval-paging-dsf',

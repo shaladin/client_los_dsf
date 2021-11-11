@@ -3,10 +3,8 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -14,14 +12,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { UcDropdownListObj, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { ReqAddNapObj, ReqAddNapFromCopyObj } from 'app/shared/model/request/nap/new-application/req-add-nap-obj.model';
+import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/request/product/req-by-prod-off-code-and-version-obj.model';
 
 @Component({
   selector: 'app-cust-main-data-add-dsf',

@@ -1,7 +1,7 @@
 import { Output, EventEmitter, OnInit, Component, Input } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { PurchaseOrderHObj } from "app/shared/model/PurchaseOrderHObj.Model";
+import { PurchaseOrderHObj } from "app/shared/model/purchase-order-h-obj.model";
 
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 

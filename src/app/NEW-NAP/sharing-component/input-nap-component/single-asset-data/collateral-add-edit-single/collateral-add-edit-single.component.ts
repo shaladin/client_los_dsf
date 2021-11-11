@@ -1,29 +1,29 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms';
-import { AppCollateralDataObj } from 'app/shared/model/AppCollateralDataObj.Model';
-import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
-import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
+import { AppCollateralDataObj } from 'app/shared/model/app-collateral-data-obj.model';
+import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-doc-obj.model';
+import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
+import { InputSearchObj } from 'app/shared/model/input-search-obj.model';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
 
 @Component({
   selector: 'app-collateral-add-edit-single',

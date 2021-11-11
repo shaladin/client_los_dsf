@@ -5,8 +5,8 @@ import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-in
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MatTabChangeEvent } from '@angular/material';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { forkJoin } from 'rxjs';
 import { LtkMainInfoComponent } from '../ltkm-mi/ltkm-mi.component';
 import { LtkmApprovalHistComponent } from './ltkm-approval-history-data/ltkm-approval-history-data.component';

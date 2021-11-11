@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { environment } from "environments/environment";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
+import { UcPagingObj } from "app/shared/model/uc-paging-obj.model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";

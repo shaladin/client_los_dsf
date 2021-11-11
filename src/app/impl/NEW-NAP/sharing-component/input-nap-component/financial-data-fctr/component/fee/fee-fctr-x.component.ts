@@ -2,13 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormArray, Validators, Form, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
-import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AppFeeObj } from 'app/shared/model/app-fee-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CalcProvisionFee } from 'app/shared/model/app-fee/calc-provision-fee.model';
 
 @Component({
   selector: 'app-fee-fctr-x',

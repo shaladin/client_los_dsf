@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { HttpClient } from '@angular/common/http';

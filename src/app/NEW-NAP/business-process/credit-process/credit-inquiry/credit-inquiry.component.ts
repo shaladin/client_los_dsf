@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 

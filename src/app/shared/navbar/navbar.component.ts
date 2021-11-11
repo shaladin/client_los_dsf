@@ -6,7 +6,7 @@ import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { formatDate } from '@angular/common';
-import { NotificationHObj } from '../model/NotificationH/NotificationHObj.model';
+import { NotificationHObj } from '../model/notification-h/notification-h-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';

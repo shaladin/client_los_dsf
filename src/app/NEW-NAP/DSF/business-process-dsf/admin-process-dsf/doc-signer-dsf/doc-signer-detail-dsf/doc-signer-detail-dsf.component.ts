@@ -3,26 +3,26 @@ import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
-import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/ResAppCustPersonalAndSpouseDataObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
+import { AgrmntSignerObj } from 'app/shared/model/agrmnt-signer-obj.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/res-app-cust-personal-and-spouse-data-obj.model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
+import { ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
 
 @Component({
   selector: 'app-doc-signer-detail-dsf',

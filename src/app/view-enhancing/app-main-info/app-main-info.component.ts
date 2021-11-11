@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

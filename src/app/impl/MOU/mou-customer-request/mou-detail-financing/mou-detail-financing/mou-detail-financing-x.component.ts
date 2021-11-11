@@ -3,24 +3,24 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-mou-detail-financing-x',

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { Validators, FormBuilder } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { DatePipe } from '@angular/common';
@@ -11,14 +10,14 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 
 @Component({
   selector: 'app-mou-execution-detail-x',

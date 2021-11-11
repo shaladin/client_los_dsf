@@ -5,7 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
-import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
+import { DeviationResultObj } from 'app/shared/model/deviation-result-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';

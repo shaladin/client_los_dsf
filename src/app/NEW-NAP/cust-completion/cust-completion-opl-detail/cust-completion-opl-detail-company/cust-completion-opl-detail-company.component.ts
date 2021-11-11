@@ -6,9 +6,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
-import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AppCustCompletionCheckingObj } from 'app/shared/model/app-cust-completion-checking-obj.model';
+import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/response-app-cust-completion-company-data-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 

@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ControlContainer, FormGroupDirective, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
+import { AppCustBankStmntObj } from 'app/shared/model/app-cust-bank-stmnt-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
  
 @Component({
   selector: 'app-cust-bank-account-FL4W',

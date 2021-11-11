@@ -1,25 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
+import { ReqMouCustSignerObj } from 'app/shared/model/request/mou/req-mou-cust-signer-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',

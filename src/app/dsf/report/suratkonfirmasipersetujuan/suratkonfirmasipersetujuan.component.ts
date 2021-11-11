@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcReportObj.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -12,8 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ReceiptDsfObj } from 'app/dsf/model/ReceiptDsfObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/rdlc-report-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 
 @Component({
   selector: 'app-suratkonfirmasipersetujuan',

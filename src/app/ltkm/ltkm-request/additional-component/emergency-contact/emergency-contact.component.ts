@@ -6,23 +6,23 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { ResponseCustPersonalForCopyObj } from 'app/shared/model/response-cust-personal-for-copy-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
-import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
 import { RegexService } from 'app/shared/services/regex.services';
-import { LtkmCustEmrgncCntctObj } from 'app/shared/model/LTKM/LtkmCustEmrgncCntctObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { LtkmCustEmrgncCntctObj } from 'app/shared/model/ltkm/ltkm-cust-emrgnc-cntct-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { LtkmCustAddrObj } from 'app/shared/model/LTKM/LtkmCustAddrObj.Model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { LtkmCustAddrObj } from 'app/shared/model/ltkm/ltkm-cust-addr-obj.model';
 @Component({
   selector: 'app-ltkm-emergency-contact',
   templateUrl: './emergency-contact.component.html',

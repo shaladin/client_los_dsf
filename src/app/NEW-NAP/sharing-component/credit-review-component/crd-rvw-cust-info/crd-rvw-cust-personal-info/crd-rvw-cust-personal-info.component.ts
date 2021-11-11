@@ -5,13 +5,13 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { CrdRvwCustPersInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustPersInfo.Model';
-import { CrdRvwCustPhnStatusObj } from 'app/shared/model/CreditReview/CrdRvwCustPhnStatusObj.Model';
-import { CrdRvwDiffAppToMasterCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToMasterCustObj.Model';
-import { ReqCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ReqCrdRvwObj.Model';
-import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ResponseCrdRvwDiffAppToInPrcAppCustObj.Model';
-import { ReqGetVerfResult2Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { CrdRvwCustPersInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-pers-info.model';
+import { CrdRvwCustPhnStatusObj } from 'app/shared/model/credit-review/crd-rvw-cust-phn-status-obj.model';
+import { CrdRvwDiffAppToMasterCustObj } from 'app/shared/model/credit-review/crd-rvw-diff-app-to-master-cust-obj.model';
+import { ReqCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/credit-review/req-crd-rvw-obj.model';
+import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/credit-review/response-crd-rvw-diff-app-to-in-prc-app-cust-obj.model';
+import { ReqGetVerfResult2Obj } from 'app/shared/model/verf-result/req-get-verf-result-obj.model';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

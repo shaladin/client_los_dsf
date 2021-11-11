@@ -10,19 +10,15 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { CompleteTaskModel } from 'app/shared/model/Workflow/V2/CompleteTaskModelObj.model';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { CompleteTaskModel } from 'app/shared/model/workflow/v2/complete-task-model-obj.model';
+import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
 
 @Component({
     selector: 'invoice-verif-detail-DF-x',

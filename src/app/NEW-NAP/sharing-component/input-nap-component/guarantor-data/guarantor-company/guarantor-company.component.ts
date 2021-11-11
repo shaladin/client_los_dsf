@@ -1,27 +1,27 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { AppGuarantorCompanyObj } from 'app/shared/model/AppGuarantorCompanyObj.Model';
-import { GuarantorCompanyObj } from 'app/shared/model/GuarantorCompanyObj.Model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { AppGuarantorCompanyObj } from 'app/shared/model/app-guarantor-company-obj.model';
+import { GuarantorCompanyObj } from 'app/shared/model/guarantor-company-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/AppGuarantorCompanyLegalDocObj.Model';
+import { AppGuarantorCompanyLegalDocObj } from 'app/shared/model/app-guarantor-company-legal-doc-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 
 @Component({
   selector: 'app-guarantor-company',
