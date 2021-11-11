@@ -5,7 +5,7 @@
       </div><br>
       <div class="card-body">
         <div class="px-3">
-          <form class="form form-horizontal" [formGroup]="InvoiceForm" #enjiForm="ngForm" (ngSubmit)="InvoiceForm.valid && SaveData()">
+          <!-- <form class="form form-horizontal" [formGroup]="InvoiceForm" #enjiForm="ngForm" (ngSubmit)="InvoiceForm.valid && SaveData()"> -->
             <lib-ucSubsection [id]="'ListOfInvoiceId'" [title]="'List Of Invoice'" [panel]="'ListOfInvoice'">
             </lib-ucSubsection>
             <div class="form-body" id="ListOfInvoice" formArrayName="Invoices">
@@ -70,7 +70,7 @@
                     </tr>
                   </tbody>
                 </table>
-                </div>
+              </div>
             </div>
 
             <lib-ucSubsection [id]="'VerificationInfoId'" [title]="'Verification Info'" [panel]="'VerificationInfo'">
@@ -113,7 +113,7 @@
                 </div>
               </div>
             </div>
-            <lib-ucSubsection *ngIf="IsReturnOn" [id]="'formReturnInvoiceId'" [title]="'Return Invoice'"
+            <!-- <lib-ucSubsection *ngIf="IsReturnOn" [id]="'formReturnInvoiceId'" [title]="'Return Invoice'"
                               [panel]="'formReturnInvoice'">
             </lib-ucSubsection>
             <div *ngIf="IsReturnOn" class="form-body" [id]="'formReturnInvoice'">
@@ -168,8 +168,8 @@
               <button type="submit" class="btn btn-raised btn-primary" >
                 <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Save</span>
               </button>
-            </div>
-          </form>
+            </div> -->
+          <!-- </form> -->
         </div>
       </div>
     </div>
