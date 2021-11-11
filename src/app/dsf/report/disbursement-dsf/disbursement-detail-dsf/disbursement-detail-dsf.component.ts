@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { ReceiptDsfObj } from 'app/dsf/model/ReceiptDsfObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
