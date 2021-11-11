@@ -1,6 +1,6 @@
 import { AgrmntObj } from "app/shared/model/Agrmnt/Agrmnt.Model";
-import { PreGoLiveMainObj } from "app/shared/model/PreGoLiveMainObj.Model";
-import { AgrmntTcObj } from "app/shared/model/AgrmntTc/AgrmntTcObj.Model";
+import { PreGoLiveMainObj } from "app/shared/model/pre-go-live-main-obj.model";
+import { AgrmntTcObj } from "app/shared/model/agrmnt-tc/agrmnt-tc-obj.model";
 
 
 export class PreGoLiveObjX {

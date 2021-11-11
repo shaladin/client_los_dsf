@@ -1,4 +1,4 @@
-import { AppFeeObj } from "app/shared/model/AppFeeObj.Model";
+import { AppFeeObj } from "app/shared/model/app-fee-obj.model";
 
 
 export class CalcRegularFixObjX {

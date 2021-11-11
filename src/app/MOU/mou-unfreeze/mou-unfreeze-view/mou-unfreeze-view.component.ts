@@ -2,10 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
-import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
+import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
 import { environment } from "environments/environment";
 
 @Component({

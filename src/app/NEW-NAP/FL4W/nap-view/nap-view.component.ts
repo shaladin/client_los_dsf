@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 
 @Component({
   selector: 'app-nap-view',

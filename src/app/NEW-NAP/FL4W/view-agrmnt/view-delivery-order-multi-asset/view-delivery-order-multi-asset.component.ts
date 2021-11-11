@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
+import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/request/delivery-order/req-get-do-multi-asset-information-obj.model';
 @Component({
   selector: 'app-view-delivery-order-multi-asset',
   templateUrl: './view-delivery-order-multi-asset.component.html'

@@ -3,16 +3,16 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
-import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
+import { CalcRegularFixObj } from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
+import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
 import { environment } from 'environments/environment';
-import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
+import { CalcEvenPrincipleObj } from 'app/shared/model/app-fin-data/calc-even-principle-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
-import { ResGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { ResGeneralSettingObj } from 'app/shared/model/response/general-setting/res-general-setting-obj.model';
 
 @Component({
   selector: 'app-schm-even-principal-dlfn',

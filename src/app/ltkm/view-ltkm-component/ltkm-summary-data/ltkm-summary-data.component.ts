@@ -4,11 +4,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { SummaryAppObj } from 'app/shared/model/App/SummaryAppObj.Model';
-import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { SummaryAppObj } from 'app/shared/model/app/summary-app-obj.model';
+import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 

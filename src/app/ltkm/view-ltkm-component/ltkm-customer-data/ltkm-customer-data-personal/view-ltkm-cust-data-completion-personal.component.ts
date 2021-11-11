@@ -1,15 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
-import { LtkmCustObj } from 'app/shared/model/LTKM/LtkmCustObj.Model';
-import { LtkmCustAddrForViewObj } from 'app/shared/model/LTKM/LtkmCustAddrForViewObj.Model';
-import { LtkmCustBankAccObj } from 'app/shared/model/LTKM/LtkmCustBankAccObj.Model';
-import { LtkmCustGrpObj } from 'app/shared/model/LTKM/LtkmCustGrpObj.Model';
-import { LtkmCustPersonalContactPersonObj } from 'app/shared/model/LTKM/LtkmCustPersonalContactPersonObj.Model';
+import { LtkmCustObj } from 'app/shared/model/ltkm/ltkm-cust-obj.model';
+import { LtkmCustAddrForViewObj } from 'app/shared/model/ltkm/ltkm-cust-addr-for-view-obj.model';
+import { LtkmCustBankAccObj } from 'app/shared/model/ltkm/ltkm-cust-bank-acc-obj.model';
+import { LtkmCustGrpObj } from 'app/shared/model/ltkm/ltkm-cust-grp-obj.model';
+import { LtkmCustPersonalContactPersonObj } from 'app/shared/model/ltkm/ltkm-cust-personal-contact-person-obj.model';
 import { ViewLtkmCustDetailComponent } from '../view-ltkm-cust-detail/view-ltkm-cust-detail.component';
 
 @Component({

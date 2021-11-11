@@ -7,19 +7,19 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 import { RegexService } from 'app/shared/services/regex.services';
-import { LtkmCustDataPersonalObj } from 'app/shared/model/LTKM/LtkmCustDataPersonalObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { LtkmCustDataPersonalObj } from 'app/shared/model/ltkm/ltkm-cust-data-personal-obj.model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 @Component({
   selector: 'app-ltkm-cust-personal-main-data-x',
   templateUrl: './cust-personal-main-data-x.component.html',

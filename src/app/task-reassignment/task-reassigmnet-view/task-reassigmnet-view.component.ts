@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ResponseTaskReassignmentDetailPageObj } from 'app/shared/model/TaskReassignment/ResponseTaskReassignmentDetailPageObj.Model';
+import { ResponseTaskReassignmentDetailPageObj } from 'app/shared/model/task-reassignment/response-task-reassignment-detail-page-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';

@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
-import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultD.Model';
-import { LeadObj } from 'app/shared/model/Lead.Model';
+import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
+import { VerfResultDObj } from 'app/shared/model/verf-result-d/verf-result-d.model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
-import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqGetVerfResult3Obj } from 'app/shared/model/verf-result/req-get-verf-result-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 

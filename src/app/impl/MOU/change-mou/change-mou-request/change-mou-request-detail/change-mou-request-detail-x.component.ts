@@ -3,21 +3,20 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Location, DatePipe, formatDate } from "@angular/common";
-import { InputLookupObj } from "app/shared/model/InputLookupObj.Model";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
-import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.Model";
 import { ExceptionConstant } from "app/shared/constant/ExceptionConstant";
-import { ClaimWorkflowObj } from "app/shared/model/Workflow/ClaimWorkflowObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
-import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CookieService } from "ngx-cookie";
 import { ClaimTaskService } from "app/shared/claimTask.service";
 import { environment } from "environments/environment";
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import {CommonConstantX} from '../../../../shared/constant/CommonConstantX';
+import { InputLookupObj } from "app/shared/model/input-lookup-obj.model";
+import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
+import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 
 @Component({
   selector: "app-change-mou-request-detail-x",
@@ -366,7 +365,11 @@ export class ChangeMouRequestDetailXComponent implements OnInit {
             MasterCode:  response["MrMouCustFctrType"]
           }).subscribe(
             (response)=>{
-              this.mouFctrType = response["Descr"];
+              if(response["Descr"]!=null){
+                  this.mouFctrType = response["Descr"];
+              }else{
+                  this.mouFctrType = "-";
+              }
             }
           );
         });

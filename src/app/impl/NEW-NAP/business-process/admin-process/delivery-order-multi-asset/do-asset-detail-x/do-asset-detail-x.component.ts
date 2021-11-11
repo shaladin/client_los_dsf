@@ -5,11 +5,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-do-asset-detail-x',
@@ -58,8 +56,6 @@ export class DoAssetDetailXComponent implements OnInit {
     listItem: this.fb.array([])
   });
 
-  LobCode: string;
-
   constructor(
     private httpClient: HttpClient,
     private fb: FormBuilder,
@@ -68,12 +64,6 @@ export class DoAssetDetailXComponent implements OnInit {
   ){}
 
   async ngOnInit() {
-    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-      (response) => {
-        this.LobCode = response.LobCode;
-      }
-    );
-
     this.listItem = this.DOAssetDetail.get('listItem') as FormArray;
 
     var datePipe = new DatePipe("en-US");
@@ -102,12 +92,10 @@ export class DoAssetDetailXComponent implements OnInit {
               this.listItem.push(eachDataDetail);
             }
 
-            if (this.LobCode != CommonConstantX.CF4W_LOB_CODE_CF) {
-              for (let i = 0; i < this.listItem.length; i++) {
-                if (this.listItem.controls[i]['controls']['IsMandatory'].value == true) {
-                  this.listItem.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-                  this.listItem.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-                }
+            for (let i = 0; i < this.listItem.length; i++) {
+              if (this.listItem.controls[i]['controls']['IsMandatory'].value == true) {
+                this.listItem.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                this.listItem.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
             }
 

@@ -1,11 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AdInsConstant } from "app/shared/AdInstConstant";
 import { Observable } from "rxjs";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { ReqGetAppFinDataAndFeeObj } from "app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model";
-import { environment } from "environments/environment";
 import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
+import { ReqGetAppFinDataAndFeeObj } from "app/shared/model/request/nap/agr-act/req-app-fin-data-and-fee.model";
 
 @Injectable({
     providedIn: 'root'

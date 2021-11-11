@@ -10,11 +10,11 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
 import Stepper from 'bs-stepper';
-import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 

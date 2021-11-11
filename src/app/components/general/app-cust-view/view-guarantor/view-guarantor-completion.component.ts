@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppGuarantorPersonalObj } from 'app/shared/model/AppGuarantorPersonalObj.Model';
-import { AppGuarantorObj } from 'app/shared/model/AppGuarantorObj.Model';
-import { AppGuarantorCompanyObj } from 'app/shared/model/AppGuarantorCompanyObj.Model';
+import { AppGuarantorPersonalObj } from 'app/shared/model/app-guarantor-personal-obj.model';
+import { AppGuarantorObj } from 'app/shared/model/app-guarantor-obj.model';
+import { AppGuarantorCompanyObj } from 'app/shared/model/app-guarantor-company-obj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

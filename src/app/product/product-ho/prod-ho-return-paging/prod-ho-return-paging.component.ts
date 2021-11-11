@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UcPagingObj, WhereValueObj } from '../../../shared/model/UcPagingObj.Model';
+import { UcPagingObj, WhereValueObj } from '../../../shared/model/uc-paging-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({

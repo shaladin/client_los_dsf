@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm, FormGroup, Validators, FormBuilder, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-cust-ucaddress-FL4W',

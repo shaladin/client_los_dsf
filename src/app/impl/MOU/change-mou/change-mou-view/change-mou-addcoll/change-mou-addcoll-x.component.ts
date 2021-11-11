@@ -3,8 +3,6 @@ import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ResMouCollForMouViewObj } from 'app/shared/model/Response/MOU/ResMouCollForMouViewObj.model';
 import {ResMouCollForMouViewObjX} from 'app/impl/shared/model/Response/MOU/ResMouCollForMouViewObjX.model';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import {CommonConstant} from 'app/shared/constant/CommonConstant';

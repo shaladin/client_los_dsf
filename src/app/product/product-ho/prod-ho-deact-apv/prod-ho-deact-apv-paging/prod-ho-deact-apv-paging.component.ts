@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { String } from 'typescript-string-operations';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { Router } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -14,7 +14,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { environment } from 'environments/environment';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 @Component({
@@ -48,7 +48,6 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
       this.apvReqObj.Username = this.UserContext.UserName;
       this.apvReqObj.RoleCode = this.UserContext.RoleCode;
       this.apvReqObj.OfficeCode = this.UserContext.OfficeCode;
-      this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "ProdCode";
       this.integrationObj.rightColumnToJoin = "TransactionNo";

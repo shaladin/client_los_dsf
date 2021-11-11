@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { UcPagingObj, WhereValueObj } from "app/shared/model/UcPagingObj.Model";
+import { UcPagingObj, WhereValueObj } from "app/shared/model/uc-paging-obj.model";
 
 @Component({
   selector: 'app-prod-offering-deact-paging',

@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from 'environments/environment';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/AppAssetCollateralForInsurance.Model';
+import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/app-asset-collateral-for-insurance.model';
 
 @Component({
   selector: 'agrmnt-view-insurance',

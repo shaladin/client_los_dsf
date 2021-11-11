@@ -10,16 +10,16 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { forkJoin } from 'rxjs';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 
 @Component({
   selector: 'app-nap-from-simple-lead-detail-x',

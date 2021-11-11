@@ -4,18 +4,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { forkJoin } from 'rxjs';
-import { AppLoanPurposeObj } from 'app/shared/model/AppLoanPurpose.Model';
-import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
-import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
-import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
+import { AppLoanPurposeObj } from 'app/shared/model/app-loan-purpose.model';
+import { VendorBankAccObj } from 'app/shared/model/vendor-bank-acc.model';
+import { PurchaseOrderHObj } from 'app/shared/model/purchase-order-h-obj.model';
+import { PurchaseOrderDObj } from 'app/shared/model/purchase-order-d-obj.model';
 import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-po-entry',

@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { SummaryAppObj } from 'app/shared/model/App/SummaryAppObj.Model';
-import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
+import { SummaryAppObj } from 'app/shared/model/app/summary-app-obj.model';
+import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';
 
 @Component({
   selector: "view-summary-app",

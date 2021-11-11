@@ -2,12 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { MouCustRvwHObj } from 'app/shared/model/MouCustRvwHObj.Model';
-import { MouCustRvwDObj } from 'app/shared/model/MouCustRvwDObj.Model';
+import { MouCustRvwHObj } from 'app/shared/model/mou-cust-rvw-h-obj.model';
+import { MouCustRvwDObj } from 'app/shared/model/mou-cust-rvw-d-obj.model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 
 @Component({
   selector: 'app-mou-view-approval-history',

@@ -2,18 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { Router } from '@angular/router';
-import { LeadForRejectObj } from 'app/shared/model/Request/LEAD/LeadForRejectObj.model';
+import { LeadForRejectObj } from 'app/shared/model/request/lead/lead-for-reject-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { environment } from 'environments/environment';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
-import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { CookieService } from 'ngx-cookie';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
@@ -71,7 +71,7 @@ export class LeadUpdateComponent implements OnInit {
       leadReject.LeadStat = CommonConstant.LeadStatReject;
       leadReject.LeadStep = CommonConstant.LeadStatReject;
       leadReject.LeadId = event.RowObj.LeadId;
-      leadReject.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId;  //ExecutionId = WF Instance GUID Versi Camunda
+      leadReject.WfTaskListId = environment.isCore ? event.RowObj.ProcessInstanceId : event.RowObj.WfTaskListId;  //ProcessInstanceId = WF Instance GUID Versi Camunda
 
       let RejectLeadUrl = environment.isCore ? URLConstant.RejectLeadV2 : URLConstant.RejectLead;
       this.http.post(RejectLeadUrl, leadReject).subscribe(

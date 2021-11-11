@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { URLConstant } from "../constant/URLConstant";
-import { GenericObj } from "../model/Generic/GenericObj.Model";
+import { GenericObj } from "../model/generic/generic-obj.model";
 
 // GetListUploadTypeKeyValue
 

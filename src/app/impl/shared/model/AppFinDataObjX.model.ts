@@ -1,4 +1,4 @@
-import { ResultRefundObj } from "app/shared/model/AppFinData/ResultRefund.Model";
+import { ResultRefundObj } from "app/shared/model/app-fin-data/result-refund.model";
 
 
 export class AppFinDataObjX {

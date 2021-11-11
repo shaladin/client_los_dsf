@@ -1,39 +1,56 @@
 {
     "url": "",
-    "title":"Lookup Economic Sector (Slik)",
+    "sectionTitle": "LOOK UP - Economic Sector SLIK",
     "component": [
-      {
-        "type": "textbox",
-        "name": "REF_SECTOR_ECONOMY_SLIK_CODE",
-        "id": "RefSectorEconomySlikCodeId",
-        "value": "",
-        "label": "Economic Sector Code",
-        "placeholder": ""
-      },
-      {
-        "type": "textbox",
-        "name": "REF_SECTOR_ECONOMY_SLIK_NAME",
-        "id": "RefSectorEconomySlikNameId",
-        "value": "",
-        "label": "Economic Sector Description",
-        "placeholder": ""
-      }
+        {
+            "type": "textbox",
+            "name": "RSES.REF_SECTOR_ECONOMY_SLIK_CODE",
+            "id": "refSectorEconomySlikCodeId",
+            "value": "",
+            "label": "Sector Economy SLIK Code",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "RIT.INDUSTRY_TYPE_NAME",
+            "id": "industryTypeNameId",
+            "value": "",
+            "label": "Industry Type",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        },
+        {
+            "type": "textbox",
+            "name": "RSES.REF_SECTOR_ECONOMY_SLIK_NAME",
+            "id": "refSectorEconomySlikNameId",
+            "value": "",
+            "label": "Sector Economy SLIK Name",
+            "placeholder": "Placeholder",
+            "datatype": "text"
+        }
     ],
-  "querystring": {
-    "name": "lookupEconomicSectorSlikX"
-  },
+    "querystring": {
+        "name": "lookupEconomicSectorSlikX"
+    },
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
-            "label": "Economic Sector Code",
-            "name": "REF_SECTOR_ECONOMY_SLIK_CODE"
+            "position": "left",
+            "label": "Sector Economy SLIK Code",
+            "name": "RSES.REF_SECTOR_ECONOMY_SLIK_CODE"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Economic Sector Description",
-            "name": "REF_SECTOR_ECONOMY_SLIK_NAME"
+            "label": "Sector Economy SLIK Name",
+            "name": "RSES.REF_SECTOR_ECONOMY_SLIK_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Industry Type",
+            "name": "RIT.INDUSTRY_TYPE_NAME"
         },
         {
             "type": "label",
@@ -44,13 +61,18 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "RefSectorEconomySlikCode"
         },
         {
             "type": "text",
             "position": "left",
             "property": "RefSectorEconomySlikName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "IndustryTypeName"
         },
         {
             "type": "action",

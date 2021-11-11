@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Sort } from '@angular/material';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
+import { LifeInsObj } from 'app/shared/model/life-ins-obj.model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 

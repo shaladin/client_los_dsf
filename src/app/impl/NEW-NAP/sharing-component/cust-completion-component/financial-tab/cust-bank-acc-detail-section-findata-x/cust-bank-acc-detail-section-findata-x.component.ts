@@ -4,21 +4,20 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankAccObjX } from 'app/impl/shared/model/AppCustBankAccObjX.model';
-import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
 import { AppCustBankStmntObjX } from 'app/impl/shared/model/AppCustBankStmntObjX.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppCustBankStmntObj } from 'app/shared/model/app-cust-bank-stmnt-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 
 @Component({

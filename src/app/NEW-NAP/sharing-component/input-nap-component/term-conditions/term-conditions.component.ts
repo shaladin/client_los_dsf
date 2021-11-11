@@ -4,10 +4,10 @@ import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGr
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
 
 @Component({
   selector: 'app-term-conditions',

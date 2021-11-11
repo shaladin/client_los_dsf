@@ -3,11 +3,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
-import { MouCustFeeObj } from 'app/shared/model/MouCustFeeObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouCustFeeDetailComponent } from 'app/MOU/mou-customer-request/mou-cust-fee/mou-cust-fee-detail/mou-cust-fee-detail.component';
+import { MouCustFeeObj } from 'app/shared/model/mou-cust-fee-obj.model';
 
 @Component({
   selector: 'app-mou-cust-fee-x',

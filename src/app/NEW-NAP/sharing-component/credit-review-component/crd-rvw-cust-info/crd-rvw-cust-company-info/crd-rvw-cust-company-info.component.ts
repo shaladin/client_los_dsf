@@ -3,13 +3,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CrdRvwCustCoyInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustCoyInfoObj.Model';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { CrdRvwCustPhnStatusObj } from 'app/shared/model/CreditReview/CrdRvwCustPhnStatusObj.Model';
-import { CrdRvwDiffAppToMasterCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToMasterCustObj.Model';
-import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
-import { ReqCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ReqCrdRvwObj.Model';
-import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ResponseCrdRvwDiffAppToInPrcAppCustObj.Model';
+import { CrdRvwCustCoyInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-coy-info-obj.model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { CrdRvwCustPhnStatusObj } from 'app/shared/model/credit-review/crd-rvw-cust-phn-status-obj.model';
+import { CrdRvwDiffAppToMasterCustObj } from 'app/shared/model/credit-review/crd-rvw-diff-app-to-master-cust-obj.model';
+import { CrdRvwExposureObj } from 'app/shared/model/credit-review/crd-rvw-exposure-obj.model';
+import { ReqCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/credit-review/req-crd-rvw-obj.model';
+import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/credit-review/response-crd-rvw-diff-app-to-in-prc-app-cust-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-cust-company-info',

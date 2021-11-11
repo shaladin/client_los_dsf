@@ -2,23 +2,23 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { String } from 'typescript-string-operations';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { CalcRegularFixObjForTrialCalc } from 'app/shared/model/AppFinData/CalcRegularFixObjForTrialCalc.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
-import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcReportObj.model';
-import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
 import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs';
 import { CalcRegularFixObjX } from 'app/impl/shared/model/AppFinData/CalcRegularFixObjX.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ResponseCalculateObjX } from 'app/impl/shared/model/AppFinData/ResponseCalculateObjX.Model';
-import {ExceptionConstantX} from 'app/impl/shared/constant/ExceptionConstantX';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { CalcRegularFixObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-regular-fix-obj-for-trial-calc.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { InputReportObj } from 'app/shared/model/library/input-report-obj.model';
+import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/rdlc-report-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 
 @Component({
   selector: 'app-schm-reguler-fix-x',
@@ -256,7 +256,7 @@ export class SchmRegulerFixXComponent implements OnInit {
             this.ParentForm.get("EffectiveRatePrcnt").disable();
             this.ParentForm.get("FlatRatePrcnt").disable();
             this.ParentForm.get("InstAmt").disable();
-          }else {
+          } else {
             this.ParentForm.get("CalcBase").enable();
             this.ParentForm.patchValue({
               CalcBase: this.CalcBaseOptions[0].MasterCode
@@ -282,8 +282,8 @@ export class SchmRegulerFixXComponent implements OnInit {
   }
 
   Calculate() {
-    if(this.ParentForm.controls.TotalFeeAmt.value > this.ParentForm.controls.TotalAssetPriceAmt.value){
-      this.toastr.warningMessage(ExceptionConstantX.FEE_MUST_LOWER_THAN_TOTAL_AMT +this.PriceLabel);
+    if (this.ParentForm.controls.TotalFeeAmt.value > this.ParentForm.controls.TotalAssetPriceAmt.value) {
+      this.toastr.warningMessage(ExceptionConstantX.FEE_MUST_LOWER_THAN_TOTAL_AMT + this.PriceLabel);
       return;
     }
     if (this.ParentForm.getRawValue().CalcBase == '') {
@@ -294,13 +294,6 @@ export class SchmRegulerFixXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
     }
-    // if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-    //     && this.ParentForm.controls.IsSubsidyRateExist.value == false
-    //     && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt)
-    // {
-    //   this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
-    //   return;
-    // }
 
     if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
       && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
@@ -332,7 +325,7 @@ export class SchmRegulerFixXComponent implements OnInit {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
           response.CommissionAmtFromDiffRate = 0;
           //End SITDSFCFRTHREE-169
-          
+
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
@@ -405,7 +398,7 @@ export class SchmRegulerFixXComponent implements OnInit {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
           response.CommissionAmtFromDiffRate = 0;
           //End SITDSFCFRTHREE-169
-           
+
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar

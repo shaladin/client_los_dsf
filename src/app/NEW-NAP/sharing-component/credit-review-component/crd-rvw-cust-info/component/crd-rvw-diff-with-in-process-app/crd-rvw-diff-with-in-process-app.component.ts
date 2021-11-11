@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToInPrcAppCustObj.Model';
-import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ResponseCrdRvwDiffAppToInPrcAppCustObj.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { CrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/credit-review/crd-rvw-diff-app-to-in-prc-app-cust-obj.model';
+import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/credit-review/response-crd-rvw-diff-app-to-in-prc-app-cust-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 
 @Component({
   selector: 'app-crd-rvw-diff-with-in-process-app',

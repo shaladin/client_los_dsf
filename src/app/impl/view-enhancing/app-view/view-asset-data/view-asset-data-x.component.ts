@@ -5,8 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ViewAssetDataDetailXComponent } from './view-asset-data-detail/view-asset-data-detail-x.component';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 
 @Component({
   selector: 'view-asset-data-x',

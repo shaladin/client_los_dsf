@@ -4,16 +4,16 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
-import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
-import { ReqRefAttrByAttrGroupObj } from 'app/shared/model/Request/RefAttr/ReqRefAttrByAttrGroupObj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { AttrContent } from 'app/shared/model/cust-completion/attr-content.model';
+import { RefAttr } from 'app/shared/model/cust-completion/ref-attr.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { NewCustAttrContentObj } from 'app/shared/model/new-cust-attr-content-obj.model';
+import { ReqRefAttrByAttrGroupObj } from 'app/shared/model/request/ref-attr/req-ref-attr-by-attr-group-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/response/nap/NAP 4/res-get-list-app-cust-attr-content-obj.model';
 import { environment } from 'environments/environment';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-new-nap-attr-content',

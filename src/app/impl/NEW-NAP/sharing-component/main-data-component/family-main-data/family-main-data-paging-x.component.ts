@@ -1,15 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 @Component({
   selector: 'app-family-main-data-paging-x',
   templateUrl: './family-main-data-paging-x.component.html',

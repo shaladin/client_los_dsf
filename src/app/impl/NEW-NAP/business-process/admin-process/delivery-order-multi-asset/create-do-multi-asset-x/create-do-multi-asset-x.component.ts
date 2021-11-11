@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
@@ -11,9 +10,10 @@ import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CookieService } from 'ngx-cookie';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { DoAssetDetailXComponent } from '../do-asset-detail-x/do-asset-detail-x.component';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-create-do-multi-asset-x',

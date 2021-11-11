@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 
 @Component({
   selector: 'app-cessie-inquiry',

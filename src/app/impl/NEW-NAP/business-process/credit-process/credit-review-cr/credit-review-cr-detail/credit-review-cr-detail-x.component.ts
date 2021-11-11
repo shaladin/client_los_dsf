@@ -8,26 +8,25 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
-import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
-import { CrdRvwAppObj } from 'app/shared/model/CreditReview/CrdRvwAppObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import {ProdOfferingDObj} from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
+import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
+import { TypeResultObj } from 'app/shared/model/type-result/type-result-obj.model';
+import { DeviationResultObj } from 'app/shared/model/deviation-result-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { ScoringResultHObj } from 'app/shared/model/scoring-result-h-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.model';
+import { AppCrdRvwHObj } from 'app/shared/model/app-crd-rvw-h-obj.model';
+import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
+import { AppCrdRvwDObj } from 'app/shared/model/app-crd-rvw-d-obj.model';
 
 @Component({
   selector: 'app-credit-review-cr-detail-x',
@@ -69,7 +68,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     CreditScoring: ['']
   });
 
-  FormReturnObj  =this.fb.group({
+  FormReturnObj = this.fb.group({
     Reason: [''],
     Notes: ['']
   });
@@ -78,8 +77,8 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   lobCode: string;
   IsFD: boolean = false;
 
-  ProdOfferingCode:string;
-  ProdOfferingVersion:number;
+  ProdOfferingCode: string;
+  ProdOfferingVersion: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -128,8 +127,8 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   }
 
   responseListTypeCodes: Array<TypeResultObj> = new Array();
-  async GetListDeviation(){
-    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {TrxNo: this.appNo}).toPromise().then(
+  async GetListDeviation() {
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, { TrxNo: this.appNo }).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
       });
@@ -184,7 +183,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
       response => {
-        if(response != undefined){
+        if (response != undefined) {
           this.apvSchmCode = response["CompntValue"];
         }
       }
@@ -207,7 +206,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
         }
       });
 
-    if(this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "FD"){
+    if (this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "FD") {
       this.IsFD = true;
     }
   }
@@ -304,7 +303,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
         this.isShow = true;
 
         // penjagaan CF4W Fleet - impl X
-        if(this.crdRvwCustInfoObj.BizTemplateCode == CommonConstant.CF4W){
+        if (this.crdRvwCustInfoObj.BizTemplateCode == CommonConstant.CF4W) {
           this.crdRvwCustInfoObj.BizTemplateCode = CommonConstant.FL4W;
         }
 

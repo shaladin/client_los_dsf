@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
-import { WhereValueObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { WhereValueObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
