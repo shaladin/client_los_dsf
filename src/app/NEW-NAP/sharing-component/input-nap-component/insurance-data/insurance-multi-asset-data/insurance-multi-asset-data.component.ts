@@ -1231,11 +1231,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.insAddCvgTypeRuleObj.forEach((o) => {
       this.AddDictInsCustRate(o.Key, 0);
 
-      let checkboxValue = false;
       const control = this.fb.group({
         MrAddCvgTypeCode: o.Key,
         AddCvgTypeName: o.Value,
-        Value: checkboxValue,
+        Value: false,
         SumInsuredPercentage: obj.SumInsuredPercentage,
         SumInsuredAmt: 0,
         PremiumType: "AMT",
