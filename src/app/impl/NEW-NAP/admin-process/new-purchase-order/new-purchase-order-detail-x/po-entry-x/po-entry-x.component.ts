@@ -92,7 +92,7 @@ export class PoEntryXComponent implements OnInit {
 
     if (this.IsDisburseToCust) {
       
-      await this.httpClient.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).subscribe(
+      await this.httpClient.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
         (response : AppCustObj) => {
           this.AppCust = response;
           if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {

@@ -131,7 +131,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "/Nap/AddProcess/EditAppAftApv/Detail",
+          "path": "NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL",
           "param": [
             {
               "type": "AgrmntId",

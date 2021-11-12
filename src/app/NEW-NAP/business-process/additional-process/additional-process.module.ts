@@ -70,6 +70,8 @@ import { ReturnHandlingPagingXComponent } from "app/impl/NEW-NAP/business-proces
 import { ReturnHandlingDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-detail-x/return-handling-detail-x.component";
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
 import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { EditAppAfterApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail-x.component";
+import { EditAppAfterApprovalPurchaseOrderDataXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-purchase-order-data/edit-app-after-approval-purchase-order-data-x.component";
 
 
 
@@ -160,7 +162,9 @@ export const customCurrencyMaskConfig = {
     CopyCancelledApplicationXComponent,
     CopyCanAppMultiBlDetailXComponent,
     ReturnHandlingPagingXComponent,
-    ReturnHandlingDetailXComponent
+    ReturnHandlingDetailXComponent,
+    EditAppAfterApprovalDetailXComponent,
+    EditAppAfterApprovalPurchaseOrderDataXComponent
   ],
   providers: [
     NGXToastrService
