@@ -389,17 +389,17 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
 
-    const obj = {
-      ProdOfferingCode: this.ProdOfferingCode,
-      RefProdCompntCode: 'CRD_APV',
-      ProdOfferingVersion: this.ProdOfferingVersion
-    };
-    await this.http.post<ProdOfferingDObj>(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
-      (resp)=>{
-        this.InputObj.CategoryCode = resp.RefProdCompntCode;
-        this.InputObj.SchemeCode = resp.CompntValue;
-      }
-    )
+    // const obj = {
+    //   ProdOfferingCode: this.ProdOfferingCode,
+    //   RefProdCompntCode: 'CRD_APV',
+    //   ProdOfferingVersion: this.ProdOfferingVersion
+    // };
+    // await this.http.post<ProdOfferingDObj>(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+    //   (resp)=>{
+    //     this.InputObj.CategoryCode = resp.RefProdCompntCode;
+    //     this.InputObj.SchemeCode = resp.CompntValue;
+    //   }
+    // )
 
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
