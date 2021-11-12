@@ -1432,7 +1432,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             this.groupAddCvrSumInsuredDropDown[currAddCvrItem.AdditionalCoverageType].push(currAddCvrItem);
           }
         });
-
       });
       return resInsuranceDataInsRateCvgRuleObj;
   }
@@ -1466,8 +1465,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       }
 
       if (premiumType == CommonConstant.PremiumTypePrcnt) {
-        custAddPremiRate = AddCvg[index].PremiToCust;
-        inscoAddPremiRate = AddCvg[index].PremiToInsco;
+        custAddPremiRate = AddCvg[index].RateToCust;
+        inscoAddPremiRate = AddCvg[index].RateToInsco;
       }
 
       // if (o.Key == CommonConstant.MrAddCvgTypeCodeTpl) {
@@ -1483,20 +1482,21 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           let loadingCriteriaCount = AddCvg.filter( x => x.AdditionalCoverageType == CommonConstant.MrAddCvgTypeCodeLoading).length;
 
           for(var i = index; i < loadingCriteriaCount + index;i ++ ){
-            let assetAgeMin = AddCvg[index].AssetAgeFrom ? parseInt(AddCvg[index].AssetAgeFrom, 10) : 0;
-            let assetAgeMax = AddCvg[index].AssetAgeTo ? parseInt(AddCvg[index].AssetAgeTo, 10) : 0;
+            let assetAgeMin = AddCvg[i].AssetAgeFrom ? parseInt(AddCvg[i].AssetAgeFrom, 10) : 0;
+            let assetAgeMax = AddCvg[i].AssetAgeTo ? parseInt(AddCvg[i].AssetAgeTo, 10) : 0;
             if (this.ManufYearDiff >= assetAgeMin && this.ManufYearDiff <= assetAgeMax) {
               AppInsAddCvg.patchValue({
                 Value: true,
-                SumInsuredAmt: AddCvg[index].SumInsuredAmt,
+                SumInsuredAmt: AddCvg[i].SumInsuredAmt,
                 PremiumType: premiumType,
-                CustAddPremiRate: custAddPremiRate,
+                CustAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? AddCvg[i].RateToCust : AddCvg[i].PremiToCust,
                 CustAddPremiAmt: 0,
-                BaseCalculation: AddCvg[index].BaseCalc,
-                InscoAddPremiRate: inscoAddPremiRate,
+                BaseCalculation: AddCvg[i].BaseCalc,
+                InscoAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? AddCvg[i].RateToInsco : AddCvg[i].PremiToInsco,
                 InscoAddPremiAmt: 0,
                 SeatCount: 0
               });
+              break;
             } else {
               AppInsAddCvg.patchValue({
                 Value: false,
