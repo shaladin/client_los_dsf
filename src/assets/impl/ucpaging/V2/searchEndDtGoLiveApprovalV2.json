@@ -1,202 +1,266 @@
 {
-    "title": "End Date Go Live Approval",
-    "exportExcel": false,
-    "component": [
-        {
-            "type": "textbox",
-            "name": "agr.AGRMNT_NO",
-            "id": "AgrmntNoId",
-            "value": "",
-            "label": "Agreement No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "agr.CUST_NAME",
-            "id": "CustNameId",
-            "value": "",
-            "label": "Customer Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vApv.APV_NO",
-            "id": "ApvNoId",
-            "value": "",
-            "label": "Approval No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vApv.REQUEST_BY",
-            "id": "RequestById",
-            "value": "",
-            "label": "Request By",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vApv.MAIN_USER_ID",
-            "id": "MainUserId",
-            "value": "",
-            "label": "Task Owner",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vApv.CURRENT_USER_ID",
-            "id": "MainUserId",
-            "value": "",
-            "label": "Current User",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "datepicker",
-            "datatype": "date",
-            "name": "vApv.REQUEST_DATE",
-            "id": "RequestDateId",
-            "value": "BD",
-            "restriction": "lte",
-            "label": "Request Date",
-            "placeholder": "Placeholder"
-        }
-        
-    ],
+  "title": "End Date Go Live Approval",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "agr.AGRMNT_NO",
+      "id": "AgrmntNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "agr.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.APV_NO",
+      "id": "ApvNoId",
+      "value": "",
+      "label": "Approval No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.REQUEST_BY",
+      "id": "RequestById",
+      "value": "",
+      "label": "Request By",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.MAIN_USER_ID",
+      "id": "MainUserId",
+      "value": "",
+      "label": "Task Owner",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.CURRENT_USER_ID",
+      "id": "MainUserId",
+      "value": "",
+      "label": "Current User",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "datepicker",
+      "datatype": "date",
+      "name": "vApv.REQUEST_DATE",
+      "id": "RequestDateId",
+      "value": "BD",
+      "restriction": "lte",
+      "label": "Request Date",
+      "placeholder": "Placeholder"
+    }
+  ],
   "querystring": {
     "name": "searchEndDtGoLiveApprovalV2"
   },
-    "headerList": [
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Agreement No",
+      "name": "AgrmntNo"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "CustName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Approval No",
+      "name": "ApvNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Request By",
+      "name": "ReqBy"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Task Owner",
+      "name": "MainUserId"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Current User",
+      "name": "CurrentUserId"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Request Date",
+      "name": "ReqDt"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Process"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Hold"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Take Back"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Unclaim"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "link",
+      "position": "center",
+      "property": "AgrmntNo",
+      "target": "_blank",
+      "path": "VIEW_AGRMNT",
+      "param": [
         {
-            "type": "sort",
-            "position": "center",
-            "label": "Agreement No",
-            "name": "AgrmntNo"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Customer Name",
-            "name": "CustName"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Approval No",
-            "name": "ApvNo"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Request By",
-            "name": "RequestBy"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Task Owner",
-            "name": "MainUserId"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Current User",
-            "name": "CurrentUserId"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Request Date",
-            "name": "RequestDate"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Process"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Hold"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Take Back"
+          "type": "AgrmntId",
+          "property": "AgrmntId"
         }
-    ],
-    "bodyList": [
+      ]
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ApvNo"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ReqBy"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "MainUserId"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CurrentUserId"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "ReqDt"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
         {
-            "type": "link",
-            "position": "center",
-            "property": "AgrmntNo",
-            "target" : "_blank", 
-            "path" : "VIEW_AGRMNT", 
-            "param" : [ 
-                {
-                    "type": "AgrmntId",
-                    "property": "AgrmntId"
-                }
-            ]
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "ApvNo"
-        },                
-        {
-            "type": "text",
-            "position": "center",
-            "property": "RequestBy"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "MainUserId"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "CurrentUserId"
-        },
-        {
-            "type": "date",
-            "position": "center",
-            "property": "RequestDate"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback",
-                    "key": "Process"                   
-                }
-            ]
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback",
-                    "key": "HoldTask"                 
-                }
-            ]
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback",
-                    "key": "TakeBack"
-                }
-            ]
+          "type": "callback",
+          "key": "Process"
         }
-    ]
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "CurrentUser",
+                  "value": "-",
+                  "restriction": "NEQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "HoldTask",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "IsRoleAssignment",
+                  "value": false,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "TakeBack",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "IsRoleAssignment",
+                  "value": true,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "UnClaim",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
