@@ -8,5 +8,9 @@ export class AppCollateralDocObj{
     RowVersion: string;
     DocName: string;
     DocNo: string;
+    IsValueNeeded: boolean;
+    IsMandatoryNew: boolean;
+    IsMandatoryUsed: boolean;
+    MrCollateralConditionCode: string;
     constructor() { }
 }
