@@ -468,10 +468,10 @@
                             <div formArrayName="AppInsAddCvgs" class="form-group-row">
                               <div [formGroupName]="j">
                                 <select class="form-control" formControlName="SumInsuredAmt"
-                                  *ngIf="groupAddCvrSumInsuredDropDown[InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value] && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.Value.value"
+                                  *ngIf="groupAddCvrSumInsuredDropDown[i][InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value] && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.Value.value"
                                   (change)="SumInsuredAmtAddCvgChanged($event, i, j)">
                                   <option
-                                    *ngFor="let item of groupAddCvrSumInsuredDropDown[InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value]"
+                                    *ngFor="let item of groupAddCvrSumInsuredDropDown[i][InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value]"
                                     [value]="item.SumInsuredAmt">
                                     {{item.SumInsuredAmt | number:'.2':'en-US'}}
                                   </option>
