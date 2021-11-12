@@ -3,8 +3,8 @@ import { AppCollateralObj } from "./app-collateral-obj.model";
 import { AppAssetSupplEmpObj } from "./app-asset-suppl-emp-obj.model";
 import { AppCollateralRegistrationObj } from "./app-collateral-registration-obj.model";
 import { AppCollateralAccessoryObj } from "./app-collateral-accessory-obj.model";
-import { AppCollateralAttrObj } from "./app-collateral-attr-obj.model";
-import { AppAssetAttrObj } from "./app-asset-attr-obj.model";
+import { AppCollateralAttrObj, ReqAppCollateralAttrObj } from "./app-collateral-attr-obj.model";
+import { AppAssetAttrObj, ReqAppAssetAttrObj } from "./app-asset-attr-obj.model";
 import { AppAssetAccessoryObj } from "./app-asset-accessory-obj.model";
 import { AppCollateralDocObj } from "./app-collateral-doc-obj.model";
 
@@ -46,5 +46,19 @@ export class AllAssetDataObj {
     this.Copy = "No";
     this.CopyNumber = 0;
     this.IsAppAssetAccessoryChanged = false;
+  }
+}
+
+export class ReqAssetDataObj {
+  AppAssetObj: AppAssetObj;
+  AppAssetAttrObj: Array<ReqAppAssetAttrObj>;
+  AppCollateralDocObj: Array<AppCollateralDocObj>;
+  AppCollateralAttrObj: Array<ReqAppCollateralAttrObj>;
+
+  constructor() {
+    this.AppAssetObj = new AppAssetObj();
+    this.AppAssetAttrObj = new Array<ReqAppAssetAttrObj>();
+    this.AppCollateralDocObj = new Array<AppCollateralDocObj>();
+    this.AppCollateralAttrObj = new Array<ReqAppCollateralAttrObj>();
   }
 }
