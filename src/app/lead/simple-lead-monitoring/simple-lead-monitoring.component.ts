@@ -14,7 +14,6 @@ export class SimpleLeadMonitoringComponent implements OnInit {
 
   ngOnInit() {
     this.uploadObj.title = "Upload Simple Lead";
-    this.uploadObj.subsectionId = "UcUploadFile";
     this.uploadObj.UploadTypeCode = "UPL_SMPL_LEAD";
     this.uploadObj.ErrorDownloadUrl = URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType;
     this.uploadObj.TemplateName = "Upload_Simple_Lead_Template";
@@ -23,10 +22,6 @@ export class SimpleLeadMonitoringComponent implements OnInit {
     if (!environment.isCore) {
       this.uploadObj.formatsAllowed = ".xls, .xlsx";
       this.uploadObj.url = URLConstant.UploadFile;
-    }
-    else {
-      this.uploadObj.formatsAllowed = ".xls, .xlsx, .txt, .TXT";
-      this.uploadObj.url = URLConstant.UploadFileV2;
     }
   }
 }

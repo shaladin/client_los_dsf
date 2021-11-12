@@ -31,8 +31,8 @@ export class UcUploadObj {
 
     constructor() {
         this.title = "";
-        this.subsectionId = "";
-        this.formatsAllowed = "";
+        this.subsectionId = "UcUploadFile";
+        this.formatsAllowed = ".xls, .xlsx, .txt, .TXT";
         this.UploadTypeCode = "";
         this.ErrorDownloadUrl = "";
         this.TemplateUrl = URLConstant.DownloadTemplate;
@@ -42,7 +42,7 @@ export class UcUploadObj {
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.pagingJson = "";
         this.SheetName = "";
-        this.url = "";
+        this.url = URLConstant.UploadFileV2;
         this.hideProgressBar = false;
         this.hideResetBtn = false;
         this.hideSelectBtn = false;

@@ -13,7 +13,6 @@ export class TestUploadComponent implements OnInit {
 
   ngOnInit() {
     this.uploadObj.title = "Test Upload File";
-    this.uploadObj.subsectionId = "UcUploadFile";
     this.uploadObj.UploadTypeCode = "UPL_TEST";
     this.uploadObj.ErrorDownloadUrl = URLConstant.GetUploadAssetMasterByUploadMonitoringNoAndTrxType;
     this.uploadObj.TemplateName = "TestTemplate";
@@ -22,10 +21,6 @@ export class TestUploadComponent implements OnInit {
     if (!environment.isCore) {
       this.uploadObj.formatsAllowed = ".xls, .xlsx";
       this.uploadObj.url = URLConstant.UploadFile;
-    }
-    else {
-      this.uploadObj.formatsAllowed = ".xls, .xlsx, .txt, .TXT";
-      this.uploadObj.url = URLConstant.UploadFileV2;
     }
   }
 }
