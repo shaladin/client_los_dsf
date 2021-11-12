@@ -1278,6 +1278,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     reqObj.MainCoverageType = insMainCvg.MrMainCvgTypeCode;
     reqObj.InsAssetCategory = this.ruleObj.InsAssetCategory;
+    reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
+    reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
     response = await this.ExecuteInstRateCvgRule(reqObj);
 
     let currPaidByBhv = this.paidByBhv.find(i => i.PaidByYearNo == insMainCvg.YearNo);
@@ -1404,6 +1406,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
       reqObj.MainCoverageType = event.target.value;
       reqObj.InsAssetCategory = this.ruleObj.InsAssetCategory;
+      reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
+      reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
   
       let response : ResInsuranceDataInsRateCvgRuleObj;
       response = await this.ExecuteInstRateCvgRule(reqObj);
@@ -1619,6 +1623,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     reqObj.MainCoverageType = MainCoverageType
     reqObj.InsAssetCategory = this.ruleObj.InsAssetCategory;
+    reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
+    reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
     let response = await this.ExecuteInstRateCvgRule(reqObj);
 
     this.ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);

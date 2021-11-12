@@ -5,6 +5,8 @@ export class InsuranceDataInsRateCvgRuleObj {
     RegionCode: string;
     InsAssetCategory: string;
     MainCoverageType: string;
+    ProdOfferingCode: string;
+    ProdOfferingVersion: string;
 
     constructor(){
         this.InscoHoCode = "";
@@ -12,6 +14,8 @@ export class InsuranceDataInsRateCvgRuleObj {
         this.AssetPriceAmount = 0;
         this.RegionCode = "";
         this.InsAssetCategory = "";
-        this.MainCoverageType = ""
+        this.MainCoverageType = "";
+        this.ProdOfferingCode = "";
+        this.ProdOfferingVersion = "";
     }
 }
