@@ -1229,8 +1229,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     });
 
     this.insAddCvgTypeRuleObj.forEach((o) => {
-      let custAddPremiRate = 0;
-      this.AddDictInsCustRate(o.Key, custAddPremiRate);
+      this.AddDictInsCustRate(o.Key, 0);
 
       let checkboxValue = false;
       const control = this.fb.group({
