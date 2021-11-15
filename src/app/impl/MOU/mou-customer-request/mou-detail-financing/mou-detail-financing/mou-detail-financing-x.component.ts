@@ -406,6 +406,8 @@ export class MouDetailFinancingXComponent implements OnInit {
       this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(1)]);
       this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
       // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].enable();
+      this.MouDetailFinancingForm.controls["TopInterestRatePrcnt"].disable();
+
     }
     else if (insType == CommonConstant.MULTIPLE_INST_TYPE) {
       this.IsSingleIns = false;
@@ -413,6 +415,8 @@ export class MouDetailFinancingXComponent implements OnInit {
       this.MouDetailFinancingForm.controls['TopDays'].clearValidators();
       this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(0)]);
       this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
+
+      this.MouDetailFinancingForm.controls["TopInterestRatePrcnt"].enable();
     }
   }
 
