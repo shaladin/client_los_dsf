@@ -251,7 +251,7 @@ export class CustBankAccountComponent implements OnInit {
 
   bindMonthObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMonth;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetListKeyValueActiveByCodeOrderBySeqNo, this.refMasterObj).subscribe(
       (response) => {
         this.MonthObj = response[CommonConstant.ReturnObj];
         if (this.MonthObj.length > 0) {

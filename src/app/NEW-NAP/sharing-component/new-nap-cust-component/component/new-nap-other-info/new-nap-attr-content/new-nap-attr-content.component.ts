@@ -88,7 +88,7 @@ export class NewNapAttrContentComponent implements OnInit {
   }
 
   SplitAttrListValue(value: string) {
-    return value.split(";");
+    return value.split(";").sort();
   }
   getLookUp(e, AttrCode: string) {
     this.parentForm['controls'][this.identifier]["controls"][AttrCode].patchValue({
@@ -106,7 +106,7 @@ export class NewNapAttrContentComponent implements OnInit {
         }
       }
       else if (refAttr.AttrInputType == 'L') {
-        var temp = refAttr.AttrValue.split(";");
+        var temp = refAttr.AttrValue.split(";").sort();
         formGroupObject["AttrValue"] = [temp[0]];
       }
       else if (refAttr.AttrInputType == 'P' || refAttr.AttrInputType == 'N') {

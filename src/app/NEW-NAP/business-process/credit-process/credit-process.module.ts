@@ -62,7 +62,7 @@ import { SurveyPagingXComponent } from "app/impl/NEW-NAP/business-process/credit
 import { SurveySubjectXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-x/survey-subject-x.component";
 import { SurveySubjectVerifXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-verif-x/survey-subject-verif-x.component";
 import { SurveySubjectViewXComponent } from "app/impl/NEW-NAP/business-process/credit-process/survey/survey-subject-view-x/survey-subject-view-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 
 export const customCurrencyMaskConfig = {
@@ -98,7 +98,7 @@ export const customCurrencyMaskConfig = {
     MatSelectModule,
     UcapprovalModule,
     UcapprovebyModule,
-    UcSubsectionModule ,
+    UcSubsectionModule,
     ViewSharingComponentModule,
     UcviewgenericModule,
     ViewAppComponentModule,
@@ -119,7 +119,7 @@ export const customCurrencyMaskConfig = {
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
     ReservedFundComponent,
-    CreditInquiryComponent, 
+    CreditInquiryComponent,
     CommissionV2Component,
     FormCommissionGenerateComponent,
     CommissionCfnaComponent,

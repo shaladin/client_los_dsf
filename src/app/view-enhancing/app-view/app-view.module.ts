@@ -56,7 +56,7 @@ import { AppViewXComponent } from "app/impl/view-enhancing/app-view/app-view-x.c
 import { ViewSrvyTaskXComponent } from "app/impl/view-enhancing/app-view/view-srvy-task-x/view-srvy-task-x.component";
 import {ApprovalHistXComponent} from 'app/impl/view-enhancing/app-view/approval-hist/approval-hist-x.component';
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
     imports: [

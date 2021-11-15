@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.4.13-1",
+  "version": "1.4.14-1",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -20,7 +20,7 @@
   },
   "private": true,
   "dependencies": {
-    "@adins/uc-directive-upper-case": "0.0.1",
+    "@adins/uc-directive-upper-case": "^1.1.1",
     "@adins/uc-show-errors": "^1.0.8",
     "@adins/uc-subsection": "^1.0.5",
     "@adins/ucaddress": "^1.1.1",
@@ -42,7 +42,7 @@
     "@adins/ucreport": "^2.0.22",
     "@adins/ucsearch": "^2.3.2",
     "@adins/ucthingstodo": "^1.0.6",
-    "@adins/ucupload": "^1.8.3",
+    "@adins/ucupload": "^1.9.1",
     "@adins/ucviewgeneric": "^2.2.1",
     "@agm/core": "1.0.0-beta.5",
     "@angular/animations": "^7.2.16",

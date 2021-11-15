@@ -11,7 +11,7 @@ import { InputLookupObj } from "app/shared/model/input-lookup-obj.model";
 import { environment } from "environments/environment";
 import { MouCustDlrFinObj } from "app/shared/model/mou-cust-dlr-fin.model";
 import { CriteriaObj } from "app/shared/model/criteria-obj.model";
-import { VendorObj } from "app/shared/model/vendor.model";
+import { VendorObj } from "app/shared/model/vendor-obj.model";
 import { RefPayFreqObj } from "app/shared/model/ref-pay-freq-obj.model";
 import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
 import { GenericObj } from "app/shared/model/generic/generic-obj.model";
