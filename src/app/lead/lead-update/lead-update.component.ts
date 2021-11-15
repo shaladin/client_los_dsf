@@ -71,7 +71,7 @@ export class LeadUpdateComponent implements OnInit {
       leadReject.LeadStat = CommonConstant.LeadStatReject;
       leadReject.LeadStep = CommonConstant.LeadStatReject;
       leadReject.LeadId = event.RowObj.LeadId;
-      leadReject.WfTaskListId = environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId;  //ProcessInstanceId = WF Instance GUID Versi Camunda
+      leadReject.WfTaskListId = environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId;
 
       let RejectLeadUrl = environment.isCore ? URLConstant.RejectLeadV2 : URLConstant.RejectLead;
       this.http.post(RejectLeadUrl, leadReject).subscribe(
