@@ -466,9 +466,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     if (!this.DOAssetForm.valid) {
       return;
     }
-    alert(this.isFinal);
-    return;
-    
+
     if (!this.isFinal) {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
