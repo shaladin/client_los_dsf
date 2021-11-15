@@ -625,7 +625,9 @@ export class URLConstant {
   public static GetChangeMouCustCollateralByChangeMouCustId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustCollateralByChangeMouCustId";
   public static GetChangeMouCustFctrByMouCustId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustFctrByMouCustId";
   public static GetChangeMouCustFctrDetailByChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustFctrDetailByChangeMouTrxId";
+  public static GetForViewChangeMouCustFctrDetailByChangeMouTrxId = environment.losUrl + "/v2" + "/ChangeMou/GetForViewChangeMouCustFctrDetailByChangeMouTrxId";
   public static GetChangeMouCustDlrFncgByMouCustId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustDlrFindById";
+  public static GetForViewChangeMouCustDlrFncgByMouCustId = environment.losUrl + "/v2" + "/ChangeMou/GetForViewChangeMouCustDlrFncgByMouCustId";
   public static GetChangeMouCustDlrFncgDetailByChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustDlrFncgDetailByChangeMouTrxId";
   public static AddEditChangeMouCustDlrFin = environment.losUrl + "/v1" + "/ChangeMou/AddEditChangeMouCustDlrFin";
   public static SubmitChangeMouReview = environment.losUrl + "/v1" + "/ChangeMou/SubmitChangeMouReview";
