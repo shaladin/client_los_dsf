@@ -1,24 +1,18 @@
-  <div formArrayName="Deductions">
-    <div formGroupName="{{groupName}}">
-      <div *ngIf="genericList?.length != 1 || (dropdownListObj.isLabel != undefined && !dropdownListObj.isLabel)">
-        <select class="form-control" formControlName="{{identifier}}"
-          (change)="onSelectOpt($event.target.value)"
-          [attr.disabled]="(isDisabled != undefined && isDisabled) ? '' : null ">
-          <option *ngIf="genericList.length != 1 && dropdownListObj.ddlType == 'one'" value="">Select One</option>
-          <option *ngIf="genericList.length != 1 && dropdownListObj.ddlType == 'all'" value="">All</option>
-          <option *ngIf="genericList.length != 1 && dropdownListObj.ddlType == 'none'" value="">Select None</option>
-          <option *ngFor="let item of genericList;let i = index" [value]="item[dropdownListObj.customKey]">
-            {{item[dropdownListObj.customValue]}}
-          </option>
-        </select>
-      </div>
-      <div *ngIf="genericList.length == 1 && (dropdownListObj.isLabel == undefined || dropdownListObj.isLabel)">
-        {{ this.genericList[0][this.dropdownListObj.customValue] }}
-      </div>
-      <!-- <lib-uc-show-errors [control]="parentForm.controls[identifier]" [submit]="enjiForm.submitted">
-      </lib-uc-show-errors> -->
-
-      <button type="button" (click)="clickMe()">Click Me</button>
-
-    </div>
-  </div>
+<div class="dd-container">
+	<div class="dd-control-container" (click)="toggle()" tabindex="0" #displayLabel>
+		<span class="dd-display-item" role="textbox">{{display}}
+			<div class="pull-right"><i class="fa fa-caret-down"></i></div>
+		</span>
+	</div>
+	<div class="dd-list-container" [hidden]="isListHide">
+		<div><input type="text" class="drop-input" [(ngModel)]="searchText" (keypress)="onKeyPress($event)" #filterInput></div>
+		<div class="dd-items-container">
+			<div [attr.data-dd-value]="{id:'', display:'Select'}" class="dd-list-item" (click)="onItemSelect()" (mouseover)="onHover($event)" (mouseout)="onHover($event)">{{placeholder}}</div>
+			<div #listItems [ngClass]=" { 'dd-active dd-hightlight-item' :isSelected(item)} " class="dd-list-item " *ngFor="let item
+			 of items | textSearch : searchText; let i=index "
+			 (click)="onItemSelect(item) " [attr.data-dd-value]="stringify(item)" (mouseover)="onHover($event) " (mouseout)="onHover($event) ">
+			{{item?.display}}
+			</div>
+		</div>
+	</div>
+</div>

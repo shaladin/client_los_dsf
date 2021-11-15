@@ -29,6 +29,7 @@ import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 import { UcDirectiveUpperCaseModule } from '@adins/uc-directive-upper-case';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { RefAttrModule } from '../sharing-components/ref-attr/ref-attr.module';
+import { TextSearchPipe } from './uc-testing/text-search.pipe';
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -47,6 +48,7 @@ export const customCurrencyMaskConfig = {
     declarations: [
         UcTestingComponent,
         UcTestComponent,
+        TextSearchPipe
     ],
     exports: [
         UcDirectiveUpperCaseModule,
