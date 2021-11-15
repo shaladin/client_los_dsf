@@ -106,7 +106,6 @@ export class DoAssetDetailComponent implements OnInit {
     var reqAppAsset = { AppAssetId: this.AppAssetId, AppId: this.AppId};
     await this.httpClient.post(URLConstant.GetAppAssetForDOMultiAsset, reqAppAsset).toPromise().then(
       async (response) => {
-        console.log(response);
         var appAsset = response["AppAssetObj"];
         this.AppAssetTypeCode = appAsset.AssetTypeCode;
         var appCollateral = response["AppCollateralDoc"];
