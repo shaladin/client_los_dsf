@@ -144,7 +144,8 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     let getDOAssetList = this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, { Id: this.agrmntId });
     let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, GetDoObj);
     let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { Id: this.agrmntId });
-    forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
+    // X DSF Non JIRA, Udin : Pisah "checkAllDO" dari forJoin() karena bikin issue data tidak muncul
+    forkJoin([getDOAssetList, getDOList]).subscribe(
       (response) => {
         this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
         this.custType = response[0]["MrCustTypeCode"];
@@ -190,9 +191,17 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           }
           formArray.push(formGroup);
         }
-        this.isFinal = response[2]["IsFinal"];
       }
     );
+    
+    // START X DSF Non JIRA, Udin : Pisah "checkAllDO" dari forJoin() karena bikin issue data tidak muncul
+    await checkAllDO.toPromise().then(
+      (response) => {
+        this.isFinal = response["IsFinal"];
+      }
+    );
+    // END X DSF Non JIRA, Udin 
+
     await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -457,6 +466,9 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     if (!this.DOAssetForm.valid) {
       return;
     }
+    alert(this.isFinal);
+    return;
+    
     if (!this.isFinal) {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
