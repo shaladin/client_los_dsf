@@ -39,6 +39,7 @@
                             <div *ngIf="question.type=='textbox'">
                               <input type="text" id="{{question.id}}" class="form-control search-form-control"
                                 [ngModel]="question.value" [required]="question.isRequired" name="{{question.name}}"
+                                attr.data-crit-datatable="{{question.isCriteriaDataTable}}"
                                 attr.data-required="{{question.isRequired}}" value="{{question.value}}"
                                 (keyup.enter)="searchClick()" attr.data-type="{{question.datatype}}"
                                 attr.data-name="{{question.name}}" attr.data-restriction="{{question.restriction}}"
@@ -90,76 +91,73 @@
 
                             <!-- End Hardcode Lookup didalem-->
                             <div *ngIf="question.type=='datepicker'">
-                              <input type="date" id="{{question.id}}"
+                              <input type="{{question.isTime ? 'datetime-local' : 'date'}}" id="{{question.id}}"
                                 class="form-control search-form-control btn-lookup" name="{{question.name+[i]}}"
                                 [ngModel]="question.value" [required]="question.isRequired"
                                 attr.data-required="{{question.isRequired}}" value="{{question.value}}"
-                                attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}"
+                                attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}" attr.data-crit-datatable="{{question.isCriteriaDataTable}}"
                                 (keyup.enter)="searchClick()" attr.data-restriction="{{question.restriction}}"
                                 attr.label="{{question.label}}" min="{{question.minDate | date:'yyyy-MM-dd'}}"
                                 max="{{question.maxDate | date:'yyyy-MM-dd'}}" (focusout)="checkInputDate(question)"
                                 [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name+[i]]?.touched || enjiForm.form.controls[question.name+[i]]?.dirty) && enjiForm.form.controls[question.name+[i]]?.invalid }">
                             </div>
-
+                            <div *ngIf="question.type == 'taskDefinitionKey' || question.type == 'processKey' || question.type == 'officeRoleCodes'">
+                              <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
+                                [required]="question.isRequired" class="form-control search-form-control"
+                                attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
+                                attr.label="{{question.label}}" [hidden]="question?.itemsUrl?.length == 1"
+                                (change)="(question.type == 'taskDefinitionKey' || question.type == 'processKey') ? SetProcessKey(i,question.wfKeyFilter) : SetRoleOfficeCodes(i)"
+                                [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
+                                <option *ngIf="question.ddlType == 'one' && question?.itemsUrl?.length != 1"
+                                  value="one">Select One</option>
+                                <option
+                                  *ngIf="(question?.ddlType == undefined || question.ddlType == 'all') && question?.itemsUrl?.length != 1"
+                                  value="all">All</option>
+                                <option *ngFor="let item of question?.itemsUrl" value="{{item.Key}}">
+                                  {{item.Value}}
+                                </option>
+                              </select>
+                              <label *ngIf="question?.itemsUrl?.length == 1">{{question.itemsUrl[0].Value}}</label>
+                            </div>
                             <div *ngIf="question.type=='dropdown'">
-                              <!-- Ini kalau datanya tidak di load dari URL -->
-                              <div *ngIf="!question.isFromURL">
-                                <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
-                                  [required]="question.isRequired" class="form-control search-form-control"
-                                  attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
-                                  attr.data-name="{{question.name}}" attr.label="{{question.label}}"
-                                  [hidden]="question?.items.length == 1" [(ngModel)]="question.value"
-                                  [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
-                                  <option *ngIf="question.ddlType == 'one' && question?.items.length != 1" value="one">
-                                    Select One</option>
-                                  <option selected
-                                    *ngIf="(question?.ddlType == undefined || question.ddlType == 'all') && question?.items.length != 1"
-                                    value="all">All</option>
-                                  <option *ngFor="let item of question?.items" value="{{item.key}}">
-                                    {{item.value}}
-                                  </option>
-                                </select>
-                                <label *ngIf="question?.items.length == 1">{{question.items[0].value}}</label>
-                              </div>
-                              <!-- Ini kalau datanya di load dari URL -->
-                              <div *ngIf="question.isFromURL">
-                                <div *ngIf="question.isEvent">
-                                  <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
-                                    [required]="question.isRequired" class="form-control search-form-control"
-                                    attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
-                                    attr.data-name="{{question.name}}" attr.label="{{question.label}}"
-                                    (change)="onChangeEvent($event.target.value, question)"
-                                    [hidden]="question?.itemsUrl.length == 1" [(ngModel)]="question.value"
-                                    [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
-                                    <option *ngIf="question.ddlType == 'one' && question?.itemsUrl.length != 1"
-                                      value="one">Select One</option>
-                                    <option
-                                      *ngIf="(question?.ddlType == undefined || question.ddlType == 'all') && question?.itemsUrl.length != 1"
-                                      value="all">All</option>
-                                    <option *ngFor="let item of question?.itemsUrl" value="{{item.Key}}">
-                                      {{item.Value}}
-                                    </option>
-                                  </select>
-                                  <label *ngIf="question?.itemsUrl.length == 1">{{question.itemsUrl[0].Value}}</label>
-                                </div>
-                                <div *ngIf="!question.isEvent">
-                                  <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
-                                    [required]="question.isRequired" class="form-control search-form-control"
-                                    attr.query-in="{{question.isQueryIn}}" attr.data-type="{{question.datatype}}"
-                                    attr.label="{{question.label}}" [hidden]="question?.itemsUrl.length == 1" [(ngModel)]="question.value"
-                                    [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
-                                    <option *ngIf="question.ddlType == 'one' && question?.itemsUrl.length != 1"
-                                      value="one">Select One</option>
-                                    <option
-                                      *ngIf="(question?.ddlType == undefined || question.ddlType == 'all') && question?.itemsUrl.length != 1"
-                                      value="all">All</option>
-                                    <option *ngFor="let item of question?.itemsUrl" value="{{item.Key}}">
-                                      {{item.Value}}
-                                    </option>
-                                  </select>
-                                  <label *ngIf="question?.itemsUrl.length == 1">{{question.itemsUrl[0].Value}}</label>
-                                </div>
-                              </div>
+                              <select name="{{question.name}}" attr.data-required="{{question.isRequired}}"
+                                [(ngModel)]="question.value" [required]="question.isRequired"
+                                class="form-control search-form-control" attr.query-in="{{question.isQueryIn}}"
+                                attr.data-type="{{question.datatype}}" attr.data-name="{{question.name}}"
+                                attr.label="{{question.label}}" attr.data-crit-datatable="{{question.isCriteriaDataTable}}"
+                                [hidden]="!question.isFromURL ? question?.items?.length == 1 : question?.itemsUrl?.length == 1"
+                                (change)="question.isEvent ? onChangeEvent($event.target.value, question) : ''"
+                                [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls[question.name]?.touched || enjiForm.form.controls[question.name]?.dirty) && enjiForm.form.controls[question.name]?.invalid }">
+                                <option
+                                  *ngIf="question.ddlType == 'one' && (!question.isFromURL ? question?.items?.length != 1 : question?.itemsUrl?.length != 1)"
+                                  value="one">
+                                  Select One</option>
+                                <option
+                                  *ngIf="(question?.ddlType == undefined || question.ddlType == 'all') && (!question.isFromURL ? question?.items?.length != 1 : question?.itemsUrl?.length != 1)"
+                                  value="all">All</option>
+                                <option *ngFor="let item of !question.isFromURL ? question?.items : question?.itemsUrl"
+                                  value="{{!question.isFromURL ? item.key : item.Key}}">
+                                  {{!question.isFromURL ? item.value : item.Value}}
+                                </option>
+                              </select>
+                              <label
+                                *ngIf="!question.isFromURL ? question?.items?.length == 1 : question?.itemsUrl?.length == 1">{{!question.isFromURL
+                                ? question.items[0].value : question.itemsUrl[0].Value}}</label>
+                            </div>
+                            <div *ngIf="question.type=='claim'">
+                              <select name="{{'claim'+[i]}}" class="form-control search-form-control"
+                                attr.data-type="{{'text'}}" attr.data-crit-datatable="{{question.isCriteriaDataTable}}"
+                                attr.data-name="{{'Assignee'}}" [hidden]="ClaimList?.length == 1"
+                                [ngClass]="{ 'is-invalid':(enjiForm.submitted || enjiForm.form.controls['claim'+[i]]?.touched || enjiForm.form.controls['claim'+[i]]?.dirty) && enjiForm.form.controls['claim'+[i]]?.invalid }">
+                                <option *ngIf="question.ddlType == 'one' && ClaimList?.length != 1" value="one">Select
+                                  One</option>
+                                <option
+                                  *ngIf="(question?.ddlType == undefined || question.ddlType == 'all') && ClaimList?.length != 1"
+                                  value="all">All</option>
+                                <option *ngFor="let item of ClaimList" value="{{item.Key}}">
+                                  {{item.Value}}
+                                </option>
+                              </select>
                             </div>
                             <lib-uc-show-errors *ngIf="question.type!='datepicker'"
                               [control]="enjiForm.form.controls[question.name]" [submit]="enjiForm.submitted">
@@ -189,18 +187,18 @@
                     <div class="form-actions right">
                       <button *ngIf="exportData == true" type="button" (click)="exportAsXLSX()"
                         class="btn btn-raised btn-success mr-1" translate>
-                        <i class="fa ft-download"></i> Export Excel
+                        <i class="fa ft-download"></i>&nbsp;<span translate>Export Excel</span>
                       </button>
                       <button type="button" (click)="reset()" class="btn btn-raised btn-warning mr-1" translate>
-                        <i class="fa fa-times"></i> Reset
+                        <i class="fa fa-times"></i>&nbsp;<span translate>Reset</span>
                       </button>
                       <button *ngIf="(isReport == undefined || !isReport)" type="submit"
-                        class="btn btn-raised btn-primary" #UCSearchClick translate>
-                        <i class="fa fa-search"></i> Search
+                        class="btn btn-raised btn-primary" #UCSearchClick>
+                        <i class="fa fa-search"></i>&nbsp;<span translate>Search</span>
                       </button>
                       <button *ngIf="(isReport != undefined && isReport)" type="button" (click)="GenerateReport()"
-                        class="btn btn-raised btn-primary" translate>
-                        <i class="fa ft-download"></i> Generate Report
+                        class="btn btn-raised btn-primary">
+                        <i class="fa ft-download"></i>&nbsp;<span translate>Generate Report</span>
                       </button>
                     </div>
                   </div>
