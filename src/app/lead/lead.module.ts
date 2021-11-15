@@ -65,7 +65,7 @@ import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitor
 import { UcDirectiveUpperCaseModule } from "@adins/uc-directive-upper-case";
 import { NewLeadInputPageXComponent } from "app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component";
 import { NewLeadInputLeadDataXComponent } from "app/impl/lead/new-lead-input/new-lead-input-lead-data-x/new-lead-input-lead-data-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",

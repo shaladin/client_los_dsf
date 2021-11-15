@@ -27,6 +27,7 @@ export class InputAddressObj {
     isRequired: boolean;
     environmentUrl: string;
     isReadonly: boolean;
+    isAddrUppercase: boolean;
 
     constructor() {
         this.title = "Address Information";
@@ -49,5 +50,6 @@ export class InputAddressObj {
         this.isRequired = true;
         this.environmentUrl = environment.FoundationR3Url + "/v1";
         this.isReadonly = false;
+        this.isAddrUppercase = true;
     }
 }

@@ -7,11 +7,11 @@ import { InputNapFL4WRoutingModule } from "./input-nap-routing.module";
 import { ArchwizardModule } from "angular-archwizard";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { ReactiveFormsModule, FormsModule } from "@angular/forms"; 
-import { UcShowErrorsModule } from "@adins/uc-show-errors"; 
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { NapAddComponent } from './nap-add/nap-add.component';
 import { NapPagingComponent } from './nap-paging/nap-paging.component';
-import { NapViewComponent } from './nap-view/nap-view.component';   
+import { NapViewComponent } from './nap-view/nap-view.component';
 import { MatCheckboxModule, MatRadioModule, MatSelectModule, MatTabsModule } from "@angular/material";
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { NapAddDetailComponent } from './nap-add-detail/nap-add-detail.component';
@@ -34,14 +34,14 @@ import { FinancialDataFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W
 import { ViewDeliveryOrderMultiAssetComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-multi-asset.component';
 import { ViewDeliveryOrderDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-detail/view-delivery-order-detail.component';
 import { ViewDeliveryOrderAssetDetailComponent } from './view-agrmnt/view-delivery-order-multi-asset/view-delivery-order-asset-detail/view-delivery-order-asset-detail.component';
-import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component"; 
+import { MultiCollDataComponent } from "../sharing-component/input-nap-component/collateral-data/multi-coll-data/multi-coll-data.component";
 import { ViewPurchaseOrderMultiAssetComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset.component';
 import { ViewPurchaseOrderMultiAssetDetailComponent } from './view-agrmnt/view-purchase-order-multi-asset/view-purchase-order-multi-asset-detail/view-purchase-order-multi-asset-detail.component';
 import { ViewAgrmntFl4wComponent } from './view-agrmnt-fl4w/view-agrmnt-fl4w.component';
 import { AppInsuranceFl4wComponent } from './view-agrmnt-fl4w/app-insurance-fl4w/app-insurance-fl4w.component';
 import { AppAssetDataFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-fl4w.component';
 import { ViewSummaryFl4wComponent } from './view-agrmnt-fl4w/view-summary-fl4w/view-summary-fl4w.component';
-import { AppAssetDataDetailFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component'; 
+import { AppAssetDataDetailFl4wComponent } from './view-agrmnt-fl4w/app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 import { UcviewgenericComponent } from "@adins/ucviewgeneric";
 import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-component/view-agrmnt-component.module";
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
@@ -51,22 +51,22 @@ import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/ne
 import { SharedModule } from "app/shared/shared.module";
 import { NapDetailFormXComponent } from "app/impl/NEW-NAP/FL4W/nap-detail-form/nap-detail-form-x.component";
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/FL4W/nap-cust-main-data/nap-cust-main-data-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
- 
-export const customCurrencyMaskConfig = {     
-  align: "right",     
-  allowNegative: true,     
-  allowZero: true,     
-  decimal: ".",     
-  precision: 2,     
-  prefix: "",     
-  suffix: "",     
-  thousands: ",",     
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
   nullable: false,
   inputMode: CurrencyMaskInputMode.NATURAL
 };
- 
+
 
 @NgModule({
   imports: [
@@ -77,9 +77,9 @@ export const customCurrencyMaskConfig = {
     InputNapComponentModule,
     ArchwizardModule,
     UcShowErrorsModule,
-    NgbModule, 
+    NgbModule,
     ReactiveFormsModule,
-    FormsModule, 
+    FormsModule,
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
@@ -96,12 +96,12 @@ export const customCurrencyMaskConfig = {
     SharedModule
   ],
   declarations: [
-    DummyComponent, 
+    DummyComponent,
     NapAddComponent,
     NapPagingComponent,
-    NapViewComponent,  
-    NapAddDetailComponent, 
-    ViewAgrmntComponent,  
+    NapViewComponent,
+    NapAddDetailComponent,
+    ViewAgrmntComponent,
     // FeeFL4WComponent,
     // SchmBalloonFL4WComponent,
     // SchmEvenPrincipalFL4WComponent,
@@ -116,7 +116,7 @@ export const customCurrencyMaskConfig = {
     ViewDeliveryOrderMultiAssetComponent,
     ViewDeliveryOrderDetailComponent,
     ViewDeliveryOrderAssetDetailComponent,
-    ViewPurchaseOrderMultiAssetComponent, 
+    ViewPurchaseOrderMultiAssetComponent,
     ViewPurchaseOrderMultiAssetDetailComponent, ViewAgrmntFl4wComponent, AppInsuranceFl4wComponent, AppAssetDataFl4wComponent, ViewSummaryFl4wComponent, AppAssetDataDetailFl4wComponent,
     NapCustMainDataComponent,
     NapDetailFormComponent,

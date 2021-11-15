@@ -39,7 +39,7 @@ import { MouViewAddcollXComponent } from 'app/impl/view-enhancing/mou-view/mou-v
 import { MouViewDetailXComponent } from "app/impl/view-enhancing/mou-view/mou-view-detail/mou-view-detail-x.component";
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 import { MouViewChangeMouHistoryXComponent } from "app/impl/view-enhancing/mou-view/mou-view-change-mou-history/mou-view-change-mou-history-x/mou-view-change-mou-history-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 @NgModule({
     imports: [
         MouViewRoutingModule,

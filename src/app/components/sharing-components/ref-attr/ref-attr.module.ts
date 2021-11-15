@@ -13,7 +13,7 @@ import { RefAttrFormGenerateComponent } from './ref-attr-form-generate/ref-attr-
 import { UcShowErrorsModule } from '@adins/uc-show-errors';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UcDirectiveUpperCaseModule } from '@adins/uc-directive-upper-case';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 export const customCurrencyMaskConfig = {
     align: "right",

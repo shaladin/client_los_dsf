@@ -15,6 +15,7 @@ export class UcTempPagingObj {
     addCritInput: Array<CriteriaObj>;
     ddlEnvironments: Array<EnviObj>;
     whereValue: Array<WhereValueObj>;
+    fromValue: Array<FromValueObj>;
     delay: number;
     isHideSearch: boolean;
     navigationConst: any;
@@ -24,7 +25,7 @@ export class UcTempPagingObj {
 
     constructor() {
         this.urlJson = "";
-        this.enviromentUrl = environment.isCore ? environment.losUrl + "/v2" : environment.losUrl + "/v1";
+        this.enviromentUrl = environment.isCore ? environment.losUrl + "/v2.1" : environment.losUrl + "/v1";
         this.title = "";
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.pagingJson = "";
@@ -36,6 +37,7 @@ export class UcTempPagingObj {
         this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url + "/v1" });
         this.listEnvironments.push({ environment: "LOS", url: environment.losUrl + "/v1" });
         this.whereValue = new Array<WhereValueObj>();
+        this.fromValue = new Array<FromValueObj>();
         this.delay = 0;
         this.isHideSearch = false;
         this.navigationConst = NavigationConstant;
@@ -55,6 +57,15 @@ export class EnviObj {
 }
 
 export class WhereValueObj {
+    property: string;
+    value: any;
+
+    constructor() {
+        this.property = "";
+    }
+}
+
+export class FromValueObj {
     property: string;
     value: any;
 

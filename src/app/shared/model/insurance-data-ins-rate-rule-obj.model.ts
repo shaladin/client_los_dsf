@@ -1,4 +1,5 @@
 export class InsuranceDataInsRateRuleObj {
+    InscoHoCode: string;
     InscoCode: string;
     AssetCategory: string;
     AssetCondition: string;

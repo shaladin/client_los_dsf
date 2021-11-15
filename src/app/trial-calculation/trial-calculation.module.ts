@@ -17,7 +17,7 @@ import { InputNapFL4WModule } from "app/NEW-NAP/FL4W/input-nap.module";
 import { InputNapCFNAModule } from "app/NEW-NAP/CFNA/input-nap.module";
 import { InputNapFCTRModule } from "app/NEW-NAP/FCTR/input-nap.module";
 import { TrialCalculationXComponent } from "app/impl/trial-calculation/trial-calculation-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",

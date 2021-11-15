@@ -26,7 +26,7 @@ import { PagesComponent } from './pages/pages.component';
 import { RequestNewPasswordComponent } from "./request-new-password/request-new-password.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {     
     align: "right",

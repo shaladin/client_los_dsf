@@ -9,7 +9,7 @@ import { CustMainDataAddComponent } from "./cust-main-data/cust-main-data-add/cu
 import { NapDetailPagingComponent } from "./nap-detail/nap-detail-paging/nap-detail-paging.component";
 import { CustMainDataPagingXComponent } from "app/impl/NEW-NAP/main-data/cust-main-data/cust-main-data-paging-x/cust-main-data-paging-x.component";
 import { CustMainDataAddXComponent } from "app/impl/NEW-NAP/main-data/cust-main-data/cust-main-data-add-x/cust-main-data-add-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 
 @NgModule({

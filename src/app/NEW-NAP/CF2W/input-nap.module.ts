@@ -12,7 +12,7 @@ import { AppAddFixedComponent } from "./app-add-fixed/app-add-fixed.component";
 import { AppAddDetailComponent } from "./app-add-detail/app-add-detail.component";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {     
     align: "right",     

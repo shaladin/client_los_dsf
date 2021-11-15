@@ -12,7 +12,7 @@ import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
 import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';

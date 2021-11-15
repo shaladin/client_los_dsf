@@ -24,18 +24,8 @@ export class ChangeMouInquiryXComponent implements OnInit {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
       this.inputPagingObj = new UcPagingObj();
-      this.inputPagingObj._url = "./assets/impl/ucpaging/mou/searchChangeMouInquiryX.json";
-      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/mou/searchChangeMouInquiryX.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url + "/v1"
-        },
-        {
-          name: "STATUS",
-          environment: environment.FoundationR3Url + "/v1"
-        }
-      ];
+      this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouInquiry.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouInquiry.json";
   }
   getEvent(event){
     let custId: number;

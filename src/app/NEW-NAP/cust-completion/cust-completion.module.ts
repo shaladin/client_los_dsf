@@ -15,11 +15,11 @@ import { CustCompletionOplDetailCompanyComponent } from './cust-completion-opl-d
 import { CustCompletionOplDetailPersonalComponent } from './cust-completion-opl-detail/cust-completion-opl-detail-personal/cust-completion-opl-detail-personal.component';
 import { InputNapComponentModule } from "../sharing-component/input-nap-component/input-nap-component.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 import { SharedModule } from 'app/shared/shared.module';
 import { CustCompletionDetailPersonalXComponent } from 'app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-personal/cust-completion-detail-personal-x.component';
 import { CustCompletionDetailCompanyXComponent } from 'app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-company/cust-completion-detail-company-x.component';
 import { CustCompletionDetailXComponent } from 'app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-x.component';
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -19,6 +19,10 @@ import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { CompleteTaskModel } from 'app/shared/model/workflow/v2/complete-task-model-obj.model';
 import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AppInvoiceFctrObj } from 'app/shared/model/app-invoice-fctr-obj.model';
 
 @Component({
     selector: 'invoice-verif-detail-DF-x',
@@ -40,23 +44,21 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
         AppId: number
     };
 
-    InvoiceForm = this.fb.group({
-        Invoices: this.fb.array([])
-    });
+    InvoiceForm = this.fb.group({});
     StepperIndex: number = 1;
-    IsReturnOn: boolean;
+    IsReturnOn: boolean = false;
 
     constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router,
         private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
         this.route.queryParams.subscribe(params => {
             if (params["AppId"] != null) {
-                this.AppId = params["AppId"];
+            this.AppId = params["AppId"];
             }
             if (params["TaskListId"] != null) {
-                this.WfTaskListId = params["TaskListId"];
+              this.WfTaskListId = params["TaskListId"];
             }
             if (params["TrxNo"] != null) {
-                this.TrxNo = params["TrxNo"];
+              this.TrxNo = params["TrxNo"];
             }
         });
     }
@@ -68,7 +70,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
     }
 
     SaveForm() {
-        var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+        let businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
 
         this.RlistAppTCObj = {
             ListAppTcObj: [],
@@ -76,7 +78,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
         }
         this.RlistAppTCObj.ListAppTcObj = new Array();
 
-        for (var i = 0; i < this.InvoiceForm.value.TCList["length"]; i++) {
+        for (let i = 0; i < this.InvoiceForm.value.TCList["length"]; i++) {
             this.appTC = new AppTCObj();
             this.appTC.AppTcId = this.InvoiceForm.value.TCList[i].AppTcId;
             this.appTC.AppId = this.InvoiceForm.value.TCList[i].AppId;
@@ -91,8 +93,8 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
             this.appTC.Notes = this.InvoiceForm.value.TCList[i].Notes;
             this.appTC.RowVersion = this.InvoiceForm.value.TCList[i].RowVersion;
 
-            var prmsDt = new Date(this.appTC.PromisedDt);
-            var prmsDtForm = this.InvoiceForm.value.TCList[i].PromisedDt;
+            let prmsDt = new Date(this.appTC.PromisedDt);
+            let prmsDtForm = this.InvoiceForm.value.TCList[i].PromisedDt;
             if (this.appTC.IsChecked == false) {
                 if (prmsDtForm != null) {
                     if (prmsDt < businessDt) {
@@ -107,7 +109,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
         this.httpClient.post(URLConstantX.EditAppTcX, this.RlistAppTCObj).subscribe(
             (response) => {
                 this.toastr.successMessage(response["message"]);
-                this.ResumeWf();
+                this.SaveInvoice();
                 // AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
             });
     }
@@ -141,6 +143,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
                 this.bizTemplateCode = response.BizTemplateCode
             });
 
+        this.GetListVerifStatus();
         if (this.LobCode == "DLRFNCNG") {
             this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerifDlrFinancing.json";
             this.viewGenericObj.ddlEnvironments = [
@@ -170,6 +173,16 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
         }
     }
 
+    listRefReason: Array<KeyValueObj> = new Array();
+    GetListVerifStatus() {
+        let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeInvoiceDataVerif };
+        this.httpClient.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
+            (response) => {
+                this.listRefReason = response[CommonConstant.ReturnObj];
+            }
+        );
+    }
+
     Cancel() {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
     }
@@ -192,16 +205,16 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
 
     ResumeWf() {
         let requestObj;
-        if (environment.isCore) {
+        if(environment.isCore){
             requestObj = new CompleteTaskModel();
             requestObj.TaskId = this.WfTaskListId;
             requestObj.ReturnValue = this.IsReturnOn ? AdInsConstant.TextTrue : AdInsConstant.TextFalse;
-        } else {
+        }else{
             requestObj = new WorkflowApiObj();
             requestObj.TaskListId = this.WfTaskListId;
             requestObj.ListValue["pBookmarkValue"] = CommonConstant.BOOKMARK_DONE;
         }
-
+        
         let ResumeWorkflowUrl = environment.isCore ? URLConstant.CompleteTask : URLConstant.ResumeWorkflow;
         this.httpClient.post(ResumeWorkflowUrl, requestObj).subscribe(
             response => {
@@ -209,5 +222,66 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
             }
         );
+    }
+
+    GetlistInvoice(ev: Array<AppInvoiceFctrObj>){
+        this.listInvoice = ev;
+    }
+    listInvoice: Array<AppInvoiceFctrObj>;
+    ReturnHandlingHData: ReturnHandlingHObj = new ReturnHandlingHObj();
+    SaveInvoice() {
+        let fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        for (let i = 0; i < fa_listInvoice.length; i++) {
+            let item = fa_listInvoice.at(i);
+            this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
+            this.listInvoice[i].RowVersion = item.get("RowVersion").value;
+        }
+
+        this.ReturnHandlingHData.AppId = this.AppId;
+        this.ReturnHandlingHData.WfTaskListId = this.WfTaskListId;
+
+        if (this.IsReturnOn) {
+            this.ReturnHandlingHData.ReturnBy = currentUserContext[CommonConstant.USER_NAME];
+            this.ReturnHandlingHData.ReturnNotes = this.ReturnForm.controls.Notes.value;
+            this.ReturnHandlingHData.ReturnFromTrxType = CommonConstant.VerfTrxTypeCodeInvoice;
+        }
+
+        let request = {
+            Invoices: this.listInvoice,
+            TaskListId: this.WfTaskListId,
+            IsDF: false,
+            IsReturn: this.IsReturnOn,
+            ReturnHandlingHObj: this.ReturnHandlingHData
+        };
+
+        let UpdateAppInvoiceDlfnUrl = environment.isCore ? URLConstant.UpdateAppInvoiceDlfnV2_1 : URLConstant.UpdateAppInvoiceDlfn;
+        this.httpClient.post(UpdateAppInvoiceDlfnUrl, request).subscribe((response) => {
+            if (response["StatusCode"] != "200") return;
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+        });
+    }
+
+    ReturnForm = this.fb.group({
+        Reason: ['', [Validators.required]],
+        Notes: ['', [Validators.required]],
+        ReasonDesc: ['']
+    });
+    switchForm() {
+        if (this.IsReturnOn) {
+            this.ReturnForm.reset();
+            this.IsReturnOn = false;
+        } else {
+            this.ReturnForm.patchValue({
+                Reason: ''
+            });
+            this.IsReturnOn = true;
+        }
+        this.ReturnForm.updateValueAndValidity();
+    }
+    onChangeReason(ev) {
+        this.ReturnForm.patchValue({
+            ReasonDesc: ev.target.selectedOptions[0].text
+        });
     }
 }

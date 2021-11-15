@@ -37,7 +37,6 @@ import { SchmStepUpStepDownCummulativeComponent } from "./financial-data/compone
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { SchmIrregularComponent } from "./financial-data/component/schm-irregular/schm-irregular.component";
 import { SchmBalloonComponent } from "./financial-data/component/schm-baloon/schm-balloon.component";
-
 import { SchmEvenPrincipalComponent } from "./financial-data/component/schm-even-principal/schm-even-principal.component";
 import { AssetDataPagingComponent } from "./multi-asset-data/asset-data-paging/asset-data-paging.component";
 import { AssetDataAddEditComponent } from "./multi-asset-data/asset-data-add-edit/asset-data-add-edit.component";
@@ -130,17 +129,16 @@ import { MultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/inp
 import { AssetDataAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-add-edit-x/asset-data-add-edit-x.component";
 import { AssetDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/asset-data-paging/asset-data-paging-x.component";
 import { AssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/asset-data/asset-data-x.component";
-import {CollateralDataCfnaPagingXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-paging/collateral-data-cfna-paging-x.component';
-import {CollateralDataCfnaXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-x.component';
+import { CollateralDataCfnaPagingXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-paging/collateral-data-cfna-paging-x.component';
+import { CollateralDataCfnaXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/collateral-data-cfna/collateral-data-cfna-x.component';
 import { InsuranceMultiAssetDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/insurance-multi-asset-data-x/insurance-multi-asset-data-x.component";
-
-import {ApplicationDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-dlfn/application-data-dlfn-x.component';
-import {FinancialDataDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/financial-data-dlfn-x.component';
-import {SingleInstDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/single-inst-dlfn/single-inst-dlfn-x.component';
-import {SchmRegularFixDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn-x.component';
-import {SchmEvenPrincipalDlfnXComponent} from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn-x.component';
+import { ApplicationDataDlfnXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/application-data-dlfn/application-data-dlfn-x.component';
+import { FinancialDataDlfnXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/financial-data-dlfn-x.component';
+import { SingleInstDlfnXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/single-inst-dlfn/single-inst-dlfn-x.component';
+import { SchmRegularFixDlfnXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn-x.component';
+import { SchmEvenPrincipalDlfnXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn-x.component';
 import { LoanObjectXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/loan-object-x/loan-object-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
