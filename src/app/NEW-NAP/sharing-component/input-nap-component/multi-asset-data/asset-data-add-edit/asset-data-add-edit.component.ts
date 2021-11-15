@@ -771,7 +771,7 @@ export class AssetDataAddEditComponent implements OnInit {
         });
 
         this.InputLookupCityIssuerObj.nameSelect = this.returnAppAssetObj.TaxCityIssuer;
-        this.InputLookupCityIssuerObj.jsonSelect = { provDistrictCode: this.returnAppAssetObj.TaxCityIssuer };
+        this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.returnAppAssetObj.TaxCityIssuer };
 
       let reqByCode = new GenericObj();
       reqByCode.Code = this.returnAppAssetObj.FullAssetCode;

@@ -92,6 +92,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
   ListAttrAnswer = [];
   isDiffWithRefAttr: boolean;
+  isUsed : boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DO_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
@@ -159,7 +160,12 @@ export class DeliveryOrderDetailComponent implements OnInit {
         this.AssetCategoryCode = this.appAssetObj.AssetCategoryCode;
         var appCollateralDocObj = response["AppCollateralDoc"];
         this.InputLookupCityIssuerObj.nameSelect = this.appAssetObj.TaxCityIssuer;
-        this.InputLookupCityIssuerObj.jsonSelect = { provDistrictCode: this.appAssetObj.TaxCityIssuer };
+        this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.appAssetObj.TaxCityIssuer };
+
+        if(this.MrAssetConditionCode == "USED") { 
+          this.isUsed = true;
+          this.InputLookupCityIssuerObj.isRequired = true;
+        }
 
         await this.http.post(URLConstant.GetAppCustByAppId, {Id : this.appAssetObj.AppId}).toPromise().then(
           (response) => {

@@ -51,6 +51,7 @@ export class DoAssetDetailComponent implements OnInit {
   reqAssetDataObj: ReqAssetDataObj;
   datePipe = new DatePipe("en-US");
   IsReady2: boolean = false;
+  isUsed : boolean = false;
 
   DOAssetDetail = this.fb.group({
     AppAssetId: [0, [Validators.required]],
@@ -105,14 +106,20 @@ export class DoAssetDetailComponent implements OnInit {
     var reqAppAsset = { AppAssetId: this.AppAssetId, AppId: this.AppId};
     await this.httpClient.post(URLConstant.GetAppAssetForDOMultiAsset, reqAppAsset).toPromise().then(
       async (response) => {
+        console.log(response);
         var appAsset = response["AppAssetObj"];
         this.AppAssetTypeCode = appAsset.AssetTypeCode;
         var appCollateral = response["AppCollateralDoc"];
         appAsset.TempRegisLettDt = this.datePipe.transform(appAsset.TempRegisLettDt, "yyyy-MM-dd");
         appAsset.TaxIssueDt = this.datePipe.transform(appAsset.TaxIssueDt, "yyyy-MM-dd");
-        console.log(this.InputLookupCityIssuerObj.isReady);
+        
         this.InputLookupCityIssuerObj.nameSelect = appAsset.TaxCityIssuer;
-        this.InputLookupCityIssuerObj.jsonSelect = { provDistrictCode: appAsset.TaxCityIssuer };
+        this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: appAsset.TaxCityIssuer };
+
+        if(appAsset.MrAssetConditionCode == "USED") { 
+          this.isUsed = true;
+          this.InputLookupCityIssuerObj.isRequired = true;
+        }
         
         await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: appAsset.AssetTypeCode }).toPromise().then(
           (response: GenericListObj) => {
@@ -167,6 +174,7 @@ export class DoAssetDetailComponent implements OnInit {
 
     console.log(this.DOAssetDetail.controls);
     await this.GetGS();
+    this.InputLookupCityIssuerObj.isReady = true;
   }
 
   lookupReady(){

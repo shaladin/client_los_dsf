@@ -34,7 +34,7 @@
                   <div class="col-md-8">
                     <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" 
                       [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='DOAssetDetail'
-                      (lookup)="SetBpkbCity($event)" *ngIf="InputLookupCityIssuerObj.isReady" >
+                      (lookup)="SetBpkbCity($event)" *ngIf="InputLookupCityIssuerObj.isReady">
                     </lib-uclookupgeneric>
                   </div>
                 </div>
@@ -237,9 +237,6 @@
     <button type="button" class="btn btn-warning btn-raised" (click)="activeModalAsset.dismiss('0')">
       <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
     </button> 
-    <button type="button" class="btn btn-warning btn-raised" (click)="lookupReady()">
-      <i class="ft-x"></i>&nbsp;<span translate>Lookup Ready</span>
-    </button>
     <button type="submit" class="btn btn-raised btn-primary">
       <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
     </button>
