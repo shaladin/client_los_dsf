@@ -134,7 +134,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "Status"
+            "property": "StatusDesc"
         },
         {
             "type": "text",
