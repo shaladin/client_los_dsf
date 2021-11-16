@@ -72,7 +72,7 @@
                 </lib-uc-show-errors>
               </div>
               <label class="col-md-2 adinsLabel" *ngIf="BizTemplateCode != 'DLFN'" for="AddIntr" translate>Additional Interest</label>
-              <label class="col-md-4 adinsLabel" *ngIf="BizTemplateCode != 'DLFN'" translate>{{MainInfoForm.controls.AddIntrstAmt.value | number:'.2':'en-US'}}</label>
+              <label class="col-md-4 adinsLabel" *ngIf="BizTemplateCode != 'DLFN'" translate>{{MainInfoForm.controls.AddIntrstAmt.value | number:'.0':'en-US'}}</label>
               </div>
               <div class="form-actions right" *ngIf="BizTemplateCode != 'DLFN'">
                 <button type="button" class="btn btn-raised btn-primary mr-2"
