@@ -2,11 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
-import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ResAppCustAddrForViewObj, ResAppCustCompanyLegalDocForViewObj, ResAppCustCompanyMgmntShrholderForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataCompanyForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
+import { ResAppCustAddrForViewObj, ResAppCustAttrForViewObj, ResAppCustCompanyLegalDocForViewObj, ResAppCustCompanyMgmntShrholderForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResAppCustOtherInfoForViewObj, ResCustDataCompanyForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
 import { ResAppCustBankAccForViewObj } from 'app/shared/model/response/view/res-app-cust-bank-acc-for-view-obj.model';
 import { DatePipe } from '@angular/common';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
@@ -52,6 +51,8 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustCompanyMgmntShrholderObjs: Array<ResAppCustCompanyMgmntShrholderForViewObj> = new Array<ResAppCustCompanyMgmntShrholderForViewObj>();
   appCustCompanyLegalDocObjs: Array<ResAppCustCompanyLegalDocForViewObj> = new Array<ResAppCustCompanyLegalDocForViewObj>();
+  appCustOtherInfoForViewObj: ResAppCustOtherInfoForViewObj = new ResAppCustOtherInfoForViewObj;
+  appCustAttrContentsObj : Array<ResAppCustAttrForViewObj> = new Array<ResAppCustAttrForViewObj>();
   readonly ShrTypePublic: string = CommonConstant.CustTypePublic;
 
   constructor(private http: HttpClient, private modalService: NgbModal) { }
@@ -97,6 +98,8 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
         this.appCustGrpObjs = response.ListAppCustGrpObj;
         this.ListCustCoyFinData = response.ListAppCustCompanyFinData;
         this.responseCustAttr = response.ListCustFinDataAttrContent;
+        this.appCustOtherInfoForViewObj = response.AppCustOtherInfoForViewObj;
+        this.appCustAttrContentsObj = response.ListAppCustAttrContentObj;
 
         this.loadShareholderListData(this.appCustObj.AppCustId);
 
