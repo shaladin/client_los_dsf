@@ -205,16 +205,6 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
-        <div class="row">
-          <div class="col-md-6">
-            <label class="adInsLabel" translate> First Installment Type </label>
-          </div>
-          <div class="col-md-6" style="text-align: right;">
-            <label class="adInsLabel"> {{agrmntObj?.FirstInstTypeName}} </label>
-          </div>
-        </div>
-      </div>
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
@@ -303,7 +293,7 @@
             <label class="adInsLabel" translate> Balloon Value Amount </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{agrmntFinDataObj?.BalloonValueAmt}} </label>
+            <label class="adInsLabel"> {{agrmntFinDataObj?.BalloonValueAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
       </div>
@@ -315,6 +305,16 @@
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{agrmntFinDataObj?.CummulativeTenor}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel" translate> First Installment Type </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{agrmntObj?.FirstInstTypeName}} </label>
           </div>
         </div>
       </div>
