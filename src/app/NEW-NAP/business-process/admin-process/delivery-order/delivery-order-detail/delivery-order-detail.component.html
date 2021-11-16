@@ -223,21 +223,21 @@
                       {{DeliveryOrderForm.get('DOAssetDocList').at(i).controls.MrCollateralConditionCode.value == 'NEW' ? (DeliveryOrderForm.get('DOAssetDocList').at(i).controls.IsMandatoryNew.value ? "YES" : "NO") : (DeliveryOrderForm.get('DOAssetDocList').at(i).controls.IsMandatoryUsed.value ? "YES" : "NO")}}
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" formControlName="IsReceived" />
+                      <input type="checkbox" formControlName="IsReceived" (change)="ChangeIsReceived(i)"/>
                     </td>
                     <td style="text-align: left;">
                       <input type="text" class="form-control adInsInput" formControlName="DocNo"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.get('DOAssetDocList').at(i).controls.DocNo.invalid }" />
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.get('DOAssetDocList').at(i).controls.DocNo.invalid }"  [readonly]="!DeliveryOrderForm.get('DOAssetDocList').at(i).controls.IsReceived.value" />
                       <lib-uc-show-errors [control]="DeliveryOrderForm.get('DOAssetDocList').at(i).controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </td>
                     <td style="text-align: left;">
                       <input type="date" class="form-control adInsInput" formControlName="ExpiredDt"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.get('DOAssetDocList').at(i).controls.ExpiredDt.invalid }" />
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.get('DOAssetDocList').at(i).controls.ExpiredDt.invalid }" [readonly]="!DeliveryOrderForm.get('DOAssetDocList').at(i).controls.IsReceived.value" />
                       <lib-uc-show-errors [control]="DeliveryOrderForm.get('DOAssetDocList').at(i).controls.ExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </td>
                     <td style="text-align: left;">
                       <textarea class="form-control adInsInput" formControlName="DocNotes"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.get('DOAssetDocList').at(i).controls.DocNotes.invalid }"></textarea>
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.get('DOAssetDocList').at(i).controls.DocNotes.invalid }" [readonly]="!DeliveryOrderForm.get('DOAssetDocList').at(i).controls.IsReceived.value" ></textarea>
                       <lib-uc-show-errors [control]="DeliveryOrderForm.get('DOAssetDocList').at(i).controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </td>
                   </tr>
@@ -248,11 +248,13 @@
             </lib-ucSubsection>
             <div class="form-body" id="RecipientInfo">
               <div class="form-group row">
-                <label class="col-md-2" translate>Delivery Order No</label>
+                <label class="col-md-2 adins-required-label" translate>Delivery Date</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control width-75-per" formControlName="DeliveryNo">
+                  <input type="date" min="{{PurchaseOrderDt | date: 'yyyy-MM-dd'}}" class="form-control width-75-per" formControlName="DeliveryDt">
+                  <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>Recipient Name</label>
+                <label class="col-md-2 adins-required-label" translate>Recipient Name</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control width-75-per" formControlName="RecipientName">
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.RecipientName"
@@ -261,22 +263,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 adins-required-label" translate>Delivery Date</label>
-                <div class="col-md-4">
-                  <input type="date" min="{{PurchaseOrderDt | date: 'yyyy-MM-dd'}}" class="form-control width-75-per"
-                    formControlName="DeliveryDt">
-                  <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryDt" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-                <label class="col-md-2" translate>Recipient Address</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control width-75-per" formControlName="DeliveryAddr">
-                  <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryAddr" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-2" translate>Customer Relationship</label>
+                <label class="col-md-2 adins-required-label" translate>Customer Relationship</label>
                 <div class="col-md-4">
                   <select class="form-control" style="width: auto" formControlName="MrCustRelationshipCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && DeliveryOrderForm.controls.MrCustRelationshipCode.invalid }">
@@ -286,6 +273,12 @@
                   </select>
                   <lib-uc-show-errors [control]="DeliveryOrderForm.controls.MrCustRelationshipCode"
                     [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <label class="col-md-2 adins-required-label" translate>Recipient Address</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control width-75-per" formControlName="DeliveryAddr">
+                  <lib-uc-show-errors [control]="DeliveryOrderForm.controls.DeliveryAddr" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>

@@ -209,21 +209,21 @@
                   {{DOAssetDetail.get('DOAssetDocList').at(i).controls.MrCollateralConditionCode.value == 'NEW' ? (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryNew.value ? "YES" : "NO") : (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryUsed.value ? "YES" : "NO")}}
                 </td>
                 <td class="text-center">
-                  <input type="checkbox" formControlName="IsReceived" />
+                  <input type="checkbox" formControlName="IsReceived" (change)="ChangeIsReceived(i)"/>
                 </td>
                 <td style="text-align: left;">
                   <input type="text" class="form-control adInsInput" formControlName="DocNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo.invalid }" />
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" />
                   <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </td>
                 <td style="text-align: left;">
                   <input type="date" class="form-control adInsInput" formControlName="ExpiredDt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.ExpiredDt.invalid }" />
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.ExpiredDt.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" />
                   <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.ExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </td>
                 <td style="text-align: left;">
                   <textarea class="form-control adInsInput" formControlName="DocNotes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes.invalid }"></textarea>
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" ></textarea>
                   <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </td>
               </tr>

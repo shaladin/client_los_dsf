@@ -214,31 +214,32 @@ export class DoAssetDetailComponent implements OnInit {
   GenerateAppCollateralDocs(appCollateralDocs)
   {
     var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
-    for (const item of appCollateralDocs) {
+    
+    for (let i = 0; i < appCollateralDocs.length; i++) {
       var isMandatory = false;
-      if(item.MrCollateralConditionCode == CommonConstant.AssetConditionNew){
-        if(item.IsMandatoryNew == true){
+      if(appCollateralDocs[i].MrCollateralConditionCode == CommonConstant.AssetConditionNew){
+        if(appCollateralDocs[i].IsMandatoryNew == true){
           isMandatory = true;
         }
       }
       else{
-        if(item.IsMandatoryUsed == true){
+        if(appCollateralDocs[i].IsMandatoryUsed == true){
           isMandatory = true;
         }
       }
       var formGroup = this.fb.group({
-        AppCollateralDocId: [item.AppCollateralDocId],
-        AppCollateralId: [item.AppCollateralId],
-        DocCode: [item.DocCode],
-        DocName: [item.DocName],
-        DocNo: [item.DocNo, isMandatory ? [Validators.required] : []],
-        IsReceived: [item.IsReceived],
-        ExpiredDt: [item.ExpiredDt == null ? "" : this.datePipe.transform(item.ExpiredDt, "yyyy-MM-dd") ],
-        DocNotes: [item.DocNotes],
-        IsValueNeeded: [item.IsValueNeeded],
-        IsMandatoryNew: [item.IsMandatoryNew],
-        IsMandatoryUsed: [item.IsMandatoryUsed],
-        MrCollateralConditionCode: [item.MrCollateralConditionCode]
+        AppCollateralDocId: [appCollateralDocs[i].AppCollateralDocId],
+        AppCollateralId: [appCollateralDocs[i].AppCollateralId],
+        DocCode: [appCollateralDocs[i].DocCode],
+        DocName: [appCollateralDocs[i].DocName],
+        DocNo: [appCollateralDocs[i].DocNo, isMandatory ? [Validators.required] : []],
+        IsReceived: [appCollateralDocs[i].IsReceived],
+        ExpiredDt: [appCollateralDocs[i].ExpiredDt == null ? "" : this.datePipe.transform(appCollateralDocs[i].ExpiredDt, "yyyy-MM-dd") ],
+        DocNotes: [appCollateralDocs[i].DocNotes],
+        IsValueNeeded: [appCollateralDocs[i].IsValueNeeded],
+        IsMandatoryNew: [appCollateralDocs[i].IsMandatoryNew],
+        IsMandatoryUsed: [appCollateralDocs[i].IsMandatoryUsed],
+        MrCollateralConditionCode: [appCollateralDocs[i].MrCollateralConditionCode]
       });
       formArray.push(formGroup);
     }
@@ -439,6 +440,12 @@ export class DoAssetDetailComponent implements OnInit {
         this.AppObj = response;
       }
     );
+  }
+
+  ChangeIsReceived(idx: number){
+    this.DOAssetDetail.controls.DOAssetDocList["controls"][idx]["controls"].DocNo.setValue("");
+    this.DOAssetDetail.controls.DOAssetDocList["controls"][idx]["controls"].ExpiredDt.setValue("");
+    this.DOAssetDetail.controls.DOAssetDocList["controls"][idx]["controls"].DocNotes.setValue("");
   }
 
   //For Fraud Checking
