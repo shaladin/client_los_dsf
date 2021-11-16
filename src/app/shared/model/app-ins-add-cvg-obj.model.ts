@@ -9,6 +9,8 @@ export class AppInsAddCvgObj {
     CustAddPremiRate: number;
     InscoAddPremiAmt: number;
     CustAddPremiAmt: number;
+    PremiumType: string;
+    BaseCalc: string;
 constructor() { 
     this.AppInsAddCvgId = 0;
     }

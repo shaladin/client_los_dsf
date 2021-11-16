@@ -8,4 +8,6 @@ export class InsRateAddCvgRuleObj{
     PremiToInsco: number;
     PremiToCust: number;
     BaseCalc: string;
+    AssetAgeFrom: number;
+    AssetAgeTo: number;
 }
