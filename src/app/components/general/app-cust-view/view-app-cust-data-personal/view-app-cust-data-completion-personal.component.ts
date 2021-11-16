@@ -93,7 +93,6 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
 
     await this.http.post(url, reqObj).toPromise().then(
       (response : ResCustDataPersonalForViewObj) => {
-        console.log(response);
         this.appCustObj = response.AppCustObj;
         this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
