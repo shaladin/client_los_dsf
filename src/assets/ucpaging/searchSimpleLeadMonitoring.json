@@ -16,7 +16,8 @@
             "label": "Office Name",
             "isQueryIn": true,
             "items": [],
-            "itemsUrl": []
+            "itemsUrl": [],
+            "environment": "FOU"
         },
         {
             "type": "textbox",
@@ -48,8 +49,9 @@
             "label": "Upload Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "TrxTypeCode",
-            "criteriaPropValue": "UPLOAD"
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "UPLOAD",
+            "environment": "FOU"
         }
     ],
     "querystring": {

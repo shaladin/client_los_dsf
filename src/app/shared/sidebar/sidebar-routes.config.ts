@@ -645,7 +645,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.REPORT_PLAFOND_MOU_DETAIL, Title: 'Report Plafond Mou Detail', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_COLLATERAL_MOU, Title: 'Report Collateral Mou', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_INCOMING_APP, Title: 'Report Daily Incoming App', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: NavigationConstant.REPORT_CANCEL_LEAD, Title: 'Report Cancel Lead', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_CANCEL_LEAD, Title: 'Report Lead Cancel', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_INCOMING_LEAD, Title: 'Report Daily Incoming Lead', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_PRE_GO_LIVE_BY_PRODUCT, Title: 'Report Daily Pre Go Live By Product', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.REPORT_DAILY_PRE_GO_LIVE_BY_CMO, Title: 'Report Daily Pre Go Live By CMO', Icon: 'fa fa-print', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },

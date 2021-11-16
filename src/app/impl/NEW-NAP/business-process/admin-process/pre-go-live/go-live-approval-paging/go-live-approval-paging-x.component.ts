@@ -118,7 +118,7 @@ export class GoLiveApprovalPagingXComponent implements OnInit {
         'AgrmntId': ev.RowObj.AgrmntId,
         'AppId': ev.RowObj.AppId,
         'TrxNo': ev.RowObj.TrxNo,
-        'TaskId': ev.RowObj.TaskId,
+        'TaskId': ev.RowObj.TaskIdQuery,
         'InstanceId': ev.RowObj.InstanceId,
         'ApvReqId': ev.RowObj.ApvReqId
       });

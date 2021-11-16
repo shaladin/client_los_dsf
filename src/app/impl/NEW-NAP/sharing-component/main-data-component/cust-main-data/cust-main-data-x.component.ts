@@ -304,9 +304,8 @@ export class CustMainDataXComponent implements OnInit {
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
-
   }
-
+  
   //#region Country
   lookUpObjCountry: InputLookupObj = new InputLookupObj();
   async BindLookupCountry() {
@@ -332,7 +331,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-
+  
   ListNationality: Array<RefMasterObj> = new Array();
   GetListRefCountry() {
     this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).subscribe(
@@ -357,7 +356,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-
+  
   getLookUpCountry(ev) {
     this.CustMainDataForm.patchValue({
       WnaCountryCode: ev.CountryCode,
@@ -496,12 +495,10 @@ export class CustMainDataXComponent implements OnInit {
       this.InputLookupCustObj.isDisable = true;
       this.InputLookupCustCoyObj.isDisable = false;
     }
-
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
-   
     this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustObj.isRequired = true;
 
@@ -708,10 +705,7 @@ export class CustMainDataXComponent implements OnInit {
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
         this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
-      } else {
-        this.MrCustTypeCode = custType;
       }
-
     }
   }
 

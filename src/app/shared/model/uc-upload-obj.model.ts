@@ -31,18 +31,18 @@ export class UcUploadObj {
 
     constructor() {
         this.title = "";
-        this.subsectionId = "";
-        this.formatsAllowed = "";
+        this.subsectionId = "UcUploadFile";
+        this.formatsAllowed = ".xls, .xlsx, .txt, .TXT";
         this.UploadTypeCode = "";
         this.ErrorDownloadUrl = "";
-        this.TemplateUrl = "";
+        this.TemplateUrl = URLConstant.DownloadTemplate;
         this.TemplateName = "";
         this.FileErrorName = "";
         this.environmentUrl = environment.isCore ? environment.losUrl + "/v2" : environment.losUrl + "/v1";
         this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.pagingJson = "";
         this.SheetName = "";
-        this.url = "";
+        this.url = URLConstant.UploadFileV2;
         this.hideProgressBar = false;
         this.hideResetBtn = false;
         this.hideSelectBtn = false;

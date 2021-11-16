@@ -14,6 +14,7 @@ import { DoAssetDetailXComponent } from '../do-asset-detail-x/do-asset-detail-x.
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-create-do-multi-asset-x',
@@ -141,7 +142,8 @@ export class CreateDoMultiAssetXComponent implements OnInit {
     });
   }
 
-  Save() {
+  // X DSF Non JIRA, Udin : Penambahan async
+  async Save() {
     var formData = this.DeliveryOrderForm.value;
     var DeliveryOrderH = { ...formData };
     var DeliveryOrderDs = [];
@@ -156,6 +158,16 @@ export class CreateDoMultiAssetXComponent implements OnInit {
       DeliveryOrderDs.push(doDetailObj);
     }
     var DOData = { DeliveryOrderH, DeliveryOrderDs };
+
+    // START X DSF Non JIRA, Udin : Fix issue Create DO dengan serial no yang tidak lengkap
+    var isValid : boolean = false;
+    await this.httpClient.post(URLConstantX.ValidateDeliveryOrderMultiAsset, DOData).toPromise().then(
+      (response) => {
+        isValid = response && response['StatusCode'] == 200;
+      }
+    );
+    if(!isValid) return;
+    // END X DSF Non JIRA
 
     if (this.Mode == "add") {
       url = URLConstant.AddDeliveryOrderMultiAsset;

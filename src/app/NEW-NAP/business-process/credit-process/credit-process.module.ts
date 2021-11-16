@@ -75,7 +75,7 @@ import { SurveySubjectViewXComponent } from "app/impl/NEW-NAP/business-process/c
 import { CreditReviewPagingXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-x-dsf/credit-review-paging-x-dsf/credit-review-paging-x-dsf.component";
 import { CreditReviewDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-x-dsf/credit-review-detail-x-dsf/credit-review-detail-x-dsf.component";
 import { CreditApprovalDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-x-dsf/credit-approval-detail-x-dsf/credit-approval-detail-x-dsf.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 
 export const customCurrencyMaskConfig = {

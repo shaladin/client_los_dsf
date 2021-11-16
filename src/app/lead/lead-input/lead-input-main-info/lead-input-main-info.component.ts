@@ -9,7 +9,7 @@ import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { LeadObj } from 'app/shared/model/lead.model';
 import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
 import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -21,6 +21,7 @@ import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ResGetListRefEmpForLookupObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { DatePipe } from '@angular/common';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
@@ -392,10 +393,13 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   setLeadObj(obj: any) {
+    let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE));;
+    let datePipe = new DatePipe("en-US");
+
     obj.LeadCopyId = this.leadIdExist;
     obj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
     obj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
-    obj.LeadDt = new Date();
+    obj.LeadDt = datePipe.transform(businessDt, "yyyy-MM-dd");
     obj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
     obj.LobCode = this.MainInfoForm.controls["LobCode"].value;
     obj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;

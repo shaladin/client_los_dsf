@@ -341,7 +341,7 @@
             [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
           </lib-uclookupgeneric>
         </div>
-        <label class="col-md-2 adInsLabel" translate>Owner Mobile Phone No</label>
+        <label class="col-md-2 adins-required-label" translate>Owner Mobile Phone No</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">

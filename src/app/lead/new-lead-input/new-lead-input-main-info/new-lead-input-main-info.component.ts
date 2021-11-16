@@ -18,7 +18,7 @@ import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.mode
 import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 

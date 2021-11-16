@@ -91,7 +91,7 @@
             </div>
             
             <div class="form-actions right">
-              <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()">
+              <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="submit" class="btn btn-raised btn-primary mr-1">
                 <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Request For Approval</span>
               </button>
               <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]">

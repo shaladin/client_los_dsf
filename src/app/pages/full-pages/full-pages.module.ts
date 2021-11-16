@@ -8,7 +8,7 @@ import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserProfilePageComponent } from "app/pages/full-pages/user-profile/user-profile-page.component";
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 
 @NgModule({

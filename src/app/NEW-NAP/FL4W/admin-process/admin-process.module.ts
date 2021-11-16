@@ -8,7 +8,7 @@ import { PurchaseOrderPagingFl4wComponent } from './purchase-order/purchase-orde
 import { PurchaseOrderFl4wComponent } from './purchase-order/purchase-order-fl4w/purchase-order-fl4w.component';
 import { PurchaseOrderDetailFl4wComponent } from './purchase-order/purchase-order-detail-fl4w/purchase-order-detail-fl4w.component';
 import { AdminProcessSharingModule } from "app/NEW-NAP/business-process/admin-process/admin-process.module";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
  
 
 @NgModule({

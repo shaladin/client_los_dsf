@@ -10,7 +10,6 @@ import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from "app/shared/constant/ExceptionConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { AppObj } from "app/shared/model/App/App.Model";
-import { VendorObj } from "app/shared/model/Vendor.Model";
 import { environment } from "environments/environment";
 import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
 import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
@@ -47,6 +46,7 @@ import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 import { CriteriaObj } from "app/shared/model/criteria-obj.model";
 import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from "app/shared/model/request/vendor/req-vendor-emp.model";
 import { ResponseJobDataPersonalObj } from "app/shared/model/response-job-data-personal-obj.model";
+import { VendorObj } from "app/shared/model/vendor-obj.model";
 
 @Component({
     selector: 'app-asset-data-x',

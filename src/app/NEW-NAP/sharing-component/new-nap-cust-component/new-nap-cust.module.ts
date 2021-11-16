@@ -22,7 +22,7 @@ import { NewNapCustCompanyLegalDocDetailComponent } from './component/company/ne
 import { NewNapCustFamilyComponent } from './new-nap-cust-family/new-nap-cust-family.component';
 import { NewNapCustGuarantorComponent } from './new-nap-cust-guarantor/new-nap-cust-guarantor.component';
 import { NewNapCustShareholderComponent } from './new-nap-cust-shareholder/new-nap-cust-shareholder.component';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 export const customCurrencyMaskConfig = {
   align: "right",

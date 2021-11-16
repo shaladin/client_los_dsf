@@ -10,7 +10,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/response/mou/mou-cust/res-get-mou-cust-dlr-find-by-id-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { GenericKeyValueListObj } from 'app/shared/model/generic/generic-key-value-list-obj.model';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

@@ -68,10 +68,10 @@ import { NewLeadInputCustDataDsfComponent } from "app/dsf/lead/new-lead-input/ne
 import { UcDirectiveUpperCaseModule } from "@adins/uc-directive-upper-case";
 import { NewLeadInputPageXComponent } from "app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component";
 import { NewLeadInputLeadDataXComponent } from "app/impl/lead/new-lead-input/new-lead-input-lead-data-x/new-lead-input-lead-data-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 import { NewLeadUpdateDsfComponent } from "app/dsf/lead/new-lead-update-dsf/new-lead-update-dsf.component";
 import { NewLeadInputDsfComponent } from "app/dsf/lead/new-lead-input/new-lead-input.component";
 import { NewLeadInputMainInfoDsfComponent } from "app/dsf/lead/new-lead-input/new-lead-input-main-info-dsf/new-lead-input-main-info-dsf.component";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",

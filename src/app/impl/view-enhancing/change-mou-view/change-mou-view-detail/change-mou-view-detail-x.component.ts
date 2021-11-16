@@ -5,9 +5,9 @@ import { HttpClient } from "@angular/common/http";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
-import { VendorObj } from "app/shared/model/Vendor.Model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { GenericKeyValueListObj } from "app/shared/model/generic/generic-key-value-list-obj.model";
+import { VendorObj } from "app/shared/model/vendor-obj.model";
 
 @Component({
   selector: 'app-change-mou-view-detail-x',

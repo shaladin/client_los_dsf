@@ -27,8 +27,7 @@ import { NapDetailFormXComponent } from "app/impl/NEW-NAP/CFNA/nap-detail-form/n
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/CFNA/nap-cust-main-data/nap-cust-main-data-x.component";
 import { NapCustMainDataXDsfComponent } from "../DSF/CFNA-dsf/nap-cust-main-data-x-dsf/nap-cust-main-data-x-dsf.component";
 import { NapDetailFormXDsfComponent } from "../DSF/CFNA-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component";
-
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
