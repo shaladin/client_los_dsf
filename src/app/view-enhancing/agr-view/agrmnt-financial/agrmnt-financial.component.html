@@ -71,7 +71,8 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel" translate> Total Invoice Amount </label>
+            <label *ngIf="BizTemplateCode != BizTemplateCodeCfna" class="adInsLabel" translate> Total Invoice Amount </label>
+            <label *ngIf="BizTemplateCode == BizTemplateCodeCfna" class="adInsLabel" translate> Total Financing Amount </label>
           </div>
           <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{agrmntFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
@@ -160,7 +161,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
+      <div class="col-md-6" [hidden]="BizTemplateCode == BizTemplateCodeCfna" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> TDP </label>
@@ -181,7 +182,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
+      <div class="col-md-6" [hidden]="BizTemplateCode == BizTemplateCodeCfna" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> TDP Paid at MF </label>
@@ -209,8 +210,8 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> First Installment Type </label>
           </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{agrmntFinDataObj?.FirstInstTypeName}} </label>
+          <div class="col-md-6" style="text-align: right;">
+            <label class="adInsLabel"> {{agrmntObj?.FirstInstTypeName}} </label>
           </div>
         </div>
       </div>
@@ -267,10 +268,10 @@
       <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel" translate> Num of Inst </label>
+            <label class="adInsLabel" translate> Num of Installment </label>
           </div>
-          <div class="col-md-6">
-            <label class="adInsLabel"> {{agrmntFinDataObj?.NumOfInst}} </label>
+          <div class="col-md-6" style="text-align: right;">
+            <label class="adInsLabel"> {{agrmntObj?.NumOfInst}} </label>
           </div>
         </div>
       </div>
@@ -279,7 +280,7 @@
           <div class="col-md-6">
             <label class="adInsLabel" translate> Grace Period </label>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel">
               {{agrmntFinDataObj?.GracePeriodTypeName != null ? agrmntFinDataObj?.GracePeriodTypeName + ' / ' + agrmntFinDataObj?.GracePeriod + ' Installment' : '-'}}
             </label>
@@ -330,7 +331,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
+      <div class="col-md-6" [hidden]="BizTemplateCode == BizTemplateCodeCfna" *ngIf="BizTemplateCode != 'DLFN'">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Diff Rate Amount</label>

@@ -6,6 +6,7 @@ import { AgrmntFeeObj } from 'app/shared/model/agrmnt-fee-obj.model';
 import { AgrmntSubsidyObj } from 'app/shared/model/agrmnt-subsidy-obj.model';
 import { AgrmntFinDataObj } from 'app/shared/model/agrmnt-fin-data.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-agrmnt-financial',
@@ -24,6 +25,7 @@ export class AgrmntFinancialComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  readonly BizTemplateCodeCfna: string = CommonConstant.CFNA;
   ngOnInit() {
     this.getFinancialData();
   }
