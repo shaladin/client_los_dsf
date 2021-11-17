@@ -18,6 +18,7 @@ import { AppObj } from 'app/shared/model/app/app.model';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -55,7 +56,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
     });
 
     this.AgrmntActForm = this.fb.group({
-      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])],
+      'CreateDt': [this.CreateDt],
       'AgrmntNo': [''],
       'isOverwrite': [this.isOverwrite]
     });
@@ -80,6 +81,13 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   readonly bizCodeFl4w: string = CommonConstant.FL4W;
 
+  patchDefaultValueCreateDt() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.CreateDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    let datePipe = new DatePipe("en-US");
+    this.AgrmntActForm.get("CreateDt").patchValue(datePipe.transform(this.CreateDt, 'yyyy-MM-dd'));
+  }
+
   async ngOnInit() {
     await this.CheckApvResultExp();
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
@@ -97,6 +105,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
     whereValueObj.property = "AppId";
     whereValueObj.value = this.AppId;
     this.tempPagingObj.whereValue.push(whereValueObj);
+    this.patchDefaultValueCreateDt();
   }
 
   ngOnDestroy() {
