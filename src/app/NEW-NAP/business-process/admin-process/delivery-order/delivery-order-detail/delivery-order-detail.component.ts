@@ -109,11 +109,10 @@ export class DeliveryOrderDetailComponent implements OnInit {
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
     TempRegisLettNo: ['', [Validators.required]],
     TempRegisLettDt: ['', [Validators.required]],
-    DeliveryNo: [''],
-    RecipientName: [''],
+    RecipientName: ['', Validators.required],
     DeliveryDt: ['', Validators.required],
-    DeliveryAddr: [''],
-    MrCustRelationshipCode: [''],
+    DeliveryAddr: ['', Validators.required],
+    MrCustRelationshipCode: ['', Validators.required],
     IsChecked: [''],
     PromisedDt: [''],
     ATExpiredDt: [''],
@@ -310,7 +309,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.setAssetDeliveryOrderData();
     this.setAgrmntTcData(businessDt);
         
-    console.log(this.deliveryOrderObj);
     let submitDeliveryOrderUrl = environment.isCore? URLConstant.SubmitDeliveryOrderDataV2 : URLConstant.SubmitDeliveryOrderData;
     this.http.post(submitDeliveryOrderUrl, this.deliveryOrderObj).subscribe(
       response => {
@@ -368,7 +366,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
     }
 
     this.deliveryOrderObj.DeliveryOrderHObj = new DeliveryOrderHObj();
-    this.deliveryOrderObj.DeliveryOrderHObj.DeliveryNo = this.DeliveryOrderForm.controls.DeliveryNo.value;
     this.deliveryOrderObj.DeliveryOrderHObj.RecipientName = this.DeliveryOrderForm.controls.RecipientName.value;
     this.deliveryOrderObj.DeliveryOrderHObj.DeliveryDt = this.DeliveryOrderForm.controls.DeliveryDt.value;
     this.deliveryOrderObj.DeliveryOrderHObj.DeliveryAddr = this.DeliveryOrderForm.controls.DeliveryAddr.value;
@@ -495,34 +492,40 @@ export class DeliveryOrderDetailComponent implements OnInit {
   GenerateAppCollateralDocs(appCollateralDocs)
   {
     var formArray = this.DeliveryOrderForm.get('DOAssetDocList') as FormArray;
-    for (const item of appCollateralDocs) {
+    for (let i = 0; i < appCollateralDocs.length; i++) {
       var isMandatory = false;
-      if(item.MrCollateralConditionCode == CommonConstant.AssetConditionNew){
-        if(item.IsMandatoryNew == true){
+      if(appCollateralDocs[i].MrCollateralConditionCode == CommonConstant.AssetConditionNew){
+        if(appCollateralDocs[i].IsMandatoryNew == true){
           isMandatory = true;
         }
       }
       else{
-        if(item.IsMandatoryUsed == true){
+        if(appCollateralDocs[i].IsMandatoryUsed == true){
           isMandatory = true;
         }
       }
       var formGroup = this.fb.group({
-        AppCollateralDocId: [item.AppCollateralDocId],
-        AppCollateralId: [item.AppCollateralId],
-        DocCode: [item.DocCode],
-        DocName: [item.DocName],
-        DocNo: [item.DocNo, isMandatory ? [Validators.required] : []],
-        IsReceived: [item.IsReceived],
-        ExpiredDt: [item.ExpiredDt == null ? "" : this.datePipe.transform(item.ExpiredDt, "yyyy-MM-dd") ],
-        DocNotes: [item.DocNotes],
-        IsValueNeeded: [item.IsValueNeeded],
-        IsMandatoryNew: [item.IsMandatoryNew],
-        IsMandatoryUsed: [item.IsMandatoryUsed],
-        MrCollateralConditionCode: [item.MrCollateralConditionCode]
+        AppCollateralDocId: [appCollateralDocs[i].AppCollateralDocId],
+        AppCollateralId: [appCollateralDocs[i].AppCollateralId],
+        DocCode: [appCollateralDocs[i].DocCode],
+        DocName: [appCollateralDocs[i].DocName],
+        DocNo: [appCollateralDocs[i].DocNo, isMandatory ? [Validators.required] : []],
+        IsReceived: [appCollateralDocs[i].IsReceived],
+        ExpiredDt: [appCollateralDocs[i].ExpiredDt == null ? "" : this.datePipe.transform(appCollateralDocs[i].ExpiredDt, "yyyy-MM-dd") ],
+        DocNotes: [appCollateralDocs[i].DocNotes],
+        IsValueNeeded: [appCollateralDocs[i].IsValueNeeded],
+        IsMandatoryNew: [appCollateralDocs[i].IsMandatoryNew],
+        IsMandatoryUsed: [appCollateralDocs[i].IsMandatoryUsed],
+        MrCollateralConditionCode: [appCollateralDocs[i].MrCollateralConditionCode]
       });
       formArray.push(formGroup);
     }
+  }
+
+  ChangeIsReceived(idx: number){
+    this.DeliveryOrderForm.controls.DOAssetDocList["controls"][idx]["controls"].DocNo.setValue("");
+    this.DeliveryOrderForm.controls.DOAssetDocList["controls"][idx]["controls"].ExpiredDt.setValue("");
+    this.DeliveryOrderForm.controls.DOAssetDocList["controls"][idx]["controls"].DocNotes.setValue("");
   }
 
   //For Fraud Checking

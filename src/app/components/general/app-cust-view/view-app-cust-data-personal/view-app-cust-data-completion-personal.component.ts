@@ -2,12 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
-import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
-import { ResAppCustAddrForViewObj, ResAppCustCompletionObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
+import { ResAppCustAddrForViewObj, ResAppCustAttrForViewObj, ResAppCustCompletionObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResAppCustOtherInfoForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
 import { ResAppCustBankAccForViewObj } from 'app/shared/model/response/view/res-app-cust-bank-acc-for-view-obj.model';
-import { AppCustSocmedObj } from 'app/shared/model/app-cust-socmed-obj.model';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -50,6 +48,8 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   CustPersonalFinData : object;
   currentCustFinDataIndex: number;
   responseCustAttr: Array<object> = new Array<object>();
+  appCustOtherInfoForViewObj: ResAppCustOtherInfoForViewObj = new ResAppCustOtherInfoForViewObj;
+  appCustAttrContentsObj : Array<ResAppCustAttrForViewObj> = new Array<ResAppCustAttrForViewObj>();
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
@@ -98,8 +98,10 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
         this.appCustFamilyObjs = response.ListAppCustFamilyObj;
-        this.ListCustPersonalFinData = response["ListAppCustPersonalFinDataObjs"];
+        this.ListCustPersonalFinData = response.ListAppCustPersonalFinDataObjs;
         this.responseCustAttr = response.ListCustFinDataAttrContent;
+        this.appCustOtherInfoForViewObj = response.AppCustOtherInfoForViewObj;
+        this.appCustAttrContentsObj = response.ListAppCustAttrContentObj;
 
         // filter family yg punya relationship
         if(this.appCustFamilyObjs && this.appCustFamilyObjs.length > 0) {

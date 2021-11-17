@@ -4,7 +4,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ResAppCustAddrForViewObj, ResAppCustCompanyLegalDocForViewObj, ResAppCustCompanyMgmntShrholderForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataCompanyForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
+import { ResAppCustAddrForViewObj, ResAppCustAttrForViewObj, ResAppCustCompanyLegalDocForViewObj, ResAppCustCompanyMgmntShrholderForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResAppCustOtherInfoForViewObj, ResCustDataCompanyForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
 import { ResAppCustBankAccForViewObj } from 'app/shared/model/response/view/res-app-cust-bank-acc-for-view-obj.model';
 
 @Component({
@@ -32,6 +32,8 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustCompanyMgmntShrholderObjs: Array<ResAppCustCompanyMgmntShrholderForViewObj> = new Array<ResAppCustCompanyMgmntShrholderForViewObj>();
   appCustCompanyLegalDocObjs: Array<ResAppCustCompanyLegalDocForViewObj> = new Array<ResAppCustCompanyLegalDocForViewObj>();
+  appCustOtherInfoForViewObj: ResAppCustOtherInfoForViewObj = new ResAppCustOtherInfoForViewObj;
+  appCustAttrContentsObj : Array<ResAppCustAttrForViewObj> = new Array<ResAppCustAttrForViewObj>();
 
   constructor(private http: HttpClient) { }
 
@@ -65,6 +67,8 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustCompanyLegalDocObjs = response.ListAppCustCompanyLegalDocObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
+        this.appCustOtherInfoForViewObj = response.AppCustOtherInfoForViewObj;
+        this.appCustAttrContentsObj = response.ListAppCustAttrContentObj;
       }
     );
   }
