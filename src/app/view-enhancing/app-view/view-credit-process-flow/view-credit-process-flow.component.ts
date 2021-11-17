@@ -8,7 +8,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/generic-obj.model';
 import { forEach } from 'core-js/core/array';
 
 @Component({
