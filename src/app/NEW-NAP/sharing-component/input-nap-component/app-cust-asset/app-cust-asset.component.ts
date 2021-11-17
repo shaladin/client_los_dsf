@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AppCustAssetDetailComponent } from './app-cust-asset-detail/app-cust-asset-detail.component';
 

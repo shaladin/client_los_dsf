@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { MouCustPersonalObj } from 'app/shared/model/MouCustPersonalObj.Model';
+import { MouCustAddrObj } from 'app/shared/model/mou-cust-addr-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { MouCustPersonalObj } from 'app/shared/model/mou-cust-personal-obj.model';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
+import { DuplicateCustObj } from 'app/shared/model/duplicate-cust-obj.model';
 
 @Component({
   selector: 'app-similar-mou-personal-data',

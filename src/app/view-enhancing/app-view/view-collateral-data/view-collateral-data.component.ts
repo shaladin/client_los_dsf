@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
+import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
 import { ActivatedRoute } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
-import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppCollateralAccessoryObj } from 'app/shared/model/app-collateral-accessory-obj.model';
+import { AppCollateralAttrObj } from 'app/shared/model/app-collateral-attr-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 
 @Component({
   selector: 'app-view-collateral-data',

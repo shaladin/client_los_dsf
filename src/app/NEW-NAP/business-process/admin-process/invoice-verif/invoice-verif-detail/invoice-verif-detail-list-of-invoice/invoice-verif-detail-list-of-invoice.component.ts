@@ -1,32 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { ControlContainer, FormArray, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { ResDisbInfo, ResGetAllNtfAppAmt } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { AppInvoiceFctrObj } from 'app/shared/model/app-invoice-fctr-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { ResDisbInfo, ResGetAllNtfAppAmt } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ClaimWorkflowObj } from 'app/shared/model/workflow/claim-workflow-obj.model';
 import { CookieService } from 'ngx-cookie';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { environment } from 'environments/environment';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'invoice-verif-detail-list-of-invoice',
-  templateUrl: './invoice-verif-detail-list-of-invoice.component.html'
+  templateUrl: './invoice-verif-detail-list-of-invoice.component.html',
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   @Input() AppId: number;
   @Input() showCancel: boolean = true;
+  @Output() outputlistInvoice: EventEmitter<Array<AppInvoiceFctrObj>> = new EventEmitter();
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -43,7 +45,6 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   MrMouTypeCode: string;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsReturnOn: boolean = false;
-  listRefReason: Array<KeyValueObj> = new Array();
   ReturnHandlingHData: ReturnHandlingHObj = new ReturnHandlingHObj();
   LobCode: string;
   IsReady: boolean = false;
@@ -51,9 +52,8 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   BankName: string;
   AccNo: string;
 
-  InvoiceForm = this.fb.group({
-    Invoices: this.fb.array([])
-  });
+  @Input() enjiForm: NgForm;
+  @Input("parentForm") InvoiceForm: FormGroup;
 
   ReturnForm = this.fb.group({
     Reason: ['', [Validators.required]],
@@ -77,6 +77,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   async ngOnInit() {
     this.claimTask();
 
+    this.InvoiceForm.addControl("Invoices", this.fb.array([]));
     let appIdObj: GenericObj = new GenericObj();
     appIdObj.Id = this.AppId;
 
@@ -88,7 +89,6 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
 
     );
 
-    this.GetListVerifStatus();
     let request: GenericObj = new GenericObj();
     request.Id = this.AppId;
     this.httpClient.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, request).subscribe(
@@ -110,6 +110,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       if (this.MrMouTypeCode == CommonConstant.FACTORING) {
         this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
           this.listInvoice = response["AppInvoiceFctrObjs"];
+          this.outputlistInvoice.emit(this.listInvoice);
           var totalInvoice = 0;
           for (let i = 0; i < this.listInvoice.length; i++) {
             var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
@@ -125,6 +126,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
         this.httpClient.post(URLConstant.GetListAppInvoiceAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
           (response) => {
             this.listInvoice = response["AppInvoiceDlrFncngHObj"];
+            this.outputlistInvoice.emit(this.listInvoice);
             var totalInvoiceDF = 0;
             for (let i = 0; i < this.listInvoice.length; i++) {
               var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
@@ -155,14 +157,6 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       InvoiceDt: obj.InvoiceDueDt,
       RowVersion: obj.RowVersion,
     })
-  }
-
-  GetListVerifStatus() {
-    let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeInvoiceDataVerif };
-    this.httpClient.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
-      (response) => {
-        this.listRefReason = response[CommonConstant.ReturnObj];
-      });
   }
 
   Cancel() {

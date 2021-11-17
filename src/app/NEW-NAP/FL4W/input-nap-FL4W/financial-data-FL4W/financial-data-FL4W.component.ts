@@ -2,16 +2,16 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
+import { CalcRegularFixObj } from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { SubsidyFL4WComponent } from './component/subsidy/subsidy-FL4W.component';
-import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
+import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
 
 
 @Component({

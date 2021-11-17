@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { environment } from "environments/environment";
-import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
+import { UcPagingObj } from "app/shared/model/uc-paging-obj.model";
 
 @Component({
   selector: "app-change-mou-execution-paging",

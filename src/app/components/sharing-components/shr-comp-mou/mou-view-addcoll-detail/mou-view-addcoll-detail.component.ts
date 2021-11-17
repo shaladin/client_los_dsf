@@ -2,13 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { formatDate } from '@angular/common';
-import { MouCustCollateralRegistrationObj } from 'app/shared/model/MouCustCollateralRegistrationObj.Model';
-import { MouCustCollateralObj } from 'app/shared/model/MouCustCollateralObj.Model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
-import { ResMouCustCollateralAttrObj } from 'app/shared/model/MouCustCollateralAttrObj.Model';
-import { RefAttrGenerateObj } from 'app/shared/model/RefAttrGenerate.Model';
+import { MouCustCollateralRegistrationObj } from 'app/shared/model/mou-cust-collateral-registration-obj.model';
+import { MouCustCollateralObj } from 'app/shared/model/mou-cust-collateral-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { GenericKeyValueListObj } from 'app/shared/model/generic/generic-key-value-list-obj.model';
+import { ResMouCustCollateralAttrObj } from 'app/shared/model/mou-cust-collateral-attr-obj.model';
+import { RefAttrGenerateObj } from 'app/shared/model/ref-attr-generate.model';
 import { RefAttrGenerate } from '../../ref-attr/ref-attr-form-generate/RefAttrGenerate.service';
 
 @Component({

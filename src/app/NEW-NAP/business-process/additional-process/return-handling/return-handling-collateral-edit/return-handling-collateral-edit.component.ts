@@ -3,19 +3,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { environment } from 'environments/environment';
 
 

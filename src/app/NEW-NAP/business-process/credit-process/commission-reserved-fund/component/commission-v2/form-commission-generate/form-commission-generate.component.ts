@@ -3,16 +3,16 @@ import { FormBuilder, FormArray, FormGroup, Validators, NgForm, ControlContainer
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Model';
-import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
-import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
-import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
+import { ResponseTaxDetailObj } from 'app/shared/model/tax/response-tax-detail.model';
+import { ResponseTaxObj } from 'app/shared/model/tax/response-tax.model';
+import { TaxTrxDObj } from 'app/shared/model/tax/tax-trx-d.model';
+import { VendorBankAccObj } from 'app/shared/model/vendor-bank-acc.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
-import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
+import { AppCommissionHObj } from 'app/shared/model/app-commission-h-obj.model';
+import { AppCommissionDObj } from 'app/shared/model/app-commission-d-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/request/vendor/req-vendor-emp.model';
 
 @Component({
   selector: 'app-form-commission-generate',

@@ -3,22 +3,22 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
-import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
+import { ListAppTCObj } from 'app/shared/model/list-app-tc-obj.model';
+import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
+import { OutstandingTcObj } from 'app/shared/model/outstanding-tc-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { forkJoin } from 'rxjs';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
-import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
 
 @Component({
   selector: 'app-outstanding-tc-detail',

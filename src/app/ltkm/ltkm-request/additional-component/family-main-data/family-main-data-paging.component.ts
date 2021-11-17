@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'ltkm-family-main-data-paging',

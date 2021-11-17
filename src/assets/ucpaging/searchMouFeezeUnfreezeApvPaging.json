@@ -7,7 +7,7 @@
       "name": "TL.TRX_NO",
       "id": "TrxNo",
       "value": "",
-      "label": "Trx No",
+      "label": "Transaction No",
       "placeholder": "Placeholder"
     },
     {
@@ -34,7 +34,7 @@
     {
       "type": "sort",
       "position": "center",
-      "label": "Trx No",
+      "label": "Transaction No",
       "name": "TRX_NO"
     },
     {

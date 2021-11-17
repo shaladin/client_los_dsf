@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ResMouCustTCObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustTCObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { ResMouCustTCObj } from 'app/shared/model/response/mou/mou-cust/res-mou-cust-tc-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-mou-view-tc',

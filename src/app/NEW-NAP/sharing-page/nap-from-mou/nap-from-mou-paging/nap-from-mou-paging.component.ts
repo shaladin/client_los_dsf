@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,7 +10,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-nap-from-mou-paging',

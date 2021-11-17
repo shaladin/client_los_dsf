@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
+import { AppReservedFundObj } from 'app/shared/model/app-reserved-fund-obj.model';
 
 @Component({
   selector: "view-reserved-fund",

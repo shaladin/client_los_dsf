@@ -3,10 +3,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 

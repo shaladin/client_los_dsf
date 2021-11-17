@@ -4,11 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { CookieService } from 'ngx-cookie';
 
 @Component({

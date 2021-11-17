@@ -1,18 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { ShareholderListingObj } from 'app/shared/model/AppCust/Shareholder/ShareholderListingObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
+import { ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { ShareholderListingObj } from 'app/shared/model/app-cust/shareholder/shareholder-listing-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
 
 @Component({
   selector: 'app-mngmnt-shrhldr-main-data-paging',

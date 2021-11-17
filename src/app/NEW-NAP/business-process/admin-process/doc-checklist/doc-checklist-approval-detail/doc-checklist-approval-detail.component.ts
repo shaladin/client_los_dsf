@@ -4,19 +4,19 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
-import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ListAppTCObj } from 'app/shared/model/list-app-tc-obj.model';
+import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
+import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 
 @Component({
   selector: 'app-doc-checklist-approval-detail',

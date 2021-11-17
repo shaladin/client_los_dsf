@@ -14,7 +14,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { DmsIframeComponent } from './dms-iframe/dms-iframe.component';
 import { SafePipe } from './pipe/safepipe';
 import { CookieModule } from 'ngx-cookie';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 
 @NgModule({

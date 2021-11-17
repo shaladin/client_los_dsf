@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { String } from 'typescript-string-operations';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { RequestTaskModelObj } from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
-import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { environment } from 'environments/environment';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 

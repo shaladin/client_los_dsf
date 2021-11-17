@@ -4,25 +4,25 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
 import { DatePipe } from '@angular/common';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
+import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
-import { ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
+import { ReqGetVerfResultObj } from 'app/shared/model/verf-result/req-get-verf-result-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { PhoneVerifObj } from 'app/shared/model/PhoneVerifObj.model';
-import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { PhoneVerifObj } from 'app/shared/model/phone-verif-obj.model';
+import { ScoringResultHObj } from 'app/shared/model/scoring-result-h-obj.model';
 
 @Component({
   selector: "phone-verification-subject",

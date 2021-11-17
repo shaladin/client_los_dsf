@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { formatDate } from '@angular/common';
-import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
+import { AppCustCompanyFinDataObj } from 'app/shared/model/app-cust-company-fin-data-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-company-financial-data-FL4W',
-  templateUrl: './cust-company-financial-data-Fl4W.component.html',
+  templateUrl: './cust-company-financial-data-FL4W.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 

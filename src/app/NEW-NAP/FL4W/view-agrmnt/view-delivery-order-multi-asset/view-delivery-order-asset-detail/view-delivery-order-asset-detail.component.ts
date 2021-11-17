@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
+import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
 
 @Component({
   selector: 'app-view-delivery-order-asset-detail',

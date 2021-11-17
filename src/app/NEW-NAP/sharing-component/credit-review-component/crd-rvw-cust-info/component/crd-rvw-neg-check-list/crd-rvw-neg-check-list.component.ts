@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.model';
+import { NegCustObj } from 'app/shared/model/credit-review/neg-cust-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-neg-check-list',

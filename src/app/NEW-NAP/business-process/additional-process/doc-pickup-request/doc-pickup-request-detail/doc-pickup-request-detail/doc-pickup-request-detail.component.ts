@@ -7,12 +7,12 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { DocPickupRequestObj } from 'app/shared/model/DocPickupRequestObj.model';
-import { SrvyTaskObj } from 'app/shared/model/SurveyTaskObj.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { DocPickupRequestObj } from 'app/shared/model/doc-pickup-request-obj.model';
+import { SrvyTaskObj } from 'app/shared/model/survey-task-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { CookieService } from 'ngx-cookie';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 
 @Component({
   selector: 'app-doc-pickup-request-detail',

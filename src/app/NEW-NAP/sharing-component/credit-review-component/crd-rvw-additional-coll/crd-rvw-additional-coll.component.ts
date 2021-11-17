@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CrdRvwCollateralObj } from 'app/shared/model/CreditReview/CrdRvwCollateralObj.Model';
+import { CrdRvwCollateralObj } from 'app/shared/model/credit-review/crd-rvw-collateral-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-additional-coll',

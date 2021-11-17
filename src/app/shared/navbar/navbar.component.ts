@@ -6,7 +6,7 @@ import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { formatDate } from '@angular/common';
-import { NotificationHObj } from '../model/NotificationH/NotificationHObj.model';
+import { NotificationHObj } from '../model/notification-h/notification-h-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from '../constant/URLConstant';
 import { CommonConstant } from '../constant/CommonConstant';
@@ -46,7 +46,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     }
 
     ngOnInit() {
-        this.GetListNotifH();
+        // this.GetListNotifH();
         localStorage.setItem('lang', 'en');
         
         this.setUser();
@@ -60,13 +60,13 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
         this.businessDate = businessDate;
     }
 
-    GetListNotifH() {
-        this.http.post(URLConstant.GetListNotificationHByRefUserId, { isLoading: false }).subscribe(
-            (response) => {
-                this.TotalUnread = response["TotalUnreadNotification"];
-                this.NotificationHListObj = response["ResponseNotificationHCustomObjs"];
-            });
-    }
+    // GetListNotifH() {
+    //     this.http.post(URLConstant.GetListNotificationHByRefUserId, { isLoading: false }).subscribe(
+    //         (response) => {
+    //             this.TotalUnread = response["TotalUnreadNotification"];
+    //             this.NotificationHListObj = response["ResponseNotificationHCustomObjs"];
+    //         });
+    // }
 
     InitNotification() {
 

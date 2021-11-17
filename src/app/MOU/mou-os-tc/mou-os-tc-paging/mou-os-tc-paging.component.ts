@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 
 @Component({
   selector: 'app-mgmnt-shrholder',

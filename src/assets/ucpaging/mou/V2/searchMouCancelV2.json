@@ -19,6 +19,24 @@
             "placeholder": "Placeholder"
         },
         {
+            "type": "currency",
+            "name": "MC.PLAFOND_AMT",
+            "id": "GreaterPlafondAmt",
+            "value": "",
+            "label": "Plafond Amount From",
+            "restriction": "gte",
+            "datatype": "numeric"
+        },
+        {
+            "type": "currency",
+            "name": "MC.PLAFOND_AMT",
+            "id": "LessPlafondAmt",
+            "value": "999999999999",
+            "label": "Plafond Amount To",
+            "restriction": "lte",
+            "datatype": "numeric"
+        },
+        {
             "type": "dropdown",
             "name": "MC.IS_REVOLVING",
             "id": "IsRevolvingId",
@@ -41,24 +59,6 @@
             "itemsUrl": [],
             "criteriaPropName": "",
             "criteriaPropValue": ""
-        },
-        {
-            "type": "currency",
-            "name": "MC.PLAFOND_AMT",
-            "id": "GreaterPlafondAmt",
-            "value": "",
-            "label": "Plafond Amount From",
-            "restriction": "gte",
-            "datatype": "numeric"
-        },
-        {
-            "type": "currency",
-            "name": "MC.PLAFOND_AMT",
-            "id": "LessPlafondAmt",
-            "value": "",
-            "label": "Plafond Amount To",
-            "restriction": "lte",
-            "datatype": "numeric"
         },
         {
             "type": "dropdown",

@@ -6,13 +6,13 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqReviewProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ReqReviewProductObj } from 'app/shared/model/request/product/req-add-edit-product-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 

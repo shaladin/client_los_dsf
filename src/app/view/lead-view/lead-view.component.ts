@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 
 @Component({
   selector: 'app-lead-view',

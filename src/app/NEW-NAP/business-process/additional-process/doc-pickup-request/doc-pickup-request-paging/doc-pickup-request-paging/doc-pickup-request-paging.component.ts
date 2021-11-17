@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 
 @Component({
   selector: 'app-doc-pickup-request-paging',

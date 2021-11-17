@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
 import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-nap-from-mou-detail',

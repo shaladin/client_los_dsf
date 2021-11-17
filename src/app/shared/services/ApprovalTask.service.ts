@@ -5,8 +5,8 @@ import { CookieService } from "ngx-cookie";
 import { AdInsHelper } from "../AdInsHelper";
 import { AdInsConstant } from "../AdInstConstant";
 import { CommonConstant } from "../constant/CommonConstant";
-import { ApprovalObj } from "../model/Approval/ApprovalObj.Model";
-import { ApvClaimTaskObj } from "../model/Approval/ApprovalReqObj.model";
+import { ApprovalObj } from "../model/approval/approval-obj.model";
+import { ApvClaimTaskObj } from "../model/approval/approval-req-obj.model";
 
 @Injectable()
 export class ApprovalTaskService{

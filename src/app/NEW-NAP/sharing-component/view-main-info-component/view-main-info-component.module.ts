@@ -9,7 +9,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { AppMainInfoComponent } from "./app-main-info/app-main-info.component";
 import { DocSignerMainInfoComponent } from './doc-signer-main-info/doc-signer-main-info.component';
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
   exports: [

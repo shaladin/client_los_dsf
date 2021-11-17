@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
-import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
+import { PurchaseOrderHObj } from 'app/shared/model/purchase-order-h-obj.model';
+import { PurchaseOrderDObj } from 'app/shared/model/purchase-order-d-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
-import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
+import { ReqAssetDataObj } from 'app/shared/model/request/app-asset/req-app-asset-obj.model';
+import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
@@ -139,7 +139,12 @@ export class PurchaseOrderDetailComponent implements OnInit {
         let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
-        tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
+
+        if(tempAgrmntFeeObj != undefined)
+          tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
+        else
+          tempPurchaseOrderDObj.PurchaseOrderAmt = 0;
+
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
     }

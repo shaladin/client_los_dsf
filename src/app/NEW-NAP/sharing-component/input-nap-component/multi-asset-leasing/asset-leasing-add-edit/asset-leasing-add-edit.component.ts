@@ -3,21 +3,21 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
-import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { AllAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
 
 @Component({
   selector: 'app-asset-leasing-add-edit',

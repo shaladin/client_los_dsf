@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustAssetObj } from 'app/shared/model/AppCustAsset/AppCustAssetObj.Model';
+import { AppCustAssetObj } from 'app/shared/model/app-cust-asset/app-cust-asset-obj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AppCustAssetOldNapDetailComponent } from './app-cust-asset-old-nap-detail/app-cust-asset-old-nap-detail.component';
 

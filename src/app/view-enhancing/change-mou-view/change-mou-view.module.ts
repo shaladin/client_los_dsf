@@ -24,7 +24,7 @@ import { ChangeMouViewComponent } from "./change-mou-view.component";
 import { ChangeMouViewRoutingModule } from "./change-mou-view-routing.module";
 import { ChangeMouMainInfoComponent } from "../change-mou-main-info/change-mou-main-info.component";
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
     imports: [
