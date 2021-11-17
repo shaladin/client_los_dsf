@@ -208,7 +208,7 @@
                       <div *ngFor="let item of items.controls; let i = index;">
                         <div class="form-group row" [formGroupName]="i">
                           <label class="col-md-4 "
-                            [ngClass]="{'adins-required-label': AssetDataForm.controls.items['controls'][i]['controls'].IsMandatory.value}"
+                            [ngClass]="{'adins-required-label': AssetDataForm.controls.MrAssetConditionCode.value == 'USED' && AssetDataForm.controls.items['controls'][i]['controls'].IsMandatory.value}"
                             translate>
                             {{item.controls.SerialNoLabel.value}} </label>
                           <div class="col-md-8">
