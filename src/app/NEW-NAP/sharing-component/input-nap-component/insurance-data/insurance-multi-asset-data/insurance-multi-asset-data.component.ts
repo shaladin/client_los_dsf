@@ -1003,7 +1003,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       async (response) => {
         this.ruleObj = response["Result"];
         if (this.ruleObj.InsAssetCategory == "") {
-          this.toastr.warningMessage(String.Format(ExceptionConstant.SETTING_RULE_FIRST, ""));
+          this.toastr.warningMessage(ExceptionConstant.INS_ASSET_CATEGORY_NOT_FOUND);
           return;
         }
         // group sum insurace for dropdown premium Type AMT
