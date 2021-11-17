@@ -9,7 +9,6 @@ import { CookieService } from 'ngx-cookie';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { GenericObj } from 'app/shared/model/Generic/generic-obj.model';
-import { forEach } from 'core-js/core/array';
 
 @Component({
   selector: 'app-view-credit-process-flow',
@@ -49,8 +48,6 @@ export class ViewCreditProcessFlowComponent implements OnInit {
     this.inputGridViewAgrmnt = new InputGridObj();
     this.inputGridViewCreditObj.pagingJson = "./assets/ucgridview/app-view/gridViewCreditProcessFlow.json";
     this.inputGridViewAdministrationObj.pagingJson = "./assets/ucgridview/app-view/gridViewAdministrationProcessFlow.json";
-    console.log(this.AppNo);
-    console.log(this.AppId);
 
     this.RequestTaskModelObj = new RequestTaskModelObj();
     this.RequestTaskModelObjForAdm = new RequestTaskModelObj();
@@ -70,39 +67,22 @@ export class ViewCreditProcessFlowComponent implements OnInit {
       }
     );
 
-    //this.RequestTaskModelObjForAdm.TransactionNo = this.AgrmntNo;
-
-    // this.http.post(URLConstant.GetTaskHistoryByTransactionNo, this.RequestTaskModelObjForAdm).subscribe(
-    //   (response) => {
-    //     this.inputGridViewAdministrationObj.resultData = {
-    //       Data: ""
-    //     }
-    //     this.inputGridViewAdministrationObj.resultData["Data"] = new Array();
-    //     this.inputGridViewAdministrationObj.resultData.Data = response
-    //   }
-    // );
-
     this.ReqByIdObj.Id = this.AppId;
 
     this.http.post(URLConstant.GetListAgrmntByAppId, this.ReqByIdObj).subscribe(
       (response) => {
-        console.log(response);
         this.listAgrmntObj = response["ReturnObject"];
 
         for(let i=0; i < this.listAgrmntObj.length; i++)
         {
           this.listAgrmntNo.push(this.listAgrmntObj[i]["AgrmntNo"])
-        }
-
-        console.log(this.listAgrmntNo);        
+        }        
         
         for(let j=0; j < this.listAgrmntNo.length; j++)
         {          
           this.RequestTaskModelObjForAdm.TransactionNo = this.listAgrmntNo[j];
-          //this.AgrmntNo = this.listAgrmntNo[j];
 
           this.AgrmntNo.push(this.listAgrmntNo[j])
-          console.log("Agrmnt No : " + this.AgrmntNo);
 
           this.http.post(URLConstant.GetListTaskHistoryByAgrmntNo, this.RequestTaskModelObjForAdm).subscribe(
             (response) => {
@@ -116,8 +96,5 @@ export class ViewCreditProcessFlowComponent implements OnInit {
         }
       }
     );
-
-    console.log(this.listAgrmntObj);
-
   }
 }
