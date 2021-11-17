@@ -2,18 +2,28 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
-          <lib-ucSubsection [id]="'viewCreditProcessFlowId'" [title]="'Credit Process Flow'" [panel]="'viewCreditProcessFlow'">
-          </lib-ucSubsection>
-          <div class="form-body" id="viewCreditProcessFlow">
-              <lib-ucgridview [gridInput]="inputGridViewCreditObj"></lib-ucgridview>
-          </div>
-          <lib-ucSubsection [id]="'viewAdministrationProcessFlowId'" [title]="'Administratoin Process Flow'" [panel]="'viewAdministrationProcessFlow'">
-          </lib-ucSubsection>
-          <div class="form-body" id="viewAdministrationProcessFlow">
+        <lib-ucSubsection [id]="'viewCreditProcessFlowId'" [title]="'Credit Process Flow'"
+          [panel]="'viewCreditProcessFlow'">
+        </lib-ucSubsection>
+        <div class="form-body" id="viewCreditProcessFlow">
+          <lib-ucgridview [gridInput]="inputGridViewCreditObj"></lib-ucgridview>
+        </div>
+        <lib-ucSubsection [id]="'viewAdministrationProcessFlowId'" [title]="'Administration Process Flow'"
+          [panel]="'viewAdministrationProcessFlow'">
+        </lib-ucSubsection>
+        <div class="form-body" id="viewAdministrationProcessFlow" >
+          <ng-container *ngFor="let i of this.AgrmntNo">
+            <p class="text-left">Agreement No : {{i}}</p>
             <lib-ucgridview [gridInput]="inputGridViewAdministrationObj"></lib-ucgridview>
-          </div>          
+            <br>
+          </ng-container>
+          <!-- <tr *ngFor="let item of this.AgrmntNo">
+            <td class="text-left">Agreement No : {{item}}</td>
+          </tr>
+          <br>
+          <lib-ucgridview [gridInput]="inputGridViewAdministrationObj"></lib-ucgridview> -->
+        </div>
       </div>
     </div>
   </div>
 </div>
-
