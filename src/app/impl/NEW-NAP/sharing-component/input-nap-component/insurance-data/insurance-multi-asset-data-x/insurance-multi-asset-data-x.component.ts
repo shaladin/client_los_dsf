@@ -900,17 +900,6 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
           TotalCustDiscAmt: custDiscAmt,
           InsCpltzAmt: capitalised,
         });
-        // if (this.InsuranceDataForm.controls.PayPeriodToInsco.value == CommonConstantX.PayPeriodAnnualy) {
-        //   this.InsuranceDataForm.patchValue({
-        //     TotalCustFeeAmt: this.calcInsObj.TotalFeeAmt,
-        //     TotalCustMainPremiAmt: this.calcInsObj.InsCoverage[0].MainPremiAmt,
-        //     TotalCustAddPremiAmt: this.calcInsObj.InsCoverage[0].AdditionalPremiAmt,
-        //     TotalInscoMainPremiAmt: this.calcInsObj.InsCoverage[0].MainPremiToInscoAmt,
-        //     TotalInscoAddPremiAmt: this.calcInsObj.InsCoverage[0].AdditionalPremiToInscoAmt,
-        //     TotalCustDiscAmt: custDiscAmt,
-        //     InsCpltzAmt: 0,
-        //   });
-        // }
 
         for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
           this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
@@ -1280,7 +1269,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
   }
 
   AddDictInsCustRate(MrAddCvgTypeCode: string, rate: number) {
-    if (this.DictInsCustRate[MrAddCvgTypeCode] == null || this.DictInsCustRate[MrAddCvgTypeCode] == undefined) this.DictInsCustRate[MrAddCvgTypeCode] = rate;
+    if (this.DictInsCustRate[MrAddCvgTypeCode] == null || this.DictInsCustRate[MrAddCvgTypeCode] == undefined || this.DictInsCustRate[MrAddCvgTypeCode] == 0) this.DictInsCustRate[MrAddCvgTypeCode] = rate;
   }
 
   async addGroupFromDB(MainCvgIndex: number,insMainCvg: AppInsMainCvgObj, ManufYearDiff) {
@@ -1598,21 +1587,14 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
 
   IsAllPaidByCust: boolean = true;
   checkPaidBy() {
+    this.IsAllPaidByCust = true;
     let tempListAppInsMainCvgs = this.InsuranceDataForm.get("AppInsMainCvgs") as FormArray;
     let totalDiscAmt: number = 0;
-
-    if (this.InsuranceDataForm.controls.PayPeriodToInsco.value == CommonConstantX.PayPeriodAnnualy) {
-      let currReq = this.InsuranceDataForm.controls['AppInsMainCvgs']['controls'].find(i => i['controls']['YearNo'].value === this.calcInsObj.InsCoverage[0].YearNo);
-      let mrInsPaidByCode = currReq ? currReq['controls']['MrInsPaidByCode'].value : this.defInsPaidBy;
-      if (mrInsPaidByCode == CommonConstant.InsPaidByAtCost) {
-        totalDiscAmt += this.calcInsObj.InsCoverage[0].MainPremiAmt + this.calcInsObj.InsCoverage[0].AdditionalPremiAmt;
-      }
-    } else {
-      for (let index = 0; index < tempListAppInsMainCvgs.length; index++) {
-        const element = tempListAppInsMainCvgs.get(index.toString()) as FormGroup;
-        if (element.get("MrInsPaidByCode").value == CommonConstant.InsPaidByAtCost) {
-          totalDiscAmt += (element.get("CustMainPremiAmt").value + element.get("TotalCustAddPremiAmt").value);
-        }
+    for (let index = 0; index < tempListAppInsMainCvgs.length; index++) {
+      const element = tempListAppInsMainCvgs.get(index.toString()) as FormGroup;
+      if (element.get("MrInsPaidByCode").value == CommonConstant.InsPaidByAtCost) {
+        totalDiscAmt += (element.get("CustMainPremiAmt").value + element.get("TotalCustAddPremiAmt").value);
+        this.IsAllPaidByCust = false;
       }
     }
     this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
