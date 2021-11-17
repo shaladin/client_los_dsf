@@ -485,7 +485,7 @@
                                   </option>
                                 </select>
                                 </span>
-                                <span *ngIf="isFromDB">
+                                <span *ngIf="isFromDB && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'AMT'">
                                   <label>{{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.SumInsuredAmt.value | number:'.2':'en-US'}}</label>
                                 </span>
                               </div>

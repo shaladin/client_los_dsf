@@ -167,6 +167,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   DefaultLoadingFeeYear: number;
   isFromDB: boolean = false;
   readonly EditInsurance = "EditInsurance";
+  readonly DefaultPremiumType = CommonConstant.PremiumTypeAmt;
 
   AppInsForm = this.fb.group({
     // PaidAmtByCust: [0]
@@ -923,7 +924,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
                 InscoAddPremiAmt: currAddCvg.AddPremiToInscoAmt
               });
             } else {
-              let sumInsuredAmt = 0;
+              let sumInsuredAmt = null;
               if (this.groupAddCvrSumInsuredDropDown[i][currAddCvgType]) {
                 sumInsuredAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].SumInsuredAmt.value;
               }
@@ -1229,7 +1230,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         Value: false,
         SumInsuredPercentage: obj.SumInsuredPercentage,
         SumInsuredAmt: 0,
-        PremiumType: "AMT",
+        PremiumType: this.DefaultPremiumType,
         CustAddPremiRate: 0,
         CustAddPremiAmt: 0,
         BaseCalculation: "",
@@ -1382,8 +1383,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           AddCvgTypeName: o.Value,
           Value: false,
           SumInsuredPercentage: 0,
-          SumInsuredAmt: 0,
-          PremiumType: "AMT",
+          SumInsuredAmt: null,
+          PremiumType: this.DefaultPremiumType,
           CustAddPremiRate: null,
           CustAddPremiAmt: 0,
           BaseCalculation: "",
@@ -1515,7 +1516,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             AppInsAddCvg.patchValue({
               Value: this.ManufYearDiff <= this.DefaultLoadingFeeYear ? false : true,
               SumInsuredAmt: 0,
-              PremiumType: "AMT",
+              PremiumType: this.DefaultPremiumType,
               CustAddPremiRate: null,
               CustAddPremiAmt: 0,
               BaseCalculation: "",
@@ -1542,7 +1543,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         AppInsAddCvg.patchValue({
           Value: false,
           SumInsuredAmt: 0,
-          PremiumType: "AMT",
+          PremiumType: this.DefaultPremiumType,
           CustAddPremiRate: null,
           CustAddPremiAmt: 0,
           BaseCalculation: "",
