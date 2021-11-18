@@ -168,7 +168,7 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
         this.apvReqObj.RoleCode = this.UserAccess.RoleCode;
         this.apvReqObj.OfficeCode = this.UserAccess.OfficeCode;
         this.integrationObj.requestObj = this.apvReqObj;
-        this.integrationObj.leftColumnToJoin = "TrxNo";
+        this.integrationObj.leftColumnToJoin = "AgrmntNo";
         this.integrationObj.rightColumnToJoin = "TransactionNo";
         this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
         this.inputPagingObj.integrationObj = this.integrationObj; 
