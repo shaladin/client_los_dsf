@@ -1074,6 +1074,7 @@ export class URLConstant {
   public static GetAgrmntByAppId = environment.losUrl + "/v1" + "/Agrmnt/GetAgrmntByAppId";
   public static GetAgrmntByAgrmntNo = environment.losUrl + "/v1" + "/Agrmnt/GetAgrmntByAgrmntNo";
   public static GetAgrmtSummaryByAgrmntId = environment.losUrl + "/v1" + "/Agrmnt/GetAgrmtSummaryByAgrmntId";
+  public static GetListAgrmntByAppId = environment.losUrl + "/v1" + "/Agrmnt/GetListAgrmntByAppId";
 
   //AGRMNT Commission
   public static GetListAgrmntCommissionWithDetailByAgrmntId = environment.losUrl + "/v1" + "/AgrmntCommission/GetListAgrmntCommissionWithDetailByAgrmntId";
@@ -1373,6 +1374,7 @@ export class URLConstant {
   public static GetAllTaskWorkflow = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllTaskWorkflow";
   public static GetAllWorkflowInstance = environment.FoundationR3Url + "/v2" + "/Workflow/GetAllWorkflowInstance";
   public static GetTaskHistoryByTransactionNo = environment.FoundationR3Url + "/v2" + "/Workflow/GetTaskHistoryByTransactionNo";
+  public static GetListTaskHistoryByAgrmntNo = environment.FoundationR3Url + "/v2" + "/Workflow/GetListTaskHistoryByAgrmntNo";
   public static CompleteTask = environment.FoundationR3Url + "/v2" + "/Workflow/CompleteTask";
 
   //Application Data
