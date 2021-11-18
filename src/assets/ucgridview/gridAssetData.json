@@ -115,7 +115,7 @@
                             "property": "AppAssetId"
                         }
                     ],
-                    "icon": "ft-trash-2"
+                    "icon": "danger p-0 ft-trash-2"
                 }
             ]
         }

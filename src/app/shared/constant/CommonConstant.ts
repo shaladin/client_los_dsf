@@ -126,6 +126,9 @@ export class CommonConstant {
   //ASSET CONDITION 
   public static AssetConditionUsed = "USED";
   public static AssetConditionNew = "NEW";
+  
+  public static ModeAddColl = "addColl";
+  public static ModeEditColl = "editColl";
 
   // SOCIAL MEDIA
   public static FACEBOOK = "FB";
