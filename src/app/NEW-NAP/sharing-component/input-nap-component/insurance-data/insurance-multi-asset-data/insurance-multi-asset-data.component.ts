@@ -423,8 +423,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   event(ev) {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
     this.AppAssetId = ev.RowObj.AppAssetId;
-    if (this.AppAssetId == null || this.AppAssetId == undefined) { }
-    this.AppAssetId = 0;
+    if (this.AppAssetId == null || this.AppAssetId == undefined) this.AppAssetId = 0;
 
     this.appInsObjId = ev.RowObj.AppInsObjId;
     this.InsSeqNo = ev.RowObj.InsSeqNo;
@@ -991,13 +990,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     let reqObj = new InsuranceDataInsRateRuleObj();
     reqObj.InscoHoCode = this.InscoHoCode;
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
-    reqObj.AssetCategory = this.appCollateralObj.AssetCategoryCode;
-    reqObj.AssetCondition = this.appCollateralObj.MrCollateralConditionCode;
-    reqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
-    reqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
-    reqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
-    reqObj.AppCollateralId = this.appCollateralObj.AppCollateralId;
+    reqObj.AppId = this.appId;
+    reqObj.AppAssetId = this.AppAssetId;
+    reqObj.AppCollateralId = this.AppCollateralId;
 
     await this.http.post(URLConstant.ExecuteInsRateRuleV2, reqObj).toPromise().then(
       async (response) => {
@@ -1060,9 +1056,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
       obj.Tenor = month;
       obj.SumInsuredPrcnt = this.ruleObj.SumInsuredPercentage[i];
-      let index = this.ruleObj.MainCoverageType.findIndex(x => x == this.InsuranceDataForm.controls.InsMainCvgType.value);
-      obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
-      obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
       (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj));
       yearCount -= 12;
     }
@@ -1428,12 +1421,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     let ReqObj = new InsuranceDataInsRateCvgRuleObj();
     ReqObj.InscoHoCode = this.InscoHoCode;
     ReqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
-    ReqObj.AssetPriceAmount = this.totalAssetInclAccessoryPriceAmt;
     ReqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     ReqObj.MainCoverageType = MainCoverageType;
     ReqObj.InsAssetCategory = this.ruleObj.InsAssetCategory;
-    ReqObj.ProdOfferingCode = this.appObj.ProdOfferingCode;
-    ReqObj.ProdOfferingVersion = this.appObj.ProdOfferingVersion;
+    ReqObj.AppId = this.appId;
+    ReqObj.AppAssetId = this.AppAssetId;
+    ReqObj.AppCollateralId = this.AppCollateralId;
+
     await this.http.post(URLConstant.ExecuteInsRateCvgRule, ReqObj).toPromise().then(
       async (response: ResInsuranceDataInsRateCvgRuleObj) => {
         resInsuranceDataInsRateCvgRuleObj = response;
@@ -1629,7 +1623,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   setRate(mainCoverageType, i) {
-    let index = this.ruleObj.MainCoverageType.findIndex(x => x == mainCoverageType);
+    let index = this.insMainCvgTypeObj.findIndex(x => x == mainCoverageType);
     this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
       CustMainPremiRate: this.ruleObj.MainRateToCust[index],
       InscoMainPremiRate: this.ruleObj.MainRateToInsco[index]
@@ -2109,13 +2103,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.defaultInsAssetRegion = response["DefaultInsAssetRegion"] != null ? response["DefaultInsAssetRegion"] : "";
 
         this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
-        this.totalAssetInclAccessoryPriceAmt = this.totalAssetPriceAmt
-        if (this.appCollateralAccessoryObjs.length > 0) {
-          for (let i = 0; i < this.appCollateralAccessoryObjs.length; i++) {
-            this.totalAssetInclAccessoryPriceAmt += this.appCollateralAccessoryObjs[i].AccessoryPriceAmt;
-          }
-
-        }
+        this.totalAssetInclAccessoryPriceAmt = this.totalAssetPriceAmt + this.appCollateralObj.TotalAccessoryPriceAmt;
 
         this.InsuranceDataForm.patchValue({
           CvgAmt: this.totalAssetInclAccessoryPriceAmt,
@@ -2123,7 +2111,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         });
 
         if (this.appAssetObj != undefined) {
-          this.AppAssetId = this.appCollateralObj.AppAssetId;
+          this.AppAssetId = this.appCollateralObj.AppAssetId != null ? this.appCollateralObj.AppAssetId : 0;
         }
         if (this.appCollateralObj != undefined) {
           this.AppCollateralId = this.appCollateralObj.AppCollateralId;
