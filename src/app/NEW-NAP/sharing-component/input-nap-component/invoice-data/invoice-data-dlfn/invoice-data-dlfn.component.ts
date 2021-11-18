@@ -28,6 +28,7 @@ import { environment } from 'environments/environment';
 })
 export class InvoiceDataDlfnComponent implements OnInit {
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   inputPagingObj: UcPagingObj;
   AppDlrFinObj: AppFctrObj = new AppFctrObj();
