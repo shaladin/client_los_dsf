@@ -19,8 +19,6 @@ export class ViewCreditProcessFlowComponent implements OnInit {
   @Input() AppNo: string;
   @Input() BizTemplateCode: string;
   inputGridViewCreditObj: InputGridObj;
-  inputGridViewAdministrationObj: InputGridObj;
-  inputGridViewAgrmnt: InputGridObj;
 
   RequestTaskModelObj: RequestTaskModelObj;
   RequestTaskModelObjForAdm: RequestTaskModelObj;
@@ -28,9 +26,7 @@ export class ViewCreditProcessFlowComponent implements OnInit {
   ReqByIdObj: GenericObj = new GenericObj();
   AppId: number;
   AgrmntNo: Array<string>  = new Array<string>();
-
-  listAgrmntObj: Array<AgrmntObj> = new Array<AgrmntObj>();
-  listAgrmntNo: Array<string> = new Array<string>();
+  AgrmntWorkflowData: {[AgrmntNo: string] : InputGridObj} = {}
 
   constructor(private router: Router,private route: ActivatedRoute,private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -44,18 +40,11 @@ export class ViewCreditProcessFlowComponent implements OnInit {
   ngOnInit() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.inputGridViewCreditObj = new InputGridObj();
-    this.inputGridViewAdministrationObj = new InputGridObj();
-    this.inputGridViewAgrmnt = new InputGridObj();
     this.inputGridViewCreditObj.pagingJson = "./assets/ucgridview/app-view/gridViewCreditProcessFlow.json";
-    this.inputGridViewAdministrationObj.pagingJson = "./assets/ucgridview/app-view/gridViewAdministrationProcessFlow.json";
 
     this.RequestTaskModelObj = new RequestTaskModelObj();
     this.RequestTaskModelObjForAdm = new RequestTaskModelObj();
     this.RequestTaskModelObj.TransactionNo = this.AppNo;
-    this.RequestTaskModelObj.UserName = UserAccess[CommonConstant.USER_NAME];
-    this.RequestTaskModelObj.Finished = true;
-    this.RequestTaskModelObj.Unfinished = true;
-    this.RequestTaskModelObj.IncludeAssignedTasks = true;
 
     this.http.post(URLConstant.GetTaskHistoryByTransactionNo, this.RequestTaskModelObj).subscribe(
       (response) => {
@@ -71,26 +60,24 @@ export class ViewCreditProcessFlowComponent implements OnInit {
 
     this.http.post(URLConstant.GetListAgrmntByAppId, this.ReqByIdObj).subscribe(
       (response) => {
-        this.listAgrmntObj = response["ReturnObject"];
+        let listAgrmntObj : Array<AgrmntObj> = response["ReturnObject"];
 
-        for(let i=0; i < this.listAgrmntObj.length; i++)
+        for(let i=0; i < listAgrmntObj.length; i++)
         {
-          this.listAgrmntNo.push(this.listAgrmntObj[i]["AgrmntNo"])
-        }        
-        
-        for(let j=0; j < this.listAgrmntNo.length; j++)
-        {          
-          this.RequestTaskModelObjForAdm.TransactionNo = this.listAgrmntNo[j];
+          this.RequestTaskModelObjForAdm.TransactionNo = listAgrmntObj[i].AgrmntNo;
+          
 
-          this.AgrmntNo.push(this.listAgrmntNo[j])
-
-          this.http.post(URLConstant.GetListTaskHistoryByAgrmntNo, this.RequestTaskModelObjForAdm).subscribe(
+          this.http.post(URLConstant.GetTaskHistoryByTransactionNo, this.RequestTaskModelObjForAdm).subscribe(
             (response) => {
-              this.inputGridViewAdministrationObj.resultData = {
+              this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo] = new InputGridObj();
+              this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo].pagingJson = "./assets/ucgridview/app-view/gridViewAdministrationProcessFlow.json";
+              console.log(this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo]);
+              this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo].resultData = {
                 Data: ""
               }
-              this.inputGridViewAdministrationObj.resultData["Data"] = new Array();
-              this.inputGridViewAdministrationObj.resultData.Data = response
+
+              this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo].resultData["Data"] = new Array();
+              this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo].resultData["Data"] = response
             }
           );
         }

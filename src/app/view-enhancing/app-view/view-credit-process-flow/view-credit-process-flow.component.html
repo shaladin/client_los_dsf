@@ -12,16 +12,11 @@
           [panel]="'viewAdministrationProcessFlow'">
         </lib-ucSubsection>
         <div class="form-body" id="viewAdministrationProcessFlow" >
-          <ng-container *ngFor="let i of this.AgrmntNo">
-            <p class="text-left">Agreement No : {{i}}</p>
-            <lib-ucgridview [gridInput]="inputGridViewAdministrationObj"></lib-ucgridview>
+          <ng-container *ngFor="let data of this.AgrmntWorkflowData | keyvalue">
+            <p class="text-left">Agreement No : {{data.key}}</p>
+            <lib-ucgridview [gridInput]="AgrmntWorkflowData[data.key]"></lib-ucgridview>
             <br>
           </ng-container>
-          <!-- <tr *ngFor="let item of this.AgrmntNo">
-            <td class="text-left">Agreement No : {{item}}</td>
-          </tr>
-          <br>
-          <lib-ucgridview [gridInput]="inputGridViewAdministrationObj"></lib-ucgridview> -->
         </div>
       </div>
     </div>
