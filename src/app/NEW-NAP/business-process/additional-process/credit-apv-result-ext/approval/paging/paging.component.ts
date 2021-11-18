@@ -152,9 +152,8 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcpagingComponent);
       this.pagingModal.clear();
       const component = this.pagingModal.createComponent(componentFactory);
-
+      
       this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchCreditApprovalPagingResultExt.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApprovalPagingResultExt.json";

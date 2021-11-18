@@ -159,7 +159,6 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-
     this.InputObj = new UcInputRFAObj(this.cookieService);
     let Attributes = [{}]
     let TypeCode = {
