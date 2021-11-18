@@ -159,7 +159,6 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-
     this.InputObj = new UcInputRFAObj(this.cookieService);
     let Attributes = [{}]
     let TypeCode = {
@@ -170,7 +169,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APV_RES_EXP_D;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CR_APV_RES_EXP_D;
     this.InputObj.Reason = this.listReason;
-    this.InputObj.TrxNo = this.AgrmntNo == null ? this.AppNo : this.AppNo + "|" + this.AgrmntNo;
+    this.InputObj.TrxNo = this.AgrmntNo == null ? this.AppNo : this.AgrmntNo;
     this.IsReady = true;
   }
 }

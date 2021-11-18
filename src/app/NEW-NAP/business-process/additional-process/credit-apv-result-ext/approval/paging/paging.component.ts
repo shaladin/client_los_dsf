@@ -152,9 +152,8 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcpagingComponent);
       this.pagingModal.clear();
       const component = this.pagingModal.createComponent(componentFactory);
-
+      
       this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchCreditApprovalPagingResultExt.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApprovalPagingResultExt.json";
@@ -168,7 +167,7 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
         this.apvReqObj.RoleCode = this.UserAccess.RoleCode;
         this.apvReqObj.OfficeCode = this.UserAccess.OfficeCode;
         this.integrationObj.requestObj = this.apvReqObj;
-        this.integrationObj.leftColumnToJoin = "TrxNo";
+        this.integrationObj.leftColumnToJoin = "AgrmntNo";
         this.integrationObj.rightColumnToJoin = "TransactionNo";
         this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
         this.inputPagingObj.integrationObj = this.integrationObj; 
