@@ -132,6 +132,7 @@ export class ExceptionConstant {
     public static CALC_FIRST = "Please Click Calculate";
 
     public static EXTENDS_TIME_INVLID = "maximum extends times, maximum extends times cant exceed extend month!";
+    public static EXTENDS_TIME_EXPIRED = "Credit Approval Result has Expired, please request Credit Approval Result Extension";
 
     public static NO_SURVEY = "No Survey";
     public static NO_PHONE_VERF = "No Phone Verification";

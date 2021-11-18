@@ -40,6 +40,8 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   private createComponent: UcapprovalcreateComponent;
   ApprovalCreateOutput: any;
   RFAInfo: Object = new Object();
+  AppCrdApvResultExpDt: Date;
+  AgrmntCrdApvResultExpDt: Date;
 
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -68,14 +70,14 @@ export class CreditApvResultExtDetailComponent implements OnInit {
 
   SaveForm() {
     this.ApprovalCreateOutput = this.createComponent.output();
-    this.RFAInfo = {RFAInfo: this.CrdApvRestExtForm.controls.RFAInfo.value};
+    this.RFAInfo = { RFAInfo: this.CrdApvRestExtForm.controls.RFAInfo.value };
     if (this.ApprovalCreateOutput != undefined) {
       // this.RequestRFAObj = this.ApprovalCreateOutput;
 
       let obj = {
         AppId: this.AppId,
         NewCrdApvResultExpDt: this.CrdApvRestExtForm.controls.NewCrdApvResultExpDt.value,
-        AgrmntId : this.AgrmntId
+        AgrmntId: this.AgrmntId
       }
 
       let sendObj = {
@@ -94,27 +96,41 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   async GetMainData() {
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      response => {
+        this.AppNo = response["AppNo"];
+        this.AppCrdApvResultExpDt = new Date(response["CrdApvResultExpDt"]);
+      }
+    );
+
     await this.http.post(URLConstant.GetCreditApvResultExtMainData, { AppId: this.AppId, AgrmntId: this.AgrmntId }).toPromise().then(
-      (response: CreditApvResultExtObj) => {
+      async (response: CreditApvResultExtObj) => {
         console.log(response);
         this.CrdApvMainDataObj = response;
         this.AgrmntNo = this.CrdApvMainDataObj.AgrmntNo;
-        this.CrdApvRestExtForm.patchValue({
-          NewCrdApvResultExpDt: formatDate(this.CrdApvMainDataObj.CrdApvResultExpDt, 'yyyy-MM-dd', 'en-US')
-        });
-        let ExpDt = new Date(this.CrdApvMainDataObj.CrdApvResultExpDt);
+
+        let ExpDt = this.AppCrdApvResultExpDt;
+        if (this.AgrmntNo != null) {
+          var agrmntObj = {
+            TrxNo: this.AgrmntNo
+          }
+
+          await this.http.post(URLConstant.GetAgrmntByAgrmntNo, agrmntObj).toPromise().then(
+            (response) => {
+              ExpDt = response["CrdApvResultExpDt"] == null ? this.AppCrdApvResultExpDt : new Date(response["CrdApvResultExpDt"]);
+            });
+        }
+
         if (this.MinDate < ExpDt) {
           this.MinDate = ExpDt;
         }
 
+        this.CrdApvRestExtForm.patchValue({
+          NewCrdApvResultExpDt: formatDate(this.MinDate, 'yyyy-MM-dd', 'en-US')
+        });
       }
     );
 
-    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-      response => {
-        this.AppNo = response["AppNo"]
-      }
-    );
     await this.http.post(URLConstant.GetListActiveRefReason, {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview
     }).toPromise().then(
@@ -154,7 +170,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APV_RES_EXP_D;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CR_APV_RES_EXP_D;
     this.InputObj.Reason = this.listReason;
-    this.InputObj.TrxNo = this.AgrmntNo
+    this.InputObj.TrxNo = this.AgrmntNo == null ? this.AppNo : this.AppNo + "|" + this.AgrmntNo;
     this.IsReady = true;
   }
 }

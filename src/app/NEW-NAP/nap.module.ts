@@ -8,6 +8,7 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
 import { SharedModule } from "app/shared/shared.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { UcpagingComponent } from "@adins/ucpaging";
 
 @NgModule({
     declarations: [],
@@ -22,6 +23,9 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         SharedModule
     ],
     exports: [],
+    entryComponents: [
+        UcpagingComponent
+    ],
     providers: [
         NGXToastrService
       ]

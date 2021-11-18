@@ -15,6 +15,8 @@ export class UcPagingObj {
     addCritInput: Array<CriteriaObj>;
     ddlEnvironments: Array<EnviObj>;
     whereValue: Array<WhereValueObj>;
+    fromValue: Array<FromValueObj>;
+    switchValue: Array<SwitchValueObj>;
     isHideSearch: boolean;
     delay: number;
     isSearched: boolean;
@@ -38,6 +40,8 @@ export class UcPagingObj {
         this.listEnvironments.push({ environment: "LOS", url: environment.losUrl  + "/v1"});
         this.listEnvironments.push({ environment: "LOSV2", url: environment.losUrl  + "/v2"});
         this.whereValue = new Array<WhereValueObj>();
+        this.fromValue = new Array<FromValueObj>();
+        this.switchValue = new Array<SwitchValueObj>();
         this.isHideSearch = false;
         this.delay = 0;
         this.isSearched = false;
@@ -56,6 +60,22 @@ export class EnviObj {
     }
 }
 export class WhereValueObj {
+    property: string;
+    value: any;
+
+    constructor() {
+        this.property = "";
+    }
+}
+export class FromValueObj {
+    property: string;
+    value: any;
+
+    constructor() {
+        this.property = "";
+    }
+}
+export class SwitchValueObj {
     property: string;
     value: any;
 
