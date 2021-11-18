@@ -272,12 +272,12 @@
     {
       "type": "text",
       "position": "left",
-      "property": "contractStat"
+      "property": "contractStatDesc"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "appStep"
+      "property": "appStepDesc"
     },
     {
       "type": "text",

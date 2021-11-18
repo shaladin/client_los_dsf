@@ -50,7 +50,7 @@
             "label": "Upload Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "TrxTypeCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "UPLOAD"
         }
     ],

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
@@ -771,7 +771,7 @@ export class AssetDataAddEditComponent implements OnInit {
         });
 
         this.InputLookupCityIssuerObj.nameSelect = this.returnAppAssetObj.TaxCityIssuer;
-        this.InputLookupCityIssuerObj.jsonSelect = { provDistrictCode: this.returnAppAssetObj.TaxCityIssuer };
+        this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.returnAppAssetObj.TaxCityIssuer };
 
       let reqByCode = new GenericObj();
       reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
@@ -953,7 +953,7 @@ export class AssetDataAddEditComponent implements OnInit {
           this.ChangeAssetCondition();
         }
         
-        if(this.AssetDataForm.controls.MrAssetConditionCode.value == "USED") { 
+        if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) { 
           this.isUsed = true;
           this.InputLookupCityIssuerObj.isRequired = true;
         }
@@ -1925,23 +1925,31 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   UcAddressHandler() {
+    let serialNoIsRequired: boolean = false;
+    this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
+    this.inputAddressObjForLoc.isRequired = true;
     if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
       this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = false;
       this.inputAddressObjForLoc.isRequired = false;
-      for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
-        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.Engine_No) {
-          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.required, Validators.pattern(this.SerialNoRegex)]);
-          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
-        }
+      serialNoIsRequired = true;
+    }
+    this.SetValidatorItemsSerialNo(serialNoIsRequired);
+  }
+
+  private SetValidatorItemsSerialNo(SerialNoIsRequired: boolean) {
+    let itemsSerialNo: FormArray = this.AssetDataForm.get("items") as FormArray;
+    for (let i = 0; i < itemsSerialNo.length; i++) {
+      let tempForm: FormGroup = itemsSerialNo.get(i.toString()) as FormGroup;
+      let tempValidators: Array<ValidatorFn> = new Array();
+      if (this.SerialNoRegex) tempValidators.push(Validators.pattern(this.SerialNoRegex));
+      if (SerialNoIsRequired) {
+        let tempIsMandatory: boolean = tempForm.get("IsMandatory").value;
+        if (tempIsMandatory) tempValidators.push(Validators.required);
       }
-    } else {
-      this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
-      this.inputAddressObjForLoc.isRequired = true;
-      for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
-        if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == CommonConstant.Engine_No) {
-          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.pattern(this.SerialNoRegex)]);
-          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
-        }
+      let tempSerialNo = tempForm.get("SerialNoValue") as AbstractControl;
+      if (tempValidators.length) {
+        tempSerialNo.setValidators(tempValidators);
+        tempSerialNo.updateValueAndValidity();
       }
     }
   }

@@ -14,6 +14,7 @@ export class InputSearchObj {
     ddlEnvironments: Array<EnviObj>;
     listEnvironments: Array<EnvisObj>;
     whereValue: Array<WhereValueObj>;
+    fromValue: Array<FromValueObj>;
     switchValue: Array<SwitchValueObj>;
     integrationObj: IntegrationObj;
     isJoinExAPI: boolean;
@@ -47,6 +48,15 @@ export class EnviObj {
 }
 
 export class WhereValueObj {
+    property: string;
+    value: any;
+
+    constructor() {
+        this.property = "";
+    }
+}
+
+export class FromValueObj {
     property: string;
     value: any;
 

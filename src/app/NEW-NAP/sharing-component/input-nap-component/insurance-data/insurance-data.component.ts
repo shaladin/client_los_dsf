@@ -32,6 +32,7 @@ import { CookieService } from 'ngx-cookie';
 import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/request/vendor/req-vendor.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { InsuranceLenObj, ResInsuranceLenObj } from 'app/shared/model/insurance-len-obj.model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-insurance-data',
@@ -668,7 +669,7 @@ export class InsuranceDataComponent implements OnInit {
       (response) => {
         this.ruleObj = response["Result"];
         if (this.ruleObj.InsAssetCategory == "") {
-          this.toastr.warningMessage(ExceptionConstant.SETTING_RULE_FIRST);
+          this.toastr.warningMessage(String.Format(ExceptionConstant.SETTING_RULE_FIRST, ""));
           return;
         }
         // group sum insurace for dropdown premium Type AMT
