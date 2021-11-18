@@ -28,7 +28,8 @@
                 <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Add</span>
               </button>
             </div>
-            <table class="table table-responsive-md text-center table-hover">
+            <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="eventColl($event)"></lib-ucgridview>
+            <!-- <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
                   <th translate class="text-left">Collateral Name</th>
@@ -38,6 +39,11 @@
                   <th translate class="text-center">Action</th>
                 </tr>
               </thead>
+              <tbody *ngIf="appCollateralObj?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
               <tbody>
                 <tr *ngFor="let item of appCollateralObj">
                   <td class="text-left">{{item.FullAssetName}}</td>
@@ -54,7 +60,7 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
           </div>
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: BizTemplateCode}">

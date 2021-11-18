@@ -65,6 +65,7 @@ import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
 
 
 
@@ -98,6 +99,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
+    InputNapComponentModule,
     ProcessComponentModule
   ],
   declarations: [

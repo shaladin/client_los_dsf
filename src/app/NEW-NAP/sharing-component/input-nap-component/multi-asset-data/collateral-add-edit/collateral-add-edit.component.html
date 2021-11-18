@@ -370,7 +370,7 @@
             </div>
           </div>
 
-          <div *ngIf="this.collateral == 'Exist'">
+          <div [hidden]="this.collateral != 'Exist'">
             <lib-ucSubsection [id]="'ExistingCollateralId'" [title]="'Collateral'" [panel]="'ExistingCollateral'">
             </lib-ucSubsection>
             <div class="form-group row">
@@ -378,7 +378,7 @@
                 <div class="form-group row" id="ExistingCollateral">
                   <label class="col-md-4 adins-required-label" translate>Existing Collateral</label>
                   <div class="col-md-8">
-                    <lib-uclookupgeneric *ngIf="inputLookupExistColl.isReady" [lookupInput]="inputLookupExistColl"
+                    <lib-uclookupgeneric [hidden]="!inputLookupExistColl.isReady" [lookupInput]="inputLookupExistColl"
                       [parentForm]='AddCollForm' [enjiForm]='enjiForm' [identifier]="'ExistingCollateralObj'"
                       (lookup)="getExistingColl($event)" #LookupCollateralExisting>
                     </lib-uclookupgeneric>

@@ -47,6 +47,7 @@ import { EditAppAfterApprovalInquiryComponent } from './edit-app-after-approval-
 import { EditAppAfterApprovalPagingComponent } from './edit-app-after-approval/edit-app-after-approval-paging/edit-app-after-approval-paging.component';
 import { CreditApprovalResultExtensionApprovalDetailComponent } from './credit-apv-result-ext/approval/detail/detail.component';
 import { CreditApprovalResultExtensionApprovalPagingComponent } from './credit-apv-result-ext/approval/paging/paging.component';
+import { CollateralAddEditComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component';
 
 
 const routes: Routes = [
@@ -209,7 +210,7 @@ const routes: Routes = [
       },
       {
         path: PathConstant.RETURN_HANDLING_COLL_DETAIL,
-        component: ReturnHandlingCollateralDetailComponent,
+        component: CollateralAddEditComponent,
         data: {
           title: 'Return Handling Collateral Detail'
         }

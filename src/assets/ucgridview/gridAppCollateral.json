@@ -162,7 +162,7 @@
                                 "property": "AppCollateralId"
                               }
                             ],
-                            "icon" : "ft-trash-2"
+                            "icon" : "danger p-0 ft-trash-2"
                           }
                         }
                     ]
