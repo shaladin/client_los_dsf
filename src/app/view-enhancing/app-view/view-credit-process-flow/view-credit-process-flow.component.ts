@@ -71,7 +71,6 @@ export class ViewCreditProcessFlowComponent implements OnInit {
             (response) => {
               this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo] = new InputGridObj();
               this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo].pagingJson = "./assets/ucgridview/app-view/gridViewAdministrationProcessFlow.json";
-              console.log(this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo]);
               this.AgrmntWorkflowData[listAgrmntObj[i].AgrmntNo].resultData = {
                 Data: ""
               }
