@@ -183,12 +183,12 @@ export class CustCompletionDetailXComponent implements OnInit {
     reqObj.AppId = this.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
 
-    for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
-      if (this.ListAppCustCompletion[i].IsCompletion === false) {
-        this.toastr.warningMessage(ExceptionConstantX.PLEASE_COMPLETE_DATA_CUSTOMER + " {" + this.ListAppCustCompletion[i].CustName + "}");
-        return;
-      }
-    }
+    // for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
+    //   if (this.ListAppCustCompletion[i].IsCompletion === false) {
+    //     this.toastr.warningMessage(ExceptionConstantX.PLEASE_COMPLETE_DATA_CUSTOMER + " {" + this.ListAppCustCompletion[i].CustName + "}");
+    //     return;
+    //   }
+    // }
 
     let SubmitAppCustCompletionUrl = environment.isCore ? URLConstant.SubmitAppCustCompletionV2 : URLConstant.SubmitAppCustCompletion;
     this.http.post(SubmitAppCustCompletionUrl, reqObj).subscribe(
