@@ -132,6 +132,7 @@ export class ExceptionConstant {
     public static CALC_FIRST = "Please Click Calculate";
 
     public static EXTENDS_TIME_INVLID = "maximum extends times, maximum extends times cant exceed extend month!";
+    public static EXTENDS_TIME_EXPIRED = "Credit Approval Result has Expired, please request Credit Approval Result Extension";
 
     public static NO_SURVEY = "No Survey";
     public static NO_PHONE_VERF = "No Phone Verification";
@@ -191,5 +192,6 @@ export class ExceptionConstant {
     public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
     
     public static JOB_POSITION_CANT_BE_EMPTY = "Job Position Cannot Be Empty - Shareholder {0}";
+    public static INS_ASSET_CATEGORY_NOT_FOUND = "Ins Asset Category Not Found, Please Setting Rule First"
 }
 

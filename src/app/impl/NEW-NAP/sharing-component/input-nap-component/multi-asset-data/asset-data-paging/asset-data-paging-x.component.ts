@@ -36,8 +36,8 @@ export class AssetDataPagingXComponent implements OnInit {
   listAppAssetObj: Array<AppAssetObj> = new Array();
   appCollateralObj: any;
   listAppCollateralObj: Array<AppCollateralObj> = new Array();
-  gridAssetDataObj: any;
-  gridAppCollateralObj: any;
+  gridAssetDataObj: InputGridObj;
+  gridAppCollateralObj: InputGridObj;
   AppAssetId: number;
   AppCollateralId: number;
   editAsset: string;
@@ -109,7 +109,7 @@ export class AssetDataPagingXComponent implements OnInit {
   }
 
   addColl() {
-    this.outputValue.emit({ mode: 'addColl' });
+    this.outputValue.emit({ mode: CommonConstant.ModeAddColl });
   }
 
   Cancel() {
@@ -182,7 +182,7 @@ export class AssetDataPagingXComponent implements OnInit {
       this.AppCollateralId = ev.RowObj.AppCollateralId;
       this.editColl = ev.RowObj.editColl;
       this.AppAssetId = ev.RowObj.AppAssetId;
-      this.outputValue.emit({ mode: 'editColl', AppCollateralId: this.AppCollateralId });
+      this.outputValue.emit({ mode: CommonConstant.ModeEditColl, AppCollateralId: this.AppCollateralId });
     }
 
     if (ev.Key == "delete") {

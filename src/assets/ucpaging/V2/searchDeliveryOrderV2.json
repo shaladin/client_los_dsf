@@ -151,6 +151,10 @@
                             "property": "AgrmntId"
                         },
                         {
+                            "type": "AppAssetId",
+                            "property": "AppAssetId"
+                        },
+                        {
                             "type": "TaskListId",
                             "property": "Id"
                         }

@@ -1,21 +1,9 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpModule } from "@angular/http";
-import { UCSearchModule } from "@adins/ucsearch";
-import { UcpagingModule } from "@adins/ucpaging";
-import { UcShowErrorsModule } from '@adins/uc-show-errors';
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { RouterModule } from "@angular/router";
 import { SharingModule } from 'app/shared/sharing.module';
 import { ArchwizardModule } from 'angular-archwizard';
-import { UcSubsectionModule } from "@adins/uc-subsection";
-import { UclookupgenericModule, UclookupgenericComponent } from '@adins/uclookupgeneric';
-import { UcviewgenericModule, UcviewgenericComponent } from '@adins/ucviewgeneric';
-import { UcaddressModule } from "@adins/ucaddress";
-import { UCSearchComponent } from '@adins/ucsearch';
+import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
-import { UcgridfooterModule, UcgridfooterComponent } from "@adins/ucgridfooter";
 // import { MainInfoComponent } from 'app/view/main-info/main-info.component';
 import { LeadRoutingModule } from "./lead-routing.module";
 // import { ShowErrorsComponent } from "./app/test-new/show-errors.component";
@@ -37,12 +25,9 @@ import { LeadUpdateComponent } from "./lead-update/lead-update.component";
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
 import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.component';
-import { UcuploadModule } from "@adins/ucupload";
 import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
 import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
-import { UcaddtotempModule } from "@adins/ucaddtotemp";
 import { GeneratePotentialRoComponent } from "./potential-ro/generate-potential-ro/generate-potential-ro.component";
-import { UcgridviewModule } from "@adins/ucgridview";
 import { RoTelemkOfferPagingComponent } from "./potential-ro/ro-telemk-offer-paging/ro-telemk-offer-paging.component";
 import { RoTelemkOfferDetailComponent } from "./potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail.component";
 import { RoTelemkOfferVerifComponent } from "./potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif.component";
@@ -72,6 +57,7 @@ import { NewLeadUpdateDsfComponent } from "app/dsf/lead/new-lead-update-dsf/new-
 import { NewLeadInputDsfComponent } from "app/dsf/lead/new-lead-input/new-lead-input.component";
 import { NewLeadInputMainInfoDsfComponent } from "app/dsf/lead/new-lead-input/new-lead-input-main-info-dsf/new-lead-input-main-info-dsf.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { AdInsModule } from "app/components/adins-module/adins.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -89,31 +75,15 @@ export const customCurrencyMaskConfig = {
 @NgModule({
   imports: [
     LeadRoutingModule,
-    CommonModule,
-    FormsModule,
-    HttpModule,
-    UCSearchModule,
-    UcgridfooterModule,
-    UcpagingModule,
-    NgbModule,
     AdInsSharedModule,
     SharingModule,
-    ReactiveFormsModule,
-    UcaddressModule,
-    UcSubsectionModule,
-    UcShowErrorsModule,
-    UclookupgenericModule,
-    UcviewgenericModule,
     SharingComponentModule,
     ArchwizardModule,
     MatRadioModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     CustSharingComponentModule,
-    UcuploadModule,
-    UcaddtotempModule,
-    UcgridviewModule,
     SharedModule,
-    UcDirectiveUpperCaseModule
+    AdInsModule
   ],
   declarations: [
     LeadVerifComponent,

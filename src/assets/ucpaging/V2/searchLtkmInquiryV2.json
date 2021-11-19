@@ -134,7 +134,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "LtkmStep"
+            "property": "LtkmStepDesc"
         }
     ]
 }

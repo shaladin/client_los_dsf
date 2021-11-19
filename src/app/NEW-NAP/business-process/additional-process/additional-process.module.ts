@@ -72,6 +72,7 @@ import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-co
 import { EditAppAfterApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail-x.component";
 import { EditAppAfterApprovalPurchaseOrderDataXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-purchase-order-data/edit-app-after-approval-purchase-order-data-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
 
 
 
@@ -105,6 +106,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
+    InputNapComponentModule,
     ProcessComponentModule
   ],
   declarations: [

@@ -540,6 +540,16 @@ export class CustMainDataXComponent implements OnInit {
 
     this.ArrAddCrit.push(critObj);
 
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust){
+      let critObj2 = new CriteriaObj();
+      critObj2.DataType = "text";
+      critObj2.propName = 'C.IS_CUSTOMER'
+      critObj2.restriction = AdInsConstant.RestrictionEq;
+      critObj2.value = '1';
+  
+      this.ArrAddCrit.push(critObj2);
+    }
+    
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustCoyObj.addCritInput = this.ArrAddCrit;
 

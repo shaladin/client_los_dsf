@@ -109,6 +109,7 @@ export class MouDetailFactoringComponent implements OnInit {
     let getPayFreq = this.httpClient.post(URLConstant.GetListActiveRefPayFreq, null);
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
+    rmInstSchm.MappingCode = CommonConstant.FCTR;
     let getInstSchm = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
     var refCurr; 
     let getCurrency = this.httpClient.post(URLConstant.GetListKvpActiveRefCurr, refCurr);

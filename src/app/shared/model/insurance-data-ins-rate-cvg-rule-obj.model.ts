@@ -1,21 +1,21 @@
 export class InsuranceDataInsRateCvgRuleObj {
     InscoHoCode : string;
     InscoCode : string;
-    AssetPriceAmount: number;
     RegionCode: string;
     InsAssetCategory: string;
     MainCoverageType: string;
-    ProdOfferingCode: string;
-    ProdOfferingVersion: string;
+    AppAssetId: number;
+    AppCollateralId: number;
+    AppId: number;
 
     constructor(){
         this.InscoHoCode = "";
         this.InscoCode = "";
-        this.AssetPriceAmount = 0;
         this.RegionCode = "";
         this.InsAssetCategory = "";
         this.MainCoverageType = "";
-        this.ProdOfferingCode = "";
-        this.ProdOfferingVersion = "";
+        this.AppAssetId = 0;
+        this.AppCollateralId = 0;
+        this.AppId = 0;
     }
 }

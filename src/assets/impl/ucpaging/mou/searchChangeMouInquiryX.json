@@ -103,7 +103,7 @@
             "type": "link",
             "position": "center",
             "property": "ChangeMouTrxNo",
-            "path": "/View/ChangeMouView/X",
+            "path": "VIEW_CHANGE_MOU",
             "target": "_blank",
             "param": [
                 {
@@ -134,7 +134,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "Status"
+            "property": "StatusDesc"
         },
         {
             "type": "text",
