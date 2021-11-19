@@ -382,7 +382,7 @@ export class CustMainDataComponent implements OnInit {
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
           this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
-          this.CustMainDataForm.controls.Email1.clearValidators();
+          this.CustMainDataForm.controls.Email1.setValidators(Validators.pattern(CommonConstant.regexEmail));
           this.CustMainDataForm.controls.Email1.updateValueAndValidity();
         }
         await this.GetAppCustMainDataByAppId();
