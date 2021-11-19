@@ -36,6 +36,7 @@ import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 
 export class ApplicationDataDlfnComponent implements OnInit {
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode: string;
