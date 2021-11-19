@@ -1,7 +1,7 @@
 <div *ngIf="BizTemplateCode !== 'OPL'">
     <app-asset-data-paging [showCancel]="showCancel" *ngIf="mode == 'paging'" [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" (outputValue)="terimaValue($event)" (outputCancel)="Cancel()"></app-asset-data-paging>
     <app-asset-data-add-edit *ngIf="mode == 'addAsset' || mode =='editAsset'" [mode] = "this.mode" [BizTemplateCode]="BizTemplateCode" [AppAssetId]="this.AppAssetId" [AppId]="AppId" (assetValue)="terimaValue($event)"></app-asset-data-add-edit>
-    <app-collateral-add-edit *ngIf="mode == 'addColl' || mode =='editColl'" [mode] = "this.mode" [AppId]="AppId" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"></app-collateral-add-edit>
+    <app-collateral-add-edit *ngIf="mode == ModeAddColl || mode == ModeEditColl" [mode] = "this.mode" [AppId]="AppId" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"></app-collateral-add-edit>
 </div>
 
 <div *ngIf="BizTemplateCode === 'OPL'">

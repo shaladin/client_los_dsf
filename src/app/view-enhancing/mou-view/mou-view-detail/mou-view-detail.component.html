@@ -43,8 +43,8 @@
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
-      <label class="col-md-2 adInsLabel" translate>TOP</label>
-      <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{TopDays}} days </label>
+      <label class="col-md-2 adInsLabel" translate>Term of Payment (in Days)</label>
+      <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{TopDays}}</label>
 
       <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
       <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}} %</label>
@@ -107,7 +107,9 @@
       <label *ngIf="Notes != '' && Notes != null" class="col-md-4 adInsLabel" translate>{{Notes}}</label>
 
       <label class="col-md-2 adInsLabel" translate>Link Supplier</label>
-      <label class="col-md-4 adInsLabel" translate>{{LinkSupplier}}</label>
+      <label class="col-md-4 adInsLabel" translate>
+        <a class="link" (click)="ClickLinkManufacturer(mouCustFctr.VendorCode)"> {{LinkSupplier}} </a>
+      </label>
     </div>
     <!-- <div *ngIf="MouType == 'GENERAL'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Insured By</label>
@@ -127,9 +129,13 @@
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Currency </label>
         <label class="col-md-4 adInsLabel" translate>{{dictRefCurr[CurrCode]}}</label>
-
+      </div>
+      <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>WoP </label>
         <label class="col-md-4 adInsLabel" translate>{{dictMasterCode['WopCode']}} </label>
+
+        <label class="col-md-2 adInsLabel" translate>Realisation Amount </label>
+        <label class="col-md-4 adInsLabel" translate>{{RealisationAmt | number}} </label>
       </div>
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Term of Payment (in Days) </label>
@@ -184,7 +190,7 @@
         <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ManufacturerCustName}} </label>
       </div>
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Link Supplier Grading</label>
+        <label class="col-md-2 adInsLabel" translate>Link Supplier</label>
         <label class="col-md-4 adInsLabel" translate>          
           <a class="link" (click)="ClickLinkManufacturer(MouCustDlrFindData.DealerCode)"> {{MouCustDlrFindData.DealerName}} </a>
         </label>

@@ -8,6 +8,8 @@ export class ResCustDataPersonalForViewObj {
     ListAppCustFamilyObj: Array<ResAppCustCompletionObj>;
     ListAppCustPersonalFinDataObjs: Array<ResAppCustPersonalFinDataForViewObj>;
     ListCustFinDataAttrContent: Array<ResAppCustFinDataAttrContentForViewObj>;
+    AppCustOtherInfoForViewObj: ResAppCustOtherInfoForViewObj;
+    ListAppCustAttrContentObj: Array<ResAppCustAttrForViewObj>;
 
     constructor() {
         this.AppCustObj = new ResAppCustForViewObj();
@@ -16,6 +18,8 @@ export class ResCustDataPersonalForViewObj {
         this.ListAppCustGrpObj = new Array<ResAppCustGrpForViewObj>();
         this.ListAppCustFamilyObj = new Array<ResAppCustCompletionObj>();
         this.ListAppCustPersonalFinDataObjs = new Array<ResAppCustPersonalFinDataForViewObj>();
+        this.AppCustOtherInfoForViewObj = new ResAppCustOtherInfoForViewObj();
+        this.ListAppCustAttrContentObj = new Array<ResAppCustAttrForViewObj>();
     }
 }
 
@@ -28,6 +32,8 @@ export class ResCustDataCompanyForViewObj {
     ListAppCustCompanyLegalDocObj: Array<ResAppCustCompanyLegalDocForViewObj>;
     ListAppCustCompanyFinData: Array<ResAppCustCompanyFinDataForViewObj>;
     ListCustFinDataAttrContent: Array<ResAppCustFinDataAttrContentForViewObj>;
+    AppCustOtherInfoForViewObj: ResAppCustOtherInfoForViewObj;
+    ListAppCustAttrContentObj: Array<ResAppCustAttrForViewObj>;
 
     constructor() {
         this.AppCustObj = new ResAppCustForViewObj();
@@ -38,6 +44,8 @@ export class ResCustDataCompanyForViewObj {
         this.ListAppCustCompanyLegalDocObj = new Array<ResAppCustCompanyLegalDocForViewObj>();
         this.ListAppCustCompanyFinData = new Array<ResAppCustCompanyFinDataForViewObj>();
         this.ListCustFinDataAttrContent = new Array<ResAppCustFinDataAttrContentForViewObj>();
+        this.AppCustOtherInfoForViewObj = new ResAppCustOtherInfoForViewObj();
+        this.ListAppCustAttrContentObj = new Array<ResAppCustAttrForViewObj>();
     }
 }
 
@@ -254,5 +262,35 @@ export class ResAppCustFinDataAttrContentForViewObj{
         this.AttrName="";
         this.AttrValue="0";
         this.AttrInputType="";
+    }
+}
+
+export class ResAppCustOtherInfoForViewObj{
+    LbppmsCntrprtLbppDescr: string;
+    LbppmsDebtGrpLbppDescr: string;
+    LbppmsBizSustainLbppDescr: string;
+    LbppmsBizSclLbppDescr: string;
+
+    constructor(){
+        this.LbppmsCntrprtLbppDescr="";
+        this.LbppmsDebtGrpLbppDescr="";
+        this.LbppmsBizSustainLbppDescr="";
+        this.LbppmsBizSclLbppDescr="";
+    }
+}
+
+export class ResAppCustAttrForViewObj{
+    AttrCode: string;
+    AttrName: string;
+    AttrInputType: string;
+    AttrValue: string;
+    MasterCode: string;
+
+    constructor(){
+        this.AttrCode="";
+        this.AttrName="";
+        this.AttrInputType="";
+        this.AttrValue="";
+        this.MasterCode="";
     }
 }

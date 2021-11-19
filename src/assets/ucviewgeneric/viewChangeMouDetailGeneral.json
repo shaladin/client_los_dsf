@@ -22,10 +22,9 @@
             "property": "payFreq"
           },
           {
-            "type": "currency",
+            "type": "text",
             "label": "Down Payment(%)",
             "property": "dpPrcnt",
-            "precision": "0.6",
             "IsPrcnt": true
           },
           {

@@ -164,7 +164,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "MouStat"
+            "property": "MouStatDesc"
         },
         {
             "type": "text",

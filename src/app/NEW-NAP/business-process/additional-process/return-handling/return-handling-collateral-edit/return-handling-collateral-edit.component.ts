@@ -17,6 +17,8 @@ import { AppObj } from 'app/shared/model/app/app.model';
 import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { environment } from 'environments/environment';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 
@@ -31,7 +33,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   appId: number;
   returnHandlingHId: number;
   wfTaskListId: any;
-  appCollateralObj: Array<AppCollateralObj>;
+  appCollateralObj: Array<AppCollateralObj> = new Array();
   AppObj: NapAppModel;
   returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
@@ -71,6 +73,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.SetCollateralGrid();
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.claimTask();
@@ -81,6 +84,37 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     }
   }
 
+  gridAppCollateralObj: InputGridObj;
+  SetCollateralGrid(){
+    this.gridAppCollateralObj = new InputGridObj();
+    this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
+    this.gridAppCollateralObj.deleteUrl = URLConstant.DeleteAppCollateral;
+  }
+
+  eventColl(ev) {
+    if (ev.Key == "edit") {
+      this.AddEdit(ev.RowObj.AppCollateralId);
+    }
+
+    if (ev.Key == "delete") {
+      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+        let collateralObj = new AppCollateralObj();
+        collateralObj.AppCollateralId = ev.RowObj.AppCollateralId;
+        collateralObj.AppId = this.appId;
+        this.http.post(URLConstant.DeleteAppCollateral, collateralObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+
+            let DetailForGridCollateral = {
+              Data: response[CommonConstant.ReturnObj],
+              Count: "0"
+            };
+            this.gridAppCollateralObj.resultData = DetailForGridCollateral;
+          }
+        );
+      }
+    }
+  }
   claimTask() {
     if (environment.isCore) {
       if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
@@ -157,12 +191,15 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   GetAppCollateralData() {
-    var obj = {
-      Id: this.appId,
-    }
-    this.http.post(URLConstant.GetListAppCollateralByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetListAdditionalCollateralByAppId, { Id: this.appId }).subscribe(
       (response) => {
         this.appCollateralObj = response[CommonConstant.ReturnObj];
+        let DetailForGridCollateral = {
+          Data: response[CommonConstant.ReturnObj],
+          Count: "0"
+        }
+
+        this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       }
     );
   }
@@ -179,11 +216,13 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   }
 
-  AddEdit(AppCollateralId) {
+  AddEdit(AppCollateralId: number) {
     if (this.isReturnHandling == false) {
     }
     if (this.isReturnHandling == true) {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_DETAIL], { AppId: this.appId, AppCollateralId: AppCollateralId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
+      let mode: string = CommonConstant.ModeAddColl;
+      if(AppCollateralId != 0) mode = CommonConstant.ModeEditColl;
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_DETAIL], { AppId: this.appId, AppCollateralId: AppCollateralId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId, Mode: mode });
 
     }
   }

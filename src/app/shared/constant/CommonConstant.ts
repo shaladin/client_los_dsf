@@ -126,6 +126,9 @@ export class CommonConstant {
   //ASSET CONDITION
   public static AssetConditionUsed = "USED";
   public static AssetConditionNew = "NEW";
+  
+  public static ModeAddColl = "addColl";
+  public static ModeEditColl = "editColl";
 
   // SOCIAL MEDIA
   public static FACEBOOK = "FB";
@@ -727,6 +730,7 @@ export class CommonConstant {
   public static GSCodeDashboardPwd = "DASHBOARD_PWD";
   public static GSCodeFilterAddr = "FILTER_ADDR";
   public static GSCodeLoadingFeeCountType = "LOADING_FEE_COUNT_TYPE";
+  public static GSCodeDefaultLoadingFeeYear = "DEFAULT_LOADING_FEE_YEAR";
     
   public static LoadingFeeCountType_FirstYear = "FY";
   public static LoadingFeeCountType_LastYear = "LY";

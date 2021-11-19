@@ -27,12 +27,14 @@ import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
+  CrdApvResultExpDt: string;
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   integrationObj: IntegrationObj = new IntegrationObj();
+  businessDt: Date;
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService, private apvTaskService: ApprovalTaskService) {
     this.route.queryParams.subscribe(params => {
@@ -96,6 +98,24 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
       else if(ev.RowObj.CurrentUser == "-") {
         await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
+
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+      
+      var agrObj = { TrxNo: ev.RowObj.TransactionNo };
+  
+    await this.httpClient.post(URLConstant.GetAgrmntByAgrmntNo, agrObj).toPromise().then(
+      (response) => {
+              this.CrdApvResultExpDt = response["CrdApvResultExpDt"]
+      });
+
+      if (this.CrdApvResultExpDt != null && this.CrdApvResultExpDt != undefined) {
+        if (this.businessDt > new Date(this.CrdApvResultExpDt)) {                                              
+          this.toastr.warningMessage(ExceptionConstant.EXTENDS_TIME_EXPIRED);
+          return;
+        }
+      }
+
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_DETAIL],{"TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId  });
     }
     else if (ev.Key == "HoldTask") {

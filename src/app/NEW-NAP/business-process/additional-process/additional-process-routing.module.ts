@@ -54,6 +54,7 @@ import { CopyCanAppMultiBlDetailXComponent } from 'app/impl/NEW-NAP/business-pro
 import { ReturnHandlingPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-paging-x/return-handling-paging-x.component';
 import { ReturnHandlingDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-detail-x/return-handling-detail-x.component';
 import { EditAppAfterApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail-x.component';
+import { CollateralAddEditComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component';
 
 
 const routes: Routes = [
@@ -216,7 +217,7 @@ const routes: Routes = [
       },
       {
         path: PathConstant.RETURN_HANDLING_COLL_DETAIL,
-        component: ReturnHandlingCollateralDetailComponent,
+        component: CollateralAddEditComponent,
         data: {
           title: 'Return Handling Collateral Detail'
         }

@@ -6,11 +6,14 @@ export class CriteriaObj{
     high:number;
     DataType:string;
     listValue : Array<any>;
+    isCriteriaDataTable: boolean;
+    
     constructor()
     {
         this.low=0;
         this.high=0;
         this.DataType='Text';
+        this.isCriteriaDataTable = false;
     }
 
 }

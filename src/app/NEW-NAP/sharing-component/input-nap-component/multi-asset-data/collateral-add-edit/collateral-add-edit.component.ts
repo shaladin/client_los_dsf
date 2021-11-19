@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, NgForm, FormGroup, FormArray, ValidatorFn } from '@angular/forms';
@@ -39,6 +39,7 @@ import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-do
 import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -46,7 +47,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 })
 export class CollateralAddEditComponent implements OnInit {
   @Input() AppId: number;
-  @Input() mode: string;
+  @Input() mode: string = CommonConstant.ModeAddColl;
   @Input() AppCollateralId: number;
   @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
@@ -57,7 +58,6 @@ export class CollateralAddEditComponent implements OnInit {
   isAssetAttrReady: boolean = false;
   AppCollateralAttrObjs: Array<AppCollateralAttrCustomObj>;
   AppAssetAttrObj: any;
-  pageType: string = "add";
   LobCode: any;
   custNo: string;
   branchObj: any;
@@ -191,7 +191,11 @@ export class CollateralAddEditComponent implements OnInit {
   existingSelected: boolean = false;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService, public formValidate: FormValidateService) {
+  isReturnHandlingSave: boolean = false;
+  ReturnHandlingHId: number = 0;
+  WfTaskListId;
+  isParamReady: boolean = false;
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService, public formValidate: FormValidateService) {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
 
@@ -199,8 +203,8 @@ export class CollateralAddEditComponent implements OnInit {
       if (params["AppCollateralId"] != null) {
         this.AppCollateralId = params["AppCollateralId"];
       }
-      if (params["mode"] != null) {
-        this.pageType = params["mode"];
+      if (params["Mode"] != null) {
+        this.mode = params["Mode"];
       }
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -208,10 +212,22 @@ export class CollateralAddEditComponent implements OnInit {
       if (params["LobCode"] != null) {
         this.LobCode = params["LobCode"];
       }
+      if (params["WfTaskListId"] != null) {
+        this.WfTaskListId = params["WfTaskListId"];
+      }
+      if (params["ReturnHandlingHId"] != null) {
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
+        this.isReturnHandlingSave = true;
+      }
+      this.isParamReady=true;
     });
   }
 
   back() {
+    if (this.isReturnHandlingSave) {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT], { AppId: this.AppId, ReturnHandlingHId: this.ReturnHandlingHId, WfTaskListId: this.WfTaskListId });
+      return;
+    }
     this.collValue.emit({ mode: 'paging' });
   }
 
@@ -314,7 +330,7 @@ export class CollateralAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetUsage }).toPromise().then(
       (response) => {
         this.CollUsageList = response[CommonConstant.ReturnObj];
-        if (this.mode != "editColl") {
+        if (this.mode != CommonConstant.ModeEditColl) {
           this.AddCollForm.patchValue({
             MrCollateralUsageCode: this.CollUsageList[1].Key
           });
@@ -366,6 +382,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.collateralTypeHandler();
     this.enabledForm();
     this.bindDDLFromRefMaster();
+    this.SetInputLookupCollExisting();
 
     if(!isOnInit){
       this.inputLookupExistColl.nameSelect = "";
@@ -420,6 +437,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.inputLookupExistColl.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupExistColl.pagingJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
     this.inputLookupExistColl.genericJson = "./assets/uclookup/NAP/lookupAppCollateralCFNA.json";
+    this.inputLookupExistColl.isRequired = false;
   }
 
   getExistingColl(event) {
@@ -761,7 +779,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
 
-    if (this.mode == 'editColl') {
+    if (this.mode == CommonConstant.ModeEditColl) {
       this.AddCollForm.controls.Collateral.disable();
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
       this.appCollateralObj.Id = this.AppCollateralId;
@@ -968,7 +986,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.ownerRelationshipObj).subscribe(
       (response) => {
         this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
-        if(this.mode != 'editColl'){
+        if(this.mode != CommonConstant.ModeEditColl){
           this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
         }
       }
@@ -987,7 +1005,7 @@ export class CollateralAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetListAssetTypeByCode, this.collTypeObj).toPromise().then(
       async (response) => {
         this.returnCollTypeObj = response[CommonConstant.ReturnObj];
-        if (this.mode != 'editColl') {
+        if (this.mode != CommonConstant.ModeEditColl) {
           this.AddCollForm.patchValue({ AssetTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
         }
         await this.collateralTypeHandler(true);
@@ -1282,7 +1300,7 @@ export class CollateralAddEditComponent implements OnInit {
       }
       this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
 
-      if (this.mode == 'addColl') {
+      if (this.mode == CommonConstant.ModeAddColl) {
         this.setCollateralInfo();
 
         if (this.AddCollForm.controls["CollateralValueAmt"].value != "") {
@@ -1302,7 +1320,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.http.post(URLConstant.AddEditAllCollateralData, this.appCollateralDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            this.collValue.emit({ mode: 'paging' });
+            this.back();
           }
         );
       }
@@ -1322,7 +1340,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.http.post(URLConstant.AddEditAllCollateralData, this.appCollateralDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            this.collValue.emit({ mode: 'paging' });
+            this.back();
           }
         );
       }

@@ -2,11 +2,13 @@ export class MouCustDlrFinObj {
     MouCustDlrFncngId: number;
     MouCustId: number;
     WopCode: string;
+    WopCodeDesc: string;
     TopDays: number;
     TopInterestRatePrcnt: number;
     PayFreqCode: string;
     InterestRatePrcnt: number;
     MaximumMonthsForExtend: number;
+    MaximumMonthForExtend: number;
     MaximumTimesForExtends: number;
     ExtendRatePrcnt: number;
     SpareDayToPay: number;
@@ -26,7 +28,10 @@ export class MouCustDlrFinObj {
     MrInstTypeCode: string;
     VirtualAccNo: string;
     CurrCode: string;
+    RevolvingType: string;
+    RevolvingTypeDesc: string;
     ChangeMouTrxId: number;
+    MaxExtendRate: number;
     constructor() {
         this.MouCustDlrFncngId = 0;
         this.MouCustId = 0;

@@ -143,13 +143,21 @@ export class MouCustCompanyMainComponent implements OnInit {
 
 
   setCriteriaLookupCustomer(custTypeCode) {
-    var arrCrit = new Array();
-    var critObj = new CriteriaObj();
+    let arrCrit = new Array();
+    let critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
+
+    let critObj2 = new CriteriaObj();
+    critObj2.DataType = "text";
+    critObj2.propName = 'C.IS_CUSTOMER'
+    critObj2.restriction = AdInsConstant.RestrictionEq;
+    critObj2.value = '1';
+    arrCrit.push(critObj2);
+
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 

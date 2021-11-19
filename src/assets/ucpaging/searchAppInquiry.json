@@ -288,22 +288,22 @@
     {
       "type": "text",
       "position": "left",
-      "property": "agrmntStep"
+      "property": "agrmntStepDesc"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "contractStat"
+      "property": "contractStatDesc"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "appStep"
+      "property": "appStepDesc"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "appStat"
+      "property": "appStatDesc"
     },
     {
       "type": "text",
