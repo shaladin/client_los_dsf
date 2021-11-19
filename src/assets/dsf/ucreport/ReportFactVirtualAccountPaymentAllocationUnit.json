@@ -4,6 +4,24 @@
     "reportTemplateCode": "FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT",
     "component": [ 
         {
+            "type" : "datepicker",
+            "label" : "Period From",
+            "name" : "LeadDtGte",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Period To",
+            "name" : "LeadDtLte",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
             "type" : "dropdown",
             "label" : "Product Type",
             "name" : "CrtProductType",
@@ -25,24 +43,6 @@
             "criteriaPropName": "", 
             "criteriaPropValue": "", 
             "itemsUrl" : [],
-            "paramAssignment": 1 
-        },
-        {
-            "type" : "datepicker",
-            "label" : "Period From",
-            "name" : "LeadDtGte",
-            "value" : "BD-10",
-            "restriction" : "gte",
-            "datatype" : "date",
-            "paramAssignment": 1 
-        },
-        {
-            "type" : "datepicker",
-            "label" : "Period To",
-            "name" : "LeadDtLte",
-            "value" : "BD+10",
-            "restriction" : "lte",
-            "datatype" : "date",
             "paramAssignment": 1 
         }      
     ],
