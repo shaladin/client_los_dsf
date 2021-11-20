@@ -182,16 +182,17 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
+    await this.GetGeneralSettingDefaultLoadingFeeYear();
     this.BindMultiInsGridData();
     if (this.BLCode == CommonConstant.FCTR) {
       this.GetExistingAppCollateralWithInsurance();
       this.textTitle = "Collateral";
     }
     this.GetCollateralDDLForCopy();
-    this.GetGeneralSettingDefaultLoadingFeeYear();
+    
   }
 
   CancelHandler() {
@@ -419,14 +420,14 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     this.PageState = 'Paging';
   }
 
-  event(ev) {
+  async event(ev) {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
     this.AppAssetId = ev.RowObj.AppAssetId;
     if (this.AppAssetId == null || this.AppAssetId == undefined) this.AppAssetId = 0;
 
     this.appInsObjId = ev.RowObj.AppInsObjId;
     this.InsSeqNo = ev.RowObj.InsSeqNo;
-    this.GetInsMultiData();
+    await this.GetInsMultiData();
     this.PageState = this.EditInsurance;
   }
 
@@ -2386,8 +2387,8 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     this.isCalculate = false;
   }
 
-  GetGeneralSettingDefaultLoadingFeeYear() {
-    this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefaultLoadingFeeYear }).toPromise().then(
+  async GetGeneralSettingDefaultLoadingFeeYear() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefaultLoadingFeeYear }).toPromise().then(
       (response) => {
         this.DefaultLoadingFeeYear = parseInt(response.GsValue);
       }
