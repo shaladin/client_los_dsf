@@ -359,7 +359,7 @@
                     </div>
 
                     <div class="form-actions right">
-                      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                      <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
                         <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                       </button>
                       <button type="submit" class="btn btn-raised btn-primary">

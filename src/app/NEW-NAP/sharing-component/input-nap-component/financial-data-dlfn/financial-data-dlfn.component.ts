@@ -20,6 +20,7 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 export class FinancialDataDlfnComponent implements OnInit {
 
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();

@@ -3,7 +3,7 @@
     <div class="px-3">
       <div class="form-action pull-right">
         <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-          [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'CFNA'}">
+          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'DLFN'}">
           <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
         </button>
       </div>
@@ -87,23 +87,23 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-dlfn *ngIf="AppStepIndex == 1" [AppId]="appId"
+              <app-application-data-dlfn *ngIf="AppStepIndex == 1" [AppId]="appId" [showCancel]="showCancel"
                 (outputTab)="NextStep('INVOICE')" (outputCancel)="Cancel()"></app-application-data-dlfn>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
-              <app-invoice-data-dlfn *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
+              <app-invoice-data-dlfn *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-invoice-data-dlfn>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-dlfn *ngIf="AppStepIndex == 3" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              <app-financial-data-dlfn *ngIf="AppStepIndex == 3" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-financial-data-dlfn>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 5 && isDmsReady && SysConfigResultObj?.ConfigValue == 1"
-                              (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="true"
+                              (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="ReturnHandlingHId == 0"
                               [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
@@ -113,7 +113,7 @@
   </div>
 </div>
 <br>
-<!-- <div class="col-md-12">
+<div class="col-md-12">
   <div class="form-action pull-right">
   </div>
   <div class="card" *ngIf="ReturnHandlingHId > 0">
@@ -128,4 +128,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
