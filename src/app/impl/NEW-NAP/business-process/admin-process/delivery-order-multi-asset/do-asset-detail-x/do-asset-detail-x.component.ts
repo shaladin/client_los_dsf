@@ -75,7 +75,7 @@ export class DoAssetDetailXComponent implements OnInit {
     AssetNotes: [''],
     TempRegisLettNo: ['', [Validators.required]],
     TempRegisLettDt: ['', [Validators.required]],
-    Color: [''],
+    Color: ['', [Validators.required]],
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
