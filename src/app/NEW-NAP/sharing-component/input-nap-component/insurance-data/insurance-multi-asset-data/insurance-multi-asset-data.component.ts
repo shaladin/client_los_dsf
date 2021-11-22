@@ -1008,6 +1008,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         let InsRateAddCvgRuleObjs = response['InsRateAddCvgRuleObjs'];
         if (response["InsRateAddCvgRuleTplObjs"]) InsRateAddCvgRuleObjs = InsRateAddCvgRuleObjs.concat(response["InsRateAddCvgRuleTplObjs"]);
 
+        await this.bindInsMainCvgTypeObj();
         this.bindInsAddCvgTypeRuleObj();
         this.bindInsPaidByRuleObj();
 
@@ -2356,7 +2357,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   GetGeneralSettingDefaultLoadingFeeYear() {
-    this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefaultLoadingFeeYear }).toPromise().then(
+    this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefaultLoadingFeeYear }).subscribe(
       (response) => {
         this.DefaultLoadingFeeYear = parseInt(response.GsValue);
       }

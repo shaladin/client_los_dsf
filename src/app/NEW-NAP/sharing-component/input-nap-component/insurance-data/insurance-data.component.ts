@@ -77,10 +77,6 @@ export class InsuranceDataComponent implements OnInit {
   inscoBranchObj: Array<KeyValueObj>;
   paidByObj: Array<KeyValueObj>;
   insMainCvgTypeObj: Array<KeyValueObj>;
-  insMainCvgTypeRuleObj = [{
-    Key: "",
-    Value: ""
-  }];
   insAddCvgTypeObj: Array<KeyValueObj>;
   insAddCvgTypeRuleObj: Array<KeyValueObj>;
   groupedAddCvgType: Array<string>;
@@ -158,6 +154,7 @@ export class InsuranceDataComponent implements OnInit {
     })
   }
   async ngOnInit(): Promise<void> {
+    this.GetGeneralSettingDefaultLoadingFeeYear();
     await this.getInsuranceData();
     await this.bindInsMainCvgTypeObj();
     await this.bindInsAddCvgTypeObj();
@@ -721,6 +718,7 @@ export class InsuranceDataComponent implements OnInit {
         let InsRateAddCvgRuleObjs = response['InsRateAddCvgRuleObjs'];
         if (response["InsRateAddCvgRuleTplObjs"]) InsRateAddCvgRuleObjs = InsRateAddCvgRuleObjs.concat(response["InsRateAddCvgRuleTplObjs"]);
 
+        await this.bindInsMainCvgTypeObj();
         this.bindInsAddCvgTypeRuleObj();
         this.bindInsPaidByRuleObj();
 
@@ -2120,5 +2118,13 @@ export class InsuranceDataComponent implements OnInit {
         this.CountTypeLastYear();
         break;
     }
+  }
+
+  GetGeneralSettingDefaultLoadingFeeYear() {
+    this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefaultLoadingFeeYear }).subscribe(
+      (response) => {
+        this.DefaultLoadingFeeYear = parseInt(response.GsValue);
+      }
+    );
   }
 }
