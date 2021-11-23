@@ -731,11 +731,11 @@ export class CommonConstant {
   public static GSCodeFilterAddr = "FILTER_ADDR";
   public static GSCodeLoadingFeeCountType = "LOADING_FEE_COUNT_TYPE";
   public static GSCodeDefaultLoadingFeeYear = "DEFAULT_LOADING_FEE_YEAR";
-    
   public static LoadingFeeCountType_FirstYear = "FY";
   public static LoadingFeeCountType_LastYear = "LY";
   public static LoadingFeeCountType_CountingYear = "CY";
-
+  public static GSCodeFilterAppDataSalesOfficerCode = "FILTER_APP_DATA_SALES_OFFICER_CODE";
+  
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
   public static PaymentTypeDirectPayment = "DIRECT_PAYMENT";
