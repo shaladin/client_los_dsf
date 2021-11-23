@@ -40,7 +40,7 @@
         "url": "",
         "environment": "FOU",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-        "label": "Office Name",
+        "label": "Office",
         "items": [],
         "itemsUrl": []
       },
