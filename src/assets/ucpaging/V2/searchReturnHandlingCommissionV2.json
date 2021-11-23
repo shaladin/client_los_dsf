@@ -27,20 +27,21 @@
         "placeholder": "Placeholder"
       },
       {
-        "type": "dropdown",
-        "name": "a.ORI_OFFICE_CODE",
-        "id": "OfficeNameId",
+        "type": "officeRoleCodes",
+        "datatype": "text",
+        "name": "TaskOfficeCode",
+        "id": "OfficeCodeId",
         "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
         "ddlType": "all",
+        "isQueryIn": true,
         "url": "",
         "environment": "FOU",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-        "label": "Office",
+        "label": "Office Name",
         "items": [],
-        "itemsUrl": [],
-        "isQueryIn": true
+        "itemsUrl": []
       },
       {
         "type" : "claim",
