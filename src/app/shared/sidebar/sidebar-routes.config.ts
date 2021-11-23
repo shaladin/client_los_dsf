@@ -151,8 +151,8 @@ export const ROUTES: RouteInfo[] = [
       {
         Path: '', Title: 'New CFNA', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
-          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X, Title: 'NAP 1 X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+          { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X, Title: 'NAP 1 X Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           { Path: NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING, Title: 'NAP 2 Dsf', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           //{ Path: NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_PAGING, Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           { Path: NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING, Title: 'NAP 1', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },

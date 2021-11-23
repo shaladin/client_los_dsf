@@ -284,7 +284,7 @@ export class CustMainDataAddXDsfComponent implements OnInit {
     );
   }
 
-  SaveForm() {
+  async SaveForm() {
     let requestAddNapObj: Object = new Object();
     let AddNapUrl: string = "";
     if (this.NapAppForm.getRawValue().AppNo == "") {
@@ -319,6 +319,11 @@ export class CustMainDataAddXDsfComponent implements OnInit {
       }
       else {
         AddNapUrl = URLConstantX.AddNewApplicationFromCopyV2_1;
+
+        await this.http.post<GenericObj>(URLConstantDsf.AddXDAACPDSF, requestAddNapObj).toPromise().then(
+          (response) => {
+          }
+        )
       }
     }
 
