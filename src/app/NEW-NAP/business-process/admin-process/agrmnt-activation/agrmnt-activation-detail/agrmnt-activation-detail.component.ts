@@ -4,20 +4,21 @@ import { AdminProcessService, ReqAppAssetAgreementActivationObj } from 'app/NEW-
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
-import { WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
+import { WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model';
-import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
+import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/request/nap/agr-act/req-app-fin-data-and-fee.model';
+import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/response/nap/agr-act/res-agrmnt-activation-fin-data-and-fee-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ToastrService } from 'ngx-toastr';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -55,7 +56,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
     });
 
     this.AgrmntActForm = this.fb.group({
-      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])],
+      'CreateDt': [this.CreateDt],
       'AgrmntNo': [''],
       'isOverwrite': [this.isOverwrite]
     });
@@ -80,6 +81,13 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   readonly bizCodeFl4w: string = CommonConstant.FL4W;
 
+  patchDefaultValueCreateDt() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.CreateDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    let datePipe = new DatePipe("en-US");
+    this.AgrmntActForm.get("CreateDt").patchValue(datePipe.transform(this.CreateDt, 'yyyy-MM-dd'));
+  }
+
   async ngOnInit() {
     await this.CheckApvResultExp();
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
@@ -97,6 +105,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
     whereValueObj.property = "AppId";
     whereValueObj.value = this.AppId;
     this.tempPagingObj.whereValue.push(whereValueObj);
+    this.patchDefaultValueCreateDt();
   }
 
   ngOnDestroy() {

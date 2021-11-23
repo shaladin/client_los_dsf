@@ -9,7 +9,7 @@
         "name": "OfficeCode",
         "datatype": "text",
         "isFromURL": true,
-        "ddlType": "all",
+        "ddlType": "one",
         "url": "",
         "environment": "FOU",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",

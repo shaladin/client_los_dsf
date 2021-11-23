@@ -67,7 +67,7 @@ export class ExceptionConstant {
     public static ALL_ASSET_MUST_PROCESSED_TO_SUBMIT = "All Asset Must Be Processed to Submit";
     public static NO_RULE_SETTING = "There no rule setting for ";
     public static RESULT_CANNOT_NEW_OR_FAILED = "Result can't be New or Failed";
-    public static SETTING_RULE_FIRST = "Please setting rule first.";
+    public static SETTING_RULE_FIRST = "Please setting {0} rule first.";
     public static STEP_UP_STEP_DOWN_TYPE = "Please choose Step Up Step Down Input Type.";
     public static CHOOSE_INSCO_BRANCH = "Please choose Insco Branch.";
     public static CHOOSE_PAID_BY = "Please choose Paid By.";
@@ -81,7 +81,7 @@ export class ExceptionConstant {
     public static DELETE_CONFIRMATION = 'Are you sure to delete this record?';
     public static NO_LEAD_DATA_AVAILABLE = 'No Lead Available to Cancel';
     public static CANNOT_INSURE_SAME_PERSON = "Cannot insure same person";
-
+    public static SETTING_COMPONENT_RULE_FIRST = "Please setting rule {0}, component {1} for Year No {2}.";
 
     public static INSERT_ESTIMATION_EFFECTIVE_DATE = "Insert Estimation Effective Date";
     public static GRACE_PERIOD_MUST_SET = "Grace Period must be set";
@@ -132,6 +132,7 @@ export class ExceptionConstant {
     public static CALC_FIRST = "Please Click Calculate";
 
     public static EXTENDS_TIME_INVLID = "maximum extends times, maximum extends times cant exceed extend month!";
+    public static EXTENDS_TIME_EXPIRED = "Credit Approval Result has Expired, please request Credit Approval Result Extension";
 
     public static NO_SURVEY = "No Survey";
     public static NO_PHONE_VERF = "No Phone Verification";
@@ -191,5 +192,6 @@ export class ExceptionConstant {
     public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
     
     public static JOB_POSITION_CANT_BE_EMPTY = "Job Position Cannot Be Empty - Shareholder {0}";
+    public static INS_ASSET_CATEGORY_NOT_FOUND = "Ins Asset Category Not Found, Please Setting Rule First"
 }
 

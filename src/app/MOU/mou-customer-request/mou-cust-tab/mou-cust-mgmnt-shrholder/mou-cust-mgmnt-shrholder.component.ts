@@ -3,23 +3,23 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate, KeyValue } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { MouCustCompanyMgmntShrholderObj } from 'app/shared/model/MouCustCompanyMgmntShrholderObj.Model';
+import { MouCustCompanyMgmntShrholderObj } from 'app/shared/model/mou-cust-company-mgmnt-shrholder-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { CustSetData } from 'app/NEW-NAP/sharing-component/main-data-component/components/CustSetData.Service';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 
 @Component({
   selector: 'app-mou-cust-mgmnt-shrholder',
@@ -206,7 +206,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.mode = "edit";
     this.currentEditedIndex = i;
 
-    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePersonal) {
+    if (this.listShareholder[i].MrShrholderTypeCode == CommonConstant.CustTypePersonal) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrGenderCode: this.listShareholder[i].MrGenderCode,
@@ -243,7 +243,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
     }
 
-    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypeCompany) {
+    if (this.listShareholder[i].MrShrholderTypeCode == CommonConstant.CustTypeCompany) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrCompanyTypeCode: this.listShareholder[i].MrCompanyTypeCode,
@@ -270,7 +270,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       }
     }
 
-    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePublic) {
+    if (this.listShareholder[i].MrShrholderTypeCode == CommonConstant.CustTypePublic) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: CommonConstant.CustTypePublic,
       });

@@ -4,9 +4,9 @@ import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, merge } from 'rxjs/operators'
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
+import { RequestCriteriaObj } from 'app/shared/model/request-criteria-obj.model';
 import { NullTemplateVisitor } from '@angular/compiler';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 // State constant declaration

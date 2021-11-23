@@ -6,19 +6,19 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompany/AppCustCompanyContactPersonObj.Model';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { AppCustCompanyContactPersonObj } from 'app/shared/model/app-cust-company/app-cust-company-contact-person-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
 import { RegexService } from 'app/shared/services/regex.services';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-cc-contact-information-tab',
@@ -171,6 +171,7 @@ export class CcContactInformationTabComponent implements OnInit {
             this.inputFieldCcObj.inputLookupObj.jsonSelect = { Zipcode: response.AppCustAddrObj.Zipcode };
             this.inputAddressObjForCc.default = this.CcAddrObj;
             this.inputAddressObjForCc.inputField = this.inputFieldCcObj;
+            this.inputAddressObjForCc.inputField.inputLookupObj.isRequired = false;
           }
           this.ChangeIdType(true);
         }
@@ -183,6 +184,8 @@ export class CcContactInformationTabComponent implements OnInit {
     this.inputAddressObjForCc = new InputAddressObj();
     this.inputAddressObjForCc.showSubsection = true;
     this.inputAddressObjForCc.showPhn3 = false;
+    this.inputAddressObjForCc.isRequired = false;
+    this.inputAddressObjForCc.inputField.inputLookupObj.isRequired = false;
   }
 
   ChangeIdType(FirstInit: boolean = false) {

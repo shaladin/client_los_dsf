@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
+import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 

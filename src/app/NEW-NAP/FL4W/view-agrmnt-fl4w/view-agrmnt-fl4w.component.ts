@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 
 @Component({
   selector: 'app-view-agrmnt-fl4w',

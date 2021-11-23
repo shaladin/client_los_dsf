@@ -3,15 +3,15 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import {UcPagingObj} from 'app/shared/model/UcPagingObj.Model';
-import {CommonConstant} from 'app/shared/constant/CommonConstant';
-import {CookieService} from 'ngx-cookie';
-import {RequestTaskModelObj} from 'app/shared/model/Workflow/V2/RequestTaskModelObj.model';
-import {IntegrationObj} from 'app/shared/model/library/IntegrationObj.model';
-import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { CookieService } from 'ngx-cookie';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 @Component({
   selector: 'app-survey-paging-x',
@@ -19,8 +19,8 @@ import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
 })
 export class SurveyPagingXComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  RequestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
-  IntegrationObj : IntegrationObj = new IntegrationObj();
+  RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  IntegrationObj: IntegrationObj = new IntegrationObj();
 
   BizTemplateCode: string;
 
@@ -43,7 +43,7 @@ export class SurveyPagingXComponent implements OnInit {
     let arrCrit = new Array();
     let critObj: CriteriaObj;
 
-    if(environment.isCore){
+    if (environment.isCore) {
       const UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.inputPagingObj._url = "./assets/impl/ucpaging/survey/V2/searchSurveyV2.json";
       this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/survey/V2/searchSurveyV2.json";
@@ -68,7 +68,7 @@ export class SurveyPagingXComponent implements OnInit {
       critObj.value = CommonConstantX.APP_STEP_SURVEY_VERIF;
       arrCrit.push(critObj);
       this.inputPagingObj.addCritInput = arrCrit
-    }else{
+    } else {
       this.inputPagingObj._url = "./assets/ucpaging/survey/searchSurvey.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/survey/searchSurvey.json";
       this.inputPagingObj.apiQryPaging = "/v1" + URLConstant.GetPagingObjectBySQL;
@@ -87,15 +87,15 @@ export class SurveyPagingXComponent implements OnInit {
       critObj = new CriteriaObj();
       critObj.restriction = AdInsConstant.RestrictionLike;
       critObj.propName = 'WF.ACT_CODE';
-      critObj.value = CommonConstantX.ACT_CODE_SURVEY_VERIF+this.BizTemplateCode;
+      critObj.value = CommonConstantX.ACT_CODE_SURVEY_VERIF + this.BizTemplateCode;
       arrCrit.push(critObj);
       this.inputPagingObj.addCritInput = arrCrit;
     }
   }
 
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
   }
 

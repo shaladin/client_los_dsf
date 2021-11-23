@@ -6,13 +6,13 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { LtkmCustBankAccObj } from 'app/shared/model/LTKM/LtkmCustBankAccObj.Model';
-import { LtkmCustBankStmntObj } from 'app/shared/model/LTKM/LtkmCustBankStmntObj.Model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppCustBankStmntObj } from 'app/shared/model/app-cust-bank-stmnt-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { LtkmCustBankAccObj } from 'app/shared/model/ltkm/ltkm-cust-bank-acc-obj.model';
+import { LtkmCustBankStmntObj } from 'app/shared/model/ltkm/ltkm-cust-bank-stmnt-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
@@ -81,7 +81,7 @@ export class LtkmBankSectionComponent implements OnInit {
             BankStmntObjs: this.fb.array([])
         }));
 
-        this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMonth }).subscribe(
+        this.http.post(URLConstant.GetListKeyValueActiveByCodeOrderBySeqNo, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMonth }).subscribe(
             (response) => {
                 this.MonthObj = response[CommonConstant.ReturnObj];
                 if (this.MonthObj.length > 0) {

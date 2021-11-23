@@ -16,7 +16,7 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { TaskReassigmnetViewComponent } from './task-reassigmnet-view/task-reassigmnet-view.component';
 import { TaskReassigmnetInquiryComponent } from "./task-reassigmnet-inquiry/task-reassigmnet-inquiry.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",

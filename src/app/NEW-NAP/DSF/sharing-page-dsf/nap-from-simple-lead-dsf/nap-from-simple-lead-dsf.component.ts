@@ -9,9 +9,9 @@ import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 

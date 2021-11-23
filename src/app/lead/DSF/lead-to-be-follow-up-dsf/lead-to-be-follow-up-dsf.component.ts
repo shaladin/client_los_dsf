@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

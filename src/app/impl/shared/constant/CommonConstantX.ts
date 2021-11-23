@@ -1,4 +1,4 @@
-import { CurrencyMaskInputMode } from "ngx-currency";
+import {CurrencyMaskInputMode} from 'ngx-currency';
 
 export class CommonConstantX {
     //RefMaster
@@ -39,7 +39,9 @@ export class CommonConstantX {
     //Approval Category
     public static CESSIE_PRE_GPV_APV_CATEGORY = "CESSIE_PGLV_APV";
     public static CAT_CODE_GO_LIVE_APV = "GO_LIVE_APV";
-    
+    public static CAT_CODE_END_DT_GO_LIVE_APV = "END_DATE_GO_LIVE_APV";
+
+
     //Add Interest Paid By
     public static AdditionalInterestPaidByCustomer = "CU";
 

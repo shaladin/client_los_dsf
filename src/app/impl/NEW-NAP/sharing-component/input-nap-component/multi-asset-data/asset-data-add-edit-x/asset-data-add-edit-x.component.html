@@ -353,7 +353,7 @@
                     <thead>
                       <tr class="table-header">
                         <th class="nowrap"><span translate class="thead-header">No</span></th>
-                        <th class="nowrap"><span translate class="thead-header">Supplier Name</span></th>
+                        <th class="nowrap" *ngIf="this.appData.LobCode!='SLB'"><span translate class="thead-header">Supplier Name</span></th>
                         <th class="nowrap"><span translate class="thead-header">Accessories Name</span></th>
                         <th class="nowrap"><span translate class="thead-header">Accessories Price</span></th>
                         <th class="nowrap"><span translate class="thead-header">Security Deposit Type</span></th>
@@ -372,7 +372,7 @@
                         <td [formGroupName]="i" class="text-center">
                           {{i + 1}}
                         </td>
-                        <td [formGroupName]="i" class="text-center">
+                        <td [formGroupName]="i" class="text-center" *ngIf="this.appData.LobCode!='SLB'">
                           <lib-uclookupgeneric [enjiForm]="enjiForm"
                             [lookupInput]="dictSuppLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]"
                             [parentForm]="AssetDataForm"

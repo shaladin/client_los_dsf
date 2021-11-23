@@ -2,21 +2,21 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetect
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { forkJoin } from 'rxjs';
-import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
 import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { MouCustListedCustFctrObj } from 'app/shared/model/mou-cust-listed-cust-fctr-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { environment } from 'environments/environment';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
@@ -109,6 +109,7 @@ export class MouDetailFactoringComponent implements OnInit {
     let getPayFreq = this.httpClient.post(URLConstant.GetListActiveRefPayFreq, null);
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
+    rmInstSchm.MappingCode = CommonConstant.FCTR;
     let getInstSchm = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
     var refCurr; 
     let getCurrency = this.httpClient.post(URLConstant.GetListKvpActiveRefCurr, refCurr);

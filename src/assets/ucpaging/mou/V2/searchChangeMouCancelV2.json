@@ -233,7 +233,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "MouStat"
+            "property": "StatusDesc"
         },
         {
             "type": "text",

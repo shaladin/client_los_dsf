@@ -1,5 +1,5 @@
 {
-  "title": "CREDIT APPROVAL RESULT EXTENSION",
+  "title": "",
   "component": [
     {
       "type": "textbox",
@@ -27,14 +27,6 @@
       "datatype": "date"
     },
     {
-      "type": "textbox",
-      "name": "AC.CUST_NAME",
-      "id": "CustNameId",
-      "value": "",
-      "label": "Customer Name",
-      "placeholder": "Placeholder"
-    },
-    {
       "type": "datepicker",
       "name": "A.CRD_APV_RESULT_EXP_DT",
       "id": "appDtlte",
@@ -42,6 +34,14 @@
       "label": "Expired Date <=",
       "restriction": "lte",
       "datatype": "date"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
     }
   ],
   "querystring": {

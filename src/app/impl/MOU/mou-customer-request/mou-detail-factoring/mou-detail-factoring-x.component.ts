@@ -2,23 +2,23 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetect
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { forkJoin } from 'rxjs';
-import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { environment } from 'environments/environment';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import {MouCustListedCustFctrXComponent} from 'app/impl/MOU/mou-customer-request/mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr-x.component';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
+import { MouCustListedCustFctrObj } from 'app/shared/model/mou-cust-listed-cust-fctr-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 @Component({
   selector: 'app-mou-detail-factoring-x',
@@ -75,7 +75,7 @@ export class MouDetailFactoringXComponent implements OnInit {
     MrCustTypeCode: [''],
     VirtualAccNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
   });
-
+  
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private httpClient: HttpClient,
@@ -83,7 +83,7 @@ export class MouDetailFactoringXComponent implements OnInit {
     private fb: FormBuilder,
     private cdref: ChangeDetectorRef,
     private cookieService: CookieService
-  ) {
+  ) { 
     this.isListedFctr = false;
     this.shouldComponentLoad = false;
   }
@@ -110,8 +110,9 @@ export class MouDetailFactoringXComponent implements OnInit {
     let getPayFreq = this.httpClient.post(URLConstant.GetListActiveRefPayFreq, null);
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
+    rmInstSchm.MappingCode = CommonConstant.FCTR;
     let getInstSchm = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInstSchm);
-    var refCurr;
+    var refCurr; 
     let getCurrency = this.httpClient.post(URLConstant.GetListKvpActiveRefCurr, refCurr);
     var mouCustFctr = new MouCustFctrObj();
     mouCustFctr.MouCustId = this.MouCustId;
@@ -119,7 +120,7 @@ export class MouDetailFactoringXComponent implements OnInit {
     forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouFctr]).subscribe(
       (response: any) => {
         this.recourseTypeList = response[0].ReturnObject;
-        this.wopList = response[1].ReturnObject;
+        this.wopList = response[1].ReturnObject; 
         this.paidByList = response[2].ReturnObject;
         this.instTypeList = response[3].ReturnObject;
         this.singleInstCalcMthdList = response[4].ReturnObject;
@@ -259,7 +260,7 @@ export class MouDetailFactoringXComponent implements OnInit {
         this.tenorInvalidMsg = "";
       }
     }
-
+    
     if (this.isRecourse === true) {
       if (this.listedCusts.length > 0) {
         formData.IsListedCust = true
@@ -285,7 +286,7 @@ export class MouDetailFactoringXComponent implements OnInit {
         console.log(response);
       });
   }
-
+  
   listedCusts: Array<MouCustListedCustFctrObj> = new Array<MouCustListedCustFctrObj>();
   GetDataListCustFctr(ev) {
     this.listedCusts = ev;
@@ -312,14 +313,14 @@ export class MouDetailFactoringXComponent implements OnInit {
       this.MouDetailFactoringForm.controls.MrInstTypeCode.enable();
       this.MouDetailFactoringForm.controls.IsDisclosed.enable();
       this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
-
+      
       this.MouDetailFactoringForm.updateValueAndValidity();
-
+      
     }
     else if (recourseType === CommonConstant.WITHOUT_RECOURSE_TYPE) {
       this.inputLookupCustObj.isRequired = true;
       this.inputLookupCustObj.isReady = true;
-
+      
       this.isRecourse = false;
       this.MouDetailFactoringForm.patchValue({
         MrPaidByCode: CommonConstant.PAID_BY_CUST_FCTR,

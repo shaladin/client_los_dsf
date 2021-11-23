@@ -62,7 +62,7 @@ import { LtkmReturnHandlingXComponent } from "app/impl/ltkm/ltkm-return-handling
 import { LtkmCustJobDataXComponent } from "app/impl/ltkm/ltkm-request/additional-component/cust-job-data/cust-job-data-x.component";
 import { LtkmRequestXComponent } from "app/impl/ltkm/ltkm-request/ltkm-request-x.component";
 import { LtkmCustPersonalMainDataXComponent } from "app/impl/ltkm/ltkm-request/additional-component/cust-personal-main-data/cust-personal-main-data-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,

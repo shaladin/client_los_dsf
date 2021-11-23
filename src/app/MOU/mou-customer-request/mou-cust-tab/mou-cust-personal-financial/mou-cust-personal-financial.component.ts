@@ -3,8 +3,8 @@ import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroup
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustPersonalFinDataObj } from 'app/shared/model/mou-cust-personal-fin-data-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-mou-cust-personal-financial',

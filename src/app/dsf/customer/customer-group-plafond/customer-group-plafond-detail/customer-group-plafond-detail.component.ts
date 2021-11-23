@@ -4,18 +4,18 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { CustGrpPlfndReqDsfObj } from 'app/dsf/model/CustGrpPlfndReqDsfObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { environment } from 'environments/environment';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 
 @Component({
   selector: 'app-customer-group-plafond-detail',

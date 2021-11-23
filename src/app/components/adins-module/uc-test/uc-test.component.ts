@@ -7,13 +7,21 @@ import { DOCUMENT } from '@angular/platform-browser';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from 'app/shared/excel-service/excel-service';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
-import { KeyValueReportObj } from '@adins/ucsearch/lib/model/KeyValueReport.model';
-import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { InputSearchObj } from 'app/shared/model/input-search-obj.model';
+import { KeyValueReportObj } from '@adins/ucsearch/lib/model/key-value-report.model';
+import { RequestCriteriaObj } from 'app/shared/model/request-criteria-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CookieService } from 'ngx-cookie';
+export class KeyValueUCSearchObj {
+  key: number;
+  value: string;
 
+  constructor() {
+      this.key = 0;
+      this.value = "";
+  }
+}
 @Component({
   selector: 'app-uc-test',
   templateUrl: './uc-test.component.html',
@@ -39,6 +47,11 @@ export class UcTestComponent implements OnInit {
   // trus nad, bisa ga kalo misalkan gw mau bikin
   // kalo login di cabang IsSelectOne: true
   // kalo login di HO, IsSelectOne: false
+  @ViewChild('enjiForm') set content(content: NgForm) {
+    if (content) { // initially setter gets called with undefined
+      this.searchForm = content;
+    }
+  }
 
   @ViewChild('formIdSearch') myForm: ElementRef;
   @Input() searchInput: InputSearchObj = new InputSearchObj();
@@ -68,7 +81,6 @@ export class UcTestComponent implements OnInit {
       value: "Document XML"
     },
   ];
-
   ListOfMonth: Array<any> = [
     {
       "key": "1",
@@ -119,17 +131,29 @@ export class UcTestComponent implements OnInit {
       "value": "December"
     }
   ];
-  ListOfYear: Array<any> = new Array<any>();
+  ListOfYear: Array<KeyValueUCSearchObj> = new Array<KeyValueUCSearchObj>();
+  DictOfMonth: { [month: number]: string } = {};
+  ClaimList: Array<any> = [
+    {
+      Key: AdInsConstant.RestrictionIsNotNull,
+      Value: "CLAIMED"
+    },
+    {
+      Key: AdInsConstant.RestrictionIsNull,
+      Value: "UNCLAIMED"
+    },
+  ];
 
   ExportType: number = 0;
 
-  pageNow: number = 1;
+  pageNow: any = 1;
   configuration: any;
   exportData: any;
   ExcelData: any;
   isDataLoaded: boolean = false;
   isHidden: boolean = false;
   BisDt: string;
+  BusinessDt: Date = new Date();
   dateWrong: boolean = false;
 
   currentState = 'initial';
@@ -154,6 +178,18 @@ export class UcTestComponent implements OnInit {
 
   ngOnInit() {
     console.log("ucsearch");
+    this.DictOfMonth[1]= "January";
+    this.DictOfMonth[2]= "February";
+    this.DictOfMonth[3]= "March";
+    this.DictOfMonth[4]= "April";
+    this.DictOfMonth[5]= "May";
+    this.DictOfMonth[6]= "June";
+    this.DictOfMonth[7]= "July";
+    this.DictOfMonth[8]= "August";
+    this.DictOfMonth[9]= "September";
+    this.DictOfMonth[10]= "October";
+    this.DictOfMonth[11]= "November";
+    this.DictOfMonth[12]= "December";
     this.apiUrl = this.searchInput.enviromentUrl + this.searchInput.apiQryPaging;
     this.arrCrit = this.searchInput.arrCritObj;
     let js = this._renderer2.createElement('script');
@@ -168,6 +204,7 @@ export class UcTestComponent implements OnInit {
 
     let value = this.cookieService.get('BusinessDateRaw');
     this.BisDt = this.DecryptString(value, "AdInsFOU12345678");
+    this.BusinessDt = new Date(this.BisDt);
     this.initiateForm();
   }
 
@@ -187,12 +224,12 @@ export class UcTestComponent implements OnInit {
         this.configuration.title = this.searchInput.title;
       }
 
-      for (var i = 0; i < this.countForm; i++) {
+      for (let i = 0; i < this.countForm; i++) {
         //ini kalau datanya di load dari URL
         if (data.component[i].isFromURL == true) {
-          var request = new RequestCriteriaObj();
-          var arrayCrit = new Array();
-          var criteriaObject = new CriteriaObj();
+          let request = new RequestCriteriaObj();
+          let arrayCrit = new Array();
+          let criteriaObject = new CriteriaObj();
           criteriaObject.DataType = "text";
           criteriaObject.propName = data.component[i].criteriaPropName;
           criteriaObject.value = data.component[i].criteriaPropValue;
@@ -203,14 +240,7 @@ export class UcTestComponent implements OnInit {
 
           // Pengecekan penggunaan url atau path
           if (data.component[i].path != undefined && data.component[i].path != "") {
-            if (this.searchInput.ddlEnvironments != undefined && this.searchInput.ddlEnvironments.length != 0) {
-              for (let y = 0; y < this.searchInput.ddlEnvironments.length; y++) {
-                if (data.component[i].name == this.searchInput.ddlEnvironments[y].name) {
-                  data.component[i].fullpath = this.searchInput.ddlEnvironments[y].environment + data.component[i].path;
-                  break;
-                }
-              }
-            } else if (this.searchInput.listEnvironments != undefined && this.searchInput.listEnvironments.length != 0) {
+            if (this.searchInput.listEnvironments != undefined && this.searchInput.listEnvironments.length != 0) {
               for (let y = 0; y < this.searchInput.listEnvironments.length; y++) {
                 if (data.component[i].environment == this.searchInput.listEnvironments[y].environment) {
                   data.component[i].fullpath = this.searchInput.listEnvironments[y].url + data.component[i].path;
@@ -233,64 +263,28 @@ export class UcTestComponent implements OnInit {
           data.component[i].value = parseFloat(data.component[i].value).toLocaleString('en');
         }
 
-        // value month u 0 / 1
         //pengecekan ddl
         if (data.component[i].type == "dropdown") {
           if (data.component[i].dtmType != undefined) {
-            if (data.component[i].dtmType == "month") {
-              data.component[i].items = this.ListOfMonth;
+            if (data.component[i].dtmType.includes("month")) {
               if (data.component[i].value != undefined && data.component[i].value.includes("BD")) {
-                let businessDate = new Date();
-                businessDate = new Date(this.BisDt);
-                data.component[i].value = businessDate.getMonth() + 1;
+                data.component[i].value = this.setDefaultValueMonth(data.component[i].value);
               }
+              data.component[i].items = this.setMonthDDL(data.component[i].dtmType);
             }
             if (data.component[i].dtmType.includes("year")) {
-              let equation = data.component[i].dtmType.match("[\\/+][-]|[-][\\/+]|\\/+|-");
-              let minMax: number = parseInt(data.component[i].dtmType.substring(equation.index + equation[0].length));
-              let businessDate = new Date();
-              businessDate = new Date(this.BisDt);
-              this.ListOfYear.push(
-                {
-                  "key": businessDate.getFullYear(),
-                  "value": businessDate.getFullYear()
-                });
-
-              if (equation[0] == "-+" || equation[0] == "+-") {
-                let toMin: number = businessDate.getFullYear();
-                let toMax: number = businessDate.getFullYear();
-                for (let q = 0; q < minMax; q++) {
-                  toMin--;
-                  toMax++;
-                  this.ListOfYear.push(
-                    {
-                      "key": toMin,
-                      "value": toMin
-                    },
-                    {
-                      "key": toMax,
-                      "value": toMax
-                    }
-                  );
-                }
-                this.ListOfYear.sort((a, b) => {
-                  return a.key - b.key;
-                });
-                data.component[i].items = this.ListOfYear;
-              } else if (equation[0] == "-") {
-
-              } else if (equation[0] == "+") {
-
-              }
               if (data.component[i].value != undefined && data.component[i].value.includes("BD")) {
-                let businessDate = new Date();
-                businessDate = new Date(this.BisDt);
-                data.component[i].value = businessDate.getFullYear();
+                data.component[i].value = this.setDefaultValueYear(data.component[i].value);
               }
+              data.component[i].items = this.setYearDDL(data.component[i].dtmType);
             }
           }
         }
-
+        if (!data.component[i].value) {
+          data.component[i].value = "";
+          if (data.component[i].ddlType == 'all') data.component[i].value = "all";
+          if (data.component[i].ddlType == 'one') data.component[i].value = "one";
+        }
         //pengecekan tanggal
         if (data.component[i].type == "datepicker") {
           if (data.component[i].value.includes("BD")) {
@@ -298,25 +292,25 @@ export class UcTestComponent implements OnInit {
             if (this.BisDt != null) {
               businessDate = new Date(this.BisDt);
             }
-            var operator = data.component[i].value.charAt(2);
-            var dateShow = new Date();
+            let operator = data.component[i].value.charAt(2);
+            let dateShow = new Date();
             if (operator == "-") {
-              var tempMinus = data.component[i].value.split("-", 2);
-              var numDay = parseInt(tempMinus[1]);
+              let tempMinus = data.component[i].value.split("-", 2);
+              let numDay = parseInt(tempMinus[1]);
               businessDate.setDate(businessDate.getDate() - numDay);
             }
             else if (operator == "+") {
-              var tempMinus = data.component[i].value.split("+", 2);
-              var numDay = parseInt(tempMinus[1]);
+              let tempMinus = data.component[i].value.split("+", 2);
+              let numDay = parseInt(tempMinus[1]);
               businessDate.setDate(businessDate.getDate() + numDay);
             }
             dateShow = businessDate;
-            var dateText = formatDate(dateShow, 'yyyy-MM-dd', 'en-US')
+            let dateText = formatDate(dateShow, 'yyyy-MM-dd', 'en-US')
             data.component[i].value = dateText;
           }
 
           if (data.component[i].restriction != undefined && data.component[i].restriction != "") {
-            if (data.component[i].restriction.toUpperCase() == "GT") {//&& (data.component[i].minDate != undefined || data.component[i].minDate != "")
+            if (data.component[i].restriction.toUpperCase() == "GT") {
               let minDate = new Date(this.datePipe.transform(data.component[i].minDate, 'yyyy-MM-dd'));
               minDate.setDate(minDate.getDate() + 1);
               data.component[i].minDate = minDate;
@@ -334,9 +328,120 @@ export class UcTestComponent implements OnInit {
           if (data.component[j].isEvent == true && this.configuration.component[j].itemsUrl.length == 1) {
             this.onChangeEvent(data.component[j].itemsUrl[0].Key, data.component[j]);
           }
+          if (data.component[j].type == "officeRoleCodes" && this.configuration.component[j].itemsUrl.length > 0) {
+            this.SetRoleOfficeCodes(j);
+          }
         }
       }, 1000);
     });
+  }
+
+  SetRoleOfficeCodes(i: number) {
+    let value: string = this.cookieService.get("UserAccess");
+    let userAccess: string = JSON.parse(this.DecryptString(value, "AdInsFOU12345678"));
+    let roleCode: string = userAccess["RoleCode"];
+    let listOfficeRoleCodes: Array<string> = new Array();
+    listOfficeRoleCodes.push(roleCode);
+    let component = this.myForm.nativeElement[i];
+    let ddl = component.options;
+    let text = ddl[ddl.selectedIndex].value.trim();
+    if (this.configuration.component[i].itemsUrl.length == 1 || (this.configuration.component[i].ddlType == 'all' && text == 'all')) {
+      for (let index = 0; index < this.configuration.component[i].itemsUrl.length; index++) {
+        const element = this.configuration.component[i].itemsUrl[index];
+        listOfficeRoleCodes.push(element.Key);
+        listOfficeRoleCodes.push(roleCode + "-" + element.Key);
+      }
+    } else {
+      listOfficeRoleCodes.push(text);
+      listOfficeRoleCodes.push(roleCode + "-" + text);
+    }
+
+    this.searchInput.integrationObj.requestObj["OfficeRoleCodes"] = listOfficeRoleCodes;
+  }
+
+  setDefaultValueMonth(value) {
+    let businessDate = new Date(this.BusinessDt);
+    let operator = value.charAt(2);
+    let tempValue = value.split(operator, 2);
+    let numMonth = parseInt(tempValue[1]);
+    if (!numMonth) numMonth = 1;
+    if (operator == "-") {
+      businessDate.setMonth(businessDate.getMonth() - numMonth);
+    }
+    else if (operator == "+") {
+      businessDate.setMonth(businessDate.getMonth() + numMonth);
+    }
+    return businessDate.getMonth();
+  }
+  setMonthDDL(month) {
+    let ListOfMonth: Array<KeyValueUCSearchObj>;
+    let equation = month.match("[\\/+][-]|[-][\\/+]|\\/+|-");
+    let toMin: number = this.BusinessDt.getMonth();
+    let toMax: number = this.BusinessDt.getMonth();
+    let tempEquation = equation[0];
+    let minMax: number = parseInt(month.substring(equation.index + equation[0].length));
+    if (minMax >= 12) return this.ListOfMonth;
+    if ((tempEquation == "+-" || tempEquation == "-+") && minMax >= 6) return this.ListOfMonth;
+    let dictOfMonth: { [month: number]: string } = this.DictOfMonth;
+    ListOfMonth.push({ key: toMin, value: dictOfMonth[toMin] });
+
+    for (let q = 0; q < minMax; q++) {
+      if (tempEquation.includes("-")) {
+        toMin--;
+        if (toMin == 0) toMin = 12;
+        ListOfMonth.push({ key: toMin, value: dictOfMonth[toMin] });
+      }
+      if (tempEquation.includes("+")) {
+        toMax++;
+        if (toMax == 13) toMax = 1;
+        ListOfMonth.push({ key: toMax, value: dictOfMonth[toMax] });
+      }
+    }
+    ListOfMonth.sort((a, b) => {
+      return a.key - b.key;
+    });
+    return ListOfMonth;
+  }
+
+  setDefaultValueYear(value) {
+    let businessDate = new Date(this.BusinessDt);
+    let operator = value.charAt(2);
+    let tempValue = value.split(operator, 2);
+    let numYear = parseInt(tempValue[1]);
+    if (!numYear) numYear = 1;
+    if (operator == "-") {
+      businessDate.setFullYear(businessDate.getFullYear() - numYear);
+    }
+    else if (operator == "+") {
+      businessDate.setFullYear(businessDate.getFullYear() + numYear);
+    }
+    return businessDate.getFullYear();
+  }
+  setYearDDL(year) {
+    this.ListOfYear = new Array<KeyValueUCSearchObj>();
+    let equation = year.match("[\\/+][-]|[-][\\/+]|\\/+|-");
+    let toMin: number = this.BusinessDt.getFullYear();
+    let toMax: number = this.BusinessDt.getFullYear();
+    let minMax: number = parseInt(year.substring(equation.index + equation[0].length));
+    this.ListOfYear.push({ key: this.BusinessDt.getFullYear(), value: this.BusinessDt.getFullYear().toString() });
+
+    for (let q = 0; q < minMax; q++) {
+      if (equation[0] == "-+" || equation[0] == "+-") {
+        toMin--;
+        toMax++;
+        this.ListOfYear.push({ key: toMin, value: toMin.toString() }, { key: toMax, value: toMax.toString() });
+      } else if (equation[0] == "-") {
+        toMin--;
+        this.ListOfYear.push({ key: toMin, value: toMin.toString() });
+      } else if (equation[0] == "+") {
+        toMax++;
+        this.ListOfYear.push({ key: toMax, value: toMax.toString() });
+      }
+    }
+    this.ListOfYear.sort((a, b) => {
+      return a.key - b.key;
+    });
+    return this.ListOfYear;
   }
 
   public getJSON(url: string): Observable<any> {
@@ -387,6 +492,12 @@ export class UcTestComponent implements OnInit {
         this.configuration.querystring.whereQuery.push(this.searchInput.whereValue[x].value);
       }
     }
+    if (this.searchInput.fromValue != undefined && this.searchInput.fromValue.length != 0) {
+      this.configuration.querystring.fromQuery = new Array<any>();
+      for (let x = 0; x < this.searchInput.fromValue.length; x++) {
+        this.configuration.querystring.fromQuery.push(this.searchInput.fromValue[x].value);
+      }
+    }
     request.pageNo = pageNo;
     request.rowPerPage = rowPerPage;
     request.orderBy = orderBy;
@@ -425,24 +536,49 @@ export class UcTestComponent implements OnInit {
             this.toastr.warning("Please select " + label);
             break;
           }
-          if (text != "all" && text != "one") {
-            //Kalau Dari Dropdown udah pasti pake Eq
-            critObj.restriction = AdInsConstant.RestrictionEq;
-            critObj.propName = component.name;
-            critObj.value = text;
+
+          if (component.getAttribute('data-crit-datatable') != "" && component.getAttribute('data-crit-datatable') != null) {
+            critObj.isCriteriaDataTable = component.getAttribute('data-crit-datatable');
+          }
+          
+          if (this.configuration.component[i].type == "taskDefinitionKey" || 
+              this.configuration.component[i].type == "processKey" || 
+              this.configuration.component[i].type == "officeRoleCodes") 
+              continue;
+          
+          if (this.configuration.component[i].type == "claim") {
+            critObj.propName = component.getAttribute('data-name');
+            critObj.restriction = text;
+            critObj.value = null;
             arrCrit.push(critObj);
-          } else if (text == "all" && IsQueryIn == true && component.options.length != 0) {
-            let ddlList = new Array();
-            for (let x = 0; x < component.options.length; x++) {
-              if (x != 0) {
-                ddlList.push(component.options[x].value);
+          } else {
+            if (text != "all" && text != "one") {
+              //Kalau Dari Dropdown udah pasti pake Eq
+              critObj.restriction = AdInsConstant.RestrictionEq;
+              if (component.name != "") {
+                critObj.propName = component.name;
+              } else {
+                critObj.propName = component.getAttribute('data-name');
               }
-            }
-            if (ddlList.length != 0) {
-              critObj.restriction = AdInsConstant.RestrictionIn;
-              critObj.propName = component.name;
-              critObj.listValue = ddlList;
+              critObj.value = text;
               arrCrit.push(critObj);
+            } else if (text == "all" && IsQueryIn == true && component.options.length != 0) {
+              let ddlList = new Array();
+              for (let x = 0; x < component.options.length; x++) {
+                if (x != 0) {
+                  ddlList.push(component.options[x].value);
+                }
+              }
+              if (ddlList.length != 0) {
+                critObj.restriction = AdInsConstant.RestrictionIn;
+                if (component.name != "") {
+                  critObj.propName = component.name;
+                } else {
+                  critObj.propName = component.getAttribute('data-name');
+                }
+                critObj.listValue = ddlList;
+                arrCrit.push(critObj);
+              }
             }
           }
         }
@@ -471,6 +607,9 @@ export class UcTestComponent implements OnInit {
           else {
             critObj.restriction = AdInsConstant.RestrictionEq
           }
+          if (component.getAttribute('data-crit-datatable') != "" && component.getAttribute('data-crit-datatable') != null) {
+            critObj.isCriteriaDataTable = component.getAttribute('data-crit-datatable');
+          }
           arrCrit.push(critObj);
         }
       }
@@ -482,17 +621,17 @@ export class UcTestComponent implements OnInit {
 
     if (addCrit != null && addCrit != undefined) {
       if (addCrit.length != 0) {
-        for (var i = 0; i < addCrit.length; i++) {
+        for (let i = 0; i < addCrit.length; i++) {
           arrCrit.push(addCrit[i]);
         }
       } else if (this.searchInput.addCritInput != null || this.searchInput.addCritInput != undefined) {
-        for (var i = 0; i < this.searchInput.addCritInput.length; i++) {
+        for (let i = 0; i < this.searchInput.addCritInput.length; i++) {
           arrCrit.push(this.searchInput.addCritInput[i]);
         }
       }
     }
     else if (this.searchInput.addCritInput != null || this.searchInput.addCritInput != undefined) {
-      for (var i = 0; i < this.searchInput.addCritInput.length; i++) {
+      for (let i = 0; i < this.searchInput.addCritInput.length; i++) {
         arrCrit.push(this.searchInput.addCritInput[i]);
       }
     }
@@ -534,6 +673,10 @@ export class UcTestComponent implements OnInit {
     val.subscribe(tempData => {
       obj.itemsUrl = new Array();
       obj.itemsUrl = tempData.ReturnObject;
+
+      if(obj.exclude != undefined && obj.exclude != ""){
+        obj.itemsUrl = obj.itemsUrl.filter((value) => !obj.exclude.includes(value.Key));
+      }
     });
   }
 
@@ -548,7 +691,7 @@ export class UcTestComponent implements OnInit {
   }
 
   exportAsXLSX(): void {
-    var request = new RequestCriteriaObj();
+    let request = new RequestCriteriaObj();
     request.pageNo = 1;
     request.rowPerPage = 9999;
     request.orderBy = null;
@@ -571,16 +714,16 @@ export class UcTestComponent implements OnInit {
   }
 
   onChangeEvent(optValue, afFilter) {
-    var jsonComp = this.configuration.component;
+    let jsonComp = this.configuration.component;
 
-    for (var i = 0; i < afFilter.affectedFilter.length; i++) {
-      for (var j = 0; j < jsonComp.length; j++) {
+    for (let i = 0; i < afFilter.affectedFilter.length; i++) {
+      for (let j = 0; j < jsonComp.length; j++) {
         if (jsonComp[j].name == afFilter.affectedFilter[i]) {
-          var request = new RequestCriteriaObj();
-          var arrayCrit = new Array();
+          let request = new RequestCriteriaObj();
+          let arrayCrit = new Array();
 
           if (optValue != "all" && optValue != "one") {
-            var critObj = new CriteriaObj();
+            let critObj = new CriteriaObj();
             critObj.DataType = afFilter.datatype;
             if (afFilter.filterPropName != undefined || afFilter.filterPropName != "") {
               request[afFilter.filterPropName] = optValue;
@@ -595,17 +738,10 @@ export class UcTestComponent implements OnInit {
           }
           request.criteria = arrayCrit;
           if (jsonComp[j].path != undefined && jsonComp[j].path != "") {
-            if (this.searchInput.ddlEnvironments != undefined && this.searchInput.ddlEnvironments.length != 0) {
-              for (let y = 0; y < this.searchInput.ddlEnvironments.length; y++) {
-                if (jsonComp[j].name == this.searchInput.ddlEnvironments[y].name) {
-                  jsonComp[j].fullpath = this.searchInput.ddlEnvironments[y].environment + jsonComp[j].path;
-                  break;
-                }
-              }
-            } else if (this.searchInput.listEnvironments != undefined && this.searchInput.listEnvironments.length != 0) {
+            if (this.searchInput.listEnvironments != undefined && this.searchInput.listEnvironments.length != 0) {
               for (let y = 0; y < this.searchInput.listEnvironments.length; y++) {
-                if (jsonComp.component[j].environment == this.searchInput.listEnvironments[y].environment) {
-                  jsonComp.component[j].fullpath = this.searchInput.listEnvironments[y].url + jsonComp.component[j].path;
+                if (jsonComp[j].environment == this.searchInput.listEnvironments[y].environment) {
+                  jsonComp[j].fullpath = this.searchInput.listEnvironments[y].url + jsonComp[j].path;
                   break;
                 }
               }
@@ -622,11 +758,20 @@ export class UcTestComponent implements OnInit {
     }
   }
 
-  switchCase(condList) {
-    var condition = false;
+  SetProcessKey(idx: number,wfKeyFilter: string) {
+    let component = this.myForm.nativeElement[idx];
+    let ddl = component.options;
+    let text = ddl[ddl.selectedIndex].value.trim();
+    if (text) {
+      this.searchInput.integrationObj.requestObj[wfKeyFilter] = text;
+    }
+  }
 
-    for (var i = 0; i < condList.conditions.length; i++) {
-      var idx = this.searchInput.switchValue.findIndex(x => x.property == condList.conditions[i].property);
+  switchCase(condList) {
+    let condition = false;
+
+    for (let i = 0; i < condList.conditions.length; i++) {
+      let idx = this.searchInput.switchValue.findIndex(x => x.property == condList.conditions[i].property);
       if (condList.conditions[i].restriction == "EQ") {
         if (condList.conditions[i].isUser != true) {
           if (this.searchInput.switchValue[idx].value == condList.conditions[i].value) {
@@ -636,7 +781,7 @@ export class UcTestComponent implements OnInit {
             break;
           }
         } else {
-          var username = localStorage.getItem("Username");
+          let username = localStorage.getItem("Username");
           if (this.searchInput.switchValue[idx].value == username) {
             condition = true;
           } else {
@@ -653,7 +798,7 @@ export class UcTestComponent implements OnInit {
             break;
           }
         } else {
-          var username = localStorage.getItem("Username");
+          let username = localStorage.getItem("Username");
           if (this.searchInput.switchValue[idx].value != username) {
             condition = true;
           } else {
@@ -670,7 +815,7 @@ export class UcTestComponent implements OnInit {
             break;
           }
         } else {
-          var username = localStorage.getItem("Username");
+          let username = localStorage.getItem("Username");
           if (this.searchInput.switchValue[idx].value > username) {
             condition = true;
           } else {
@@ -687,7 +832,7 @@ export class UcTestComponent implements OnInit {
             break;
           }
         } else {
-          var username = localStorage.getItem("Username");
+          let username = localStorage.getItem("Username");
           if (this.searchInput.switchValue[idx].value >= username) {
             condition = true;
           } else {
@@ -704,7 +849,7 @@ export class UcTestComponent implements OnInit {
             break;
           }
         } else {
-          var username = localStorage.getItem("Username");
+          let username = localStorage.getItem("Username");
           if (this.searchInput.switchValue[idx].value < username) {
             condition = true;
           } else {
@@ -721,7 +866,7 @@ export class UcTestComponent implements OnInit {
             break;
           }
         } else {
-          var username = localStorage.getItem("Username");
+          let username = localStorage.getItem("Username");
           if (this.searchInput.switchValue[idx].value <= username) {
             condition = true;
           } else {
@@ -740,10 +885,10 @@ export class UcTestComponent implements OnInit {
       chipperKey == undefined || chipperKey.trim() == '' ||
       chipperText == undefined || chipperText.trim() == ''
     ) return chipperText;
-    var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
-    var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
-    var decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, { iv: iv });
-    var plainText = decrypted.toString(CryptoJS.enc.Utf8);
+    let chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
+    let iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
+    let decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, { iv: iv });
+    let plainText = decrypted.toString(CryptoJS.enc.Utf8);
     return plainText;
   }
 

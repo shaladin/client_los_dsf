@@ -36,7 +36,7 @@ import { ReportMonthlyPreGoLiveByProductComponent } from './report-monthly/repor
 import { ReportMonthlyPendingPreGoLiveAftApvComponent } from "./report-monthly/report-monthly-pending-pre-go-live-aft-apv/report-monthly-pending-pre-go-live-aft-apv.component";
 import { ReportMonthlyPreGoLiveBySupplierComponent } from "./report-monthly/report-monthly-pre-go-live-by-supplier/report-monthly-pre-go-live-by-supplier.component";
 import { ReportMonthlyTopSupplierComponent } from "./report-monthly/report-monthly-top-supplier/report-monthly-top-supplier.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
     declarations: [

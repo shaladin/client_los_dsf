@@ -3,26 +3,26 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { AppGuarantorPersonalObj } from 'app/shared/model/AppGuarantorPersonalObj.Model';
-import { GuarantorPersonalObj } from 'app/shared/model/GuarantorPersonalObj.Model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { AppGuarantorPersonalObj } from 'app/shared/model/app-guarantor-personal-obj.model';
+import { GuarantorPersonalObj } from 'app/shared/model/guarantor-personal-obj.model';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-guarantor-personal-FL4W',

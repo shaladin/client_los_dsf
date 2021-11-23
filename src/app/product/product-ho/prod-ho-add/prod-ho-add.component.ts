@@ -9,10 +9,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResGetProductHObj } from 'app/shared/model/Response/Product/ResGetProdObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqAddProductObj, ReqEditProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
-import { ResAddEditProductObj } from 'app/shared/model/Response/Product/ResAddEditProdObj.model';
+import { ResGetProductHObj } from 'app/shared/model/response/product/res-get-prod-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqAddProductObj, ReqEditProductObj } from 'app/shared/model/request/product/req-add-edit-product-obj.model';
+import { ResAddEditProductObj } from 'app/shared/model/response/product/res-add-edit-prod-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({

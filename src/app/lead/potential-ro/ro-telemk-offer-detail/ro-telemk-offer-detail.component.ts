@@ -5,16 +5,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DatePipe } from '@angular/common';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ResRoTelemkOfferSubjectObj } from 'app/shared/model/Lead/ResRoTelemkOfferSubjectObj.Model';
+import { ResRoTelemkOfferSubjectObj } from 'app/shared/model/lead/res-ro-telemk-offer-subject-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
 import { first } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

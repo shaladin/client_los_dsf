@@ -7,9 +7,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import {ResDisbInfo} from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
-import {RefBankObj} from 'app/shared/model/RefBankObj.model';
-
+import { ResDisbInfo } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
+import { RefBankObj } from 'app/shared/model/ref-bank-obj.model';
 @Component({
   selector: 'app-invoice-view',
   templateUrl: './invoice-view.component.html'
@@ -18,11 +17,11 @@ export class InvoiceViewComponent implements OnInit {
   inputPagingObj: any;
   invoiceDataList: Object;
   @Input() AppId: number;
-  appObj:any;
-  listAppInvoiceDlrFncngD:any;
+  appObj: any;
+  listAppInvoiceDlrFncngD: any;
   DisbInfoObj: ResDisbInfo;
-  BankInfoObj:RefBankObj;
-  IsShowDetail:boolean=false;
+  BankInfoObj: RefBankObj;
+  IsShowDetail: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -38,11 +37,11 @@ export class InvoiceViewComponent implements OnInit {
     this.GetDisbInfo();
   }
 
-  GetDisbInfo(){
-    this.http.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, { Id: this.AppId}).subscribe(
+  GetDisbInfo() {
+    this.http.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.DisbInfoObj = response;
-        this.http.post<RefBankObj>(URLConstant.GetRefBankByBankCodeAsync, {Code: response.BankCode}).subscribe(
+        this.http.post<RefBankObj>(URLConstant.GetRefBankByBankCodeAsync, { Code: response.BankCode }).subscribe(
           (responseBank) => {
             this.BankInfoObj = responseBank;
             console.log(this.BankInfoObj);
@@ -76,22 +75,22 @@ export class InvoiceViewComponent implements OnInit {
     )
   }
   ToDetail(ev) {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_DETAIL], { "AppInvoiceFctrId": ev });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_DETAIL], { "AppInvoiceFctrId": ev });
   }
 
-  showDetailInvoiceData(appInvoiceDlrFncngHId){
+  showDetailInvoiceData(appInvoiceDlrFncngHId) {
     console.log("CEK")
     var reqObj = {
-      Id:appInvoiceDlrFncngHId
+      Id: appInvoiceDlrFncngHId
     }
     this.http.post(URLConstant.GetListAppInvoiceDlrFncngHByAppInvoiceDlrFncngHId, reqObj).subscribe(
-      (response)=>{
+      (response) => {
         this.listAppInvoiceDlrFncngD = response["ReturnObject"].AppInvoiceDlrFncngD;
         this.IsShowDetail = true;
       }
     )
   }
-  hideDetailInvoiceData(){
+  hideDetailInvoiceData() {
     this.IsShowDetail = false;
   }
 }

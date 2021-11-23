@@ -12,25 +12,24 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
-import { AssetListForDOMultiAssetObj } from 'app/shared/model/AssetListForDOMultiAssetObj.Model';
-import { environment } from 'environments/environment';
-import { ReqSubmitAgrmntTcObj } from 'app/shared/model/AgrmntTc/ReqSubmitAgrmntTcObj.Model';
-import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { formatDate } from '@angular/common';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CreateDoMultiAssetXComponent } from '../create-do-multi-asset-x/create-do-multi-asset-x.component';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
+import { AssetListForDOMultiAssetObj } from 'app/shared/model/asset-list-for-do-multi-asset-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/request/delivery-order/req-get-do-multi-asset-information-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
+import { environment } from 'environments/environment';
+import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail-x',
@@ -145,7 +144,8 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     let getDOAssetList = this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, { Id: this.agrmntId });
     let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, GetDoObj);
     let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { Id: this.agrmntId });
-    forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
+    // X DSF Non JIRA, Udin : Pisah "checkAllDO" dari forJoin() karena bikin issue data tidak muncul
+    forkJoin([getDOAssetList, getDOList]).subscribe(
       (response) => {
         this.doAssetList = response[0]["AssetListForDOMultiAssetObj"];
         this.custType = response[0]["MrCustTypeCode"];
@@ -191,9 +191,17 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           }
           formArray.push(formGroup);
         }
-        this.isFinal = response[2]["IsFinal"];
       }
     );
+    
+    // START X DSF Non JIRA, Udin : Pisah "checkAllDO" dari forJoin() karena bikin issue data tidak muncul
+    await checkAllDO.toPromise().then(
+      (response) => {
+        this.isFinal = response["IsFinal"];
+      }
+    );
+    // END X DSF Non JIRA, Udin 
+
     await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -458,6 +466,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     if (!this.DOAssetForm.valid) {
       return;
     }
+
     if (!this.isFinal) {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
@@ -490,7 +499,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
 
   calculateAddInterest() {
     let diffDays = 0;
-    const diffTimes =new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime() - new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime()
+    const diffTimes = new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime() - new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime();
     if (diffTimes > 0) {
       diffDays = diffTimes / (1000 * 3600 * 24)
       console.log(diffDays);

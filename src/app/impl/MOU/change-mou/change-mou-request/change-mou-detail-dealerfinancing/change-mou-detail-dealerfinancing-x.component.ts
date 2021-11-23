@@ -2,20 +2,20 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { FormBuilder, Validators } from "@angular/forms";
-import { RefMasterObj } from "app/shared/model/RefMasterObj.Model";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { forkJoin } from "rxjs";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { InputLookupObj } from "app/shared/model/InputLookupObj.Model";
 import { environment } from "environments/environment";
-import { MouCustDlrFinObj } from "app/shared/model/moucustdlrfin.model";
-import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
-import { RefPayFreqObj } from "app/shared/model/RefPayFreqObj.model";
-import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
-import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CookieService } from "ngx-cookie";
+import { MouCustDlrFinObj } from "app/shared/model/mou-cust-dlr-fin.model";
+import { RefPayFreqObj } from "app/shared/model/ref-pay-freq-obj.model";
+import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
+import { InputLookupObj } from "app/shared/model/input-lookup-obj.model";
+import { RefMasterObj } from "app/shared/model/ref-master-obj.model";
+import { GenericObj } from "app/shared/model/generic/generic-obj.model";
+import { CriteriaObj } from "app/shared/model/criteria-obj.model";
 
 @Component({
   selector: "app-change-mou-detail-dealerfinancing-x",

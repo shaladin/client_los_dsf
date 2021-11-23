@@ -37,7 +37,7 @@ import { CrdRvwSurveyDataXComponent } from "app/impl/NEW-NAP/sharing-component/c
 import { CrdRvwThirdPartyCheckingXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-third-party-checking-x/crd-rvw-third-party-checking-x.component";
 import { SharedModule } from "app/shared/shared.module";
 import { CrdRvwThirdPartyCheckingXDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/crd-rvw-third-party-checking-x-dsf/crd-rvw-third-party-checking-x-dsf.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
     exports: [

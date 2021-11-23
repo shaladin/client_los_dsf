@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from "environments/environment";
 
 @Component({

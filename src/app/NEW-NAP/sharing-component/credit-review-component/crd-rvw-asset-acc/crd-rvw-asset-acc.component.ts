@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { GenericListByIdObj } from 'app/shared/model/Generic/GenericListByIdObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { AppAssetAccessoryObj } from 'app/shared/model/app-asset-accessory-obj.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { GenericListByIdObj } from 'app/shared/model/generic/generic-list-by-id-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-asset-acc',

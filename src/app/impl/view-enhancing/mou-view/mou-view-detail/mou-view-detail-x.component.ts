@@ -5,13 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
-import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { GenericKeyValueListObj } from 'app/shared/model/generic/generic-key-value-list-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 
 @Component({
   selector: 'app-mou-view-detail-x',

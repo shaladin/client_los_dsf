@@ -17,7 +17,7 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
 import { NapCustMainDataDsfComponent } from "../DSF/RFN4W-dsf/nap-cust-main-data-dsf/nap-cust-main-data-dsf.component";
 import { NapDetailFormDsfComponent } from "../DSF/RFN4W-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component";
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/RFN4W/nap-cust-main-data/nap-cust-main-data-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
   imports: [

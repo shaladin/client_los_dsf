@@ -1,15 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
+import { AppCustGrpObj } from 'app/shared/model/app-cust-grp-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { CustObj } from 'app/shared/model/CustObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CustObj } from 'app/shared/model/cust-obj.model';
 
 @Component({
   selector: 'app-cust-grp-member-FL4W',

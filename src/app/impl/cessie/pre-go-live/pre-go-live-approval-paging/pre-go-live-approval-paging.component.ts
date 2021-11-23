@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { String } from 'typescript-string-operations';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -16,6 +12,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { environment } from 'environments/environment';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 
 
 @Component({

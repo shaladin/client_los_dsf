@@ -126,6 +126,9 @@ export class CommonConstant {
   //ASSET CONDITION
   public static AssetConditionUsed = "USED";
   public static AssetConditionNew = "NEW";
+  
+  public static ModeAddColl = "addColl";
+  public static ModeEditColl = "editColl";
 
   // SOCIAL MEDIA
   public static FACEBOOK = "FB";
@@ -593,7 +596,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
   public static RefMasterTypeCodeReturnTaskOPL = "RETURN_TASK_OPL";
   public static RefMasterTypeCodeReturnTaskFCTR = "RETURN_TASK_FCTR";
-  public static RefMasterTypeCodeReturnTaskDLFN = "RETURN_TASK_DLFN";
+  public static RefMasterTypeCodeReturnTaskDF = "RETURN_TASK_DLFN";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";
@@ -725,6 +728,13 @@ export class CommonConstant {
   public static GSCodeRoleDashboardLosOperational = "ROLE_DASHBOARD_LOS_OPERATIONAL";
   public static GSCodeDashboardUsr = "DASHBOARD_USR";
   public static GSCodeDashboardPwd = "DASHBOARD_PWD";
+  public static GSCodeFilterAddr = "FILTER_ADDR";
+  public static GSCodeLoadingFeeCountType = "LOADING_FEE_COUNT_TYPE";
+  public static GSCodeDefaultLoadingFeeYear = "DEFAULT_LOADING_FEE_YEAR";
+    
+  public static LoadingFeeCountType_FirstYear = "FY";
+  public static LoadingFeeCountType_LastYear = "LY";
+  public static LoadingFeeCountType_CountingYear = "CY";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";

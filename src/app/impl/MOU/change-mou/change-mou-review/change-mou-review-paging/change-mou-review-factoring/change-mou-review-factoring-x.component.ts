@@ -3,22 +3,22 @@ import { FormBuilder } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { MouCustObj } from "app/shared/model/MouCustObj.Model";
-import { RFAInfoObj } from "app/shared/model/Approval/RFAInfoObj.Model";
-import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.Model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { environment } from "environments/environment";
-import { UcInputRFAObj } from "app/shared/model/UcInputRFAObj.Model";
 import { UcapprovalcreateComponent } from "@adins/ucapprovalcreate";
 import { CookieService } from "ngx-cookie";
-import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
-import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { ClaimTaskService } from "app/shared/claimTask.service";
 import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
+import { RFAInfoObj } from "app/shared/model/approval/rfa-info-obj.model";
+import { MouCustObj } from "app/shared/model/mou-cust-obj.model";
+import { ChangeMouTrxObj } from "app/shared/model/change-mou-trx-obj.model";
+import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
+import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
+import { ReqGetByTypeCodeObj } from "app/shared/model/ref-reason/req-get-by-type-code-obj.model";
+import { UcInputRFAObj } from "app/shared/model/uc-input-rfa-obj.model";
 
 @Component({
   selector: "app-change-mou-review-factoring-x",

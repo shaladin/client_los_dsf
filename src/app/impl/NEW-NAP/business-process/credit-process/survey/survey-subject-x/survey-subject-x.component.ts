@@ -1,30 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {FormBuilder, Validators} from '@angular/forms';
-import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
-import {VerfResultObj} from 'app/shared/model/VerfResult/VerfResult.Model';
-import {DatePipe} from '@angular/common';
-import {WorkflowApiObj} from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
-import {CommonConstant} from 'app/shared/constant/CommonConstant';
-import {URLConstant} from 'app/shared/constant/URLConstant';
-import {ReturnHandlingDObj} from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import {ReturnHandlingHObj} from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
-import {NavigationConstant} from 'app/shared/constant/NavigationConstant';
-import {DMSObj} from 'app/shared/model/DMS/DMSObj.model';
-import {AdInsHelper} from 'app/shared/AdInsHelper';
-import {CookieService} from 'ngx-cookie';
-import {DMSLabelValueObj} from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import {AppObj} from 'app/shared/model/App/App.Model';
-import {environment} from 'environments/environment';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {ClaimTaskService} from 'app/shared/claimTask.service';
-import {ReqSubmitNAPDataObj} from 'app/shared/model/App/ReqSubmitNAPDataV2Obj.model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { DatePipe } from '@angular/common';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { environment } from 'environments/environment';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 
 @Component({
   selector: 'app-survey-subject-x',
@@ -90,7 +88,7 @@ export class SurveySubjectXComponent implements OnInit {
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
   readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
   readonly DDLTask: string = CommonConstant.ReturnTask;
-  FormReturnObj  =this.fb.group({
+  FormReturnObj = this.fb.group({
     ReturnTo: [''],
     Reason: [''],
     Notes: ['']
@@ -100,7 +98,7 @@ export class SurveySubjectXComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
-              private fb: FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService
@@ -131,7 +129,7 @@ export class SurveySubjectXComponent implements OnInit {
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
-    await this.http.post(URLConstant.GetAppById, {Id: this.appId}).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
       async (response: AppObj) => {
         if (response) {
           this.NapObj = response;
@@ -144,7 +142,7 @@ export class SurveySubjectXComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    await this.http.post(URLConstant.GetAppCustByAppId, {Id: this.appId}).toPromise().then(
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).toPromise().then(
       async (response) => {
         this.appNo = this.NapObj.AppNo;
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
@@ -267,16 +265,16 @@ export class SurveySubjectXComponent implements OnInit {
         (response) => {
 
           this.toastr.successMessage(response['message']);
-          this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
+          this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING], { queryParams: { 'BizTemplateCode': BizTemplateCode } });
         });
     }
     if (this.isReturnHandling == true) {
-      const ReturnHandlingDData =this.setReturnHandlingD();
+      const ReturnHandlingDData = this.setReturnHandlingD();
       const url = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
       this.http.post(url, ReturnHandlingDData).subscribe(
         (response) => {
           this.toastr.successMessage(response['message']);
-          this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
+          this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], { queryParams: { 'BizTemplateCode': BizTemplateCode } });
         });
 
     }
@@ -462,16 +460,16 @@ export class SurveySubjectXComponent implements OnInit {
 
   async claimTask() {
     const currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    if(environment.isCore){
+    if (environment.isCore) {
       const wfClaimObjV2 = {
-        TaskId : this.wfTaskListId,
-        UserId : currentUserContext[CommonConstant.USER_NAME],
+        TaskId: this.wfTaskListId,
+        UserId: currentUserContext[CommonConstant.USER_NAME],
       }
-      this.http.post(URLConstant.ClaimTaskV2 , wfClaimObjV2).subscribe(
+      this.http.post(URLConstant.ClaimTaskV2, wfClaimObjV2).subscribe(
         (response) => {
           console.log(response);
         });
-    }else{
+    } else {
       const wfClaimObj = {
         pWFTaskListID: this.wfTaskListId,
         pUserID: currentUserContext[CommonConstant.USER_NAME],
@@ -487,14 +485,14 @@ export class SurveySubjectXComponent implements OnInit {
   back() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     if (this.isReturnHandling == false) {
-      this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
+      this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING], { queryParams: { 'BizTemplateCode': BizTemplateCode } });
     }
     if (this.isReturnHandling == true) {
-      this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], {queryParams: {'BizTemplateCode': BizTemplateCode}});
+      this.router.navigate([NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING], { queryParams: { 'BizTemplateCode': BizTemplateCode } });
     }
   }
 
-  SaveReturnForm(){
+  SaveReturnForm() {
     let request = {
       AppId: this.appId,
       WfTaskListId: this.wfTaskListId,

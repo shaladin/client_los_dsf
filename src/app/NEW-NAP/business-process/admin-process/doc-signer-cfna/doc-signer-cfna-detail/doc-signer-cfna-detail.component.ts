@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { AgrmntSignerObj } from 'app/shared/model/agrmnt-signer-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,13 +8,13 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/ResAppCustPersonalAndSpouseDataObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/res-app-cust-personal-and-spouse-data-obj.model';
 
 @Component({
   selector: 'app-doc-signer-cfna-detail',
