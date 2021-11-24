@@ -168,6 +168,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   isFromDB: boolean = false;
   readonly EditInsurance = "EditInsurance";
   readonly DefaultPremiumType = CommonConstant.PremiumTypeAmt;
+  RoundedAmt: number;
 
   AppInsForm = this.fb.group({
     // PaidAmtByCust: [0]
@@ -813,6 +814,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     let isRuleComplete = true;
     if (!this.InsuranceDataForm.controls["AppInsMainCvgs"].valid) return;
     let reqObj = new RequestCalcInsObj();
+
+    await this.getRoundedAmt();
+    
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
       var insCoverage = new CalcInsMainCvgObj();
 
@@ -859,6 +863,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     reqObj.AppId = this.appId;
     reqObj.AppAssetId = this.AppAssetId;
     reqObj.AppCollateralId = this.AppCollateralId;
+    reqObj.RoundedAmt = this.RoundedAmt;
 
     await this.http.post(URLConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
@@ -2374,6 +2379,22 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       response = await this.ExecuteInstRateCvgRule(MainCvg.MrMainCvgTypeCode.value);
       await this.PatchInsRateCvg(i, response["InsRateMainCvgRuleObj"], response["InsRateAddCvgRuleObjs"]);
     }
+  }
+
+  async getRoundedAmt(){
+    const prodObj = {
+      ProdOfferingCode: this.appObj.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CURR,
+      ProdOfferingVersion: this.appObj.ProdOfferingVersion
+    }
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
+      async (response: any) => {
+        await this.http.post(URLConstant.GetRefCurrByCode, {Code : response.CompntValue}).toPromise().then(
+          (response: any) => {
+            this.RoundedAmt = response.RoundedAmt;
+          });
+      });
   }
   // End Insurance Method
 }
