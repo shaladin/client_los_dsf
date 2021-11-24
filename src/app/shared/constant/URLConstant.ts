@@ -658,6 +658,7 @@ export class URLConstant {
   // MOU CUST
   public static GetMouCustById = environment.losUrl + "/v1" + "/MouCust/GetMouCustById";
   public static AddMouCust = environment.losUrl + "/v1" + "/MouCust/AddMouCust";
+  public static AddMouCustV2 = environment.losUrl + "/v2" + "/MouCust/AddMouCust";
   public static EditMouCust = environment.losUrl + "/v1" + "/MouCust/EditMouCust";
   public static GetMouCustClauseByMouCustId = environment.losUrl + "/v1" + "/MouCustClause/GetMouCustClauseByMouCustId";
   public static AddMouCustClause = environment.losUrl + "/v1" + "/MouCustClause/AddMouCustClause";

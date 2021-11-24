@@ -23,6 +23,18 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-md-3 adInsLabel adins-required-label" translate>Office </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto"
+                          formControlName="OriOfficeCode" 
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.OriOfficeCode.invalid }">
+                          <option *ngFor="let it of returnRefOffices" [value]="it.Key">
+                            {{it.Value}}
+                          </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-md-3 adInsLabel adins-required-label" for="StartDtEndDt" translate>Start Date -
                   End Date</label>
                 <div class="col-md-3">

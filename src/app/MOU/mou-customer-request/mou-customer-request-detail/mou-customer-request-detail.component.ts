@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location, DatePipe } from '@angular/common';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { MouCustObj, ReqMouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -21,6 +21,8 @@ import { CustObj } from 'app/shared/model/cust-obj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { environment } from 'environments/environment';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -42,6 +44,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   CustNoObj: GenericObj = new GenericObj();
   plafondTypeObj: Array<RefMasterObj>;
   datePipe = new DatePipe("en-US");
+  dropdownListObj: UcDropdownListObj = new UcDropdownListObj();
+  user: CurrentUserContext;
+  returnRefOffices: Array<KeyValueObj> = new Array<KeyValueObj>();
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -55,7 +60,12 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     MrMouTypeCode: ['', [Validators.required]],
     RowVersion: [''],
     MrRevolvingTypeCode: [''],
-    PlafondType:['']
+    PlafondType:[''],
+    OriOfficeCode: ['', [Validators.required]],
+    OriOfficeName: [''],
+    CrtOfficeCode: [''],
+    CrtOfficeName: [''],
+    IsFreeze: [''],
   });
 
   constructor(
@@ -84,7 +94,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.initLookupObj();
+    
     this.bindAllRefMasterObj();
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE }).subscribe(
       (response) => {
@@ -191,12 +204,30 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     return;
    }
     var mouCustFormData = this.MOUMainInfoForm.value;
+    let reqMouCustObj: ReqMouCustObj = new ReqMouCustObj();
+    reqMouCustObj.OriOfficeCode = this.MOUMainInfoForm.getRawValue().OriOfficeCode;
+    reqMouCustObj.OriOfficeName = this.returnRefOffices.filter(x => x.Key == this.MOUMainInfoForm.getRawValue().OriOfficeCode).map(x => x.Value).toString();
+    reqMouCustObj.CrtOfficeCode = this.MOUMainInfoForm.getRawValue().CrtOfficeCode;
+    reqMouCustObj.CrtOfficeName = this.MOUMainInfoForm.getRawValue().CrtOfficeName;
+    reqMouCustObj.StartDt = this.MOUMainInfoForm.getRawValue().StartDt;
+    reqMouCustObj.EndDt = this.MOUMainInfoForm.getRawValue().EndDt;
+    reqMouCustObj.RefNo = this.MOUMainInfoForm.getRawValue().RefNo;
+    reqMouCustObj.IsRevolving = this.MOUMainInfoForm.getRawValue().IsRevolving;
+    reqMouCustObj.PlafondAmt = this.MOUMainInfoForm.getRawValue().PlafondAmt;
+    reqMouCustObj.MouStat = this.MOUMainInfoForm.getRawValue().MouStat;
+    reqMouCustObj.MrMouTypeCode = this.MOUMainInfoForm.getRawValue().MrMouTypeCode;
+    reqMouCustObj.PlafondType = this.MOUMainInfoForm.getRawValue().PlafondType;
+    reqMouCustObj.RowVersion = this.MOUMainInfoForm.getRawValue().RowVersion;
+    
     if (!this.MOUMainInfoForm.controls.IsRevolving.value) {
-      mouCustFormData["MrRevolvingTypeCode"] = null;
+      reqMouCustObj.MrRevolvingTypeCode = null;
     }
-
+    else{
+      reqMouCustObj.MrRevolvingTypeCode = this.MOUMainInfoForm.getRawValue().MrRevolvingTypeCode;
+    }
     if (this.pageType == "add") {
-      this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
+      let AddMouCustUrl = environment.isCore ? URLConstant.AddMouCustV2 : URLConstant.AddMouCust;
+      this.httpClient.post(AddMouCustUrl, reqMouCustObj).subscribe(
         (response: GenericObj) => {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response.Id;
@@ -204,7 +235,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         });
     }
     else if (this.pageType == "edit" || this.pageType == "return") {
-      this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
+      reqMouCustObj.MouCustId = this.MOUMainInfoForm.getRawValue().MouCustId;
+      reqMouCustObj.MouCustNo = this.MOUMainInfoForm.getRawValue().MouCustNo;
+      reqMouCustObj.IsFreeze = this.MOUMainInfoForm.getRawValue().IsFreeze;
+      this.httpClient.post(URLConstant.EditMouCust, reqMouCustObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){
@@ -215,6 +249,40 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           }
         });
     }
+  }
+
+  initLookupObj(){
+    this.dropdownListObj.apiUrl = URLConstant.GetListKvpActiveRefOfficeForPaging;
+    this.dropdownListObj.requestObj = {};
+    this.dropdownListObj.isSelectOutput = true;
+
+    this.http.post(URLConstant.GetListKvpActiveRefOfficeForPaging, {}).subscribe(
+      (response) => {
+        this.returnRefOffices = response[CommonConstant.ReturnObj];
+        this.MOUMainInfoForm.patchValue(
+          {
+            OriOfficeCode: this.returnRefOffices[0].Key
+          }
+        )
+      }
+    );
+
+    if ((this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice)&& this.pageType == "add") {
+      this.MOUMainInfoForm.patchValue({
+        CrtOfficeCode: this.user.OfficeCode,
+        CrtOfficeName: this.user.OfficeName,
+      });
+    }
+    else {
+      this.MOUMainInfoForm.controls.OriOfficeCode.disable();
+      this.MOUMainInfoForm.patchValue({
+        OriOfficeCode: this.user.OfficeCode,
+        OriOfficeName: this.user.OfficeName,
+        CrtOfficeCode: this.user.OfficeCode,
+        CrtOfficeName: this.user.OfficeName,
+      });
+    }
+
   }
 
   OpenView(key: string) {
