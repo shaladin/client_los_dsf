@@ -259,6 +259,7 @@ export class CommonConstant {
   public static CollateralNeeded = "COLLATERALNEEDED";
   public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
   public static REF_PROD_COMPNT_CODE_CRD_APV = "CRD_APV";
+  public static REF_PROD_COMPNT_CODE_CURR = "CURR";
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";

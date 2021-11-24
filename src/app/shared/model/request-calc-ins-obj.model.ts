@@ -11,11 +11,13 @@ export class RequestCalcInsObj {
     AppId: number;
     AppAssetId: number;
     AppCollateralId: number;
+    RoundedAmt: number;
 
 constructor() {
     this.InsCoverage = new Array<CalcInsMainCvgObj>();
     this.StampDutyFee = 0;
     this.AdminFee = 0;
     this.InscoBranchCode = "";
+    this.RoundedAmt = 0;
     }
 }
