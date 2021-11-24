@@ -28,6 +28,7 @@
             "isFromURL": true,
             "ddlType": "all",
             "url": "",
+            "environment": "FOU",
             "path": "/RefMaster/GetListKeyValueActiveByCode",
             "label": "Mou Type",
             "items": [],
@@ -84,10 +85,10 @@
         },
         {
             "type": "dropdown",
-            "name": "Assignee",
+            "name": "WTL.CLAIM_STAT",
             "id": "AssigneeId",
             "label": "Task Claim Status",
-            "value": null,
+            "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
             "ddlType": "all",
@@ -105,7 +106,7 @@
         },
         {
             "type": "textbox",
-            "name": "Assignee",
+            "name": "WTL.USERNAME",
             "id": "AssigneeId",
             "value": null,
             "label": "Claim By",
@@ -120,13 +121,13 @@
             "type": "label",
             "position": "center",
             "label": "SLA",
-            "name": "IndicatorSLA"
+            "name": "SlaColor"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "CLAIM BY",
-            "name": "Assignee"
+            "name": "WTL.USERNAME"
         },
         {
             "type": "sort",
@@ -174,12 +175,12 @@
         {
             "type": "sla",
             "position": "center",
-            "property": "IndicatorSLA"
+            "property": "SlaColor"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "Assignee"
+            "property": "ClaimBy"
         },
         {
             "type": "text",

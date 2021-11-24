@@ -15,6 +15,8 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-create-do-multi-asset-x',
@@ -32,7 +34,8 @@ export class CreateDoMultiAssetXComponent implements OnInit {
   @Input() DeliveryOrderHId: number;
   relationshipList: Array<KeyValueObj>;
   PODt: Date;
-
+  maxDt: any;
+  isNeedMaxDt: boolean = false;
   DeliveryOrderForm = this.fb.group({
     DeliveryOrderHId: [0, [Validators.required]],
     AppId: [0, [Validators.required]],
@@ -53,9 +56,18 @@ export class CreateDoMultiAssetXComponent implements OnInit {
     private modalServiceAsset: NgbModal,
     private spinner: NgxSpinnerService, private cookieService: CookieService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     var datePipe = new DatePipe("en-US");
-
+    this.maxDt = new Date(9999,11,31);
+    
+    await this.httpClient.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstantX.GsCodeIsDoDtValidation }).toPromise().then(
+      (response) => {
+        if (response['GsValue'] == "1") {
+          this.maxDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+        }
+      }
+    );
+    console.log(this.maxDt);
     this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { Id: this.AgrmntId }).subscribe(
       (response) => {
         this.PODt = new Date(response["PurchaseOrderDt"]);
