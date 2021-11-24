@@ -506,6 +506,7 @@ export class CommissionV2Component implements OnInit {
       let totalExpenseAmount = 0;
       let totalPenaltyAmt = 0;
       let totalDisburseAmount = 0;
+      let HoldingTaxWithPenalty = 0;
       let tempRespTaxObj: ResponseTaxObj = TaxDetailData.ResponseTaxObjs[idxStart];
       for (var j = 0; j < tempRespTaxObj.ReturnObject.length; j++) {
         let taxAmt = 0;
@@ -518,8 +519,9 @@ export class CommissionV2Component implements OnInit {
         for (var k = 0; k < TaxTrxDObjData.length; k++) {
           totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
           if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.TaxTypeCode) {
-            taxAmt += (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
-            totalTaxAmount +=  (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
+            taxAmt += TaxTrxDObjData[k].TaxAmt;
+            totalTaxAmount +=  TaxTrxDObjData[k].TaxAmt;
+            HoldingTaxWithPenalty +=  (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
           } else if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.VATTypeCode) {
             vatAmt = TaxTrxDObjData[k].TaxAmt;
             totalVATAmount += TaxTrxDObjData[k].TaxAmt;
@@ -529,7 +531,7 @@ export class CommissionV2Component implements OnInit {
         this.CommissionForm.controls[identifier]["controls"][i].controls.ListAllocated.controls[j].patchValue({
           TaxAmt: taxAmt,
           VatAmt: vatAmt,
-          PenaltyAmt: totalPenaltyDAmount,
+          PenaltyAmt: totalPenaltyDAmount
         });
       }
       this.CommissionForm.controls[identifier]["controls"][i].patchValue({
@@ -542,6 +544,7 @@ export class CommissionV2Component implements OnInit {
         TotalExpenseAmount: totalExpenseAmount,
         TotalPenaltyAmount: totalPenaltyAmt,
         TotalDisburseAmount: totalDisburseAmount,
+        HoldingTaxWithPenalty: HoldingTaxWithPenalty
       });
       this.Summary.TotalCommisionAmount += this.CommissionForm.value[identifier][i].TotalCommisionAmount;
       this.Summary.TotalTaxAmmount += totalTaxAmount;
