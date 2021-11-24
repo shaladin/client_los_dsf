@@ -518,8 +518,8 @@ export class CommissionV2Component implements OnInit {
         for (var k = 0; k < TaxTrxDObjData.length; k++) {
           totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
           if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.TaxTypeCode) {
-            taxAmt += TaxTrxDObjData[k].TaxAmt;
-            totalTaxAmount += TaxTrxDObjData[k].TaxAmt;
+            taxAmt += (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
+            totalTaxAmount +=  (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
           } else if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.VATTypeCode) {
             vatAmt = TaxTrxDObjData[k].TaxAmt;
             totalVATAmount += TaxTrxDObjData[k].TaxAmt;
