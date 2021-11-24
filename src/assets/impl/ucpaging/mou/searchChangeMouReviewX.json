@@ -28,6 +28,7 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
+      "environment": "FOU",
       "path": "GetRefMasterListKeyValueActiveByCode",
       "label": "Mou Type",
       "items": [],
