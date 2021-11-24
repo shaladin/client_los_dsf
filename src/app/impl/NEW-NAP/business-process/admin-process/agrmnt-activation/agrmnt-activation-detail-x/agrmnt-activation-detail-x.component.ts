@@ -59,7 +59,7 @@ export class AgrmntActivationDetailXComponent implements OnInit {
     });
 
     this.AgrmntActForm = this.fb.group({
-      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])],
+      'CreateDt': [this.CreateDt],
       'AgrmntNo': [''],
       'isOverwrite': [this.isOverwrite]
     });
