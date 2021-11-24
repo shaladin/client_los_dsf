@@ -46,6 +46,7 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-jo
 import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-doc-obj.model';
 import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 
 @Component({
   selector: 'app-asset-data',
@@ -181,7 +182,7 @@ export class AssetDataComponent implements OnInit {
   });
 
   CustType: string = "";
-  AddrObj: AddrObj;
+  AddrObj: Array<AppCustAddrObj> = new Array();
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -261,8 +262,8 @@ export class AssetDataComponent implements OnInit {
   AppObj: AppObj;
   VendorObj: VendorObj;
   AssetMasterObj: any;
-  AppCustAddrObj: any;
-  AddrLegalObj: any;
+  AppCustAddrObj: Array<AppCustAddrObj> = new Array();
+  AddrLegalObj: Array<AppCustAddrObj> = new Array();
   AddrMailingObj: any;
   AddrResidenceObj: any;
   appAssetObj: any;
