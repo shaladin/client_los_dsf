@@ -203,7 +203,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y')  );
     return;
    }
-    var mouCustFormData = this.MOUMainInfoForm.value;
+
     let reqMouCustObj: ReqMouCustObj = new ReqMouCustObj();
     reqMouCustObj.OriOfficeCode = this.MOUMainInfoForm.getRawValue().OriOfficeCode;
     reqMouCustObj.OriOfficeName = this.returnRefOffices.filter(x => x.Key == this.MOUMainInfoForm.getRawValue().OriOfficeCode).map(x => x.Value).toString();
@@ -242,10 +242,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType, mode : "return" });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: this.MOUMainInfoForm.getRawValue().MouCustId, MOUType: this.mouType, mode : "return" });
           }
           else{
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: this.MOUMainInfoForm.getRawValue().MouCustId, MOUType: this.mouType });
           }
         });
     }
