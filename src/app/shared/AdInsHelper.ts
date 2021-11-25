@@ -230,9 +230,10 @@ export class AdInsHelper {
     router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     }
+
     router.navigateByUrl(
       router.createUrlTree(
-        [url], {queryParams: queryParams, skipLocationChange: false}
+        [url.toString()], {queryParams: queryParams, skipLocationChange: false}
       )
     );
   }
