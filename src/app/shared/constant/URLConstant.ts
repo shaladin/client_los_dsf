@@ -1881,4 +1881,6 @@ export class URLConstant {
   public static GetListAgrmntTcbyAgrmntId = environment.losUrl + "/v1" + "/AgrmntTc/GetListAgrmntTcbyAgrmntId";
   public static SubmitAgrmntTc = environment.losUrl + "/v1" + "/AgrmntTc/SubmitAgrmntTc";
 
+  //Ref Curr
+  public static GetRefCurrByCode = environment.FoundationR3Url + "/v1" + "/RefCurr/GetRefCurrByCode";
 }
