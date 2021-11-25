@@ -27,6 +27,23 @@
             "placeholder": "Placeholder"
         },
         {
+            "type": "officeRoleCodes",
+            "datatype": "text",
+            "name": "TaskOfficeCode",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
             "type": "textbox",
             "name": "Assignee",
             "id": "ClaimById",
