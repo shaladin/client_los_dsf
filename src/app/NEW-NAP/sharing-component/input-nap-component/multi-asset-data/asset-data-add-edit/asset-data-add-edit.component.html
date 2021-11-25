@@ -547,8 +547,7 @@
                   <label class="col-md-2" translate>Copy Address</label>
                   <div class="col-md-4">
                     <div class="input-group">
-                      <select class="form-control" formControlName="OwnerAddrType"
-                        [(ngModel)]="copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
+                      <select class="form-control" formControlName="OwnerAddrType">
                         <option value="">-Select One-</option>
                         <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
                           {{item.MrCustAddrTypeCode}}
