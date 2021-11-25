@@ -524,8 +524,6 @@ export class InsuranceDataComponent implements OnInit {
     let isRuleComplete = true;
     if (!this.InsuranceDataForm.controls["AppInsMainCvgs"].valid) return;
     let reqObj = new RequestCalcInsObj();
-    
-    await this.getRoundedAmt();
 
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
       var insCoverage = new CalcInsMainCvgObj();
@@ -2131,21 +2129,5 @@ export class InsuranceDataComponent implements OnInit {
         this.DefaultLoadingFeeYear = parseInt(response.GsValue);
       }
     );
-  }
-
-  async getRoundedAmt(){
-    const prodObj = {
-      ProdOfferingCode: this.appObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CURR,
-      ProdOfferingVersion: this.appObj.ProdOfferingVersion
-    }
-
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
-      async (response: any) => {
-        await this.http.post(URLConstant.GetRefCurrByCode, {Code : response.CompntValue}).toPromise().then(
-          (response: any) => {
-            this.RoundedAmt = response.RoundedAmt;
-          });
-      });
   }
 }
