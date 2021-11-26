@@ -198,7 +198,7 @@ export class TermConditionsComponent implements OnInit {
       let isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
 
       if (isMandatory) {
-        //logic PriorTo cek
+        //logic PriorTo
         if(item.get("PriorTo").value != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
         if (isChecked) {
           if(isExpDtMandatory){
