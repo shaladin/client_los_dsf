@@ -36,21 +36,23 @@ export class TermConditionsComponent implements OnInit {
   constructor(private http: HttpClient,
     private fb: FormBuilder, private cookieService: CookieService) { }
 
+  currStep: string = "";
   ngOnInit() {
-    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
-    var listTC = this.parentForm.get(this.identifier) as FormArray;
+    let listTC = this.parentForm.get(this.identifier) as FormArray;
     while (listTC.length !== 0) {​​​​​
       listTC.removeAt(0)
     }​​​​​
-    var appTcObj = {
+    let appTcObj = {
       Id: this.AppId
     }
-    var appObj = { Id: this.AppId };
+    let appObj = { Id: this.AppId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (responseApp: AppObj) => {
+        this.currStep = responseApp.AppCurrStep;
         if(responseApp.BizTemplateCode === CommonConstant.OPL) {
           this.IsOpl = true;
         }
@@ -59,7 +61,7 @@ export class TermConditionsComponent implements OnInit {
             this.AppTcList = response["AppTcs"];
             if (this.AppTcList != null && this.AppTcList["length"] != 0) {
               for (let i = 0; i < this.AppTcList["length"]; i++) {
-                var TCDetail = this.fb.group({
+                let TCDetail = this.fb.group({
                   AppTcId: this.AppTcList[i].AppTcId,
                   AppId: this.AppTcList[i].AppId,
                   TcCode: this.AppTcList[i].TcCode,
@@ -114,7 +116,7 @@ export class TermConditionsComponent implements OnInit {
                 (response) => {
                   this.AppTcList = response["AppTcs"];
                   for (let i = 0; i < this.AppTcList["length"]; i++) {
-                    var TCDetail = this.fb.group({
+                    let TCDetail = this.fb.group({
                       AppTcId: this.AppTcList[i].AppTcId,
                       AppId: this.AppTcList[i].AppId,
                       TcCode: this.AppTcList[i].TcCode,
@@ -175,8 +177,8 @@ export class TermConditionsComponent implements OnInit {
   }
 
   ResetPromisedAndExpiredDtToNull(index){
-    var listTC = this.parentForm.get(this.identifier) as FormArray
-    var item = listTC.at(index);
+    let listTC = this.parentForm.get(this.identifier) as FormArray
+    let item = listTC.at(index);
     item.patchValue({
       PromisedDt: null,
       ExpiredDt: null
@@ -188,14 +190,15 @@ export class TermConditionsComponent implements OnInit {
     this.totalCheckAll = 0;
     this.totalMandatory = 0;
     this.IsCheckedAll = true;
-    var listTC = this.parentForm.get(this.identifier) as FormArray
+    let listTC = this.parentForm.get(this.identifier) as FormArray
     for (let i = 0; i < listTC.length; i++) {
-      var item = listTC.at(i);
-      var isMandatory: Boolean = item.get("IsMandatory").value;
-      var isChecked: Boolean = item.get("IsChecked").value;
-      var isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
+      let item = listTC.at(i);
+      let isMandatory: Boolean = item.get("IsMandatory").value;
+      let isChecked: Boolean = item.get("IsChecked").value;
+      let isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
 
       if (isMandatory) {
+        if(item.get("PriorTo").value != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
         if (isChecked) {
           if(isExpDtMandatory){
             item.get("ExpiredDt").enable();
