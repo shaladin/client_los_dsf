@@ -27,24 +27,6 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   constructor(private fb: FormBuilder, private http: HttpClient) { }
-  
-  // AssetDataForm = this.fb.group({
-  //   OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
-  //   MrIdTypeCode: ['', Validators.maxLength(50)],
-  //   OwnerIdNo: ['', Validators.maxLength(50)],
-  //   MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-  //   OwnerAddr: [''],
-  //   OwnerAreaCode1: ['', Validators.maxLength(50)],
-  //   OwnerAreaCode2: ['', Validators.maxLength(50)],
-  //   OwnerAreaCode3: ['', Validators.maxLength(50)],
-  //   OwnerAreaCode4: ['', Validators.maxLength(50)],
-  //   OwnerCity: ['', Validators.maxLength(50)],
-  //   OwnerZipcode: ['', Validators.maxLength(50)],
-  //   OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-  //   OwnerProfessionCode: [''],
-  //   OwnerAddrType: [''],
-  //   SelfOwner: [false]
-  // });
 
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -95,7 +77,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   }
 
   async setAssetOwnerData() {
-    this.parentForm.controls.AssetOwner.patchValue({
+    this.parentForm.controls[this.identifier].patchValue({
       OwnerName: this.AppCollateralRegistrationObj.OwnerName,
       MrIdTypeCode: this.AppCollateralRegistrationObj.MrIdTypeCode,
       OwnerIdNo: this.AppCollateralRegistrationObj.OwnerIdNo,
@@ -191,14 +173,14 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   }
 
   GetProfession(event) {
-    this.parentForm.controls.AssetOwner.patchValue({
+    this.parentForm.controls[this.identifier].patchValue({
       OwnerProfessionCode: event.ProfessionCode
     });
   }
 
   async SelfOwnerChange(event) {
     if (event.checked == true) {
-      this.parentForm.controls.AssetOwner.patchValue({
+      this.parentForm.controls[this.identifier].patchValue({
         OwnerName: this.AppCustObj.CustName,
         MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
         OwnerIdNo: this.AppCustObj.IdNo,
@@ -239,24 +221,24 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   disableAssetDataForm() {
     this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = true;
     this.InputLookupProfessionObj.isDisable = true;
-    this.parentForm.controls.AssetOwner["controls"]["OwnerName"].disable();
-    this.parentForm.controls.AssetOwner["controls"]["MrIdTypeCode"].disable();
-    this.parentForm.controls.AssetOwner["controls"]["OwnerIdNo"].disable();
-    this.parentForm.controls.AssetOwner["controls"]["MrOwnerRelationshipCode"].disable();
-    this.parentForm.controls.AssetOwner["controls"]["OwnerMobilePhnNo"].disable();
-    this.parentForm.controls.AssetOwner["controls"]["OwnerAddrType"].disable();
+    this.parentForm.controls[this.identifier]["controls"]["OwnerName"].disable();
+    this.parentForm.controls[this.identifier]["controls"]["MrIdTypeCode"].disable();
+    this.parentForm.controls[this.identifier]["controls"]["OwnerIdNo"].disable();
+    this.parentForm.controls[this.identifier]["controls"]["MrOwnerRelationshipCode"].disable();
+    this.parentForm.controls[this.identifier]["controls"]["OwnerMobilePhnNo"].disable();
+    this.parentForm.controls[this.identifier]["controls"]["OwnerAddrType"].disable();
     this.parentForm.controls["ownerData"].disable();
   }
 
   enableAssetDataForm() {
     this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
     this.InputLookupProfessionObj.isDisable = false;
-    this.parentForm.controls.AssetOwner["controls"]["OwnerName"].enable();
-    this.parentForm.controls.AssetOwner["controls"]["MrIdTypeCode"].enable();
-    this.parentForm.controls.AssetOwner["controls"]["OwnerIdNo"].enable();
-    this.parentForm.controls.AssetOwner["controls"]["MrOwnerRelationshipCode"].enable();
-    this.parentForm.controls.AssetOwner["controls"]["OwnerMobilePhnNo"].enable();
-    this.parentForm.controls.AssetOwner["controls"]["OwnerAddrType"].enable();
+    this.parentForm.controls[this.identifier]["controls"]["OwnerName"].enable();
+    this.parentForm.controls[this.identifier]["controls"]["MrIdTypeCode"].enable();
+    this.parentForm.controls[this.identifier]["controls"]["OwnerIdNo"].enable();
+    this.parentForm.controls[this.identifier]["controls"]["MrOwnerRelationshipCode"].enable();
+    this.parentForm.controls[this.identifier]["controls"]["OwnerMobilePhnNo"].enable();
+    this.parentForm.controls[this.identifier]["controls"]["OwnerAddrType"].enable();
     this.parentForm.controls["ownerData"].enable();
   }
 
@@ -286,8 +268,8 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
       this.ownerAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
       this.ownerAddrObj.City = this.AddrObj[0].City;
 
-      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.parentForm.controls.AssetOwner["controls"].OwnerZipcode.value;
-      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.parentForm.controls.AssetOwner["controls"].OwnerZipcode.value };
+      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.parentForm.controls[this.identifier]["controls"].OwnerZipcode.value;
+      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.parentForm.controls[this.identifier]["controls"].OwnerZipcode.value };
 
       this.inputAddressObjForOwner.default = this.ownerAddrObj;
       this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
