@@ -33,9 +33,33 @@
             "value": "",
             "label": "Product Offering Name",
             "placeholder": "Placeholder"
+        },
+        {
+          "type": "dropdown",
+          "name": "A.ORI_OFFICE_CODE",
+          "id": "OfficeNameId",
+          "value": "",
+          "placeholder": "Placeholder",
+          "datatype": "text",
+          "isFromURL": true,
+          "ddlType": "all",
+          "url": "",
+          "environment": "FOU",
+          "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+          "label": "Office Name",
+          "criteriaPropName": "",
+          "criteriaPropValue": "",
+          "items": [],
+          "itemsUrl": []
         }
     ],
     "headerList": [
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Office Name",
+          "name": "A.ORI_OFFICE_NAME"
+        },
         {
             "type": "sort",
             "position": "center",
@@ -70,6 +94,11 @@
     "name": "searchCancelledApp"
   },
     "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
         {
             "type": "link",
             "position": "center",

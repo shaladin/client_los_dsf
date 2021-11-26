@@ -33,12 +33,36 @@
       "value": "",
       "label": "Product Offering Name",
       "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "ap.ORI_OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "items": [],
+      "itemsUrl": []
     }
   ],
   "querystring": {
     "name": "searchApplicationAgreementCancellation"
   },
   "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office Name",
+      "name": "OriOfficeName"
+    },
     {
       "type": "sort",
       "position": "center",
@@ -71,6 +95,11 @@
     }
   ],
   "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OriOfficeName"
+    },
     {
       "type": "link",
       "position": "center",

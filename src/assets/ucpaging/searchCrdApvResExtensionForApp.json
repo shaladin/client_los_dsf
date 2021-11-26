@@ -1,146 +1,174 @@
 {
-    "title": "",
-    "component": [
-      {
-        "type": "textbox",
-        "name": "A.APP_NO",
-        "id": "AppNoId",
-        "value": "",
-        "label": "Application No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "AC.CUST_NAME",
-        "id": "CustNameId",
-        "value": "",
-        "label": "Customer Name",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "datepicker",
-        "name": "A.CRD_APV_RESULT_EXP_DT",
-        "id": "appDtgte",
-        "value": "",
-        "label": "Expired Date >=",
-        "restriction": "gte",
-        "datatype": "date"
-      },
-      {
-        "type": "datepicker",
-        "name": "A.CRD_APV_RESULT_EXP_DT",
-        "id": "appDtlte",
-        "value": "",
-        "label": "Expired Date <=",
-        "restriction": "lte",
-        "datatype": "date"
-      }
-    ],
-    "querystring": {
-      "name": "searchCrdApvResExtensionForApp"
+  "title": "",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "AppNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
     },
-    "headerList": [
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "SLA",
-        "name": "SlaColor"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "APPLICATION NO",
-        "name": "A.APP_NO"
-      },
-      {
-        "type": "sort",
-        "position": "left",
-        "label": "CUSTOMER NAME",
-        "name": "AC.CUST_NAME"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "EXPIRED DATE",
-        "name": "A.CRD_APV_RESULT_EXP_DT"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Remaining Days",
-        "name": "RemainingDays"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "PO # OF EXTENSION",
-        "name": "ACRD.NUM_OF_EXTENDED"
-      },
-      {
-        "type": "label",
-        "position": "center",
-        "label": "Extend PO"
-      }
-    ],
-    "bodyList": [
-      {
-        "type": "sla",
-        "position": "center",
-        "property": "SlaColor"
-      },
-      {
-        "type": "link",
-        "position": "center",
-        "property": "AppNo",
-        "target": "_blank",
-        "path": "VIEW_APP",
-        "param": [
-          {
-            "type": "AppId",
-            "property": "AppId"
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "CustName"
-      },
-      {
-        "type": "date",
-        "position": "center",
-        "property": "ExpiredDt"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "RemainingDays"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "NumOfExtension"
-      },
-      {
-        "type": "action",
-        "position": "center",
-        "action": [
-          {
-            "type": "edit",
-            "path": "NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_DETAIL",
-            "param": [
-              {
-                "type": "AppId",
-                "property": "AppId"
-              },
-              {
-                "type": "BizTemplateCode",
-                "property": "BizTemplateCode"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.CRD_APV_RESULT_EXP_DT",
+      "id": "appDtgte",
+      "value": "",
+      "label": "Expired Date >=",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.CRD_APV_RESULT_EXP_DT",
+      "id": "appDtlte",
+      "value": "",
+      "label": "Expired Date <=",
+      "restriction": "lte",
+      "datatype": "date"
+    },
+    {
+      "type": "dropdown",
+      "name": "A.ORI_OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "items": [],
+      "itemsUrl": []
+    }
+  ],
+  "querystring": {
+    "name": "searchCrdApvResExtensionForApp"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "SLA",
+      "name": "SlaColor"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office Name",
+      "name": "A.ORI_OFFICE_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "APPLICATION NO",
+      "name": "A.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "CUSTOMER NAME",
+      "name": "AC.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "EXPIRED DATE",
+      "name": "A.CRD_APV_RESULT_EXP_DT"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Remaining Days",
+      "name": "RemainingDays"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "PO # OF EXTENSION",
+      "name": "ACRD.NUM_OF_EXTENDED"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Extend PO"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "sla",
+      "position": "center",
+      "property": "SlaColor"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OriOfficeName"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "AppNo",
+      "target": "_blank",
+      "path": "VIEW_APP",
+      "param": [
+        {
+          "type": "AppId",
+          "property": "AppId"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "ExpiredDt"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "RemainingDays"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "NumOfExtension"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "edit",
+          "path": "NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_DETAIL",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            },
+            {
+              "type": "BizTemplateCode",
+              "property": "BizTemplateCode"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

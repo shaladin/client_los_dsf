@@ -107,6 +107,7 @@ export class InsuranceDataComponent implements OnInit {
   PageState: string = "AddInsurance";
   readonly EditInsurance = "EditInsurance";
   readonly DefaultPremiumType = CommonConstant.PremiumTypeAmt;
+  RoundedAmt: number;
 
   InsuranceDataForm = this.fb.group({
     InsAssetCoveredBy: ['', [Validators.required, Validators.maxLength(50)]],
@@ -523,6 +524,7 @@ export class InsuranceDataComponent implements OnInit {
     let isRuleComplete = true;
     if (!this.InsuranceDataForm.controls["AppInsMainCvgs"].valid) return;
     let reqObj = new RequestCalcInsObj();
+
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
       var insCoverage = new CalcInsMainCvgObj();
 
@@ -569,6 +571,7 @@ export class InsuranceDataComponent implements OnInit {
     reqObj.AppId = this.appId;
     reqObj.AppAssetId = this.appAssetId;
     reqObj.AppCollateralId = this.appCollateralId;
+    reqObj.RoundedAmt = this.RoundedAmt;
 
     await this.http.post(URLConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {

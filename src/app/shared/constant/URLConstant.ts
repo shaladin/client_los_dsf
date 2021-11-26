@@ -658,6 +658,7 @@ export class URLConstant {
   // MOU CUST
   public static GetMouCustById = environment.losUrl + "/v1" + "/MouCust/GetMouCustById";
   public static AddMouCust = environment.losUrl + "/v1" + "/MouCust/AddMouCust";
+  public static AddMouCustV2 = environment.losUrl + "/v2" + "/MouCust/AddMouCust";
   public static EditMouCust = environment.losUrl + "/v1" + "/MouCust/EditMouCust";
   public static GetMouCustClauseByMouCustId = environment.losUrl + "/v1" + "/MouCustClause/GetMouCustClauseByMouCustId";
   public static AddMouCustClause = environment.losUrl + "/v1" + "/MouCustClause/AddMouCustClause";
@@ -824,6 +825,7 @@ export class URLConstant {
   //DELIVERY ORDER
   public static SubmitDeliveryOrderData = environment.losUrl + "/v1" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static SubmitDeliveryOrderDataV2 = environment.losUrl + "/v2" + "/DeliveryOrder/SubmitDeliveryOrderData";
+  public static SubmitDeliveryOrderDataV2_1 = environment.losUrl + "/v2.1" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
   public static GetDeliveryOrderHByAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderHByAgrmntId";
   public static GetAssetListForDOMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAsset";
@@ -1881,4 +1883,6 @@ export class URLConstant {
   public static GetListAgrmntTcbyAgrmntId = environment.losUrl + "/v1" + "/AgrmntTc/GetListAgrmntTcbyAgrmntId";
   public static SubmitAgrmntTc = environment.losUrl + "/v1" + "/AgrmntTc/SubmitAgrmntTc";
 
+  //Ref Curr
+  public static GetRefCurrByCode = environment.FoundationR3Url + "/v1" + "/RefCurr/GetRefCurrByCode";
 }

@@ -168,6 +168,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   isFromDB: boolean = false;
   readonly EditInsurance = "EditInsurance";
   readonly DefaultPremiumType = CommonConstant.PremiumTypeAmt;
+  RoundedAmt: number;
 
   AppInsForm = this.fb.group({
     // PaidAmtByCust: [0]
@@ -813,6 +814,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     let isRuleComplete = true;
     if (!this.InsuranceDataForm.controls["AppInsMainCvgs"].valid) return;
     let reqObj = new RequestCalcInsObj();
+    
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
       var insCoverage = new CalcInsMainCvgObj();
 
@@ -859,6 +861,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     reqObj.AppId = this.appId;
     reqObj.AppAssetId = this.AppAssetId;
     reqObj.AppCollateralId = this.AppCollateralId;
+    reqObj.RoundedAmt = this.RoundedAmt;
 
     await this.http.post(URLConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {

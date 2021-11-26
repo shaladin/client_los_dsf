@@ -2607,6 +2607,7 @@ export class AssetDataComponent implements OnInit {
         if (AppCollateralDocs["length"] > 0) {
           for (let i = 0; i < AppCollateralDocs.length; i++) {
             this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
+              AssetDocName: AppCollateralDocs[i].DocName,
               DocNo: AppCollateralDocs[i].DocNo,
               DocNotes: AppCollateralDocs[i].DocNotes,
               ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
