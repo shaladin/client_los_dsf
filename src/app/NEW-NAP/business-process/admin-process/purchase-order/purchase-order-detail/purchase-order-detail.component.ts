@@ -122,6 +122,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
         console.log(response);
         tempRefMasterObj = response["ListPoItems"];
 
+        
       });
     return tempRefMasterObj;
   }
