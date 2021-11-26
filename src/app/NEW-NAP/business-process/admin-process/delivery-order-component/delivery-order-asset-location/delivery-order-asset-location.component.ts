@@ -47,7 +47,7 @@ export class DeliveryOrderAssetLocationComponent implements OnInit {
   }
 
   setAssetLocationData() {
-    this.parentForm.controls.AssetLocation.patchValue({
+    this.parentForm.controls[this.identifier].patchValue({
       LocationAddr: this.AppCollateralRegistrationObj.LocationAddr,
       LocationAreaCode1: this.AppCollateralRegistrationObj.LocationAreaCode1,
       LocationAreaCode2: this.AppCollateralRegistrationObj.LocationAreaCode2,
@@ -64,8 +64,8 @@ export class DeliveryOrderAssetLocationComponent implements OnInit {
     this.locationAddrObj.AreaCode4 = this.AppCollateralRegistrationObj.LocationAreaCode4;
     this.locationAddrObj.City = this.AppCollateralRegistrationObj.LocationCity;
 
-    this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.parentForm.controls.AssetLocation["controls"].LocationZipcode.value;
-    this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.parentForm.controls.AssetLocation["controls"].LocationZipcode.value };
+    this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.parentForm.controls[this.identifier]["controls"].LocationZipcode.value;
+    this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.parentForm.controls[this.identifier]["controls"].LocationZipcode.value };
 
     this.inputAddressObjForLoc.default = this.locationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
@@ -81,7 +81,7 @@ export class DeliveryOrderAssetLocationComponent implements OnInit {
       this.AddrObj = this.AppCustAddrObj.filter(
         emp => emp.MrCustAddrTypeCode === this.copyFromAppCustAddrForLocation);
 
-      this.parentForm.controls.AssetLocation.patchValue({
+      this.parentForm.controls[this.identifier].patchValue({
         LocationAddr: this.AddrObj[0].Addr,
         LocationAreaCode1: this.AddrObj[0].AreaCode1,
         LocationAreaCode2: this.AddrObj[0].AreaCode2,
@@ -98,8 +98,8 @@ export class DeliveryOrderAssetLocationComponent implements OnInit {
       this.locationAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
       this.locationAddrObj.City = this.AddrObj[0].City;
 
-      this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.parentForm.controls.AssetLocation["controls"].LocationZipcode.value;
-      this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.parentForm.controls.AssetLocation["controls"].LocationZipcode.value };
+      this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.parentForm.controls[this.identifier]["controls"].LocationZipcode.value;
+      this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.parentForm.controls[this.identifier]["controls"].LocationZipcode.value };
 
       this.inputAddressObjForLoc.default = this.locationAddrObj;
       this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
