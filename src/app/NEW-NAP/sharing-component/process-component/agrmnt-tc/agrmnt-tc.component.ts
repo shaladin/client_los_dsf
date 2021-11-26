@@ -36,6 +36,7 @@ export class AgrmntTcComponent implements OnInit {
   constructor(private http: HttpClient,
     private fb: FormBuilder, private cookieService: CookieService) { }
 
+  currStep: string = "";
   ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -51,6 +52,7 @@ export class AgrmntTcComponent implements OnInit {
     var agrmntObj = { Id: this.AgrmntId };
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (responseAgrmnt: AgrmntObj) => {
+        this.currStep = responseAgrmnt.AgrmntCurrStep;
         if(responseAgrmnt.BizTemplateCode === CommonConstant.OPL) {
           this.IsOpl = true;
         }
@@ -132,14 +134,16 @@ export class AgrmntTcComponent implements OnInit {
     this.totalCheckAll = 0;
     this.totalMandatory = 0;
     this.IsCheckedAll = true;
-    var listTC = this.parentForm.get(this.identifier) as FormArray
+    let listTC = this.parentForm.get(this.identifier) as FormArray
     for (let i = 0; i < listTC.length; i++) {
-      var item = listTC.at(i);
-      var isMandatory: Boolean = item.get("IsMandatory").value;
-      var isChecked: Boolean = item.get("IsChecked").value;
-      var isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
+      let item = listTC.at(i);
+      let isMandatory: Boolean = item.get("IsMandatory").value;
+      let isChecked: Boolean = item.get("IsChecked").value;
+      let isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
 
       if (isMandatory) {
+        //logic PriorTo
+        if(item.get("PriorTo").value != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
         if (isChecked) {
           if(isExpDtMandatory){
             item.get("ExpiredDt").enable();
