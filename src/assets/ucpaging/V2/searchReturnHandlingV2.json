@@ -27,9 +27,10 @@
       "placeholder": "Placeholder"
     },
     {
-      "type": "dropdown",
-      "name": "A.ORI_OFFICE_CODE",
-      "id": "OfficeNameId",
+      "type": "officeRoleCodes",
+      "datatype": "text",
+      "name": "TaskOfficeCode",
+      "id": "OfficeCodeId",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,

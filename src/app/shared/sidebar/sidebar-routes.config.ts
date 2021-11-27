@@ -119,7 +119,7 @@ export const ROUTES: RouteInfo[] = [
         Path: '', Title: 'Return Handling', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING, Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP4, Title: 'Return Handling - Edit NAP4', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2, Title: 'Return Handling - Edit NAP2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING, Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
@@ -192,7 +192,7 @@ export const ROUTES: RouteInfo[] = [
         Path: '', Title: 'Return Handling', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING, Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+          // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP4, Title: 'Return Handling - Edit NAP 4', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2, Title: 'Return Handling - Edit NAP2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING, Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
@@ -254,7 +254,7 @@ export const ROUTES: RouteInfo[] = [
         Path: '', Title: 'Return Handling', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING, Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+          // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP4, Title: 'Return Handling - Edit NAP4', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2, Title: 'Return Handling - Edit NAP2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING, Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
@@ -319,7 +319,7 @@ export const ROUTES: RouteInfo[] = [
         Path: '', Title: 'Return Handling', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING, Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
+          // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP4, Title: 'Return Handling - Edit NAP4', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2, Title: 'Return Handling - Edit NAP2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING, Title: 'Return Handling - Phone Verif', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] },
@@ -380,7 +380,7 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP, Title: 'Copy From Cancelled Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }, { Attr: "IsNapVersionMainData", Value: "true" }] }
         ], Params: []
       },
-      { Path: NavigationConstant.NAP_DLFN_PAGING, Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      // { Path: NavigationConstant.NAP_DLFN_PAGING, Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING, Title: 'App Duplicate Checking', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
       { Path: NavigationConstant.APP_INQUIRY, Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING, Title: 'Document Signer', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
@@ -397,9 +397,8 @@ export const ROUTES: RouteInfo[] = [
         Path: '', Title: 'Return Handling', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING, Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
-          // { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING, Title: 'Return Handling - Edit Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] },
+          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING, Title: 'Return Handling - Edit NAP2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] },
-          { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "DLFN" }] }
         ], Params: []
       },
     ], Params: []
