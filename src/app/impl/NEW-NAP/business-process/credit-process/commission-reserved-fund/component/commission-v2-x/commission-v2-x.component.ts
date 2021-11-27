@@ -573,7 +573,7 @@ export class CommissionV2XComponent implements OnInit {
         //   TaxAmt: taxAmt,
         //   VatAmt: vatAmt,
         //   PenaltyAmt: totalPenaltyDAmount,
-        // });
+        // });s
       }
       this.ListAppCommHObj[idxStart].MrTaxKindCode = tempRespTaxObj.MrTaxKindCode;
       this.ListAppCommHObj[idxStart].MrTaxCalcMethodCode = tempRespTaxObj.MrTaxCalcMethodCode;
