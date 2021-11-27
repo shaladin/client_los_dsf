@@ -29,7 +29,7 @@
       "ddlType": "all",
       "url": "",
       "environment": "FOU",
-      "path": "GetRefMasterListKeyValueActiveByCode",
+      "path": "/RefMaster/GetListKeyValueActiveByCode",
       "label": "Mou Type",
       "items": [],
       "itemsUrl": [],

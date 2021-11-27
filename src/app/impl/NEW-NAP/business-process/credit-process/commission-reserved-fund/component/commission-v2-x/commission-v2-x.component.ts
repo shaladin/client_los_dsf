@@ -541,6 +541,7 @@ export class CommissionV2XComponent implements OnInit {
       let totalExpenseAmount = 0;
       let totalPenaltyAmt = 0;
       let totalDisburseAmount = 0;
+      let HoldingTaxWithPenalty = 0;
       let tempRespTaxObj: ResponseTaxObj = TaxDetailData.ResponseTaxObjs[idxStart];
       for (var j = 0; j < tempRespTaxObj.ReturnObject.length; j++)
       {
@@ -555,7 +556,8 @@ export class CommissionV2XComponent implements OnInit {
           totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
           if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.TaxTypeCode) {
             taxAmt += TaxTrxDObjData[k].TaxAmt;
-            totalTaxAmount += TaxTrxDObjData[k].TaxAmt;
+            totalTaxAmount +=  TaxTrxDObjData[k].TaxAmt;
+            HoldingTaxWithPenalty +=  (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
           } else if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.VATTypeCode) {
             vatAmt = TaxTrxDObjData[k].TaxAmt;
             totalVATAmount += TaxTrxDObjData[k].TaxAmt;
@@ -593,6 +595,7 @@ export class CommissionV2XComponent implements OnInit {
         TotalExpenseAmount: totalExpenseAmount,
         TotalPenaltyAmount: totalPenaltyAmt,
         TotalDisburseAmount: totalDisburseAmount,
+        HoldingTaxWithPenalty: HoldingTaxWithPenalty
       });
       this.Summary.TotalCommisionAmount += this.CommissionForm.value[identifier][i].TotalCommisionAmount;
       this.Summary.TotalTaxAmmount += totalTaxAmount;

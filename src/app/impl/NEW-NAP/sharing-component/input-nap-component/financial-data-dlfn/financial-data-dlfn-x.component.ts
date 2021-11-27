@@ -19,6 +19,7 @@ import { CalcRegularFixObj } from 'app/shared/model/app-fin-data/calc-regular-fi
 export class FinancialDataDlfnXComponent implements OnInit {
 
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   FinDataForm: FormGroup;
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();

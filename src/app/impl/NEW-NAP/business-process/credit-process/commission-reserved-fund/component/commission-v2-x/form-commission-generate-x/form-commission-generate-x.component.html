@@ -77,9 +77,9 @@
             <!-- Tax Amount -->
             <label class="col-md-2 adInsLabel" translate>With Holding Tax Amount </label>
             <div class="col-md-4" style="text-align: right;">
-              <label class="adInsLabel" currencyMask *ngIf="item.controls.TotalTaxAmount.value != ''">
-                {{item.controls.TotalTaxAmount.value | number:'.2':'en-US'}} </label>
-              <label class="adInsLabel" *ngIf="item.controls.TotalTaxAmount.value == ''"> {{ 0 | number:'.2':'en-US' }}
+              <label class="adInsLabel" currencyMask *ngIf="item.controls.HoldingTaxWithPenalty.value != ''">
+                {{item.controls.HoldingTaxWithPenalty.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.HoldingTaxWithPenalty.value == ''"> {{ 0 | number:'.2':'en-US' }}
               </label>
             </div>
           </div>
