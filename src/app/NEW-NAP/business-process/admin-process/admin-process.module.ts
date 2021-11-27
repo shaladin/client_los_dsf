@@ -93,6 +93,8 @@ import { DocSignerPagingXComponent } from "app/impl/NEW-NAP/business-process/adm
 import { CreateDoMultiAssetXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/create-do-multi-asset-x/create-do-multi-asset-x.component";
 import { DoAssetDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/do-asset-detail-x/do-asset-detail-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { DeliveryOrderAssetOwnerComponent } from './delivery-order-component/delivery-order-asset-owner/delivery-order-asset-owner.component';
+import { DeliveryOrderAssetLocationComponent } from './delivery-order-component/delivery-order-asset-location/delivery-order-asset-location.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -199,7 +201,9 @@ export const customCurrencyMaskConfig = {
     NewPurchaseOrderDetailXComponent,
     PoEntryXComponent,
     CreateDoMultiAssetXComponent,
-    DoAssetDetailXComponent
+    DoAssetDetailXComponent,
+    DeliveryOrderAssetOwnerComponent,
+    DeliveryOrderAssetLocationComponent
   ],
   providers: [
     NGXToastrService,

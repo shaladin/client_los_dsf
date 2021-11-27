@@ -26,13 +26,13 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Prod Code",
+            "label": "Product Code",
             "name": "ProdCode"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Prod Name",
+            "label": "Product Name",
             "name": "ProdName"
         },
         {

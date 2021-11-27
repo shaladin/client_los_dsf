@@ -480,6 +480,98 @@
                   </div>
                 </div>
               </div>
+              <lib-ucSubsection [id]="'ownerDataId'" [title]="'Asset Owner'" [panel]="'ownerData'">
+              </lib-ucSubsection>
+              <div id="ownerData">
+                <div class="form-group row">
+                  <label class="col-md-2" for="selfOwner" translate>Self Owner</label>
+                  <div class="col-md-4">
+                    <mat-checkbox formControlName="SelfOwner" (change)="SelfOwnerChange()"></mat-checkbox>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 adins-required-label" translate>Owner Name </label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" formControlName="OwnerName" [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.OwnerName.invalid}">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.OwnerName" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adins-required-label" translate>Owner Id Type </label>
+                  <div class="col-md-4">
+                    <select class="form-control" id="idType" formControlName="MrIdTypeCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }"
+                      style="width:50%">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let item of IdTypeObj" [value]="item.Key">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2  adins-required-label" translate>Owner Relationship </label>
+                  <div class="col-md-4">
+                    <select class="form-control" id="userRelationship" formControlName="MrOwnerRelationshipCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrOwnerRelationshipCode.invalid }"
+                      style="width:50%">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let item of OwnerRelationObj" [value]="item.Key">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.MrOwnerRelationshipCode"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" formControlName="OwnerIdNo">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Owner Profession</label>
+                  <div class="col-md-4">
+                    <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+                      [lookupInput]="InputLookupProfessionObj" [parentForm]="AssetDataForm"
+                      [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+                    </lib-uclookupgeneric>
+                  </div>
+                  <label class="col-md-2  adInsLabel" translate>Owner Mobile Phone No </label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.OwnerMobilePhnNo"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Copy Address</label>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <select class="form-control" formControlName="OwnerAddrType">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
+                          {{item.MrCustAddrTypeCode}}
+                        </option>
+                      </select>
+                      <div class="input-group-append">
+                        <span class="input-group-btn" *ngIf="!AssetDataForm.controls.SelfOwner.value">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()">
+                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm"
+                      [identifier]="'ownerData'" [UCAddrForm]="AssetDataForm"></lib-ucaddress>
+                  </div>
+                </div>
+              </div>
               <lib-ucSubsection [id]="'assetLocId'" [title]="'Asset Location'" [panel]="'assetLoc'">
               </lib-ucSubsection>
               <div id="assetLoc">

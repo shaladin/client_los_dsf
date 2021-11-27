@@ -71,8 +71,8 @@ export class NapDetailFormXComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   appNo: string;
   isDmsReady: boolean = false;
-
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,

@@ -16,7 +16,8 @@
         "label": "Office Name",
         "isQueryIn": true,
         "items": [],
-        "itemsUrl": []
+        "itemsUrl": [],
+        "environment": "FOU"
       },
       {
         "type": "textbox",
