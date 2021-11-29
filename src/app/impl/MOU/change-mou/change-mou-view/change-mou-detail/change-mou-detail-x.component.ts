@@ -6,9 +6,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 
 @Component({
   selector: 'app-change-mou-detail-x',

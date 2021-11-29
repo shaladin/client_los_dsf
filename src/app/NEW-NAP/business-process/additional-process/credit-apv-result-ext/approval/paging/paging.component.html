@@ -1,1 +1,28 @@
-<lib-ucpaging [searchObj]="inputPagingObj" (callback)="CallBackHandler($event)"></lib-ucpaging>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-header header-title">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="form-section card-title" translate>CREDIT APPROVAL RESULT EXTENSION APPROVAL</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="px-3">
+                <div class="form-group row">
+                    <label class="col-md-2 px-3" for="extendBasedOn" translate>Extend Based On</label>
+                    <div class="col-md-9 px-5">
+                        <select class="form-control adInsInput" id="extendBasedOn" [(ngModel)]="ExtendBasedOn"
+                            (change)="ExtendBasedOnChanged($event)">
+                            <option value="APP">Application</option>
+                            <option value="AGR">Agreement</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <ng-template #PagingModal></ng-template>
+            <!-- <lib-ucpaging [searchObj]="inputPagingObj" (callback)="CallBackHandler($event)"></lib-ucpaging> -->
+        </div>
+    </div>
+</div>

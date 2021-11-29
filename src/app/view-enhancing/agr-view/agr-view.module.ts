@@ -44,7 +44,7 @@ import { ViewInsuranceDataDetailXComponent } from "app/impl/view-enhancing/agr-v
 import { AgrMainInfoXComponent } from "app/impl/view-enhancing/agr-main-info/agr-main-info-x.component";
 import { AgreementViewContainerXComponent } from "app/impl/view-enhancing/agr-view/agreement-view-container-x.component";
 import { ViewAgrmntTcComponent } from "./view-agrmnt-tc/view-agrmnt-tc.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
     imports: [

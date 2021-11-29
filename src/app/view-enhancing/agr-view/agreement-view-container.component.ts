@@ -176,6 +176,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsPurchaseOrder = false;
           this.IsLoanData = false;
+          this.IsDeviation = false;
           if(!this.IsNeedPO){
             this.IsPurchaseOrder = false;
           }
@@ -189,6 +190,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsMulti = false;
           this.IsCollateral = false;
+          this.IsDeviation = false;
         }
         else if (this.BizTemplateCode == CommonConstant.CF4W) {
           this.IsAsset = this.NumOfAsset < 2 ? true : false;
@@ -200,6 +202,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsAppCollateral = false;
           this.IsLoanData = false;
+          this.IsDeviation = false;
         }
         else if (this.BizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -219,6 +222,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
           this.IsCollateral = false;
+          this.IsDeviation = false;
           if(!this.IsNeedPO){
             this.IsPurchaseOrder = false;
           }

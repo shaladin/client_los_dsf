@@ -20,6 +20,7 @@ export class MouCustCollateralObj{
     CollateralValueAmt: number;
     CollateralPrcnt: number;
     CollateralPortionAmt: number;
+    MaxCollPrcnt: number;
     AssetTaxDate: Date;
     CollateralNotes: string;
     ManufacturingYear: number;

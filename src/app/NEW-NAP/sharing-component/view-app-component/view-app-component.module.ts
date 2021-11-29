@@ -44,7 +44,7 @@ import { FraudVerificationComponent } from './fraud-verification/fraud-verificat
 import { ViewFraudDetectionResultComponent } from './view-fraud-detection-result/view-fraud-detection-result.component';
 import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.component';
 import { ChangeMouViewModule } from "app/view-enhancing/change-mou-view/change-mou-view.module";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
   exports: [

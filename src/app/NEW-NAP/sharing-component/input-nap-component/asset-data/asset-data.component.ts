@@ -37,7 +37,7 @@ import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.m
 import { VendorEmpObj } from 'app/shared/model/vendor-emp.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { AppObj } from 'app/shared/model/app/app.model';
-import { VendorObj } from 'app/shared/model/vendor.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { RefProvDistrictObj } from 'app/shared/model/ref-prov-district-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 import { ResAssetValidationRuleObj } from 'app/shared/model/rule/res-asset-validation-rule-obj.model';
@@ -46,6 +46,7 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-jo
 import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-doc-obj.model';
 import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 
 @Component({
   selector: 'app-asset-data',
@@ -181,7 +182,7 @@ export class AssetDataComponent implements OnInit {
   });
 
   CustType: string = "";
-  AddrObj: AddrObj;
+  AddrObj: Array<AppCustAddrObj> = new Array();
   refMasterObj = {
     RefMasterTypeCode: "",
   };
@@ -261,8 +262,8 @@ export class AssetDataComponent implements OnInit {
   AppObj: AppObj;
   VendorObj: VendorObj;
   AssetMasterObj: any;
-  AppCustAddrObj: any;
-  AddrLegalObj: any;
+  AppCustAddrObj: Array<AppCustAddrObj> = new Array();
+  AddrLegalObj: Array<AppCustAddrObj> = new Array();
   AddrMailingObj: any;
   AddrResidenceObj: any;
   appAssetObj: any;
@@ -2605,6 +2606,7 @@ export class AssetDataComponent implements OnInit {
         if (AppCollateralDocs["length"] > 0) {
           for (let i = 0; i < AppCollateralDocs.length; i++) {
             this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
+              AssetDocName: AppCollateralDocs[i].DocName,
               DocNo: AppCollateralDocs[i].DocNo,
               DocNotes: AppCollateralDocs[i].DocNotes,
               ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),

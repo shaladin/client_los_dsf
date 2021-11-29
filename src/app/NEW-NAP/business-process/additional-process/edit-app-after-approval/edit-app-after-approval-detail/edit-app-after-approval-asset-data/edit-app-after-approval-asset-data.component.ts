@@ -24,6 +24,7 @@ import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/request/vendor/req-vendor.model';
 import { ResProdOfferingDObj } from 'app/shared/model/response/product/res-get-prod-offering-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-edit-app-after-approval-asset-data',
@@ -31,6 +32,7 @@ import { ResProdOfferingDObj } from 'app/shared/model/response/product/res-get-p
   styleUrls: ['./edit-app-after-approval-asset-data.component.css']
 })
 export class EditAppAfterApprovalAssetDataComponent implements OnInit {
+  @Input() AgrmntCurrStep: string;
   @Input() AppAssetObj: AppAssetObj;
   @Input() ListAppAssetAttrObjs: Array<AppAssetAttrObj>;
   @Input() AppCollateralObj: AppCollateralObj;
@@ -95,6 +97,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   SerialNoLabelList:Array<string> = new Array();
   SerialNoLabelMandatory:Array<boolean> = new Array();
+  ListAgrStepToCheckMandatory: Array<string> = new Array();
+  IsCheckSerialMandatory: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -154,33 +158,33 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       SerialNo4: this.AppAssetObj.SerialNo4,
       SerialNo5: this.AppAssetObj.SerialNo5
     });
-
+    
     if(this.EditAppAssetForm.controls.AssetColor.value != null && this.EditAppAssetForm.controls.AssetColor.value != "")
     {
       this.tempColor = true;
       this.EditAppAssetForm.controls.AssetColor.setValidators(Validators.required);
       this.EditAppAssetForm.controls.AssetColor.updateValueAndValidity();
     }
-    if(this.SerialNoLabelMandatory[0]){
-      this.EditAppAssetForm.controls.SerialNo1.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo1.updateValueAndValidity();
-    }
-    if(this.SerialNoLabelMandatory[1]){
-      this.EditAppAssetForm.controls.SerialNo2.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo2.updateValueAndValidity();
-    }
-    if(this.SerialNoLabelMandatory[2]){
-      this.EditAppAssetForm.controls.SerialNo3.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo3.updateValueAndValidity();
-    }
-    if(this.SerialNoLabelMandatory[3]){
-      this.EditAppAssetForm.controls.SerialNo4.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo4.updateValueAndValidity();
-    }
-    if(this.SerialNoLabelMandatory[4]){
-      this.EditAppAssetForm.controls.SerialNo5.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo5.updateValueAndValidity();
-    }
+    // if(this.SerialNoLabelMandatory[0]){
+    //   this.EditAppAssetForm.controls.SerialNo1.setValidators(Validators.required);
+    //   this.EditAppAssetForm.controls.SerialNo1.updateValueAndValidity();
+    // }
+    // if(this.SerialNoLabelMandatory[1]){
+    //   this.EditAppAssetForm.controls.SerialNo2.setValidators(Validators.required);
+    //   this.EditAppAssetForm.controls.SerialNo2.updateValueAndValidity();
+    // }
+    // if(this.SerialNoLabelMandatory[2]){
+    //   this.EditAppAssetForm.controls.SerialNo3.setValidators(Validators.required);
+    //   this.EditAppAssetForm.controls.SerialNo3.updateValueAndValidity();
+    // }
+    // if(this.SerialNoLabelMandatory[3]){
+    //   this.EditAppAssetForm.controls.SerialNo4.setValidators(Validators.required);
+    //   this.EditAppAssetForm.controls.SerialNo4.updateValueAndValidity();
+    // }
+    // if(this.SerialNoLabelMandatory[4]){
+    //   this.EditAppAssetForm.controls.SerialNo5.setValidators(Validators.required);
+    //   this.EditAppAssetForm.controls.SerialNo5.updateValueAndValidity();
+    // }
 
     await this.http.post(URLConstant.GetListRefChangeItem, {}).toPromise().then(
       (response) => {

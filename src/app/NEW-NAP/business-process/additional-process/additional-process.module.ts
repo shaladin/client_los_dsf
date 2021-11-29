@@ -69,9 +69,10 @@ import { CopyCanAppMultiBlDetailXComponent } from "app/impl/NEW-NAP/business-pro
 import { ReturnHandlingPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-paging-x/return-handling-paging-x.component";
 import { ReturnHandlingDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-detail-x/return-handling-detail-x.component";
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
 import { EditAppAfterApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail-x.component";
 import { EditAppAfterApprovalPurchaseOrderDataXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-purchase-order-data/edit-app-after-approval-purchase-order-data-x.component";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
 
 
 
@@ -105,6 +106,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
+    InputNapComponentModule,
     ProcessComponentModule
   ],
   declarations: [

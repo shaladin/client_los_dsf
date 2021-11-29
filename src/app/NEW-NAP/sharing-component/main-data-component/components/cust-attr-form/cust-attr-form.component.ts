@@ -184,7 +184,7 @@ export class CustAttrFormComponent implements OnInit {
 
   DictListItem: { [Id: string]: Array<KeyValueObj> } = {};
   SetDictListItem(attrCode: string, masterCode: string) {
-    let tempList: Array<string> = masterCode.split(";");
+    let tempList: Array<string> = masterCode.split(";").sort();
     let tempListKeyValueObj: Array<KeyValueObj> = new Array();
     for (let index = 0; index < tempList.length; index++) {
       const element = tempList[index];

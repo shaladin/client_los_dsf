@@ -72,7 +72,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
     let poUrl = "";
     if (this.lobCode == CommonConstant.CF4W || this.lobCode == CommonConstant.FL4W) {
-      poUrl = URLConstant.GetAllAssetDataForPOByAsset;
+      poUrl = URLConstant.GetAllAssetDataForPOByAssetV2;
     }
 
     let appAssetObj : ReqAssetDataObj = new ReqAssetDataObj();
@@ -122,6 +122,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
         console.log(response);
         tempRefMasterObj = response["ListPoItems"];
 
+        //
       });
     return tempRefMasterObj;
   }
@@ -139,7 +140,6 @@ export class PurchaseOrderDetailComponent implements OnInit {
         let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
-        
         if(tempAgrmntFeeObj != undefined)
           tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
         else

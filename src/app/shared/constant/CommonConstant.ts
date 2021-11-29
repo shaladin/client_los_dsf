@@ -126,6 +126,9 @@ export class CommonConstant {
   //ASSET CONDITION
   public static AssetConditionUsed = "USED";
   public static AssetConditionNew = "NEW";
+  
+  public static ModeAddColl = "addColl";
+  public static ModeEditColl = "editColl";
 
   // SOCIAL MEDIA
   public static FACEBOOK = "FB";
@@ -256,6 +259,7 @@ export class CommonConstant {
   public static CollateralNeeded = "COLLATERALNEEDED";
   public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
   public static REF_PROD_COMPNT_CODE_CRD_APV = "CRD_APV";
+  public static REF_PROD_COMPNT_CODE_CURR = "CURR";
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
@@ -727,11 +731,12 @@ export class CommonConstant {
   public static GSCodeDashboardPwd = "DASHBOARD_PWD";
   public static GSCodeFilterAddr = "FILTER_ADDR";
   public static GSCodeLoadingFeeCountType = "LOADING_FEE_COUNT_TYPE";
-    
+  public static GSCodeDefaultLoadingFeeYear = "DEFAULT_LOADING_FEE_YEAR";
   public static LoadingFeeCountType_FirstYear = "FY";
   public static LoadingFeeCountType_LastYear = "LY";
   public static LoadingFeeCountType_CountingYear = "CY";
-
+  public static GSCodeFilterAppDataSalesOfficerCode = "FILTER_APP_DATA_SALES_OFFICER_CODE";
+  
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
   public static PaymentTypeDirectPayment = "DIRECT_PAYMENT";

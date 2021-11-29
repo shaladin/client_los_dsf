@@ -1,11 +1,8 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
+import { FromValueObj, UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqListProdBranchMbrObj, ReqProdBranchMbrDomainObj } from 'app/shared/model/request/product/req-add-prod-branch-mbr-obj.model';
 import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
@@ -30,16 +27,12 @@ export class HoSearchOfficeComponent implements OnInit {
 
   ngOnInit() {
     this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
-    this.TempPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
 
-    if (this.ListOfficeMemberObjInput.length != 0) {
-      let addCrit = new CriteriaObj();
-      addCrit.propName = "RO.OFFICE_CODE";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.ListOfficeMemberObjInput;
-      this.TempPagingObj.addCritInput.push(addCrit);
-    }
+    let fromValueObj = new FromValueObj();
+    fromValueObj.property = 'ProdHId';
+    fromValueObj.value = this.ProdHId;
+    this.TempPagingObj.fromValue.push(fromValueObj);
     this.TempPagingObj.isReady = true;
   }
 

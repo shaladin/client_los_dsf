@@ -9,7 +9,7 @@ import { SharedModule } from "app/shared/shared.module";
 import { RequisitionDecisionRoutingModule } from "./requisition-decision-routing.module";
 import { RequisitionDecisionPagingComponent } from './requisition-decision-paging/requisition-decision-paging.component';
 import { RequisitionDecisionDetailComponent } from './requisition-decision-detail/requisition-decision-detail.component';
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
     declarations: [

@@ -304,9 +304,8 @@ export class CustMainDataXComponent implements OnInit {
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
-
   }
-
+  
   //#region Country
   lookUpObjCountry: InputLookupObj = new InputLookupObj();
   async BindLookupCountry() {
@@ -332,7 +331,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-
+  
   ListNationality: Array<RefMasterObj> = new Array();
   GetListRefCountry() {
     this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).subscribe(
@@ -357,7 +356,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-
+  
   getLookUpCountry(ev) {
     this.CustMainDataForm.patchValue({
       WnaCountryCode: ev.CountryCode,
@@ -496,12 +495,10 @@ export class CustMainDataXComponent implements OnInit {
       this.InputLookupCustObj.isDisable = true;
       this.InputLookupCustCoyObj.isDisable = false;
     }
-
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
-   
     this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustObj.isRequired = true;
 
@@ -543,6 +540,16 @@ export class CustMainDataXComponent implements OnInit {
 
     this.ArrAddCrit.push(critObj);
 
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust){
+      let critObj2 = new CriteriaObj();
+      critObj2.DataType = "text";
+      critObj2.propName = 'C.IS_CUSTOMER'
+      critObj2.restriction = AdInsConstant.RestrictionEq;
+      critObj2.value = '1';
+  
+      this.ArrAddCrit.push(critObj2);
+    }
+    
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustCoyObj.addCritInput = this.ArrAddCrit;
 
@@ -708,10 +715,7 @@ export class CustMainDataXComponent implements OnInit {
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
         this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
-      } else {
-        this.MrCustTypeCode = custType;
       }
-
     }
   }
 

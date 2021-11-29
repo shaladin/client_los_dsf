@@ -14,7 +14,7 @@
         "name": "re.EMP_NAME",
         "id": "salesOfficerName",
         "value": "",
-        "label": "MO Office Name",
+        "label": "Marketing Officer Name",
         "placeholder": "Sales Officer Name"
       },
       {

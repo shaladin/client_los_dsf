@@ -382,6 +382,8 @@ export class CustMainDataComponent implements OnInit {
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
           this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
+          this.CustMainDataForm.controls.Email1.setValidators(Validators.pattern(CommonConstant.regexEmail));
+          this.CustMainDataForm.controls.Email1.updateValueAndValidity();
         }
         await this.GetAppCustMainDataByAppId();
         this.BindLookupJobPosition();
@@ -488,6 +490,16 @@ export class CustMainDataComponent implements OnInit {
 
     this.ArrAddCrit.push(critObj);
 
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust){
+      let critObj2 = new CriteriaObj();
+      critObj2.DataType = "text";
+      critObj2.propName = 'C.IS_CUSTOMER'
+      critObj2.restriction = AdInsConstant.RestrictionEq;
+      critObj2.value = '1';
+  
+      this.ArrAddCrit.push(critObj2);
+    }
+    
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustCoyObj.addCritInput = this.ArrAddCrit;
 
@@ -624,10 +636,7 @@ export class CustMainDataComponent implements OnInit {
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
         this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
-      } else {
-        this.MrCustTypeCode = custType;
       }
-
     }
   }
 

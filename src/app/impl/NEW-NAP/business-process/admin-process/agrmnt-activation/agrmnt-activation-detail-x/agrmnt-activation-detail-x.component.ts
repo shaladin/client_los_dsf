@@ -11,10 +11,11 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ToastrService } from 'ngx-toastr';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
-import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { DatePipe } from '@angular/common';
 import { ResAppFeeObj, ResponseAppFinDataObj, ResAgrmntActivationFinDataAndFeeObj } from 'app/shared/model/response/nap/agr-act/res-agrmnt-activation-fin-data-and-fee-obj.model';
 import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
@@ -47,7 +48,7 @@ export class AgrmntActivationDetailXComponent implements OnInit {
   AppObj: AppObj = new AppObj();
   businessDt: Date;
   toastRef: any;
-  
+
   isNeedExtension: boolean = false;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_AGRMNT_ACT_PAGING;
   constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessXService, private router: Router, private http: HttpClient, private cookieService: CookieService, private claimTaskService: ClaimTaskService, private toastrSvc: ToastrService) {
@@ -58,7 +59,7 @@ export class AgrmntActivationDetailXComponent implements OnInit {
     });
 
     this.AgrmntActForm = this.fb.group({
-      'CreateDt': [this.CreateDt, Validators.compose([Validators.required])],
+      'CreateDt': [this.CreateDt],
       'AgrmntNo': [''],
       'isOverwrite': [this.isOverwrite]
     });
@@ -83,6 +84,13 @@ export class AgrmntActivationDetailXComponent implements OnInit {
 
   readonly bizCodeFl4w: string = CommonConstant.FL4W;
 
+  patchDefaultValueCreateDt() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.CreateDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    let datePipe = new DatePipe("en-US");
+    this.AgrmntActForm.get("CreateDt").patchValue(datePipe.transform(this.CreateDt, 'yyyy-MM-dd'));
+  }
+
   async ngOnInit() {
     await this.CheckApvResultExp();
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
@@ -100,16 +108,17 @@ export class AgrmntActivationDetailXComponent implements OnInit {
     whereValueObj.property = "AppId";
     whereValueObj.value = this.AppId;
     this.tempPagingObj.whereValue.push(whereValueObj);
+    this.patchDefaultValueCreateDt();
   }
 
   ngOnDestroy() {
-    if(this.toastRef != undefined && this.toastRef != null){
+    if (this.toastRef != undefined && this.toastRef != null) {
       this.toastrSvc.clear(this.toastRef.toastId);
     }
   }
 
   async GetAppData() {
-    await this.http.post < AppObj > (URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.AppObj = response;
       }
@@ -122,7 +131,7 @@ export class AgrmntActivationDetailXComponent implements OnInit {
     await this.GetAppData();
     if (this.AppObj.CrdApvResultExpDt != null && this.AppObj.CrdApvResultExpDt != undefined) {
       if (this.businessDt > new Date(this.AppObj.CrdApvResultExpDt)) {
-      this.isNeedExtension = true;
+        this.isNeedExtension = true;
         this.toastRef = this.toastrSvc.error(null, "Need Extension", {
           disableTimeOut: true,
           tapToDismiss: false,
@@ -135,15 +144,15 @@ export class AgrmntActivationDetailXComponent implements OnInit {
   getListTemp(ev) {
     this.listSelectedId = ev.TempListId;
     this.IsEnd = false;
-    if(this.listSelectedId.length == 0){
+    if (this.listSelectedId.length == 0) {
       this.AppFees = null;
       this.AppFinData = null;
-    }else{
+    } else {
       let obj: ReqAppAssetAgreementActivationObj = {
         AppId: this.AppId,
         ListAppAssetId: this.listSelectedId
       };
-  
+
       this.adminProcessSvc.GetListAppAssetAgrmntActivation(obj).subscribe((response) => {
         this.AssetObj = response["ListAppAsset"];
         if (this.AssetObj.length == 0)
@@ -152,7 +161,7 @@ export class AgrmntActivationDetailXComponent implements OnInit {
         objFinDataAndFee.AppId = this.AppId;
         objFinDataAndFee.ListAppAssetId = this.listSelectedId;
         objFinDataAndFee.IsEnd = this.IsEnd;
-        this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response : ResAgrmntActivationFinDataAndFeeObj) => {
+        this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response: ResAgrmntActivationFinDataAndFeeObj) => {
           this.AppFees = response.ListAppFeeObj;
           this.AppFinData = response.AppFinDataObj;
         })
@@ -161,8 +170,8 @@ export class AgrmntActivationDetailXComponent implements OnInit {
   }
 
   Submit() {
-    
-    if(this.isNeedExtension){
+
+    if (this.isNeedExtension) {
       this.toastr.typeErrorCustom("Need Extension");
       return;
     }
@@ -173,15 +182,15 @@ export class AgrmntActivationDetailXComponent implements OnInit {
       return;
     }
     if (this.AgrmntActForm.valid) {
-      if(this.isOverwrite){
+      if (this.isOverwrite) {
         let checkAgrmntNo = this.AgrmntNo.split("/");
-        if(checkAgrmntNo.length < 3){
+        if (checkAgrmntNo.length < 3) {
           this.toastr.warningMessage("Format for Agreement No at Least has 2 Separators ' / '");
           return;
         }
-        else{
+        else {
           let checkEmptySeparators = checkAgrmntNo.find(x => x == "");
-          if(checkEmptySeparators != null){
+          if (checkEmptySeparators != null) {
             this.toastr.warningMessage("Format for Agreement No can't have An Empty String Between Separators");
             return;
           }
@@ -196,13 +205,13 @@ export class AgrmntActivationDetailXComponent implements OnInit {
         IsEnd: this.IsEnd
       }
 
-      if(environment.isCore){
+      if (environment.isCore) {
         this.adminProcessSvc.SubmitAgrmntActivationXByHumanV2(Obj).subscribe((response) => {
-          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
         });
       } else {
         this.adminProcessSvc.SubmitAgrmntActivationXByHuman(Obj).subscribe((response) => {
-          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
         });
       }
     }
@@ -216,9 +225,9 @@ export class AgrmntActivationDetailXComponent implements OnInit {
     });
   }
 
-  claimTask(){
-    if (environment.isCore){
-      if (this.WfTaskListId != "" && this.WfTaskListId != undefined ) {
+  claimTask() {
+    if (environment.isCore) {
+      if (this.WfTaskListId != "" && this.WfTaskListId != undefined) {
         this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
       }
     }

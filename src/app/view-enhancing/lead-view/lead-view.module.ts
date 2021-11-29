@@ -22,7 +22,7 @@ import { ViewCustomerDataComponent } from "./view-customer-data/view-customer-da
 import { LeadViewRoutingModule } from "./lead-view-routing.module";
 import { SharedModule } from "app/shared/shared.module";
 import { LeadViewSrvyTaskComponent } from "./lead-view-srvy-task/lead-view-srvy-task.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 
 @NgModule({

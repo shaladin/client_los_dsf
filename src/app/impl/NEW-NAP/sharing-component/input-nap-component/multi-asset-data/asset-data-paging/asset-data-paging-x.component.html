@@ -28,22 +28,6 @@
   </button>
 </div>
 
-<!-- <div *ngIf="IsUseDigitalization == '1' && IntegratorCheckBySystemGsValue == '0' && IsSvcExist && mouCustId==0">
-  <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
-  </lib-ucSubsection>
-  <div [id]="fraudChecking">
-    <div class="form-group row">
-      <label class="col-md-2" translate>RAPINDO</label>
-      <div class="col-md-8">
-        <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary">
-          Check Rapindo
-        </button>
-        <label *ngIf="thirdPartyRsltHId != '' && thirdPartyRsltHId != null" class="col-md-4" translate>Requested At
-          {{this.LastRequestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
-      </div>
-    </div>
-  </div>
-</div> -->
 <br>
 <br>
 <br>
@@ -65,10 +49,10 @@
   <br>
 </div>
 <div class="form-actions right" style="text-align: right;">
-  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-    <i class="ft-x"></i> Cancel
+  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
   </button>
-  <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
-    <i class="far fa-check-square"></i> Save
+  <button type="submit" class="btn btn-raised btn-primary" (click)="next()">
+    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
   </button>
 </div>

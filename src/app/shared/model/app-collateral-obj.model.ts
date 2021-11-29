@@ -36,6 +36,7 @@ export class AppCollateralObj {
   RsvField4: string;
   RsvField5: string;
   InsAssetCoveredByDesc: string;
+  TotalAccessoryPriceAmt: number;
 
   constructor() {
     this.Id = 0;
@@ -69,5 +70,6 @@ export class AppCollateralObj {
     this.RsvField4 = "";
     this.RsvField5 = "";
     this.RowVersion = "";
+    this.TotalAccessoryPriceAmt = 0;
   }
 }
