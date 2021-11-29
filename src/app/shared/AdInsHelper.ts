@@ -99,7 +99,7 @@ export class AdInsHelper {
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_PERSONAL_DETAIL + "?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
-  public static OpenCustomerCoyViewByCustId(CustId: number){
+  public static OpenCustomerCoyViewByCustId(CustId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_COY_DETAIL + "?CustId=" + CustId + "&Token=" + token, "_blank");
   }
@@ -168,7 +168,7 @@ export class AdInsHelper {
 
   public static OpenEditAppAfterApv(TrxHId, AgrmntId) {
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW + "?EditAppAftApvTrxHId=" + TrxHId + "&AgrmntId="+  AgrmntId + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW + "?EditAppAftApvTrxHId=" + TrxHId + "&AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
   }
 
   public static IsGrantAccess(formPath) {
@@ -225,16 +225,16 @@ export class AdInsHelper {
     return encrypted
   }
 
-  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}) {
+  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}, isSkipLocation: boolean = false, isReuseRoute: boolean = false) {
     // Ngebuat bisa jalanin Constructor dan NgOnInit lagi
     router.routeReuseStrategy.shouldReuseRoute = () => {
-      return false;
+      return isReuseRoute;
     }
 
     router.navigateByUrl(
       router.createUrlTree(
-        [url.toString()], {queryParams: queryParams, skipLocationChange: false}
-      )
+        [url.toString()], { queryParams: queryParams }
+      ), { skipLocationChange: isSkipLocation }
     );
   }
 
