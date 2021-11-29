@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.4.15-1",
+  "version": "1.4.15-25",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -27,8 +27,8 @@
     "@adins/ucaddtotemp": "^1.0.26",
     "@adins/ucapproval": "^1.0.9",
     "@adins/ucapproval-history": "^1.0.10",
-    "@adins/ucapproval-r3": "^1.0.35",
-    "@adins/ucapprovalcreate": "^1.0.49",
+    "@adins/ucapproval-r3": "^1.0.36",
+    "@adins/ucapprovalcreate": "^1.0.50",
     "@adins/ucapprovalgeneralinfo": "^1.0.8",
     "@adins/ucapprovalhist": "^1.0.16",
     "@adins/ucapproveby": "^1.0.2",
@@ -40,7 +40,7 @@
     "@adins/uclookupgeneric": "^2.1.1",
     "@adins/ucpaging": "^2.1.1",
     "@adins/ucreport": "^2.0.22",
-    "@adins/ucsearch": "^2.3.2",
+    "@adins/ucsearch": "^2.4.1",
     "@adins/ucthingstodo": "^1.0.6",
     "@adins/ucupload": "^1.9.1",
     "@adins/ucviewgeneric": "^2.2.1",

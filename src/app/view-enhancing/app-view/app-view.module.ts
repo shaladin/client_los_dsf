@@ -54,9 +54,11 @@ import { ViewSrvyTaskComponent } from "./view-srvy-task/view-srvy-task.component
 import { TabApplicationXComponent } from "app/impl/view-enhancing/app-view/tab-application/tab-application-x.component";
 import { AppViewXComponent } from "app/impl/view-enhancing/app-view/app-view-x.component";
 import { ViewSrvyTaskXComponent } from "app/impl/view-enhancing/app-view/view-srvy-task-x/view-srvy-task-x.component";
-import {ApprovalHistXComponent} from 'app/impl/view-enhancing/app-view/approval-hist/approval-hist-x.component';
+import { ApprovalHistXComponent } from 'app/impl/view-enhancing/app-view/approval-hist/approval-hist-x.component';
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewDeviationComponent } from "./view-deviation/view-deviation.component";
+
 
 @NgModule({
     imports: [
@@ -120,7 +122,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         AppViewXComponent,
         ViewSrvyTaskXComponent,
         ApprovalHistXComponent,
-        ViewCreditProcessFlowComponent
+        ViewCreditProcessFlowComponent,
+        ViewDeviationComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

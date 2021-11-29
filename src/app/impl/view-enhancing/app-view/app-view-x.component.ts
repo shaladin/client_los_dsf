@@ -202,7 +202,6 @@ export class AppViewXComponent implements OnInit {
       this.IsAsset = false;
       this.IsMultiAsset = false;
       this.IsInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -218,7 +217,6 @@ export class AppViewXComponent implements OnInit {
       this.IsInvoice = false;
       this.IsMultiAsset = false;
       this.IsMultiInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -232,7 +230,6 @@ export class AppViewXComponent implements OnInit {
       this.IsInsurance = this.NumOfAsset < 2 ? true : false;
       this.IsMultiAsset = this.NumOfAsset > 1 ? true : false;
       this.IsMultiInsurance = this.NumOfAsset > 1 ? true : false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -244,7 +241,6 @@ export class AppViewXComponent implements OnInit {
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
       this.IsInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -259,7 +255,6 @@ export class AppViewXComponent implements OnInit {
       this.IsMultiAsset = false;
       this.IsMultiInsurance = false;
       this.IsCollateral = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -295,7 +290,6 @@ export class AppViewXComponent implements OnInit {
       this.IsReservedFund = false;
       this.IsPhoneVerification = false;
       this.IsAssetExpense = false;
-      this.IsDeviation = false;
     }
   }
 

@@ -39,7 +39,7 @@ export class ReturnHandlingDetailXComponent implements OnInit {
     MrReturnTaskCode: ['', [Validators.required, Validators.maxLength(50)]],
     ReturnHandlingNotes: ['', [Validators.required, Validators.maxLength(4000)]]
   });
-  
+
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING;
@@ -47,7 +47,7 @@ export class ReturnHandlingDetailXComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private router: Router, 
+    private router: Router,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
@@ -171,9 +171,6 @@ export class ReturnHandlingDetailXComponent implements OnInit {
             MrReturnTaskCode: this.taskObj[0].Key
           });
 
-          if(this.lobCode != CommonConstant.FCTR){
-            this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
-          }
         }else if(this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.AppStepComm || this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.AppStepRSVFund){        
           this.taskObj = this.taskObj.filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstantX.ReturnHandlingAddSurveyVerf);
 

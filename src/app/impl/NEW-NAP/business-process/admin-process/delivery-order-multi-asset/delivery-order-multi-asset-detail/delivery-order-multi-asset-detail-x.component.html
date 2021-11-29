@@ -18,9 +18,14 @@
             <div class="form-body" id="DoInfoForm">
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
-                <div *ngIf = "checkPOReady" class="col-md-4">
+                <!-- <div *ngIf = "checkPOReady" class="col-md-4">
                   <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <input *ngIf = "isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="DOAssetForm.controls.AgrmntDt">
+                  </lib-uc-show-errors>
+                </div> -->
+                <div class="col-md-4">
+                  <input type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.AgrmntDt">
                   </lib-uc-show-errors>
                 </div>
@@ -159,7 +164,7 @@
                     <span class="thead-header" name='assetPrice' translate>RECIPIENT NAME</span>
                   </th>
                   <th style="text-align: left;">
-                    <span class="thead-header" name='downPayment' translate>RECIPIENT ADDRESS</span>
+                    <span class="thead-header" name='downPayment' translate>Notes</span>
                   </th>
                   <th style="text-align: center;">
                     <span class="thead-header" name='serialNo1' translate>ACTION</span>

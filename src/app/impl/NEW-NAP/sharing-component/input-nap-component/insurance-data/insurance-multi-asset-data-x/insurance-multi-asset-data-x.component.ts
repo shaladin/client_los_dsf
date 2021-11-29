@@ -167,6 +167,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
   isFromDB: boolean = false;
   readonly EditInsurance = "EditInsurance";
   readonly DefaultPremiumType = CommonConstant.PremiumTypeAmt;
+  RoundedAmt: number;
 
   AppInsForm = this.fb.group({
     // PaidAmtByCust: [0]
@@ -182,16 +183,17 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
+    await this.GetGeneralSettingDefaultLoadingFeeYear();
     this.BindMultiInsGridData();
     if (this.BLCode == CommonConstant.FCTR) {
       this.GetExistingAppCollateralWithInsurance();
       this.textTitle = "Collateral";
     }
     this.GetCollateralDDLForCopy();
-    this.GetGeneralSettingDefaultLoadingFeeYear();
+    
   }
 
   CancelHandler() {
@@ -419,14 +421,14 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     this.PageState = 'Paging';
   }
 
-  event(ev) {
+  async event(ev) {
     this.AppCollateralId = ev.RowObj.AppCollateralId;
     this.AppAssetId = ev.RowObj.AppAssetId;
     if (this.AppAssetId == null || this.AppAssetId == undefined) this.AppAssetId = 0;
 
     this.appInsObjId = ev.RowObj.AppInsObjId;
     this.InsSeqNo = ev.RowObj.InsSeqNo;
-    this.GetInsMultiData();
+    await this.GetInsMultiData();
     this.PageState = this.EditInsurance;
   }
 
@@ -823,6 +825,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     let isRuleComplete = true;
     if (!this.InsuranceDataForm.controls["AppInsMainCvgs"].valid) return;
     let reqObj = new RequestCalcInsObj();
+    
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
       var insCoverage = new CalcInsMainCvgObj();
 
@@ -869,6 +872,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     reqObj.AppId = this.appId;
     reqObj.AppAssetId = this.AppAssetId;
     reqObj.AppCollateralId = this.AppCollateralId;
+    reqObj.RoundedAmt = this.RoundedAmt;
 
     await this.http.post(URLConstant.CalculateInsurance, reqObj).toPromise().then(
       (response) => {
@@ -1018,6 +1022,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
         let InsRateAddCvgRuleObjs = response['InsRateAddCvgRuleObjs'];
         if (response["InsRateAddCvgRuleTplObjs"]) InsRateAddCvgRuleObjs = InsRateAddCvgRuleObjs.concat(response["InsRateAddCvgRuleTplObjs"]);
 
+        await this.bindInsMainCvgTypeObj();
         this.bindInsAddCvgTypeRuleObj();
         this.bindInsPaidByRuleObj();
 
@@ -2386,8 +2391,8 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     this.isCalculate = false;
   }
 
-  GetGeneralSettingDefaultLoadingFeeYear() {
-    this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefaultLoadingFeeYear }).toPromise().then(
+  async GetGeneralSettingDefaultLoadingFeeYear() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefaultLoadingFeeYear }).toPromise().then(
       (response) => {
         this.DefaultLoadingFeeYear = parseInt(response.GsValue);
       }

@@ -3,6 +3,23 @@
     "exportExcel": false,
     "component": [
       {
+        "type": "officeRoleCodes",
+        "datatype": "text",
+        "name": "TaskOfficeCode",
+        "id": "OfficeCodeId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "isQueryIn": true,
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "label": "Office",
+        "items": [],
+        "itemsUrl": []
+      },
+      {
         "type": "textbox",
         "name": "CMT.CHANGE_MOU_TRX_NO",
         "id": "TrxNoId",
@@ -28,6 +45,7 @@
         "isFromURL": true,
         "ddlType": "all",
         "url": "",
+        "environment": "FOU",
         "path": "/RefMaster/GetListKeyValueActiveByCode",
         "label": "Mou Type",
         "items": [],

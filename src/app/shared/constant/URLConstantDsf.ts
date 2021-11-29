@@ -22,4 +22,5 @@ export class URLConstantDsf {
     public static EditCessiePaymentDueDate = environment.losUrl + "/CessieDsf/EditCessiePaymentDueDate";
 
     public static GetSpvDPCDSF = environment.losUrl + "/v1" + "/CrdRvwX/GetSpvDPCDSF";
+    public static AddXDAACPDSF = environment.losUrl + "/v2" + "/XDAACPDsf/AddXDAACPDSF";
 }

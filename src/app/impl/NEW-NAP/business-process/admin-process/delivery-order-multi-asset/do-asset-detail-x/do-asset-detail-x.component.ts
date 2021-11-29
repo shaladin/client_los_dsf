@@ -41,8 +41,6 @@ export class DoAssetDetailXComponent implements OnInit {
   ListAttrAnswer = [];
   isAssetAttrReady: boolean = false;
   generalSettingObj: GenericListByCodeObj;
-  IntegratorCheckBySystemGsValue: string = "1";
-  IsUseDigitalization: string;
   sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   IsSvcExist: boolean = false;
   AppObj: AppObj = new AppObj();
@@ -75,7 +73,7 @@ export class DoAssetDetailXComponent implements OnInit {
     AssetNotes: [''],
     TempRegisLettNo: ['', [Validators.required]],
     TempRegisLettDt: ['', [Validators.required]],
-    Color: [''],
+    Color: ['', [Validators.required]],
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
@@ -172,7 +170,6 @@ export class DoAssetDetailXComponent implements OnInit {
     
 
     console.log(this.DOAssetDetail.controls);
-    await this.GetGS();
     this.InputLookupCityIssuerObj.isReady = true;
   }
 
@@ -448,66 +445,6 @@ export class DoAssetDetailXComponent implements OnInit {
     this.DOAssetDetail.controls.DOAssetDocList["controls"][idx]["controls"].DocNotes.setValue("");
   }
 
-  //For Fraud Checking
-  async GetGS(){
-    this.generalSettingObj = new GenericListByCodeObj();
-    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization); 
-
-    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
-      (response) => {
-        let returnGeneralSettingObj = response;
-
-        let gsNeedCheckBySystem = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        let gsUseDigitalization = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined){
-          this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
-        }else{
-          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
-        }
-
-        if(gsUseDigitalization != undefined){
-          this.IsUseDigitalization = gsUseDigitalization.GsValue;
-          this.getDigitalizationSvcType();
-        }else{
-          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
-        }        
-      }
-    );
-  }
-  
-  async getDigitalizationSvcType(){
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
-      (response) => {
-        this.sysConfigResultObj = response;
-      });
-
-    if(this.sysConfigResultObj.ConfigValue != null){
-      var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
-      var refSvcType = "";
-      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.AppObj.BizTemplateCode }).toPromise().then(
-        (response) => {
-            refSvcType = response["Result"];
-        });
-
-      var svcType = listSvcType.find(x => x == refSvcType);
-
-      if(svcType != null){
-        this.IsSvcExist = true;
-      }
-    }
-  }
-
-  HitAPI() {
-    if (this.listItem.controls[this.indexChassis]['controls']['SerialNoValue'].value == '') {
-      this.toastr.warningMessage("Please Input Chassis No !");
-    }
-    else {
-      this.toastr.successMessage("Submit with Integrator");
-      this.IsIntegrator = true;
-    }
-  }
 
   ReceiveDocument(idx)
   {

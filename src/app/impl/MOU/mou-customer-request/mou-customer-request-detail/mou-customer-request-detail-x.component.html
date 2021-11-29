@@ -13,13 +13,25 @@
         </lib-ucSubsection>
         <div id="MOUMainInfoSection" class="col-md-12">
           <form class="form form-horizontal" [formGroup]="MOUMainInfoForm" #enjiForm="ngForm" novalidate
-                (ngSubmit)="enjiForm.form.valid && Save()">
+            (ngSubmit)="enjiForm.form.valid && Save()">
             <div class="form-body">
               <div class="form-group row" *ngIf="pageType == 'edit' || pageType == 'return'">
                 <label class="col-md-3 adInsLabel" for="MouCustNo" translate>Mou No.</label>
                 <div class="col-md-9">
                   <a href="javascript:void(0);"
-                     (click)="OpenView('mou')">{{MOUMainInfoForm.controls.MouCustNo.value}}</a>
+                    (click)="OpenView('mou')">{{MOUMainInfoForm.controls.MouCustNo.value}}</a>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel adins-required-label" translate>Office </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto"
+                          formControlName="OriOfficeCode" 
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.OriOfficeCode.invalid }">
+                          <option *ngFor="let it of returnRefOffices" [value]="it.Key">
+                            {{it.Value}}
+                          </option>
+                  </select>
                 </div>
               </div>
               <div class="form-group row">
@@ -27,8 +39,8 @@
                   End Date</label>
                 <div class="col-md-3">
                   <input type="date" class="form-control adInsInput" formControlName="StartDt"
-                         [max]="businessDt | date: 'yyyy-MM-dd'" (focusout)="checkStartDate($event)"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.StartDt.invalid }"/>
+                    [max]="businessDt | date: 'yyyy-MM-dd'"(focusout) ="checkStartDate($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.StartDt.invalid }" />
                   <lib-uc-show-errors [control]="MOUMainInfoForm.controls.StartDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -37,8 +49,8 @@
                 </div>
                 <div class="col-md-3">
                   <input type="date" class="form-control adInsInput" formControlName="EndDt"
-                         [min]="businessDt | date: 'yyyy-MM-dd'" (focusout)="checkEndDate($event)"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.EndDt.invalid }"/>
+                    [min]="businessDt | date: 'yyyy-MM-dd'"(focusout) ="checkEndDate($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.EndDt.invalid }"/>
                   <lib-uc-show-errors [control]="MOUMainInfoForm.controls.EndDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -47,7 +59,7 @@
                 <label class="col-md-3 adInsLabel" for="RefNo" translate>Reference No.</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control adInsInput" formControlName="RefNo"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.RefNo.invalid }"/>
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.RefNo.invalid }" />
                   <lib-uc-show-errors [control]="MOUMainInfoForm.controls.RefNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>

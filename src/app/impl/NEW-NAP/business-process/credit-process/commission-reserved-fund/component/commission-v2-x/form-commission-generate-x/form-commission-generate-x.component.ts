@@ -135,6 +135,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       RowVersion: [''],
       ListAllocated: this.fb.array([]),
       DropDownList: this.fb.array([]),
+      HoldingTaxWithPenalty: [0],
       ListEmpPosition: this.fb.array([])
     }) as FormGroup;
     this.arr.push(NewDataForm);
@@ -535,7 +536,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       TotalVATAmount: appCommObj.VatAmt,
       TotalPenaltyAmount: appCommObj.PenaltyAmt,
       TotalDisburseAmount: appCommObj.TotalDisburseAmt,
-      RowVersion: appCommObj.RowVersion,
+      RowVersion: appCommObj.RowVersion
     });
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
@@ -545,12 +546,17 @@ export class FormCommissionGenerateXComponent implements OnInit {
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
     var allocAmt = 0;
-  
+  	let TotalPenaltyAmt = 0
     for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
-      allocAmt += appCommObj.AppCommissionDs[i].CommissionAmt
+      allocAmt += appCommObj.AppCommissionDs[i].CommissionAmt;
+      TotalPenaltyAmt += appCommObj.AppCommissionDs[i].PenaltyAmt;
     }
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][0].patchValue({
       AllocationAmount: allocAmt,
+    });
+
+    this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+      HoldingTaxWithPenalty: (appCommObj.TaxAmt + TotalPenaltyAmt)
     });
 
     this.ReCalcListAllocated(indexFormObj);
