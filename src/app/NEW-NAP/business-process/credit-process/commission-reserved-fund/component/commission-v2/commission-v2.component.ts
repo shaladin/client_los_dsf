@@ -73,9 +73,9 @@ export class CommissionV2Component implements OnInit {
   readonly AllocTypeAmt = CommonConstant.AllocTypeAmt;
   readonly AllocTypePerc = CommonConstant.AllocTypePerc;
 
-  identifierSupplier: string = CommonConstant.CommissionIdentifierSupplier;
-  identifierSupplierEmp: string = CommonConstant.CommissionIdentifierSupplierEmp;
-  identifierReferantor: string = CommonConstant.CommissionIdentifierReferantor;
+  readonly identifierSupplier: string = CommonConstant.CommissionIdentifierSupplier;
+  readonly identifierSupplierEmp: string = CommonConstant.CommissionIdentifierSupplierEmp;
+  readonly identifierReferantor: string = CommonConstant.CommissionIdentifierReferantor;
   FormInputObjSupplier: object = {};
   FormInputObjSupplierEmp: object = {};
   FormInputObjReferantor: object = {};
@@ -427,6 +427,7 @@ export class CommissionV2Component implements OnInit {
 
       this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYield, obj).subscribe(
         (response) => {
+          console.log(response);
           let idxStart = 0;
           let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
           let totalSupplEmpData = this.CommissionForm.value[this.identifierSupplierEmp].length;
@@ -501,20 +502,26 @@ export class CommissionV2Component implements OnInit {
   BindTaxData(identifier: string, TaxDetailData: ResponseTaxDetailObj, idxStart: number, idxEnd: number) {
     // let totalBindData=this.CommissionForm.value[identifier].length;
     for (var i = 0; i < idxEnd; i++) {
-      let totalTaxAmount = 0;
-      let totalVATAmount = 0;
-      let totalExpenseAmount = 0;
-      let totalPenaltyAmt = 0;
-      let totalDisburseAmount = 0;
-      let HoldingTaxWithPenalty = 0;
+      let totalTaxAmount: number = 0;
+      let totalVATAmount: number = 0;
+      let totalExpenseAmount: number = 0;
+      let totalPenaltyAmt: number = 0;
+      let totalDisburseAmount: number = 0;
+      let totalCommissionAmtAfterTax: number = 0;
+      let totalAllocationAmount: number = 0;
+      let HoldingTaxWithPenalty: number = 0;
       let tempRespTaxObj: ResponseTaxObj = TaxDetailData.ResponseTaxObjs[idxStart];
       for (var j = 0; j < tempRespTaxObj.ReturnObject.length; j++) {
         let taxAmt = 0;
         let vatAmt = 0;
+        let commissionAmtAfterTax = tempRespTaxObj.ReturnObject[j].TotalTrxAmtAfterTaxAmt;
+        let AllocationAmount = tempRespTaxObj.ReturnObject[j].TrxTaxableAmt;
         let totalPenaltyDAmount = 0;
         totalExpenseAmount += tempRespTaxObj.ReturnObject[j].ExpenseAmt;
         totalDisburseAmount += tempRespTaxObj.ReturnObject[j].DisburseAmt;
         totalPenaltyAmt += tempRespTaxObj.ReturnObject[j].PenaltyAmt;
+        totalCommissionAmtAfterTax += commissionAmtAfterTax;
+        totalAllocationAmount += AllocationAmount;
         var TaxTrxDObjData: Array<TaxTrxDObj> = tempRespTaxObj.ReturnObject[j].TaxTrxD;
         for (var k = 0; k < TaxTrxDObjData.length; k++) {
           totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
@@ -531,7 +538,9 @@ export class CommissionV2Component implements OnInit {
         this.CommissionForm.controls[identifier]["controls"][i].controls.ListAllocated.controls[j].patchValue({
           TaxAmt: taxAmt,
           VatAmt: vatAmt,
-          PenaltyAmt: totalPenaltyDAmount
+          AllocationAmount: AllocationAmount,
+          PenaltyAmt: totalPenaltyDAmount,
+          CommissionAmtAfterTax: commissionAmtAfterTax
         });
       }
       this.CommissionForm.controls[identifier]["controls"][i].patchValue({
@@ -544,9 +553,22 @@ export class CommissionV2Component implements OnInit {
         TotalExpenseAmount: totalExpenseAmount,
         TotalPenaltyAmount: totalPenaltyAmt,
         TotalDisburseAmount: totalDisburseAmount,
+        TotalCommissionAfterTaxAmt: totalCommissionAmtAfterTax,
+        TotalCommisionAmount: totalAllocationAmount,
         HoldingTaxWithPenalty: HoldingTaxWithPenalty
       });
-      this.Summary.TotalCommisionAmount += this.CommissionForm.value[identifier][i].TotalCommisionAmount;
+      switch (identifier) {
+        case this.identifierSupplier:
+          this.FormAdd1.ChangeAllocPercentageBasedOnAmt(i);
+          break;
+        case this.identifierSupplierEmp:
+          this.FormAdd2.ChangeAllocPercentageBasedOnAmt(i);
+          break;
+        case this.identifierReferantor:
+          this.FormAdd3.ChangeAllocPercentageBasedOnAmt(i);
+          break;
+      }
+      this.Summary.TotalCommisionAmount += totalAllocationAmount;
       this.Summary.TotalTaxAmmount += totalTaxAmount;
       this.Summary.TotalVATAmount += totalVATAmount;
       this.totalExpenseAmt += totalExpenseAmount;
@@ -616,7 +638,7 @@ export class CommissionV2Component implements OnInit {
     temp.TaxAmt = AppCommH.get("TotalTaxAmount").value;
     temp.VatAmt = AppCommH.get("TotalVATAmount").value;
     temp.PenaltyAmt = AppCommH.get("TotalPenaltyAmount").value;
-    temp.TotalCommissionAfterTaxAmt = AppCommH.get("TotalCommisionAmount").value - (AppCommH.get("TotalTaxAmount").value + AppCommH.get("TotalVATAmount").value);
+    temp.TotalCommissionAfterTaxAmt = AppCommH.get("TotalCommissionAfterTaxAmt").value;
     temp.TotalCommissionAmt = AppCommH.get("TotalCommisionAmount").value;
     temp.TotalExpenseAmt = AppCommH.get("TotalExpenseAmount").value;
     temp.TotalDisburseAmt = AppCommH.get("TotalDisburseAmount").value;
@@ -652,7 +674,7 @@ export class CommissionV2Component implements OnInit {
       tempAppCommissionDObj.VatAmt = tempObj.get("VatAmt").value;
       tempAppCommissionDObj.PenaltyAmt = tempObj.get("PenaltyAmt").value;
       tempAppCommissionDObj.RefundAmt = this.DictMaxIncomeForm[tempObj.get("AllocationFrom").value].RefundAmount;
-      tempAppCommissionDObj.CommissionAmtAfterTax = tempObj.get("AllocationAmount").value - (tempObj.get("TaxAmt").value + tempObj.get("VatAmt").value);
+      tempAppCommissionDObj.CommissionAmtAfterTax = tempObj.get("CommissionAmtAfterTax").value;
       tempAppCommissionDObj.RowVersion = tempObj.get("RowVersion").value;
       listAppCommissionDObj.push(tempAppCommissionDObj);
     }
