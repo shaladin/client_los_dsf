@@ -1,224 +1,288 @@
 {
-    "title": "Go Live Approval",
-    "exportExcel": false,
-    "component": [
-        {
-            "type": "textbox",
-            "name": "CHX.CESSIE_NO",
-            "id": "CessieNoId",
-            "value": "",
-            "label": "Cessie No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "APP_INFO.CustName",
-            "id": "CustNameId",
-            "value": "",
-            "label": "Customer Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "APP_INFO.ProdOfferingName",
-            "id": "ProdOfferingName",
-            "value": "",
-            "label": "Product Offering Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vApv.APV_NO",
-            "id": "ApvNoId",
-            "value": "",
-            "label": "Approval No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vApv.REQUEST_BY",
-            "id": "RequestById",
-            "value": "",
-            "label": "Request By",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vApv.MAIN_USER_ID",
-            "id": "MainUserId",
-            "value": "",
-            "label": "Task Owner",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "vApv.CURRENT_USER_ID",
-            "id": "MainUserId",
-            "value": "",
-            "label": "Current User",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "datepicker",
-            "datatype": "date",
-            "name": "vApv.REQUEST_DATE",
-            "id": "RequestDateId",
-            "value": "BD",
-            "restriction": "lte",
-            "label": "Request Date",
-            "placeholder": "Placeholder"
-        }
-        
-    ],
+  "title": "Go Live Approval",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "CHX.CESSIE_NO",
+      "id": "CessieNoId",
+      "value": "",
+      "label": "Cessie No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "APP_INFO.CustName",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "APP_INFO.ProdOfferingName",
+      "id": "ProdOfferingName",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.APV_NO",
+      "id": "ApvNoId",
+      "value": "",
+      "label": "Approval No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.REQUEST_BY",
+      "id": "RequestById",
+      "value": "",
+      "label": "Request By",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.MAIN_USER_ID",
+      "id": "MainUserId",
+      "value": "",
+      "label": "Task Owner",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.CURRENT_USER_ID",
+      "id": "MainUserId",
+      "value": "",
+      "label": "Current User",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "datepicker",
+      "datatype": "date",
+      "name": "vApv.REQUEST_DATE",
+      "id": "RequestDateId",
+      "value": "BD",
+      "restriction": "lte",
+      "label": "Request Date",
+      "placeholder": "Placeholder"
+    }
+  ],
   "querystring": {
     "name": "searchCessiePreGoLiveApprovalV2"
   },
-    "headerList": [
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Office Name",
+      "name": "OfficeName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Cessie No",
+      "name": "CessieNo"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "CustName"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Product Offering Name",
+      "name": "ProdOfferingName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Approval No",
+      "name": "ApvNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Request By",
+      "name": "ReqBy"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Task Owner",
+      "name": "MainUserId"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Current User",
+      "name": "CurrentUserId"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Request Date",
+      "name": "ReqDt"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Process"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Hold"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Take Back"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Unclaim"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OfficeName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CessieNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ProdOfferingName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ApvNo"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ReqBy"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "MainUserId"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CurrentUserId"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "ReqDt"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
         {
-            "type": "sort",
-            "position": "center",
-            "label": "Office Name",
-            "name": "OfficeName"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Cessie No",
-            "name": "CessieNo"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Customer Name",
-            "name": "CustName"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Product Offering Name",
-            "name": "ProdOfferingName"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Approval No",
-            "name": "ApvNo"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Request By",
-            "name": "RequestBy"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Task Owner",
-            "name": "MainUserId"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Current User",
-            "name": "CurrentUserId"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Request Date",
-            "name": "RequestDate"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Process"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Hold"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Take Back"
+          "type": "callback",
+          "key": "Process"
         }
-    ],
-    "bodyList": [
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
         {
-            "type": "text",
-            "position": "left",
-            "property": "OfficeName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "CessieNo"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "CustName"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "ProdOfferingName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "ApvNo"
-        },                
-        {
-            "type": "text",
-            "position": "center",
-            "property": "RequestBy"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "MainUserId"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "CurrentUserId"
-        },
-        {
-            "type": "date",
-            "position": "center",
-            "property": "RequestDate"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
                 {
-                    "type": "callback",
-                    "key": "Process"                   
+                  "property": "CurrentUser",
+                  "value": "-",
+                  "restriction": "NEQ"
                 }
-            ]
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback",
-                    "key": "HoldTask"                 
-                }
-            ]
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback",
-                    "key": "TakeBack"
-                }
-            ]
+              ],
+              "result": {
+                "type": "callback",
+                "key": "HoldTask",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
+            }
+          ]
         }
-    ]
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "IsRoleAssignment",
+                  "value": false,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "TakeBack",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "IsRoleAssignment",
+                  "value": true,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "UnClaim",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

@@ -54,11 +54,13 @@ export class ReqAssetDataObj {
   AppAssetAttrObj: Array<ReqAppAssetAttrObj>;
   AppCollateralDocObj: Array<AppCollateralDocObj>;
   AppCollateralAttrObj: Array<ReqAppCollateralAttrObj>;
+  AppCollateralRegistrationObj: AppCollateralRegistrationObj;
 
   constructor() {
     this.AppAssetObj = new AppAssetObj();
     this.AppAssetAttrObj = new Array<ReqAppAssetAttrObj>();
     this.AppCollateralDocObj = new Array<AppCollateralDocObj>();
     this.AppCollateralAttrObj = new Array<ReqAppCollateralAttrObj>();
+    this.AppCollateralRegistrationObj = new AppCollateralRegistrationObj();
   }
 }
