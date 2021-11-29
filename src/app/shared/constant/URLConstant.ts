@@ -16,6 +16,7 @@ export class URLConstant {
   public static GetAssetTypeListKeyValueActiveByCode = environment.FoundationR3Url + "/v1" + "/AssetType/GetListKeyValueActiveByCode";
   public static GetAssetTypeByCode = environment.FoundationR3Url + "/v1" + "/AssetType/GetAssetTypeByCode";
   public static GetMostSerialNoAssetTypeByListAssetTypeCode = environment.FoundationR3Url + "/v1" + "/AssetType/GetMostSerialNoAssetTypeByListAssetTypeCode";
+  public static GetListAssetTypeByListAssetTypeCodes = environment.FoundationR3Url + "/v1" + "/AssetType/GetListAssetTypeByListAssetTypeCodes";
 
   // APPROVAL
   public static GetApprovalScreenViewInfo = environment.FoundationR3Url + "/v1" + "/Approval/GetApprovalScreenViewInfo";
