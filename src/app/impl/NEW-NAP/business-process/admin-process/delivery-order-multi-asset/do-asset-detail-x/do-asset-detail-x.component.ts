@@ -1,28 +1,30 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { DatePipe } from '@angular/common';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
-import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
-import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { environment } from 'environments/environment';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppAssetAttrCustomObj } from 'app/shared/model/app-asset/app-asset-attr-custom.model';
-import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
-import { String } from 'typescript-string-operations';
-import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
-import { AppObj } from 'app/shared/model/app/app.model';
-import { ReqAppAssetAttrObj } from 'app/shared/model/app-asset-attr-obj.model';
-import { ReqAppCollateralAttrObj } from 'app/shared/model/app-collateral-attr-obj.model';
-import { ReqAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
-import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import {Component, Input, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {FormArray, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {AdInsConstant} from 'app/shared/AdInstConstant';
+import {DatePipe} from '@angular/common';
+import {CommonConstant} from 'app/shared/constant/CommonConstant';
+import {URLConstant} from 'app/shared/constant/URLConstant';
+import {GenericListObj} from 'app/shared/model/generic/generic-list-obj.model';
+import {AssetTypeSerialNoLabelCustomObj} from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
+import {InputLookupObj} from 'app/shared/model/input-lookup-obj.model';
+import {CriteriaObj} from 'app/shared/model/criteria-obj.model';
+import {environment} from 'environments/environment';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
+import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
+import {AppAssetAttrCustomObj} from 'app/shared/model/app-asset/app-asset-attr-custom.model';
+import {GenericListByCodeObj} from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import {ResSysConfigResultObj} from 'app/shared/model/response/res-sys-config-result-obj.model';
+import {AppObj} from 'app/shared/model/app/app.model';
+import {ReqAppAssetAttrObj} from 'app/shared/model/app-asset-attr-obj.model';
+import {ReqAppCollateralAttrObj} from 'app/shared/model/app-collateral-attr-obj.model';
+import {ReqAssetDataObj} from 'app/shared/model/all-asset-data-obj.model';
+import {AppAssetObj} from 'app/shared/model/app-asset-obj.model';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {AppCustAddrObj} from 'app/shared/model/app-cust-addr-obj.model';
+import {GenericObj} from 'app/shared/model/generic/generic-obj.model';
+import {AppCollateralRegistrationObj} from 'app/shared/model/app-collateral-registration-obj.model';
 
 @Component({
   selector: 'app-do-asset-detail-x',
@@ -50,6 +52,12 @@ export class DoAssetDetailXComponent implements OnInit {
   datePipe = new DatePipe("en-US");
   IsReady2: boolean = false;
   isUsed : boolean = false;
+  CustType: string;
+  AppCustObj: any;
+  AppCollateralRegistrationObj: any;
+  AppCustAddrObj: Array<AppCustAddrObj> = new Array();
+  AddrLegalObj: Array<AppCustAddrObj> = new Array();
+  isOwnerReady: boolean = false;
 
   DOAssetDetail = this.fb.group({
     AppAssetId: [0, [Validators.required]],
@@ -100,7 +108,7 @@ export class DoAssetDetailXComponent implements OnInit {
   async ngOnInit() {
     this.listItem = this.DOAssetDetail.get('listItem') as FormArray;
     this.initCityLookupIssuerLookup();
-    
+
     var reqAppAsset = { AppAssetId: this.AppAssetId, AppId: this.AppId};
     await this.httpClient.post(URLConstant.GetAppAssetForDOMultiAsset, reqAppAsset).toPromise().then(
       async (response) => {
@@ -109,15 +117,15 @@ export class DoAssetDetailXComponent implements OnInit {
         var appCollateral = response["AppCollateralDoc"];
         appAsset.TempRegisLettDt = this.datePipe.transform(appAsset.TempRegisLettDt, "yyyy-MM-dd");
         appAsset.TaxIssueDt = this.datePipe.transform(appAsset.TaxIssueDt, "yyyy-MM-dd");
-        
+
         this.InputLookupCityIssuerObj.nameSelect = appAsset.TaxCityIssuer;
         this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: appAsset.TaxCityIssuer };
 
-        if(appAsset.MrAssetConditionCode == "USED") { 
+        if(appAsset.MrAssetConditionCode == "USED") {
           this.isUsed = true;
           this.InputLookupCityIssuerObj.isRequired = true;
         }
-        
+
         await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: appAsset.AssetTypeCode }).toPromise().then(
           (response: GenericListObj) => {
             while (this.listItem.length) {
@@ -151,8 +159,8 @@ export class DoAssetDetailXComponent implements OnInit {
                 }
               }
             }
-        });
-          
+          });
+
         this.DOAssetDetail.patchValue({
           ...appAsset
         });
@@ -161,16 +169,20 @@ export class DoAssetDetailXComponent implements OnInit {
         await this.GetAppData();
 
         // jika first input, ambil isian collateral doc by type
-        if(!appCollateral || appCollateral.length <= 0) 
+        if(!appCollateral || appCollateral.length <= 0)
           this.GenerateDefaultAssetDocs(appAsset.AssetTypeCode);
         else
           this.GenerateAppCollateralDocs(appCollateral);
       }
     );
-    
+
 
     console.log(this.DOAssetDetail.controls);
+    await this.GetAppCustData();
+    await this.GetListAddr();
+    await this.GetAllAssetData();
     this.InputLookupCityIssuerObj.isReady = true;
+    this.isOwnerReady = true;
   }
 
   lookupReady(){
@@ -199,7 +211,7 @@ export class DoAssetDetailXComponent implements OnInit {
               IsMandatoryNew: RefAssetDoc.IsMandatoryNew,
               IsMandatoryUsed: RefAssetDoc.IsMandatoryUsed,
               MrCollateralConditionCode: CommonConstant.AssetConditionUsed,
-            })    
+            })
           });
           this.GenerateAppCollateralDocs(assetDocs);
         }
@@ -211,7 +223,7 @@ export class DoAssetDetailXComponent implements OnInit {
   GenerateAppCollateralDocs(appCollateralDocs)
   {
     var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
-    
+
     for (let i = 0; i < appCollateralDocs.length; i++) {
       var isMandatory = false;
       if(appCollateralDocs[i].MrCollateralConditionCode == CommonConstant.AssetConditionNew){
@@ -249,11 +261,12 @@ export class DoAssetDetailXComponent implements OnInit {
     this.setAsset(formData);
     this.setCollateralDoc(formData);
     this.setAssetAttr();
+    this.setCollateralRegistration();
 
     this.httpClient.post(URLConstantX.EditAppAssetDOMultiAsset, this.reqAssetDataObj).subscribe(
-    (response) => {
-      this.activeModalAsset.close(response);
-    });
+      (response) => {
+        this.activeModalAsset.close(response);
+      });
   }
 
   setAsset(formData){
@@ -318,6 +331,33 @@ export class DoAssetDetailXComponent implements OnInit {
     }
   }
 
+  setCollateralRegistration() {
+    this.reqAssetDataObj.AppCollateralRegistrationObj = new AppCollateralRegistrationObj();
+    this.reqAssetDataObj.AppCollateralRegistrationObj.AppCollateralId = this.AppCollateralRegistrationObj.AppCollateralId;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerName = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerName.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.MrIdTypeCode = this.DOAssetDetail.controls.AssetOwner["controls"].MrIdTypeCode.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerIdNo.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAddr = this.DOAssetDetail.controls.ownerData["controls"].Addr.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.DOAssetDetail.controls.ownerData["controls"].AreaCode1.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode2 = this.DOAssetDetail.controls.ownerData["controls"].AreaCode2.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode3 = this.DOAssetDetail.controls.ownerData["controls"].AreaCode3.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode4 = this.DOAssetDetail.controls.ownerData["controls"].AreaCode4.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerCity = this.DOAssetDetail.controls.ownerData["controls"].City.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.DOAssetDetail.controls.ownerDataZipcode.value['value'];
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerMobilePhnNo.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.DOAssetDetail.controls.AssetOwner["controls"].MrOwnerRelationshipCode.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.DOAssetDetail.controls.locationData["controls"].Addr.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.DOAssetDetail.controls.locationData["controls"].AreaCode1.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.DOAssetDetail.controls.locationData["controls"].AreaCode2.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.DOAssetDetail.controls.locationData["controls"].AreaCode3.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.DOAssetDetail.controls.locationData["controls"].AreaCode4.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.DOAssetDetail.controls.locationData["controls"].City.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.DOAssetDetail.controls.locationDataZipcode.value['value'];
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerName.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.AppCollateralRegistrationObj.RowVersion;
+
+  }
+
   initCityLookupIssuerLookup(){
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
@@ -344,12 +384,12 @@ export class DoAssetDetailXComponent implements OnInit {
 
   GenerataAppAssetAttr(isRefresh: boolean) {
     let GenObj =
-    {
-      AppAssetId: this.AppAssetId,
-      AssetTypeCode: this.AppAssetTypeCode,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-      IsRefresh: isRefresh
-    };
+      {
+        AppAssetId: this.AppAssetId,
+        AssetTypeCode: this.AppAssetTypeCode,
+        AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
+        IsRefresh: isRefresh
+      };
     this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
       (response) => {
         this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
@@ -401,7 +441,7 @@ export class DoAssetDetailXComponent implements OnInit {
 
     return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
   }
-  
+
   private setFbGroupAssetAttribute(appAssetAttrObj: AppAssetAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>) {
     let tempFB = this.fb.group({
       No: [i],
@@ -437,6 +477,37 @@ export class DoAssetDetailXComponent implements OnInit {
         this.AppObj = response;
       }
     );
+  }
+
+  async GetAppCustData() {
+    await this.http.post(URLConstant.GetAppCustByAppId, {Id : this.AppId}).toPromise().then(
+      (response) => {
+        this.AppCustObj = response;
+        this.CustType = response["MrCustTypeCode"];
+      }
+    );
+  }
+
+  async GetListAddr() {
+    let reqById: GenericObj = new GenericObj();
+    reqById.Id = this.AppId;
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, reqById).toPromise().then(
+      (response) => {
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
+        this.AddrLegalObj = this.AppCustAddrObj.filter(
+          emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
+      }
+    );
+  }
+  async GetAllAssetData() {
+    let reqById: GenericObj = new GenericObj();
+    reqById.Id = this.AppId;
+    await this.http.post(URLConstant.GetAllAssetDataByAppId, reqById).toPromise().then(
+      async (response) => {
+        this.AppCollateralRegistrationObj = response["ResponseAppCollateralRegistrationObj"];
+        this.AppCollateralRegistrationObj.AppCollateralId = response["ResponseAppCollateralObj"].AppCollateralId;
+      }
+    )
   }
 
   ChangeIsReceived(idx: number){
