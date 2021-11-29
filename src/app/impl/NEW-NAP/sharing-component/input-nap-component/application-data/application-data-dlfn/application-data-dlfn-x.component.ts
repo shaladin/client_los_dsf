@@ -203,6 +203,8 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     } else {
       this.isShowAppCustBankAcc = false;
     }
+    this.checkIsTopDaysNull();
+
   }
 
 
@@ -210,6 +212,18 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+  }
+
+  checkIsTopDaysNull() {
+    console.log(this.SalesAppInfoForm.controls.TopDays.value)
+    if(this.SalesAppInfoForm.controls.TopDays.value == 0){
+      this.SalesAppInfoForm.controls.IntrstRatePrcnt.disable();
+      this.SalesAppInfoForm.patchValue({
+        IntrstRatePrcnt: 0
+      });
+    }else{
+      this.SalesAppInfoForm.controls.IntrstRatePrcnt.enable();
     }
   }
 
