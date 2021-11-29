@@ -96,7 +96,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.initLookupObj();
+    await this.initLookupObj();
     
     this.bindAllRefMasterObj();
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE }).subscribe(
@@ -251,12 +251,12 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     }
   }
 
-  initLookupObj(){
+  async initLookupObj(){
     this.dropdownListObj.apiUrl = URLConstant.GetListKvpActiveRefOfficeForPaging;
     this.dropdownListObj.requestObj = {};
     this.dropdownListObj.isSelectOutput = true;
 
-    this.http.post(URLConstant.GetListKvpActiveRefOfficeForPaging, {}).subscribe(
+    await this.http.post(URLConstant.GetListKvpActiveRefOfficeForPaging, {}).toPromise().then(
       (response) => {
         this.returnRefOffices = response[CommonConstant.ReturnObj];
         this.MOUMainInfoForm.patchValue(
@@ -264,25 +264,33 @@ export class MouCustomerRequestDetailComponent implements OnInit {
             OriOfficeCode: this.returnRefOffices[0].Key
           }
         )
+
+        if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE && this.pageType == "add") {
+          this.MOUMainInfoForm.patchValue({
+            CrtOfficeCode: this.user.OfficeCode,
+            CrtOfficeName: this.user.OfficeName,
+          });
+        }
+        else if(this.user.MrOfficeTypeCode == CommonConstant.HeadOffice && this.pageType == "add"){
+          this.MOUMainInfoForm.patchValue({
+            OriOfficeCode: this.user.OfficeCode,
+            OriOfficeName: this.user.OfficeName,
+            CrtOfficeCode: this.user.OfficeCode,
+            CrtOfficeName: this.user.OfficeName,
+          });
+        }
+        else {
+          this.MOUMainInfoForm.controls.OriOfficeCode.disable();
+          this.MOUMainInfoForm.patchValue({
+            OriOfficeCode: this.user.OfficeCode,
+            OriOfficeName: this.user.OfficeName,
+            CrtOfficeCode: this.user.OfficeCode,
+            CrtOfficeName: this.user.OfficeName,
+          });
+        }
+
       }
     );
-
-    if ((this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice)&& this.pageType == "add") {
-      this.MOUMainInfoForm.patchValue({
-        CrtOfficeCode: this.user.OfficeCode,
-        CrtOfficeName: this.user.OfficeName,
-      });
-    }
-    else {
-      this.MOUMainInfoForm.controls.OriOfficeCode.disable();
-      this.MOUMainInfoForm.patchValue({
-        OriOfficeCode: this.user.OfficeCode,
-        OriOfficeName: this.user.OfficeName,
-        CrtOfficeCode: this.user.OfficeCode,
-        CrtOfficeName: this.user.OfficeName,
-      });
-    }
-
   }
 
   OpenView(key: string) {
