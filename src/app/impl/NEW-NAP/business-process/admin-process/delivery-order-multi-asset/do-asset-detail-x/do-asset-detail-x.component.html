@@ -32,7 +32,7 @@
                 <div class="form-group row">
                   <label class="col-md-4" translate  [ngClass]="{'adins-required-label': isUsed}" >BPKB City Issuer</label>
                   <div class="col-md-8">
-                    <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj" 
+                    <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
                       [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='DOAssetDetail'
                       (lookup)="SetBpkbCity($event)" *ngIf="InputLookupCityIssuerObj.isReady">
                     </lib-uclookupgeneric>
@@ -132,13 +132,22 @@
             </div>
           </div>
         </div>
+        <app-delivery-order-asset-owner *ngIf="isOwnerReady" [CustType]="CustType" [AppId]="AppId" [AppCustObj]="AppCustObj"
+                                        [AppCustAddrObj]="AppCustAddrObj" [AppCollateralRegistrationObj]="AppCollateralRegistrationObj"
+                                        [parentForm]="DOAssetDetail" [identifier]="'AssetOwner'" [enjiForm]="enjiForm">
+        </app-delivery-order-asset-owner>
+
+        <app-delivery-order-asset-location *ngIf="isOwnerReady" [AppCustAddrObj]="AppCustAddrObj"
+                                           [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" [parentForm]="DOAssetDetail"
+                                           [identifier]="'AssetLocation'" [enjiForm]="enjiForm">
+        </app-delivery-order-asset-location>
         <lib-ucSubsection [id]="'MainDocLetterId'" [title]="'MAIN DOCUMENT LETTER'" [panel]="'MainDocLetterSection'"></lib-ucSubsection>
         <div id="MainDocLetterSection" class="form-body">
           <div class="col-md-12">
             <div class="form-group row">
               <label class="col-md-2 adInsLabel adins-required-label" for="TempRegisLettNo" translate>Temporary Registration Letter No</label>
               <div class="col-md-4">
-                <input type="text" class="form-control adInsInput" formControlName="TempRegisLettNo" 
+                <input type="text" class="form-control adInsInput" formControlName="TempRegisLettNo"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettNo.invalid }" />
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.TempRegisLettNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
@@ -220,7 +229,7 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-warning btn-raised" (click)="activeModalAsset.dismiss('0')">
       <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
-    </button> 
+    </button>
     <button type="submit" class="btn btn-raised btn-primary">
       <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
     </button>
