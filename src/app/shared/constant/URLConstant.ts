@@ -834,6 +834,7 @@ export class URLConstant {
   public static DeleteDeliveryOrderMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/DeleteDeliveryOrderMultiAsset";
   public static GetAppAssetForDOMultiAsset = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetForDOMultiAsset";
   public static EditAppAssetDOMultiAsset = environment.losUrl + "/v1" + "/AppAsset/EditAppAssetDOMultiAsset";
+  public static EditAppAssetDOMultiAssetV2 = environment.losUrl + "/v2" + "/AppAsset/EditAppAssetDOMultiAsset";
   public static EditDeliveryOrderMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/EditDeliveryOrderMultiAsset";
   public static GetDeliveryOrderHByDeliveryOrderHId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderHByDeliveryOrderHId";
   public static GetDeliveryOrderDataForOneAssetByAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderDataForOneAssetByAgrmntId";

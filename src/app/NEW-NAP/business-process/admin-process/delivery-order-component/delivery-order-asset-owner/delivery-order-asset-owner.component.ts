@@ -90,7 +90,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
       OwnerCity: this.AppCollateralRegistrationObj.OwnerCity,
       OwnerZipcode: this.AppCollateralRegistrationObj.OwnerZipcode,
       OwnerMobilePhnNo: this.AppCollateralRegistrationObj.OwnerMobilePhnNo,
-      SelfOwner: (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
+      SelfOwner: (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer),
       OwnerProfessionCode: this.AppCollateralRegistrationObj.OwnerProfessionCode
     });
     this.inputFieldOwnerAddrObj = new InputFieldObj();
@@ -107,7 +107,9 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
     this.inputAddressObjForOwner.default = this.ownerAddrObj;
     this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
     await this.GetOwnerProfessionByCode();
-    this.disableAssetDataForm();
+    if(this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer){
+      this.disableAssetDataForm();
+    }
   }
 
   async GetOwnerProfessionByCode() {
