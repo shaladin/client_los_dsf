@@ -53,6 +53,8 @@ import { AppViewInsuranceDetailComponent } from "./app-insurance/app-insurance-d
 import { ViewSrvyTaskComponent } from "./view-srvy-task/view-srvy-task.component";
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewDeviationComponent } from "./view-deviation/view-deviation.component";
+
 
 @NgModule({
     imports: [
@@ -112,7 +114,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         AppCustDataCompanyOplComponent,
         AppViewInsuranceDetailComponent,
         ViewSrvyTaskComponent,
-        ViewCreditProcessFlowComponent
+        ViewCreditProcessFlowComponent,
+        ViewDeviationComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

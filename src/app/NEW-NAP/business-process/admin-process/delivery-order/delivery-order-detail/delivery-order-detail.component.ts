@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormArray, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -36,6 +36,9 @@ import { AppAssetAttrCustomObj } from 'app/shared/model/app-asset/app-asset-attr
 import { ReqAppAssetAttrObj } from 'app/shared/model/app-asset-attr-obj.model';
 import { ReqAppCollateralAttrObj } from 'app/shared/model/app-collateral-attr-obj.model';
 import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -93,6 +96,12 @@ export class DeliveryOrderDetailComponent implements OnInit {
   ListAttrAnswer = [];
   isDiffWithRefAttr: boolean;
   isUsed : boolean = false;
+  CustType: string;
+  AppCustObj: any;
+  AppCollateralRegistrationObj: any;
+  AppCustAddrObj: Array<AppCustAddrObj> = new Array();
+  AddrLegalObj: Array<AppCustAddrObj> = new Array();
+  isOwnerReady: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DO_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
@@ -168,6 +177,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
         await this.http.post(URLConstant.GetAppCustByAppId, {Id : this.appAssetObj.AppId}).toPromise().then(
           (response) => {
+            this.AppCustObj = response;
+            this.CustType = response["MrCustTypeCode"];
             var refMasterTypeObj = {
               RefMasterTypeCode: response["MrCustTypeCode"] == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
             }
@@ -239,10 +250,14 @@ export class DeliveryOrderDetailComponent implements OnInit {
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
-      });
+      }
+    );
 
     await this.InitDms();
     await this.GetGS();
+    await this.GetListAddr();
+    await this.GetAllAssetData();
+    this.isOwnerReady = true;
   }
 
   async InitDms() {
@@ -309,7 +324,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.setAssetDeliveryOrderData();
     this.setAgrmntTcData(businessDt);
         
-    let submitDeliveryOrderUrl = environment.isCore? URLConstant.SubmitDeliveryOrderDataV2 : URLConstant.SubmitDeliveryOrderData;
+    let submitDeliveryOrderUrl = environment.isCore? URLConstant.SubmitDeliveryOrderDataV2_1 : URLConstant.SubmitDeliveryOrderData;
     this.http.post(submitDeliveryOrderUrl, this.deliveryOrderObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
@@ -371,6 +386,30 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.DeliveryOrderHObj.DeliveryAddr = this.DeliveryOrderForm.controls.DeliveryAddr.value;
     this.deliveryOrderObj.DeliveryOrderHObj.MrCustRelationshipCode = this.DeliveryOrderForm.controls.MrCustRelationshipCode.value;
     this.deliveryOrderObj.DeliveryOrderHObj.AgrmntId = this.AgrmntId;
+
+    this.deliveryOrderObj.AppCollateralRegistrationObj = new AppCollateralRegistrationObj();
+    this.deliveryOrderObj.AppCollateralRegistrationObj.AppCollateralId = this.AppCollateralRegistrationObj.AppCollateralId;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerName = this.DeliveryOrderForm.controls.AssetOwner["controls"].OwnerName.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.MrIdTypeCode = this.DeliveryOrderForm.controls.AssetOwner["controls"].MrIdTypeCode.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerIdNo = this.DeliveryOrderForm.controls.AssetOwner["controls"].OwnerIdNo.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerAddr = this.DeliveryOrderForm.controls.ownerData["controls"].Addr.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.DeliveryOrderForm.controls.ownerData["controls"].AreaCode1.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerAreaCode2 = this.DeliveryOrderForm.controls.ownerData["controls"].AreaCode2.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerAreaCode3 = this.DeliveryOrderForm.controls.ownerData["controls"].AreaCode3.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerAreaCode4 = this.DeliveryOrderForm.controls.ownerData["controls"].AreaCode4.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerCity = this.DeliveryOrderForm.controls.ownerData["controls"].City.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerZipcode = this.DeliveryOrderForm.controls.ownerDataZipcode.value['value'];
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.DeliveryOrderForm.controls.AssetOwner["controls"].OwnerMobilePhnNo.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.DeliveryOrderForm.controls.AssetOwner["controls"].MrOwnerRelationshipCode.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.LocationAddr = this.DeliveryOrderForm.controls.locationData["controls"].Addr.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.DeliveryOrderForm.controls.locationData["controls"].AreaCode1.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.DeliveryOrderForm.controls.locationData["controls"].AreaCode2.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.DeliveryOrderForm.controls.locationData["controls"].AreaCode3.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.DeliveryOrderForm.controls.locationData["controls"].AreaCode4.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.LocationCity = this.DeliveryOrderForm.controls.locationData["controls"].City.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.LocationZipcode = this.DeliveryOrderForm.controls.locationDataZipcode.value['value'];
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.DeliveryOrderForm.controls.AssetOwner["controls"].OwnerName.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.RowVersion = this.AppCollateralRegistrationObj.RowVersion;
 
     this.deliveryOrderObj.AppCollateralDocObj = [...this.DeliveryOrderForm.value.DOAssetDocList];
 
@@ -526,6 +565,28 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.DeliveryOrderForm.controls.DOAssetDocList["controls"][idx]["controls"].DocNo.setValue("");
     this.DeliveryOrderForm.controls.DOAssetDocList["controls"][idx]["controls"].ExpiredDt.setValue("");
     this.DeliveryOrderForm.controls.DOAssetDocList["controls"][idx]["controls"].DocNotes.setValue("");
+  }
+
+  async GetListAddr() {
+    let reqById: GenericObj = new GenericObj();
+    reqById.Id = this.AppId;
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, reqById).toPromise().then(
+      (response) => {
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
+        this.AddrLegalObj = this.AppCustAddrObj.filter(
+          emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
+      }
+    );
+  }
+  async GetAllAssetData() {
+    let reqById: GenericObj = new GenericObj();
+    reqById.Id = this.AppId;
+    await this.http.post(URLConstant.GetAllAssetDataByAppId, reqById).toPromise().then(
+      async (response) => {
+        this.AppCollateralRegistrationObj = response["ResponseAppCollateralRegistrationObj"];
+        this.AppCollateralRegistrationObj.AppCollateralId = response["ResponseAppCollateralObj"].AppCollateralId;
+      }
+    )
   }
 
   //For Fraud Checking

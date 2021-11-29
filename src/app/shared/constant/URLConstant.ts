@@ -825,6 +825,7 @@ export class URLConstant {
   //DELIVERY ORDER
   public static SubmitDeliveryOrderData = environment.losUrl + "/v1" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static SubmitDeliveryOrderDataV2 = environment.losUrl + "/v2" + "/DeliveryOrder/SubmitDeliveryOrderData";
+  public static SubmitDeliveryOrderDataV2_1 = environment.losUrl + "/v2.1" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
   public static GetDeliveryOrderHByAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderHByAgrmntId";
   public static GetAssetListForDOMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAsset";
@@ -984,6 +985,7 @@ export class URLConstant {
   public static GetAppAssetListForInsuranceByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetListForInsuranceByAppId"
   public static GetAppAssetListForInsuranceByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetListForInsuranceByAgrmntId"
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataForPOByAsset";
+  public static GetAllAssetDataForPOByAssetV2 = environment.losUrl + "/v2" + "/AppAsset/GetAllAssetDataForPOByAsset";
   public static GetAllAssetDataForPOMultiAsset = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataForPOMultiAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAppId";
