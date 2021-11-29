@@ -58,7 +58,7 @@ export class PreGoLiveXComponent implements OnInit {
 
 
   MainInfoForm = this.fb.group({
-    AgrmntCreatedDt: ['', Validators.required],
+    AgrmntCreatedDt: [''], //DSF INTERNAL-0229 Udin : Lepas validasi AgrmntDt mandatory
     EffectiveDt: ['', Validators.required],
     Notes: ['', Validators.required],
     ApprovalStatus: [''],
