@@ -21,6 +21,7 @@ export class TaxTrxHObj {
     TaxHId : number;
     TaxTrxHId : number;
     PenaltyAmt : number;
+    TotalTrxAmtAfterTaxAmt : number;
     TaxTrxD : Array<TaxTrxDObj>;
     
     constructor() {
