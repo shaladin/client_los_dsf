@@ -47,6 +47,7 @@ import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-do
 import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 
 @Component({
   selector: 'app-asset-data',
@@ -90,6 +91,7 @@ export class AssetDataComponent implements OnInit {
   IsReady: boolean = false;
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
+  UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -1978,15 +1980,25 @@ export class AssetDataComponent implements OnInit {
     obj.RefProdCompntCode = CommonConstant.RefProdCompAssetCond;
     obj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
 
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response: any) => {
         this.assetCondObj = response;
+        
         this.AssetDataForm.patchValue({
           MrAssetConditionCode: this.assetCondObj.CompntValue
         });
         this.setValidatorBpkb();
       }
     );
+
+    
+
+    this.UcDDLAssetCond = new UcDropdownListObj;
+    this.UcDDLAssetCond.ddlType = "one";
+    this.UcDDLAssetCond.isObject = true;
+    this.UcDDLAssetCond.isSelectOutput = true;
+    this.UcDDLAssetCond.customKey = "Key";
+    this.UcDDLAssetCond.customValue = "Value";
   }
 
   GetProfession(event) {
@@ -2142,7 +2154,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   AssetConditionChanged(mode: string = "add") {
-    if (this.AssetConditionObj != null) {
+    if (this.AssetConditionObj != null && this.AssetDataForm.controls.MrAssetConditionCode.value != "") {
       let filter: any;
       filter = this.AssetConditionObj.filter(
         cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value);
