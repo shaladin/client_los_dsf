@@ -10,7 +10,7 @@
         <label class="adInsLabel"> {{AppAssetObj.FullAssetName}} </label>
       </div>
 
-      <label class="col-md-2" [ngClass]="'adInsLabel'" *ngIf="SerialNoLabelList[0]" translate>{{SerialNoLabelList[0]}}</label>
+      <label class="col-md-2" [ngClass]="(SerialNoLabelMandatory[0] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"  *ngIf="SerialNoLabelList[0]" translate>{{SerialNoLabelList[0]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo1" *ngIf="SerialNoLabelList[0]">
           <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -24,7 +24,7 @@
         <label class="adInsLabel"> {{AppAssetObj.SupplName}} </label>
       </div>
 
-      <label class="col-md-2" [ngClass]="'adInsLabel'" *ngIf="SerialNoLabelList[1]" translate>{{SerialNoLabelList[1]}}</label>
+      <label class="col-md-2" [ngClass]="(SerialNoLabelMandatory[1] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'" *ngIf="SerialNoLabelList[1]" translate>{{SerialNoLabelList[1]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo2" *ngIf="SerialNoLabelList[1]">
           <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -39,7 +39,7 @@
           <lib-uc-show-errors [control]= "EditAppAssetForm.controls.ManufacturingYear" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
 
-      <label class="col-md-2 " [ngClass]="'adInsLabel'" *ngIf="SerialNoLabelList[2]" translate>{{SerialNoLabelList[2]}}</label>
+      <label class="col-md-2 " [ngClass]="(SerialNoLabelMandatory[2] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'" *ngIf="SerialNoLabelList[2]" translate>{{SerialNoLabelList[2]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo3" *ngIf="SerialNoLabelList[2]">
           <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -54,7 +54,7 @@
           <lib-uc-show-errors [control]= "EditAppAssetForm.controls.AssetColor" [submit]="enjiForm.submitted"></lib-uc-show-errors>
       </div>
 
-      <label class="col-md-2 " [ngClass]="'adInsLabel'" *ngIf="SerialNoLabelList[3]" translate>{{SerialNoLabelList[3]}}</label>
+      <label class="col-md-2 " [ngClass]="(SerialNoLabelMandatory[3] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'" *ngIf="SerialNoLabelList[3]" translate>{{SerialNoLabelList[3]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo4" *ngIf="SerialNoLabelList[3]">
           <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo4" [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -66,7 +66,7 @@
       <label class="col-md-2  adInsLabel" translate></label>
       <div class="col-md-4"></div>
 
-      <label class="col-md-2 " [ngClass]="'adInsLabel'"  *ngIf="SerialNoLabelList[4]" translate>{{SerialNoLabelList[4]}}</label>
+      <label class="col-md-2 " [ngClass]="(SerialNoLabelMandatory[4] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"  *ngIf="SerialNoLabelList[4]" translate>{{SerialNoLabelList[4]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo5" *ngIf="SerialNoLabelList[4]">
           <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
