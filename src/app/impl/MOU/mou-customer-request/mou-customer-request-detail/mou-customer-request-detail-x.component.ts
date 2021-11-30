@@ -3,26 +3,28 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location, DatePipe } from '@angular/common';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { CustObj } from 'app/shared/model/CustObj.Model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { environment } from 'environments/environment';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
+import { CustObj } from 'app/shared/model/cust-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { ReqMouCustObjX } from 'app/impl/shared/model/mou-cust-obj-x.model';
 
 @Component({
   selector: 'app-mou-customer-request-detail-x',
@@ -44,6 +46,9 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
   CustNoObj: GenericObj = new GenericObj();
   plafondTypeObj: Array<RefMasterObj>;
   datePipe = new DatePipe("en-US");
+  dropdownListObj: UcDropdownListObj = new UcDropdownListObj();
+  user: CurrentUserContext;
+  returnRefOffices: Array<KeyValueObj> = new Array<KeyValueObj>();
   MrMouCustFctrTypeList: Array<KeyValueObj> = [];
 
   MOUMainInfoForm = this.fb.group({
@@ -59,7 +64,12 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     MrMouTypeCode: ['', [Validators.required]],
     RowVersion: [''],
     MrRevolvingTypeCode: [''],
-    PlafondType: ['']
+    PlafondType:[''],
+    OriOfficeCode: ['', [Validators.required]],
+    OriOfficeName: [''],
+    CrtOfficeCode: [''],
+    CrtOfficeName: [''],
+    IsFreeze: [''],
   });
 
   constructor(
@@ -90,7 +100,10 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    await this.initLookupObj();
+    
     this.bindAllRefMasterObj();
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE }).subscribe(
       (response) => {
@@ -208,44 +221,102 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
   }
 
   Save() {
-    if (this.MOUMainInfoForm.controls.StartDt.value > this.datePipe.transform(this.businessDt, "yyyy-MM-dd")) {
-      this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
-      return
-    }
-    if (this.MOUMainInfoForm.controls.EndDt.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd")) {
-      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
-      return;
-    }
-    var mouCustFormData = this.MOUMainInfoForm.value;
-    if (!this.MOUMainInfoForm.controls.IsRevolving.value) {
-      mouCustFormData["MrRevolvingTypeCode"] = null;
-    }
+    if( this.MOUMainInfoForm.controls.StartDt.value > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+      this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y') );
+     return
+   }
+   if(this.MOUMainInfoForm.controls.EndDt.value< this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+     this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y')  );
+    return;
+   }
 
+    let reqMouCustObj: ReqMouCustObjX = new ReqMouCustObjX();
+    reqMouCustObj.OriOfficeCode = this.MOUMainInfoForm.getRawValue().OriOfficeCode;
+    reqMouCustObj.OriOfficeName = this.returnRefOffices.filter(x => x.Key == this.MOUMainInfoForm.getRawValue().OriOfficeCode).map(x => x.Value).toString();
+    reqMouCustObj.CrtOfficeCode = this.MOUMainInfoForm.getRawValue().CrtOfficeCode;
+    reqMouCustObj.CrtOfficeName = this.MOUMainInfoForm.getRawValue().CrtOfficeName;
+    reqMouCustObj.StartDt = this.MOUMainInfoForm.getRawValue().StartDt;
+    reqMouCustObj.EndDt = this.MOUMainInfoForm.getRawValue().EndDt;
+    reqMouCustObj.RefNo = this.MOUMainInfoForm.getRawValue().RefNo;
+    reqMouCustObj.IsRevolving = this.MOUMainInfoForm.getRawValue().IsRevolving;
+    reqMouCustObj.PlafondAmt = this.MOUMainInfoForm.getRawValue().PlafondAmt;
+    reqMouCustObj.MouStat = this.MOUMainInfoForm.getRawValue().MouStat;
+    reqMouCustObj.MrMouTypeCode = this.MOUMainInfoForm.getRawValue().MrMouTypeCode;
+    reqMouCustObj.PlafondType = this.MOUMainInfoForm.getRawValue().PlafondType;
+    reqMouCustObj.RowVersion = this.MOUMainInfoForm.getRawValue().RowVersion;
+    reqMouCustObj.MrMouCustFctrType = this.MOUMainInfoForm.getRawValue().MrMouCustFctrType;
+    
+    if (!this.MOUMainInfoForm.controls.IsRevolving.value) {
+      reqMouCustObj.MrRevolvingTypeCode = null;
+    }
+    else{
+      reqMouCustObj.MrRevolvingTypeCode = this.MOUMainInfoForm.getRawValue().MrRevolvingTypeCode;
+    }
     if (this.pageType == "add") {
-      this.httpClient.post(URLConstantX.AddMouCustX, mouCustFormData).subscribe(
+      let AddMouCustUrl = environment.isCore ? URLConstantX.AddMouCustV2X : URLConstantX.AddMouCustX;
+      this.httpClient.post(AddMouCustUrl, reqMouCustObj).subscribe(
         (response: GenericObj) => {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response.Id;
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DETAIL], { mouCustId: mouCustId, MOUType: this.mouType });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustId, MOUType: this.mouType });
         });
-    } else if (this.pageType == "edit" || this.pageType == "return") {
-      this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
+    }
+    else if (this.pageType == "edit" || this.pageType == "return") {
+      reqMouCustObj.MouCustId = this.MOUMainInfoForm.getRawValue().MouCustId;
+      reqMouCustObj.MouCustNo = this.MOUMainInfoForm.getRawValue().MouCustNo;
+      reqMouCustObj.IsFreeze = this.MOUMainInfoForm.getRawValue().IsFreeze;
+      this.httpClient.post(URLConstant.EditMouCust, reqMouCustObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          if (this.pageType == "return") {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DETAIL], {
-              mouCustId: mouCustFormData.MouCustId,
-              MOUType: this.mouType,
-              mode: "return"
-            });
-          } else {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DETAIL], {
-              mouCustId: mouCustFormData.MouCustId,
-              MOUType: this.mouType
-            });
+          if(this.pageType == "return"){
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: this.MOUMainInfoForm.getRawValue().MouCustId, MOUType: this.mouType, mode : "return" });
+          }
+          else{
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: this.MOUMainInfoForm.getRawValue().MouCustId, MOUType: this.mouType });
           }
         });
     }
+  }
+
+  async initLookupObj(){
+    this.dropdownListObj.apiUrl = URLConstant.GetListKvpActiveRefOfficeForPaging;
+    this.dropdownListObj.requestObj = {};
+    this.dropdownListObj.isSelectOutput = true;
+
+    await this.http.post(URLConstant.GetListKvpActiveRefOfficeForPaging, {}).toPromise().then(
+      (response) => {
+        this.returnRefOffices = response[CommonConstant.ReturnObj];
+        this.MOUMainInfoForm.patchValue(
+          {
+            OriOfficeCode: this.returnRefOffices[0].Key
+          }
+        )
+
+        if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE && this.pageType == "add") {
+          this.MOUMainInfoForm.patchValue({
+            CrtOfficeCode: this.user.OfficeCode,
+            CrtOfficeName: this.user.OfficeName,
+          });
+        }
+        else if(this.user.MrOfficeTypeCode == CommonConstant.HeadOffice && this.pageType == "add"){
+          this.MOUMainInfoForm.patchValue({
+            OriOfficeCode: this.user.OfficeCode,
+            OriOfficeName: this.user.OfficeName,
+            CrtOfficeCode: this.user.OfficeCode,
+            CrtOfficeName: this.user.OfficeName,
+          });
+        }
+        else {
+          this.MOUMainInfoForm.controls.OriOfficeCode.disable();
+          this.MOUMainInfoForm.patchValue({
+            OriOfficeCode: this.user.OfficeCode,
+            OriOfficeName: this.user.OfficeName,
+            CrtOfficeCode: this.user.OfficeCode,
+            CrtOfficeName: this.user.OfficeName,
+          });
+        }
+      }
+    );
   }
 
   OpenView(key: string) {
@@ -256,12 +327,12 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     }
   }
 
-  bindAllRefMasterObj() {
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodePlafonType }).subscribe(
+  bindAllRefMasterObj(){
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodePlafonType}).subscribe(
       (response) => {
         this.plafondTypeObj = response["RefMasterObjs"];
 
-        if (this.plafondTypeObj.length > 0) {
+        if(this.plafondTypeObj.length > 0){
           var idxDefault = this.plafondTypeObj.findIndex(x => x.ReserveField2 == CommonConstant.DEFAULT);
           this.MOUMainInfoForm.patchValue({
             PlafondType: this.plafondTypeObj[idxDefault].MasterCode
@@ -271,15 +342,15 @@ export class MouCustomerRequestDetailXComponent implements OnInit {
     );
   }
 
-  checkStartDate(ev) {
-    if (this.datePipe.transform(ev.target.value, "yyyy-MM-dd") > this.datePipe.transform(this.businessDt, "yyyy-MM-dd")) {
-      this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+  checkStartDate(ev){
+    if( this.datePipe.transform(ev.target.value, "yyyy-MM-dd") > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+       this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
     }
   }
 
-  checkEndDate(ev) {
-    if (ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd")) {
-      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+  checkEndDate(ev){
+    if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+       this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
     }
   }
 

@@ -4,8 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/app-cust-company-legal-doc-obj.model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({

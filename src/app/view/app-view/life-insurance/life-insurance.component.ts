@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
+import { UcPagingObj } from "app/shared/model/uc-paging-obj.model";
 import { environment } from "environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
@@ -7,12 +7,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { ChangeMouCustConfirmCancelObj } from "app/shared/model/ChangeMouCustConfirmCancelObj.Model";
-import { CurrentUserContext } from "app/shared/model/CurrentUserContext.model";
+import { ChangeMouCustConfirmCancelObj } from "app/shared/model/change-mou-cust-confirm-cancel-obj.model";
+import { CurrentUserContext } from "app/shared/model/current-user-context.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { CookieService } from "ngx-cookie";
-import { RequestTaskModelObj } from "app/shared/model/Workflow/V2/RequestTaskModelObj.model";
-import { IntegrationObj } from "app/shared/model/library/IntegrationObj.model";
+import { RequestTaskModelObj } from "app/shared/model/workflow/v2/request-task-model-obj.model";
+import { IntegrationObj } from "app/shared/model/library/integration-obj.model";
 import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 
 @Component({
@@ -52,18 +52,6 @@ export class ChangeMouCancelComponent implements OnInit {
     if(environment.isCore) {
       this.inputPagingObj._url = "./assets/ucpaging/mou/V2/searchChangeMouCancelV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/V2/searchChangeMouCancelV2.json";
-      this.inputPagingObj.isJoinExAPI = true;
-      
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CHANGE_MOU;
-      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
-                                               UserAccess[CommonConstant.OFFICE_CODE],
-                                               UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
-      
-      this.IntegrationObj.baseUrl = URLConstant.GetAllWorkflowInstance;
-      this.IntegrationObj.requestObj = this.RequestTaskModel;
-      this.IntegrationObj.leftColumnToJoin = "TrxNo";
-      this.IntegrationObj.rightColumnToJoin = "BusinessKey";
-      this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
   }
 

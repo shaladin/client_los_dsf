@@ -4,22 +4,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { forkJoin } from 'rxjs';
-import { AppLoanPurposeObj } from 'app/shared/model/AppLoanPurpose.Model';
-import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
-import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
-import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
 import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
-import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppLoanPurposeObj } from 'app/shared/model/app-loan-purpose.model';
+import { VendorBankAccObj } from 'app/shared/model/vendor-bank-acc.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { PurchaseOrderHObj } from 'app/shared/model/purchase-order-h-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { ResGetAllAssetDataForPOByAsset } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { PurchaseOrderDObj } from 'app/shared/model/purchase-order-d-obj.model';
 
 @Component({
   selector: 'app-po-entry-x',
@@ -93,7 +92,7 @@ export class PoEntryXComponent implements OnInit {
 
     if (this.IsDisburseToCust) {
       
-      await this.httpClient.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).subscribe(
+      await this.httpClient.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
         (response : AppCustObj) => {
           this.AppCust = response;
           if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {

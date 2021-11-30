@@ -3,37 +3,36 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
-import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
-import { RuleCommissionObj } from 'app/shared/model/RuleCommission/RuleCommissionObj.Model';
-import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { FormCommissionGenerateXComponent } from './form-commission-generate-x/form-commission-generate-x.component';
-import { ResponseTaxDetailObj } from 'app/shared/model/Tax/ResponseTaxDetail.Model';
-import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
-import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCommissionDObjX } from 'app/impl/shared/model/AppCommissionDObjX.Model';
-import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
-import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
-import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
-import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { String } from 'typescript-string-operations';
-import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/AppCommissionRsvFund/ReqReturnHandlingCommRsvFundObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { environment } from 'environments/environment';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AppCommissionHObjX } from 'app/impl/shared/model/AppCommissionHObjX.Model';
 import { AppCommSupplEmpObjX } from 'app/impl/shared/model/AppCommSupplEmpObjX.model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
+import { ResultRefundObj } from 'app/shared/model/app-fin-data/result-refund.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppReservedFundObj } from 'app/shared/model/app-reserved-fund-obj.model';
+import { AppAssetDetailObj } from 'app/shared/model/app-asset/app-asset-detail-obj.model';
+import { NapAppReferantorModel } from 'app/shared/model/nap-app-referantor.model';
+import { ReqGetAppCommissionRuleObj } from 'app/shared/model/app-commission-rsv-fund/req-get-app-commission-rule-obj.model';
+import { RuleCommissionObj } from 'app/shared/model/rule-commission/rule-commission-obj.model';
+import { AppCommissionHObj } from 'app/shared/model/app-commission-h-obj.model';
+import { ReqTaxObj } from 'app/shared/model/app-commission-rsv-fund/req-tax-obj.model';
+import { ResponseTaxDetailObj } from 'app/shared/model/tax/response-tax-detail.model';
+import { ResponseTaxObj } from 'app/shared/model/tax/response-tax.model';
+import { TaxTrxDObj } from 'app/shared/model/tax/tax-trx-d.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/app-commission-rsv-fund/req-return-handling-comm-rsv-fund-obj.model';
 
 @Component({
   selector: 'app-commission-v2-x',
@@ -542,6 +541,7 @@ export class CommissionV2XComponent implements OnInit {
       let totalExpenseAmount = 0;
       let totalPenaltyAmt = 0;
       let totalDisburseAmount = 0;
+      let HoldingTaxWithPenalty = 0;
       let tempRespTaxObj: ResponseTaxObj = TaxDetailData.ResponseTaxObjs[idxStart];
       for (var j = 0; j < tempRespTaxObj.ReturnObject.length; j++)
       {
@@ -556,7 +556,8 @@ export class CommissionV2XComponent implements OnInit {
           totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
           if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.TaxTypeCode) {
             taxAmt += TaxTrxDObjData[k].TaxAmt;
-            totalTaxAmount += TaxTrxDObjData[k].TaxAmt;
+            totalTaxAmount +=  TaxTrxDObjData[k].TaxAmt;
+            HoldingTaxWithPenalty +=  (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
           } else if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.VATTypeCode) {
             vatAmt = TaxTrxDObjData[k].TaxAmt;
             totalVATAmount += TaxTrxDObjData[k].TaxAmt;
@@ -594,6 +595,7 @@ export class CommissionV2XComponent implements OnInit {
         TotalExpenseAmount: totalExpenseAmount,
         TotalPenaltyAmount: totalPenaltyAmt,
         TotalDisburseAmount: totalDisburseAmount,
+        HoldingTaxWithPenalty: HoldingTaxWithPenalty
       });
       this.Summary.TotalCommisionAmount += this.CommissionForm.value[identifier][i].TotalCommisionAmount;
       this.Summary.TotalTaxAmmount += totalTaxAmount;

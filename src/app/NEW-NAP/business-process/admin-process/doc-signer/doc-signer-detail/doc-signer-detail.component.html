@@ -90,7 +90,7 @@
                                 <div class="form-body" id="ManagementShareholderSigner">
                                     <div class="form-group row">
                                         <label class="col-md-5 adInsLabel adins-required-label" translate>Management /
-                                            Shareholder</label>
+                                            Shareholder 1</label>
                                         <div class="col-md-5">
                                             <lib-uclookupgeneric
                                                 [lookupInput]="inputLookupAppCustCompanyShareHolder1Obj"
@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-5 adInsLabel" translate>Management / Shareholder Position</label>
+                                        <label class="col-md-5 adInsLabel" translate>Management / Shareholder Position 1</label>
                                         <div class="col-md-5">
                                             <input type="text" class="form-control adInsInput width-75-per"
                                                 formControlName="MrJobPositionMgmntShrholder1Name" readonly>
@@ -112,7 +112,56 @@
                                             </lib-uc-show-errors>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-5 adInsLabel" translate>Management /
+                                            Shareholder 2</label>
+                                        <div class="col-md-5">
+                                            <lib-uclookupgeneric
+                                                [lookupInput]="inputLookupAppCustCompanyShareHolder2Obj"
+                                                [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                                [identifier]="'lookupAppCustCompanyShareHolder2'"
+                                                (lookup)="getLookupAppCustCompanyShareHolder2($event)"
+                                                *ngIf="inputLookupAppCustCompanyShareHolder2Obj.isReady">
+                                            </lib-uclookupgeneric>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-5 adInsLabel" translate>Management / Shareholder Position 2</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control adInsInput width-75-per"
+                                                formControlName="MrJobPositionMgmntShrholder2Name" readonly>
+                                            <lib-uc-show-errors
+                                                [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder2Code"
+                                                [submit]="enjiForm.submitted">
+                                            </lib-uc-show-errors>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-5 adInsLabel" translate>Management /
+                                            Shareholder 3</label>
+                                        <div class="col-md-5">
+                                            <lib-uclookupgeneric
+                                                [lookupInput]="inputLookupAppCustCompanyShareHolder3Obj"
+                                                [parentForm]="DocSignerForm" [enjiForm]="enjiForm"
+                                                [identifier]="'lookupAppCustCompanyShareHolder3'"
+                                                (lookup)="getLookupAppCustCompanyShareHolder3($event)"
+                                                *ngIf="inputLookupAppCustCompanyShareHolder3Obj.isReady">
+                                            </lib-uclookupgeneric>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-5 adInsLabel" translate>Management / Shareholder Position 3</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control adInsInput width-75-per"
+                                                formControlName="MrJobPositionMgmntShrholder3Name" readonly>
+                                            <lib-uc-show-errors
+                                                [control]="DocSignerForm.controls.MrJobPositionMgmntShrholder3Code"
+                                                [submit]="enjiForm.submitted">
+                                            </lib-uc-show-errors>
+                                        </div>
+                                    </div>
                                 </div>
+                                
                         </div>
                         <div *ngIf="MrCustTypeCode == 'PERSONAL'">
                             <div [hidden]="isHidden">

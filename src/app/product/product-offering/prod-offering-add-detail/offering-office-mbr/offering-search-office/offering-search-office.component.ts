@@ -1,15 +1,13 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { FromValueObj, UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { ResGetProdOfferingBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
-import { ReqListProdOfferingBranchMbrObj, ReqProdOfferingBranchMbrDomainObj } from 'app/shared/model/Request/Product/ReqAddProdOfferingBranchMbrObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqListProdOfferingBranchMbrObj, ReqProdOfferingBranchMbrDomainObj } from 'app/shared/model/request/product/req-add-prod-offering-branch-mbr-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -40,47 +38,34 @@ export class OfferingSearchOfficeComponent implements OnInit {
   ngOnInit() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
-    this.TempPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     
     this.TempPagingObj.addCritInput = new Array();
     
     if(currentUserContext.OfficeCode != "HO"){
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'RO.PARENT_ID';
-    critObj.value = currentUserContext.OfficeId;
-    this.TempPagingObj.addCritInput.push(critObj);
+      var critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.propName = 'RO.PARENT_OFFICE_CODE';
+      critObj.value = currentUserContext.OfficeCode;
+      this.TempPagingObj.addCritInput.push(critObj);
 
-    critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionOr;
-    critObj.propName = 'RO.REF_OFFICE_ID';
-    critObj.value = currentUserContext.OfficeId;
-    this.TempPagingObj.addCritInput.push(critObj);
+      critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionOr;
+      critObj.propName = 'RO.OFFICE_CODE';
+      critObj.value = currentUserContext.OfficeCode;
+      this.TempPagingObj.addCritInput.push(critObj);
     }
 
-    this.GenericByIdObj.Id = this.ProdHId;
-    this.http.post<ResGetProdOfferingBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
-      response => {
-        for (let i = 0; i < response.ReturnObject.length; i++) {
-          this.ArrListCode.push(response.ReturnObject[i].OfficeCode);
-        }
-        let addCrit = new CriteriaObj();
-        addCrit.propName = "RO.OFFICE_CODE";
-        addCrit.restriction = AdInsConstant.RestrictionIn;
-        addCrit.listValue = this.ArrListCode;
-        this.TempPagingObj.addCritInput.push(addCrit);
+    let fromValueObj = new FromValueObj();
+    fromValueObj.property = 'ProdHId';
+    fromValueObj.value = this.ProdHId;
+    this.TempPagingObj.fromValue.push(fromValueObj);
+    
+    let fromValueObj2 = new FromValueObj();
+    fromValueObj2.property = 'ProdOfferingHId';
+    fromValueObj2.value = this.ProdOfferingHId;
+    this.TempPagingObj.fromValue.push(fromValueObj2);
 
-      }
-    );
-
-    if (this.ListOfficeMemberObjInput.length != 0) {
-      let addCrit = new CriteriaObj();
-      addCrit.propName = "RO.OFFICE_CODE";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.ListOfficeMemberObjInput;
-      this.TempPagingObj.addCritInput.push(addCrit);
-    }
     this.TempPagingObj.isReady = true;
   }
 

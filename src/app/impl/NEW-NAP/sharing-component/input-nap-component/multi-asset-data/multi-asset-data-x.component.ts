@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+ 
 @Component({
   selector: 'app-multi-asset-data-x',
   templateUrl: './multi-asset-data-x.component.html',
@@ -44,10 +45,11 @@ export class MultiAssetDataXComponent implements OnInit {
     this.outputTab.emit();
   }
 
+  readonly ModeAddColl = CommonConstant.ModeAddColl;
+  readonly ModeEditColl = CommonConstant.ModeEditColl;
   terimaCollateral(ev : any) {
     this.mode = ev.mode;
     //this.AppId =  ev.AppId;
     this.AppCollateralId = ev.AppCollateralId;
   }
-
 }

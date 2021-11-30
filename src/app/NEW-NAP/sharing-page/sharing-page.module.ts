@@ -14,7 +14,7 @@ import { NapFromSimpleLeadComponent } from './nap-from-simple-lead/nap-from-simp
 import { NapFromSimpleLeadDetailComponent } from './nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail.component';
 import { UclookupgenericComponent } from "@adins/uclookupgeneric";
 import { NapFromSimpleLeadDetailXComponent } from "app/impl/NEW-NAP/sharing-page/nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
   imports: [

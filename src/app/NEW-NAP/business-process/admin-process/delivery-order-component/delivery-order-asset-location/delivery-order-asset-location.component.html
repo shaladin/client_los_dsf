@@ -1,0 +1,36 @@
+<div [formGroup]="parentForm">
+  <div formGroupName="{{identifier}}">
+    <lib-ucSubsection [id]="'locationDataId'" [title]="'Asset Location'" [panel]="'locationData'">
+    </lib-ucSubsection>
+    <div id="locationData">
+      <div class="form-group row">
+        <label class="col-md-2" translate>Copy Address</label>
+        <div class="col-md-4">
+          <div class="input-group">
+            <select class="form-control" formControlName="LocationAddrType"
+              [(ngModel)]="copyFromAppCustAddrForLocation"
+              (change)="SetLocationAddrType($event.target.value)">
+              <option value="">-Select One-</option>
+              <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
+                {{item.MrCustAddrTypeCode}}
+              </option>
+            </select>
+            <div class="input-group-append">
+              <span class="input-group-btn">
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-12">
+          <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLoc" [enjiForm]="enjiForm"
+            [identifier]="'locationData'" [UCAddrForm]="parentForm"></lib-ucaddress>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

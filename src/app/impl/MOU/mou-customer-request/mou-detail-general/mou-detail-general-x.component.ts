@@ -2,18 +2,18 @@ import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angu
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { forkJoin } from 'rxjs';
-import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustAssetComponent } from 'app/MOU/mou-customer-request/mou-detail-general/mou-cust-asset/mou-cust-asset.component';
-import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
-import { MouCustAssetListObj } from 'app/shared/model/MouCustAssetListObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
+import { MouCustAssetListObj } from 'app/shared/model/mou-cust-asset-list-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { MouCustAssetObj } from 'app/shared/model/mou-cust-asset-obj.model';
 
 @Component({
   selector: 'app-mou-detail-general-x',

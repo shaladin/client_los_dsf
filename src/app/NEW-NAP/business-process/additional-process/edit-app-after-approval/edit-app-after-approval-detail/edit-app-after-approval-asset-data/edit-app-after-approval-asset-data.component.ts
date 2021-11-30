@@ -4,26 +4,27 @@ import { FormArray, FormBuilder, ValidatorFn, Validators } from '@angular/forms'
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
-import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
-import { ResProdOfferingDObj } from 'app/shared/model/Response/Product/ResGetProdOfferingObj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { AppAssetAttrCustomObj } from 'app/shared/model/app-asset/app-asset-attr-custom.model';
+import { AppAssetAttrObj } from 'app/shared/model/app-asset-attr-obj.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppInsObjObj } from 'app/shared/model/app-ins-obj-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/request/vendor/req-vendor.model';
+import { ResProdOfferingDObj } from 'app/shared/model/response/product/res-get-prod-offering-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-edit-app-after-approval-asset-data',
@@ -31,6 +32,7 @@ import { ResProdOfferingDObj } from 'app/shared/model/Response/Product/ResGetPro
   styleUrls: ['./edit-app-after-approval-asset-data.component.css']
 })
 export class EditAppAfterApprovalAssetDataComponent implements OnInit {
+  @Input() AgrmntCurrStep: string;
   @Input() AppAssetObj: AppAssetObj;
   @Input() ListAppAssetAttrObjs: Array<AppAssetAttrObj>;
   @Input() AppCollateralObj: AppCollateralObj;
@@ -95,6 +97,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   SerialNoLabelList:Array<string> = new Array();
   SerialNoLabelMandatory:Array<boolean> = new Array();
+  ListAgrStepToCheckMandatory: Array<string> = new Array();
+  IsCheckSerialMandatory: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -155,31 +159,44 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       SerialNo5: this.AppAssetObj.SerialNo5
     });
 
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAgrStepToCheckSerialMandatoryEaaa }).toPromise().then(
+      (response: GeneralSettingObj) => {
+        this.ListAgrStepToCheckMandatory = response["GsValue"].split(',')
+        if(this.ListAgrStepToCheckMandatory.includes(this.AgrmntCurrStep) == true)
+        {
+          this.IsCheckSerialMandatory = true;
+        }
+      });
+    
     if(this.EditAppAssetForm.controls.AssetColor.value != null && this.EditAppAssetForm.controls.AssetColor.value != "")
     {
       this.tempColor = true;
       this.EditAppAssetForm.controls.AssetColor.setValidators(Validators.required);
       this.EditAppAssetForm.controls.AssetColor.updateValueAndValidity();
     }
-    if(this.SerialNoLabelMandatory[0]){
-      this.EditAppAssetForm.controls.SerialNo1.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo1.updateValueAndValidity();
-    }
-    if(this.SerialNoLabelMandatory[1]){
-      this.EditAppAssetForm.controls.SerialNo2.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo2.updateValueAndValidity();
-    }
-    if(this.SerialNoLabelMandatory[2]){
-      this.EditAppAssetForm.controls.SerialNo3.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo3.updateValueAndValidity();
-    }
-    if(this.SerialNoLabelMandatory[3]){
-      this.EditAppAssetForm.controls.SerialNo4.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo4.updateValueAndValidity();
-    }
-    if(this.SerialNoLabelMandatory[4]){
-      this.EditAppAssetForm.controls.SerialNo5.setValidators(Validators.required);
-      this.EditAppAssetForm.controls.SerialNo5.updateValueAndValidity();
+
+    if(this.IsCheckSerialMandatory)
+    {
+      if(this.SerialNoLabelMandatory[0]){
+        this.EditAppAssetForm.controls.SerialNo1.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo1.updateValueAndValidity();
+      }
+      if(this.SerialNoLabelMandatory[1]){
+        this.EditAppAssetForm.controls.SerialNo2.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo2.updateValueAndValidity();
+      }
+      if(this.SerialNoLabelMandatory[2]){
+        this.EditAppAssetForm.controls.SerialNo3.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo3.updateValueAndValidity();
+      }
+      if(this.SerialNoLabelMandatory[3]){
+        this.EditAppAssetForm.controls.SerialNo4.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo4.updateValueAndValidity();
+      }
+      if(this.SerialNoLabelMandatory[4]){
+        this.EditAppAssetForm.controls.SerialNo5.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo5.updateValueAndValidity();
+      }
     }
 
     await this.http.post(URLConstant.GetListRefChangeItem, {}).toPromise().then(

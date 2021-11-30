@@ -1,4 +1,3 @@
-import { AdInsConstant } from "app/shared/AdInstConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 export class CrdRvwAppObjX {

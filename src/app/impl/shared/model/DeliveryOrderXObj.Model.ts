@@ -1,8 +1,8 @@
-import { AppAssetObj } from "app/shared/model/AppAssetObj.Model";
-import { ListAppCollateralDocObj } from "app/shared/model/ListAppCollateralDocObj.Model";
-import { DeliveryOrderHObj } from "app/shared/model/DeliveryOrderHObj.Model";
-import { ListAppTCObj } from "app/shared/model/ListAppTCObj.Model";
 import { environment } from "environments/environment";
+import { AppAssetObj } from "app/shared/model/app-asset-obj.model";
+import { ListAppCollateralDocObj } from "app/shared/model/list-app-collateral-doc-obj.model";
+import { DeliveryOrderHObj } from "app/shared/model/delivery-order-h-obj.model";
+import { ListAppTCObj } from "app/shared/model/list-app-tc-obj.model";
 
 export class DeliveryOrderXObj {
     AppAssetObj: AppAssetObj;

@@ -16,7 +16,7 @@ import { SharedModule } from "app/shared/shared.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 import { NapDetailFormXComponent } from "app/impl/NEW-NAP/CF4W/nap-detail-form/nap-detail-form-x.component";
 import { NapCustMainDataXComponent } from "app/impl/NEW-NAP/CF4W/nap-cust-main-data/nap-cust-main-data-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
 @NgModule({
   imports: [

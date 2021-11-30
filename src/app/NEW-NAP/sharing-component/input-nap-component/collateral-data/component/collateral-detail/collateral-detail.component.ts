@@ -1,38 +1,39 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { HttpClient } from '@angular/common/http';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { formatDate } from '@angular/common';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppCollateralDataObj } from 'app/shared/model/AppCollateralDataObj.Model';
-import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
-import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
+import { AppCollateralDataObj } from 'app/shared/model/app-collateral-data-obj.model';
+import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-doc-obj.model';
+import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
-import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
+import { AppCollateralAttrObj } from 'app/shared/model/app-collateral-attr-obj.model';
+import { AppCollateralAttrCustomObj } from 'app/shared/model/app-collateral-attr-custom.model';
 import { String } from 'typescript-string-operations';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
-import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
-import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
-import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/response/general-setting/res-general-setting-obj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
+import { AssetTypeSerialNoLabelObj } from 'app/shared/model/serial-no/asset-type-serial-no-label-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -75,6 +76,7 @@ export class CollateralDetailComponent implements OnInit {
   AppCustAddrObj: AppCustAddrObj = new AppCustAddrObj();
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj();
   AppCustPersonalObj: AppCustPersonalObj = new AppCustPersonalObj();
+  AppCustPersonalJobDataObj: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   OwnerAddrObj: AddrObj = new AddrObj();
   appCollateralDataObj: AppCollateralDataObj = new AppCollateralDataObj();
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
@@ -124,7 +126,8 @@ export class CollateralDetailComponent implements OnInit {
     CollateralPortionAmt: [0],
     OutstandingCollPrcnt: [0],
     items: this.fb.array([]),
-    AppCollateralAttrObjs: this.fb.array([])
+    AppCollateralAttrObjs: this.fb.array([]),
+    OwnerProfessionCode: ['']
   });
 
   CollTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -143,6 +146,7 @@ export class CollateralDetailComponent implements OnInit {
   sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   IsSvcExist: boolean = false;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  InputLookupProfessionObj : InputLookupObj = new InputLookupObj();
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() : Promise<void> {
@@ -154,8 +158,12 @@ export class CollateralDetailComponent implements OnInit {
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
 
-    this.items = this.AddCollForm.get('items') as FormArray;
+    this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.isRequired = false;
 
+    this.items = this.AddCollForm.get('items') as FormArray;
 
     this.GetLegalAddr();
     this.initUcLookup();
@@ -187,6 +195,7 @@ export class CollateralDetailComponent implements OnInit {
     }
     this.GenerateAppCollateralAttr(false);
     await this.GetGS();
+    this.InputLookupProfessionObj.isReady = true;
   }
 
   initUcLookup() {
@@ -597,7 +606,6 @@ export class CollateralDetailComponent implements OnInit {
       this.AddCollForm.patchValue({
         CollateralStat: CommonConstant.AssetStatExisting
       });
-
     } else {
       await this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { AppId: AppId, AppCollateralId: AppCollateralId }).toPromise().then(
         async (response) => {
@@ -971,13 +979,15 @@ export class CollateralDetailComponent implements OnInit {
           this.AppCustObj = response['AppCustObj'];
           this.AppCustCompanyObj = response['AppCustCompanyObj'];
           this.AppCustAddrObj = response['AppCustAddrLegalObj'];
+          this.AppCustPersonalJobDataObj = response['AppCustPersonalJobDataObj'];
 
           this.AddCollForm.patchValue({
             OwnerName: this.AppCustObj.CustName,
             MrOwnerRelationshipCode: "SELF",
             MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
             OwnerIdNo: this.AppCustObj.IdNo,
-            OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
+            OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : '',
+            OwnerProfessionCode: this.AppCustPersonalJobDataObj.MrProfessionCode
           })
           this.OwnerAddrObj.Addr = this.AppCustAddrObj.Addr
           this.OwnerAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1
@@ -989,6 +999,9 @@ export class CollateralDetailComponent implements OnInit {
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.AppCustAddrObj.Zipcode };
           this.inputAddressObjForLegal.default = this.OwnerAddrObj;
           this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
+          this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobDataObj.ProfessionName;
+          this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobDataObj.ProfessionName };
+          this.InputLookupProfessionObj.isDisable = true;
         }
       )
 
@@ -1000,6 +1013,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AddCollForm.controls.MrIdTypeCode.enable();
       this.AddCollForm.controls.OwnerIdNo.enable();
       this.AddCollForm.controls.OwnerAddrObj.enable();
+      this.InputLookupProfessionObj.isDisable = false;
     }
   }
 
@@ -1274,6 +1288,7 @@ export class CollateralDetailComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerCity = this.AddCollForm.controls["OwnerAddrObj"]["controls"].City.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.AddCollForm.controls["OwnerMobilePhnNo"].value;
+    this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AddCollForm.controls["OwnerProfessionCode"].value;
   }
 
   setCollateralLocation() {
@@ -1314,5 +1329,11 @@ export class CollateralDetailComponent implements OnInit {
         this.IsSvcExist = true;
       }
     }
+  }
+  
+  GetProfession(event) {
+    this.AddCollForm.patchValue({
+      OwnerProfessionCode: event.ProfessionCode
+    });
   }
 }

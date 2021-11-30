@@ -1,5 +1,5 @@
 {
-  "title": "CREDIT APPROVAL RESULT EXTENSION",
+  "title": "",
   "component": [
     {
       "type": "textbox",
@@ -27,6 +27,15 @@
       "datatype": "date"
     },
     {
+      "type": "datepicker",
+      "name": "A.CRD_APV_RESULT_EXP_DT",
+      "id": "appDtlte",
+      "value": "",
+      "label": "Expired Date <=",
+      "restriction": "lte",
+      "datatype": "date"
+    },
+    {
       "type": "textbox",
       "name": "AC.CUST_NAME",
       "id": "CustNameId",
@@ -35,13 +44,22 @@
       "placeholder": "Placeholder"
     },
     {
-      "type": "datepicker",
-      "name": "A.CRD_APV_RESULT_EXP_DT",
-      "id": "appDtlte",
+      "type": "dropdown",
+      "name": "A.ORI_OFFICE_CODE",
+      "id": "OfficeNameId",
       "value": "",
-      "label": "Expired Date <=",
-      "restriction": "lte",
-      "datatype": "date"
+      "placeholder": "Placeholder",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "items": [],
+      "itemsUrl": []
     }
   ],
   "querystring": {
@@ -50,9 +68,15 @@
   "headerList": [
     {
       "type": "sort",
-      "position": "center",
-      "label": "SLA",
-      "name": "SlaColor"
+      "position": "left",
+      "label": "APPLICATION NO",
+      "name": "A.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office Name",
+      "name": "A.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
@@ -101,6 +125,11 @@
       "type": "sla",
       "position": "center",
       "property": "SlaColor"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OriOfficeName"
     },
     {
       "type": "link",

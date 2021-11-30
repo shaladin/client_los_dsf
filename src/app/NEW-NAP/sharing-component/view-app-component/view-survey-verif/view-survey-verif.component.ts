@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 
 @Component({
   selector: "view-survey-verif",

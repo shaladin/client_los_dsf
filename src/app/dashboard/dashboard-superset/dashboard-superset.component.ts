@@ -4,9 +4,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
-import { ReqSuperset } from 'app/shared/model/Request/Superset/ReqSuperset.model';
-import { ResGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import { ReqSuperset } from 'app/shared/model/request/superset/req-superset.model';
+import { ResGeneralSettingObj } from 'app/shared/model/response/general-setting/res-general-setting-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 

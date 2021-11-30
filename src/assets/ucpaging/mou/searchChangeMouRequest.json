@@ -19,6 +19,8 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
             "path": "/RefMaster/GetListKeyValueActiveByCode",
             "label": "Mou Type",
             "items": [],
@@ -83,6 +85,23 @@
             "value": "",
             "label": "Reference No",
             "placeholder": "Placeholder"
+        },
+        {
+            "type": "officeRoleCodes",
+            "datatype": "text",
+            "name": "TaskOfficeCode",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
         }
     ],
     "querystring": {

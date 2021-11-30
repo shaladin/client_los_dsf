@@ -28,6 +28,7 @@
             "isFromURL": true,
             "ddlType": "all",
             "url": "",
+            "environment": "FOU",
             "path": "/RefMaster/GetListKeyValueActiveByCode",
             "label": "Mou Type",
             "items": [],
@@ -113,12 +114,30 @@
             "isFromURL": true,
             "ddlType": "all",
             "url": "",
+            "environment": "FOU",
             "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
             "label": "Mou Status",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "Code",
             "criteriaPropValue": "CANCEL_CHANGE_MOU"
+        },
+        {
+            "type": "officeRoleCodes",
+            "datatype": "text",
+            "name": "TaskOfficeCode",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
         }
     ],
     "querystring": {
@@ -233,7 +252,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "MouStat"
+            "property": "StatusDesc"
         },
         {
             "type": "text",

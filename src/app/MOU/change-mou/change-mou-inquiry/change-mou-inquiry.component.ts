@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { CookieService } from "ngx-cookie";
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
@@ -30,16 +30,6 @@ export class ChangeMouInquiryComponent implements OnInit {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchChangeMouInquiry.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchChangeMouInquiry.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url + "/v1"
-        },
-        {
-          name: "STATUS",
-          environment: environment.FoundationR3Url + "/v1"
-        }
-      ];
   }
   getEvent(event){
     if (event.Key == "customer") {

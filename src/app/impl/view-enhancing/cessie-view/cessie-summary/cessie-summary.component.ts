@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 
 @Component({
   selector: 'cessie-summary-view',

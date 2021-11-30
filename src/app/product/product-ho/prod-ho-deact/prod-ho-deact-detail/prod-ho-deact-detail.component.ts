@@ -5,21 +5,21 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqProductDeactivationObj } from 'app/shared/model/Request/Product/ReqProductDeactivationObj.model';
+import { ReqProductDeactivationObj } from 'app/shared/model/request/product/req-product-deactivation-obj.model';
 import { environment } from 'environments/environment';
-import { ReqProdOfferingVersionObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ResProdOfferingVersionObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
-import { ProdOfferingObj } from 'app/shared/model/Product/ProdOfferingObj.model';
+import { ReqProdOfferingVersionObj } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { GenericKeyValueListObj } from 'app/shared/model/generic/generic-key-value-list-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResProdOfferingVersionObj } from 'app/shared/model/response/product/res-prod-offering-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { ProdOfferingObj } from 'app/shared/model/product/prod-offering-obj.model';
 
 @Component({
   selector: 'app-prod-ho-deact-detail',

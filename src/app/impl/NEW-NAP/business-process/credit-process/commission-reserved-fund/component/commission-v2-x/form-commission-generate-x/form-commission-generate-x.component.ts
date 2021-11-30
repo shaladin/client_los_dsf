@@ -4,13 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
-import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { VendorBankAccObj } from 'app/shared/model/vendor-bank-acc.model';
+import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/request/vendor/req-vendor-emp.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { AppCommissionHObj } from 'app/shared/model/app-commission-h-obj.model';
 
 @Component({
   selector: 'app-form-commission-generate-x',
@@ -137,6 +135,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       RowVersion: [''],
       ListAllocated: this.fb.array([]),
       DropDownList: this.fb.array([]),
+      HoldingTaxWithPenalty: [0],
       ListEmpPosition: this.fb.array([])
     }) as FormGroup;
     this.arr.push(NewDataForm);
@@ -537,7 +536,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       TotalVATAmount: appCommObj.VatAmt,
       TotalPenaltyAmount: appCommObj.PenaltyAmt,
       TotalDisburseAmount: appCommObj.TotalDisburseAmt,
-      RowVersion: appCommObj.RowVersion,
+      RowVersion: appCommObj.RowVersion
     });
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
@@ -547,12 +546,17 @@ export class FormCommissionGenerateXComponent implements OnInit {
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
     var allocAmt = 0;
-  
+  	let TotalPenaltyAmt = 0
     for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
-      allocAmt += appCommObj.AppCommissionDs[i].CommissionAmt
+      allocAmt += appCommObj.AppCommissionDs[i].CommissionAmt;
+      TotalPenaltyAmt += appCommObj.AppCommissionDs[i].PenaltyAmt;
     }
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][0].patchValue({
       AllocationAmount: allocAmt,
+    });
+
+    this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+      HoldingTaxWithPenalty: (appCommObj.TaxAmt + TotalPenaltyAmt)
     });
 
     this.ReCalcListAllocated(indexFormObj);

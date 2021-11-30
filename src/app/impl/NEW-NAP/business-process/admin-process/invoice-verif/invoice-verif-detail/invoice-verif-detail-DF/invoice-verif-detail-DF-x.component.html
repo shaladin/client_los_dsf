@@ -39,24 +39,81 @@
               <div class="bs-stepper-content">
                 <!-- your steps content here -->
                 <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
-                  <invoice-verif-detail-list-of-invoice-x *ngIf="StepperIndex == 1" [AppId]="AppId"
-                    (outputTab)="NextStep($event)" (outputCancel)="Cancel()">
+                  <invoice-verif-detail-list-of-invoice-x [hidden]="StepperIndex != 1" [AppId]="AppId" [parentForm]="InvoiceForm" [enjiForm]="enjiForm"
+                    (outputTab)="NextStep($event)" (outputCancel)="Cancel()" (outputlistInvoice)="GetlistInvoice($event)">
                   </invoice-verif-detail-list-of-invoice-x>
                 </div>
                 <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-                  <app-term-conditions *ngIf="StepperIndex == 2" [AppId]="AppId" [parentForm]="InvoiceForm"
+                  <app-term-conditions [hidden]="StepperIndex != 2" [AppId]="AppId" [parentForm]="InvoiceForm"
                     [enjiForm]="enjiForm">
                   </app-term-conditions>
                 </div>
               </div>
             </div>
 
-            <div class="form-actions right" *ngIf="StepperIndex == 2">
+            <!-- <div class="form-actions right" *ngIf="StepperIndex == 2">
               <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()">
-                <i class="ft-x"></i> Cancel
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
               <button type="submit" class="btn btn-raised btn-primary">
-                <i class="fa fa-check-square-o"></i> Save
+                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Save</span>
+              </button>
+            </div> -->
+            <lib-ucSubsection *ngIf="IsReturnOn" [id]="'formReturnInvoiceId'" [title]="'Return Invoice'"
+              [panel]="'formReturnInvoice'">
+            </lib-ucSubsection>
+            <div *ngIf="IsReturnOn" class="form-body" [id]="'formReturnInvoice'">
+              <form class="form form-horizontal" [formGroup]="ReturnForm" #rettForm="ngForm"
+                (ngSubmit)="ReturnForm.valid && SaveForm()">
+                <div class="form-group row adins-required">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel">Return Reason</label>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                      (change)="onChangeReason($event)"
+                      [ngClass]="{ 'is-invalid': rettForm.submitted && ReturnForm.controls.Reason.invalid}">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of listRefReason" value="{{it.Key}}">
+                        {{it.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="ReturnForm.controls.Reason" [submit]="rettForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
+            
+                <div class="form-group row adins-required">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel">Return Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                      [ngClass]="{ 'is-invalid': rettForm.submitted && ReturnForm.controls.Notes.invalid}"></textarea>
+                    <lib-uc-show-errors [control]="ReturnForm.controls.Notes" [submit]="rettForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-actions right">
+                  <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+                    <i class="ft-x"></i>&nbsp;<span translate>Cancel Return</span>
+                  </button>
+                  <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()">
+                    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+                  </button>
+                  <button type="submit" class="btn btn-raised btn-primary">
+                    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Submit</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="form-actions right" *ngIf="!IsReturnOn">
+              <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+                <i class="ft-x"></i>&nbsp;<span translate>Return</span>
+              </button>
+              <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Save</span>
               </button>
             </div>
           </form>

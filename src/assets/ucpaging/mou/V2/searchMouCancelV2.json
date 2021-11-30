@@ -19,6 +19,24 @@
             "placeholder": "Placeholder"
         },
         {
+            "type": "currency",
+            "name": "MC.PLAFOND_AMT",
+            "id": "GreaterPlafondAmt",
+            "value": "",
+            "label": "Plafond Amount From",
+            "restriction": "gte",
+            "datatype": "numeric"
+        },
+        {
+            "type": "currency",
+            "name": "MC.PLAFOND_AMT",
+            "id": "LessPlafondAmt",
+            "value": "999999999999",
+            "label": "Plafond Amount To",
+            "restriction": "lte",
+            "datatype": "numeric"
+        },
+        {
             "type": "dropdown",
             "name": "MC.IS_REVOLVING",
             "id": "IsRevolvingId",
@@ -43,24 +61,6 @@
             "criteriaPropValue": ""
         },
         {
-            "type": "currency",
-            "name": "MC.PLAFOND_AMT",
-            "id": "GreaterPlafondAmt",
-            "value": "0",
-            "label": "Plafond Amount From",
-            "restriction": "gte",
-            "datatype": "numeric"
-        },
-        {
-            "type": "currency",
-            "name": "MC.PLAFOND_AMT",
-            "id": "LessPlafondAmt",
-            "value": "999999999999",
-            "label": "Plafond Amount To",
-            "restriction": "lte",
-            "datatype": "numeric"
-        },
-        {
             "type": "dropdown",
             "datatype": "text",
             "name": "MC.MOU_STAT",
@@ -77,6 +77,23 @@
             "itemsUrl": [],
             "criteriaPropName": "Code",
             "criteriaPropValue": "MOUC_STAT"
+        },
+        {
+            "type": "officeRoleCodes",
+            "datatype": "text",
+            "name": "TaskOfficeCode",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
         }
     ],
   "querystring": {
@@ -169,7 +186,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "MouStat"
+            "property": "MouStatDesc"
         },
         {
             "type": "text",

@@ -5,23 +5,23 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
-import { AgrmntDocObj } from 'app/shared/model/AgrmntDocObj.Model';
-import { AgrmntDocPrintObj } from 'app/shared/model/AgrmntDocPrintObj.Model';
+import { AgrmntDocObj } from 'app/shared/model/agrmnt-doc-obj.model';
+import { AgrmntDocPrintObj } from 'app/shared/model/agrmnt-doc-print-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { map, mergeMap } from 'rxjs/operators';
-import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 import { forkJoin } from 'rxjs';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AgrmntSignerObj } from 'app/shared/model/agrmnt-signer-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcReportObj.model';
+import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/rdlc-report-obj.model';
 import { CookieService } from 'ngx-cookie';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { AgrmntDocForPrintingObj } from 'app/shared/model/AgrmntDocForPrintingObj.Model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { AgrmntDocForPrintingObj } from 'app/shared/model/agrmnt-doc-for-printing-obj.model';
 
 @Component({
   selector: 'app-document-view',

@@ -78,6 +78,7 @@ export class URLConstantX {
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
   public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
+  public static AddMouCustV2X = environment.losUrl + '/v2' + '/MouCustX/AddMouCust';
   public static MouCustExecutionHumanActivityX = environment.losUrl +'/v1' + "/MouCustX/MouCustExecutionHumanActivity";
   public static GetMouMainInfoByIdX = environment.losUrl +'/v1' + "/MouCustX/GetMouMainInfoById";
 
@@ -188,6 +189,7 @@ export class URLConstantX {
   public static CalculateInstallmentRegularFixX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentRegularFix";
   public static CalculateInstallmentStepUpStepDownX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentStepUpStepDown";
   public static SaveAppFinDataX = environment.losUrl + "/v1" + "/AppFinDataX/SaveAppFinData";
+  public static GetAppFinDataWithRuleByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetAppFinDataWithRuleByAppId";
 
   //Application Data DF
   public static EditApplicationDataDF = environment.losUrl + "/v1" + "/ApplicationDataX/EditApplicationDataDF";
@@ -242,5 +244,6 @@ export class URLConstantX {
 
   //Delivery Order
   public static EditAppAssetDOMultiAsset = environment.losUrl + "/v1" + "/AppAssetX/EditAppAssetDOMultiAsset";
+  public static ValidateDeliveryOrderMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrderX/ValidateDeliveryOrderMultiAsset";
 
 }

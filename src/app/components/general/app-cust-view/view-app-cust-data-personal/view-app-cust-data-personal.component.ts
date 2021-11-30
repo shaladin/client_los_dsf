@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
+import { AppCustPersonalContactPersonObj } from 'app/shared/model/app-cust-personal-contact-person-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
-import { ResAppCustAddrForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
-import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ResAppCustAddrForViewObj, ResAppCustAttrForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResAppCustOtherInfoForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
+import { ResAppCustBankAccForViewObj } from 'app/shared/model/response/view/res-app-cust-bank-acc-for-view-obj.model';
 
 @Component({
   selector: 'app-view-app-cust-data-personal',
@@ -32,6 +31,8 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
+  appCustOtherInfoForViewObj: ResAppCustOtherInfoForViewObj = new ResAppCustOtherInfoForViewObj;
+  appCustAttrContentsObj : Array<ResAppCustAttrForViewObj> = new Array<ResAppCustAttrForViewObj>();
 
   constructor(private http: HttpClient) {
   }
@@ -70,6 +71,8 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
         this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
+        this.appCustOtherInfoForViewObj = response.AppCustOtherInfoForViewObj;
+        this.appCustAttrContentsObj = response.ListAppCustAttrContentObj;
       });
   }
 }

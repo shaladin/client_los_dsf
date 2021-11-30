@@ -7,12 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { ResRefEmpObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
     selector: 'app-ltkm-request-analysis',

@@ -2,13 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
+import { CalcSingleInstObj } from 'app/shared/model/app-fin-data/calc-single-inst-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
 
 @Component({
   selector: 'app-single-inst-fctr',

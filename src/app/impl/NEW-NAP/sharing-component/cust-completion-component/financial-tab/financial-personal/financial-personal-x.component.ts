@@ -4,17 +4,17 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { AppCustPersonalFinDataObj } from 'app/shared/model/app-cust-personal-fin-data-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 
 @Component({
   selector: 'app-financial-personal-x',

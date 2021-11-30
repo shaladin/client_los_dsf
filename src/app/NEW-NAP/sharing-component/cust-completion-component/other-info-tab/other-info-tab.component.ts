@@ -5,10 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustOtherInfoObj } from 'app/shared/model/AppCustOtherInfoObj.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
-import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { AppCustOtherInfoObj } from 'app/shared/model/app-cust-other-info-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { RefProfessionObj } from 'app/shared/model/ref-profession-obj.model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
 import { environment } from 'environments/environment';
 import { AttrContentComponentComponent } from '../attr-content-component/attr-content-component.component';
 

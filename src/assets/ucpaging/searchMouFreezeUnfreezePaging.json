@@ -72,6 +72,23 @@
         }
       ],
       "itemsUrl": []
+    },
+    {
+      "type": "officeRoleCodes",
+      "datatype": "text",
+      "name": "TaskOfficeCode",
+      "id": "OfficeCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "isQueryIn": true,
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "items": [],
+      "itemsUrl": []
     }
   ],
   "querystring": {
@@ -137,7 +154,7 @@
     {
       "type": "text",
       "position": "center",
-      "property": "MouStat"
+      "property": "MouStatDesc"
     },
     {
       "type": "boolean",

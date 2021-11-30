@@ -6,16 +6,16 @@ import Stepper from 'bs-stepper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
-import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
+import { LeadInputLeadDataObj } from 'app/shared/model/lead-input-lead-data-obj.model';
+import { LeadAppObj } from 'app/shared/model/lead-app-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

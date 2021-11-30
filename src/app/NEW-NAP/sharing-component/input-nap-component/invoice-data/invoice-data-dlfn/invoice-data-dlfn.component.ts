@@ -6,20 +6,20 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppDlrFncng } from 'app/shared/model/AppData/AppDlrFncng.Model';
-import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
-import { AppInvoiceDlrFncngHObj } from 'app/shared/model/AppInvoiceDlrFncngHObj.Model';
-import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ResDuplicateDoubleFinancingObj } from 'app/shared/model/Lead/ResDuplicateDoubleFinancingObj.Model';
-import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { ReqAddAppInvoiceDlrFncngHObj } from 'app/shared/model/Request/AppInvoice/ReqAppInvoiceObj.model';
-import { ResDisbInfo } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { AppDlrFncng } from 'app/shared/model/app-data/app-dlr-fncng.model';
+import { AppFctrObj } from 'app/shared/model/app-fctr/app-fctr.model';
+import { AppInvoiceDlrFncngHObj } from 'app/shared/model/app-invoice-dlr-fncng-h-obj.model';
+import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResDuplicateDoubleFinancingObj } from 'app/shared/model/lead/res-duplicate-double-financing-obj.model';
+import { NegativeAssetCheckObj } from 'app/shared/model/negative-asset-check-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { ReqAddAppInvoiceDlrFncngHObj } from 'app/shared/model/request/app-invoice/req-app-invoice-obj.model';
+import { ResDisbInfo } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -28,6 +28,7 @@ import { environment } from 'environments/environment';
 })
 export class InvoiceDataDlfnComponent implements OnInit {
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   inputPagingObj: UcPagingObj;
   AppDlrFinObj: AppFctrObj = new AppFctrObj();

@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGr
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { AgrmntTcObj } from 'app/shared/model/AgrmntTc/AgrmntTcObj.Model';
-import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 
 @Component({
   selector: 'app-agrmnt-tc',
@@ -36,6 +36,7 @@ export class AgrmntTcComponent implements OnInit {
   constructor(private http: HttpClient,
     private fb: FormBuilder, private cookieService: CookieService) { }
 
+  currStep: string = "";
   ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -51,6 +52,7 @@ export class AgrmntTcComponent implements OnInit {
     var agrmntObj = { Id: this.AgrmntId };
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (responseAgrmnt: AgrmntObj) => {
+        this.currStep = responseAgrmnt.AgrmntCurrStep;
         if(responseAgrmnt.BizTemplateCode === CommonConstant.OPL) {
           this.IsOpl = true;
         }
@@ -132,14 +134,16 @@ export class AgrmntTcComponent implements OnInit {
     this.totalCheckAll = 0;
     this.totalMandatory = 0;
     this.IsCheckedAll = true;
-    var listTC = this.parentForm.get(this.identifier) as FormArray
+    let listTC = this.parentForm.get(this.identifier) as FormArray
     for (let i = 0; i < listTC.length; i++) {
-      var item = listTC.at(i);
-      var isMandatory: Boolean = item.get("IsMandatory").value;
-      var isChecked: Boolean = item.get("IsChecked").value;
-      var isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
+      let item = listTC.at(i);
+      let isMandatory: Boolean = item.get("IsMandatory").value;
+      let isChecked: Boolean = item.get("IsChecked").value;
+      let isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
 
       if (isMandatory) {
+        //logic PriorTo
+        if(item.get("PriorTo").value != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
         if (isChecked) {
           if(isExpDtMandatory){
             item.get("ExpiredDt").enable();

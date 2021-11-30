@@ -2,15 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
 import { environment } from 'environments/environment';
-import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
+import { CalcIrregularObj } from 'app/shared/model/app-fin-data/calc-irregular-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { CalcIrregularObjForTrialCalc } from 'app/shared/model/AppFinData/CalcIrregularObjForTrialCalc.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { CalcIrregularObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-irregular-obj-for-trial-calc.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
 
 @Component({
   selector: 'app-schm-irregular',

@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
+import { FromValueObj, UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 
 @Component({
   selector: 'app-app-source-office-member-add',
@@ -35,34 +33,16 @@ export class AppSourceOfficeMemberAddComponent implements OnInit {
     this.viewGenericObj.viewEnvironment = environment.FoundationR3Url + "/v1";
     
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/refAppSrcOfficeMbrTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url + "/v1";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/refAppSrcOfficeMbrTempPaging.json";
 
-    this.GetListRefAppSrcOfficeMbrByRefAppSrcId();
-  }
-
-  GetListRefAppSrcOfficeMbrByRefAppSrcId(){
-    this.http.post(URLConstant.GetListRefAppSrcOfficeMbrByRefAppSrcId, { RefAppSrcId: this.RefAppSrcId }).subscribe(
-      (response) => {
-        var arrMemberList = new Array();
-        for (let index = 0; index < response["RefAppSrcOfficeMbrObjs"].length; index++) {
-          arrMemberList.push(response["RefAppSrcOfficeMbrObjs"][index].RefOfficeCode)
-        }
-
-        if (arrMemberList.length != 0) {
-          const addCritList = new CriteriaObj();
-          addCritList.propName = 'REF_OFFICE_CODE';
-          addCritList.restriction = AdInsConstant.RestrictionNotIn;
-          addCritList.listValue = arrMemberList;
-          this.tempPagingObj.addCritInput.push(addCritList);
-        }
-        this.tempPagingObj.isReady = true;
-      }
-    );
+    let fromValueObj = new FromValueObj();
+    fromValueObj.property = 'RefAppSrcId';
+    fromValueObj.value = this.RefAppSrcId;
+    this.tempPagingObj.fromValue.push(fromValueObj);
+    this.tempPagingObj.isReady = true;
   }
 
   getListTemp(ev) {
-    console.log(ev);
     this.listSelectedCode = ev.TempListId;
   }
 

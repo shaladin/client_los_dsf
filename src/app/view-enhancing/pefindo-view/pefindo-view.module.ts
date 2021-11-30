@@ -11,7 +11,7 @@ import { PefindoOtherDataViewComponent } from './pefindo-other-data/pefindo-othe
 import { PefindoDashboardViewComponent } from './pefindo-dashboard/pefindo-dashboard-view/pefindo-dashboard-view.component';
 import { PefindoPersonalInfoViewComponent } from './pefindo-personal-info/pefindo-personal-info-view/pefindo-personal-info-view.component';
 import { PefindoPersonalInfoCoyViewComponent } from './pefindo-personal-info/pefindo-personal-info-coy-view/pefindo-personal-info-coy-view.component';
-import { AdInsSharedModule } from 'app/components/adins-module/AdInsShared.Module';
+import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 
 @NgModule({
   declarations: [PefindoViewComponent, PefindoScoreViewComponent, PefindoContractsViewComponent, PefindoContractSummaryViewComponent, PefindoOtherDataViewComponent, PefindoDashboardViewComponent, PefindoPersonalInfoViewComponent, PefindoPersonalInfoCoyViewComponent],

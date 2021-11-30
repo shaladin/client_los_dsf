@@ -1,23 +1,23 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
-import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
-import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { NegativeCustObj } from 'app/shared/model/negative-cust.model';
+import { NegativeAssetObj } from 'app/shared/model/negative-asset-obj.model';
+import { ResDuplicateCustomerObj } from 'app/shared/model/lead/res-duplicate-customer-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
+import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { FraudDukcapilObj } from 'app/shared/model/fraud-dukcapil-obj.model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
-import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
+import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/negative-asset-check-for-multi-asset-obj.model';
+import { NegativeAssetCheckObj } from 'app/shared/model/negative-asset-check-obj.model';
 
 @Component({
   selector: 'app-fraud-detection-result',

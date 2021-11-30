@@ -3,17 +3,12 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { environment } from 'environments/environment';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { MouCustCollateralObj } from 'app/shared/model/MouCustCollateralObj.Model';
-import { MouCustCollateralRegistrationObj } from 'app/shared/model/MouCustCollateralRegistrationObj.Model';
-import { ListMouCustCollateralDocObj } from 'app/shared/model/ListMouCustCollateralDocObj.Model';
-import { MouCustCollateralDocObj } from 'app/shared/model/MouCustCollateralDocObj.Model';
 import { formatDate } from '@angular/common';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {MouCustCollateralStatXObj} from 'app/impl/shared/model/MouCustCollateralStatXObj.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { MouCustCollateralStatXObj } from 'app/impl/shared/model/MouCustCollateralStatXObj.Model';
+import { MouCustCollateralDocObj } from 'app/shared/model/mou-cust-collateral-doc-obj.model';
+import { MouCustCollateralObj } from 'app/shared/model/mou-cust-collateral-obj.model';
 
 @Component({
   selector: 'app-mou-view-addcoll-x',

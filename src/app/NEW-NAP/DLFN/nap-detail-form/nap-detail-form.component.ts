@@ -1,24 +1,23 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { forkJoin } from 'rxjs';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResSysConfigResultObj } from '../../../shared/model/Response/ResSysConfigResultObj.model';
+import { ResSysConfigResultObj } from '../../../shared/model/response/res-sys-config-result-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
@@ -71,6 +70,7 @@ export class NapDetailFormComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   appNo: string;
   isDmsReady: boolean = false;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
 
   constructor(
     private route: ActivatedRoute,
@@ -95,8 +95,8 @@ export class NapDetailFormComponent implements OnInit {
       }
     });
   }
-  //---
-  async ngOnInit() {
+  
+  ngOnInit() {
     this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
@@ -126,28 +126,28 @@ export class NapDetailFormComponent implements OnInit {
 
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-
-    const appObj = { Id: this.appId };
-    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
+    
+    let appObj = { Id: this.appId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
           if (this.ReturnHandlingHId > 0) {
-            this.stepper.to(this.AppStepIndex);
+            this.ChooseStep(this.AppStepIndex);
           } else {
             if (this.NapObj.AppCurrStep == CommonConstant.AppStepNapd) {
               this.NapObj.AppCurrStep = CommonConstant.AppStepApp;
               this.UpdateAppStep(this.NapObj.AppCurrStep);
             }
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
-            this.stepper.to(this.AppStepIndex);
+            this.ChooseStep(this.AppStepIndex);
             if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
               this.initDms();
             }
           }
         } else {
           this.AppStepIndex = 0;
-          this.stepper.to(this.AppStepIndex);
+          this.ChooseStep(this.AppStepIndex);
         }
       }
     );
@@ -373,6 +373,29 @@ export class NapDetailFormComponent implements OnInit {
       );
     } else {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
+  }
+
+  Submit() {
+    if (this.ReturnHandlingHId > 0) {
+      let ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      console.log(ReturnHandlingResult);
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: this.BizTemplateCode });
+        }
+      )
     }
   }
 

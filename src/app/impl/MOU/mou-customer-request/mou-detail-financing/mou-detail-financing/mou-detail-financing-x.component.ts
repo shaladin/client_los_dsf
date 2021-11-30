@@ -3,24 +3,24 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { VendorObj } from 'app/shared/model/Vendor.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { VendorObj } from 'app/shared/model/vendor-obj.model';
 
 @Component({
   selector: 'app-mou-detail-financing-x',
@@ -42,7 +42,7 @@ export class MouDetailFinancingXComponent implements OnInit {
     itemsShowLimit: 5,
     allowSearchFilter: true
   };
-  listSelectedItem:Array<any>;
+  listSelectedItem: Array<any>;
 
   wopList: Array<KeyValueObj>;
   instTypeList: Array<KeyValueObj>;
@@ -104,7 +104,7 @@ export class MouDetailFinancingXComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listSelectedItem= new Array<any>();
+    this.listSelectedItem = new Array<any>();
     this.initLookup();
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
@@ -132,8 +132,8 @@ export class MouDetailFinancingXComponent implements OnInit {
           suppCrit.push(criteriaObj);
         }
 
-        this.InputLookupLinkSupplGradingObj.addCritInput=suppCrit;
-        this.InputLookupLinkManufacturerObj.addCritInput=suppCrit;
+        this.InputLookupLinkSupplGradingObj.addCritInput = suppCrit;
+        this.InputLookupLinkManufacturerObj.addCritInput = suppCrit;
         this.ucInputLookupLinkSupplGradingObj.setAddCritInput();
         this.ucInputLookupLinkManufacturerObj.setAddCritInput();
       });
@@ -211,9 +211,9 @@ export class MouDetailFinancingXComponent implements OnInit {
             MrInstTypeCode: this.MouDlrFinData["MrInstTypeCode"]
           });
 
-          if(this.MouDlrFinData['MrInstTypeCode'] == CommonConstant.InstTypeMultiple){
+          if (this.MouDlrFinData['MrInstTypeCode'] == CommonConstant.InstTypeMultiple) {
             const listPayFreqCode = this.MouDlrFinData["PayFreqCode"].split(';');
-            this.listSelectedItem = this.payFreqList.filter(x=> listPayFreqCode.includes(x.PayFreqCode));
+            this.listSelectedItem = this.payFreqList.filter(x => listPayFreqCode.includes(x.PayFreqCode));
           }
 
           this.instTypeHandler(this.MouDlrFinData["MrInstTypeCode"]);
@@ -241,8 +241,8 @@ export class MouDetailFinancingXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.EXTENDS_TIME_INVLID);
       return;
     }
-    if(! this.IsSingleIns){
-      if(this.listSelectedItem.length == 0){
+    if (!this.IsSingleIns) {
+      if (this.listSelectedItem.length == 0) {
         this.toastr.warningMessage("Please Select Payment Frequency");
         return;
       }
@@ -390,10 +390,10 @@ export class MouDetailFinancingXComponent implements OnInit {
       this.MouCustDlrFindData.ManufacturerCustNo = "-";
     }
 
-    if(this.IsSingleIns){
+    if (this.IsSingleIns) {
       this.MouCustDlrFindData.PayFreqCode = CommonConstant.PAY_FREQ_MONTHLY;
-    }else{
-      this.MouCustDlrFindData.PayFreqCode = this.listSelectedItem.map(x=>x.PayFreqCode).join(';');
+    } else {
+      this.MouCustDlrFindData.PayFreqCode = this.listSelectedItem.map(x => x.PayFreqCode).join(';');
     }
   }
 
@@ -406,6 +406,8 @@ export class MouDetailFinancingXComponent implements OnInit {
       this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(1)]);
       this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
       // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].enable();
+      this.MouDetailFinancingForm.controls["TopInterestRatePrcnt"].disable();
+
     }
     else if (insType == CommonConstant.MULTIPLE_INST_TYPE) {
       this.IsSingleIns = false;
@@ -413,6 +415,8 @@ export class MouDetailFinancingXComponent implements OnInit {
       this.MouDetailFinancingForm.controls['TopDays'].clearValidators();
       this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(0)]);
       this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
+
+      this.MouDetailFinancingForm.controls["TopInterestRatePrcnt"].enable();
     }
   }
 

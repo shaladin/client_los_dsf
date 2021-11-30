@@ -3,22 +3,22 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { MouCustCompanyDataObj } from 'app/shared/model/MouCustCompanyDataObj.Model';
+import { MouCustCompanyDataObj } from 'app/shared/model/mou-cust-company-data-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResListKeyValueObj } from 'app/shared/model/response/generic/res-list-key-value-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-mou-cust-company-main',
@@ -143,13 +143,21 @@ export class MouCustCompanyMainComponent implements OnInit {
 
 
   setCriteriaLookupCustomer(custTypeCode) {
-    var arrCrit = new Array();
-    var critObj = new CriteriaObj();
+    let arrCrit = new Array();
+    let critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
+
+    let critObj2 = new CriteriaObj();
+    critObj2.DataType = "text";
+    critObj2.propName = 'C.IS_CUSTOMER'
+    critObj2.restriction = AdInsConstant.RestrictionEq;
+    critObj2.value = '1';
+    arrCrit.push(critObj2);
+
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 

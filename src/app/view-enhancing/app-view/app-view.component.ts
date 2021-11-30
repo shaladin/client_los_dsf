@@ -5,15 +5,15 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MatTabChangeEvent } from '@angular/material';
 import { AppMainInfoComponent } from '../app-main-info/app-main-info.component';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { formatDate } from '@angular/common';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 
 @Component({
   selector: 'app-app-view',
@@ -203,7 +203,6 @@ export class AppViewComponent implements OnInit {
       this.IsAsset = false;
       this.IsMultiAsset = false;
       this.IsInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -218,7 +217,6 @@ export class AppViewComponent implements OnInit {
       this.IsInvoice = false;
       this.IsMultiAsset = false;
       this.IsMultiInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -229,10 +227,8 @@ export class AppViewComponent implements OnInit {
       this.IsCollateral = false;
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
-      this.IsInsurance = this.NumOfAsset < 2 ? true : false;
-      this.IsMultiAsset = this.NumOfAsset > 1 ? true : false;
-      this.IsMultiInsurance = this.NumOfAsset > 1 ? true : false;
-      this.IsDeviation = false;
+      this.IsMultiAsset = false;
+      this.IsMultiInsurance = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -244,7 +240,6 @@ export class AppViewComponent implements OnInit {
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
       this.IsInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -259,7 +254,6 @@ export class AppViewComponent implements OnInit {
       this.IsMultiAsset = false;
       this.IsMultiInsurance = false;
       this.IsCollateral = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -295,7 +289,6 @@ export class AppViewComponent implements OnInit {
       this.IsReservedFund = false;
       this.IsPhoneVerification = false;
       this.IsAssetExpense = false;
-      this.IsDeviation = false;
     }
   }
 

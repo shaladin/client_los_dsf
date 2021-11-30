@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
-import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/verf-result/req-get-verf-result-obj.model';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
+import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.model';
 
 @Component({
   selector: 'app-phone-verif',

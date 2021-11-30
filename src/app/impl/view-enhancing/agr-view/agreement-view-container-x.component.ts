@@ -3,15 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { RdlcReportObjv2, ReportParamObjv2 } from 'app/shared/model/Report/RdlcReportObjv2.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { RdlcReportObjv2, ReportParamObjv2 } from 'app/shared/model/report/rdlc-report-obj-v2.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 
 
 @Component({
@@ -178,6 +178,7 @@ export class AgreementViewContainerXComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsPurchaseOrder = false;
           this.IsLoanData = false;
+          this.IsDeviation = false;
           if(!this.IsNeedPO){
             this.IsPurchaseOrder = false;
           }
@@ -192,6 +193,7 @@ export class AgreementViewContainerXComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsMulti = false;
           this.IsCollateral = false;
+          this.IsDeviation = false;
         }
         else if (this.BizTemplateCode == CommonConstant.CF4W) {
           this.IsAsset = this.NumOfAsset < 2 ? true : false;
@@ -204,6 +206,7 @@ export class AgreementViewContainerXComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsAppCollateral = false;
           this.IsLoanData = false;
+          this.IsDeviation = false;
         }
         else if (this.BizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -224,6 +227,7 @@ export class AgreementViewContainerXComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
           this.IsCollateral = false;
+          this.IsDeviation = false;
           if(!this.IsNeedPO){
             this.IsPurchaseOrder = false;
           }

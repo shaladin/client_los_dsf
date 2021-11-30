@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { Validators, FormBuilder } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { Location, DatePipe } from '@angular/common';

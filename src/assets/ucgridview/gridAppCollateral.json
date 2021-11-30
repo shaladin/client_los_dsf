@@ -119,11 +119,6 @@
                             "property" : "AppAssetId", 
                             "value": null,
                             "restriction": "EQ"
-                          },
-                          {
-                            "property" : "CollateralStat", 
-                            "value": "NEW",
-                            "restriction": "EQ"
                           }
                         ],
                           "result" : {
@@ -167,7 +162,7 @@
                                 "property": "AppCollateralId"
                               }
                             ],
-                            "icon" : "ft-trash-2"
+                            "icon" : "danger p-0 ft-trash-2"
                           }
                         }
                     ]

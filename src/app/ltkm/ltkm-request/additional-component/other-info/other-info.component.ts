@@ -4,9 +4,9 @@ import { FormBuilder, Validators, FormGroup, NgForm, ControlContainer, FormGroup
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustOtherInfoObj } from 'app/shared/model/AppCustOtherInfoObj.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { LtkmCustOtherInfoObj } from 'app/shared/model/LTKM/LtkmCustOtherInfoObj.Model';
+import { AppCustOtherInfoObj } from 'app/shared/model/app-cust-other-info-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { LtkmCustOtherInfoObj } from 'app/shared/model/ltkm/ltkm-cust-other-info-obj.model';
 import { environment } from 'environments/environment';
 @Component({
   selector: 'app-ltkm-other-info',

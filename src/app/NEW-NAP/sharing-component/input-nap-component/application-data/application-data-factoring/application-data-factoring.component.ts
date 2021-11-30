@@ -1,36 +1,36 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder, FormArray, ValidatorFn } from '@angular/forms';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { SalesInfoObj } from 'app/shared/model/SalesInfoObj.Model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { SalesInfoObj } from 'app/shared/model/sales-info-obj.model';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { ResGetListMouByAppAndTypeObj } from 'app/shared/model/Response/MOU/MouCust/ResGetListMouByAppAndTypeObj.model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
-import { RefEmpObj } from 'app/shared/model/RefEmpObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppDataObj } from 'app/shared/model/AppDataObj.model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { ResGetListMouByAppAndTypeObj } from 'app/shared/model/response/mou/mou-cust/res-get-list-mou-by-app-and-type-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { RefEmpObj } from 'app/shared/model/ref-emp-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppDataObj } from 'app/shared/model/app-data-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { NapModule } from 'app/NEW-NAP/nap.module';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { GenerateAppAttrContentObj } from 'app/shared/model/AppAttrContent/GenerateAppAttrContentObj.Model';
-import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
+import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -567,14 +567,19 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
-      (response) => {
-        var addCrit3 = new CriteriaObj();
-        addCrit3.DataType = "text";
-        addCrit3.propName = "rbt.JOB_TITLE_CODE";
-        addCrit3.restriction = AdInsConstant.RestrictionIn;
-        addCrit3.listValue = [response.GsValue];
-        this.arrAddCrit.push(addCrit3);
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
       });
   }
 

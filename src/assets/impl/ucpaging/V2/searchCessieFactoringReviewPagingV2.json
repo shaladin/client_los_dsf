@@ -12,7 +12,7 @@
         },
         {
             "type": "textbox",
-            "name": "AC.CUST_NAME",
+            "name": "VC.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -66,7 +66,7 @@
             "type": "sort",
             "position": "center",
             "label": "Customer Name",
-            "name": "AC.CUST_NAME"
+            "name": "VC.CUST_NAME"
         },
         {
             "type": "sort",

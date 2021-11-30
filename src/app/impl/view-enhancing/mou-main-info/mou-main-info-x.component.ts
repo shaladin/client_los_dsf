@@ -1,17 +1,14 @@
-import {Component, OnInit, Input, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {AdInsHelper} from 'app/shared/AdInsHelper';
-import {URLConstant} from 'app/shared/constant/URLConstant';
-import {UcViewGenericObj} from 'app/shared/model/UcViewGenericObj.model';
-import {UcviewgenericComponent} from '@adins/ucviewgeneric';
-import {MouCustObj} from 'app/shared/model/MouCustObj.Model';
-import {GenericObj} from 'app/shared/model/Generic/GenericObj.Model';
-import {CommonConstant} from 'app/shared/constant/CommonConstant';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {ResMouMainInfoObjX} from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjX.model';
-import {NavigationConstant} from 'app/shared/constant/NavigationConstant';
-import {Router} from '@angular/router';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ResMouMainInfoObjX } from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjX.model';
+import { Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-mou-main-info-x',
@@ -25,8 +22,8 @@ export class MouMainInfoXComponent implements OnInit {
   MouMainInfo: ResMouMainInfoObjX;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private toastr: NGXToastrService) {
+    private router: Router,
+    private toastr: NGXToastrService) {
   }
 
   ngOnInit() {
@@ -36,44 +33,42 @@ export class MouMainInfoXComponent implements OnInit {
   ReloadUcViewGeneric() {
 
     if (this.ChangeMouTrxId == 0) {
-      this.http.post<ResMouMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, {Id: this.MouCustId}).subscribe(
+      this.http.post<ResMouMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, { Id: this.MouCustId }).subscribe(
         (response) => {
           this.MouMainInfo = response;
-          if(this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+          if (this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
             this.MouMainInfo.PlafondType = 'Base On Amount'
-          }else{
+          } else {
             this.MouMainInfo.PlafondType = 'Base On Collateral'
           }
 
-          if(this.MouMainInfo.IsWarning === true)
-          {
+          if (this.MouMainInfo.IsWarning === true) {
             this.toastr.warningMessage(this.MouMainInfo.WarningMsg);
           }
 
           console.log(response);
         });
     } else {
-      this.http.post<ResMouMainInfoObjX>(URLConstantX.GetChangeMouMainInfoByIdX, {Id: this.ChangeMouTrxId}).subscribe(
+      this.http.post<ResMouMainInfoObjX>(URLConstantX.GetChangeMouMainInfoByIdX, { Id: this.ChangeMouTrxId }).subscribe(
         (response) => {
           this.MouMainInfo = response;
-          if(this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+          if (this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
             this.MouMainInfo.PlafondType = 'Base On Amount'
-          }else{
+          } else {
             this.MouMainInfo.PlafondType = 'Base On Collateral'
           }
 
-          if(this.MouMainInfo.IsWarning === true)
-          {
+          if (this.MouMainInfo.IsWarning === true) {
             this.toastr.warningMessage(this.MouMainInfo.WarningMsg);
           }
-          
+
           console.log(response);
         });
     }
-    
+
   }
 
-  ViewMou(){
+  ViewMou() {
     AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
   }
 

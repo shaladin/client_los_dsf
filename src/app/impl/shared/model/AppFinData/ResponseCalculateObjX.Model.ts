@@ -1,5 +1,5 @@
-import { InstallmentObj } from "app/shared/model/AppFinData/InstallmentObj.Model"
-import { AppInstStepSchmObj } from "app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model"
+import { InstallmentObj } from "app/shared/model/app-fin-data/installment-obj.model";
+import { AppInstStepSchmObj } from "app/shared/model/app-inst-step-schm/app-inst-step-schm-obj.model";
 
 
 export class ResponseCalculateObjX {

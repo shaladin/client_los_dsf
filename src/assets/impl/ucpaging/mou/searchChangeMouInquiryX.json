@@ -28,6 +28,7 @@
             "isFromURL": true,
             "ddlType": "all",
             "url": "",
+            "environment": "FOU",
             "path": "/RefMaster/GetListKeyValueActiveByCode",
             "label": "Mou Type",
             "items": [],
@@ -53,6 +54,7 @@
             "isFromURL": true,
             "ddlType": "all",
             "url": "",
+            "environment": "FOU",
             "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
             "label": "Change Mou Status",
             "items": [],
@@ -101,7 +103,7 @@
             "type": "link",
             "position": "center",
             "property": "ChangeMouTrxNo",
-            "path": "/View/ChangeMouView/X",
+            "path": "VIEW_CHANGE_MOU",
             "target": "_blank",
             "param": [
                 {
@@ -132,7 +134,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "Status"
+            "property": "StatusDesc"
         },
         {
             "type": "text",

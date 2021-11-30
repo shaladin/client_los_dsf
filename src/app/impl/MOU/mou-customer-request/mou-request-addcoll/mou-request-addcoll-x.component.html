@@ -126,6 +126,7 @@
               <input type="text" currencyMask class="form-control adInsInput text-right"
                 formControlName="CollateralValueAmt"
                 (keyup)="CollateralPortionTypeChange()"
+                (focusout)="UpdateValueCollateralPortionAmt()"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
@@ -159,6 +160,17 @@
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPortionAmt.invalid}">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPortionAmt"
                 [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Max Collateral Percentage (%)</label>
+            <div class="col-md-8">
+              <input type="text" currencyMask class="form-control adInsInput text-right"
+                formControlName="MaxCollPrcnt"
+                [options]="CurrencyMaskPrct"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MaxCollPrcnt.invalid }">
+              <lib-uc-show-errors [control]="AddCollForm.controls.MaxCollPrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
           </div>
@@ -341,7 +353,7 @@
             [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
           </lib-uclookupgeneric>
         </div>
-        <label class="col-md-2 adInsLabel" translate>Owner Mobile Phone No</label>
+        <label class="col-md-2 adins-required-label" translate>Owner Mobile Phone No</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
@@ -479,6 +491,17 @@
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralPortionAmt.invalid}">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralPortionAmt"
                 [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Max Collateral Percentage (%)</label>
+            <div class="col-md-8">
+              <input type="text" currencyMask class="form-control adInsInput text-right"
+                formControlName="MaxCollPrcnt"
+                [options]="CurrencyMaskPrct"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MaxCollPrcnt.invalid }">
+              <lib-uc-show-errors [control]="AddCollForm.controls.MaxCollPrcnt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
           </div>

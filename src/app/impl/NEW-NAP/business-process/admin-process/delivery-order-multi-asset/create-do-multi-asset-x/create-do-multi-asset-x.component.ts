@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
@@ -11,9 +10,13 @@ import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CookieService } from 'ngx-cookie';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { DoAssetDetailXComponent } from '../do-asset-detail-x/do-asset-detail-x.component';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-create-do-multi-asset-x',
@@ -31,7 +34,8 @@ export class CreateDoMultiAssetXComponent implements OnInit {
   @Input() DeliveryOrderHId: number;
   relationshipList: Array<KeyValueObj>;
   PODt: Date;
-
+  maxDt: any;
+  isNeedMaxDt: boolean = false;
   DeliveryOrderForm = this.fb.group({
     DeliveryOrderHId: [0, [Validators.required]],
     AppId: [0, [Validators.required]],
@@ -52,9 +56,18 @@ export class CreateDoMultiAssetXComponent implements OnInit {
     private modalServiceAsset: NgbModal,
     private spinner: NgxSpinnerService, private cookieService: CookieService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     var datePipe = new DatePipe("en-US");
-
+    this.maxDt = new Date(9999,11,31);
+    
+    await this.httpClient.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstantX.GsCodeIsDoDtValidation }).toPromise().then(
+      (response) => {
+        if (response['GsValue'] == "1") {
+          this.maxDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+        }
+      }
+    );
+    console.log(this.maxDt);
     this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { Id: this.AgrmntId }).subscribe(
       (response) => {
         this.PODt = new Date(response["PurchaseOrderDt"]);
@@ -141,7 +154,8 @@ export class CreateDoMultiAssetXComponent implements OnInit {
     });
   }
 
-  Save() {
+  // X DSF Non JIRA, Udin : Penambahan async
+  async Save() {
     var formData = this.DeliveryOrderForm.value;
     var DeliveryOrderH = { ...formData };
     var DeliveryOrderDs = [];
@@ -156,6 +170,16 @@ export class CreateDoMultiAssetXComponent implements OnInit {
       DeliveryOrderDs.push(doDetailObj);
     }
     var DOData = { DeliveryOrderH, DeliveryOrderDs };
+
+    // START X DSF Non JIRA, Udin : Fix issue Create DO dengan serial no yang tidak lengkap
+    var isValid : boolean = false;
+    await this.httpClient.post(URLConstantX.ValidateDeliveryOrderMultiAsset, DOData).toPromise().then(
+      (response) => {
+        isValid = response && response['StatusCode'] == 200;
+      }
+    );
+    if(!isValid) return;
+    // END X DSF Non JIRA
 
     if (this.Mode == "add") {
       url = URLConstant.AddDeliveryOrderMultiAsset;

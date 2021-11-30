@@ -1,21 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { ResDisbInfo } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
-import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ResDisbInfo } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
+import { AppInvoiceFctrObj } from 'app/shared/model/app-invoice-fctr-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -232,7 +232,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
       if(this.WfTaskListId != "" && this.WfTaskListId != undefined){
         this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
       }
-    }else if (this.WfTaskListId > 0) {
+    }else if (this.WfTaskListId > 0) {
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }

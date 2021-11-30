@@ -3,23 +3,23 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { CustDataCompanyObj } from 'app/shared/model/cust-data-company-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResListKeyValueObj } from 'app/shared/model/response/generic/res-list-key-value-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-cust-company-main-data',

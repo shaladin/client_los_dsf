@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { formatDate } from '@angular/common';
-import { MouCustCompanyFinDataObj } from 'app/shared/model/MouCustCompanyFinDataObj.Model';
+import { MouCustCompanyFinDataObj } from 'app/shared/model/mou-cust-company-fin-data-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({

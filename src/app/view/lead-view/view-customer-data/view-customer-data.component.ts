@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { LeadCustObj } from 'app/shared/model/Request/LEAD/LeadCustObj.model';
+import { LeadCustObj } from 'app/shared/model/request/lead/lead-cust-obj.model';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSucmedObj.model';
+import { LeadCustSocmedObj } from 'app/shared/model/lead-cust-sucmed-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 
 @Component({

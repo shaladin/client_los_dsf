@@ -3,48 +3,48 @@ import { FormArray, FormBuilder, ValidatorFn, Validators } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ActivatedRoute } from '@angular/router';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResRefEmpObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
-import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
-import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
-import { GenerateAppAttrContentObj } from 'app/shared/model/AppAttrContent/GenerateAppAttrContentObj.Model';
-import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { DatePipe } from '@angular/common';
 import { ResCalculatePlafondAgrmntXObj } from 'app/impl/shared/model/ResCalculatePlafondAgrmntXObj.Model';
 import { ReqCalculatePlafondAgrmntXObj } from 'app/impl/shared/model/ReqCalculatePlafondAgrmntXObj.Model';
 import { ReqAgrmntMasterDataObjX } from 'app/impl/shared/model/ReqAgrmntMasterDataObjX.model';
 import { AgrParentObjX } from 'app/impl/shared/model/Response/AgrParentObjX.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
+import { UcDropdownListObj, UcDropdownListConstant, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
+import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-application-data-x',
@@ -269,8 +269,8 @@ export class ApplicationDataXComponent implements OnInit {
         );
       }
     );
-
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
+    
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
         if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
@@ -885,7 +885,7 @@ export class ApplicationDataXComponent implements OnInit {
       this.inputLookupCommodityObj.jsonSelect = { Descr: this.tempCommodityName };
     }
 
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
         if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
@@ -938,6 +938,13 @@ export class ApplicationDataXComponent implements OnInit {
     addCrit4.restriction = AdInsConstant.RestrictionIn;
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
+
+    let addCrit5 = new CriteriaObj();
+    addCrit5.DataType = "bit";
+    addCrit5.propName = "RUR.IS_ACTIVE";
+    addCrit5.restriction = AdInsConstant.RestrictionEq;
+    addCrit5.value = "1";
+    this.arrAddCrit.push(addCrit5);
 
     await this.GetGSValueSalesOfficer();
 
@@ -1001,16 +1008,20 @@ export class ApplicationDataXComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
-      (response) => {
-        let addCrit3 = new CriteriaObj();
-        addCrit3.DataType = "text";
-        addCrit3.propName = "rbt.JOB_TITLE_CODE";
-        addCrit3.restriction = AdInsConstant.RestrictionIn;
-        addCrit3.listValue = [response.GsValue];
-        this.arrAddCrit.push(addCrit3);
-      }
-    );
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
+      });
   }
 
   ChangeNumOfInstallmentTenor() {

@@ -1,6 +1,6 @@
+import { AppDlrFncng } from "app/shared/model/app-data/app-dlr-fncng.model";
+import { AppAttrContentObj } from "app/shared/model/app-attr-content/app-attr-content-obj.model";
 
-import { AppDlrFncng } from "app/shared/model/AppData/AppDlrFncng.Model";
-import { AppAttrContentObj } from "app/shared/model/AppAttrContent/AppAttrContentObj.Model";
 
 export class SalesInfoObjX {
     AppId: number;

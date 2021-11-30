@@ -136,7 +136,7 @@
   "Documentation": "Documentation",
   "Support": "Support",
   "Sales Information": "MO Information",
-  "Sales Officer": "MO's Officer",
+  "Sales Officer": "Marketing Officer",
   "Sales Supervisor": "MO's Supervisor",
   "Sales Notes": "MO's Notes",
   "Sales Code": "MO Code",
@@ -144,5 +144,6 @@
   "Sales Office Name": "MO Office Name",
   "Sales Officer Code": "MO Code",
   "Sales Officer Name": "MO Name",
-  "Tenor": "TENOR (IN MONTHS)"
+  "Tenor": "TENOR (IN MONTHS)",
+  "Insurance Length" : "Insurance Length (In Months)"
 }

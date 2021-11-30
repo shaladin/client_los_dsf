@@ -3,9 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResAppCustForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResAppCustForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { environment } from 'environments/environment';
 

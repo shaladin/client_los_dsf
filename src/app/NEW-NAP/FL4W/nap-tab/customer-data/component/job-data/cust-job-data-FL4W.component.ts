@@ -3,24 +3,24 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResListKeyValueObj } from 'app/shared/model/response/generic/res-list-key-value-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 
 @Component({
   selector: 'app-cust-job-data-FL4W',

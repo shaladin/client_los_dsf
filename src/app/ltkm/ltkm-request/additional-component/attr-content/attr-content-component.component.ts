@@ -5,11 +5,11 @@ import { ControlContainer, FormArray, FormBuilder, FormGroup, FormGroupDirective
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
-import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { LtkmAttrContent } from 'app/shared/model/LTKM/LtkmAttrContent.Model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { AttrContent } from 'app/shared/model/cust-completion/attr-content.model';
+import { RefAttr } from 'app/shared/model/cust-completion/ref-attr.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { LtkmAttrContent } from 'app/shared/model/ltkm/ltkm-attr-content.model';
 import { environment } from 'environments/environment';
 @Component({
     selector: 'app-ltkm-attr-content-component',
@@ -69,7 +69,7 @@ export class LtkmAttrContentComponentComponent implements OnInit {
     }
 
     SplitAttrListValue(value: string) {
-        return value.split(";");
+        return value.split(";").sort();
     }
     getLookUp(e, AttrCode: string) {
         this.parentForm['controls'][this.identifier]["controls"][AttrCode].patchValue({

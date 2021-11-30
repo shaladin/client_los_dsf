@@ -5,10 +5,10 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ReqGetPurchaseOrderHDetailObj } from 'app/shared/model/Request/PurchaseOrder/ReqPOObj.model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
-import { AgrmntFinDataObj } from 'app/shared/model/AgrmntFinData.Model';
+import { ReqGetPurchaseOrderHDetailObj } from 'app/shared/model/request/purchase-order/req-po-obj.model';
+import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { PurchaseOrderHObj } from 'app/shared/model/purchase-order-h-obj.model';
+import { AgrmntFinDataObj } from 'app/shared/model/agrmnt-fin-data.model';
 
 @Component({
   selector: 'app-view-purchase-order-multi-asset-detail',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppAssetOplObj } from 'app/shared/model/AppAssetOplObj.Model';
+import { AppAssetOplObj } from 'app/shared/model/app-asset-opl-obj.model';
 
 @Component({
   selector: 'app-asset-opl-main-info',

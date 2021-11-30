@@ -5,22 +5,22 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ActivatedRoute } from '@angular/router';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { AppCustGrpObj } from 'app/shared/model/app-cust-grp-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 
 @Component({
   selector: 'app-cust-detail-company-x',

@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
-import { AgrmntFeeObj } from 'app/shared/model/AgrmntFeeObj.Model';
-import { AgrmntSubsidyObj } from 'app/shared/model/AgrmntSubsidyObj.Model';
-import { AgrmntFinDataObj } from 'app/shared/model/AgrmntFinData.Model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { AgrmntFeeObj } from 'app/shared/model/agrmnt-fee-obj.model';
+import { AgrmntSubsidyObj } from 'app/shared/model/agrmnt-subsidy-obj.model';
+import { AgrmntFinDataObj } from 'app/shared/model/agrmnt-fin-data.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-agrmnt-financial',
@@ -24,6 +25,7 @@ export class AgrmntFinancialComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  readonly BizTemplateCodeCfna: string = CommonConstant.CFNA;
   ngOnInit() {
     this.getFinancialData();
   }

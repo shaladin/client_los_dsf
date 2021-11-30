@@ -4,15 +4,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { LifeInsObj } from 'app/shared/model/LifeInsObj.Model';
-import { LifeInsDObj } from 'app/shared/model/LifeInsDObj.Model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { LifeInsObj } from 'app/shared/model/life-ins-obj.model';
+import { LifeInsDObj } from 'app/shared/model/life-ins-d-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppLifeInsRuleObj } from 'app/shared/model/AppLifeIns/AppLifeInsRuleObj.Model';
-import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AppLifeInsRuleObj } from 'app/shared/model/app-life-ins/app-life-ins-rule-obj.model';
+import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/request/vendor/req-vendor.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-life-insurance-data',

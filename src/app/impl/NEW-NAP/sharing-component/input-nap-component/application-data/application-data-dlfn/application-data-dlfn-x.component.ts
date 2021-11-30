@@ -1,37 +1,39 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {Validators, FormBuilder} from '@angular/forms';
-import {RefMasterObj} from 'app/shared/model/RefMasterObj.Model';
-import {SalesInfoObjX} from 'app/impl/shared/model/SalesInfoObjX.Model';
-import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
-import {AdInsConstant} from 'app/shared/AdInstConstant';
-import {InputLookupObj} from 'app/shared/model/InputLookupObj.Model';
-import {environment} from 'environments/environment';
-import {CriteriaObj} from 'app/shared/model/CriteriaObj.model';
-import {CommonConstant} from 'app/shared/constant/CommonConstant';
-import {URLConstant} from 'app/shared/constant/URLConstant';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {NapAppCrossObj} from 'app/shared/model/NapAppCrossObj.Model';
-import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
-import {MouCustDlrFinObj} from 'app/shared/model/moucustdlrfin.model';
-import {AppDlrFncng} from 'app/shared/model/AppData/AppDlrFncng.Model';
-import {KeyValueObj} from 'app/shared/model/KeyValue/KeyValueObj.model';
-import {ResGetListMouByAppAndTypeObj} from 'app/shared/model/Response/MOU/MouCust/ResGetListMouByAppAndTypeObj.model';
-import {ResApplicationDataObj} from 'app/shared/model/Response/ApplicationData/ResApplicationDataObj.model';
-import {RefPayFreqObj} from 'app/shared/model/RefPayFreqObj.model';
-import {RefEmpObj} from 'app/shared/model/RefEmpObj.Model';
-import {AppObj} from 'app/shared/model/App/App.Model';
-import {ProdOfferingDObj} from 'app/shared/model/Product/ProdOfferingDObj.model';
-import {AppCustBankAccObj} from 'app/shared/model/AppCustBankAccObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Validators, FormBuilder } from '@angular/forms';
+import { SalesInfoObjX } from 'app/impl/shared/model/SalesInfoObjX.Model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { environment } from 'environments/environment';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { DatePipe } from '@angular/common';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResGetListMouByAppAndTypeObj } from 'app/shared/model/response/mou/mou-cust/res-get-list-mou-by-app-and-type-obj.model';
+import { ResApplicationDataObj } from 'app/shared/model/response/application-data/res-application-data-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { RefEmpObj } from 'app/shared/model/ref-emp-obj.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { AppDlrFncng } from 'app/shared/model/app-data/app-dlr-fncng.model';
+import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 
 @Component({
   selector: 'app-application-data-dlfn-x',
@@ -40,6 +42,7 @@ import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 export class ApplicationDataDlfnXComponent implements OnInit {
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode: string;
@@ -129,10 +132,11 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   GetBankInfo: any;
   appCustId: number;
   IsMouSelect: boolean = false;
-  wopCodeAutoDebit:string = CommonConstant.WopAutoDebit;
+  wopCodeAutoDebit: string = CommonConstant.WopAutoDebit;
   MouOsPlafond: number;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  MaxEffDt: Date;
   isMrCustTypeCompany: boolean = false;
   MasterCustType: string = "";
   MasterIdNoType: string = "";
@@ -140,7 +144,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   isDdlIdTypeReady: boolean = false;
   isShowAppCustBankAcc: boolean = false;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -167,7 +171,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.GetCrossInfoData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
 
-    if(this.mode =='edit'){
+    if (this.mode == 'edit') {
       this.SalesAppInfoForm.patchValue({
         MouCustId: this.resultData.MouCustId,
         SalesNotes: this.resultData.SalesNotes,
@@ -199,6 +203,8 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     } else {
       this.isShowAppCustBankAcc = false;
     }
+    this.checkIsTopDaysNull();
+
   }
 
 
@@ -206,6 +212,18 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+  }
+
+  checkIsTopDaysNull() {
+    console.log(this.SalesAppInfoForm.controls.TopDays.value)
+    if(this.SalesAppInfoForm.controls.TopDays.value == 0){
+      this.SalesAppInfoForm.controls.IntrstRatePrcnt.disable();
+      this.SalesAppInfoForm.patchValue({
+        IntrstRatePrcnt: 0
+      });
+    }else{
+      this.SalesAppInfoForm.controls.IntrstRatePrcnt.enable();
     }
   }
 
@@ -375,7 +393,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
             TopBased: this.allTopBased[0].Key
           });
         } else {
-          this.http.post(URLConstant.GetAppDlrFinByAppId, {Id: this.AppId}).subscribe(
+          this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).subscribe(
             (responseEdit) => {
               this.SalesAppInfoForm.patchValue({
                 TopBased: responseEdit['TopBased']
@@ -399,9 +417,8 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (response) => {
         this.allInType = response[CommonConstant.ReturnObj];
         // to be comment, 17 september 2021 richard, utk wop sifatnya mandatory pada mou, nilainya akan di set pada SetPayFreq(on init true/false), jika tdk ada mou sama skali, baru set default
-        if(!this.SalesAppInfoForm.controls.MouCustId.value)
-        {
-           this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
+        if (!this.SalesAppInfoForm.controls.MouCustId.value) {
+          this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
         }
         // if (this.mode != 'edit') {
         //   this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
@@ -412,11 +429,10 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (response) => {
         this.allWOP = response[CommonConstant.ReturnObj];
         // to be comment, 17 september 2021 richard, utk wop sifatnya mandatory pada mou, nilainya akan di set pada SetPayFreq(on init true/false), jika tdk ada mou sama skali, baru set default
-        if(!this.SalesAppInfoForm.controls.MouCustId.value)
-        {
-            this.SalesAppInfoForm.patchValue({
-              MrWopCode: this.allWOP[0].Key
-            });
+        if (!this.SalesAppInfoForm.controls.MouCustId.value) {
+          this.SalesAppInfoForm.patchValue({
+            MrWopCode: this.allWOP[0].Key
+          });
         }
         // if (this.mode != 'edit') {
         //   this.SalesAppInfoForm.patchValue({
@@ -533,7 +549,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   }
 
   changePaymentFreq() {
-    const obj = {Code: this.SalesAppInfoForm.controls.PayFreqCode.value};
+    const obj = { Code: this.SalesAppInfoForm.controls.PayFreqCode.value };
     this.http.post<RefPayFreqObj>(URLConstant.GetRefPayFreqByPayFreqCode, obj).subscribe(
       (response) => {
         this.payFreqObj = response;
@@ -661,18 +677,22 @@ export class ApplicationDataDlfnXComponent implements OnInit {
 
     this.makeLookUpObj();
   }
-  
+
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
-      (response) => {
-        let addCrit3 = new CriteriaObj();
-        addCrit3.DataType = "text";
-        addCrit3.propName = "rbt.JOB_TITLE_CODE";
-        addCrit3.restriction = AdInsConstant.RestrictionIn;
-        addCrit3.listValue = [response.GsValue];
-        this.arrAddCrit.push(addCrit3);
-      }
-    );
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
+      });
   }
 
   async loadData() {
@@ -751,7 +771,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  SaveForm(): void {
+  async SaveForm(): Promise<void> {
     this.salesAppInfoObj.MouCustId = this.SalesAppInfoForm.controls.MouCustId.value;
     if (this.salesAppInfoObj.MouCustId == 0 || this.salesAppInfoObj.MouCustId == null) {
       this.toastr.errorMessage(ExceptionConstant.NO_MOU);
@@ -768,6 +788,25 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         this.toastr.errorMessage('Tenor Needs to be multiple of ' + this.payFreqObj.PayFreqVal);
         return
       }
+    }
+
+    await this.http.post(URLConstant.GetMouCustById, { Id: this.SalesAppInfoForm.controls.MouCustId.value }).toPromise().then(
+      async (result: MouCustObj) => {
+        const endDt = new Date(result.EndDt);
+        this.MaxEffDt = new Date(result.EndDt);
+        let Tenor = this.SalesAppInfoForm.controls.Tenor.value;
+        //DF selalu arrear
+        this.MaxEffDt.setMonth(endDt.getMonth() - Tenor)
+        if (this.MaxEffDt.getDate() != endDt.getDate()) { //untuk perhitungan bulan kabisat / tgl 31 ke tgl 30
+          this.MaxEffDt.setDate(0);
+        }
+
+      }
+    );
+    const businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    if (businessDt.getTime() > this.MaxEffDt.getTime()) {
+      this.toastr.warningMessage('Tenor Exceeded MOU Expired Date');
+      return;
     }
 
     if (this.SalesAppInfoForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
@@ -797,12 +836,12 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     this.salesAppInfoObj.AppDlrFncngObj.TopDays = this.SalesAppInfoForm.controls.TopDays.value;
     this.salesAppInfoObj.AppDlrFncngObj.TopInterestRatePrcnt = this.SalesAppInfoForm.controls.TopIntrstRatePrcnt.value;
     this.salesAppInfoObj.AppDlrFncngObj.InterestRatePrcnt = this.SalesAppInfoForm.controls.IntrstRatePrcnt.value;
-    this.http.post(URLConstant.GetMouCustDlrFindById, {Id: this.salesAppInfoObj.MouCustId}).subscribe(
+    this.http.post(URLConstant.GetMouCustDlrFindById, { Id: this.salesAppInfoObj.MouCustId }).subscribe(
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng['MouCustDlrFncngId'];
 
         // if (this.SalesAppInfoForm.controls.MrWopCode.value == this.wopCodeAutoDebit) {
-          this.SaveAppOtherInfo();
+        this.SaveAppOtherInfo();
         // }
 
         let appXobj = {};
@@ -963,12 +1002,11 @@ export class ApplicationDataDlfnXComponent implements OnInit {
           (response) => {
             this.listCustBankAcc = response.ReturnObject["AppCustBankAccObjs"];
 
-            var currAppOthInfoBank = this.listCustBankAcc.find(x => 
-              x.BankCode == this.AppOthInfoBank.BankCode && x.BankBranch == this.AppOthInfoBank.BankBranch && 
+            var currAppOthInfoBank = this.listCustBankAcc.find(x =>
+              x.BankCode == this.AppOthInfoBank.BankCode && x.BankBranch == this.AppOthInfoBank.BankBranch &&
               x.BankAccNo == this.AppOthInfoBank.BankAccNo && x.BankAccName == this.AppOthInfoBank.BankAccName
             );
-            if(currAppOthInfoBank && currAppOthInfoBank.AppCustBankAccId)
-            {
+            if (currAppOthInfoBank && currAppOthInfoBank.AppCustBankAccId) {
               this.SalesAppInfoForm.patchValue({
                 CustBankAcc: currAppOthInfoBank.AppCustBankAccId
               });
@@ -978,7 +1016,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       });
   }
 
-  AppOthInfoBank : {BankCode:string,BankBranch:string,BankAccNo:string, BankAccName:string,AppCustId: number} = {BankCode:'', BankBranch:'', BankAccNo:'', BankAccName:'', AppCustId: 0};
+  AppOthInfoBank: { BankCode: string, BankBranch: string, BankAccNo: string, BankAccName: string, AppCustId: number } = { BankCode: '', BankBranch: '', BankAccNo: '', BankAccName: '', AppCustId: 0 };
   async GetBankAccCust() {
     await this.http.post(URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).toPromise().then(
       (responseAoi) => {

@@ -73,9 +73,9 @@ import { GoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-proces
 import { GoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/go-live-approval-detail/go-live-approval-detail-x.component";
 import { EndDateForGoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-paging/end-date-go-live-approval-paging-x.component";
 import { EndDateForGoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/end-date-go-live-approval-detail/end-date-go-live-approval-detail-x.component";
-import {InvoiceVerifDetailXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
-import {InvoiceVerifDetailDFXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF-x.component';
-import {InvoiceVerifDetailListOfInvoiceXComponent} from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
+import { InvoiceVerifDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-x.component';
+import { InvoiceVerifDetailDFXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF-x.component';
+import { InvoiceVerifDetailListOfInvoiceXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice-x.component';
 import { PurchaseOrderPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging/purchase-order-paging-x.component";
 import { PurchaseOrderDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail/purchase-order-detail-x.component";
 import { PurchaseOrderXComponent } from "app/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order/purchase-order-x.component";
@@ -90,7 +90,9 @@ import { DocSignerDetailXComponent } from "app/impl/NEW-NAP/business-process/adm
 import { DocSignerPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-paging/doc-signer-paging-x.component";
 import { CreateDoMultiAssetXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/create-do-multi-asset-x/create-do-multi-asset-x.component";
 import { DoAssetDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/do-asset-detail-x/do-asset-detail-x.component";
-import { AdInsSharedModule } from "app/components/adins-module/AdInsShared.Module";
+import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { DeliveryOrderAssetOwnerComponent } from './delivery-order-component/delivery-order-asset-owner/delivery-order-asset-owner.component';
+import { DeliveryOrderAssetLocationComponent } from './delivery-order-component/delivery-order-asset-location/delivery-order-asset-location.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -102,7 +104,8 @@ export const customCurrencyMaskConfig = {
   suffix: "",
   thousands: ",",
   nullable: false,
-  inputMode: CurrencyMaskInputMode.NATURAL };
+  inputMode: CurrencyMaskInputMode.NATURAL
+};
 
 @NgModule({
   imports: [
@@ -194,7 +197,9 @@ export const customCurrencyMaskConfig = {
     NewPurchaseOrderDetailXComponent,
     PoEntryXComponent,
     CreateDoMultiAssetXComponent,
-    DoAssetDetailXComponent
+    DoAssetDetailXComponent,
+    DeliveryOrderAssetOwnerComponent,
+    DeliveryOrderAssetLocationComponent
   ],
   providers: [
     NGXToastrService,

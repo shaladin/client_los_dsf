@@ -24,8 +24,8 @@
                 <label class="col-md-4  " translate>{{this.CrdApvMainDataObj?.CustName}}</label>
             </div>
             <div class="form-group row">
-                <label class="col-md-2  adInsLabel" translate>Agreement No</label>
-                <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('agr')">
+                <label class="col-md-2  adInsLabel" *ngIf = "this.AgrmntId > 0" translate>Agreement No</label>
+                <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('agr')" *ngIf = "this.AgrmntId > 0">
                 {{this.CrdApvMainDataObj?.AgrmntNo}}
                 </a>
                 <label class="col-md-2  adInsLabel" translate>Credit Approval Result Expired Date</label>

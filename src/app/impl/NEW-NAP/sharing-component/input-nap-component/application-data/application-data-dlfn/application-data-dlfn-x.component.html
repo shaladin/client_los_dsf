@@ -118,7 +118,7 @@
                         <div class="form-group row">
                           <label class="col-md-3 adins-required-label" translate>Term Of Payment (In Days)</label>
                           <div class="col-md-9">
-                            <input type="text" class="form-control adInsInput width-30-per" formControlName="TopDays"
+                            <input type="text" class="form-control adInsInput width-30-per" formControlName="TopDays" (focusout)='checkIsTopDaysNull()'
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopDays.invalid }">
                             <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopDays"
                               [submit]="enjiForm.submitted">
@@ -469,7 +469,7 @@
                     </div>
 
                     <div class="form-actions right">
-                      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                      <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
                         <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
                       </button>
                       <button type="submit" class="btn btn-raised btn-primary">

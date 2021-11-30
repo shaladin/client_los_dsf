@@ -5,18 +5,17 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
 import { URLConstantX } from '../shared/constant/URLConstantX';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
+import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 @Component({
   selector: 'app-trial-calculation-x',
@@ -177,7 +176,6 @@ export class TrialCalculationXComponent implements OnInit {
     this.InputLookupProductOfferingObj.urlEnviPaging = environment.losUrl + "/v1";
     this.InputLookupProductOfferingObj.pagingJson = "./assets/uclookup/lookupProductOffering.json";
     this.InputLookupProductOfferingObj.genericJson = "./assets/uclookup/lookupProductOffering.json";
-    this.InputLookupProductOfferingObj.isReadonly = false;
     this.InputLookupProductOfferingObj.addCritInput = bizTmpltCrit;
   }
 

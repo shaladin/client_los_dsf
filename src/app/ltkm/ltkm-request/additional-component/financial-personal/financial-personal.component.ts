@@ -9,11 +9,11 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { LtkmCustBankAccObj } from 'app/shared/model/LTKM/LtkmCustBankAccObj.Model';
-import { LtkmCustPersonalFinDataObj } from 'app/shared/model/LTKM/LtkmCustPersonalFinDataObj.Model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppCustPersonalFinDataObj } from 'app/shared/model/app-cust-personal-fin-data-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { LtkmCustBankAccObj } from 'app/shared/model/ltkm/ltkm-cust-bank-acc-obj.model';
+import { LtkmCustPersonalFinDataObj } from 'app/shared/model/ltkm/ltkm-cust-personal-fin-data-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({

@@ -4,38 +4,38 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { LeadObj } from 'app/shared/model/Lead.Model';
-import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
-import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { GenerateAppAttrContentObj } from 'app/shared/model/AppAttrContent/GenerateAppAttrContentObj.Model';
-import { AppAttrContentObj } from 'app/shared/model/AppAttrContent/AppAttrContentObj.Model';
+import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { LeadObj } from 'app/shared/model/lead.model';
+import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
+import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
 
 @Component({
   selector: 'app-application-data-FL4W',
@@ -624,14 +624,19 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
-      (response) => {
-        var addCrit3 = new CriteriaObj();
-        addCrit3.DataType = "text";
-        addCrit3.propName = "rbt.JOB_TITLE_CODE";
-        addCrit3.restriction = AdInsConstant.RestrictionIn;
-        addCrit3.listValue = [response.GsValue];
-        this.arrAddCrit.push(addCrit3);
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
       });
   }
 

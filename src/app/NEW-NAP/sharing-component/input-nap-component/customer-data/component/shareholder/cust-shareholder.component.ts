@@ -3,22 +3,22 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
+import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/app-cust-company-mgmnt-shrholder-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { RegexService } from 'app/shared/services/regex.services';
-import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
-import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-cust-shareholder',

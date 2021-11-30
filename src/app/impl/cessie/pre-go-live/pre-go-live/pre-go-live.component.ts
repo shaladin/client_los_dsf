@@ -3,25 +3,25 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { environment } from 'environments/environment';
-import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
-import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { ListAppTCObj } from 'app/shared/model/list-app-tc-obj.model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 
 @Component({
   selector: 'cessie-sharing-pre-go-live',

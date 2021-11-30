@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/app-cust-company-legal-doc-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 
 @Component({
   selector: 'app-crd-rvw-legal-doc',
