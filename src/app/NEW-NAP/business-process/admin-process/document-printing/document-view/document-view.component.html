@@ -15,7 +15,7 @@
     <div class="card-body">
       <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
       <div class="px-3">
-        <lib-ucSubsection *ngIf="AgrmntDocObj.length > 0" [id]="'Hierarchy'" [title]="'List Document'" [panel]="'ListDocId'">
+        <lib-ucSubsection *ngIf="AgrmntDocObj?.length > 0" [id]="'Hierarchy'" [title]="'List Document'" [panel]="'ListDocId'">
         </lib-ucSubsection>
         <div id="ListDocId">
           <table class="table table-responsive-md text-center table-hover">
