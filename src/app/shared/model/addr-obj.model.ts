@@ -18,6 +18,7 @@ export class AddrObj {
     FaxArea: string;
     Fax: string;
     MrHouseOwnershipCode: string;
+    Zipcode: string;
     SubZipcode: string;
     StayLength: number;
     RowVersion: string;
@@ -41,6 +42,7 @@ constructor() {
     this.FaxArea = '';
     this.Fax = '';
     this.MrHouseOwnershipCode = '';
+    this.Zipcode = '';
     this.SubZipcode = '';
     this.StayLength = 0;
     this.RowVersion = '';

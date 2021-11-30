@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.4.15-13",
+  "version": "1.4.15-37",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -13,6 +13,7 @@
     "integration": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=integration_env --base-href /LOS_INTEGRATION/",
     "stresstest": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=test_env --base-href /LOS_FE/",
     "OPL": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=OPL --aot --base-href /ROS_FE/",
+    "1_4_16": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=1_4_16_env --base-href /1.4.16/LOS/",
     "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
     "test": "ng test",
     "lint": "ng lint",

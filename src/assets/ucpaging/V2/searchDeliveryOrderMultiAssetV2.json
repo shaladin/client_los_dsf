@@ -42,10 +42,10 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
+            "type": "officeRoleCodes",
             "datatype": "text",
-            "name": "DOD.ORI_OFFICE_CODE",
-            "id": "OfficeNameId",
+            "name": "TaskOfficeCode",
+            "id": "OfficeCodeId",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
@@ -54,7 +54,7 @@
             "url": "",
             "environment": "FOU",
             "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "Office Name",
+            "label": "Office",
             "items": [],
             "itemsUrl": []
         },

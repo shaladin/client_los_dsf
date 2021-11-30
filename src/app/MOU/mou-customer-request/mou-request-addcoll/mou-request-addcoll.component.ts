@@ -141,6 +141,7 @@ export class MouRequestAddcollComponent implements OnInit {
     AssetTypeCode: ['', [Validators.required]],
     CollateralValueAmt: [0, [Validators.required]],
     CollateralPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
+    MaxCollPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
     FullAssetCode: [''],
     AssetCategoryCode: [''],
     OwnerName: ['', [Validators.required]],
@@ -390,11 +391,15 @@ export class MouRequestAddcollComponent implements OnInit {
         CollateralPortionAmt: 0,
         CollateralPrcnt: 0
       });
+      this.AddCollForm.controls.MaxCollPrcnt.setValidators([Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]);
+      this.AddCollForm.controls.MaxCollPrcnt.updateValueAndValidity();
     }
     else {
       this.AddCollForm.patchValue({
         CollateralPortionAmt: CollateralPortionAmt
       });
+      this.AddCollForm.controls.MaxCollPrcnt.setValidators([Validators.required, Validators.min(this.AddCollForm.controls.CollateralPrcnt.value), Validators.max(this.maxPrcnt)])
+      this.AddCollForm.controls.MaxCollPrcnt.updateValueAndValidity();
     }
   }
 
@@ -406,11 +411,15 @@ export class MouRequestAddcollComponent implements OnInit {
         CollateralPortionAmt: 0,
         CollateralPrcnt: 0
       });
+      this.AddCollForm.controls.MaxCollPrcnt.setValidators([Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]);
+      this.AddCollForm.controls.MaxCollPrcnt.updateValueAndValidity();
     }
     else {
       this.AddCollForm.patchValue({
         CollateralPrcnt: CollateralPrcnt
       });
+      this.AddCollForm.controls.MaxCollPrcnt.setValidators([Validators.required, Validators.min(this.AddCollForm.controls.CollateralPrcnt.value), Validators.max(this.maxPrcnt)])
+      this.AddCollForm.controls.MaxCollPrcnt.updateValueAndValidity();
     }
   }
 
@@ -582,7 +591,6 @@ export class MouRequestAddcollComponent implements OnInit {
     if (pageType == 'AddExisting') {
       await this.http.post(URLConstant.GetListMouCustCollateralActiveByCustNo, { TrxNo: this.custNo }).toPromise().then(
         (response) => {
-          console.log(response);
           if(response["ReturnObject"].length < 1){
             this.isAddExistingOK = false;
           }
@@ -715,7 +723,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.collateralObj = response['MouCustCollateral'];
           this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
-          this.maxPrcnt = 100 - e.SumCollateralPrcnt;
+          this.maxPrcnt = this.collateralObj.MaxCollPrcnt - e.SumCollateralPrcnt;
           this.CollateralPortionTypeChange();
 
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
@@ -774,6 +782,7 @@ export class MouRequestAddcollComponent implements OnInit {
             CollateralValueAmt: this.collateralObj.CollateralValueAmt,
             CollateralPrcnt: this.maxPrcnt,
             CollateralPortionAmt: this.collateralObj.CollateralPortionAmt,
+            MaxCollPrcnt: this.collateralObj.MaxCollPrcnt,
             CollateralNotes: this.collateralObj.CollateralNotes,
             ManufacturingYear: this.collateralObj.ManufacturingYear,
             RowVersionCollateral: this.collateralObj.RowVersion,
@@ -808,6 +817,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.AddCollForm.controls.CopyFromLegal.disable();
           this.AddCollForm.controls.CopyToOwnerLocation.disable();
           this.AddCollForm.controls.CollateralValueAmt.disable();
+          this.AddCollForm.controls.MaxCollPrcnt.disable();
           this.AddCollForm.controls.FullAssetCode.disable();
           this.AddCollForm.controls.AssetCategoryCode.disable();
           this.AddCollForm.controls.OwnerName.disable();
@@ -979,6 +989,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.mouCustCollateralObj.CollateralPrcnt = this.AddCollForm.controls.CollateralPrcnt.value;
     this.mouCustCollateralObj.CollateralPortionAmt = this.AddCollForm.controls.CollateralPortionAmt.value;
+    this.mouCustCollateralObj.MaxCollPrcnt = this.AddCollForm.controls.MaxCollPrcnt.value;
     this.mouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
     this.mouCustCollateralObj.ManufacturingYear = this.AddCollForm.controls.ManufacturingYear.value;
 
@@ -1091,6 +1102,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.CopyFromLegal.disable();
       this.AddCollForm.controls.CopyToOwnerLocation.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
+      this.AddCollForm.controls.MaxCollPrcnt.disable();
       this.AddCollForm.controls.FullAssetCode.disable();
       this.AddCollForm.controls.AssetCategoryCode.disable();
       this.AddCollForm.controls.OwnerName.disable();
@@ -1182,6 +1194,7 @@ export class MouRequestAddcollComponent implements OnInit {
           CollateralValueAmt: this.collateralObj.CollateralValueAmt,
           CollateralPrcnt: this.collateralObj.CollateralPrcnt,
           CollateralPortionAmt: this.collateralObj.CollateralPortionAmt,
+          MaxCollPrcnt: this.collateralObj.MaxCollPrcnt,
           CollateralNotes: this.collateralObj.CollateralNotes,
           ManufacturingYear: this.collateralObj.ManufacturingYear,
           RowVersionCollateral: this.collateralObj.RowVersion,
@@ -1197,6 +1210,10 @@ export class MouRequestAddcollComponent implements OnInit {
           OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
+
+        this.AddCollForm.controls.MaxCollPrcnt.setValidators([Validators.required, Validators.min(this.AddCollForm.controls.CollateralPrcnt.value), Validators.max(this.maxPrcnt)])
+        this.AddCollForm.controls.MaxCollPrcnt.updateValueAndValidity();
+
         this.CollateralPortionTypeChange();
         this.GenerateCollateralAttr(false, MouCustCollId, !isAddEdit);
 
@@ -1277,6 +1294,7 @@ export class MouRequestAddcollComponent implements OnInit {
       AssetTypeCode: ['', [Validators.required]],
       CollateralValueAmt: [0, [Validators.required]],
       CollateralPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
+      MaxCollPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
       FullAssetCode: [''],
       AssetCategoryCode: [''],
       OwnerName: ['', [Validators.required]],

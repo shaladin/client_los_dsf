@@ -122,7 +122,7 @@
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady"
-                [AppId]="appId" [showCancel]="showCancel" (OutputMultiAsset)="NextStep('INS')"
+                [AppId]="appId" [showCancel]="showCancel" [BizTemplateCode]="BizTemplateCode" (OutputMultiAsset)="NextStep('INS')"
                 (outputCancel)="Cancel()">
               </app-multi-asset-data>
             </div>

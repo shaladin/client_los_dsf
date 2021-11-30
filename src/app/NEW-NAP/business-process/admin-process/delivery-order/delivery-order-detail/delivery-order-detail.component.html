@@ -156,6 +156,18 @@
                 </div>
               </div>
             </div>
+            
+            <app-delivery-order-asset-owner *ngIf="isOwnerReady" [CustType]="CustType" [AppId]="AppId" [AppCustObj]="AppCustObj" 
+              [AppCustAddrObj]="AppCustAddrObj" [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" 
+              [parentForm]="DeliveryOrderForm" [identifier]="'AssetOwner'" [enjiForm]="enjiForm">
+            </app-delivery-order-asset-owner>
+            
+            <app-delivery-order-asset-location *ngIf="isOwnerReady" [AppCustAddrObj]="AppCustAddrObj" 
+              [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" [parentForm]="DeliveryOrderForm" 
+              [identifier]="'AssetLocation'" [enjiForm]="enjiForm">
+            </app-delivery-order-asset-location>
+
+            
             <div *ngIf="this.MrAssetConditionCode != 'USED'">
               <lib-ucSubsection [id]="'MainDocumentLetterId'" [title]="'Main Document Letter'"
                 [panel]="'MainDocumentLetter'">

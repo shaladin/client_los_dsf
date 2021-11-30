@@ -149,7 +149,7 @@
       </div>
     </div>
     <br>
-    <div class="form-group row" *ngIf="BizTemplateCode != 'DLFN'">
+    <div class="form-group row" [hidden]="BizTemplateCode == BizTemplateCodeCfna" *ngIf="BizTemplateCode != 'DLFN'">
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
@@ -161,7 +161,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" [hidden]="BizTemplateCode == BizTemplateCodeCfna" *ngIf="BizTemplateCode != 'DLFN'">
+      <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> TDP </label>
@@ -171,7 +171,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" *ngIf="BizTemplateCode != 'DLFN'">
+      <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'" translate> DP Asset - Subsidy DP </label>
@@ -182,7 +182,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" [hidden]="BizTemplateCode == BizTemplateCodeCfna" *ngIf="BizTemplateCode != 'DLFN'">
+      <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> TDP Paid at MF </label>
