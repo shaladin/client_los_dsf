@@ -158,6 +158,15 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       SerialNo4: this.AppAssetObj.SerialNo4,
       SerialNo5: this.AppAssetObj.SerialNo5
     });
+
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAgrStepToCheckSerialMandatoryEaaa }).toPromise().then(
+      (response: GeneralSettingObj) => {
+        this.ListAgrStepToCheckMandatory = response["GsValue"].split(',')
+        if(this.ListAgrStepToCheckMandatory.includes(this.AgrmntCurrStep) == true)
+        {
+          this.IsCheckSerialMandatory = true;
+        }
+      });
     
     if(this.EditAppAssetForm.controls.AssetColor.value != null && this.EditAppAssetForm.controls.AssetColor.value != "")
     {
@@ -165,26 +174,30 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       this.EditAppAssetForm.controls.AssetColor.setValidators(Validators.required);
       this.EditAppAssetForm.controls.AssetColor.updateValueAndValidity();
     }
-    // if(this.SerialNoLabelMandatory[0]){
-    //   this.EditAppAssetForm.controls.SerialNo1.setValidators(Validators.required);
-    //   this.EditAppAssetForm.controls.SerialNo1.updateValueAndValidity();
-    // }
-    // if(this.SerialNoLabelMandatory[1]){
-    //   this.EditAppAssetForm.controls.SerialNo2.setValidators(Validators.required);
-    //   this.EditAppAssetForm.controls.SerialNo2.updateValueAndValidity();
-    // }
-    // if(this.SerialNoLabelMandatory[2]){
-    //   this.EditAppAssetForm.controls.SerialNo3.setValidators(Validators.required);
-    //   this.EditAppAssetForm.controls.SerialNo3.updateValueAndValidity();
-    // }
-    // if(this.SerialNoLabelMandatory[3]){
-    //   this.EditAppAssetForm.controls.SerialNo4.setValidators(Validators.required);
-    //   this.EditAppAssetForm.controls.SerialNo4.updateValueAndValidity();
-    // }
-    // if(this.SerialNoLabelMandatory[4]){
-    //   this.EditAppAssetForm.controls.SerialNo5.setValidators(Validators.required);
-    //   this.EditAppAssetForm.controls.SerialNo5.updateValueAndValidity();
-    // }
+
+    if(this.IsCheckSerialMandatory)
+    {
+      if(this.SerialNoLabelMandatory[0]){
+        this.EditAppAssetForm.controls.SerialNo1.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo1.updateValueAndValidity();
+      }
+      if(this.SerialNoLabelMandatory[1]){
+        this.EditAppAssetForm.controls.SerialNo2.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo2.updateValueAndValidity();
+      }
+      if(this.SerialNoLabelMandatory[2]){
+        this.EditAppAssetForm.controls.SerialNo3.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo3.updateValueAndValidity();
+      }
+      if(this.SerialNoLabelMandatory[3]){
+        this.EditAppAssetForm.controls.SerialNo4.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo4.updateValueAndValidity();
+      }
+      if(this.SerialNoLabelMandatory[4]){
+        this.EditAppAssetForm.controls.SerialNo5.setValidators(Validators.required);
+        this.EditAppAssetForm.controls.SerialNo5.updateValueAndValidity();
+      }
+    }
 
     await this.http.post(URLConstant.GetListRefChangeItem, {}).toPromise().then(
       (response) => {

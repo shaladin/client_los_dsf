@@ -126,6 +126,7 @@
               <input type="text" currencyMask class="form-control adInsInput text-right"
                 formControlName="CollateralValueAmt"
                 (keyup)="CollateralPortionTypeChange()"
+                (focusout)="UpdateValueCollateralPortionAmt()"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
