@@ -5,7 +5,7 @@ export class ReceiptDsfObj {
     KwitansiNo: string;
     TandaTerimaNo: string;
     AgrmntFacNo: string;
-    AgrmntFacDt: any;
+    AgrmntFacDt: Date;
     DocSignCol: string;
     PositionSignCol: string;
     OfficeCode: string;
@@ -19,7 +19,7 @@ export class ReceiptDsfObj {
         this.KwitansiNo = "";
         this.TandaTerimaNo = "";
         this.AgrmntFacNo = "";
-        this.AgrmntFacDt = Date.now;
+        this.AgrmntFacDt = new Date();
         this.DocSignCol = "";
         this.PositionSignCol = "";
         this.OfficeCode = "";
