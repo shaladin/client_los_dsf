@@ -104,7 +104,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
     var obj = {
       Id: this.ReturnHandlingHObj.AppId
     };
-    this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
+    this.http.post<AppFinDataObj>(URLConstantX.GetAppFinDataWithRuleByAppIdX, obj).subscribe(
       (response) => {
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
