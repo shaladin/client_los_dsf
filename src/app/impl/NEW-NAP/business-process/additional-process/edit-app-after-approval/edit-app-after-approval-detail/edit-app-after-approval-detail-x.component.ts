@@ -26,6 +26,7 @@ import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 
 @Component({
   selector: 'app-edit-app-after-approval-detail-x',
@@ -67,6 +68,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
   IsPOEdited: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   DDLReason;
+  AgrmntCurrStep: string;
   LobCode: string = "";
   AppId: number = 0;
   CustBankAccList: Array<Object> = new Array<Object>();
@@ -127,6 +129,11 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
   async getData() {
     let reqObj: GenericObj = new GenericObj();
     reqObj.Id = this.agrmntId;
+
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, reqObj).toPromise().then(
+      (response: AgrmntObj) => {
+        this.AgrmntCurrStep = response.AgrmntCurrStep;
+      });
 
     await this.http.post(URLConstant.GetAgrmntDataForEditAppAfterApprovalByAgrmntId, reqObj).toPromise().then(
       (response) => {
