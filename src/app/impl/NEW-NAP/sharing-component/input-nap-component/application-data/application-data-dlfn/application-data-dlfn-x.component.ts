@@ -576,7 +576,6 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   }
 
   CheckInstType() {
-    console.log('aaa')
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.isSingle = false;
       this.SalesAppInfoForm.controls.Tenor.enable();
