@@ -68,7 +68,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     SalesOfficerName: [''],
     MrInstTypeCode: [''],
     TopDays: ['', [Validators.pattern('^[0-9]+$')]],
-    Tenor: ['', [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
+    Tenor: ['', [Validators.pattern("^[0-9]+$"), Validators.required]],
     NumOfInst: [1],
     MrInstSchemeCode: [''],
     IsDisclosed: [false],
@@ -162,7 +162,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (response: any) => {
         this.listAllActivePayFreq = response[CommonConstant.ReturnObj];
       });
-
+      
     this.initCustBankAccDetail();
     this.initAddressCustBankAcc();
     await this.loadData();
@@ -590,7 +590,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
 
       if (this.mode != 'edit') {
-        this.SalesAppInfoForm.controls.Tenor.setValue(1);
+        this.SalesAppInfoForm.controls.Tenor.setValue(0);
       }
     }
 
@@ -672,6 +672,13 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     addCrit4.restriction = AdInsConstant.RestrictionIn;
     addCrit4.listValue = [this.resultData.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
+
+    let addCrit5 = new CriteriaObj();
+    addCrit5.DataType = "bit";
+    addCrit5.propName = "RUR.IS_ACTIVE";
+    addCrit5.restriction = AdInsConstant.RestrictionEq;
+    addCrit5.value = "1";
+    this.arrAddCrit.push(addCrit5);
 
     await this.GetGSValueSalesOfficer();
 
@@ -824,7 +831,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     if (this.salesAppInfoObj.MrInstTypeCode == CommonConstant.InstTypeSingle) {
       this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       this.salesAppInfoObj.NumOfInst = 1;
-      this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
+      // this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
       this.isSingle = true;
     } else {
       this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
@@ -889,7 +896,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         }
 
 
-
+        
         if (this.mode == 'add') {
           let obj = {
             RequestApplicationDataObj: this.salesAppInfoObj,

@@ -189,6 +189,20 @@ export class DocumentViewComponent implements OnInit {
         reportParamObj.paramValue = this.AgrmntId.toString();
         reportParamObj.paramAssignment = 1;
         this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
+        this.RdlcReport.ReportInfo.SubReports = new Array();
+
+        //if(environment.isCore){
+        //  this.RdlcReport.ReportInfo.SubReports = new Array();
+        // if(this.RdlcReport.ReportInfo.ReportName == "Kartu Tanda Penduduk"){
+        //   this.RdlcReport.ReportInfo.SubReports = [{
+        //     reportName: this.RdlcReport.ReportInfo.ReportName,
+        //     reportTemplateCode: "",
+        //     exportFormat: 0,
+        //     reportParameters: [reportParamObj],
+        //     subReports: []
+        //   }]
+        // }
+        //}
 
         // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
 
@@ -220,6 +234,7 @@ export class DocumentViewComponent implements OnInit {
       else {
         this.toastr.warningMessage(ExceptionConstant.NO_SIGNER_AVAILABLE);
       }
+
     }
     catch (error) {
       this.toastr.warningMessage(error);

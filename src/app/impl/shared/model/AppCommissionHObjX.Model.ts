@@ -22,6 +22,7 @@ export class AppCommissionHObjX{
     PenaltyAmt: number;
     TaxpayerNo: string;
     RowVersion: string;
+    MrIdTypeCode: string;
     ReservedField1: string;
     ReservedField2: string;
     ReservedField3: string;
@@ -29,6 +30,8 @@ export class AppCommissionHObjX{
     ReservedField5: string;
     ListappCommissionDObj: Array<AppCommissionDObjX>;
     ListAppCommSupplEmpObj: Array<AppCommSupplEmpObjX>;
+    AllocationAmount: number;
+    CommissionAmtAfterTax: number;
 
     constructor(){
         this.AppCommissionHId = 0;
@@ -58,5 +61,7 @@ export class AppCommissionHObjX{
         this.ReservedField5="";
         this.ListappCommissionDObj = new Array<AppCommissionDObjX>();
         this.ListAppCommSupplEmpObj = new Array<AppCommSupplEmpObjX>();
+        this.AllocationAmount=0;
+        this.CommissionAmtAfterTax=0;
     }
 }

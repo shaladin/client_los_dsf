@@ -8,6 +8,7 @@ export class AppCommissionDObjX{
     RefundAmt: number;
     CommissionAmtAfterTax: number;
     RowVersion: string;
+    AllocationAmount: number;
     
     constructor(){
         this.AppCommissionHId=0;
@@ -19,6 +20,7 @@ export class AppCommissionDObjX{
         this.RefundAmt=0;
         this.CommissionAmtAfterTax=0;
         this.RowVersion="";
+        this.AllocationAmount=0;
 
     }
 }

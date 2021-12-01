@@ -33,6 +33,7 @@ import { TaxTrxDObj } from 'app/shared/model/tax/tax-trx-d.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/app-commission-rsv-fund/req-return-handling-comm-rsv-fund-obj.model';
+import { getLocaleNumberFormat, formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-commission-v2-x',
@@ -53,6 +54,8 @@ export class CommissionV2XComponent implements OnInit {
   @Input() BizTemplateCode: string;
   @Input() LobCode: string = "";
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
+  @Input() maxAllocRefundAmt : number = 0;
+
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
@@ -88,9 +91,9 @@ export class CommissionV2XComponent implements OnInit {
   readonly AllocTypeAmt = CommonConstant.AllocTypeAmt;
   readonly AllocTypePerc = CommonConstant.AllocTypePerc;
 
-  identifierSupplier: string = CommonConstant.CommissionIdentifierSupplier;
-  identifierSupplierEmp: string = CommonConstant.CommissionIdentifierSupplierEmp;
-  identifierReferantor: string = CommonConstant.CommissionIdentifierReferantor;
+  readonly identifierSupplier: string = CommonConstant.CommissionIdentifierSupplier;
+  readonly identifierSupplierEmp: string = CommonConstant.CommissionIdentifierSupplierEmp;
+  readonly identifierReferantor: string = CommonConstant.CommissionIdentifierReferantor;
   FormInputObjSupplier: object = {};
   FormInputObjSupplierEmp: object = {};
   FormInputObjReferantor: object = {};
@@ -261,7 +264,11 @@ export class CommissionV2XComponent implements OnInit {
           this.lockAppCommTab = true;
         }
         this.outputCommCondition.emit(this.lockAppCommTab);
-        this.outputUpdateRemainingAlloc.emit(0);
+        let x = {
+          TotalAllocAmt : 0,
+          ExpenseAmount : 0
+        }
+        this.outputUpdateRemainingAlloc.emit(x);
         this.outputDictRemaining.emit(this.DictRemainingIncomeForm);
       }
     )
@@ -273,7 +280,7 @@ export class CommissionV2XComponent implements OnInit {
       Id: this.AppId,
       RowVersion: ""
     };
-    await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).toPromise().then(
+    await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2, obj).toPromise().then(
       (response) => {
         if (response.ListAppAssetObj.length != 0) {
           this.GetDDLContent(response.ListAppAssetObj, CommonConstant.ContentSupplier);
@@ -464,6 +471,7 @@ export class CommissionV2XComponent implements OnInit {
 
   DictTempRemainingIncomeForm: Object = {}
   async NewCalculateTotal(){
+    this.totalAlloc = 0;
     console.log("CALCULATE NEW");
     this.DictTempRemainingIncomeForm = new Object();
 
@@ -514,10 +522,16 @@ export class CommissionV2XComponent implements OnInit {
           idxStart = this.mapTaxData(this.identifierSupplierEmp, response, idxStart, totalSupplEmpData);
           idxStart = this.mapTaxData(this.identifierReferantor, response, idxStart, totalReferantorData);
           this.Summary.GrossYield = response.GrossYield;
-          this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
+          this.RemainingAllocAmt = this.maxAllocAmt - this.totalAlloc - this.totalRsvFundAmt;
+          console.log("nyan cat");
           if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
+          if (this.totalExpenseAmt > this.maxAllocRefundAmt) return this.toastr.warningMessage("Total Expense (" + formatNumber(this.totalExpenseAmt,'en-US', '.2') + ") Exceeded Total Max Refund Amount (" + formatNumber(this.maxAllocRefundAmt,'en-US', '.2') +")");
           this.IsCalculated = true;
-          this.outputUpdateRemainingAlloc.emit(this.totalExpenseAmt);
+          let x = {
+            TotalAllocAmt : this.totalAlloc,
+            ExpenseAmount : this.totalExpenseAmt
+          }
+          this.outputUpdateRemainingAlloc.emit(x);
         },
         (error) => {
           this.IsCalculated = false;
@@ -536,21 +550,27 @@ export class CommissionV2XComponent implements OnInit {
 
     for (var i = 0; i < idxEnd; i++)
     {
-      let totalTaxAmount = 0;
-      let totalVATAmount = 0;
-      let totalExpenseAmount = 0;
-      let totalPenaltyAmt = 0;
-      let totalDisburseAmount = 0;
-      let HoldingTaxWithPenalty = 0;
+      let totalTaxAmount: number = 0;
+      let totalVATAmount: number = 0;
+      let totalExpenseAmount: number = 0;
+      let totalPenaltyAmt: number = 0;
+      let totalDisburseAmount: number = 0;
+      let totalCommissionAmtAfterTax: number = 0;
+      let totalAllocationAmount: number = 0;
+      let HoldingTaxWithPenalty: number = 0;
       let tempRespTaxObj: ResponseTaxObj = TaxDetailData.ResponseTaxObjs[idxStart];
       for (var j = 0; j < tempRespTaxObj.ReturnObject.length; j++)
       {
         let taxAmt = 0;
         let vatAmt = 0;
+        let commissionAmtAfterTax = tempRespTaxObj.ReturnObject[j].TotalTrxAmtAfterTaxAmt;
+        let AllocationAmount = tempRespTaxObj.ReturnObject[j].TrxTaxableAmt;
         let totalPenaltyDAmount = 0;
         totalExpenseAmount += tempRespTaxObj.ReturnObject[j].ExpenseAmt;
         totalDisburseAmount += tempRespTaxObj.ReturnObject[j].DisburseAmt;
         totalPenaltyAmt += tempRespTaxObj.ReturnObject[j].PenaltyAmt;
+        totalCommissionAmtAfterTax += commissionAmtAfterTax;
+        totalAllocationAmount += AllocationAmount;
         var TaxTrxDObjData: Array<TaxTrxDObj> = tempRespTaxObj.ReturnObject[j].TaxTrxD;
         for (var k = 0; k < TaxTrxDObjData.length; k++) {
           totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
@@ -567,12 +587,16 @@ export class CommissionV2XComponent implements OnInit {
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].TaxAmt = taxAmt;
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].VatAmt = vatAmt;
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].PenaltyAmt = totalPenaltyDAmount;
-        this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].CommissionAmtAfterTax -= (taxAmt + vatAmt);
+        //this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].CommissionAmtAfterTax -= (taxAmt + vatAmt);
+        this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].AllocationAmount = AllocationAmount;
+        this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].CommissionAmtAfterTax = commissionAmtAfterTax;
 
         // this.CommissionForm.controls[identifier]["controls"][i].controls.ListAllocated.controls[j].patchValue({
         //   TaxAmt: taxAmt,
         //   VatAmt: vatAmt,
+        //   AllocationAmount: AllocationAmount,
         //   PenaltyAmt: totalPenaltyDAmount,
+        //   CommissionAmtAfterTax: commissionAmtAfterTax
         // });
       }
       this.ListAppCommHObj[idxStart].MrTaxKindCode = tempRespTaxObj.MrTaxKindCode;
@@ -595,9 +619,22 @@ export class CommissionV2XComponent implements OnInit {
         TotalExpenseAmount: totalExpenseAmount,
         TotalPenaltyAmount: totalPenaltyAmt,
         TotalDisburseAmount: totalDisburseAmount,
+        TotalCommissionAfterTaxAmt: totalCommissionAmtAfterTax,
+        TotalCommisionAmount: totalAllocationAmount,
         HoldingTaxWithPenalty: HoldingTaxWithPenalty
       });
-      this.Summary.TotalCommisionAmount += this.CommissionForm.value[identifier][i].TotalCommisionAmount;
+      switch (identifier) {
+        case this.identifierSupplier:
+          this.FormAdd1.ChangeAllocPercentageBasedOnAmt(i);
+          break;
+        case this.identifierSupplierEmp:
+          this.FormAdd2.ChangeAllocPercentageBasedOnAmt(i);
+          break;
+        case this.identifierReferantor:
+          this.FormAdd3.ChangeAllocPercentageBasedOnAmt(i);
+          break;
+      }
+      this.Summary.TotalCommisionAmount += totalAllocationAmount;
       this.Summary.TotalTaxAmmount += totalTaxAmount;
       this.Summary.TotalVATAmount += totalVATAmount;
       this.totalExpenseAmt += totalExpenseAmount;
@@ -615,6 +652,9 @@ export class CommissionV2XComponent implements OnInit {
     let listAppCommissionHEditObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
     for(let i=0; i<this.ListAppCommHObj.length;i++)
     {
+      if(this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt == null || isNaN(this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt)){
+        this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt = 0;
+      }
       if(this.ListAppCommHObj[i].AppCommissionHId == 0)
       {
         listAppCommissionHAddObj.push(this.ListAppCommHObj[i]);
@@ -650,6 +690,7 @@ export class CommissionV2XComponent implements OnInit {
 
   }
 
+  totalAlloc : number = 0;
   AllocateDataWithPriority(identifier:string, listVendorCode: Array<string>, listVendorEmpNo: Array<string>, listTrxAmt: Array<Array<number>>)
   {
     const tempDataList = this.CommissionForm.get(identifier) as FormArray;
@@ -672,7 +713,7 @@ export class CommissionV2XComponent implements OnInit {
 
             var tempListTrxAmt: Array<number> = this.allocateValue(AllocAmt, tempAppComm.ListappCommissionDObj, identifier);
             totalCommAmt = AllocAmt;
-
+          this.totalAlloc = this.totalAlloc+totalCommAmt;
           if (totalCommAmt == 0) {
             this.IsCalculated = false;
             this.toastr.warningMessage("Please Allocate Commission Amount for " + ContentName);
@@ -745,7 +786,7 @@ export class CommissionV2XComponent implements OnInit {
     temp.TaxAmt = FormHData.get("TotalTaxAmount").value;
     temp.VatAmt = FormHData.get("TotalVATAmount").value;
     temp.PenaltyAmt = FormHData.get("TotalPenaltyAmount").value;
-    temp.TotalCommissionAfterTaxAmt = FormHData.get("TotalCommisionAmount").value;
+    temp.TotalCommissionAfterTaxAmt = FormHData.get("TotalCommissionAfterTaxAmt").value;
     temp.TotalCommissionAmt = FormHData.get("TotalCommisionAmount").value;
     temp.TotalExpenseAmt = FormHData.get("TotalExpenseAmount").value;
     temp.TotalDisburseAmt = FormHData.get("TotalDisburseAmount").value;

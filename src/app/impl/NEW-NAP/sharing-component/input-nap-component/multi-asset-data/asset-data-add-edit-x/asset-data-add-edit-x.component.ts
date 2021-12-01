@@ -824,7 +824,7 @@ export class AssetDataAddEditXComponent implements OnInit {
 
     await this.GetListAddr();
 
-    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
       map((response: AppObj) => {
         this.appData = response;
         return response;
@@ -838,8 +838,8 @@ export class AssetDataAddEditXComponent implements OnInit {
 
         return forkJoin([getVendorSchmCode, getAssetCond, getAssetType, getAssetSchm, RegexSerialNo]);
       })
-    ).subscribe(
-      (response) => {
+    ).toPromise().then(
+      async (response) => {
         this.vendorSchmCode = response[0];
         this.bindAccessories();
         let assetCond = response[1];
@@ -871,9 +871,9 @@ export class AssetDataAddEditXComponent implements OnInit {
 
         this.GenerataAppAssetAttr(false);
 
-        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+        await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           Code: assetType["CompntValue"]
-        }).subscribe(
+        }).toPromise().then(
           (response: any) => {
             while (this.items.length) {
               this.items.removeAt(0);
