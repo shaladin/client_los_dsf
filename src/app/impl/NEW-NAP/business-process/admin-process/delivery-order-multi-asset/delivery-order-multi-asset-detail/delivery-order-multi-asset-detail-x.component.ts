@@ -66,7 +66,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   appNo: string;
   mouCustNo: string;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-  bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+  bizTemplateCode: string = "";
   UserAccess: CurrentUserContext;
   minDt: Date = new Date();
   checkPOReady: boolean = false;
@@ -119,6 +119,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     });
     this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response: AgrmntObj) => {
+        this.bizTemplateCode = response.BizTemplateCode;
         if (response["EffectiveDt"] == null) {
           this.DOAssetForm.patchValue({
             AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
