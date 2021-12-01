@@ -204,7 +204,7 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div formArrayName="items">
+                    <div formArrayName="items" *ngIf="items && items.controls">
                       <div *ngFor="let item of items.controls; let i = index;">
                         <div class="form-group row" [formGroupName]="i">
                           <label class="col-md-4 "
@@ -353,7 +353,7 @@
                     <thead>
                       <tr class="table-header">
                         <th class="nowrap"><span translate class="thead-header">No</span></th>
-                        <th class="nowrap" *ngIf="this.appData.LobCode!='SLB'"><span translate class="thead-header">Supplier Name</span></th>
+                        <th class="nowrap" *ngIf="!this.appData || this.appData.LobCode!='SLB'"><span translate class="thead-header">Supplier Name</span></th>
                         <th class="nowrap"><span translate class="thead-header">Accessories Name</span></th>
                         <th class="nowrap"><span translate class="thead-header">Accessories Price</span></th>
                         <th class="nowrap"><span translate class="thead-header">Security Deposit Type</span></th>
@@ -372,7 +372,7 @@
                         <td [formGroupName]="i" class="text-center">
                           {{i + 1}}
                         </td>
-                        <td [formGroupName]="i" class="text-center" *ngIf="this.appData.LobCode!='SLB'">
+                        <td [formGroupName]="i" class="text-center" *ngIf="!this.appData || this.appData.LobCode!='SLB'">
                           <lib-uclookupgeneric [enjiForm]="enjiForm"
                             [lookupInput]="dictSuppLookup[AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].No.value]"
                             [parentForm]="AssetDataForm"
@@ -592,7 +592,7 @@
                     </span>
                   </div>
                 </div>
-                <div id="AssetLocation">
+                <div id="AssetLocation" *ngIf="inputAddressObjForLoc">
                   <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLoc" [enjiForm]="enjiForm"
                     [identifier]="'assetLocationAddress'" [UCAddrForm]="AssetDataForm"></lib-ucaddress>
                   <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [isRequired]="false" [title]="'Asset Location'" [UCAddrForm]="AssetDataForm" 
