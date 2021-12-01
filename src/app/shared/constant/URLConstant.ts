@@ -980,6 +980,7 @@ export class URLConstant {
   public static GetAppAssetByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetDataByAppId";
   public static GetAppAssetListByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetListByAppId";
   public static GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId";
+  public static GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2 = environment.losUrl + "/v2" + "/AppAsset/GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId"
   public static GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAgrmntId";
   public static GetAppAssetListByAgrmntIdForViewAgrmnt = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetListByAgrmntIdForViewAgrmnt";
   public static GetAppAssetListForInsuranceByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetListForInsuranceByAppId"
