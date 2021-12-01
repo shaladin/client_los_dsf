@@ -19,6 +19,7 @@ import { ResultRefundObj } from 'app/shared/model/app-fin-data/result-refund.mod
 import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-comission-reserved-fund-detail-x',
@@ -102,7 +103,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
     var obj = {
       Id: this.ReturnHandlingHObj.AppId
     };
-    this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
+    this.http.post<AppFinDataObj>(URLConstantX.GetAppFinDataWithRuleByAppIdX, obj).subscribe(
       (response) => {
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);

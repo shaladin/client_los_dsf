@@ -11,6 +11,7 @@
             </lib-ucSubsection>
             <div class="form-body" id="MainInfoForm">
               <div class="form-group row">
+                <!--BEGIN DSF INTERNAL-0229 Udin : Lepas semua validasi AgrmntDt >
                 <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
                 <div *ngIf = "checkPOReady" class="col-md-4">
                   <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
@@ -18,6 +19,14 @@
                   <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="GoLiveApvReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+                -->
+                <label class="col-md-2" for="AgrmntDt" translate>Agreement Date</label>
+                <div class="col-md-4">
+                  <input type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt">
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="GoLiveApvReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <!--END DSF INTERNAL-0229 Udin -->
                 <label class="col-md-2 adins-required-label" for="EffectiveDtInp" translate>Effective Date</label>
                 <div class="col-md-4" *ngIf="BizTemplateCode == 'DLFN'">
                   <input type="date" id="EffectiveDtInp" class="form-control adInsInput name"
