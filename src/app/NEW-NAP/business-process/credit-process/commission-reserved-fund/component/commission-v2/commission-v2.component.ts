@@ -190,7 +190,7 @@ export class CommissionV2Component implements OnInit {
       Id: this.ReturnHandlingHObj.AppId,
       RowVersion: ""
     };
-    await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).toPromise().then(
+    await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2, obj).toPromise().then(
       (response) => {
         if (response.ListAppAssetObj.length != 0) {
           this.GetDDLContent(response.ListAppAssetObj, CommonConstant.ContentSupplier);
