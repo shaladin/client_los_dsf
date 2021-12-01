@@ -12,6 +12,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
 import { SubsidyComponent } from './component/subsidy/subsidy.component';
 import { AppObj } from 'app/shared/model/app/app.model';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -154,7 +155,8 @@ export class FinancialDataComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { Id: this.AppId }).subscribe(
+    let InitAppFinDataUrl = environment.isCore ? URLConstant.GetInitAppFinDataByAppIdV2 : URLConstant.GetInitAppFinDataByAppId;
+    this.http.post<AppFinDataObj>(InitAppFinDataUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
         this.instAmt = response['InstAmt'];

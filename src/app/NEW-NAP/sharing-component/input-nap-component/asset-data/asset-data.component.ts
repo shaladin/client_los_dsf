@@ -1990,15 +1990,11 @@ export class AssetDataComponent implements OnInit {
         this.setValidatorBpkb();
       }
     );
-
     
-
     this.UcDDLAssetCond = new UcDropdownListObj;
     this.UcDDLAssetCond.ddlType = "one";
-    this.UcDDLAssetCond.isObject = true;
+    this.UcDDLAssetCond.isCustomList = true;
     this.UcDDLAssetCond.isSelectOutput = true;
-    this.UcDDLAssetCond.customKey = "Key";
-    this.UcDDLAssetCond.customValue = "Value";
   }
 
   GetProfession(event) {
