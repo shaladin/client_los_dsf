@@ -77,8 +77,12 @@
 
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel" translate>Asset Condition</label>
-                    <label class="col-md-8 adInsLabel" translate>{{AssetConditionName}}</label>
+                    <label class="col-md-4 adInsLabel adins-required-label" translate>Asset Condition</label>
+                    <div class="col-md-8">
+                      <lib-ucdropdownlist [dropdownListObj]="UcDDLAssetCond" [genericList]="assetCondObj.DDLRefProdComptCode"
+                      [parentForm]="AssetDataForm" [enjiForm]="enjiForm" [identifier]="'MrAssetConditionCode'"
+                      (callback)="AssetConditionChanged($event)"></lib-ucdropdownlist>
+                    </div>
                   </div>
                 </div>
 

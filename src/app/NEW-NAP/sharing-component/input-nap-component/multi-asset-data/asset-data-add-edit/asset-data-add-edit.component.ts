@@ -46,6 +46,7 @@ import { AddrObj } from 'app/shared/model/addr-obj.model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/response-job-data-personal-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 import { RefCoyObj } from 'app/shared/model/ref-coy-obj.model';
+import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -120,7 +121,7 @@ export class AssetDataAddEditComponent implements OnInit {
   appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
   ListAttrAnswer = [];
   isAssetAttrReady: boolean = false;
-  isUsed : boolean = false;
+  isUsed: boolean = false;
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
 
@@ -167,7 +168,7 @@ export class AssetDataAddEditComponent implements OnInit {
     MrDownPaymentTypeCode: ['', Validators.required],
     AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
     DownPayment: ['', Validators.required],
-    MrAssetConditionCode: [''],
+    MrAssetConditionCode: ['', Validators.required],
     AssetUsage: [''],
     LicensePlate: [''],
     ChassisNo: [''],
@@ -233,9 +234,11 @@ export class AssetDataAddEditComponent implements OnInit {
   indexChassis: number = 0;
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
-  InputLookupCityIssuerObj : any;
+  InputLookupCityIssuerObj: any;
   DpObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IsReady: boolean = false;
+  UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
+  isUCReady: boolean = false;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
@@ -285,10 +288,10 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
 
-  async GetGS(){
+  async GetGS() {
     this.generalSettingObj = new GenericListByCodeObj();
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization); 
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
     await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
@@ -296,31 +299,31 @@ export class AssetDataAddEditComponent implements OnInit {
 
         let gsNeedCheckBySystem = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         let gsUseDigitalization = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined){
+
+        if (gsNeedCheckBySystem != undefined) {
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
-        if(gsUseDigitalization != undefined){
+        if (gsUseDigitalization != undefined) {
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
           this.getDigitalizationSvcType();
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
-        }        
+        }
       }
     );
   }
-  async GetThirdPartyResultH(){
+  async GetThirdPartyResultH() {
     let ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
-    await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, {TrxNo : this.appData.AppNo, TrxTypeCode : "APP", ChassisNo : ChassisNoValue}).toPromise().then(
+    await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, { TrxNo: this.appData.AppNo, TrxTypeCode: "APP", ChassisNo: ChassisNoValue }).toPromise().then(
       (response) => {
-        if(response["AppAssetObject"]["SerialNo1"] != null){
+        if (response["AppAssetObject"]["SerialNo1"] != null) {
           this.currentChassisNo = response["AppAssetObject"]["SerialNo1"];
         }
-        if(response["ResponseThirdPartyRsltH"]["ThirdPartyRsltHId"] != null){
-        this.LastRequestedDate = response["ResponseThirdPartyRsltH"]["ReqDt"];
+        if (response["ResponseThirdPartyRsltH"]["ThirdPartyRsltHId"] != null) {
+          this.LastRequestedDate = response["ResponseThirdPartyRsltH"]["ReqDt"];
         }
       }
     );
@@ -351,7 +354,7 @@ export class AssetDataAddEditComponent implements OnInit {
       (response) => {
         let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
         ListDoc.reset();
-        while(ListDoc.length) {
+        while (ListDoc.length) {
           ListDoc.removeAt(0);
         }
         if (response[CommonConstant.ReturnObj].length > 0) {
@@ -371,7 +374,7 @@ export class AssetDataAddEditComponent implements OnInit {
             ListDoc.push(assetDocumentDetail);
           }
         }
-        if(isInit){
+        if (isInit) {
           this.setAppCollateralDoc(this.returnAppCollateralObj.AppCollateralId);
         }
       });
@@ -435,8 +438,8 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   GetSalesList() {
-    let ReqGetListActiveVendorSales : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
-    ReqGetListActiveVendorSales.VendorId =this.salesObj.VendorId;
+    let ReqGetListActiveVendorSales: ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+    ReqGetListActiveVendorSales.VendorId = this.salesObj.VendorId;
     ReqGetListActiveVendorSales.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
     this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSales).subscribe(
       (response) => {
@@ -448,7 +451,7 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   GetAdminHeadList() {
-    let ReqGetListActiveVendorAdminHead : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+    let ReqGetListActiveVendorAdminHead: ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
     ReqGetListActiveVendorAdminHead.VendorId = this.salesObj.VendorId;
     ReqGetListActiveVendorAdminHead.MrVendorEmpPositionCodes = [CommonConstant.ADMIN_HEAD_JOB_CODE];
     this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorAdminHead).subscribe(
@@ -719,6 +722,11 @@ export class AssetDataAddEditComponent implements OnInit {
   }
   readonly AssetUsed: string = CommonConstant.AssetConditionUsed;
   async ngOnInit(): Promise<void> {
+    this.UcDDLAssetCond = new UcDropdownListObj();
+    this.UcDDLAssetCond.ddlType = "one";
+    this.UcDDLAssetCond.isSelectOutput = true;
+    this.UcDDLAssetCond.isCustomList = true;
+
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -754,8 +762,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
-    this.AssetDataForm.controls.MrAssetConditionCode.disable();
-    
+
     await this.bindDownPaymentTypeObj();
 
     await this.GetListAddr();
@@ -767,7 +774,7 @@ export class AssetDataAddEditComponent implements OnInit {
       }),
       mergeMap((response: AppObj) => {
         let getVendorSchmCode = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "SUPPLSCHM", ProdOfferingVersion: response.ProdOfferingVersion });
-        let getAssetCond = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETCOND", ProdOfferingVersion: response.ProdOfferingVersion });
+        let getAssetCond = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETCOND", ProdOfferingVersion: response.ProdOfferingVersion });
         let getAssetType = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion });
         let getAssetSchm = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETSCHM", ProdOfferingVersion: response.ProdOfferingVersion });
         let RegexSerialNo = this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex });
@@ -778,29 +785,31 @@ export class AssetDataAddEditComponent implements OnInit {
       (response) => {
         this.vendorSchmCode = response[0];
         this.bindAccessories();
-        let assetCond = response[1];
+        this.returnAssetConditionObj = response[1]["DDLRefProdComptCode"];
         let assetType = response[2];
         let assetSchm = response[3];
         this.SerialNoRegex = response[4]["GsValue"];
         this.assetTypeCompntValue = assetType["CompntValue"];
-        
+        this.isUCReady = true;
+
         let obj: CustomPatternObj = {
           pattern: this.SerialNoRegex,
           invalidMsg: "Cannot input special character"
         }
         this.ListPattern.push(obj);
-        
+
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
         if (this.mode != 'editAsset') {
           this.AssetDataForm.patchValue({
-            MrAssetConditionCode: assetCond["CompntValue"],
-            MrAssetConditionCodeView: assetCond["CompntValue"]
+            // MrAssetConditionCode: this.returnAssetConditionObj[0]["Key"],
+            MrAssetConditionCodeView: this.returnAssetConditionObj[0]["Value"]
           });
+
           this.ChangeAssetCondition();
         }
-        
-        if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) { 
+
+        if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
           this.InputLookupCityIssuerObj.isRequired = true;
         }
@@ -819,7 +828,7 @@ export class AssetDataAddEditComponent implements OnInit {
             for (let i = 0; i < this.SerialNoList.length; i++) {
               let eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
-                SerialNoValue: ['',[Validators.pattern(this.SerialNoRegex)]],
+                SerialNoValue: ['', [Validators.pattern(this.SerialNoRegex)]],
                 IsMandatory: [this.SerialNoList[i].IsMandatory]
               }) as FormGroup;
               this.items.push(eachDataDetail);
@@ -836,15 +845,13 @@ export class AssetDataAddEditComponent implements OnInit {
               for (let i = 0; i < this.items.length; i++) {
                 if (this.items.controls[i] != null) {
                   this.items.controls[i]['controls']['SerialNoValue'].value = this.returnAppAssetObj["SerialNo" + (i + 1)];
-                  if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No"){
+                  if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No") {
                     this.indexChassis = i;
                   }
                 }
               }
-			  this.GetThirdPartyResultH();
+              this.GetThirdPartyResultH();
             }
-            this.UcAddressHandler();
-
           });
 
         let arrCritSuppl = new Array<CriteriaObj>();
@@ -882,24 +889,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.InputLookupAssetObj.isReady = true;
       });
 
-    this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetConditionObj).subscribe(
-      (response) => {
-        this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
-        if (this.mode != 'editAsset') {
-          this.AssetDataForm.patchValue(
-            {
-              MrAssetConditionCode: this.returnAssetConditionObj[0].Key
-            }
-          )
-          this.ChangeAssetCondition();
-        }
-
-        this.UcAddressHandler();
-      }
-    );
-
+      this.UcAddressHandler();
     this.downPaymentObj = new RefMasterObj();
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.downPaymentObj).subscribe(
@@ -1127,7 +1117,7 @@ export class AssetDataAddEditComponent implements OnInit {
               this.GetRefAssetDocList(true);
             });
         });
-    }else{
+    } else {
       this.http.post(URLConstant.GetRefCoy, null).subscribe(
         (response: RefCoyObj) => {
           console.log(response);
@@ -1164,7 +1154,7 @@ export class AssetDataAddEditComponent implements OnInit {
     let reqByCode: GenericObj = new GenericObj();
     reqByCode.Code = OwnerProfessionCode;
     this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).subscribe(
-      (response) =>{
+      (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
       }
@@ -1279,7 +1269,7 @@ export class AssetDataAddEditComponent implements OnInit {
     });
   }
 
-  setAssetAttr(){
+  setAssetAttr() {
     this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
 
     if (this.AppAssetAttrObj != null) {
@@ -1539,7 +1529,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     if (this.AssetValidationResult) {
       let sumAssetAccessories: number = 0;
-      if(assetForm.AssetAccessoriesObjs.length > 0){
+      if (assetForm.AssetAccessoriesObjs.length > 0) {
         sumAssetAccessories = assetForm.AssetAccessoriesObjs.map(x => x.AccessoryPriceAmt).reduce((acc, curr) => acc + curr);
       }
 
@@ -1660,7 +1650,7 @@ export class AssetDataAddEditComponent implements OnInit {
           }
         }
         else if (!this.IsIntegrator) {
-            if (confirm("Submit data without Integrator ?")) {
+          if (confirm("Submit data without Integrator ?")) {
             this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
@@ -1668,7 +1658,7 @@ export class AssetDataAddEditComponent implements OnInit {
                 //this.router.navigate(["/Nap/AssetData/Paging"]);
                 this.assetValue.emit({ mode: 'paging' });
               });
-            }
+          }
         }
         else if (this.IsIntegrator) {
           this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
@@ -1677,11 +1667,11 @@ export class AssetDataAddEditComponent implements OnInit {
               this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
                 (response) => {
                 });
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
+              this.AssetDataForm.reset();
+              this.assetValue.emit({ mode: 'paging' });
             });
         }
-      }else{
+      } else {
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -1772,7 +1762,7 @@ export class AssetDataAddEditComponent implements OnInit {
           }
         }
         else if (!this.IsIntegrator) {
-          
+
           if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
             this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
               (response) => {
@@ -1781,14 +1771,14 @@ export class AssetDataAddEditComponent implements OnInit {
                 this.assetValue.emit({ mode: 'paging' });
               });
           }
-          else{
+          else {
             if (confirm("Submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
-              });
+              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  this.AssetDataForm.reset();
+                  this.assetValue.emit({ mode: 'paging' });
+                });
             }
           }
         }
@@ -1799,11 +1789,11 @@ export class AssetDataAddEditComponent implements OnInit {
               this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
                 (response) => {
                 });
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
+              this.AssetDataForm.reset();
+              this.assetValue.emit({ mode: 'paging' });
             });
         }
-      }else{
+      } else {
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -1821,10 +1811,10 @@ export class AssetDataAddEditComponent implements OnInit {
         AssetAccessoryName: ['', [Validators.maxLength(100)]],
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: ['', [Validators.required,Validators.min(0.00)]],
+        AccessoryPriceAmt: ['', [Validators.required, Validators.min(0.00)]],
         AccessoryDownPaymentType: [''],
         AccessoryDownPaymentPrcnt: [0, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
-        AccessoryDownPaymentAmt: [0, [Validators.required,Validators.min(0.00)]],
+        AccessoryDownPaymentAmt: [0, [Validators.required, Validators.min(0.00)]],
         AccessoryNotes: ['']
       })
     } else {
@@ -1834,15 +1824,15 @@ export class AssetDataAddEditComponent implements OnInit {
         AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(100)]],
         SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
         SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
-        AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required,Validators.min(0.00)]],
+        AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required, Validators.min(0.00)]],
         AccessoryDownPaymentType: [this.DpObj[0].Key],
         AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
-        AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, [Validators.required,Validators.min(0.00)]],
+        AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, [Validators.required, Validators.min(0.00)]],
         AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]
       })
     }
   }
-  
+
   initLookupAcc() {
     let arrAddCrit = new Array();
     if (this.AssetDataForm.get("AssetTypeCode").value != "") {
@@ -1900,7 +1890,7 @@ export class AssetDataAddEditComponent implements OnInit {
   }
   setAppAccessorySupplier(i, SupplCode) {
     this.vendorAccSuppObj.VendorCode = SupplCode;
-    this.http.post(URLConstant.GetVendorByVendorCode, {Code : SupplCode}).subscribe(
+    this.http.post(URLConstant.GetVendorByVendorCode, { Code: SupplCode }).subscribe(
       (response) => {
         this.dictSuppLookup[i].nameSelect = response["VendorName"];
         this.dictSuppLookup[i].jsonSelect = response;
@@ -1911,7 +1901,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   setAppAccessory(i, AssetAccessoryCode) {
     this.accObj.AssetAccessoryCode = AssetAccessoryCode;
-    let obj = {Code: this.accObj.AssetAccessoryCode}
+    let obj = { Code: this.accObj.AssetAccessoryCode }
     this.http.post(URLConstant.GetAssetAccessoryByCode, obj).subscribe(
       (response) => {
         this.dictAccLookup[i].nameSelect = response["AssetAccessoryName"];
@@ -2048,39 +2038,39 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
 
-  ChangeAssetCondition(){
-    if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed){
+  ChangeAssetCondition() {
+    if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
       this.AssetDataForm.controls.TaxCityIssuer.setValidators([Validators.required]);
-    }else{
+    } else {
       this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
     }
     this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
   }
 
   async bindDownPaymentTypeObj() {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.RefMasterTypeCodeDownPaymentType}).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeDownPaymentType }).subscribe(
       (response) => {
         this.DpObj = response[CommonConstant.ReturnObj];
         this.IsReady = true;
       }
     );
   }
-  
-  ChangeAccessoryDPType(i: number, ev){
-    if(ev == CommonConstant.DownPaymentTypeAmt){
+
+  ChangeAccessoryDPType(i: number, ev) {
+    if (ev == CommonConstant.DownPaymentTypeAmt) {
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.disable();
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.enable();
-    }else{
+    } else {
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.disable();
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.enable();
     }
   }
 
-  CheckAccessoryDPValue(i: number, from: string){
+  CheckAccessoryDPValue(i: number, from: string) {
     let InputAccessoryPrice = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryPriceAmt.value
 
-    if(InputAccessoryPrice == 0){
-      this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i+1));
+    if (InputAccessoryPrice == 0) {
+      this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i + 1));
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
       return;
@@ -2088,26 +2078,26 @@ export class AssetDataAddEditComponent implements OnInit {
 
     let InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value
 
-    if(InputDPAmt > InputAccessoryPrice){
-      this.toastr.warningMessage("Security Deposit Amount " + (i+1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i+1));
+    if (InputDPAmt > InputAccessoryPrice) {
+      this.toastr.warningMessage("Security Deposit Amount " + (i + 1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i + 1));
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
       return;
     }
 
     let InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
-    
-    if(from == CommonConstant.DownPaymentTypeAmt){
+
+    if (from == CommonConstant.DownPaymentTypeAmt) {
       let DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
-    }else if(from == CommonConstant.DownPaymentTypePrcnt){
+    } else if (from == CommonConstant.DownPaymentTypePrcnt) {
       let DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
-    }else{
-      if(this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt){
+    } else {
+      if (this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt) {
         let DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
-      }else{
+      } else {
         let DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
       }
@@ -2116,11 +2106,11 @@ export class AssetDataAddEditComponent implements OnInit {
 
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
 
-  GetProfessionData(){
+  GetProfessionData() {
     let reqByCode: GenericObj = new GenericObj();
     reqByCode.Code = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
     this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).subscribe(
-      (response) =>{
+      (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
       }
@@ -2219,18 +2209,18 @@ export class AssetDataAddEditComponent implements OnInit {
     this.inputAddressObjForOwner.default = ownerAddrObj;
     this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
   }
-  
+
   AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   async GetAppCustPersonalJobData() {
     await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.appCustObj.AppCustId }).toPromise().then(
       (response) => {
-        if(response.AppCustPersonalJobDataObj != null){
+        if (response.AppCustPersonalJobDataObj != null) {
           this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
         }
       }
     );
   }
-  
+
   copyToOwnerAddr() {
     let OwnerAddrType: string = this.AssetDataForm.get("OwnerAddrType").value;
     if (OwnerAddrType != "") {
@@ -2272,23 +2262,23 @@ export class AssetDataAddEditComponent implements OnInit {
 
   OwnerRelationObj: Array<KeyValueObj> = new Array();
 
-  async getDigitalizationSvcType(){
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType}).toPromise().then(
+  async getDigitalizationSvcType() {
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType }).toPromise().then(
       (response) => {
         this.sysConfigResultObj = response;
       });
 
-    if(this.sysConfigResultObj.ConfigValue != null){
+    if (this.sysConfigResultObj.ConfigValue != null) {
       var listSvcType = this.sysConfigResultObj.ConfigValue.split("|");
       var refSvcType = "";
-      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.BizTemplateCode}).toPromise().then(
+      await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: this.BizTemplateCode }).toPromise().then(
         (response) => {
-            refSvcType = response["Result"];
+          refSvcType = response["Result"];
         });
 
       var svcType = listSvcType.find(x => x == refSvcType);
 
-      if(svcType != null){
+      if (svcType != null) {
         this.IsSvcExist = true;
       }
     }
