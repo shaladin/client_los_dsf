@@ -126,6 +126,8 @@ export class FormCommissionGenerateXComponent implements OnInit {
       MrTaxKindCode: [''],
       MrTaxCalcMethodCode: [''],
       TaxpayerNo: [''],
+      //TotalCommissionAfterTaxAmt: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
+      TotalCommissionAfterTaxAmt: [0],
       TotalCommisionAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalExpenseAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalTaxAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
@@ -236,6 +238,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
         AppCommissionHId: [0],
         AllocationFrom: [ruleObj[0].AllocationFrom],
         MaxAllocationAmount: [maxAllocAmt],
+        CommissionAmtAfterTax: [0],
         AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(maxAllocAmt)]],
         AllocationPercentage: [percentageAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(100)]],
         AllocationBehaviour: [behaviour],
@@ -245,6 +248,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
         RowVersion: ['']
       }) as FormGroup;
       TotalCommisionAmount += allocAmt;
+      console.log("nyan 2 cat");
       this.parentForm.controls[this.identifier]["controls"][formIdx].controls.ListAllocated.push(eachAllocationDetail);
 
       this.UpdateInputType();
@@ -536,6 +540,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       TotalVATAmount: appCommObj.VatAmt,
       TotalPenaltyAmount: appCommObj.PenaltyAmt,
       TotalDisburseAmount: appCommObj.TotalDisburseAmt,
+      TotalCommissionAfterTaxAmt: appCommObj.TotalCommissionAfterTaxAmt,
       RowVersion: appCommObj.RowVersion
     });
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
@@ -553,6 +558,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
     }
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][0].patchValue({
       AllocationAmount: allocAmt,
+      CommissionAmtAfterTax: appCommObj.AppCommissionDs[i].CommissionAmtAfterTax,
     });
 
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({

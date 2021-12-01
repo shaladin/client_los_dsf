@@ -140,7 +140,7 @@
           </app-reserved-fund-x>
         </div>
         <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
-          <app-commission-v2-x *ngIf="StepIndex == 2 && isView" [LobCode]="NapObj.LobCode" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo"  [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode"
+          <app-commission-v2-x *ngIf="StepIndex == 2 && isView" [LobCode]="NapObj.LobCode" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo"  [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode" [maxAllocRefundAmt]="viewIncomeInfoObj.MaxAllocatedRefundAmt"
           (outputTab)="LastStepHandler($event)" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)">
         </app-commission-v2-x>
         </div>

@@ -39,7 +39,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
   BizTemplateCode: string;
   IsViewReady: boolean = false;
   isShow: boolean = false;
-  lockCommissionTab: boolean= false;
+  lockCommissionTab: boolean = false;
 
   Step = {
     "RSV": 1,
@@ -79,7 +79,8 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
     InterestIncome: 0,
     ReservedFundAllocatedAmount: 0,
     ExpenseAmount: 0,
-    Other: []
+    Other: [],
+    MaxAllocatedRefundAmt: 0
   };
 
   ngOnInit() {
@@ -103,7 +104,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
     var obj = {
       Id: this.ReturnHandlingHObj.AppId
     };
-    this.http.post<AppFinDataObj>(URLConstantX.GetAppFinDataWithRuleByAppIdX, obj).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
@@ -114,20 +115,17 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
           totalListResultRefundIncomeInfoAmount += this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount;
         }
         this.isView = true;
-        if (totalListResultRefundIncomeInfoAmount < response.MaxAllocatedRefundAmt)
-          this.viewIncomeInfoObj.MaxAllocatedAmount = totalListResultRefundIncomeInfoAmount;
-        else
-          this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt;
+        this.viewIncomeInfoObj.MaxAllocatedAmount = totalListResultRefundIncomeInfoAmount;
 
         if (this.viewIncomeInfoObj.MaxAllocatedAmount < 0) this.viewIncomeInfoObj.MaxAllocatedAmount = 0;
 
-        this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt,
-          this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt,
-          this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt,
-          // this.viewIncomeInfoObj.MaxAllocatedAmount = response.MaxAllocatedRefundAmt,
-          this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response.ReservedFundAllocatedAmt,
-          this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - response.CommissionAllocatedAmt - response.ReservedFundAllocatedAmt,
-          this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
+        this.viewIncomeInfoObj.UppingRate = response.DiffRateAmt;
+        this.viewIncomeInfoObj.InsuranceIncome = response.TotalInsCustAmt - response.TotalInsInscoAmt;
+        this.viewIncomeInfoObj.LifeInsuranceIncome = response.TotalLifeInsCustAmt - response.TotalLifeInsInscoAmt;
+        this.viewIncomeInfoObj.MaxAllocatedRefundAmt = response.MaxAllocatedRefundAmt,
+        this.viewIncomeInfoObj.ReservedFundAllocatedAmount = response.ReservedFundAllocatedAmt;
+        this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - response.CommissionAllocatedAmt - response.ReservedFundAllocatedAmt;
+        this.viewIncomeInfoObj.InterestIncome = response.TotalInterestAmt;
         this.viewIncomeInfoObj.ExpenseAmount = response.CommissionAllocatedAmt;
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
         this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
@@ -163,7 +161,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.ReturnHandlingHObj.ReturnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditComRsvFnd;
       this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.returnHandlingDObj = response;
           this.HandlingForm.patchValue({
             ReturnHandlingExecNotes: this.returnHandlingDObj.ReturnHandlingExecNotes
@@ -215,9 +213,9 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
   }
 
   LastStepHandler(returnHandlingId: number) {
-    if(returnHandlingId == 0) {
+    if (returnHandlingId == 0) {
       var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING], { "BizTemplateCode": lobCode });
 
     }
   }
@@ -239,7 +237,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
       this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         () => {
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING], { "BizTemplateCode": lobCode });
         })
     }
   }
@@ -247,15 +245,15 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
   Back() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING], { "BizTemplateCode": lobCode });
     } else {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING], { "BizTemplateCode": lobCode });
     }
   }
 
-  updateRemainingAllocFromCommission(ev: number) {
-    this.viewIncomeInfoObj.ExpenseAmount = ev;
-    this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - this.viewIncomeInfoObj.ExpenseAmount - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
+  updateRemainingAllocFromCommission(ev) {
+    this.viewIncomeInfoObj.ExpenseAmount = ev.ExpenseAmount;
+    this.viewIncomeInfoObj.RemainingAllocatedAmount = this.viewIncomeInfoObj.MaxAllocatedAmount - ev.TotalAllocAmt - this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
   }
 
   updateRemainingAllocFromReservedFund(ev: number) {
@@ -275,18 +273,18 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
     this.isShow = true;
   }
 
-  checkCommData(ev: boolean){
-    this.lockCommissionTab=ev;
+  checkCommData(ev: boolean) {
+    this.lockCommissionTab = ev;
     console.log(this.lockCommissionTab)
   }
 
-  claimTask(){
-    if(environment.isCore){
-      if(this.ReturnHandlingHObj.WfTaskListId != "" && this.ReturnHandlingHObj.WfTaskListId != undefined){
+  claimTask() {
+    if (environment.isCore) {
+      if (this.ReturnHandlingHObj.WfTaskListId != "" && this.ReturnHandlingHObj.WfTaskListId != undefined) {
         this.claimTaskService.ClaimTaskV2(this.ReturnHandlingHObj.WfTaskListId);
       }
     }
-    else if (this.ReturnHandlingHObj.WfTaskListId> 0) {
+    else if (this.ReturnHandlingHObj.WfTaskListId > 0) {
       this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
     }
   }
