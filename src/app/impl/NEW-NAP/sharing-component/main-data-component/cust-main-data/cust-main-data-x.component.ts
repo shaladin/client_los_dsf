@@ -222,7 +222,8 @@ export class CustMainDataXComponent implements OnInit {
     }),
     AddressZipcode: this.fb.group({
       value: [''],
-    })
+    }),
+    isForeigner : [false]
   });
 
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
@@ -1056,6 +1057,8 @@ export class CustMainDataXComponent implements OnInit {
     this.InputLookupCustCoyObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isDisable = true;
+    this.CheckTaxIdFormat();
+    this.CustMainDataForm.get("isForeigner").disable();
   }
 
   enableInput() {
@@ -1157,6 +1160,7 @@ export class CustMainDataXComponent implements OnInit {
       this.InputLookupCustCoyObj.nameSelect = CustObj.CustName;
       this.InputLookupCustCoyObj.jsonSelect = { CustName: CustObj.CustName };
       if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
+      this.CheckTaxIdFormat();
     }
 
     if (CustCompanyObj != undefined) {
@@ -1197,6 +1201,7 @@ export class CustMainDataXComponent implements OnInit {
         this.positionSlikLookUpObj.nameSelect = tempDesc;
         this.positionSlikLookUpObj.jsonSelect = { Jabatan: tempDesc };
       }
+      this.ChangeValidityShareOwner();
     }
     else if (CustCompanyObj != null) {
       this.CustMainDataForm.patchValue({
@@ -2045,5 +2050,43 @@ export class CustMainDataXComponent implements OnInit {
         this.checkIsAddressKnown = true;
       }
 
+  }
+
+  
+  isShareOwnerMandatory : boolean = false;
+  ChangeValidityShareOwner() {
+    console.log("nyan cat")
+    if (this.CustMainDataForm.controls.SharePrcnt.value == 0 && this.CustMainDataForm.controls.IsOwner.value == false) {
+      this.CustMainDataForm.get("SharePrcnt").setValidators([Validators.min(0), Validators.max(100)]);
+      this.CustMainDataForm.get("IsOwner").clearValidators();
+      this.isShareOwnerMandatory = false;
+    }
+    else{
+      this.CustMainDataForm.get("SharePrcnt").setValidators([Validators.min(0.000001), Validators.max(100)]);
+      this.CustMainDataForm.get("IsOwner").setValidators([Validators.requiredTrue]);
+      this.isShareOwnerMandatory = true;
+      
+    }
+    this.CustMainDataForm.get("SharePrcnt").updateValueAndValidity();
+    this.CustMainDataForm.get("IsOwner").updateValueAndValidity();
+  }
+
+  CheckTaxIdFormat() {
+    if (isNaN(this.CustMainDataForm.controls.TaxIdNo.value)) {
+      this.CustMainDataForm.patchValue({
+        isForeigner: true
+      });
+    }
+    this.ChangeTaxIdValidity();
+  }
+
+  ChangeTaxIdValidity() {
+    if (this.CustMainDataForm.controls.isForeigner.value == true) {
+      this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required]);
+    }
+    else {
+      this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
+    }
+    this.CustMainDataForm.get("TaxIdNo").updateValueAndValidity();
   }
 }

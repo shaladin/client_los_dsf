@@ -86,8 +86,6 @@ export class SidebarComponent implements OnInit {
     }
 
     navigateSkipLocationChange(ev) {
-        //sementara Sementara begini dulu, belum ketemu solusi lain
-        //problem : ketika di 'click' halaman memasuki halaman /dashboard/dash-board terlebih dahulu
         AdInsHelper.RedirectUrl(this.router, ev.Path, this.genParam(ev.Params));
     }
 }
