@@ -240,7 +240,7 @@
             </div>
 
             <div *ngIf="isEditAssetData">
-              <app-edit-app-after-approval-asset-data [AppAssetObj]= "selectedAppAssetObj"
+              <app-edit-app-after-approval-asset-data [AgrmntCurrStep] = "AgrmntCurrStep" [AppAssetObj]= "selectedAppAssetObj"
               [AppCollateralObj] = "selectedAppCollateralObj"
               [AppCollateralRegistrationObj] = "selectedAppCollateralRegistrationObj"
               [ListAppAssetAttrObjs] = "selectedListAppAssetAttrObjs"
