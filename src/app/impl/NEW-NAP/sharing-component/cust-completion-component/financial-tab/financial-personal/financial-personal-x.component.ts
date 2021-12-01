@@ -14,6 +14,7 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
 import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 
 @Component({
   selector: 'app-financial-personal-x',
@@ -25,6 +26,7 @@ export class FinancialPersonalXComponent implements OnInit {
   @Input() AppId: number;
   @Input() IsMarried: boolean;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
+  dropdownListObj: UcDropdownListObj = new UcDropdownListObj();
 
   IsDetail: boolean = false;
   AttrGroups: Array<string> = [
@@ -95,6 +97,7 @@ export class FinancialPersonalXComponent implements OnInit {
         }
       }
     );
+    
     // await this.GetFinData();
     await this.GetListFinData();
   }
@@ -154,9 +157,23 @@ export class FinancialPersonalXComponent implements OnInit {
 
   showModalCustFinData(FinDataIndex: number) {
     this.isCalculated = false;
-    this.GetRefMaster();
+    // this.GetRefMaster();
+    this.dropdownListObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.dropdownListObj.requestObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSourceIncome
+    };
+    this.dropdownListObj.isSelectOutput = true;
+    this.dropdownListObj.customObjName = "ReturnObject";
+    this.dropdownListObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+
     this.getSingleCustPersonalFinData(FinDataIndex);
     this.currentModal = this.modalService.open(this.ModalPersonalFinData, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
+  }
+
+  ChangeValueSourceOfIncome(ev: UcDropdownListCallbackObj) {
+    this.FinancialForm.patchValue({
+      MrSourceOfIncomeTypeCode: ev.selectedObj.Key
+    });
   }
 
   getSingleCustPersonalFinData(currentCustFinDataIndex: number) {
