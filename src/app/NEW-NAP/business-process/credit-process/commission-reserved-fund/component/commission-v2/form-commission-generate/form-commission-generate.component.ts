@@ -127,6 +127,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       MrTaxKindCode: [''],
       MrTaxCalcMethodCode: [''],
       TaxpayerNo: [''],
+      TotalCommissionAfterTaxAmt: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalCommisionAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalExpenseAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalTaxAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
@@ -246,6 +247,7 @@ export class FormCommissionGenerateComponent implements OnInit {
         AllocationFrom: [ruleObj[i].AllocationFrom],
         AllocationFromDesc: [ruleObj[i].AllocationFromDesc],
         MaxAllocationAmount: [maxAllocAmt],
+        CommissionAmtAfterTax: [0],
         AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount)]],
         AllocationPercentage: [percentageAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(100)]],
         AllocationBehaviour: [behaviour],
@@ -534,6 +536,7 @@ export class FormCommissionGenerateComponent implements OnInit {
         TotalVATAmount: appCommObj.VatAmt,
         TotalPenaltyAmount: appCommObj.PenaltyAmt,
         TotalDisburseAmount: appCommObj.TotalDisburseAmt,
+        TotalCommissionAfterTaxAmt: appCommObj.TotalCommissionAfterTaxAmt,
         RowVersion: appCommObj.RowVersion
       });
       if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
@@ -560,6 +563,7 @@ export class FormCommissionGenerateComponent implements OnInit {
             TaxAmt: appCommObj.AppCommissionDs[i].TaxAmt,
             VatAmt: appCommObj.AppCommissionDs[i].VatAmt,
             PenaltyAmt: appCommObj.AppCommissionDs[i].PenaltyAmt,
+            CommissionAmtAfterTax: appCommObj.AppCommissionDs[i].CommissionAmtAfterTax,
             RowVersion: appCommObj.AppCommissionDs[i].RowVersion,
           })
           TotalPenaltyAmt += appCommObj.AppCommissionDs[i].PenaltyAmt;
