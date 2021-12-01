@@ -1,5 +1,6 @@
 {
-    "sectionTitle": "Sustainable Financial Business",
+    "title": "Lookup - Sustainable Financial Business",
+    "sectionTitle": "Search",
     "component": [
         {
             "type": "textbox",

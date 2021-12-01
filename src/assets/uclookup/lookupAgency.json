@@ -1,5 +1,6 @@
 {
-    "title": "Lookup Agency",
+    "title": "Lookup - Agency",
+    "sectionTitle": "Search",
     "component": [
     {
         "type": "textbox",

@@ -1,6 +1,7 @@
 {
     "url": "",
-    "title":"Lookup Tele Sales",
+    "title":"Lookup - Tele Sales",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

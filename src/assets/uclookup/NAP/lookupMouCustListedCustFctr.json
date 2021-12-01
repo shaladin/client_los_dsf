@@ -1,5 +1,6 @@
 {
-  "title": "Lookup Customer Factoring",
+  "title": "Lookup - Customer Factoring",
+  "sectionTitle": "Search",
   "component": [
     {
       "type": "textbox",
