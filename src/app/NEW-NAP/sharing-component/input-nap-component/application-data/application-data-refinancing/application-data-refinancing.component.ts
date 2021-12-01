@@ -415,6 +415,14 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     addCrit4.propName = "ro.OFFICE_CODE";
     addCrit4.restriction = AdInsConstant.RestrictionIn;
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
+
+    let addCrit5 = new CriteriaObj();
+    addCrit5.DataType = "bit";
+    addCrit5.propName = "RUR.IS_ACTIVE";
+    addCrit5.restriction = AdInsConstant.RestrictionEq;
+    addCrit5.value = "1";
+    this.arrAddCrit.push(addCrit5);
+    
     this.arrAddCrit.push(addCrit4);
     await this.GetGSValueSalesOfficer();
     this.makeLookUpObj();
