@@ -26,7 +26,16 @@
             "criteriaPropValue": "", 
             "itemsUrl" : [],
             "paramAssignment": 1 
-        } 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Date As Of",
+            "name" : "LeadDtGte",
+            "value" : "BD",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }    
     ],
     "exportTypeList": [
         {
