@@ -66,6 +66,13 @@
           <div class="row" *ngIf="MrCustTypeCode == CustTypeCompany">
             <div class="col-md-6">
               <div class="form-group row">
+                <label class="col-md-4 adInsLabel" translate>Is Foreigner</label>
+                <div class="col-md-8">
+                  <input class="border-primary" type="checkbox" data-md-icheck formControlName="isForeigner" [disabled]="isExisting" (change)="ChangeTaxIdValidity()" />
+                </div>
+              </div>
+
+              <div class="form-group row">
                 <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == CustTypeCompany}" translate>Tax
                   Id No</label>
                 <div class="col-md-8">
@@ -300,11 +307,11 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4" translate>Share(%)</label>
+                <label class="col-md-4 {{ isShareOwnerMandatory ? 'adins-required-label' : 'adInsLabel'}}" translate>Share(%)</label>
                 <div class="col-md-8">
                   <input type="" currencyMask class="form-control" formControlName="SharePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.SharePrcnt.invalid}"
-                    [options]="CurrencyMaskPrct">
+                    [options]="CurrencyMaskPrct" (focusout)="ChangeValidityShareOwner()">
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.SharePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -333,9 +340,11 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4" translate>Is Owner</label>
+                <label class="col-md-4 {{ isShareOwnerMandatory ? 'adins-required-label' : 'adInsLabel'}}" translate>Is Owner</label>
                 <div class="col-md-8">
-                  <input type="checkbox" formControlName="IsOwner" />
+                  <input type="checkbox" formControlName="IsOwner" (change)="ChangeValidityShareOwner()" />
+                  <lib-uc-show-errors [control]="CustMainDataForm.controls.IsOwner" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </div>
