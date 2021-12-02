@@ -1350,7 +1350,7 @@ export class CustMainDataComponent implements OnInit {
           }
         );
       } else {
-        this.http.post(URLConstant.EditCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+        this.http.post(URLConstant.EditCustMainDataPersonalV2, this.custDataPersonalObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
               this.toastr.successMessage(response["message"]);
@@ -1386,7 +1386,7 @@ export class CustMainDataComponent implements OnInit {
           }
         );
       } else {
-        this.http.post(URLConstant.EditCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
+        this.http.post(URLConstant.EditCustMainDataCompanyDataV2, this.custDataCompanyObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
               this.outputAfterSave.emit(this.custDataCompanyObj.AppCustObj);
