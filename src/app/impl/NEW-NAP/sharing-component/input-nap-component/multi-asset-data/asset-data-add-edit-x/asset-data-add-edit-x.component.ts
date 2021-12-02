@@ -681,7 +681,9 @@ export class AssetDataAddEditXComponent implements OnInit {
           let assetValidationRule = response;
           this.AssetValidationResult = response;
           this.grossDPPrcnt = assetValidationRule["DPPrcnt"];
-          if (assetValidationRule["DPPrcnt"] != null) {
+          // X DSF Non Jora Udin : Fix issue DP tereset ketika input manucfaturing year
+          if (assetValidationRule["DPPrcnt"] != null && !this.AssetDataForm.controls['DownPayment'].value) { 
+          //if (assetValidationRule["DPPrcnt"] != null) {
             this.AssetDataForm.patchValue({
               DownPaymentPrctg: assetValidationRule["DPPrcnt"],
               DownPayment: (assetValidationRule["DPPrcnt"] / 100) * this.AssetDataForm.controls["AssetPrice"].value
