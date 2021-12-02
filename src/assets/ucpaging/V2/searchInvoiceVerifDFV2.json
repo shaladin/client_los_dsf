@@ -55,6 +55,12 @@
             "name": "IndicatorSLA"
         },
         {
+            "type": "label",
+            "position": "left",
+            "label": "Claim By",
+            "name": "Assignee"
+        },
+        {
             "type": "sort",
             "position": "center",
             "label": "Application No",
@@ -83,6 +89,11 @@
             "type": "sla",
             "position": "center",
             "property": "IndicatorSLA"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
         },        
         {
             "type": "link",
@@ -113,16 +124,59 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "/Nap/AdminProcess/InvoiceVerif/InvoiceDetailDF",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AppId",
-                            "property": "AppId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Nap/AdminProcess/InvoiceVerif/InvoiceDetailDF",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "TaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "TaskListId",
-                            "property": "Id"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Nap/AdminProcess/InvoiceVerif/InvoiceDetailDF",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "TaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }

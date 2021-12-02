@@ -1,5 +1,6 @@
 {
-    "title": "Position SLIK",
+    "title": "Lookup - Position SLIK",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

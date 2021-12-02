@@ -1,5 +1,6 @@
 {
-    "sectionTitle": "Debtor Group",
+    "title": "Lookup - Debtor Group",
+    "sectionTitle": "Search",
     "component": [
         {
             "type": "textbox",

@@ -120,6 +120,12 @@
             <th style="text-align: right;">
               <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
             </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='paidBy' translate>Paid By</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='isCapitalized' translate>Capitalized</span>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -144,6 +150,15 @@
             </td>
             <td style="text-align: right;">
               {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.PaidBy}}
+            </td>
+            <td *ngIf="item.IsCapitalized == true">
+              Yes
+            </td>
+            <td *ngIf="item.IsCapitalized == false">
+              No
             </td>
           </tr>
         </tbody>
