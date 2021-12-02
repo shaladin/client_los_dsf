@@ -1057,8 +1057,10 @@ export class CustMainDataXComponent implements OnInit {
     this.InputLookupCustCoyObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isDisable = true;
-    this.CheckTaxIdFormat();
-    this.CustMainDataForm.get("isForeigner").disable();
+    if(this.MrCustTypeCode == CommonConstant.CustTypeCompany){
+      this.CheckTaxIdFormat();
+      this.CustMainDataForm.get("isForeigner").disable();
+    }
   }
 
   enableInput() {
