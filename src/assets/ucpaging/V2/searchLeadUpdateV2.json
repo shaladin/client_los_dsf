@@ -203,8 +203,39 @@
             "position": "center",
             "action": [
                 {
-                    "type": "callback",
-                    "icon" : "ft-x-circle"
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "icon" : "ft-x-circle"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "icon" : "ft-x-circle"
+                            },
+                            "isHide": false
+                        }
+                    ]
                 }
             ]
         },
