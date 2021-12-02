@@ -207,7 +207,7 @@ export class DocumentViewXComponent implements OnInit {
 
         if(environment.isCore){
           this.RdlcReport.ReportInfo.SubReports = new Array();
-          if(this.RdlcReport.ReportInfo.ReportName == "Insurance Premium Slip"){
+          if(this.RdlcReport.ReportInfo.ReportTemplateCode == "INSPREMIUMSLIP"){
             this.RdlcReport.ReportInfo.SubReports = [
               {
                 reportName: this.RdlcReport.ReportInfo.ReportName,
