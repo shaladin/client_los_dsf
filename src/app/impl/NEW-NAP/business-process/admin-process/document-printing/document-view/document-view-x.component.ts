@@ -205,6 +205,28 @@ export class DocumentViewXComponent implements OnInit {
 
         // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
 
+        if(environment.isCore){
+          this.RdlcReport.ReportInfo.SubReports = new Array();
+          if(this.RdlcReport.ReportInfo.ReportTemplateCode == "INSPREMIUMSLIP"){
+            this.RdlcReport.ReportInfo.SubReports = [
+              {
+                reportName: this.RdlcReport.ReportInfo.ReportName,
+                reportTemplateCode: "INSPREMIUMSLIPSUB2",
+                exportFormat: 0,
+                reportParameters: [reportParamObj],
+                subReports: []
+              },
+              {
+                reportName: this.RdlcReport.ReportInfo.ReportName,
+                reportTemplateCode: "PRSNLACCINSPREMIUMSLIPSUB2",
+                exportFormat: 0,
+                reportParameters: [reportParamObj],
+                subReports: []
+              }
+          ]
+          }
+        }
+
         this.http.post(URLConstant.GenerateReportR3, this.RdlcReport).subscribe(
           (response) => {
             let linkSource: string = 'data:application/pdf;base64,' + response["ReportFile"];
