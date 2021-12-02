@@ -8,6 +8,8 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-doc-signer-paging-dsf',
@@ -18,8 +20,9 @@ export class DocSignerPagingDsfComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
+  userAccess: CurrentUserContext;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -29,6 +32,8 @@ export class DocSignerPagingDsfComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
     var pagingJsonPath = "./assets/dsf/ucpaging/searchDocSignerDsf.json";
 
     if (this.BizTemplateCode == CommonConstant.OPL) {
@@ -54,6 +59,15 @@ export class DocSignerPagingDsfComponent implements OnInit {
       whereValueObj.property = "BizTemplateCode";
       whereValueObj.value = this.BizTemplateCode;
       this.inputPagingObj.whereValue.push(whereValueObj);
+
+      // let arrCritOffice = new Array();
+      // let critOfficeObj = new CriteriaObj();
+      // critOfficeObj.restriction = AdInsConstant.RestrictionLike;
+      // critOfficeObj.propName = 'AG.OFFICE_CODE';
+      // critOfficeObj.value = this.userAccess.OfficeCode;
+      // arrCritOffice.push(critOfficeObj);
+
+      // this.inputPagingObj.addCritInput = arrCritOffice;
     }
   }
 

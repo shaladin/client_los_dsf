@@ -6,4 +6,10 @@ export class CommonConstantDsf {
     public static GS_ROLE_PRV = "ROLE_PRV";
 
     public static Director = "DIR";
+    public static JOB_TITLE_CODE_BM = "18";
+    public static JOB_TITLE_CODE_RBM = "16";
+    public static JOB_TITLE_CODE_EGM = "38";
+    public static JOB_TITLE_CODE_DIR = "04";
+    public static JOB_TITLE_CODE_VP = "43";
+    public static JOB_TITLE_CODE_PD = "03";
 }

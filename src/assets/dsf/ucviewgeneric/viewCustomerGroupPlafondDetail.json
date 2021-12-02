@@ -35,6 +35,21 @@
             "type": "text",
             "label": "End Plafond Date",
             "property": "DtmEnd"
+          },
+          {
+            "type": "text",
+            "label": "Existing Agreement Outstanding AR",
+            "property": "Existing"
+          },
+          {
+            "type": "text",
+            "label": "Application In Process Outstanding AR",
+            "property": "Process"
+          },
+          {
+            "type": "text",
+            "label": "OPL Agreement Outstanding AR",
+            "property": "Opl"
           }
         ],
         "querystring": {
