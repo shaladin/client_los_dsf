@@ -1,5 +1,6 @@
 {
-    "sectionTitle": "Counterpart Category",
+    "title": "Lookup - Counterpart Category",
+    "sectionTitle": "Search",
     "component": [
         {
             "type": "textbox",

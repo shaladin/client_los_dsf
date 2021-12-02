@@ -1,5 +1,6 @@
 {
-    "sectionTitle": "Search Product",
+    "title": "Lookup - Search Product",
+    "sectionTitle": "Search",
     "exportExcel": false,
     "component": [
       {

@@ -1,5 +1,6 @@
 {
-    "title": "Lookup Supplier",
+    "title": "Lookup - Supplier",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",
