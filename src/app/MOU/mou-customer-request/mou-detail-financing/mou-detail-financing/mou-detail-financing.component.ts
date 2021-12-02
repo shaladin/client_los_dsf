@@ -225,7 +225,7 @@ export class MouDetailFinancingComponent implements OnInit {
             MouCustId: this.MouCustId
           });
 
-          this.instTypeHandler(CommonConstant.SINGLE_INST_TYPE);
+          this.instTypeHandler(this.MouDetailFinancingForm.controls.MrInstTypeCode.value);
         }
         this.shouldComponentLoad = true;
         if (this.MouDlrFinData["AssetCondition"] != null) {
