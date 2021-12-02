@@ -104,7 +104,8 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadSubsidyMaxRule() {
-    this.http.post(URLConstant.GetRuleSubsidyMax, { Id: this.AppId }).subscribe(
+    let GetRuleSubsidyMaxURL = environment.isCore ? URLConstant.GetRuleSubsidyMaxV2 : URLConstant.GetRuleSubsidyMax;
+    this.http.post(GetRuleSubsidyMaxURL, { Id: this.AppId }).subscribe(
       (response) => {
         this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
       }
@@ -134,7 +135,8 @@ export class SubsidyAddEditComponent implements OnInit {
     subdObj.AppFees = this.listAppFeeObj;
 
     if (this.mode == "add") {
-      this.http.post(URLConstant.AddAppSubsidy, subdObj).subscribe(
+      let AddAppSubsidyURL = environment.isCore ? URLConstant.AddAppSubsidyV2 : URLConstant.AddAppSubsidy;
+      this.http.post(AddAppSubsidyURL, subdObj).subscribe(
         (response) => {
           var x = response[CommonConstant.ReturnObj];
           this.emitData.emit(x);
@@ -146,7 +148,8 @@ export class SubsidyAddEditComponent implements OnInit {
       subdObj.AppSubsidyId = this.AppSubsidyId;
       subdObj.RowVersion = this.FormAppSubsidy.get("RowVersion").value;
 
-      this.http.post(URLConstant.EditAppSubsidy, subdObj).subscribe(
+      let EditAppSubsidyURL = environment.isCore ? URLConstant.EditAppSubsidyV2 : URLConstant.EditAppSubsidy;
+      this.http.post(EditAppSubsidyURL, subdObj).subscribe(
         (response) => {
           var x = response[CommonConstant.ReturnObj];
           this.emitData.emit(x);

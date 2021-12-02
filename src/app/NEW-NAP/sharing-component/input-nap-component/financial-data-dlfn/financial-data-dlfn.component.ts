@@ -142,7 +142,8 @@ export class FinancialDataDlfnComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataDFByAppId, { Id: this.AppId }).subscribe(
+    let InitAppFinDataUrl = environment.isCore ? URLConstant.GetInitAppFinDataDFByAppIdV2 : URLConstant.GetInitAppFinDataDFByAppId;
+    this.http.post<AppFinDataObj>(InitAppFinDataUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 

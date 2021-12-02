@@ -7,6 +7,7 @@ import { SubsidyAddEditCFNAComponent } from '../subsidy-add-edit/subsidy-add-edi
 import { AppFeeObj } from 'app/shared/model/app-fee-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-subsidy-cfna',
@@ -74,7 +75,8 @@ export class SubsidyCFNAComponent implements OnInit {
 
   LoadSubsidyData()
   {
-    this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { Id: this.AppId }).subscribe(
+    let InitAppSubsidyUrl = environment.isCore ? URLConstant.GetOrInitAppSubsidyByAppIdV2 : URLConstant.GetOrInitAppSubsidyByAppId;
+    this.http.post(InitAppSubsidyUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
         this.emitData.emit(this.listSubsidy);

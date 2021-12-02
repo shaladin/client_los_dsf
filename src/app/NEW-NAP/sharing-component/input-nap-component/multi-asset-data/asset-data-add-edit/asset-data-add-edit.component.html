@@ -85,15 +85,11 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group row">
-                      <label class="col-md-4 adInsLabel" [ngClass]="{'adins-required-label': isUsed}"  translate>Asset Condition</label>
-                      <div class="col-md-8">
-                        <select class="form-control adInsInput" style="width: auto"
-                          formControlName="MrAssetConditionCode" (change)="UcAddressHandler()"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetConditionCode.invalid }">
-                          <option *ngFor="let it of returnAssetConditionObj" [value]="it.Key">
-                            {{it.Value}}
-                          </option>
-                        </select>
+                      <label class="col-md-4 adInsLabel adins-required-label" translate>Asset Condition</label>
+                      <div class="col-md-8" *ngIf="isUCReady">
+                        <lib-ucdropdownlist [dropdownListObj]="UcDDLAssetCond" [genericList]="returnAssetConditionObj"
+                        [parentForm]="AssetDataForm" [enjiForm]="enjiForm" [identifier]="'MrAssetConditionCode'"
+                        (callback)="UcAddressHandler()"></lib-ucdropdownlist>
                       </div>
                     </div>
                   </div>
