@@ -1,15 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute } from '@angular/router';
-import { formatDate } from '@angular/common';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model';
-import { CalcRegularFixObj } from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
+import {ActivatedRoute} from '@angular/router';
+import {formatDate} from '@angular/common';
+import {URLConstant} from 'app/shared/constant/URLConstant';
+import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {KeyValueObj} from 'app/shared/model/key-value/key-value-obj.model';
+import {AppFinDataObj} from 'app/shared/model/app-fin-data/app-fin-data.model';
+import {CalcRegularFixObj} from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'app-financial-data-fctr-x',
@@ -157,7 +158,10 @@ export class FinancialDataFctrXComponent implements OnInit {
   }
 
   async LoadAppFinData() {
-    this.http.post<AppFinDataObj>(URLConstantX.GetInitAppFinDataFctrByAppIdX, { Id: this.AppId }).subscribe(
+    // note rework: Url V2 belum ditambahin di X, baru ada di Core doank. PERLU DITAMBAHIN !
+    // let InitAppFinDataUrl = environment.isCore ? URLConstant.GetInitAppFinDataFctrByAppIdV2X : URLConstant.GetInitAppFinDataFctrByAppIdX;
+    let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataFctrByAppIdX : URLConstantX.GetInitAppFinDataFctrByAppIdX;
+    this.http.post<AppFinDataObj>(InitAppFinDataUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 

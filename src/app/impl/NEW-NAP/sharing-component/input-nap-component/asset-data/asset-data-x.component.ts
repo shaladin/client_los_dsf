@@ -1,58 +1,62 @@
-import { DatePipe, formatDate } from "@angular/common";
-import { HttpClient } from "@angular/common/http";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { AdInsConstant } from "app/shared/AdInstConstant";
-import { CommonConstant } from "app/shared/constant/CommonConstant";
-import { String } from 'typescript-string-operations';
-import { ExceptionConstant } from "app/shared/constant/ExceptionConstant";
-import { URLConstant } from "app/shared/constant/URLConstant";
-import { AppObj } from "app/shared/model/App/App.Model";
-import { environment } from "environments/environment";
-import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
-import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
-import { InputFieldObj } from "app/shared/model/input-field-obj.model";
-import { AddrObj } from "app/shared/model/addr-obj.model";
-import { AppAssetAccessoryObj } from "app/shared/model/app-asset-accessory-obj.model";
-import { AssetTypeSerialNoLabelObj } from "app/shared/model/serial-no/asset-type-serial-no-label-obj.model";
-import { AllAssetDataObj } from "app/shared/model/all-asset-data-obj.model";
-import { AppAssetObj } from "app/shared/model/app-asset-obj.model";
-import { AppCollateralRegistrationObj } from "app/shared/model/app-collateral-registration-obj.model";
-import { ListAppCollateralDocObj } from "app/shared/model/list-app-collateral-doc-obj.model";
-import { AppCollateralDocObj } from "app/shared/model/app-collateral-doc-obj.model";
-import { ProdOfferingDObj } from "app/shared/model/product/prod-offering-d-obj.model";
-import { InputLookupObj } from "app/shared/model/input-lookup-obj.model";
-import { VendorEmpObj } from "app/shared/model/vendor-emp.model";
-import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
-import { RefProvDistrictObj } from "app/shared/model/ref-prov-district-obj.model";
-import { ResGetVendorEmpByVendorIdAndEmpNoObj, ResGetVendorEmpSpvByEmpNoObj } from "app/shared/model/response/vendor-emp/res-vendor-emp.model";
-import { AppCustPersonalJobDataObj } from "app/shared/model/app-cust-personal-job-data-obj.model";
-import { AppCustCompanyObj } from "app/shared/model/app-cust-company-obj.model";
-import { ResAssetValidationRuleObj } from "app/shared/model/rule/res-asset-validation-rule-obj.model";
-import { AppAssetAttrObj } from "app/shared/model/app-asset-attr-obj.model";
-import { AppAssetAttrCustomObj } from "app/shared/model/app-asset/app-asset-attr-custom.model";
-import { AppDataObj } from "app/shared/model/app-data-obj.model";
-import { InputAddressObj } from "app/shared/model/input-address-obj.model";
-import { GenericListByCodeObj } from "app/shared/model/generic/generic-list-by-code-obj.model";
-import { CustomPatternObj } from "app/shared/model/custom-pattern-obj.model";
-import { ReqGetProdOffDByProdOffVersion } from "app/shared/model/request/product/req-get-prod-offering-obj.model";
-import { GeneralSettingObj } from "app/shared/model/general-setting-obj.model";
-import { ResListGeneralSettingObj, ResGeneralSettingObj } from "app/shared/model/response/general-setting/res-general-setting-obj.model";
-import { AppCollateralAccessoryObj } from "app/shared/model/app-collateral-accessory-obj.model";
-import { AppCollateralAttrObj } from "app/shared/model/app-collateral-attr-obj.model";
-import { GenericObj } from "app/shared/model/generic/generic-obj.model";
-import { CriteriaObj } from "app/shared/model/criteria-obj.model";
-import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from "app/shared/model/request/vendor/req-vendor-emp.model";
-import { ResponseJobDataPersonalObj } from "app/shared/model/response-job-data-personal-obj.model";
-import { VendorObj } from "app/shared/model/vendor-obj.model";
+import {formatDate} from '@angular/common';
+import {HttpClient} from '@angular/common/http';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
+import {AdInsConstant} from 'app/shared/AdInstConstant';
+import {CommonConstant} from 'app/shared/constant/CommonConstant';
+import {String} from 'typescript-string-operations';
+import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
+import {URLConstant} from 'app/shared/constant/URLConstant';
+import {AppObj} from 'app/shared/model/App/App.Model';
+import {environment} from 'environments/environment';
+import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {InputFieldObj} from 'app/shared/model/input-field-obj.model';
+import {AddrObj} from 'app/shared/model/addr-obj.model';
+import {AppAssetAccessoryObj} from 'app/shared/model/app-asset-accessory-obj.model';
+import {AssetTypeSerialNoLabelObj} from 'app/shared/model/serial-no/asset-type-serial-no-label-obj.model';
+import {AllAssetDataObj} from 'app/shared/model/all-asset-data-obj.model';
+import {AppAssetObj} from 'app/shared/model/app-asset-obj.model';
+import {AppCollateralRegistrationObj} from 'app/shared/model/app-collateral-registration-obj.model';
+import {ListAppCollateralDocObj} from 'app/shared/model/list-app-collateral-doc-obj.model';
+import {AppCollateralDocObj} from 'app/shared/model/app-collateral-doc-obj.model';
+import {ProdOfferingDObj} from 'app/shared/model/product/prod-offering-d-obj.model';
+import {InputLookupObj} from 'app/shared/model/input-lookup-obj.model';
+import {VendorEmpObj} from 'app/shared/model/vendor-emp.model';
+import {KeyValueObj} from 'app/shared/model/key-value/key-value-obj.model';
+import {RefProvDistrictObj} from 'app/shared/model/ref-prov-district-obj.model';
+import {
+  ResGetVendorEmpByVendorIdAndEmpNoObj,
+  ResGetVendorEmpSpvByEmpNoObj
+} from 'app/shared/model/response/vendor-emp/res-vendor-emp.model';
+import {AppCustPersonalJobDataObj} from 'app/shared/model/app-cust-personal-job-data-obj.model';
+import {AppCustCompanyObj} from 'app/shared/model/app-cust-company-obj.model';
+import {ResAssetValidationRuleObj} from 'app/shared/model/rule/res-asset-validation-rule-obj.model';
+import {AppAssetAttrObj} from 'app/shared/model/app-asset-attr-obj.model';
+import {AppAssetAttrCustomObj} from 'app/shared/model/app-asset/app-asset-attr-custom.model';
+import {AppDataObj} from 'app/shared/model/app-data-obj.model';
+import {InputAddressObj} from 'app/shared/model/input-address-obj.model';
+import {GenericListByCodeObj} from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import {CustomPatternObj} from 'app/shared/model/custom-pattern-obj.model';
+import {ReqGetProdOffDByProdOffVersion} from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import {GeneralSettingObj} from 'app/shared/model/general-setting-obj.model';
+import {ResGeneralSettingObj, ResListGeneralSettingObj} from 'app/shared/model/response/general-setting/res-general-setting-obj.model';
+import {AppCollateralAccessoryObj} from 'app/shared/model/app-collateral-accessory-obj.model';
+import {AppCollateralAttrObj} from 'app/shared/model/app-collateral-attr-obj.model';
+import {GenericObj} from 'app/shared/model/generic/generic-obj.model';
+import {CriteriaObj} from 'app/shared/model/criteria-obj.model';
+import {ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj} from 'app/shared/model/request/vendor/req-vendor-emp.model';
+import {ResponseJobDataPersonalObj} from 'app/shared/model/response-job-data-personal-obj.model';
+import {VendorObj} from 'app/shared/model/vendor-obj.model';
+import {UcDropdownListObj} from 'app/shared/model/library/uc-dropdown-list-obj.model';
 
 @Component({
     selector: 'app-asset-data-x',
     templateUrl: './asset-data-x.component.html',
   })
-  
+
   export class AssetDataXComponent implements OnInit {
     @Input() AppId: number;
     @Input() showCancel: boolean = true;
@@ -92,7 +96,8 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
     IsReady: boolean = false;
     listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
     appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
-  
+    UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
+
     AssetDataForm = this.fb.group({
       /* AppAsset Value that in form*/
       FullAssetName: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -110,7 +115,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       ExpectedDelivDt: [],
       IsNeedReplacementCar: [false],
       ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
-  
+
       /* AppAsset Value That required but not in form*/
       AssetSeqNo: ['1', Validators.required],
       FullAssetCode: ['', [Validators.required, Validators.maxLength(500)]],
@@ -121,25 +126,25 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       IsCollateral: [true, Validators.required],
       IsInsurance: [true, Validators.required],
       IsEditableDp: [true, Validators.required],
-  
+
       /*Admin Head SuppEmp*/
       AdminHeadId: [''],
       AdminHeadName: ['', [Validators.maxLength(500)]],
       AdminHeadNo: ['', [Validators.maxLength(50)]],
       AdminHeadPositionCode: ['', [Validators.maxLength(50)]],
-  
+
       /*Sales Person SuppEmp*/
       SalesPersonId: ['', Validators.required],
       SalesPersonName: ['', [Validators.required, Validators.maxLength(500)]],
       SalesPersonNo: ['', [Validators.required, Validators.maxLength(50)]],
       SalesPersonPositionCode: ['', [Validators.required, Validators.maxLength(50)]],
-  
+
       /*Branch Manager SuppEmp*/
       BranchManagerId: [''],
       BranchManagerName: ['', Validators.maxLength(500)],
       BranchManagerNo: ['', Validators.maxLength(50)],
       BranchManagerPositionCode: ['', Validators.maxLength(50)],
-  
+
       /*App Collateral Regist*/
       UserName: ['', Validators.maxLength(50)],
       MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -170,7 +175,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       LocationCity: ['', Validators.maxLength(50)],
       LocationZipcode: ['', Validators.maxLength(50)],
       OwnerProfessionCode: [''],
-  
+
       LocationAddrType: [''],
       DelivAddrType: [''],
       OwnerAddrType: [''],
@@ -182,7 +187,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       AppAssetAttrObjs: this.fb.array([]),
       ListDoc: this.fb.array([])
     });
-  
+
     CustType: string = "";
     AddrObj: AddrObj;
     refMasterObj = {
@@ -191,58 +196,58 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
     appObj = {
       Id: 0,
     };
-  
+
     assetCondObj: ProdOfferingDObj;
-  
+
     vendorObj = {
       VendorId: 0,
       VendorCode: "",
       MrVendorEmpPositionCodes: [CommonConstant.ADMIN_HEAD_JOB_CODE, CommonConstant.SALES_JOB_CODE, CommonConstant.BRANCH_MANAGER_JOB_CODE],
     };
-  
+
     vendorAccSuppObj = {
       VendorId: 0,
       VendorCode: "",
     };
-  
+
     accObj = {
       AssetAccessoryCode: "",
     };
-  
+
     vendorEmpObj = {
       VendorId: 0,
       VendorEmpId: 0,
       VendorEmpNo: "",
     };
-  
+
     vendorEmpSalesObj = {
       VendorId: 0,
       VendorEmpId: 0,
       VendorEmpNo: "",
     };
-  
+
     vendorEmpAdminObj = {
       VendorId: 0,
       VendorEmpId: 0,
       VendorEmpNo: "",
     };
-  
+
     vendorEmpBMObj = {
       VendorId: 0,
       VendorEmpId: 0,
       VendorEmpNo: "",
     };
-  
+
     assetMasterObj = {
       FullAssetCode: "",
     };
-  
+
     districtObj = {
       ProvDistrictCode: "",
     };
-  
+
     allAssetDataObj: AllAssetDataObj;
-  
+
     InputLookupSupplierObj: InputLookupObj;
     InputLookupCityIssuerObj: InputLookupObj;
     InputLookupAssetObj: InputLookupObj;
@@ -250,7 +255,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
     InputLookupAccObj: InputLookupObj;
     InputLookupAccSupObj: InputLookupObj;
     InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
-  
+
     EmpObj: Array<VendorEmpObj>;
     AdminHeadObj: any;
     SalesPersonObj: any;
@@ -289,7 +294,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
     SetManuYearObj: ResAssetValidationRuleObj;
     SetDpObj: ResAssetValidationRuleObj;
     isValidOk: boolean = true;
-  
+
     AssetConditionName: string = "";
     OfficeCode: string;
     DpTypeBefore: string = "";
@@ -320,14 +325,14 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
     inputAddressObjForDeliv: InputAddressObj;
     inputAddressObjForLoc: InputAddressObj;
     isDiffWithRefAttr: boolean;
-  
+
     generalSettingObj: GenericListByCodeObj = new GenericListByCodeObj();
     IntegratorCheckBySystemGsValue: string = "1";
     IsUseDigitalization: string;
     SerialNoRegex: string;
     ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
     LastRequestedDate: any = "";
-  
+
     readonly CurrencyMaskPrct = CommonConstantX.CurrencyMaskPrct;
     constructor(
       private fb: FormBuilder,
@@ -339,22 +344,22 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       });
       this.originalAppAssetAccessory = new Array<AppAssetAccessoryObj>();
     }
-  
+
     async ngOnInit(): Promise<void> {
       this.isListAsset = true;
-  
+
       this.inputAddressObjForOwner = new InputAddressObj();
       this.inputAddressObjForOwner.showSubsection = false;
       this.inputAddressObjForOwner.showAllPhn = false;
-  
+
       this.inputAddressObjForDeliv = new InputAddressObj();
       this.inputAddressObjForDeliv.showSubsection = false;
       this.inputAddressObjForDeliv.showAllPhn = false;
-  
+
       this.inputAddressObjForLoc = new InputAddressObj();
       this.inputAddressObjForLoc.showSubsection = false;
       this.inputAddressObjForLoc.showAllPhn = false;
-  
+
       this.items = this.AssetDataForm.get('items') as FormArray;
       this.isOnlookup = false;
       await this.GetAppData();
@@ -373,7 +378,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.inputFieldDelivAddrObj.inputLookupObj = new InputLookupObj();
       this.inputFieldLocationAddrObj = new InputFieldObj();
       this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-  
+
       if (this.CustType == CommonConstant.CustTypeCompany) {
         await this.GetAppCustCoy();
       }
@@ -383,7 +388,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       }
       this.AssetDataForm.removeControl("AssetAccessoriesObjs");
       this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
-  
+
       if (this.BizTemplateCode === "OPL") {
         this.AssetDataForm.controls.DownPaymentAmt.clearValidators();
         this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
@@ -396,13 +401,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       else if(this.mode == 'editAsset') {
         await this.getAllAssetData();
       }
-  
+
       this.GenerataAppAssetAttr(false);
       var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
       appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
         appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetCond,
         appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
-  
+
         await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
           (response: any) => {
             this.RefProdCmptAssetCond = response;
@@ -413,11 +418,11 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
             }
           }
         );
-  
+
       await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex }).toPromise().then(
         (response: GeneralSettingObj) => {
           this.SerialNoRegex = response.GsValue;
-  
+
           let obj: CustomPatternObj = {
             pattern: this.SerialNoRegex,
             invalidMsg: "Cannot input special character"
@@ -425,13 +430,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           this.ListPattern.push(obj);
         }
       )
-  
+
       this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.RefProdCmptAssetType.CompntValue }).subscribe(
         (response: any) => {
           while (this.items.length) {
             this.items.removeAt(0);
           }
-  
+
           this.SerialNoList = response[CommonConstant.ReturnObj];
           for (let i = 0; i < this.SerialNoList.length; i++) {
             let eachDataDetail = this.fb.group({
@@ -441,8 +446,8 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
             }) as FormGroup;
             this.items.push(eachDataDetail);
           }
-  
-  
+
+
           if(this.mode == 'editAsset'){
             if (this.appAssetObj.ResponseAppAssetObj != null) {
               for (let i = 0; i < this.items.length; i++) {
@@ -458,37 +463,37 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         });
       await this.GetGS();
     }
-  
+
     AddAsset() {
       this.mode = "Add";
       this.salesSupervisor = "";
       this.InputLookupSupplierObj.jsonSelect = null;
       this.InputLookupSupplierObj.nameSelect = "";
-  
+
       this.InputLookupAssetObj.jsonSelect = null;
       this.InputLookupAssetObj.nameSelect = "";
-  
+
       this.InputLookupCityIssuerObj.jsonSelect = null;
       this.InputLookupCityIssuerObj.nameSelect = "";
-  
+
       this.inputAddressObjForDeliv.showSubsection = false;
       this.inputAddressObjForDeliv.showAllPhn = false;
       this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = "";
       this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = null;
       this.inputAddressObjForDeliv.default = null;
       this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
-  
+
       this.inputAddressObjForLoc.showSubsection = false;
       this.inputAddressObjForLoc.showAllPhn = false;
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = "";
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = null;
       this.inputAddressObjForLoc.default = null;
       this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-  
+
       this.AdminHeadObj = null;
       this.SalesPersonObj = null;
       this.BranchManagerObj = null;
-  
+
       this.AssetDataForm.patchValue({
         MrAssetConditionCode: "",
         MrAssetUsageCode: "",
@@ -503,35 +508,35 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         AdminHeadId: "",
         BranchManagerId: ""
       });
-  
+
       this.AssetDataForm.removeControl("AssetAccessoriesObjs");
       this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
-  
+
       var appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
       for (let i = 0; i < appAttrObjs.value.length; i++) {
         appAttrObjs.controls[i].patchValue({
           AttrValue: ""
         });
       }
-  
+
       this.isListAsset = false;
     }
-  
+
     Edit(index: any) {
       this.mode = "Edit";
       this.index = index;
-  
+
       this.allAssetDataObj = this.listAsset[this.index];
-  
+
       this.InputLookupSupplierObj.jsonSelect = null;
       this.InputLookupSupplierObj.nameSelect = this.allAssetDataObj.AppAssetObj.SupplName;
-  
+
       this.InputLookupAssetObj.jsonSelect = null;
       this.InputLookupAssetObj.nameSelect = this.allAssetDataObj.AppAssetObj.FullAssetName;
-  
+
       this.InputLookupCityIssuerObj.jsonSelect = null;
       this.InputLookupCityIssuerObj.nameSelect = this.allAssetDataObj.AppAssetObj.TaxCityIssuer;
-  
+
       this.inputAddressObjForDeliv.showSubsection = false;
       this.inputAddressObjForDeliv.showAllPhn = false;
       this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode;
@@ -545,7 +550,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.delivAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity;
       this.inputAddressObjForDeliv.default = this.delivAddrObj;
       this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
-  
+
       this.inputAddressObjForLoc.showSubsection = false;
       this.inputAddressObjForLoc.showAllPhn = false;
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode;
@@ -559,11 +564,11 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.locationAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity;
       this.inputAddressObjForLoc.default = this.locationAddrObj;
       this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-  
+
       this.AdminHeadObj = this.allAssetDataObj.AppAssetSupplEmpAdminObj;
       this.SalesPersonObj = this.allAssetDataObj.AppAssetSupplEmpSalesObj;
       this.BranchManagerObj = this.allAssetDataObj.AppAssetSupplEmpManagerObj;
-  
+
       this.AssetDataForm.patchValue({
         MrAssetConditionCode: this.allAssetDataObj.AppAssetObj.MrAssetConditionCode,
         MrAssetUsageCode: this.allAssetDataObj.AppAssetObj.MrAssetUsageCode,
@@ -578,36 +583,36 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         AdminHeadId: this.allAssetDataObj.AppAssetSupplEmpAdminObj.VendorEmpId,
         BranchManagerId: this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId
       });
-  
+
       this.priceAfterDiscount = this.allAssetDataObj.AppAssetObj.AssetPriceAmt - this.allAssetDataObj.AppAssetObj.Discount;
-  
+
       this.AssetDataForm.removeControl("AssetAccessoriesObjs");
       this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
       for (let i = 0; i < this.allAssetDataObj.AppAssetAccessoryObjs.length; i++) {
         var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
         appAccessoryObjs.push(this.addGroup(this.allAssetDataObj.AppAssetAccessoryObjs[i], i));
-  
+
         var InputLookupAccObj = this.initLookupAcc();
         var InputLookupAccSupObj = this.initLookupSuppAcc();
         this.dictAccLookup[i] = InputLookupAccObj;
         this.dictSuppLookup[i] = InputLookupAccSupObj;
         this.InputLookupAcceObjs.push(InputLookupAccObj);
         this.InputLookupSupplObjs.push(InputLookupAccSupObj);
-  
+
         this.setAppAccessorySupplier(i, this.appAssetAccessoriesObjs[i].SupplCode);
         this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
       }
-  
+
       var appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
       for (let i = 0; i < this.allAssetDataObj.AppCollateralAttrObj.length; i++) {
         appAttrObjs.controls[i].patchValue({
           AttrValue: this.allAssetDataObj.AppCollateralAttrObj[i].AttrValue
         });
       }
-  
+
       this.isListAsset = false;
     }
-  
+
     Delete(index: any) {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         this.allAssetDataObj = this.listAsset[index];
@@ -621,11 +626,11 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         );
       }
     }
-  
+
     ChangeAssetName(index: any) {
       this.index = index;
     }
-  
+
     CopyAsset() {
       this.allAssetDataObj = this.listAsset[this.index];
       this.allAssetDataObj.BizTemplateCode = this.BizTemplateCode;
@@ -639,38 +644,38 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     updateValueAssetPrice() {
       var assetPriceAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
       var discount = this.AssetDataForm.controls.Discount.value;
       this.priceAfterDiscount = assetPriceAmt - discount;
     }
-  
+
     async GetGS() {
       this.generalSettingObj = new GenericListByCodeObj();
       this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
       this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
-  
+
       await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
         (response) => {
           var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
           returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
-  
+
           var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
           var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-  
+
           if (gsNeedCheckBySystem != undefined) {
             this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
           } else {
             this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
           }
-  
+
           if (gsUseDigitalization != undefined) {
             this.IsUseDigitalization = gsUseDigitalization.GsValue;
           } else {
             this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
           }
-  
+
           if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
             this.GetThirdPartyResultH();
           }
@@ -678,7 +683,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       );
     }
 
-  
+
     async SaveForm() {
       var assetForm = this.AssetDataForm.getRawValue();
       if (this.BizTemplateCode !== "OPL") {
@@ -690,7 +695,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           if(assetForm.AssetAccessoriesObjs.length > 0){
             sumAssetAccessories = assetForm.AssetAccessoriesObjs.map(x => x.AccessoryPriceAmt).reduce((acc, curr) => acc + curr);
           }
-  
+
           if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
             if (assetForm.DownPaymentPrctg < this.CheckValidationObj.DPMin) {
               this.isValidOk = false;
@@ -713,7 +718,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
               confirmMsg = "Down Payment Amount is Higher than Maximum Amount";
             }
           }
-  
+
           if (!this.isValidOk) {
             confirmMsg += ", Are You Sure to Save This Data ?";
             var confirmation = confirm(confirmMsg);
@@ -723,7 +728,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           }
         }
       }
-  
+
       this.allAssetDataObj = new AllAssetDataObj();
       this.setAllAssetObj();
       this.allAssetDataObj.BizTemplateCode = this.BizTemplateCode;
@@ -770,7 +775,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
         }
       }
-  
+
       if (this.BizTemplateCode !== "OPL") {
         if(this.mode == 'editAsset'){
           if (this.returnAppAssetObj != null && this.returnAppAssetObj != undefined) {
@@ -858,20 +863,20 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         );
       }
     }
-  
+
     Cancel() {
       this.outputCancel.emit();
     }
-  
+
     Back() {
       this.assetValue.emit({ mode: 'paging' });
     }
-  
+
     Save() {
       this.toastr.successMessage("");
       this.outputTab.emit();
     }
-  
+
     async GetThirdPartyResultH() {
       var ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
       await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, { TrxNo: this.AppObj.AppNo, TrxTypeCode: "APP", ChassisNo: ChassisNoValue }).toPromise().then(
@@ -885,7 +890,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async CheckValidation() {
       var CheckValidObj = {
         AppId: this.AppId,
@@ -906,7 +911,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     SetDpValue(mode: string = "add") {
       var CheckValidObj = {
         AppId: this.AppId,
@@ -943,7 +948,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           }
         });
     }
-  
+
     SetMinManuYear() {
       var CheckValidObj = {
         AppId: this.AppId,
@@ -958,13 +963,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           });
         });
     }
-  
+
     ChangeManuYear() {
       if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
         this.SetDpValue();
       }
     }
-  
+
     setAllAssetObj() {
       var assetForm = this.AssetDataForm.getRawValue();
       this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetId;
@@ -975,10 +980,10 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.allAssetDataObj.VendorEmpId = this.AssetDataForm.controls.SalesPersonId.value;
       this.allAssetDataObj.AppAssetSupplEmpAdminObj.VendorEmpId = this.AssetDataForm.controls.AdminHeadId.value;
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId = this.AssetDataForm.controls.BranchManagerId.value;
-  
+
       this.allAssetDataObj.AppAssetObj.SupplName = this.AssetDataForm.controls.SupplName.value;
       this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
-  
+
       this.allAssetDataObj.AppAssetObj.MinDownPaymentPrcnt = this.CheckValidationObj && this.CheckValidationObj.DPMin ? this.CheckValidationObj.DPMin : 0;
       this.allAssetDataObj.AppAssetObj.MaxDownPaymentPrcnt = this.CheckValidationObj && this.CheckValidationObj.DPMax ? this.CheckValidationObj.DPMax : 0;
       this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls.AssetNotes.value;
@@ -987,14 +992,14 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls.TaxIssueDt.value;
       this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
       this.allAssetDataObj.AppAssetObj.Discount = this.AssetDataForm.controls.Discount.value;
-  
+
       if (this.AssetDataForm.controls.ExpectedDelivDt.value !== null) {
         this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.AssetDataForm.controls.ExpectedDelivDt.value;
       }
       if (this.AssetDataForm.controls.IsNeedReplacementCar.value !== null) {
         this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.AssetDataForm.controls.IsNeedReplacementCar.value;
       }
-  
+
       this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.AssetDataForm.controls.AssetSeqNo.value;
       this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls.FullAssetCode.value;
       if (this.appAssetId == 0) {
@@ -1030,7 +1035,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "-";
         this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "-";
       }
-  
+
       this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls.SalesPersonName.value;
       this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls.SalesPersonNo.value;
       this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.AssetDataForm.controls.SalesPersonPositionCode.value;
@@ -1044,23 +1049,23 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
         this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "-";
       }
-  
+
       this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls.TaxCityIssuer.value;
       this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls.TaxIssueDt.value;
       this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
-  
+
       this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
       this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.AssetDataForm.controls.AssetSeqNo.value;
       this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls.FullAssetCode.value;
       this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls.FullAssetName.value;
       this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls.MrAssetConditionCode.value;
       this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls.MrAssetUsageCode.value;
-  
+
       this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
       this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
       this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
       this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
-  
+
       this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls.UserName.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls.MrUserRelationshipCode.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.OwnerName = this.AssetDataForm.controls.OwnerName.value;
@@ -1068,14 +1073,14 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.allAssetDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.AssetDataForm.controls.OwnerIdNo.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AssetDataForm.controls.MrOwnerRelationshipCode.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AssetDataForm.controls.OwnerProfessionCode.value;
-  
+
       if (this.BizTemplateCode !== "OPL") {
         for (let i = 0; i < this.items.length; i++) {
           if (this.items.controls[i] != null) {
             this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
           }
         }
-  
+
         if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
           // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
           this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm.DownPaymentPrctg;
@@ -1085,13 +1090,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm.DownPaymentAmt;
           this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm.DownPaymentAmt / assetForm.AssetPriceAmt) * 100;
         }
-  
+
         for (var i = 0; i < this.items.length; i++) {
           if (this.items.controls[i] != null) {
             this.allAssetDataObj.AppCollateralObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
           }
         }
-  
+
         this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAddr = this.AssetDataForm.controls["ownerData"]["controls"].Addr.value;
         this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.AssetDataForm.controls["ownerData"]["controls"].AreaCode1.value;
         this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode2 = this.AssetDataForm.controls["ownerData"]["controls"].AreaCode2.value;
@@ -1110,7 +1115,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.AssetDataForm.controls["delivData"]["controls"].City.value;
         this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.AssetDataForm.controls["delivDataZipcode"]["controls"].value.value;
       }
-  
+
       this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.AssetDataForm.controls["locationData"]["controls"].Addr.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.AssetDataForm.controls["locationData"]["controls"].AreaCode1.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.AssetDataForm.controls["locationData"]["controls"].AreaCode2.value;
@@ -1118,12 +1123,12 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.AssetDataForm.controls["locationData"]["controls"].AreaCode4.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.AssetDataForm.controls["locationData"]["controls"].City.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.AssetDataForm.controls["locationDataZipcode"]["controls"].value.value;
-  
+
       this.allAssetDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
       this.allAssetDataObj.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
       this.allAssetDataObj.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
       this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
-  
+
       for (let i = 0; i < this.AssetDataForm.controls["AssetAccessoriesObjs"].value.length; i++) {
         var appAssetAccObj = new AppAssetAccessoryObj();
         var appCollateralAccObj = new AppCollateralAccessoryObj();
@@ -1135,13 +1140,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         appAssetAccObj.DownPaymentPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value;
         appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value;
         appAssetAccObj.AccessoryNotes = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryNotes;
-  
+
         appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
         appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
         appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
         appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
         appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
-  
+
         this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
         this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
       }
@@ -1152,16 +1157,16 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           appAssetAttrObj.AssetAttrName = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrName;
           appAssetAttrObj.AssetAttrCode = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrCode;
           appAssetAttrObj.AttrValue = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
-  
+
           appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
           appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
           appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
-  
+
           this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
           this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
         }
       }
-  
+
       this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
       for (let i = 0; i < this.AssetDataForm.value.ListDoc["length"]; i++) {
         this.appCollateralDoc = new AppCollateralDocObj();
@@ -1181,24 +1186,24 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       }
       this.allAssetDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
     }
-  
+
     async SetSupplier(event) {
       this.AdminHeadObj = null;
       this.SalesPersonObj = null;
       this.BranchManagerObj = null;
-  
+
       this.vendorObj.VendorCode = event.VendorCode;
       this.vendorObj.VendorId = event.VendorId;
       await this.GetVendor();
       this.GetVendorEmpList();
     }
-  
+
     SetBpkbCity(event) {
       this.AssetDataForm.patchValue({
         TaxCityIssuer: event.DistrictCode,
       });
     }
-  
+
     async SetAsset(event) {
       this.assetMasterObj.FullAssetCode = event.FullAssetCode;
       await this.GetAssetMaster(this.assetMasterObj);
@@ -1217,7 +1222,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       }
     }
-  
+
     SalesPersonChanged(event) {
       if (event.target.value != "") {
         var temp: any;
@@ -1238,7 +1243,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         });
       }
     }
-  
+
     AdminHeadChanged(event) {
       if (event.target.value != "") {
         var tempId = event.target.value;
@@ -1261,7 +1266,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         });
       }
     }
-  
+
     BranchManagerChanged(event) {
       if (event.target.value != "") {
         var tempId = event.target.value;
@@ -1284,7 +1289,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         });
       }
     }
-  
+
     DpTypeChange() {
       if (this.AssetDataForm.controls.selectedDpType.value != '') {
         if (this.AssetDataForm.controls.selectedDpType.value == 'AMT' && this.DpTypeBefore == 'PRCTG') {
@@ -1324,7 +1329,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         });
       }
     }
-  
+
     updateValueDownPaymentPrctg() {
       var DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
       if(isNaN(DownPaymentPrctg)){
@@ -1346,14 +1351,14 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         });
       }
     }
-  
+
     async SelfUsageChange(event) {
       if (event.checked == true) {
         this.AssetDataForm.patchValue({
           UserName: this.AppCustObj.CustName,
           MrUserRelationshipCode: "SELF",
         });
-  
+
         this.AssetDataForm.controls.UserName.clearValidators();
         this.AssetDataForm.controls.UserName.updateValueAndValidity();
         this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
@@ -1370,7 +1375,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.AssetDataForm.controls["MrUserRelationshipCode"].enable();
       };
     }
-  
+
     async SelfOwnerChange(event) {
       if (event.checked == true) {
         this.AssetDataForm.patchValue({
@@ -1404,7 +1409,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
         this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName };
-  
+
         this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = true;
         this.InputLookupProfessionObj.isDisable = true;
         this.AssetDataForm.controls["OwnerName"].disable();
@@ -1545,7 +1550,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
         this.SelfOwnerChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")});
       }
-      
+
       this.AssetConditionChanged(this.mode);
       this.appAssetAccessoriesObjs = this.appAssetAccessoriesObjs;
       this.appAssetId = this.returnAppAssetObj.AppAssetId;
@@ -1576,7 +1581,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       }
     }
-  
+
     async getListAllAssetData() {
       this.appData = new AppDataObj();
       this.appData.AppId = this.AppId;
@@ -1584,30 +1589,30 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       await this.http.post(URLConstant.GetListAllAssetDataByAppId, appData).toPromise().then(
         (response) => {
           this.appAssetObj = response[CommonConstant.ReturnObj];
-  
+
           if (this.appAssetObj != null) {
             for (let i = 0; i < this.appAssetObj.length; i++) {
               this.allAssetDataObj = new AllAssetDataObj();
-  
+
               this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetObj[i].ResponseAppAssetObj.AppAssetId;
               this.allAssetDataObj.AppAssetObj.AppId = this.appAssetObj[i].ResponseAppAssetObj.AppId;
               this.allAssetDataObj.AppAssetObj.FullAssetName = this.appAssetObj[i].ResponseAppAssetObj.FullAssetName;
               this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.appAssetObj[i].ResponseAppAssetObj.MrAssetConditionCode;
               this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.appAssetObj[i].ResponseAppAssetObj.MrAssetUsageCode;
-  
+
               this.allAssetDataObj.AppAssetObj.SupplName = this.appAssetObj[i].ResponseAppAssetObj.SupplName;
               this.allAssetDataObj.AppAssetObj.AssetNotes = this.appAssetObj[i].ResponseAppAssetObj.AssetNotes;
               this.allAssetDataObj.AppAssetObj.Color = this.appAssetObj[i].ResponseAppAssetObj.Color;
               this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj[i].ResponseAppAssetObj.TaxCityIssuer;
               this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj[i].ResponseAppAssetObj.TaxIssueDt;
               this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj[i].ResponseAppAssetObj.ManufacturingYear;
-  
+
               if (this.appAssetObj[i].ResponseAssetDataOplObj != null) {
                 this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.appAssetObj[i].ResponseAssetDataOplObj.AssetPriceBefDiscAmt;
                 this.allAssetDataObj.AppAssetObj.Discount = this.appAssetObj[i].ResponseAssetDataOplObj.DiscountAmt;
                 this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.appAssetObj[i].ResponseAssetDataOplObj.ExpectedDeliveryDt;
                 this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.appAssetObj[i].ResponseAssetDataOplObj.IsNeedReplacementCar;
-  
+
                 this.allAssetDataObj.AppCollateralRegistrationObj.DelivAddr = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAddr;
                 this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode1 = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAreaCode1;
                 this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode2 = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAreaCode2;
@@ -1615,7 +1620,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
                 this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4 = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAreaCode4;
                 this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryCity;
                 this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryZipcode;
-  
+
                 this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.appAssetObj[i].ResponseAssetDataOplObj.LocationAddr;
                 this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.appAssetObj[i].ResponseAssetDataOplObj.LocationAreaCode1;
                 this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.appAssetObj[i].ResponseAssetDataOplObj.LocationAreaCode2;
@@ -1624,17 +1629,17 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
                 this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.appAssetObj[i].ResponseAssetDataOplObj.LocationCity;
                 this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.appAssetObj[i].ResponseAssetDataOplObj.LocationZipcode;
               }
-  
+
               this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.appAssetObj[i].ResponseAppAssetObj.AssetSeqNo;
               this.allAssetDataObj.AppAssetObj.FullAssetCode = this.appAssetObj[i].ResponseAppAssetObj.FullAssetCode;
               this.allAssetDataObj.AppAssetObj.AssetStat = this.appAssetObj[i].ResponseAppAssetObj.AssetStat;
               this.allAssetDataObj.AppCollateralObj.CollateralStat = this.appAssetObj[i].ResponseAppAssetObj.AssetStat;
               this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetObj[i].ResponseAppAssetObj.AppAssetId;
-  
+
               this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.appAssetObj[i].ResponseAppAssetObj.AssetTypeCode;
               this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.appAssetObj[i].ResponseAppAssetObj.AssetCategoryCode;
               this.allAssetDataObj.AppAssetObj.SupplCode = this.appAssetObj[i].ResponseAppAssetObj.SupplCode;
-  
+
               if (this.appAssetObj[i].ResponseBranchManagerSupp != null) {
                 this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.appAssetObj[i].ResponseBranchManagerSupp.SupplEmpName;
                 this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.appAssetObj[i].ResponseBranchManagerSupp.SupplEmpNo;
@@ -1645,7 +1650,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
                 this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "";
                 this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "";
               }
-  
+
               if (this.appAssetObj[i].ResponseAdminHeadSupp != null) {
                 this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.appAssetObj[i].ResponseAdminHeadSupp.SupplEmpName;
                 this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.appAssetObj[i].ResponseAdminHeadSupp.SupplEmpNo;
@@ -1656,7 +1661,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
                 this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "";
                 this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "";
               }
-  
+
               if (this.appAssetObj[i].ResponseSalesPersonSupp != null) {
                 this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj[i].ResponseSalesPersonSupp.SupplEmpName;
                 this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj[i].ResponseSalesPersonSupp.SupplEmpNo;
@@ -1667,23 +1672,23 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
                 this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "";
                 this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
               }
-  
+
               this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj[i].ResponseAppAssetObj.TaxCityIssuer;
               this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj[i].ResponseAppAssetObj.TaxIssueDt;
               this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj[i].ResponseAppAssetObj.ManufacturingYear;
-  
+
               this.allAssetDataObj.AppCollateralObj.AppId = this.appAssetObj[i].ResponseAppAssetObj.AppId;
               this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.appAssetObj[i].ResponseAppAssetObj.AssetSeqNo;
               this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.appAssetObj[i].ResponseAppAssetObj.FullAssetCode;
               this.allAssetDataObj.AppCollateralObj.FullAssetName = this.appAssetObj[i].ResponseAppAssetObj.FullAssetName;
               this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.appAssetObj[i].ResponseAppAssetObj.MrAssetConditionCode;
               this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.appAssetObj[i].ResponseAppAssetObj.MrAssetUsageCode;
-  
+
               this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.appAssetObj[i].ResponseAppAssetObj.AssetPriceAmt;
               this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.appAssetObj[i].ResponseAppAssetObj.AssetTypeCode;
               this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.appAssetObj[i].ResponseAppAssetObj.AssetCategoryCode;
               this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.appAssetObj[i].ResponseAppAssetObj.ManufacturingYear;
-  
+
               this.allAssetDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
               this.allAssetDataObj.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
               this.allAssetDataObj.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
@@ -1700,18 +1705,18 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
                   appAssetAccObj.DownPaymentPrcnt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryDownPaymentPrcnt;
                   appAssetAccObj.DownPaymentAmt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].DownPaymentAmt;
                   appAssetAccObj.AccessoryNotes = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryNotes;
-  
+
                   appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
                   appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
                   appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
                   appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
                   appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
-  
+
                   this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
                   this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
                 }
               }
-  
+
               if (this.appAssetObj[i].ResponseAppAssetAttrObjs != null) {
                 for (let k = 0; k < this.appAssetObj[i].ResponseAppAssetAttrObjs.length; k++) {
                   var appAssetAttrObj = new AppAssetAttrObj();
@@ -1719,26 +1724,26 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
                   appAssetAttrObj.AssetAttrName = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AssetAttrName;
                   appAssetAttrObj.AssetAttrCode = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AssetAttrCode;
                   appAssetAttrObj.AttrValue = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AttrValue;
-  
+
                   appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
                   appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
                   appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
-  
+
                   this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
                   this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
                 }
               }
-  
+
               this.listAsset.push(this.allAssetDataObj);
             }
           }
         }
       );
     }
-  
+
     initLookup() {
       this.InputLookupSupplierObj = this.initLookupSupp();
-  
+
       this.InputLookupCityIssuerObj = new InputLookupObj();
       this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
       this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -1753,13 +1758,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       critDisObj.value = 'DIS';
       disCrit.push(critDisObj);
       this.InputLookupCityIssuerObj.addCritInput = disCrit;
-  
+
       this.InputLookupAssetObj = new InputLookupObj();
       this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
       this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
       this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
       this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
-  
+
       var assetCrit = new Array();
       var critAssetObj = new CriteriaObj();
       critAssetObj.DataType = 'text';
@@ -1767,7 +1772,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       critAssetObj.propName = 'B.ASSET_TYPE_CODE';
       critAssetObj.value = this.RefProdCmptAssetType.CompntValue;
       assetCrit.push(critAssetObj);
-  
+
       var critAssetSchmObj = new CriteriaObj();
       critAssetSchmObj.DataType = 'text';
       critAssetSchmObj.restriction = AdInsConstant.RestrictionEq;
@@ -1775,8 +1780,8 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       critAssetSchmObj.value = this.RefProdCmptAssetSchm.CompntValue;
       assetCrit.push(critAssetSchmObj);
       this.InputLookupAssetObj.addCritInput = assetCrit;
-  
-  
+
+
       this.InputLookupAccObj = this.initLookupAcc();
       this.isOnlookup = true;
 
@@ -1785,7 +1790,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
       this.InputLookupProfessionObj.isReady = true;
     }
-  
+
     initLookupAcc() {
       let arrAddCrit = new Array();
       if (this.AssetDataForm.get("AssetTypeCode").value != "") {
@@ -1796,17 +1801,17 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         addCrit.listValue = [this.AssetDataForm.get("AssetTypeCode").value];
         arrAddCrit.push(addCrit);
       }
-  
+
       this.InputLookupAccObj = new InputLookupObj();
       this.InputLookupAccObj.urlJson = "./assets/uclookup/NAP/lookupAcc.json";
       this.InputLookupAccObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
       this.InputLookupAccObj.pagingJson = "./assets/uclookup/NAP/lookupAcc.json";
       this.InputLookupAccObj.genericJson = "./assets/uclookup/NAP/lookupAcc.json";
       this.InputLookupAccObj.addCritInput = arrAddCrit;
-  
+
       return this.InputLookupAccObj;
     }
-  
+
     initLookupSupp() {
       this.InputLookupSupplierObj = new InputLookupObj();
       this.InputLookupSupplierObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
@@ -1820,7 +1825,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       critSuppObj.propName = 'ro.OFFICE_CODE';
       critSuppObj.value = this.OfficeCode;
       suppCrit.push(critSuppObj);
-  
+
       var critSuppSupplSchmObj = new CriteriaObj();
       critSuppSupplSchmObj.DataType = 'text';
       critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
@@ -1830,10 +1835,10 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       console.log(this.RefProdCmptSupplSchm.CompntValue);
       suppCrit.push(critSuppSupplSchmObj);
       this.InputLookupSupplierObj.addCritInput = suppCrit;
-  
+
       return this.InputLookupSupplierObj;
     }
-  
+
     initLookupSuppAcc() {
       this.InputLookupAccSupObj = new InputLookupObj();
       this.InputLookupAccSupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
@@ -1847,14 +1852,14 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       critSuppObj.propName = 'ro.OFFICE_CODE';
       critSuppObj.value = this.OfficeCode;
       suppCrit.push(critSuppObj);
-  
+
       var critSupp2Obj = new CriteriaObj();
       critSupp2Obj.DataType = 'text';
       critSupp2Obj.restriction = AdInsConstant.RestrictionEq;
       critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
       critSupp2Obj.value = 'SUPPLIER';
       suppCrit.push(critSupp2Obj);
-  
+
       var critSuppSupplSchmObj = new CriteriaObj();
       critSuppSupplSchmObj.DataType = 'text';
       critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
@@ -1862,10 +1867,10 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       critSuppSupplSchmObj.value = this.RefProdCmptSupplSchm.CompntValue;
       suppCrit.push(critSuppSupplSchmObj);
       this.InputLookupAccSupObj.addCritInput = suppCrit;
-  
+
       return this.InputLookupAccSupObj;
     }
-  
+
     async bindAllRefMasterObj() {
       await this.bindAssetUsageObj();
       await this.bindIdTypeObj();
@@ -1873,7 +1878,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       await this.bindAsseConditionObj();
       await this.bindDownPaymentTypeObj();
     }
-  
+
     async bindAssetUsageObj() {
       this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -1882,7 +1887,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async bindAsseConditionObj() {
       this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -1891,7 +1896,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async bindIdTypeObj() {
       this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -1900,7 +1905,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async bindDownPaymentTypeObj() {
       this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
       await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -1910,7 +1915,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async bindUserOwnerRelationshipObj() {
       if (this.CustType == CommonConstant.CustTypePersonal) {
         this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
@@ -1925,7 +1930,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async GetAppData() {
       this.appObj.Id = this.AppId;
       await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
@@ -1939,14 +1944,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     GetProdOfferingAssetCond() {
       var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
       obj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
       obj.RefProdCompntCode = CommonConstant.RefProdCompAssetCond;
       obj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
-  
-      this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+      this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
         (response: any) => {
           this.assetCondObj = response;
           this.AssetDataForm.patchValue({
@@ -1954,6 +1958,10 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           });
         }
       );
+      this.UcDDLAssetCond = new UcDropdownListObj;
+      this.UcDDLAssetCond.ddlType = "one";
+      this.UcDDLAssetCond.isCustomList = true;
+      this.UcDDLAssetCond.isSelectOutput = true;
     }
 
     GetProfession(event) {
@@ -1961,7 +1969,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         OwnerProfessionCode: event.ProfessionCode
       });
     }
-  
+
     async GetVendor() {
       await this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.vendorObj.VendorCode }).toPromise().then(
         (response: any) => {
@@ -1976,7 +1984,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async GetVendorForView() {
       await this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.vendorObj.VendorCode }).toPromise().then(
         (response: any) => {
@@ -2003,16 +2011,16 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
             GetVendorEmpBM.Code = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
             this.GetVendorEmpBM(GetVendorEmpBM);
           }
-  
+
           this.vendorObj.VendorId = this.VendorObj.VendorId;
           this.GetVendorEmpList();
           this.InputLookupSupplierObj.jsonSelect = this.VendorObj;
           this.InputLookupSupplierObj.nameSelect = this.VendorObj.VendorName;
-  
+
         }
       );
     }
-  
+
     GetProvDistrict() {
       this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, { Code: this.districtObj.ProvDistrictCode }).subscribe(
         (response: any) => {
@@ -2025,7 +2033,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     GetVendorEmpSalesPerson(ReqGetVendorEmpSales: GenericObj) {
       this.http.post<ResGetVendorEmpByVendorIdAndEmpNoObj>(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, ReqGetVendorEmpSales).subscribe(
         (response) => {
@@ -2037,7 +2045,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     GetVendorEmpAdminHead(ReqGetVendorEmpAdminHead: GenericObj) {
       this.http.post<ResGetVendorEmpByVendorIdAndEmpNoObj>(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, ReqGetVendorEmpAdminHead).subscribe(
         (response) => {
@@ -2048,7 +2056,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     GetVendorEmpBM(ReqGetVendorEmpBM: GenericObj) {
       this.http.post<ResGetVendorEmpByVendorIdAndEmpNoObj>(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, ReqGetVendorEmpBM).subscribe(
         (response) => {
@@ -2059,7 +2067,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     GetVendorEmpList() {
       let ReqGetListActiveVendor: ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
       ReqGetListActiveVendor.VendorId = this.vendorObj.VendorId;
@@ -2067,7 +2075,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendor).subscribe(
         (response) => {
           this.EmpObj = response[CommonConstant.ReturnObj];
-  
+
           for (let i = 0; i < this.EmpObj.length; i++) {
             if (this.EmpObj[i]["SupervisorId"] !== null) {
               var supervisor = {
@@ -2081,7 +2089,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
               break;
             }
           }
-  
+
           this.AdminHeadObj = this.EmpObj.filter(
             emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE);
           this.SalesPersonObj = this.EmpObj.filter(
@@ -2091,7 +2099,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async GetAssetMaster(assetMasterObj) {
       await this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: assetMasterObj.FullAssetCode }).toPromise().then(
         (response: any) => {
@@ -2107,33 +2115,33 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     AssetConditionChanged(mode: string = "add") {
-      if (this.AssetConditionObj != null) {
+      if (this.AssetConditionObj != null && this.AssetDataForm.controls.MrAssetConditionCode.value != "") {
         var filter: any;
         filter = this.AssetConditionObj.filter(
           cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value);
-        
+
         this.AssetConditionName = filter[0].Value;
         if(this.AssetConditionName == CommonConstantX.REF_MASTER_ASSET_CONDITION_DESCR_USED)
         {
-          for (let i = 0; i < this.items.length; i++) 
+          for (let i = 0; i < this.items.length; i++)
           {
             this.items.controls[i]['controls']['SerialNoValue'].setValidators(Validators.pattern(this.SerialNoRegex));
             this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
           }
         }
- 
+
       }
       if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
         this.SetDpValue(mode);
       }
     }
-  
+
     setAddrOwnerObj() {
       this.inputFieldOwnerAddrObj = new InputFieldObj();
       this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
-  
+
       this.ownerAddrObj = new AddrObj();
       this.ownerAddrObj.Addr = this.returnAppCollateralRegistObj.OwnerAddr;
       this.ownerAddrObj.AreaCode1 = this.returnAppCollateralRegistObj.OwnerAreaCode1;
@@ -2141,17 +2149,17 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.ownerAddrObj.AreaCode3 = this.returnAppCollateralRegistObj.OwnerAreaCode3;
       this.ownerAddrObj.AreaCode4 = this.returnAppCollateralRegistObj.OwnerAreaCode4;
       this.ownerAddrObj.City = this.returnAppCollateralRegistObj.OwnerCity;
-  
+
       this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.OwnerZipcode;
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.OwnerZipcode };
       this.inputAddressObjForOwner.default = this.ownerAddrObj;
       this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
     }
-  
+
     setAddrDelivObj() {
       this.inputFieldDelivAddrObj = new InputFieldObj();
       this.inputFieldDelivAddrObj.inputLookupObj = new InputLookupObj();
-  
+
       this.delivAddrObj = new AddrObj();
       this.delivAddrObj.Addr = this.returnAppCollateralRegistObj.DelivAddr;
       this.delivAddrObj.AreaCode1 = this.returnAppCollateralRegistObj.DelivAreaCode1;
@@ -2159,17 +2167,17 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.delivAddrObj.AreaCode3 = this.returnAppCollateralRegistObj.DelivAreaCode3;
       this.delivAddrObj.AreaCode4 = this.returnAppCollateralRegistObj.DelivAreaCode4;
       this.delivAddrObj.City = this.returnAppCollateralRegistObj.DelivCity;
-  
+
       this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.DelivZipcode;
       this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.DelivZipcode };
       this.inputAddressObjForDeliv.default = this.delivAddrObj;
       this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
     }
-  
+
     setAddrLocationObj() {
       this.inputFieldLocationAddrObj = new InputFieldObj();
       this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-  
+
       this.locationAddrObj = new AddrObj();
       this.locationAddrObj.Addr = this.returnAppCollateralRegistObj.LocationAddr;
       this.locationAddrObj.AreaCode1 = this.returnAppCollateralRegistObj.LocationAreaCode1;
@@ -2177,13 +2185,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       this.locationAddrObj.AreaCode3 = this.returnAppCollateralRegistObj.LocationAreaCode3;
       this.locationAddrObj.AreaCode4 = this.returnAppCollateralRegistObj.LocationAreaCode4;
       this.locationAddrObj.City = this.returnAppCollateralRegistObj.LocationCity;
-  
+
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.LocationZipcode };
       this.inputAddressObjForLoc.default = this.locationAddrObj;
       this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
     }
-  
+
     addAccessories() {
       if (this.AssetDataForm.get("AssetTypeCode").value == "") {
         return this.toastr.warningMessage("Please Choose Asset First");
@@ -2194,18 +2202,18 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       if (length > 0) {
         max = this.AssetDataForm.value["AssetAccessoriesObjs"][length - 1].No;
       }
-  
+
       appAccessoryObj.push(this.addGroup(undefined, max + 1));
-  
+
       var InputLookupAccObj = this.initLookupAcc();
       var InputLookupAccSupObj = this.initLookupSuppAcc();
       this.InputLookupAcceObjs.push(InputLookupAccObj);
       this.InputLookupSupplObjs.push(InputLookupAccSupObj);
-  
+
       this.dictAccLookup[max + 1] = InputLookupAccObj;
       this.dictSuppLookup[max + 1] = InputLookupAccSupObj;
     }
-  
+
     deleteAccessory(i) {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var appAccessoryObjs = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
@@ -2215,28 +2223,28 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.AssetDataForm.removeControl("lookupAccObj" + no);
       }
     }
-  
+
     bindAccessories() {
       if (this.appAssetAccessoriesObjs != undefined) {
         this.originalAppAssetAccessory = [...this.appAssetAccessoriesObjs];
         for (let i = 0; i < this.appAssetAccessoriesObjs.length; i++) {
           var listAppAccessories = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
           listAppAccessories.push(this.addGroup(this.appAssetAccessoriesObjs[i], i));
-  
+
           var InputLookupAccObj = this.initLookupAcc();
           var InputLookupAccSupObj = this.initLookupSuppAcc();
           this.dictAccLookup[i] = InputLookupAccObj;
           this.dictSuppLookup[i] = InputLookupAccSupObj;
           this.InputLookupAcceObjs.push(InputLookupAccObj);
           this.InputLookupSupplObjs.push(InputLookupAccSupObj);
-  
+
           this.setAppAccessorySupplier(i, this.appAssetAccessoriesObjs[i].SupplCode);
           this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
           this.ChangeAccessoryDPType(i, 'AMT');
         }
       }
     }
-  
+
     setAppAccessorySupplier(i, SupplCode) {
       this.vendorAccSuppObj.VendorCode = SupplCode;
       this.http.post(URLConstant.GetVendorByVendorCode, { Code: SupplCode }).subscribe(
@@ -2244,10 +2252,10 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           this.dictSuppLookup[i].nameSelect = response["VendorName"];
           this.dictSuppLookup[i].jsonSelect = response;
           this.InputLookupSupplObjs[i].jsonSelect = response;
-  
+
         });
     }
-  
+
     setAppAccessory(i, AssetAccessoryCode) {
       this.accObj.AssetAccessoryCode = AssetAccessoryCode;
       let obj = { Code: this.accObj.AssetAccessoryCode }
@@ -2258,7 +2266,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
           this.InputLookupAcceObjs[i].jsonSelect = response;
         });
     }
-  
+
     addGroup(appAssetAccessoriesObj, i) {
       if (appAssetAccessoriesObj == undefined) {
         return this.fb.group({
@@ -2289,21 +2297,21 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         })
       }
     }
-  
+
     SetSupplierAccessory(i, event) {
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i].patchValue({
         SupplNameAccessory: event.VendorName,
         SupplCodeAccessory: event.VendorCode
       });
     }
-  
+
     SetAccessory(i, event) {
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i].patchValue({
         AssetAccessoryName: event.AssetAccessoryName,
         AssetAccessoryCode: event.AssetAccessoryCode
       });
     }
-  
+
     HitAPI() {
       if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '') {
         this.toastr.warningMessage("Please Input Chassis No !");
@@ -2313,7 +2321,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.IsIntegrator = true;
       }
     }
-  
+
     GetVendorAccessories() {
       this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.vendorObj.VendorCode }).subscribe(
         (response: any) => {
@@ -2325,7 +2333,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     GetVendorEmpSupervisi() {
       let ReqGerVendorEmpSpvByVendorEmpNo: GenericObj = new GenericObj();
       ReqGerVendorEmpSpvByVendorEmpNo.EmpNo = this.vendorEmpObj.VendorEmpNo;
@@ -2348,11 +2356,11 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
             });
             this.BranchManagerName = "-";
           }
-  
+
         }
       );
     }
-  
+
     async GetListAddr() {
       this.appObj.Id = this.AppId;
       await this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
@@ -2363,12 +2371,12 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     copyToOwnerAddr() {
       if (this.copyFromAppCustAddrForOwner != "") {
         this.AddrObj = this.AppCustAddrObj.filter(
           emp => emp.MrCustAddrTypeCode === this.copyFromAppCustAddrForOwner);
-  
+
         this.AssetDataForm.patchValue({
           OwnerAddr: this.AddrObj[0].Addr,
           OwnerAreaCode1: this.AddrObj[0].AreaCode1,
@@ -2385,20 +2393,20 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.ownerAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
         this.ownerAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
         this.ownerAddrObj.City = this.AddrObj[0].City;
-  
+
         this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.OwnerZipcode.value;
         this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.OwnerZipcode.value };
-  
+
         this.inputAddressObjForOwner.default = this.ownerAddrObj;
         this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
       }
     }
-  
+
     copyToDelivAddr() {
       if (this.copyFromAppCustAddrForDelivery != "") {
         this.AddrObj = this.AppCustAddrObj.filter(
           emp => emp.MrCustAddrTypeCode === this.copyFromAppCustAddrForDelivery);
-  
+
         this.AssetDataForm.patchValue({
           DelivAddr: this.AddrObj[0].Addr,
           DelivAreaCode1: this.AddrObj[0].AreaCode1,
@@ -2415,20 +2423,20 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.delivAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
         this.delivAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
         this.delivAddrObj.City = this.AddrObj[0].City;
-  
+
         this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.DelivZipcode.value;
         this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.DelivZipcode.value };
-  
+
         this.inputAddressObjForDeliv.default = this.delivAddrObj;
         this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
       }
     }
-  
+
     copyToLocationAddr() {
       if (this.copyFromAppCustAddrForLocation != "") {
         this.AddrObj = this.AppCustAddrObj.filter(
           emp => emp.MrCustAddrTypeCode === this.copyFromAppCustAddrForLocation);
-  
+
         this.AssetDataForm.patchValue({
           LocationAddr: this.AddrObj[0].Addr,
           LocationAreaCode1: this.AddrObj[0].AreaCode1,
@@ -2445,32 +2453,32 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.locationAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
         this.locationAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
         this.locationAddrObj.City = this.AddrObj[0].City;
-  
+
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.LocationZipcode.value;
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.LocationZipcode.value };
-  
+
         this.inputAddressObjForLoc.default = this.locationAddrObj;
         this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
       }
     }
-  
+
     CheckValue() {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setAllAssetObj();
     }
-  
+
     SetLocationAddrType(event) {
       this.copyFromAppCustAddrForLocation = event;
     }
-  
+
     SetDelivAddrType(event) {
       this.copyFromAppCustAddrForDelivery = event;
     }
-  
+
     SetOwnerAddrType(event) {
       this.copyFromAppCustAddrForOwner = event;
     }
-  
+
     async GetAppCust() {
       var appObj = {
         Id: this.AppId,
@@ -2486,7 +2494,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     async GetAppCustPersonalJobData() {
       await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
         (response) => {
@@ -2509,35 +2517,35 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         );
       }
     }
-  
+
     async GetRefProdCompt() {
       var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
       appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
       appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetType;
       appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
-  
+
       await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
         (response: any) => {
           this.RefProdCmptAssetType = response;
         }
       );
-  
+
       var appObj2: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
       appObj2.ProdOfferingCode = this.AppObj.ProdOfferingCode;
       appObj2.RefProdCompntCode = CommonConstant.RefProdCompntSupplSchm;
       appObj2.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
-  
+
       await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj2).toPromise().then(
         (response: any) => {
           this.RefProdCmptSupplSchm = response;
         }
       );
-  
+
       var appObj3: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
       appObj3.ProdOfferingCode = this.AppObj.ProdOfferingCode;
       appObj3.RefProdCompntCode = CommonConstant.RefProdCompntAssetSchm;
       appObj3.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
-  
+
       await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj3).toPromise().then(
         (response: any) => {
           this.RefProdCmptAssetSchm = response;
@@ -2574,7 +2582,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
             //Validasi AssetDoc Asset Condition
             if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstantX.APP_ASSET_CONDITION_CODE_NEW)
             {
-              for (let i = 0; i < ListDoc.length; i++) 
+              for (let i = 0; i < ListDoc.length; i++)
               {
                 if(ListDoc.controls[i]['controls']['IsMandatoryNew'].value)
                 {
@@ -2584,13 +2592,13 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
               }
             }
           }
-          
+
           if(isInit){
             this.setAppCollateralDoc(this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId']);
           }
         });
     }
-  
+
     setAppCollateralDoc(AppCollateralId: number = 0) {
       this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
         (response) => {
@@ -2642,7 +2650,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       );
     }
-  
+
     public findInvalidControls() {
       const invalid = [];
       const controls = this.AssetDataForm.controls;
@@ -2652,7 +2660,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
       }
     }
-  
+
     GenerataAppAssetAttr(isRefresh: boolean) {
       var GenObj =
       {
@@ -2668,16 +2676,16 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
             this.isDiffWithRefAttr = true;
             this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
           }
-  
+
           this.GenerateAppAssetAttrForm();
         });
     }
-  
+
     refreshAttr() {
       this.isAssetAttrReady = false;
       this.GenerataAppAssetAttr(true);
     }
-  
+
     GenerateAppAssetAttrForm() {
       if (this.AppAssetAttrObj != null) {
         this.appAssetAttrObjs = new Array<AppAssetAttrCustomObj>();
@@ -2699,7 +2707,7 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
             this.ListAttrAnswer[i].push("");
           }
           this.appAssetAttrObjs.push(appAssetAttrObj);
-  
+
         }
         var listAppAssetAttrs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
         while (listAppAssetAttrs.length !== 0) {
@@ -2710,19 +2718,19 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         }
         this.isAssetAttrReady = true;
       }
-  
+
     }
-  
+
     private setValidators(appAssetAttrObjs: AppAssetAttrCustomObj) {
       let ListValidator: Array<ValidatorFn> = new Array<ValidatorFn>();
-  
+
       if (appAssetAttrObjs.AttrLength != null && appAssetAttrObjs.AttrLength != 0) {
         ListValidator.push(Validators.maxLength(appAssetAttrObjs.AttrLength));
       }
-  
+
       return ListValidator;
     }
-  
+
     private setFbGroupAssetAttribute(appAssetAttrObj: AppAssetAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>) {
       let tempFB = this.fb.group({
         No: [i],
@@ -2734,16 +2742,16 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       if (ListValidator.length > 0) {
         tempFB.get("AttrValue").setValidators(ListValidator);
       }
-  
+
       return tempFB;
     }
-  
+
     addGroupAppAssetAttr(appAssetAttrObj: AppAssetAttrCustomObj, i: number) {
       let ListValidator: Array<ValidatorFn> = this.setValidators(appAssetAttrObj);
-  
+
       return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
     }
-  
+
     ChangeAccessoryDPType(i: number, ev){
       if(ev == CommonConstant.DownPaymentTypeAmt){
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.disable();
@@ -2753,28 +2761,28 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.enable();
       }
     }
-  
+
     CheckAccessoryDPValue(i: number, from: string){
       var InputAccessoryPrice = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryPriceAmt.value
-  
+
       if(InputAccessoryPrice == 0){
         this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i+1));
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
         return;
       }
-  
+
       var InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value
-  
+
       if(InputDPAmt > InputAccessoryPrice){
         this.toastr.warningMessage("Down Payment Amount " + (i+1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i+1));
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
         return;
       }
-  
+
       var InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
-      
+
       if(from == CommonConstant.DownPaymentTypeAmt){
         var DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
         this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
@@ -2792,4 +2800,3 @@ import { VendorObj } from "app/shared/model/vendor-obj.model";
       }
     }
   }
-  

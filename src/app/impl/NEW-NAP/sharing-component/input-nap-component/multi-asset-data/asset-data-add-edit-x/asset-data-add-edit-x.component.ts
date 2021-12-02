@@ -1,54 +1,55 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatePipe, formatDate } from '@angular/common';
-import { map, mergeMap, first } from 'rxjs/operators';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { forkJoin } from 'rxjs';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CookieService } from 'ngx-cookie';
-import { String } from 'typescript-string-operations';
-import { LookupTaxCityIssuerComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { VendorEmpObj } from 'app/shared/model/vendor-emp.model';
-import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
-import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
-import { AllAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
-import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
-import { AppAssetAccessoryObj } from 'app/shared/model/app-asset-accessory-obj.model';
-import { AppAssetAttrCustomObj } from 'app/shared/model/app-asset/app-asset-attr-custom.model';
-import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-doc-obj.model';
-import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
-import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
-import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
-import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
-import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
-import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
-import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/request/vendor/req-vendor-emp.model';
-import { environment } from 'environments/environment';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
-import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
-import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
-import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
-import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
-import { AppAssetAttrObj } from 'app/shared/model/app-asset-attr-obj.model';
-import { AppCollateralAttrObj } from 'app/shared/model/app-collateral-attr-obj.model';
-import { AppCollateralAccessoryObj } from 'app/shared/model/app-collateral-accessory-obj.model';
-import { AddrObj } from 'app/shared/model/addr-obj.model';
-import { ResponseJobDataPersonalObj } from 'app/shared/model/response-job-data-personal-obj.model';
-import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
-import { RefCoyObj } from 'app/shared/model/ref-coy-obj.model';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {AdInsConstant} from 'app/shared/AdInstConstant';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DatePipe, formatDate} from '@angular/common';
+import {first, map, mergeMap} from 'rxjs/operators';
+import {AppObj} from 'app/shared/model/App/App.Model';
+import {forkJoin} from 'rxjs';
+import {CommonConstant} from 'app/shared/constant/CommonConstant';
+import {URLConstant} from 'app/shared/constant/URLConstant';
+import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
+import {AdInsHelper} from 'app/shared/AdInsHelper';
+import {CookieService} from 'ngx-cookie';
+import {String} from 'typescript-string-operations';
+import {LookupTaxCityIssuerComponent} from 'app/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
+import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {VendorEmpObj} from 'app/shared/model/vendor-emp.model';
+import {InputFieldObj} from 'app/shared/model/input-field-obj.model';
+import {AppCustAddrObj} from 'app/shared/model/app-cust-addr-obj.model';
+import {AllAssetDataObj} from 'app/shared/model/all-asset-data-obj.model';
+import {AssetTypeSerialNoLabelCustomObj} from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
+import {AppAssetAccessoryObj} from 'app/shared/model/app-asset-accessory-obj.model';
+import {AppAssetAttrCustomObj} from 'app/shared/model/app-asset/app-asset-attr-custom.model';
+import {ListAppCollateralDocObj} from 'app/shared/model/list-app-collateral-doc-obj.model';
+import {AppCollateralDocObj} from 'app/shared/model/app-collateral-doc-obj.model';
+import {InputLookupObj} from 'app/shared/model/input-lookup-obj.model';
+import {InputAddressObj} from 'app/shared/model/input-address-obj.model';
+import {GenericListByCodeObj} from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import {ResSysConfigResultObj} from 'app/shared/model/response/res-sys-config-result-obj.model';
+import {CustomPatternObj} from 'app/shared/model/custom-pattern-obj.model';
+import {KeyValueObj} from 'app/shared/model/key-value/key-value-obj.model';
+import {GenericObj} from 'app/shared/model/generic/generic-obj.model';
+import {ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj} from 'app/shared/model/request/vendor/req-vendor-emp.model';
+import {environment} from 'environments/environment';
+import {CriteriaObj} from 'app/shared/model/criteria-obj.model';
+import {AppAssetObj} from 'app/shared/model/app-asset-obj.model';
+import {AppCollateralObj} from 'app/shared/model/app-collateral-obj.model';
+import {AppCollateralRegistrationObj} from 'app/shared/model/app-collateral-registration-obj.model';
+import {RefMasterObj} from 'app/shared/model/ref-master-obj.model';
+import {GeneralSettingObj} from 'app/shared/model/general-setting-obj.model';
+import {AppAssetAttrObj} from 'app/shared/model/app-asset-attr-obj.model';
+import {AppCollateralAttrObj} from 'app/shared/model/app-collateral-attr-obj.model';
+import {AppCollateralAccessoryObj} from 'app/shared/model/app-collateral-accessory-obj.model';
+import {AddrObj} from 'app/shared/model/addr-obj.model';
+import {ResponseJobDataPersonalObj} from 'app/shared/model/response-job-data-personal-obj.model';
+import {AppCustPersonalJobDataObj} from 'app/shared/model/app-cust-personal-job-data-obj.model';
+import {RefCoyObj} from 'app/shared/model/ref-coy-obj.model';
+import {UcDropdownListObj} from 'app/shared/model/library/uc-dropdown-list-obj.model';
 
 @Component({
   selector: 'app-asset-data-add-edit-x',
@@ -175,7 +176,7 @@ export class AssetDataAddEditXComponent implements OnInit {
     MrDownPaymentTypeCode: ['', Validators.required],
     AssetPrice: ['', [Validators.required, Validators.min(1.00)]],
     DownPayment: ['', Validators.required],
-    MrAssetConditionCode: [''],
+    MrAssetConditionCode: ['', Validators.required],
     AssetUsage: [''],
     LicensePlate: [''],
     ChassisNo: [''],
@@ -244,6 +245,8 @@ export class AssetDataAddEditXComponent implements OnInit {
   InputLookupCityIssuerObj : any;
   DpObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IsReady: boolean = false;
+  UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
+  isUCReady: boolean = false;
 
   //URS-LOS-166
   generalSettingVendorSLBObj: GenericObj;
@@ -301,7 +304,7 @@ export class AssetDataAddEditXComponent implements OnInit {
   async GetGS(){
     this.generalSettingObj = new GenericListByCodeObj();
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization); 
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
     await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
@@ -309,7 +312,7 @@ export class AssetDataAddEditXComponent implements OnInit {
 
         let gsNeedCheckBySystem = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         let gsUseDigitalization = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
+
         if(gsNeedCheckBySystem != undefined){
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
         }else{
@@ -321,7 +324,7 @@ export class AssetDataAddEditXComponent implements OnInit {
           this.getDigitalizationSvcType();
         }else{
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
-        }        
+        }
       }
     );
   }
@@ -389,7 +392,7 @@ export class AssetDataAddEditXComponent implements OnInit {
           //Validasi AssetDoc Asset Condition
           if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstantX.APP_ASSET_CONDITION_CODE_NEW)
           {
-            for (let i = 0; i < ListDoc.length; i++) 
+            for (let i = 0; i < ListDoc.length; i++)
             {
               if(ListDoc.controls[i]['controls']['IsMandatoryNew'].value)
               {
@@ -400,7 +403,7 @@ export class AssetDataAddEditXComponent implements OnInit {
           }
           else if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstantX.APP_ASSET_CONDITION_CODE_USED)
           {
-            for (let i = 0; i < ListDoc.length; i++) 
+            for (let i = 0; i < ListDoc.length; i++)
             {
               if(ListDoc.controls[i]['controls']['IsMandatoryUsed'].value)
               {
@@ -682,7 +685,7 @@ export class AssetDataAddEditXComponent implements OnInit {
           this.AssetValidationResult = response;
           this.grossDPPrcnt = assetValidationRule["DPPrcnt"];
           // X DSF Non Jora Udin : Fix issue DP tereset ketika input manucfaturing year
-          if (assetValidationRule["DPPrcnt"] != null && !this.AssetDataForm.controls['DownPayment'].value) { 
+          if (assetValidationRule["DPPrcnt"] != null && !this.AssetDataForm.controls['DownPayment'].value) {
           //if (assetValidationRule["DPPrcnt"] != null) {
             this.AssetDataForm.patchValue({
               DownPaymentPrctg: assetValidationRule["DPPrcnt"],
@@ -785,6 +788,11 @@ export class AssetDataAddEditXComponent implements OnInit {
   }
   readonly AssetUsed: string = CommonConstant.AssetConditionUsed;
   async ngOnInit(): Promise<void> {
+    this.UcDDLAssetCond = new UcDropdownListObj();
+    this.UcDDLAssetCond.ddlType = 'one';
+    this.UcDDLAssetCond.isSelectOutput = true;
+    this.UcDDLAssetCond.isCustomList = true;
+
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -820,8 +828,7 @@ export class AssetDataAddEditXComponent implements OnInit {
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
-    this.AssetDataForm.controls.MrAssetConditionCode.disable();
-    
+
     await this.bindDownPaymentTypeObj();
 
     await this.GetListAddr();
@@ -833,7 +840,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       }),
       mergeMap((response: AppObj) => {
         let getVendorSchmCode = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "SUPPLSCHM", ProdOfferingVersion: response.ProdOfferingVersion });
-        let getAssetCond = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETCOND", ProdOfferingVersion: response.ProdOfferingVersion });
+        let getAssetCond = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETCOND", ProdOfferingVersion: response.ProdOfferingVersion });
         let getAssetType = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion });
         let getAssetSchm = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETSCHM", ProdOfferingVersion: response.ProdOfferingVersion });
         let RegexSerialNo = this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex });
@@ -844,29 +851,30 @@ export class AssetDataAddEditXComponent implements OnInit {
       async (response) => {
         this.vendorSchmCode = response[0];
         this.bindAccessories();
-        let assetCond = response[1];
+        this.returnAssetConditionObj = response[1]['DDLRefProdComptCode'];
         let assetType = response[2];
         let assetSchm = response[3];
         this.SerialNoRegex = response[4]["GsValue"];
         this.assetTypeCompntValue = assetType["CompntValue"];
-        
+        this.isUCReady = true;
+
         let obj: CustomPatternObj = {
           pattern: this.SerialNoRegex,
           invalidMsg: "Cannot input special character"
         }
         this.ListPattern.push(obj);
-        
+
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
         if (this.mode != 'editAsset') {
           this.AssetDataForm.patchValue({
-            MrAssetConditionCode: assetCond["CompntValue"],
-            MrAssetConditionCodeView: assetCond["CompntValue"]
+            // MrAssetConditionCode: this.returnAssetConditionObj[0]["Key"],
+            MrAssetConditionCodeView: this.returnAssetConditionObj[0]['Value']
           });
           this.ChangeAssetCondition();
         }
-        
-        if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) { 
+
+        if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
           this.isUsed = true;
           this.InputLookupCityIssuerObj.isRequired = true;
         }
@@ -907,10 +915,8 @@ export class AssetDataAddEditXComponent implements OnInit {
                   }
                 }
               }
-			  this.GetThirdPartyResultH();
+			      this.GetThirdPartyResultH();
             }
-            this.UcAddressHandler();
-
           });
 
         let arrCritSuppl = new Array<CriteriaObj>();
@@ -948,24 +954,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         this.InputLookupAssetObj.isReady = true;
       });
 
-    this.assetConditionObj = new RefMasterObj();
-    this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetConditionObj).subscribe(
-      (response) => {
-        this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
-        if (this.mode != 'editAsset') {
-          this.AssetDataForm.patchValue(
-            {
-              MrAssetConditionCode: this.returnAssetConditionObj[0].Key
-            }
-          )
-          this.ChangeAssetCondition();
-        }
-
-        this.UcAddressHandler();
-      }
-    );
-
+    this.UcAddressHandler();
     this.downPaymentObj = new RefMasterObj();
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.downPaymentObj).subscribe(
@@ -1881,7 +1870,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       //     }
       //   }
       //   else if (!this.IsIntegrator) {
-          
+
       //     if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
       //       this.http.post(URLConstantX.AddEditAllAssetDataX, this.allAssetDataObj).subscribe(
       //         (response) => {
@@ -1948,7 +1937,7 @@ export class AssetDataAddEditXComponent implements OnInit {
           AccessoryDownPaymentAmt: [0, [Validators.required,Validators.min(0.00)]],
           AccessoryNotes: ['']
         })
-      }  
+      }
     } else {
       if (this.appData.LobCode == CommonConstantX.FL4W_LOB_CODE_SLB) {
         return this.fb.group({
@@ -1975,10 +1964,10 @@ export class AssetDataAddEditXComponent implements OnInit {
           AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]
         })
       }
-      
+
     }
   }
-  
+
   initLookupAcc() {
     let arrAddCrit = new Array();
     if (this.AssetDataForm.get("AssetTypeCode").value != "") {
@@ -2081,7 +2070,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       this.dictAccLookup[max + 1] = InputLookupAccObj;
       this.dictSuppLookup[max + 1] = InputLookupAccSupObj;
     }
-    
+
   }
 
   deleteAccessory(i) {
@@ -2143,7 +2132,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         appAssetAccObj.SupplCode = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplCodeAccessory;
         appAssetAccObj.SupplName = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].SupplNameAccessory;
       }
-      
+
       appAssetAccObj.AccessoryPriceAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"].value[i].AccessoryPriceAmt;
       appAssetAccObj.DownPaymentPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value;
       appAssetAccObj.DownPaymentAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value;
@@ -2224,7 +2213,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       }
     );
   }
-  
+
   ChangeAccessoryDPType(i: number, ev){
     if(ev == CommonConstant.DownPaymentTypeAmt){
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.disable();
@@ -2255,7 +2244,7 @@ export class AssetDataAddEditXComponent implements OnInit {
     }
 
     let InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
-    
+
     if(from == CommonConstant.DownPaymentTypeAmt){
       let DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
@@ -2378,7 +2367,7 @@ export class AssetDataAddEditXComponent implements OnInit {
     this.inputAddressObjForOwner.default = ownerAddrObj;
     this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
   }
-  
+
   AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   async GetAppCustPersonalJobData() {
     await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.appCustObj.AppCustId }).toPromise().then(
@@ -2389,7 +2378,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       }
     );
   }
-  
+
   copyToOwnerAddr() {
     let OwnerAddrType: string = this.AssetDataForm.get("OwnerAddrType").value;
     if (OwnerAddrType != "") {

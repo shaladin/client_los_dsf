@@ -1,17 +1,18 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute } from '@angular/router';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { SubsidyComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/financial-data/component/subsidy/subsidy.component';
-import { AppFinDataObjX } from 'app/impl/shared/model/AppFinDataObjX.model';
-import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { CalcRegularFixObj } from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
-import { AppSubsidyObj } from 'app/shared/model/app-subsidy-obj.model';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
+import {ActivatedRoute} from '@angular/router';
+import {CommonConstant} from 'app/shared/constant/CommonConstant';
+import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
+import {AppObj} from 'app/shared/model/App/App.Model';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {SubsidyComponent} from 'app/NEW-NAP/sharing-component/input-nap-component/financial-data/component/subsidy/subsidy.component';
+import {AppFinDataObjX} from 'app/impl/shared/model/AppFinDataObjX.model';
+import {KeyValueObj} from 'app/shared/model/key-value/key-value-obj.model';
+import {CalcRegularFixObj} from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
+import {AppSubsidyObj} from 'app/shared/model/app-subsidy-obj.model';
+import {environment} from 'environments/environment';
 
 
 @Component({
@@ -163,7 +164,10 @@ export class FinancialDataXComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObjX>(URLConstantX.GetInitAppFinDataByAppIdX, { Id: this.AppId }).subscribe(
+    // note rework: Url V2 belum ditambahin di X, baru ada di Core doank. PERLU DITAMBAHIN !
+    // let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdV2X : URLConstantX.GetInitAppFinDataByAppIdX;
+    let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdX : URLConstantX.GetInitAppFinDataByAppIdX;
+    this.http.post<AppFinDataObjX>(InitAppFinDataUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
         this.instAmt = response['InstAmt'];

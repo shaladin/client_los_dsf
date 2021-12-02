@@ -77,8 +77,12 @@
 
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel" translate>Asset Condition</label>
-                    <label class="col-md-8 adInsLabel" translate>{{AssetConditionName}}</label>
+                    <label class="col-md-4 adInsLabel adins-required-label" translate>Asset Condition</label>
+                    <div class="col-md-8">
+                      <lib-ucdropdownlist [dropdownListObj]="UcDDLAssetCond" [genericList]="assetCondObj.DDLRefProdComptCode"
+                                          [parentForm]="AssetDataForm" [enjiForm]="enjiForm" [identifier]="'MrAssetConditionCode'"
+                                          (callback)="AssetConditionChanged($event)"></lib-ucdropdownlist>
+                    </div>
                   </div>
                 </div>
 
@@ -413,7 +417,7 @@
                           </div>
                         </td>
                         <td [formGroupName]="i">
-                          <textarea type="text" class="form-control" formControlName="AccessoryNotes" 
+                          <textarea type="text" class="form-control" formControlName="AccessoryNotes"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes.invalid}"></textarea>
                           <lib-uc-show-errors [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryNotes" [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
@@ -683,7 +687,7 @@
                     Copy
                   </button>
                 </div>
-              
+
                 <div class="form-actions right">
                   <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                     <i class="ft-x"></i> Cancel
@@ -721,7 +725,7 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
-  
+
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Admin Head</label>
                   <div class="col-md-4">
@@ -742,7 +746,7 @@
                   <label class="col-md-4 adInsLabel" *ngIf="salesSupervisor">{{salesSupervisor}} </label>
                   <label class="col-md-4 adInsLabel" *ngIf="!salesSupervisor"> -  </label>
                 </div>
-  
+
                 <div class="form-group row">
                   <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
                   <div class="col-md-4">
@@ -760,7 +764,7 @@
                   </div>
                 </div>
               </div>
-  
+
               <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Information'" [panel]="'assetData'">
               </lib-ucSubsection>
               <div id="assetData">
@@ -775,7 +779,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4 adins-required-label" translate>Asset Condition</label>
@@ -791,7 +795,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4  adins-required-label" translate>Asset Price</label>
@@ -805,7 +809,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4 adins-required-label" translate>Asset Usage</label>
@@ -824,7 +828,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4  adins-label" translate>Discount</label>
@@ -834,7 +838,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4 adins-required-label" translate>Manufacturing Year</label>
@@ -845,14 +849,14 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4 adins-label" translate>Asset Price After Discount</label>
                       <label class="col-md-8 adins-label" translate>{{ priceAfterDiscount | number:'1.2-2':'en-US' }}</label>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4 adins-required-label" translate>BPKB City Issuer</label>
@@ -864,7 +868,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4 adins-label" translate>Expected Delivery Date</label>
@@ -873,7 +877,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4" translate>Color</label>
@@ -882,7 +886,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4" translate>Notes</label>
@@ -891,7 +895,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-md-4" translate>Need Replacement Car</label>
@@ -901,7 +905,7 @@
                     </div>
                   </div>
                 </div>
-  
+
                 <div *ngIf="AppAssetAttrObj != null && isAssetAttrReady == 1">
                   <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
                   </lib-ucSubsection>
@@ -951,7 +955,7 @@
                     </div>
                   </div>
                 </div>
-  
+
                 <lib-ucSubsection [id]="'accessoriesDataId'" [title]="'Accessories'" [panel]="'accessoriesData'">
                 </lib-ucSubsection>
                 <div id="accessoriesData">
@@ -973,7 +977,7 @@
                           <th><span translate class="thead-header">Delete</span></th>
                         </tr>
                       </thead>
-  
+
                       <tbody>
                         <tr *ngIf="AssetDataForm.controls['AssetAccessoriesObjs'].controls == 0">
                           <td align="center" colspan="7">No data available</td>
@@ -1021,7 +1025,7 @@
                     </table>
                   </div>
                 </div>
-  
+
                 <lib-ucSubsection [id]="'DelivAddrId'" [title]="'Delivery Address'" [panel]="'DelivAddr'">
                 </lib-ucSubsection>
                 <div id="DelivAddr">
@@ -1053,7 +1057,7 @@
                       [identifier]="'delivData'" [UCAddrForm]="AssetDataForm"></lib-ucaddress>
                   </div>
                 </div>
-  
+
                 <lib-ucSubsection [id]="'locationDataId'" [title]="'Asset Location'" [panel]="'locationData'">
                 </lib-ucSubsection>
                 <div id="locationData">
@@ -1086,7 +1090,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="form-actions right">
                   <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
                     (click)="Back()" translate>
