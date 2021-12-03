@@ -27,6 +27,7 @@ export class SingleInstDlfnComponent implements OnInit {
   listInstallment: Array<InstallmentObj>;
   IsAppFeePrcntValid: boolean = true;
   TempTotalDisbAmt = 0;
+  isInterestCalcBasedTOP:boolean= false;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
@@ -36,12 +37,21 @@ export class SingleInstDlfnComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.checkIsCalcBasedTop();
     this.LoadDDLInterestType();
     this.LoadMaturityDate();
     this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
+    this.ParentForm.get("TopInterestRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
+    this.ParentForm.get("TopInterestRatePrcnt").updateValueAndValidity();
   }
 
+  checkIsCalcBasedTop(){
+    if(this.ParentForm.controls.InterestCalcBased.value == "TOP"){
+      this.isInterestCalcBasedTOP = true;
+    }
+  }
+  
   LoadDDLInterestType() {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInterestInputType }).subscribe(
       (response) => {
