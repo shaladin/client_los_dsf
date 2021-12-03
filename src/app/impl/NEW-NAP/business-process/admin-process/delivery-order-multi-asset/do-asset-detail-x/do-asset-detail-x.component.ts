@@ -83,8 +83,8 @@ export class DoAssetDetailXComponent implements OnInit {
     IsCollateral: [''],
     IsInsurance: [''],
     AssetNotes: [''],
-    TempRegisLettNo: ['', [Validators.required]],
-    TempRegisLettDt: ['', [Validators.required]],
+    TempRegisLettNo: [''],
+    TempRegisLettDt: [''],
     Color: ['', [Validators.required]],
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
@@ -140,6 +140,7 @@ export class DoAssetDetailXComponent implements OnInit {
         if(appAsset.MrAssetConditionCode == "USED") {
           this.isUsed = true;
           this.InputLookupCityIssuerObj.isRequired = true;
+
         }
 
         await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: appAsset.AssetTypeCode }).toPromise().then(

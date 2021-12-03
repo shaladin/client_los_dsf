@@ -145,13 +145,13 @@
         <div id="MainDocLetterSection" class="form-body">
           <div class="col-md-12">
             <div class="form-group row">
-              <label class="col-md-2 adInsLabel adins-required-label" for="TempRegisLettNo" translate>Temporary Registration Letter No</label>
+              <label class="col-md-2 adInsLabel" for="TempRegisLettNo" translate>Temporary Registration Letter No</label>
               <div class="col-md-4">
                 <input type="text" class="form-control adInsInput" formControlName="TempRegisLettNo"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettNo.invalid }" />
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.TempRegisLettNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
-              <label class="col-md-2 adInsLabel adins-required-label" for="TempRegisLettDt" translate>Temporary Registration Letter Date</label>
+              <label class="col-md-2 adInsLabel" for="TempRegisLettDt" translate>Temporary Registration Letter Date</label>
               <div class="col-md-4">
                 <input type="date" class="form-control adInsInput" formControlName="TempRegisLettDt" onkeypress="return false;"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettDt.invalid }" />
