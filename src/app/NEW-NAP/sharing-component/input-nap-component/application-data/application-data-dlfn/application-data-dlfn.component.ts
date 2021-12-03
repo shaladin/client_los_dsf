@@ -51,7 +51,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj: boolean;
-
+  isInterestCalcBasedTOP: boolean = false;
+  
   SalesAppInfoForm = this.fb.group({
     MouCustId: [''],
     TopBased: [''],
@@ -327,6 +328,11 @@ export class ApplicationDataDlfnComponent implements OnInit {
         this.IsMouSelect = true;
 
         this.isSingle = this.mouCustDlrFinObj.MrInstTypeCode != CommonConstant.InstTypeMultiple;
+        if(this.isSingle){
+          if(response["InterestCalcBased"] == "TOP"){
+            this.isInterestCalcBasedTOP = true;
+          }
+        }
       });
 
     let payFreqCode;
@@ -561,6 +567,16 @@ export class ApplicationDataDlfnComponent implements OnInit {
       });
     }
     await this.setDropdown();
+    
+    this.http.post(URLConstant.GetMouCustDlrFncngByAppId, { Id: this.AppId }).subscribe(
+      (responseMouCustDlrFncng) => {
+        if(this.isSingle){
+          if(responseMouCustDlrFncng["InterestCalcBased"] == "TOP"){
+            this.isInterestCalcBasedTOP = true;
+          }
+        }
+      }
+    );
   }
 
   Cancel() {

@@ -32,6 +32,8 @@ export class MouCustDlrFinObj {
     RevolvingTypeDesc: string;
     ChangeMouTrxId: number;
     MaxExtendRate: number;
+    InterestCalcBased: string; 
+
     constructor() {
         this.MouCustDlrFncngId = 0;
         this.MouCustId = 0;
@@ -57,5 +59,6 @@ export class MouCustDlrFinObj {
         this.VirtualAccNo = "";
         this.CurrCode = "";
         this.ChangeMouTrxId = 0;
+        this.InterestCalcBased = ""; 
     }
 }

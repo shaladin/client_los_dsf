@@ -60,29 +60,7 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <div class="form-group row" *ngIf="IsMouSelect">
-                        <label class="col-md-3 adins-label" translate>Term Of Payment Interest Rate Percent (%)</label>
-                        <div class="col-md-9">
-                          <input type="" currencyMask id="topIntrstRatePrcnt" class="form-control width-30-per"
-                          formControlName="TopIntrstRatePrcnt" [options]="CurrencyMaskPrct"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopIntrstRatePrcnt.invalid}">
-                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopIntrstRatePrcnt"
-                          [submit]="enjiForm.submitted">
-                        </lib-uc-show-errors>
-                        </div>
-                      </div>
-                      <div class="form-group row" *ngIf="IsMouSelect">
-                        <label class="col-md-3 adins-label" translate>Interest Rate (%)</label>
-                        <div class="col-md-9">
-                          <input type="" currencyMask id="intrstRatePrcnt" class="form-control width-30-per"
-                          formControlName="IntrstRatePrcnt" [options]="CurrencyMaskPrct"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.IntrstRatePrcnt.invalid}">
-                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.IntrstRatePrcnt"
-                          [submit]="enjiForm.submitted">
-                        </lib-uc-show-errors>
-                        </div>
-
-                      </div>
+                   
                       <div class="form-group row">
                         <label class="col-md-3 adins-required-label" translate>Installment Type</label>
                         <div class="col-md-9">
@@ -97,7 +75,11 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <div class="form-group row">
+                      <div class="form-group row" *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
+                        <label class="col-md-3 adins-label" translate>Interest Calculation Based On</label>
+                        <label class="col-md-9 adInsLabel">{{this.isInterestCalcBasedTOP? "TOP" : "Interest" }}</label>
+                      </div>
+                      <div class="form-group row" *ngIf="isInterestCalcBasedTOP">
                         <label class="col-md-3 adins-required-label" translate>TOP Type</label>
                         <div class="col-md-9">
                           <select class="form-control adInsInput" style="width: auto" formControlName="TopBased"
@@ -110,7 +92,7 @@
                           </lib-uc-show-errors>
                         </div>
                       </div>
-                      <div class="form-group row">
+                      <div class="form-group row" *ngIf="isInterestCalcBasedTOP">
                         <label class="col-md-3 adins-required-label" translate>Term Of Payment (Days)</label>
                         <div class="col-md-9">
                           <input type="text" class="form-control adInsInput width-30-per" formControlName="TopDays"
@@ -376,3 +358,4 @@
     </div>
   </div>
 </div>
+

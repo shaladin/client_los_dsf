@@ -1,6 +1,7 @@
 {
     "url": "",
-    "title":"Lookup CMO",
+    "title":"Lookup - CMO",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

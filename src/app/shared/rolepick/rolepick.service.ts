@@ -21,9 +21,10 @@ export class RolePickService {
             var roleObject2 = {
                 RequestDateTime: AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW),
                 RowVersion: ""
-
             };
-            this.http.post(AdInsConstant.LoginByToken, roleObject2).subscribe(
+
+            let LoginByTokenURL = environment.isCore ? AdInsConstant.LoginByTokenV2 : AdInsConstant.LoginByToken;
+            this.http.post(LoginByTokenURL, roleObject2).subscribe(
                 (response) => {
                     const object = {
                         response: response["ReturnObject"]

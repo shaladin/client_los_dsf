@@ -1,6 +1,7 @@
 {
     "url": "",
     "title":"Lookup - Lead Personal",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

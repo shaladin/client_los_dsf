@@ -1,5 +1,6 @@
 {
-    "title": "Lookup Supplier Branch",
+    "title": "Lookup - Supplier Branch",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

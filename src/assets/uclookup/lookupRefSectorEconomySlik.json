@@ -1,6 +1,7 @@
 {
     "url": "",
-    "sectionTitle":"LOOK UP - SEctor Economy SLIK",
+    "title":"Lookup - Sector Economy SLIK",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

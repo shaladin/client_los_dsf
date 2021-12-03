@@ -29,7 +29,7 @@ export class URLConstant {
   public static AddNewApplication = environment.losUrl + "/v1" + "/Application/AddNewApplication";
   public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/Application/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationFromCopy";
-  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2.1" + "/Application/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2.2" + "/Application/AddNewApplicationFromCopy";
   public static AddNewApplicationOplFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationOplFromCopy";
 
   // APP Application
@@ -935,8 +935,10 @@ export class URLConstant {
   public static GetListAppCustMainDataByAppId = environment.losUrl + "/v1" + "/AppCust/GetListAppCustMainDataByAppId";
   public static AddCustMainDataPersonal = environment.losUrl + "/v1" + "/AppCust/AddCustMainDataPersonal";
   public static EditCustMainDataPersonal = environment.losUrl + "/v1" + "/AppCust/EditCustMainDataPersonal";
+  public static EditCustMainDataPersonalV2 = environment.losUrl + "/v2" + "/AppCust/EditCustMainDataPersonal";
   public static AddCustMainDataCompanyData = environment.losUrl + "/v1" + "/AppCust/AddCustMainDataCompanyData";
   public static EditCustMainDataCompanyData = environment.losUrl + "/v1" + "/AppCust/EditCustMainDataCompanyData";
+  public static EditCustMainDataCompanyDataV2 = environment.losUrl + "/v2" + "/AppCust/EditCustMainDataCompanyData";
   public static DeleteAppCustMainData = environment.losUrl + "/v1" + "/AppCust/DeleteAppCustMainData";
   public static CheckAppCustShareholderMandatoryData = environment.losUrl + "/v1" + "/AppCust/CheckAppCustShareholderMandatoryData";
   public static DeleteAllAppCust = environment.losUrl + "/v1" + "/AppCust/DeleteAllAppCust";

@@ -1,6 +1,7 @@
 {
     "url": "",
     "title":"Lookup - Company",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

@@ -1,5 +1,6 @@
 {
-  "title": "Lookup Service",
+  "title": "Lookup - Service",
+  "sectionTitle": "Search",
   "component": [
     {
       "type": "textbox",
