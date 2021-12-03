@@ -58,6 +58,8 @@ import { ApprovalHistXComponent } from 'app/impl/view-enhancing/app-view/approva
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { ViewDeviationComponent } from "./view-deviation/view-deviation.component";
+import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
+import { AppMainInfoXComponent } from "../app-main-info-x/app-main-info-x.component";
 
 
 @NgModule({
@@ -88,6 +90,7 @@ import { ViewDeviationComponent } from "./view-deviation/view-deviation.componen
     ],
     declarations: [
         AppMainInfoComponent,
+        AppMainInfoXComponent,
         AppViewComponent,
         TabReferantorComponent,
         TabApplicationComponent,
@@ -131,6 +134,7 @@ import { ViewDeviationComponent } from "./view-deviation/view-deviation.componen
         UcgridviewComponent,
         UcapprovalhistComponent,
         AppMainInfoComponent,
+        AppMainInfoXComponent,
         AppAssetDataDetailComponent
     ]
 })

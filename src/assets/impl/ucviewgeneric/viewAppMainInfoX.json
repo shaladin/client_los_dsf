@@ -1,12 +1,10 @@
 {
-  "title": "",
-  "subsection": [
-    {
+    "title": "",
+    "subsection": [{
       "subSectionId": "AgrMainInformationId",
       "subSectionTitle": "Main Information",
       "mainInfoPath": "/Generic/GetDataViewBySQL",
-      "mainInfo": [
-        {
+      "mainInfo": [{
           "type": "link",
           "label": "Application No",
           "property": "AppNo",
@@ -14,22 +12,50 @@
           "environment": "LOSR3WEB",
           "path": "VIEW_APP",
           "target": "_blank",
-          "param": [
+          "param": [{
+            "type": "AppId",
+            "property": "AppId"
+          }]
+        },
+        {
+          "type": "switch",
+          "case": [{
+              "conditions": [{
+                "property": "BizTemplateCode",
+                "value": "CFNA",
+                "restriction": "EQ"
+              }],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property": "NumOfColl"
+              }
+            },
             {
-              "type": "AppId",
-              "property": "AppId"
+              "conditions": [{
+                "property": "BizTemplateCode",
+                "value": "CFRFN4W",
+                "restriction": "EQ"
+              }],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property": "NumOfColl"
+              }
+            },
+            {
+              "conditions": [{
+                "property": "BizTemplateCode",
+                "value": "FCTR",
+                "restriction": "EQ"
+              }],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property": "NumOfColl"
+              }
             }
           ]
-        },
-        {
-          "type": "text",
-          "label": "Agreement Parent",
-          "property": "AgrmntParentNo"
-        },
-        {
-          "type": "text",
-          "label": "Customer Model",
-          "property": "CustModel"
         },
         {
           "type": "callback",
@@ -59,15 +85,19 @@
           "property": "LeadNo",
           "name": "LeadNo",
           "isHide": true,
+          "environment": "LOSR3WEB",
           "position": "left",
-          "path": "/View/Lead",
+          "path": "VIEW_LEAD",
           "target": "_blank",
-          "param": [
-            {
-              "type": "LeadId",
-              "property": "LeadId"
-            }
-          ]
+          "param": [{
+            "type": "LeadId",
+            "property": "LeadId"
+          }]
+        },
+        {
+          "type": "text",
+          "label": "Customer Model",
+          "property": "MrCustModelDescr"
         },
         {
           "type": "text",
@@ -91,8 +121,7 @@
         }
       ],
       "querystring": {
-        "name": "viewAppMainInfoCFNAX"
+        "name": "viewAppMainInfo"
       }
-    }
-  ]
-}
+    }]
+  }
