@@ -25,6 +25,8 @@ import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import {AppCustAddrObj} from 'app/shared/model/app-cust-addr-obj.model';
 import {GenericObj} from 'app/shared/model/generic/generic-obj.model';
 import {AppCollateralRegistrationObj} from 'app/shared/model/app-collateral-registration-obj.model';
+import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-do-asset-detail-x',
@@ -58,6 +60,8 @@ export class DoAssetDetailXComponent implements OnInit {
   AppCustAddrObj: Array<AppCustAddrObj> = new Array();
   AddrLegalObj: Array<AppCustAddrObj> = new Array();
   isOwnerReady: boolean = false;
+  ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
+  SerialNoRegex: string;
 
   DOAssetDetail = this.fb.group({
     AppAssetId: [0, [Validators.required]],
@@ -109,6 +113,18 @@ export class DoAssetDetailXComponent implements OnInit {
     this.listItem = this.DOAssetDetail.get('listItem') as FormArray;
     this.initCityLookupIssuerLookup();
 
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex }).toPromise().then(
+      (response: GeneralSettingObj) => {
+        this.SerialNoRegex = response.GsValue;
+
+        let obj: CustomPatternObj = {
+          pattern: this.SerialNoRegex,
+          invalidMsg: "Cannot input special character"
+        }
+        this.ListPattern.push(obj);
+      }
+    )
+
     var reqAppAsset = { AppAssetId: this.AppAssetId, AppId: this.AppId};
     await this.httpClient.post(URLConstant.GetAppAssetForDOMultiAsset, reqAppAsset).toPromise().then(
       async (response) => {
@@ -136,7 +152,7 @@ export class DoAssetDetailXComponent implements OnInit {
             for (let i = 0; i < this.SerialNoList.length; i++) {
               let eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
-                SerialNoValue: [''],
+                SerialNoValue: ['',[Validators.pattern(this.SerialNoRegex)]],
                 IsMandatory: [this.SerialNoList[i].IsMandatory]
               }) as FormGroup;
               this.listItem.push(eachDataDetail);
@@ -144,7 +160,7 @@ export class DoAssetDetailXComponent implements OnInit {
 
             for (let i = 0; i < this.listItem.length; i++) {
               if (this.listItem.controls[i]['controls']['IsMandatory'].value == true) {
-                this.listItem.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                this.listItem.controls[i]['controls']['SerialNoValue'].setValidators([Validators.pattern(this.SerialNoRegex), Validators.required]);
                 this.listItem.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
             }
