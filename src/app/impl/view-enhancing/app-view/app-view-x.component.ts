@@ -8,12 +8,13 @@ import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { formatDate } from '@angular/common';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppMainInfoComponent } from 'app/view-enhancing/app-main-info/app-main-info.component';
+//import { AppMainInfoComponent } from 'app/view-enhancing/app-main-info/app-main-info.component';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { AppMainInfoXComponent } from 'app/view-enhancing/app-main-info-x/app-main-info-x.component';
 
 @Component({
   selector: 'app-app-view-x',
@@ -62,7 +63,7 @@ export class AppViewXComponent implements OnInit {
   OriOfficeCode: string;
   NumOfAsset: number;
 
-  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoXComponent;
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,

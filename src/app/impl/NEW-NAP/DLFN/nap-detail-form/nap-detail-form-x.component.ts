@@ -103,7 +103,7 @@ export class NapDetailFormXComponent implements OnInit {
       });
 
     this.ClaimTask();
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewNapAppDlfnMainInformationX.json";
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",
@@ -420,7 +420,22 @@ export class NapDetailFormXComponent implements OnInit {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }
       );
-    } else {
+    } 
+    else if (ev.Key == "Customer") {
+      var custObj = {
+        CustNo: ev.ViewObj.CustNo
+      };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        (response) => {
+          if(response['MrCustTypeCode'] == CommonConstant.CustTypePersonal) {
+            AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          } else if(response['MrCustTypeCode'] == CommonConstant.CustTypeCompany) {
+            AdInsHelper.OpenCustomerCoyViewByCustId(response['CustId']);
+          }
+        }
+      )
+    }
+    else {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }

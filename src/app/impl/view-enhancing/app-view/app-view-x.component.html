@@ -14,7 +14,7 @@
         </div>
 
         <div class="px-3">
-          <app-app-main-info [AppId]="AppId" #viewAppMainInfo></app-app-main-info>
+          <app-app-main-info-x [AppId]="AppId" #viewAppMainInfo></app-app-main-info-x>
           <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
             <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
