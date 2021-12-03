@@ -91,11 +91,14 @@ export class LoginPageComponent implements OnInit {
           this.isLocked = true;
         }
         else {
-          await this.http.post(AdInsConstant.GetListJobTitleByUsernameAndModule, {UserName : username, Module : environment.Module}).toPromise().then(
-            (response) => {
-              this.loginObj.response = environment.isCore ? response["ListOfficeRoleJobTitle"] : response[CommonConstant.ReturnObj];
-            });
-            
+          if(environment.isCore){
+            await this.http.post(AdInsConstant.GetListJobTitleByUsernameAndModule, {UserName : username, Module : environment.Module}).toPromise().then(
+              (response) => {
+                this.loginObj.response = response["ListOfficeRoleJobTitle"]
+              });
+          }else{
+            this.loginObj.response = response[CommonConstant.ReturnObj];
+          }
           this.loginObj.user = username;
           this.loginObj.pwd = password;
 
