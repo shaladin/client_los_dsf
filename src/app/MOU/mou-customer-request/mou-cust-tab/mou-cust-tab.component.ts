@@ -148,6 +148,7 @@ export class MouCustTabComponent implements OnInit {
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
   appId: number;
+  listAddrRequiredOwnership: Array<string> = new Array();
   inputAddrLegalPersonalObj: InputAddressObj = new InputAddressObj();
   inputAddrLegalCompanyObj: InputAddressObj = new InputAddressObj();
   inputAddrResidenceObj: InputAddressObj = new InputAddressObj();
@@ -158,7 +159,9 @@ export class MouCustTabComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute, private cookieService: CookieService) {
+    private route: ActivatedRoute, 
+    private cookieService: CookieService
+    ) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["mouCustId"];
     })
@@ -166,10 +169,17 @@ export class MouCustTabComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.latestCustDataObj = new AppCustCompareObj();
-    this.GetGS();
+    await this.GetGS();
     await this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
+  }
+
+  setOwnership(MrCustAddrTypeCode: string) : boolean {
+    if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+        return true;
+    }
+    return false;
   }
 
   async SaveForm() {
@@ -1114,6 +1124,7 @@ export class MouCustTabComponent implements OnInit {
     this.inputAddrResidenceObj.showPhn3 = false;
     this.inputAddrResidenceObj.showSubsection = false;
     this.inputAddrResidenceObj.showOwnership = true;
+    this.inputAddrResidenceObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeResidence);
   }
 
   initAddrMailingObj() {
@@ -1736,19 +1747,22 @@ export class MouCustTabComponent implements OnInit {
     }
   }
 
-  GetGS() {
+  async GetGS() {
     this.generalSettingObj = new GenericListByCodeObj();
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeListLegalDocCantDuplicate);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeOwnershipMandatoryAddrType);
 
-    this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
+    await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
         this.returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
         var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         var gsListLegalDocCantDuplicate = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeListLegalDocCantDuplicate);
+        let gsListOwnershipMandatoryType = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeOwnershipMandatoryAddrType);
+        this.listAddrRequiredOwnership = gsListOwnershipMandatoryType.GsValue.split(',');
 
         if (gsNeedCheckBySystem != undefined) {
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
@@ -1815,6 +1829,7 @@ export class MouCustTabComponent implements OnInit {
       }
     );
   }
+
   confirmFraudCheck() {
     if (this.isUseDigitalization == "0") return true;
 

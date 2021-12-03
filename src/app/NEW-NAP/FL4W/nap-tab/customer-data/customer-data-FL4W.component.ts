@@ -30,6 +30,7 @@ import { AppCustCompanyLegalDocObj } from 'app/shared/model/app-cust-company-leg
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/app-cust-company-contact-person-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { AddressService } from 'app/shared/services/custAddr.service';
 
 @Component({
   selector: 'app-customer-data-FL4W',
@@ -89,7 +90,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
   listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
-
+  listAddrRequiredOwnership: Array<string> = new Array();
   CustTypeObj: Array<KeyValueObj>;
   copyToResidenceTypeObj: Array<KeyValueObj> = [
     {
@@ -129,13 +130,16 @@ export class CustomerDataFL4WComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private addressService: AddressService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
     })
   }
 
   async ngOnInit(): Promise<void> {
+    await this.getAddrTypeOwnershipRequired();
+
     this.inputAddressObjForLegal = new InputAddressObj();
     this.inputAddressObjForLegal.title = "Legal Address";
     this.inputAddressObjForLegal.showAllPhn = false;
@@ -144,6 +148,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.inputAddressObjForResidence.showSubsection = false;
     this.inputAddressObjForResidence.showPhn3 = false;
     this.inputAddressObjForResidence.showOwnership = true;
+    this.inputAddressObjForResidence.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeResidence);
     this.inputAddressObjForResidence.showStayLength = true;
 
     this.inputAddressObjForMailing = new InputAddressObj();
@@ -159,11 +164,22 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.inputAddressObjForCoyMailing.showPhn3 = false;
 
     this.cancel = this.showCancel;
-    this.bindCustTypeObj();
+    await this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
 
 
+  }
+
+  async getAddrTypeOwnershipRequired(){
+    this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
+  }
+  
+  setOwnership(MrCustAddrTypeCode: string) : boolean {
+    if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+      return true;
+    }
+    return false;
   }
 
   Cancel() {
@@ -1262,8 +1278,8 @@ export class CustomerDataFL4WComponent implements OnInit {
     }
   }
 
-  bindCustTypeObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
+  async bindCustTypeObj() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
