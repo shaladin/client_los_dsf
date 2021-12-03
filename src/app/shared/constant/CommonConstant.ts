@@ -463,6 +463,10 @@ export class CommonConstant {
   public static PAY_FREQ_MONTHLY = "MONTHLY";
   public static INST_SCHM_REGULAR_FIXED = "RF";
 
+  // INTEREST CALC BASED
+  public static TOP_INTEREST_CALC_BASED = "TOP"; 
+  public static INTEREST_INTEREST_CALC_BASED = "INTEREST"; 
+
   // MR ID TYPE CODE
   public static MrIdTypeCodeEKTP = "EKTP";
   public static MrIdTypeCodeSIM = "SIM";
@@ -633,6 +637,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
   public static RefMasterTypeCodePublicType = "PUBLIC_TYPE";
   public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
+  public static RefMasterTypeCodeInterestCalcBased = "INTEREST_CALC_BASED"; 
+
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
