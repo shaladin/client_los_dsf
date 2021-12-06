@@ -1,26 +1,24 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, NgForm, Validators } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppDlrFncng } from 'app/shared/model/app-data/app-dlr-fncng.model';
-import { AppFctrObj } from 'app/shared/model/app-fctr/app-fctr.model';
-import { AppInvoiceDlrFncngHObj } from 'app/shared/model/app-invoice-dlr-fncng-h-obj.model';
-import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
-import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
-import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { ResDuplicateDoubleFinancingObj } from 'app/shared/model/lead/res-duplicate-double-financing-obj.model';
-import { NegativeAssetCheckObj } from 'app/shared/model/negative-asset-check-obj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
-import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
-import { ReqAddAppInvoiceDlrFncngHObj } from 'app/shared/model/request/app-invoice/req-app-invoice-obj.model';
-import { ResDisbInfo } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
-import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
-import { environment } from 'environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
+import {CommonConstant} from 'app/shared/constant/CommonConstant';
+import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
+import {URLConstant} from 'app/shared/constant/URLConstant';
+import {AppDlrFncng} from 'app/shared/model/app-data/app-dlr-fncng.model';
+import {AppFctrObj} from 'app/shared/model/app-fctr/app-fctr.model';
+import {AssetTypeObj} from 'app/shared/model/asset-type-obj.model';
+import {GenericObj} from 'app/shared/model/generic/generic-obj.model';
+import {InputLookupObj} from 'app/shared/model/input-lookup-obj.model';
+import {ResDuplicateDoubleFinancingObj} from 'app/shared/model/lead/res-duplicate-double-financing-obj.model';
+import {NegativeAssetCheckObj} from 'app/shared/model/negative-asset-check-obj.model';
+import {ReqRefMasterByTypeCodeAndMappingCodeObj} from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import {RefMasterObj} from 'app/shared/model/ref-master-obj.model';
+import {ReqAddAppInvoiceDlrFncngHObj} from 'app/shared/model/request/app-invoice/req-app-invoice-obj.model';
+import {ResDisbInfo} from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
+import {UcPagingObj} from 'app/shared/model/uc-paging-obj.model';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'app-invoice-data-dlfn',
@@ -149,7 +147,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
         await this.httpClient.post(URLConstant.GetListActiveRefMaster, objectReq).subscribe(
           async (response) => {
             this.disburseTos = response[CommonConstant.ReturnObj];
-    
+
             for(var i = 0, len = this.disburseTos.length; i < len; i++) {
               if (this.disburseTos[i].MasterCode === CommonConstant.RefMasterMasterCodeCust) {
                 // Customer
@@ -162,7 +160,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
                 await this.CheckDisburseToOther();
               }
             }
-    
+
           });
       });
   }
@@ -193,7 +191,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
                         AccNo: this.CustBankAccs[i].BankAccNo,
                         AccName: response["BankAccName"]
                       });
-          
+
                       this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, { Code: response["BankCode"] }).subscribe(
                         (responseBank) => {
                           this.selectedBankCode = responseBank["BankCode"];
@@ -225,7 +223,8 @@ export class InvoiceDataDlfnComponent implements OnInit {
     await this.httpClient.post(URLConstant.GetMouCustDlrFncngByAppId, { Id: this.AppId }).subscribe(
       (responseMouCustDlrFncng) => {
         this.CustNo = responseMouCustDlrFncng["DealerCustNo"];
-        this.httpClient.post(URLConstant.GetListCustBankAccByCustNo, { CustNo: this.CustNo }).subscribe(
+        const reqObj = {Code: responseMouCustDlrFncng["DealerCode"]}
+        this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, reqObj).subscribe(
           (response) => {
             this.VendorBankAccs = response["ReturnObject"];
             if (this.ResponseBank != null && !this.IsDisburseInfoExist) {
@@ -249,7 +248,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
                             AccNo: this.VendorBankAccs[i].BankAccNo,
                             AccName: response["ReturnObject"].BankAccName
                           });
-          
+
                           this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, { Code: response["ReturnObject"].BankCode }).subscribe(
                             (responseBank) => {
                               this.selectedBankCode = responseBank["BankCode"];
@@ -660,7 +659,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
           this.httpClient.post(URLConstant.GetDoubleFinancingCheckInvoiceDlrFncngD, this.negativeAssetCheckObj).subscribe(
             (response2) => {
               this.ResultDuplicateDoubleFinancing = response2[CommonConstant.ReturnObj];
-      
+
               if (this.ResultDuplicateDoubleFinancing["length"] > 0) {
                 this.toastr.errorMessage(ExceptionConstant.DOUBLE_FINANCING);
               }
@@ -675,7 +674,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
                   SerialNo5: this.InvoiceForm.controls.SerialNo5.value,
                   CollateralPriceAmt: this.InvoiceForm.controls.CollateralPrice.value
                 }
-      
+
                 this.httpClient.post(URLConstant.AddAppInvoiceDlrFncngD, obj).subscribe(
                   (response3) => {
                     this.toastr.successMessage(response3["message"]);
@@ -688,7 +687,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
         }
       }
     );
-      
+
   }
 
   CLearCollateralForm() {

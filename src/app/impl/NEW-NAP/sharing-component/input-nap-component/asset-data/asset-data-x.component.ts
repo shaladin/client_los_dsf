@@ -114,7 +114,7 @@ import {UcDropdownListObj} from 'app/shared/model/library/uc-dropdown-list-obj.m
       Discount: [0],
       ExpectedDelivDt: [],
       IsNeedReplacementCar: [false],
-      ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+      ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.max(new Date().getFullYear())]],
 
       /* AppAsset Value That required but not in form*/
       AssetSeqNo: ['1', Validators.required],
