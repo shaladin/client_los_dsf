@@ -1473,6 +1473,7 @@ export class MouCustTabComponent implements OnInit {
       this.residenceAddrObj.PhnExt1 = custAddrResidenceObj.PhnExt1;
       this.residenceAddrObj.PhnExt2 = custAddrResidenceObj.PhnExt2;
       this.residenceAddrObj.SubZipcode = custAddrResidenceObj.SubZipcode;
+      this.residenceAddrObj.MrHouseOwnershipCode = custAddrResidenceObj.MrHouseOwnershipCode;
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = custAddrResidenceObj.Zipcode;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: custAddrResidenceObj.Zipcode };
