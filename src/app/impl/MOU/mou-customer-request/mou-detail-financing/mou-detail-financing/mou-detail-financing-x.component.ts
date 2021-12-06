@@ -84,12 +84,12 @@ export class MouDetailFinancingXComponent implements OnInit {
     RowVersion: [''],
     TopInterestRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
     ExtendRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
-    MmForExtend: [0, [Validators.required, Validators.min(1)]],
+    MmForExtend: [0, [Validators.required, Validators.min(0)]],
     PpForExtendPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
     SpareDayToPay: [0, [Validators.required]],
     AssetCondition: ['', [Validators.required]],
     LcRatePrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)],],
-    MaximumExtendTimes: [0, [Validators.required, Validators.min(1)]]
+    MaximumExtendTimes: [0, [Validators.required, Validators.min(0)]]
   });
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
