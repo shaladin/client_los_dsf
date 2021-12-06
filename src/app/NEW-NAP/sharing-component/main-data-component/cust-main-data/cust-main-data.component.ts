@@ -47,6 +47,7 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-jo
 import { CustAttrFormComponent } from '../components/cust-attr-form/cust-attr-form.component';
 import { AppCustAttrContentObj } from 'app/shared/model/app-cust/cust-attr-content/app-cust-attr-content-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { AddressService } from 'app/shared/services/custAddr.service';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -156,6 +157,7 @@ export class CustMainDataComponent implements OnInit {
   readonly AttrGroupCustPersonalOther: string = CommonConstant.AttrGroupCustPersonalOther;
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
   MaxDaysThirdPartyChecking: number;
+  listAddrRequiredOwnership: Array<string> = new Array();
 
   constructor(
     private regexService: RegexService,
@@ -163,7 +165,8 @@ export class CustMainDataComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    public formValidate: FormValidateService, private cookieService: CookieService) {
+    public formValidate: FormValidateService, private cookieService: CookieService,
+    private addressService: AddressService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
     })
@@ -220,6 +223,7 @@ export class CustMainDataComponent implements OnInit {
     }
     await this.initcustMainDataMode();
     await this.setLookup();
+    await this.getAddrTypeOwnershipRequired();
 
     this.ddlCustModelObj.isSelectOutput = true;
 
@@ -230,7 +234,7 @@ export class CustMainDataComponent implements OnInit {
     this.inputAddressObj.showAllPhn = false;
     this.inputAddressObj.showFax = false;
     this.inputAddressObj.showOwnership = true;
-    this.inputAddressObj.requiredOwnership = true;
+    this.inputAddressObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
     this.isUcAddressReady = true;
 
     this.http.post(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GS_MAX_DAYS_CUST_THIRD_PARTY_CHECK }).toPromise().then(
@@ -262,6 +266,17 @@ export class CustMainDataComponent implements OnInit {
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
+  }
+
+  async getAddrTypeOwnershipRequired(){
+    this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
+  }
+  
+  setOwnership(MrCustAddrTypeCode: string) : boolean {
+    if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+      return true;
+    }
+    return false;
   }
   
   //#region Country

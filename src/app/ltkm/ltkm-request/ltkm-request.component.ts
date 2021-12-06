@@ -63,6 +63,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AddressService } from 'app/shared/services/custAddr.service';
 @Component({
     selector: 'app-ltkm-request',
     templateUrl: './ltkm-request.component.html',
@@ -139,6 +140,7 @@ export class LtkmRequestComponent implements OnInit {
     selectedCustNo: any;
     isCustomerSelected: boolean = false;
     isCustomerCompanySelected: boolean = false;
+    listAddrRequiredOwnership: Array<string> = new Array();
     @ViewChild('applicationData') ucLookupApplicationData: UclookupgenericComponent;
     @ViewChild('applicationCompanyData') ucLookupApplicationCompanyData: UclookupgenericComponent;
 
@@ -229,7 +231,8 @@ export class LtkmRequestComponent implements OnInit {
         private toastr: NGXToastrService,
         private route: ActivatedRoute,
         private cookieService: CookieService,
-        private claimTaskService: ClaimTaskService) {
+        private claimTaskService: ClaimTaskService,
+        private addressService: AddressService) {
         this.route.queryParams.subscribe(params => {
             if (params["AppId"] != undefined && params["AppId"] != null) {
                 this.appId = params["AppId"];
@@ -253,16 +256,20 @@ export class LtkmRequestComponent implements OnInit {
         this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
         this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
 
+        await this.getAddrTypeOwnershipRequired();
+
         this.inputAddressObjForLegal = new InputAddressObj();
         this.inputAddressObjForLegal.title = "Legal Address";
         this.inputAddressObjForLegal.showAllPhn = false;
         this.inputAddressObjForLegal.showOwnership = true;
+        this.inputAddressObjForLegal.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
         this.inputAddressObjForLegal.showStayLength = true;
 
         this.inputAddressObjForResidence = new InputAddressObj();
         this.inputAddressObjForResidence.showSubsection = false;
         this.inputAddressObjForResidence.showPhn3 = false;
         this.inputAddressObjForResidence.showOwnership = true;
+        this.inputAddressObjForResidence.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeResidence);
         this.inputAddressObjForResidence.showStayLength = true;
 
         this.inputAddressObjForMailing = new InputAddressObj();
@@ -273,11 +280,13 @@ export class LtkmRequestComponent implements OnInit {
         this.inputAddressObjForLegalCoy.title = "Company Legal Address";
         this.inputAddressObjForLegalCoy.showPhn3 = false;
         this.inputAddressObjForLegalCoy.showOwnership = true;
+        this.inputAddressObjForLegalCoy.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
 
         this.inputAddressObjForMailingCoy = new InputAddressObj();
         this.inputAddressObjForMailingCoy.showSubsection = false;
         this.inputAddressObjForMailingCoy.showPhn3 = false;
         this.inputAddressObjForMailingCoy.showOwnership = true;
+        this.inputAddressObjForMailingCoy.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeMailing);
         
         this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
@@ -328,12 +337,23 @@ export class LtkmRequestComponent implements OnInit {
         else if (this.WfTaskListId > 0) {
           this.claimTaskService.ClaimTask(this.WfTaskListId);
         }
-      }
+    }
 
     resetForm(){
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate([NavigationConstant.LTKM_REQ]);
           });
+    }
+
+    async getAddrTypeOwnershipRequired(){
+        this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
+    }
+
+    setOwnership(MrCustAddrTypeCode: string) : boolean {
+        if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+            return true;
+        }
+        return false;
     }
 
     SaveForm() {
