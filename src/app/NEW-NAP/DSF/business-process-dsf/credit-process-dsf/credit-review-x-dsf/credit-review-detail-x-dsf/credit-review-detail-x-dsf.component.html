@@ -4,7 +4,7 @@
       <h4 class="card-title" translate>Credit Review</h4>
     </div>
     <br>
-    <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+    <app-app-main-info-x [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-x>
     <div class="card-body">
       <div class="px-3">
         <app-crd-rvw-cust-info-x *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
