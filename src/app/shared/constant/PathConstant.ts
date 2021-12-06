@@ -498,6 +498,8 @@ export class PathConstant {
 
     //#region Inquiry-Module
     public static APP_INQUIRY = "AppInquiry";
+    public static PROD_INQUIRY = "ProdInquiry";
+    public static PROD_OFF_INQUIRY = "ProdOffInquiry";
     public static PURCHASE_TRACKING_INQUIRY = "PurchaseTrackingInquiry";
     //#endregion
 
