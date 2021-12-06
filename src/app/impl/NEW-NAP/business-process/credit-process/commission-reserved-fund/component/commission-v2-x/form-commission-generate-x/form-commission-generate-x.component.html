@@ -24,7 +24,7 @@
                 <select *ngIf="item.controls.ContentName.value == ''" class="form-control adInsInput"
                   style="width: auto" formControlName="ContentName" (change)="ChooseContentName($event, i)">
                   <option value="">-Select One-</option>
-                  <option *ngFor="let it of DDLContentName" value="{{it.Key}}">
+                  <option *ngFor="let it of DDLContentAdd" value="{{it.Key}}">
                     {{it.Value}} </option>
                 </select>
                 <lib-uc-show-errors [control]="item.controls.ContentName" [submit]="enjiForm.submitted">
