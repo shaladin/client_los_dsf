@@ -22,6 +22,7 @@ export class InputLookupObj {
     listEnvironments: Array<EnvisObj>;
     isJoinExAPI: boolean;
     integrationObj: IntegrationObj;
+    isClear : boolean;
     
     constructor() {
         this.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
@@ -41,6 +42,7 @@ export class InputLookupObj {
         this.listEnvironments.push({ environment: "LOS", url: environment.losUrl + "/v1" });
         this.isJoinExAPI = false;
         this.integrationObj = new IntegrationObj();
+        this.isClear = false;
     }
 }
 
