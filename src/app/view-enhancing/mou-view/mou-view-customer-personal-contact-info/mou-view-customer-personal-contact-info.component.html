@@ -1,0 +1,46 @@
+<lib-ucSubsection [id]="'contactInfomationId'" [title]="'Contact Information'" [panel]="'contactInformation'">
+</lib-ucSubsection>
+<div id="contactInformation">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th style="text-align: left;"><span class="thead-header" translate>Name
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Id No
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Cust Relationship
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Mobile Phone
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Gender
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Emergency Contact
+        </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf = "listContactPersonPersonal?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf = "listContactPersonPersonal?.length > 0">
+      <tr *ngFor="let item of listContactPersonPersonal; let i = index">
+        <td style="text-align: left;">{{item.ContactPersonName}}</td>
+        <td style="text-align: center;">{{item.IdNo}}</td>
+        <td style="text-align: center;">{{item.RelationshipName}}</td>
+        <td style="text-align: center;">{{item.MobilePhnNo1}}</td>
+        <td style="text-align: center;">{{item.GenderName}}</td>
+        <td style="text-align: center;">
+          <span *ngIf="item.IsEmergencyContact == true">Yes</span>
+          <span *ngIf="item.IsEmergencyContact == false">No</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
