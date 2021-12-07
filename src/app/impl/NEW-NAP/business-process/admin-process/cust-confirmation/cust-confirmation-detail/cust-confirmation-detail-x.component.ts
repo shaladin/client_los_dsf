@@ -21,6 +21,8 @@ import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
 import { CustCnfrmObj } from 'app/shared/model/cust-cnfrm/cust-cnfrm.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-cust-confirmation-detail-x',
@@ -45,7 +47,8 @@ export class CustConfirmationDetailXComponent implements OnInit {
     AgrmntCreatedDt: [''],
     EffectiveDt: [''],
     AddIntrstAmt:[0],
-    GoLiveEstimated: ['']
+    GoLiveEstimated: [''],
+    AdditionalInterestPaidBy: ['']
   });
   UserAccess: CurrentUserContext;
   businessDt: Date = new Date();
@@ -108,9 +111,17 @@ export class CustConfirmationDetailXComponent implements OnInit {
     } else {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
     }
+    this.http.post(URLConstantX.GetAgrmntOtherInfoByAgrmntIdX, { Id: this.AgrmntId }).subscribe(
+      (response) => {
+        this.CustConfirmForm.patchValue({
+          AdditionalInterestPaidBy: response["AdditionalInterestPaidBy"]
+        })
+      }
+    );
 
 
     await this.GetVerfResult();
+    await this.getAddInterestPaidBy();
   }
 
   async GetVerfResult(IsAdded: boolean = false) {
@@ -194,6 +205,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
           wfTaskListId: this.TaskListId,
           AgrmntCreatedDt: this.CustConfirmForm.controls.AgrmntCreatedDt.value,
           EffectiveDt: this.CustConfirmForm.controls.EffectiveDt.value,
+          AdditionalInterestPaidBy: this.CustConfirmForm.controls.AdditionalInterestPaidBy.value,
         };
         this.http.post(URLConstantX.AddCustCnfrmX, CustCnfrmWFCFNAObj).subscribe(
           (response) => {
@@ -220,6 +232,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
           wfTaskListId: this.TaskListId,
           AgrmntCreatedDt: this.CustConfirmForm.controls.AgrmntCreatedDt.value,
           EffectiveDt: this.CustConfirmForm.controls.EffectiveDt.value,
+          AdditionalInterestPaidBy: this.CustConfirmForm.controls.AdditionalInterestPaidBy.value,
         };
         this.http.post(URLConstantX.AddCustCnfrmX, CustCnfrmWFCFNAObj).subscribe(
           () => {
@@ -335,5 +348,35 @@ export class CustConfirmationDetailXComponent implements OnInit {
   clickCancel() {
     this.removeFromLocalStorage();
     AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
+  }
+
+  ListRmAddInterestPaidByCode: Array<KeyValueObj>;
+  IsGSAddInerestExists: boolean = false;
+  async getAddInterestPaidBy() {
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsDiffdaysglveff }).toPromise().then(
+      (response) => {
+        if (response['GsValue']) {
+          this.IsGSAddInerestExists = true;
+        }
+      }
+    );
+    if (!this.IsGSAddInerestExists) {
+      return;
+    }
+
+
+    this.CustConfirmForm.controls['AdditionalInterestPaidBy'].setValidators([Validators.required]);
+    this.CustConfirmForm.controls['AdditionalInterestPaidBy'].updateValueAndValidity();
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAdditionalInterestPaidBy }).toPromise().then(
+      (response) => {
+        this.ListRmAddInterestPaidByCode = response[CommonConstant.ReturnObj];
+        if (this.BizTemplateCode === CommonConstant.CFNA) {
+          this.CustConfirmForm.patchValue({
+            AdditionalInterestPaidBy: CommonConstantX.AdditionalInterestPaidByCustomer
+          });
+          this.CustConfirmForm.controls['AdditionalInterestPaidBy'].disable();
+        }
+      }
+    );
   }
 }

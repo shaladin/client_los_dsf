@@ -62,9 +62,10 @@ export class PreGoLiveXComponent implements OnInit {
     EffectiveDt: ['', Validators.required],
     Notes: ['', Validators.required],
     ApprovalStatus: [''],
-    AdditionalInterestPaidBy: ['', Validators.required],
+    AdditionalInterestPaidBy: [''],
     AddIntrstAmt: [0],
-    GoLiveEstimated: ['']
+    GoLiveEstimated: [''],
+    AdditionalInterestPaidByName: [''],
   })
   listAgrmntTcObj: Array<AgrmntTcObj>;
 
@@ -205,8 +206,17 @@ export class PreGoLiveXComponent implements OnInit {
         }
       }
     );
+    this.http.post(URLConstantX.GetAgrmntOtherInfoByAgrmntIdX, { Id: this.AgrmntId }).subscribe(
+      (response) => {
+        this.MainInfoForm.patchValue({
+          AdditionalInterestPaidBy: response["AdditionalInterestPaidBy"],
+          AdditionalInterestPaidByName: response["AdditionalInterestPaidByName"],
+        })
+      }
+    );
+
     await this.getPODate();
-    await this.getAddInterestPaidBy();
+    //await this.getAddInterestPaidBy();
     await this.InitDms();
     await this.LoadRefReason();
     if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.DF) {

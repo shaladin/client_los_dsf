@@ -30,6 +30,19 @@
             </div>
           </div>
           <div class="form-group row">
+            <label *ngIf="IsGSAddInerestExists && BizTemplateCode != 'DLFN'"
+              class="col-md-2 adins-required-label" translate>Additional Interest
+              Paid By</label>
+            <div *ngIf="IsGSAddInerestExists" class="col-md-4">
+              <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirmForm.controls.AdditionalInterestPaidBy.invalid }">
+                <option value="">--Select One--</option>
+                <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
+              </select>
+              <lib-uc-show-errors [control]="CustConfirmForm.controls.AdditionalInterestPaidBy"
+                [submit]="CustConfirmForm.submitted">
+              </lib-uc-show-errors>
+            </div>
             <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
             <div class="col-md-4">
               <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
@@ -38,6 +51,9 @@
                 [submit]="CustConfirmForm.submitted">
               </lib-uc-show-errors>
             </div>
+          </div>
+
+          <div class="form-group row">
             <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
             <label class="col-md-4 adinsLabel" translate>{{CustConfirmForm.controls.AddIntrstAmt.value | number:'.0':'en-US'}}</label>
           </div>
