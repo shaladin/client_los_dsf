@@ -86,4 +86,8 @@ export class CommonConstantX {
 
     // NAP 4 Tab
     public static FINANCIAL_TAB = "Financial";
+
+    //DDL COMMISSION
+    public static COM_DDL_SUPPL_EMP = "COM_DDL_SUPPL_EMP";
+    
 }

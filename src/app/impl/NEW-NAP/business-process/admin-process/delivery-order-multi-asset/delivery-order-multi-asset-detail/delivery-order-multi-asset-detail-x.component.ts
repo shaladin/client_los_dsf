@@ -30,6 +30,8 @@ import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
 import { environment } from 'environments/environment';
 import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail-x',
@@ -55,7 +57,8 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     AgrmntCreatedDt: ['', Validators.required],
     EffectiveDt: ['', Validators.required],
     AddIntrstAmt: [0],
-    GoLiveEstimated: ['']
+    GoLiveEstimated: [''],
+    AdditionalInterestPaidBy: ['']
   });
 
   AppTcForm = this.fb.group({});
@@ -132,6 +135,13 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         }
       }
     );
+    this.http.post(URLConstantX.GetAgrmntOtherInfoByAgrmntIdX, { Id: this.agrmntId }).subscribe(
+      (response) => {
+        this.DOAssetForm.patchValue({
+          AdditionalInterestPaidBy: response["AdditionalInterestPaidBy"]
+        })
+      }
+    );
     this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response) => {
         this.PODt = response["PurchaseOrderDt"];
@@ -194,7 +204,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         }
       }
     );
-    
+
     // START X DSF Non JIRA, Udin : Pisah "checkAllDO" dari forJoin() karena bikin issue data tidak muncul
     await checkAllDO.toPromise().then(
       (response) => {
@@ -208,6 +218,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         this.SysConfigResultObj = response
       });
     await this.InitDms();
+    await this.getAddInterestPaidBy();
   }
 
   async InitDms() {
@@ -339,7 +350,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
 
   createDOHandler() {
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
-    var formArraySelected : FormArray = new FormArray([]);
+    var formArraySelected: FormArray = new FormArray([]);
 
     for (var i = 0; i < formArray.length; i++) {
       if (formArray.at(i).get("IsSelected").value == true) {
@@ -448,6 +459,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         AgrmntId: this.agrmntId,
         AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
         EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
+        AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
       };
       let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
       let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
@@ -472,29 +484,30 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
     else {
-        var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
-        reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
-        reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
-        var agrmntObj = {
-          AgrmntId: this.agrmntId,
-          AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
-          EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
-        };
-        let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
-        var submitDO = null;
-        if (environment.isCore) {
-          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+      var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+      reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
+      reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
+      var agrmntObj = {
+        AgrmntId: this.agrmntId,
+        AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
+        EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
+        AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
+      };
+      let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
+      var submitDO = null;
+      if (environment.isCore) {
+        submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+      }
+      else {
+        submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+      }
+      let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
+      forkJoin([editTc, submitDO, updateAgrmntDt]).subscribe(
+        (response) => {
+          this.toastr.successMessage(response[1]["Message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
         }
-        else {
-          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
-        }
-        let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
-        forkJoin([editTc, submitDO, updateAgrmntDt]).subscribe(
-          (response) => {
-            this.toastr.successMessage(response[1]["Message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
-          }
-        );
+      );
     }
   }
 
@@ -531,7 +544,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     }
   }
 
-  SetTcForm(): Array<AgrmntTcObj>{
+  SetTcForm(): Array<AgrmntTcObj> {
     let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     let listAgrmntTcObj: Array<AgrmntTcObj> = new Array<AgrmntTcObj>();
     for (var i = 0; i < this.AppTcForm.value.TCList["length"]; i++) {
@@ -567,5 +580,35 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     }
 
     return listAgrmntTcObj;
+  }
+
+  ListRmAddInterestPaidByCode: Array<KeyValueObj>;
+  IsGSAddInerestExists: boolean = false;
+  async getAddInterestPaidBy() {
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsDiffdaysglveff }).toPromise().then(
+      (response) => {
+        if (response['GsValue']) {
+          this.IsGSAddInerestExists = true;
+        }
+      }
+    );
+    if (!this.IsGSAddInerestExists) {
+      return;
+    }
+
+
+    this.DOAssetForm.controls['AdditionalInterestPaidBy'].setValidators([Validators.required]);
+    this.DOAssetForm.controls['AdditionalInterestPaidBy'].updateValueAndValidity();
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAdditionalInterestPaidBy }).toPromise().then(
+      (response) => {
+        this.ListRmAddInterestPaidByCode = response[CommonConstant.ReturnObj];
+        if (this.bizTemplateCode === CommonConstant.CFNA) {
+          this.DOAssetForm.patchValue({
+            AdditionalInterestPaidBy: CommonConstantX.AdditionalInterestPaidByCustomer
+          });
+          this.DOAssetForm.controls['AdditionalInterestPaidBy'].disable();
+        }
+      }
+    );
   }
 }
