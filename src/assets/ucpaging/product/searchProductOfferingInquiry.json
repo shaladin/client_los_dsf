@@ -1,27 +1,42 @@
 {
-  "title": "Product HO",
+  "title": "Product Offering",
   "exportExcel": false,
-  "component": [
-    {
+  "component": [{
       "type": "textbox",
-      "name": "A.PROD_CODE",
-      "id": "ProdCodeId",
+      "name": "Prod_Code",
+      "id": "ProdCode",
       "value": "",
       "label": "Product Code",
       "placeholder": "Placeholder"
     },
     {
       "type": "textbox",
-      "name": "A.PROD_NAME",
-      "id": "ProdNameId",
+      "name": "Prod_Name",
+      "id": "ProdName",
       "value": "",
       "label": "Product Name",
       "placeholder": "Placeholder"
     },
     {
+      "type": "textbox",
+      "name": "Prod_Offering_Code",
+      "id": "ProdCode",
+      "value": "",
+      "label": "Product Offering Code",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "Prod_Offering_Name",
+      "id": "ProdOfferingName",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
       "type": "dropdown",
-      "name": "A.PROD_STAT",
-      "id": "ProdStatId",
+      "name": "A.Prod_Offering_Stat",
+      "id": "ProdOfferingStat",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,
@@ -29,17 +44,17 @@
       "ddlType": "all",
       "url": "",
       "environment": "FOU",
-      "path": "/RefMaster/GetListKeyValueActiveMappingCodeHumanActivityByCode",
-      "label": "Product Status",
+      "path": "/RefMaster/GetListKeyValueActiveByCode",
+      "label": "Product Offering Status",
       "items": [],
       "itemsUrl": [],
       "criteriaPropName": "RefMasterTypeCode",
-      "criteriaPropValue": "PROD_STAT"
+      "criteriaPropValue": "PRODUCT_STAT"
     },
     {
       "type": "datepicker",
-      "name": "A.END_DT",
-      "id": "EndDtId",
+      "name": "A.End_Dt",
+      "id": "EndDt",
       "value": "",
       "label": "End Date",
       "placeholder": "Placeholder"
@@ -60,14 +75,26 @@
     {
       "type": "sort",
       "position": "center",
+      "label": "Product Offering Code",
+      "name": "ProdOfferingCode"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Product Offering Name",
+      "name": "ProdOfferingName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
       "label": "Current Version",
-      "name": "CurrentProdVersion"
+      "name": "CurrentProdOfrVersion"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Draft Version",
-      "name": "DraftProdVersion"
+      "name": "DraftProdOfrVersion"
     },
     {
       "type": "sort",
@@ -78,17 +105,12 @@
     {
       "type": "sort",
       "position": "center",
-      "label": "Product Status",
-      "name": "ProdStatDesc"
-    },
-    {
-      "type": "label",
-      "position": "center",
-      "label": "Action"
+      "label": "Product Offering Status",
+      "name": "ProdOfferingStatDesc"
     }
   ],
   "querystring": {
-    "name": "searchProductHO"
+    "name": "searchProductOffering"
   },
   "bodyList": [{
       "type": "text",
@@ -101,28 +123,38 @@
       "property": "ProdName"
     },
     {
+      "type": "text",
+      "position": "center",
+      "property": "ProdOfferingCode"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ProdOfferingName"
+    },
+    {
       "type": "link",
       "position": "center",
-      "property": "CurrentProdVersion",
-      "path": "VIEW_PRODUCT_HO",
+      "property": "CurrentProdOfrVersion",
+      "path": "VIEW_OFFERING",
       "target": "_blank",
       "param": [
           {
-              "type": "prodHId",
-              "property": "prodHId"
+              "type": "prodOfferingHId",
+              "property": "prodOfferingHId"
           }
       ]
     },
     {
       "type": "link",
       "position": "center",
-      "property": "DraftProdVersion",
-      "path": "VIEW_PRODUCT_HO",
+      "property": "DraftProdOfrVersion",
+      "path": "VIEW_OFFERING",
       "target": "_blank",
       "param": [
           {
-              "type": "prodHId",
-              "property": "DraftProdHId"
+              "type": "prodOfferingHId",
+              "property": "DraftProdOfferingHId"
           }
       ]
     },
@@ -134,26 +166,7 @@
     {
       "type": "text",
       "position": "center",
-      "property": "ProdStatDesc"
-    },
-    {
-
-      "type": "action",
-      "position": "center",
-      "action": [{
-        "type": "switch",
-        "case": [{
-          "conditions": [{
-            "property": "ProdStat",
-            "value": "DEACT",
-            "restriction": "NEQ"
-          }],
-          "result": {
-            "type": "callback",
-            "key": "EditProductOffering"
-          }
-        }]
-      }]
+      "property": "ProdOfferingStatDesc"
     }
   ]
 }
