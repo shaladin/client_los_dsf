@@ -3,7 +3,7 @@
     "exportExcel": false,
     "component": [
       {
-        "type": "dropdown",
+        "type": "officeRoleCodes",
         "name": "UMH.OFFICE_CODE",
         "id": "OriOfficeNameId",
         "value": "",

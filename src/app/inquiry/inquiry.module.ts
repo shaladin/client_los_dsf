@@ -12,6 +12,8 @@ import { InquiryRoutingComponent } from "./inquiry-routing.module";
 import { AppInquiryPagingComponent } from "./app-inquiry/app-inquiry-paging.component";
 import { PurchaseTrackingInquiryComponent } from './purchase-tracking-inquiry/purchase-tracking-inquiry.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ProdHoInquiryComponent } from "./prod-ho-inquiry/prod-ho-inquiry.component";
+import { ProdOfferingInquiryComponent } from "./prod-offering-inquiry/prod-offering-inquiry.component";
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
   ],
   declarations: [
     AppInquiryPagingComponent,
+    ProdHoInquiryComponent,
+    ProdOfferingInquiryComponent,
     PurchaseTrackingInquiryComponent
   ]
 })

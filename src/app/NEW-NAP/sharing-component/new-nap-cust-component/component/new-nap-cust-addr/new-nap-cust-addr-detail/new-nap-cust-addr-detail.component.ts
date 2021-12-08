@@ -12,6 +12,7 @@ import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { AddressService } from 'app/shared/services/custAddr.service';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
@@ -30,6 +31,7 @@ export class NewNapCustAddrDetailComponent implements OnInit {
   copyAddressFromObj: Array<AppCustAddrObj> = new Array();
   AddressTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   selectedAddrType: string;
+  listAddrRequiredOwnership: Array<string> = new Array();
 
   AddressForm = this.fb.group({
     MrCustAddrTypeCode: [],
@@ -40,19 +42,21 @@ export class NewNapCustAddrDetailComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService
+    public formValidate: FormValidateService,
+    private addressService: AddressService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.getAddrTypeOwnershipRequired();
+
     this.AddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
     this.inputAddressObj.showOwnership = true;
-    this.isUcAddressReady = true;
-
+    
     let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany };
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).toPromise().then(
       async (response) => {
         this.AddressTypeObj = response[CommonConstant.ReturnObj];
         if(this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
@@ -62,6 +66,7 @@ export class NewNapCustAddrDetailComponent implements OnInit {
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key,
         });
+        this.inputAddressObj.requiredOwnership = this.setOwnership(this.AddressTypeObj[0].Key);
         this.selectedAddrType = this.AddressTypeObj[0].Value;
         await this.LoadAddrForCopy();
         await this.ResetForm();
@@ -77,6 +82,18 @@ export class NewNapCustAddrDetailComponent implements OnInit {
           this.SetShowOwnership(this.InputObj.InputedAddr.MrCustAddrTypeCode);
         }
       });
+      this.isUcAddressReady = true;
+  }
+
+  async getAddrTypeOwnershipRequired(){
+    this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
+  }
+  
+  setOwnership(MrCustAddrTypeCode: string) : boolean {
+    if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+      return true;
+    }
+    return false;
   }
 
   ResetForm() {
@@ -144,6 +161,7 @@ export class NewNapCustAddrDetailComponent implements OnInit {
     }else{
       this.inputAddressObj.showOwnership = true;
     }
+    this.inputAddressObj.requiredOwnership =  this.setOwnership(mrCustAddrTypeCode);
     this.isUcAddressReady = true;
   }
 

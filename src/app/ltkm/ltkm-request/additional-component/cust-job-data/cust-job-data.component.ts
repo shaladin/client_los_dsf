@@ -18,6 +18,7 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { AddressService } from 'app/shared/services/custAddr.service';
 
 @Component({
   selector: 'app-ltkm-cust-job-data',
@@ -48,25 +49,30 @@ export class LtkmCustJobDataComponent implements OnInit {
   CustModelObj: Array<KeyValueObj>;
 
   IsLookupIndustryTypeReady: boolean = false;
-
+  listAddrRequiredOwnership: Array<string> = new Array();
   testing: Date = new Date();
   inputAddressObjForJobData: InputAddressObj;
+  isReady: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private addressService: AddressService) {
   }
 
   MaxDate: Date;
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-  ngOnInit() {
+  async ngOnInit() {
+    await this.getAddrTypeOwnershipRequired();
+
     this.inputAddressObjForJobData = new InputAddressObj();
     this.inputAddressObjForJobData.showSubsection = false;
     this.inputAddressObjForJobData.showPhn3 = false;
     this.inputAddressObjForJobData.showOwnership = true;
+    this.inputAddressObjForJobData.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeJob);
 
     if (this.isLockMode) {
       this.inputAddressObjForJobData.isReadonly = true;
@@ -137,11 +143,23 @@ export class LtkmCustJobDataComponent implements OnInit {
 
     this.initLookup();
     // this.bindCustModelObj();
-    this.bindAllRefMasterObj();
+    await this.bindAllRefMasterObj();
     if (this.ltkmCustPersonalJobDataObj != undefined) {
-      this.bindLtkmCustPersonalJobData();
+      await this.bindLtkmCustPersonalJobData();
     }
     this.IsLookupIndustryTypeReady = true;
+    this.isReady = true;
+  }
+
+  async getAddrTypeOwnershipRequired(){
+      this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
+  }
+
+  setOwnership(MrCustAddrTypeCode: string) : boolean {
+      if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+          return true;
+      }
+      return false;
   }
 
   CriteriaAddLookUpProfessionName() {
@@ -205,8 +223,8 @@ export class LtkmCustJobDataComponent implements OnInit {
     });
   }
 
-  setProfessionName(professionCode: string) {
-    this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).subscribe(
+  async setProfessionName(professionCode: string) {
+    this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;
@@ -271,7 +289,7 @@ export class LtkmCustJobDataComponent implements OnInit {
     }
   }
 
-  bindLtkmCustPersonalJobData() {
+  async bindLtkmCustPersonalJobData() {
     this.IsInitJobData = true;
 
     if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != "")
@@ -294,7 +312,7 @@ export class LtkmCustJobDataComponent implements OnInit {
         MrProfessionCode: this.ltkmCustPersonalJobDataObj.MrProfessionCode
       });
 
-      this.setProfessionName(this.ltkmCustPersonalJobDataObj.MrProfessionCode);
+      await this.setProfessionName(this.ltkmCustPersonalJobDataObj.MrProfessionCode);
       this.CustModelChanged(false);
       this.setAddrJobDataObj();
       this.IsInitJobData = false
@@ -302,17 +320,17 @@ export class LtkmCustJobDataComponent implements OnInit {
     }
   }
 
-  bindAllRefMasterObj() {
-    this.bindCustModelObj();
-    this.bindJobPositionObj();
-    this.bindCompanyScaleObj();
-    this.bindInvestmentTypeObj();
-    this.bindJobStatObj();
+  async bindAllRefMasterObj() {
+    await this.bindCustModelObj();
+    await this.bindJobPositionObj();
+    await this.bindCompanyScaleObj();
+    await this.bindInvestmentTypeObj();
+    await this.bindJobStatObj();
   }
 
 
-  bindJobPositionObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).subscribe(
+  async bindJobPositionObj() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).toPromise().then(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
         if (this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")) {
@@ -324,8 +342,8 @@ export class LtkmCustJobDataComponent implements OnInit {
     );
   }
 
-  bindCompanyScaleObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCoyScale }).subscribe(
+  async bindCompanyScaleObj() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCoyScale }).toPromise().then(
       (response) => {
         this.CompanyScaleObj = response[CommonConstant.ReturnObj];
         if (this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")) {
@@ -337,8 +355,8 @@ export class LtkmCustJobDataComponent implements OnInit {
     );
   }
 
-  bindJobStatObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobStat }).subscribe(
+  async bindJobStatObj() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobStat }).toPromise().then(
       (response) => {
         this.JobStatObj = response[CommonConstant.ReturnObj];
         if (this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")) {
@@ -350,8 +368,8 @@ export class LtkmCustJobDataComponent implements OnInit {
     );
   }
 
-  bindInvestmentTypeObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInvestmentType }).subscribe(
+  async bindInvestmentTypeObj() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInvestmentType }).toPromise().then(
       (response) => {
         this.InvestmentTypeObj = response[CommonConstant.ReturnObj];
         if (this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")) {
@@ -363,7 +381,7 @@ export class LtkmCustJobDataComponent implements OnInit {
     );
   }
 
-  bindCustModelObj() {
+  async bindCustModelObj() {
     // this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { Code: CommonConstant.CustTypePersonal }).toPromise().then(
     //   (response) => {
     //     this.CustModelObj = response[CommonConstant.ReturnObj];
@@ -376,7 +394,7 @@ export class LtkmCustJobDataComponent implements OnInit {
     //     }
     //   }
     // );
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
