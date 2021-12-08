@@ -56,7 +56,7 @@ export class CreditApprovalPagingDsfComponent implements OnInit {
       this.apvReqObj.Username = this.userContext.UserName;
       this.apvReqObj.RoleCode = this.userContext.RoleCode;
       this.apvReqObj.OfficeCode = this.userContext.OfficeCode;
-      this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
+      // this.integrationObj.baseUrl = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "AppNo";
       this.integrationObj.rightColumnToJoin = "TransactionNo";
