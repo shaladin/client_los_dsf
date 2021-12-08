@@ -1252,6 +1252,7 @@ export class URLConstant {
   public static CalculateInstallmentRegularFixForTrialCalc = environment.losUrl + "/v1" + "/AppFinData/CalculateInstallmentRegularFixForTrialCalc";
   public static GetFinancialDataByAppIdForView = environment.losUrl + "/v1" + "/AppFinData/GetFinancialDataByAppIdForView";
   public static GetInitAppFinDataFctrByAppId = environment.losUrl + "/v1" + "/AppFinData/GetInitAppFinDataFctrByAppId";
+  public static GetInitAppFinDataFctrByAppIdV2 = environment.losUrl + "/v2" + "/AppFinData/GetInitAppFinDataFctrByAppId";
   public static CalculateInstallmentRegularFixFctr = environment.losUrl + "/v1" + "/AppFinData/CalculateInstallmentRegularFixFctr";
   public static SaveAppFinDataFctr = environment.losUrl + "/v1" + "/AppFinData/SaveAppFinDataFctr";
   public static SaveAppFinData = environment.losUrl + "/v1" + "/AppFinData/SaveAppFinData";
@@ -1261,14 +1262,20 @@ export class URLConstant {
   public static CalculateSingleInstDlfn = environment.losUrl + "/v1" + "/AppFinData/CalculateSingleInstDlfn";
   public static CalculateProvisionFee = environment.losUrl + "/v1" + "/AppFee/CalculateProvisionFee";
   public static GetOrInitAppSubsidyByAppId = environment.losUrl + "/v1" + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
+  public static GetOrInitAppSubsidyByAppIdV2 = environment.losUrl + "/v2" + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
   public static GetRuleSubsidyMax = environment.losUrl + "/v1" + "/AppSubsidy/GetRuleSubsidyMax";
+  public static GetRuleSubsidyMaxV2 = environment.losUrl + "/v2" + "/AppSubsidy/GetRuleSubsidyMax";
   public static GetInitAppFinDataByAppId = environment.losUrl + "/v1" + "/AppFinData/GetInitAppFinDataByAppId";
+  public static GetInitAppFinDataByAppIdV2 = environment.losUrl + "/v2" + "/AppFinData/GetInitAppFinDataByAppId";
   public static GetInitFinDataForTrialCalc = environment.losUrl + "/v1" + "/AppFinData/GetInitFinDataForTrialCalc";
   public static GetAppSubsidyByAppSubsidyId = environment.losUrl + "/v1" + "/AppSubsidy/GetAppSubsidyByAppSubsidyId";
   public static AddAppSubsidy = environment.losUrl + "/v1" + "/AppSubsidy/AddSubsidy";
+  public static AddAppSubsidyV2 = environment.losUrl + "/v2" + "/AppSubsidy/AddSubsidy";
   public static EditAppSubsidy = environment.losUrl + "/v1" + "/AppSubsidy/EditAppSubsidy";
+  public static EditAppSubsidyV2 = environment.losUrl + "/v2" + "/AppSubsidy/EditAppSubsidy";
 
   public static GetInitAppFinDataDFByAppId = environment.losUrl + "/v1" + "/AppFinData/GetInitAppFinDataDFByAppId";
+  public static GetInitAppFinDataDFByAppIdV2 = environment.losUrl + "/v2" + "/AppFinData/GetInitAppFinDataDFByAppId";
   public static SaveAppFinDataDF = environment.losUrl + "/v1" + "/AppFinData/SaveAppFinDataDF";
   //Fraud Detection
   public static GetAppDupCheckCustByAppId = environment.losUrl + "/v1" + "/FraudDetection/GetAppDupCheckCustByAppId";

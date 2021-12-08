@@ -1,0 +1,43 @@
+<lib-ucSubsection [id]="'shareholderId'" [title]="'Management / Shareholder'" [panel]="'shareholder'">
+</lib-ucSubsection>
+<div id="shareholder">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th style="text-align: center;"><span class="thead-header" name="ShareholderName" translate>Shareholder Name
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" name="JobPosition" translate>Job Position
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" name="Type" translate>Type
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" name="NPWP" translate>NPWP
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" name="IsActive" translate>Is Active
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" name="Share" translate>Share (%)
+        </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf = "listShareholder?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf = "listShareholder?.length > 0">
+      <tr *ngFor="let item of listShareholder; let i = index">
+        <td style="text-align: center;">{{item.MrShrholderTypeCode == 'PUBLIC' ? item.PublicName : item.MgmntShrholderName}}</td>
+        <td style="text-align: center;">{{item.JobPositionName}}</td>
+        <td style="text-align: center;">{{item.MrShrholderTypeName}}</td>
+        <td style="text-align: center;">{{item.MrShrholderTypeCode == 'PUBLIC' ? item.PublicIdentityNo : item.TaxIdNo}}</td>
+        <td style="text-align: center;">{{item.IsActive}}</td>
+        <td style="text-align: center;">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

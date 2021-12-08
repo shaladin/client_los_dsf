@@ -75,7 +75,8 @@ export class SubsidyFL4WComponent implements OnInit {
 
   LoadSubsidyData()
   {
-    this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { Id: this.AppId }).subscribe(
+    let InitAppSubsidyUrl = environment.isCore ? URLConstant.GetOrInitAppSubsidyByAppIdV2 : URLConstant.GetOrInitAppSubsidyByAppId;
+    this.http.post(InitAppSubsidyUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
         this.emitData.emit(this.listSubsidy);
