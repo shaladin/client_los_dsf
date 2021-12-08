@@ -282,13 +282,18 @@ export class CommissionV2XComponent implements OnInit {
           this.GetDDLContent(response.ListAppAssetObj, CommonConstant.ContentSupplier);
           this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstant.ContentSupplierEmp);
         }
+        console.log(response);
       });
 
     await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2, obj).toPromise().then(
       (response) => {
         if (response.ListAppAssetObj.length != 0) {
+          response.ListAppAssetSupplEmpObj.sort((a, b) => (
+            a.SupplEmpName.localeCompare(b.SupplEmpName)
+          ));
           this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstantX.COM_DDL_SUPPL_EMP);
         }
+        console.log(response);
       });
 
     obj = {
@@ -483,6 +488,7 @@ export class CommissionV2XComponent implements OnInit {
   }
 
   DictTempRemainingIncomeForm: Object = {}
+  TotalInput : number = 0;
   async NewCalculateTotal() {
     this.totalAlloc = 0;
     console.log("CALCULATE NEW");
@@ -499,7 +505,7 @@ export class CommissionV2XComponent implements OnInit {
     this.totalSupplier = 0;
     this.totalSupplierEmp = 0;
     this.totalReferantor = 0;
-
+    this.TotalInput = 0;
     this.Summary.TotalCommisionAmount = 0;
     this.Summary.TotalTaxAmmount = 0;
     this.Summary.TotalVATAmount = 0;
@@ -523,6 +529,9 @@ export class CommissionV2XComponent implements OnInit {
       ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
       IsSave: false,
     };
+    listTrxAmt.forEach(a=> a.forEach(b=>this.TotalInput += b));
+    
+    
 
     await this.http.post<ResponseTaxDetailObj>(URLConstantX.GetAppCommissionTaxAndCalcGrossYieldX, obj).toPromise().then(
       (response) => {
@@ -654,9 +663,12 @@ export class CommissionV2XComponent implements OnInit {
 
   SaveForm() {
     if (!this.IsCalculated) return this.toastr.warningMessage(ExceptionConstant.MUST_CALCUCATE_FIRST);
-    if (this.Summary.TotalCommisionAmount > this.maxAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Max Allocated Amount");
-    if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
+    // if (this.Summary.TotalCommisionAmount > this.maxAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Max Allocated Amount");
+    // if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
 
+    if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
+    if (this.totalExpenseAmt > this.maxAllocRefundAmt) return this.toastr.warningMessage("Total Expense (" + formatNumber(this.totalExpenseAmt, 'en-US', '.2') + ") Exceeded Total Max Refund Amount (" + formatNumber(this.maxAllocRefundAmt, 'en-US', '.2') + ")");
+    
     let listAppCommissionHAddObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
     let listAppCommissionHEditObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
     for (let i = 0; i < this.ListAppCommHObj.length; i++) {
