@@ -43,11 +43,8 @@
                   <label translate>Total Commision Amount</label>
                 </div>
                 <div class="col-md-4" style="text-align: right;">
-                  <label class ="adInsLabel" *ngIf="Summary.TotalCommisionAmount <= maxAllocAmt">
-                    {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
-                  <label *ngIf="Summary.TotalCommisionAmount > maxAllocAmt"
-                    style="color: red;">
-                    {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
+                  <label>
+                    {{TotalInput | number:'.2':'en-US'}} </label>
                 </div>
               </div>
               <div class="row">
@@ -64,6 +61,18 @@
                 </div>
                 <div class="col-md-4" style="text-align: right;">
                   <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Total Expense</label>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                  <label class ="adInsLabel" *ngIf="totalExpenseAmt <= maxAllocAmt">
+                    {{totalExpenseAmt | number:'.2':'en-US'}} </label>
+                  <label *ngIf="totalExpenseAmt > maxAllocAmt"
+                    style="color: red;">
+                    {{totalExpenseAmt | number:'.2':'en-US'}} </label>
                 </div>
               </div>
               <div class="row">
