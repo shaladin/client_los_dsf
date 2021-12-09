@@ -491,6 +491,15 @@
                   <div class="col-md-4">
                     <mat-checkbox formControlName="SelfOwner" (change)="SelfOwnerChange($event)"></mat-checkbox>
                   </div>
+                  <label class="col-md-2" translate>Owner Type</label>
+                  <div class="col-md-4">
+                    <mat-radio-group formControlName="MrOwnerTypeCode" (change)="OwnerTypeChange($event.value)">
+                      <mat-radio-button class="custom-control custom-radio display-inline-block"
+                        *ngFor="let item of OwnerTypeObj" [value]="item.Key">
+                        {{item.Value}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2 adins-required-label" translate>Owner Name </label>
@@ -534,11 +543,15 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2" translate>Owner Profession</label>
-                  <div class="col-md-4">
+                  <div class="col-md-4" *ngIf="AssetDataForm.controls.MrOwnerTypeCode.value == 'PERSONAL'">
                     <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
                       [lookupInput]="InputLookupProfessionObj" [parentForm]="AssetDataForm"
                       [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
                     </lib-uclookupgeneric>
+                  </div>
+                  <div class="col-md-4" *ngIf="AssetDataForm.controls.MrOwnerTypeCode.value == 'COMPANY' && UcDDLOwnerProfession.isReady">
+                    <lib-ucdropdownlist [dropdownListObj]="UcDDLOwnerProfession" [genericList]="OwnerProfessionObj"
+                    [parentForm]="AssetDataForm" [enjiForm]="enjiForm" [identifier]="'OwnerProfessionCode'"></lib-ucdropdownlist>
                   </div>
                   <label class="col-md-2  adInsLabel" translate>Owner Mobile Phone No </label>
                   <div class="col-md-4">

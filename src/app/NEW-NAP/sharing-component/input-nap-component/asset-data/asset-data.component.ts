@@ -59,7 +59,7 @@ export class AssetDataComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Input() BizTemplateCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter(); 
   BranchManagerName: string = "-";
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
@@ -92,6 +92,7 @@ export class AssetDataComponent implements OnInit {
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
+  UcDDLOwnerProfession: UcDropdownListObj = new UcDropdownListObj();
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -170,6 +171,7 @@ export class AssetDataComponent implements OnInit {
     LocationCity: ['', Validators.maxLength(50)],
     LocationZipcode: ['', Validators.maxLength(50)],
     OwnerProfessionCode: [''],
+    MrOwnerTypeCode: [''],
 
     LocationAddrType: [''],
     DelivAddrType: [''],
@@ -324,6 +326,7 @@ export class AssetDataComponent implements OnInit {
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   LastRequestedDate: any = "";
+  OwnerTypeObj: Array<KeyValueObj>;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
@@ -1086,6 +1089,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.AssetDataForm.controls.OwnerIdNo.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AssetDataForm.controls.MrOwnerRelationshipCode.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AssetDataForm.controls.OwnerProfessionCode.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.MrOwnerTypeCode = this.AssetDataForm.controls.MrOwnerTypeCode.value;
 
     if (this.BizTemplateCode !== "OPL") {
       for (let i = 0; i < this.items.length; i++) {
@@ -1893,6 +1897,7 @@ export class AssetDataComponent implements OnInit {
     await this.bindUserOwnerRelationshipObj();
     await this.bindAsseConditionObj();
     await this.bindDownPaymentTypeObj();
+    await this.bindOwnerTypeObj();
   }
 
   setValidatorBpkb() {
@@ -2804,5 +2809,59 @@ export class AssetDataComponent implements OnInit {
         this.IsSvcExist = true;
       }
     }
+  }
+
+  async bindOwnerTypeObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.OwnerTypeObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({
+          MrOwnerTypeCode : this.CustType
+        });
+      }
+    );
+  }
+
+  OwnerProfessionObj: any;
+  OwnerTypeChange(OwnerType: string){
+    if(OwnerType == CommonConstant.CustTypePersonal){
+      this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
+      this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
+      this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
+      this.InputLookupProfessionObj.isRequired = false;
+      this.InputLookupProfessionObj.isReady = true;
+      this.InputLookupProfessionObj.nameSelect = "";
+      this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+    }else{
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
+      this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+        (response) => {    
+          this.UcDDLOwnerProfession = new UcDropdownListObj;
+          this.UcDDLOwnerProfession.ddlType = "one";
+          this.UcDDLOwnerProfession.isCustomList = true;
+          this.UcDDLOwnerProfession.isSelectOutput = true;
+          
+          this.OwnerProfessionObj = response[CommonConstant.ReturnObj];
+
+          this.UcDDLOwnerProfession.isReady = true;
+        }
+      );
+    }
+  }
+
+  async bindOwnerProfessionObj() {
+    if (this.CustType == CommonConstant.CustTypePersonal) {
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    }
+    else {
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+    }
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.UserRelationObj = response[CommonConstant.ReturnObj];
+        this.OwnerRelationObj = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 }
