@@ -106,6 +106,9 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
     };
     this.http.post<AppFinDataObj>(URLConstantX.GetAppFinDataWithRuleByAppIdX, obj).subscribe(
       (response) => {
+        if(response.CommissionAllocatedAmt>0){
+          response.CommissionAllocatedAmt = 0;
+        }
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
         let totalListResultRefundIncomeInfoAmount = 0;
