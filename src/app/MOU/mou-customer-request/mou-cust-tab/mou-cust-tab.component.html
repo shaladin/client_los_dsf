@@ -82,6 +82,9 @@
           <app-mou-cust-personal-financial [MouCustPersonalFinDataObj]="custDataPersonalObj.MouCustPersonalFinDataObj"
             [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'financialData'" [isMarried]="isMarried">
           </app-mou-cust-personal-financial>
+          <app-mou-cust-attr-content-component [title]="'Financial Attribute Information'" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
+           [identifier]="'AttrList'" [MouCustId]="MouCustId" [AttrGroups]="AttrGroupsPersonal">
+          </app-mou-cust-attr-content-component>
           <app-mou-cust-bank-acc (callbackSubmit)="getMouCustBankAcc($event)" [listBankAcc]="listMouCustBankAcc">
           </app-mou-cust-bank-acc>
           <app-mou-cust-job-data [custModelCode]="defCustModelCode"
@@ -159,6 +162,9 @@
           <app-mou-cust-company-financial [MouCustCompanyFinDataObj]="custDataCompanyObj.MouCustCompanyFinDataObj"
             [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [identifier]="'financialDataCompany'">
           </app-mou-cust-company-financial>
+          <app-mou-cust-attr-content-component [title]="'Financial Attribute Information'" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
+           [identifier]="'AttrList'" [MouCustId]="MouCustId" [AttrGroups]="AttrGroupsCoy">
+          </app-mou-cust-attr-content-component>
           <app-mou-cust-bank-acc (callbackSubmit)="getMouCustBankAccCompany($event)"
             [listBankAcc]="listMouCustBankAccCompany"></app-mou-cust-bank-acc>
           <app-mou-cust-legal-doc (callbackSubmit)="getMouCustLegalDoc($event)" [listLegalDoc]="listLegalDoc" [ListLegalDocCantDuplicate] ="ListLegalDocCantDuplicate">

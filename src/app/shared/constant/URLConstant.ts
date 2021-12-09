@@ -784,6 +784,9 @@ export class URLConstant {
   public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/v1" + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
   public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/v1" + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
 
+  //MOU CUST FIN DATA ATTR
+  public static GetListMouCustFinDataAttrContentByMouCustIdAndListAttrGroup = environment.losUrl + "/v1" + "/MouCustFinDataAttrContent/GetListMouCustFinDataAttrContentByMouCustIdAndListAttrGroup";
+
   // REF COUNTRY
   public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/v1" + "/RefCountry/GetRefCountryByCountryCode";
 

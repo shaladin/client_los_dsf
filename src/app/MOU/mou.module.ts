@@ -109,6 +109,7 @@ import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
 import { MouCustMgmntShrholderPublicComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
+import { MouCustAttrContentComponentComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-attr-content-component/mou-cust-attr-content-component.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -244,7 +245,8 @@ export const customCurrencyMaskConfig = {
     MouUnfreezeDetailComponent,
     MouUnfreezeInquiryComponent,
     MouUnfreezeViewComponent,
-    MouCancelDetailComponent
+    MouCancelDetailComponent,
+    MouCustAttrContentComponentComponent
   ],
   exports: [],
   providers: [NGXToastrService],

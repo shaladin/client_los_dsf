@@ -7,6 +7,7 @@ import { MouCustGrpObj } from "./mou-cust-grp-obj.model";
 import { MouCustCompanyLegalDocObj } from "./mou-cust-company-legal-doc-obj.model";
 import { MouCustBankAccObj } from "./mou-cust-bank-acc-obj.model";
 import { MouCustPersonalContactPersonObj } from "./mou-cust-personal-contact-person-obj.model";
+import { MouCustCompanyFinDataAttrObj } from "./mou-cust-fin-data-attr-content-obj.model";
 
 
 
@@ -21,6 +22,8 @@ export class MouCustCompanyDataObj {
     MouCustBankAccObjs: Array<MouCustBankAccObj>;
     MouCustCompanyLegalDocObjs: Array<MouCustCompanyLegalDocObj>;
     MouCustGrpObjs: Array<MouCustGrpObj>;
+    MouCustFinDataAttrObjs: Array<MouCustCompanyFinDataAttrObj>;
+    AttrGroups: Array<string>;
     RowVersion: string;
 
     constructor() { 

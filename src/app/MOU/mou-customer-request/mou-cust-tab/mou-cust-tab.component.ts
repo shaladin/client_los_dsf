@@ -39,6 +39,8 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { MouCustPersonalFinDataObj } from 'app/shared/model/mou-cust-personal-fin-data-obj.model';
 import { CustAddrObj } from 'app/shared/model/cust-addr-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { MouCustCompanyFinDataAttrObj } from 'app/shared/model/mou-cust-fin-data-attr-content-obj.model';
+
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -154,6 +156,20 @@ export class MouCustTabComponent implements OnInit {
   inputAddrResidenceObj: InputAddressObj = new InputAddressObj();
   inputAddressObjForMailing: InputAddressObj = new InputAddressObj();
   inputAddrMailingCompanyObj: InputAddressObj = new InputAddressObj();
+
+  AttrGroupsPersonal: Array<string> = [
+    CommonConstant.AttrGroupCustPersonalFinData,
+    CommonConstant.AttrGroupCustPersonalFinDataIncome,
+    CommonConstant.AttrGroupCustPersonalFinDataExpense,
+    CommonConstant.AttrGroupCustPersonalFinDataOther
+  ];
+
+  AttrGroupsCoy: Array<string> = [
+    CommonConstant.AttrGroupCustCompanyFinData,
+    CommonConstant.AttrGroupCustCompanyFinDataIncome,
+    CommonConstant.AttrGroupCustCompanyFinDataExpense,
+    CommonConstant.AttrGroupCustCompanyFinDataOther
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -376,6 +392,7 @@ export class MouCustTabComponent implements OnInit {
     this.setMouCustPersonalJobData();
     this.setMouCustSocmedObj();
     this.setMouCustGrpObj();
+    this.setMouCustPersonalFinDataAttr();
   }
 
   async checkJobPosition() {
@@ -401,6 +418,7 @@ export class MouCustTabComponent implements OnInit {
     this.custDataCompanyObj.MouCustBankAccObjs = this.listMouCustBankAccCompany;
     this.custDataCompanyObj.MouCustCompanyLegalDocObjs = this.listLegalDoc;
     this.setMouCustGrpObj();
+    this.setMouCustCompanyFinDataAttr();
   }
 
   isExpiredBirthDt: boolean = false;
@@ -685,10 +703,35 @@ export class MouCustTabComponent implements OnInit {
     this.custDataPersonalObj.MouCustPersonalFinDataObj.MonthlyInstallmentAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyInstallmentAmt.value;
     this.custDataPersonalObj.MouCustPersonalFinDataObj.IsJoinIncome = this.CustDataForm.controls["financialData"]["controls"].IsJoinIncome.value;
     this.custDataPersonalObj.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].SpouseMonthlyIncomeAmt.value;
+    this.custDataPersonalObj.MouCustPersonalFinDataObj.OtherIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].OtherIncomeAmt.value;
+    this.custDataPersonalObj.MouCustPersonalFinDataObj.NettIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].NettMonthlyIncome.value;
+    this.custDataPersonalObj.MouCustPersonalFinDataObj.TotalIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].TotalMonthlyIncome.value;
     if (this.MouCustFinDataId != 0) {
       this.custDataPersonalObj.MouCustPersonalFinDataObj.MouCustPersonalFinDataId = this.MouCustFinDataId;
       this.custDataPersonalObj.MouCustPersonalFinDataObj.MouCustPersonalId = this.MouCustPersonalId;
     }
+  }
+
+  setMouCustPersonalFinDataAttr(){
+    var formValue = this.CustDataForm.controls['AttrList'].value;
+    let CustAttrRequest = new Array<MouCustCompanyFinDataAttrObj>();
+     
+    if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
+      for (const key in formValue) {
+        if(formValue[key]["AttrValue"]!=null ) { 
+        let custFinDataAttr = {
+          MouCustId: this.MouCustId,
+          RefAttrCode: formValue[key]["AttrCode"],
+          AttrValue: formValue[key]["AttrValue"],
+          AttrGroup: formValue[key]["AttrGroup"]
+        };
+        CustAttrRequest.push(custFinDataAttr);}
+
+      }  
+    }
+
+    this.custDataPersonalObj.MouCustFinDataAttrObjs = CustAttrRequest;
+    this.custDataPersonalObj.AttrGroups = this.AttrGroupsPersonal;
   }
 
   setMouCustCompanyFinData() {
@@ -722,6 +765,28 @@ export class MouCustTabComponent implements OnInit {
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustId = this.MouCustCompanyId;
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyId = this.MouCustCompanyId;
     }
+  }
+
+  setMouCustCompanyFinDataAttr(){
+    var formValue = this.CustDataCompanyForm.controls['AttrList'].value;
+    let CustAttrRequest = new Array<MouCustCompanyFinDataAttrObj>();
+     
+    if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
+      for (const key in formValue) {
+        if(formValue[key]["AttrValue"]!=null ) { 
+        let custFinDataAttr = {
+          MouCustId: this.MouCustId,
+          RefAttrCode: formValue[key]["AttrCode"],
+          AttrValue: formValue[key]["AttrValue"],
+          AttrGroup: formValue[key]["AttrGroup"]
+        };
+        CustAttrRequest.push(custFinDataAttr);}
+
+      }  
+    }
+
+    this.custDataCompanyObj.MouCustFinDataAttrObjs = CustAttrRequest;
+    this.custDataCompanyObj.AttrGroups = this.AttrGroupsCoy;
   }
 
   setMouCustPersonalJobData() {
