@@ -268,7 +268,7 @@ export class CustMainDataXComponent implements OnInit {
     this.inputAddressObj.showAllPhn = false;
     this.inputAddressObj.showFax = false;
     this.inputAddressObj.showOwnership = true;
-    this.inputAddressObj.requiredOwnership = true;
+    this.inputAddressObj.requiredOwnership = false;
     this.isUcAddressReady = true;
 
     this.http.post(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GS_MAX_DAYS_CUST_THIRD_PARTY_CHECK }).toPromise().then(

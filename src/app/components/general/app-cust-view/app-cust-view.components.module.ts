@@ -11,6 +11,8 @@ import { ViewAppCustDetailComponent } from './view-app-cust-detail/view-app-cust
 import { GuarantorCompletionComponent } from './view-guarantor/view-guarantor-completion.component';
 import { GuarantorComponent } from './view-guarantor/view-guarantor.component';
 import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
+import { ViewAppCustDataCompanyXComponent } from 'app/impl/components/general/app-cust-view/view-app-cust-data-company/view-app-cust-data-company-x.component';
+import { ViewAppCustDataCompletionCompanyXComponent } from 'app/impl/components/general/app-cust-view/view-app-cust-data-company/view-app-cust-data-completion-company-x.component';
 
 @NgModule({
     imports: [
@@ -22,15 +24,18 @@ import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.modu
     ],
     declarations: [
         ViewAppCustDataCompanyComponent,
+        ViewAppCustDataCompanyXComponent,
         ViewAppCustDataPersonalComponent,
         ViewAppCustDataCompletionPersonalComponent,
         ViewAppCustDataCompletionCompanyComponent,
+        ViewAppCustDataCompletionCompanyXComponent,
         ViewAppCustDetailComponent,
         GuarantorComponent,
         GuarantorCompletionComponent,
     ],
     exports: [
         ViewAppCustDataCompanyComponent,
+        ViewAppCustDataCompanyXComponent,
         ViewAppCustDataPersonalComponent,
         GuarantorComponent,
     ],

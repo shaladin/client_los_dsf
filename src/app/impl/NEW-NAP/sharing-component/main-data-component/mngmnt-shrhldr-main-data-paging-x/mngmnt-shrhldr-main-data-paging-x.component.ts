@@ -41,7 +41,7 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
 
   async ngOnInit() {
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridMgmntShrholderMainData.json";
+    this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridMgmntShrholderMainDataX.json";
     this.custMainDataMode = CommonConstant.CustMainDataModeMgmntShrholder;
     await this.loadMgmntShrholderListData();
     await this.getCustMainData();
@@ -156,7 +156,7 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
     await this.http.post(URLConstant.GetAppCustCompanyMainDataByAppId, { Id: this.appId }).toPromise().then(
       async (response: AppCustCompanyObj) => {
         this.ParentAppCustCompanyId = response.AppCustCompanyId;
-        await this.http.post(URLConstant.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).toPromise().then(
+        await this.http.post(URLConstantX.GetListManagementShareholderForListPagingByParentAppCustCompanyId, { Id: response.AppCustCompanyId }).toPromise().then(
           (response2: GenericListObj) => {
             this.inputGridObj.resultData = {
               Data: ""
