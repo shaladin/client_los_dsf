@@ -35,7 +35,7 @@ export class AppCollateralRegistrationObj {
   Notes: string;
   OwnerProfessionCode: string;
   RowVersion: string;
-
+  MrOwnerTypeCode: string;
 
   constructor() {
     this.Id = 0;
@@ -65,5 +65,6 @@ export class AppCollateralRegistrationObj {
     this.Notes = "";
     this.OwnerProfessionCode = "";
     this.RowVersion = "";
+    this.MrOwnerTypeCode = "";
   }
 }
