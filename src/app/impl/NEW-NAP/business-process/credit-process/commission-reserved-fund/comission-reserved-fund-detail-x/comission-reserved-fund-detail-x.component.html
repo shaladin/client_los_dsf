@@ -63,8 +63,8 @@
                     <label class="label-control" translate> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
                   <div class="col-md-6 form-inline-right">
-                    <label class="label-control" *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
-                    <label class="label-control" *ngIf="item.RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                    <label class="label-control" *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number : '1.2-2'}} </label>
+                    <label class="label-control" *ngIf="item.RefundAmount < 0"> {{0 | number : '1.2-2'}} </label>
                   </div>
                 </div>
               </div>
@@ -74,8 +74,8 @@
                 </div>
                 <div class="col-md-6 form-inline-right">
                   <label class="label-control" *ngIf="viewIncomeInfoObj.MaxAllocatedAmount >= 0">
-                    {{viewIncomeInfoObj.MaxAllocatedAmount | number:'.2':'en-US'}} </label>
-                  <label class="label-control" *ngIf="viewIncomeInfoObj.MaxAllocatedAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                    {{viewIncomeInfoObj.MaxAllocatedAmount | number : '1.2-2'}} </label>
+                  <label class="label-control" *ngIf="viewIncomeInfoObj.MaxAllocatedAmount < 0"> {{0 | number : '1.2-2'}} </label>
                 </div>
               </div>    
             </div>
@@ -90,8 +90,8 @@
                     <label class="label-control" translate> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
                   <div class="col-md-6 form-inline-right">
-                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount >= 0"> {{DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount | number:'.2':'en-US'}} </label>
-                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount < 0"> {{0 | number:'.2':'en-US'}} </label>
+                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount >= 0"> {{DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount | number : '1.2-2'}} </label>
+                    <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount < 0"> {{0 | number : '1.2-2'}} </label>
                   </div>
                 </div>
               </div> -->
@@ -101,9 +101,9 @@
                 </div>
                 <div class="col-md-6 form-inline-right">
                   <label class="label-control" *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount >= 0">
-                    {{viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} </label>
+                    {{viewIncomeInfoObj.RemainingAllocatedAmount | number : '1.2-2'}} </label>
                   <label class="label-control" *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount < 0" style="color: red;"> (
-                    {{-viewIncomeInfoObj.RemainingAllocatedAmount | number:'.2':'en-US'}} )</label>
+                    {{-viewIncomeInfoObj.RemainingAllocatedAmount | number : '1.2-2'}} )</label>
                 </div>
               </div>    
             </div>
