@@ -1,0 +1,31 @@
+<lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
+</lib-ucSubsection>
+<div id="CustAddress">
+    <table class="table table-responsive-md text-center table-hover">
+        <thead>
+        <tr class="table-header">
+            <th class="text-left"><span class="thead-header" name='addrType' translate>Address Type</span> </th>
+            <th class="text-left"><span class="thead-header" name='fullAddr' translate>Address</span></th>
+            <th class="text-left"><span class="thead-header" name='houseOwnership' translate>Building Ownership</span></th>
+            <th class="text-center"><span class="thead-header" name='phoneNo' translate>Phone (Fix Line) 1</span></th>
+            <th class="text-center"><span class="thead-header" name='phoneNo' translate>Phone (Fix Line) 2</span></th>
+        </tr>
+        </thead>
+        <tbody *ngIf = "mouCustAddrForViewObjs?.length == 0">
+            <tr>
+                <td colspan="100%">No Data Available</td>
+            </tr>
+        </tbody>
+        <tbody>
+        <ng-container *ngFor="let item of mouCustAddrForViewObjs">
+            <tr>
+              <td class="text-left" >{{item.MrCustAddrTypeCode ? item.MrCustAddrTypeCode : "-"}}</td>
+              <td class="text-left" >{{item.FullAddr ? item.FullAddr : "-"}}</td>
+              <td class="text-left" >{{item.MrHouseOwnershipCode ? item.MrHouseOwnershipCode : "-"}}</td>
+              <td class="text-center">{{item.PhoneNo ? item.PhoneNo : "-"}}</td>
+              <td class="text-center">{{item.PhoneNo2 ? item.PhoneNo2 : "-"}}</td>
+            </tr>
+        </ng-container>
+        </tbody>
+    </table>
+</div>

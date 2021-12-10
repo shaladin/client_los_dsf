@@ -1,0 +1,33 @@
+<lib-ucSubsection [id]="'custSocmedId'" [title]="'Social Media Id'" [panel]="'custSocmed'">
+</lib-ucSubsection>
+<div id="custSocmed">
+  <div>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span translate class="thead-header">No</span></th>
+          <th><span translate class="thead-header">Social Media</span></th>
+          <th><span translate class="thead-header">Social Media Id</span></th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "MouCustSocmedObjs.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "MouCustSocmedObjs.length > 0">
+        <tr *ngFor="let item of MouCustSocmedObjs;let i = index">
+          <td class="text-center">
+            {{i + 1}}
+          </td>
+          <td class="text-center">
+              {{item.MrSocmedName}}
+          </td>
+          <td>
+             {{item.SocmedId}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

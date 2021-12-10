@@ -1,0 +1,68 @@
+<lib-ucSubsection [id]="'custCompanyMainDataId'" [title]="'Customer Company Main Data'" [panel]="'CustCompanyMainData'">
+</lib-ucSubsection>
+<div id="CustCompanyMainData">
+  <div class="form-group row">
+    <label class="col-md-2" for="custName" translate>Customer Name</label>
+    <div class="col-md-4">
+      {{ custDataCompanyObj.MouCustObj.CustName }}
+    </div>
+    <label class="col-md-2" for="custModel" translate>Customer Model</label>
+    <div class="col-md-4">
+      {{ CustModel }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="companyBrandName" translate>Company Brand Name</label>
+    <div class="col-md-4">
+      {{ custDataCompanyObj.MouCustCompanyObj.CompanyBrandName }}
+    </div>
+    <label class="col-md-2" translate>Industry Type</label>
+    <div class="col-md-4">
+      {{ IndustryTypeName }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="companyType" translate>Company Type</label>
+    <div class="col-md-4">
+      {{ CompType }}
+    </div>
+    <label class="col-md-2" for="motherMaidenName" translate>Number of Employee</label>
+    <div class="col-md-4">
+      {{ custDataCompanyObj.MouCustCompanyObj.NumOfEmp }}  
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="npwp" translate>NPWP</label>
+    <div class="col-md-4">
+      {{ custDataCompanyObj.MouCustObj.TaxIdNo }} 
+    </div>
+    <label class="col-md-2" for="affiliation" translate>Affiliation MF</label>
+    <div class="col-md-4">
+      {{ custDataCompanyObj.MouCustCompanyObj.IsAffiliated == false? "No" : "Yes" }}  
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
+    <div class="col-md-4">
+      {{ custDataCompanyObj.MouCustCompanyObj.EstablishmentDt | date:'yyyy-MM-dd' }}  
+    </div>
+    <label class="col-md-2" for="vip" translate>VIP</label>
+    <div class="col-md-4">
+      {{ custDataCompanyObj.MouCustObj.IsVip == false? "No" : "Yes" }}  
+    </div>
+  </div>
+</div>
+<!-- Mou Customer Address -->
+<app-mou-view-customer-addr [MouCustAddrLegalObj]="custDataCompanyObj.MouCustAddrLegalObj" [MouCustAddrMailingObj]="custDataCompanyObj.MouCustAddrMailingObj" [MouCustType]="custDataCompanyObj.MouCustObj.MrCustTypeCode"></app-mou-view-customer-addr>
+<!-- Mou Customer Mngmnt / Shareholder  -->
+<app-mou-view-customer-mgmnt-shrholder [listShareholder]="listShareholder"></app-mou-view-customer-mgmnt-shrholder>
+<!-- Mou Customer Contact Info -->
+<app-mou-view-customer-comp-contact-info [listContactPersonCompany]="listContactPersonCompany"></app-mou-view-customer-comp-contact-info>
+<!-- Mou Customer Comp Fin Data -->
+<app-mou-view-customer-comp-fin-data [MouCustCompanyFinDataObj]="custDataCompanyObj.MouCustCompanyFinDataObj"></app-mou-view-customer-comp-fin-data>
+<!-- Mou Customer Bank Account -->
+<app-mou-view-customer-bank-account [listBankAcc]="listMouCustBankAcc" ></app-mou-view-customer-bank-account>
+<!-- Mou Customer Lgl Doc -->
+<app-mou-view-customer-comp-legal-doc [listLegalDoc]="listLegalDoc"></app-mou-view-customer-comp-legal-doc>
+<!-- Mou Customer Grp Mbr -->
+<app-mou-view-customer-grp-mbr [MouCustGrpObjs]="custDataCompanyObj.MouCustGrpObjs" [MrCustTypeCode]="custDataCompanyObj.MouCustObj.MrCustTypeCode"></app-mou-view-customer-grp-mbr>

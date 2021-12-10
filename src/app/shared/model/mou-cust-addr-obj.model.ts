@@ -21,6 +21,8 @@ export class MouCustAddrObj {
     Fax: string;
     FullAddr: string;
     RowVersion: string;
+    PhoneNo: string;
+    PhoneNo2: string;
 
     constructor() { this.MouCustAddrId = 0; }
 }
