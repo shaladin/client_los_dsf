@@ -78,8 +78,8 @@
             <label class="col-md-2 adInsLabel" translate>With Holding Tax Amount </label>
             <div class="col-md-4" style="text-align: right;">
               <label class="adInsLabel" currencyMask *ngIf="item.controls.HoldingTaxWithPenalty.value != ''">
-                {{item.controls.HoldingTaxWithPenalty.value | number:'.2':'en-US'}} </label>
-              <label class="adInsLabel" *ngIf="item.controls.HoldingTaxWithPenalty.value == ''"> {{ 0 | number:'.2':'en-US' }}
+                {{item.controls.HoldingTaxWithPenalty.value | number : '1.2-2'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.HoldingTaxWithPenalty.value == ''"> {{ 0 | number : '1.2-2' }}
               </label>
             </div>
           </div>
@@ -91,16 +91,16 @@
             </div>
             <div class="col-md-4" style="text-align: right;">
               <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
-                {{item.controls.TotalCommisionAmount.value | number:'.2':'en-US'}} </label>
-              <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+                {{item.controls.TotalCommisionAmount.value | number : '1.2-2'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> {{ 0 | number : '1.2-2' }} </label>
             </div>
 
             <!-- VAT Amount -->
             <label class="col-md-2 adInsLabel" translate>VAT Amount </label>
             <div class="col-md-4" style="text-align: right;">
               <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value != ''">
-                {{item.controls.TotalVATAmount.value | number:'.2':'en-US'}} </label>
-              <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+                {{item.controls.TotalVATAmount.value | number : '1.2-2'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> {{ 0 | number : '1.2-2' }} </label>
             </div>
           </div>
           

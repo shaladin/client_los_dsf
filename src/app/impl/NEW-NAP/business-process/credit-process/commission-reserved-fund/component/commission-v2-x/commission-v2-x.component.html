@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-4" style="text-align: right;">
                   <label>
-                    {{TotalInput | number:'.2':'en-US'}} </label>
+                    {{TotalInput | number : '1.2-2'}} </label>
                 </div>
               </div>
               <div class="row">
@@ -52,7 +52,7 @@
                   <label translate>Total TAX</label>
                 </div>
                 <div class="col-md-4" style="text-align: right;">
-                  <label>{{Summary.TotalTaxAmmount | number:'.2':'en-US'}}</label>
+                  <label>{{Summary.TotalTaxAmmount | number : '1.2-2'}}</label>
                 </div>
               </div>
               <div class="row">
@@ -60,7 +60,7 @@
                   <label translate>Total VAT</label>
                 </div>
                 <div class="col-md-4" style="text-align: right;">
-                  <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
+                  <label>{{Summary.TotalVATAmount | number : '1.2-2'}}</label>
                 </div>
               </div>
               <div class="row">
@@ -69,10 +69,10 @@
                 </div>
                 <div class="col-md-4" style="text-align: right;">
                   <label class ="adInsLabel" *ngIf="totalExpenseAmt <= maxAllocAmt">
-                    {{totalExpenseAmt | number:'.2':'en-US'}} </label>
+                    {{totalExpenseAmt | number : '1.2-2'}} </label>
                   <label *ngIf="totalExpenseAmt > maxAllocAmt"
                     style="color: red;">
-                    {{totalExpenseAmt | number:'.2':'en-US'}} </label>
+                    {{totalExpenseAmt | number : '1.2-2'}} </label>
                 </div>
               </div>
               <div class="row">
