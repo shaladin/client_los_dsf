@@ -549,7 +549,7 @@
                       [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
                     </lib-uclookupgeneric>
                   </div>
-                  <div class="col-md-4" *ngIf="AssetDataForm.controls.MrOwnerTypeCode.value == 'COMPANY' && UcDDLOwnerProfession.isReady">
+                  <div class="col-md-4" *ngIf="AssetDataForm.controls.MrOwnerTypeCode.value == 'COMPANY'">
                     <lib-ucdropdownlist [dropdownListObj]="UcDDLOwnerProfession" [genericList]="OwnerProfessionObj"
                     [parentForm]="AssetDataForm" [enjiForm]="enjiForm" [identifier]="'OwnerProfessionCode'"></lib-ucdropdownlist>
                   </div>

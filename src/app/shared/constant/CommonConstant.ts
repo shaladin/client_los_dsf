@@ -1103,4 +1103,6 @@ export class CommonConstant {
     "CMPLTN": CommonConstant.AppStepCustCmpltn,
     "AEX": CommonConstant.AppStepAssetExpense
   }
+
+  public static CompanyTypePT = "PT";
 }
