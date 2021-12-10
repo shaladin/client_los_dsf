@@ -129,6 +129,31 @@
             [identifier]="'companyMainData'" [MouCustId]="MouCustId"></app-mou-cust-company-main>
           <lib-ucaddress [addressObj]="inputAddrLegalCompanyObj" [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'"
             [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
+          <lib-ucSubsection [id]="'businessAddrId'" [title]="'Business Address'" [panel]="'businessAddr'">
+          </lib-ucSubsection>
+          <div id="businessAddr">
+            <div class="form-group row">
+              <label class="col-md-2" translate>Copy Address From</label>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <select class="form-control" formControlName="CopyFromBusiness" [(ngModel)]="copyFromBusinessCompany">
+                    <option *ngFor="let item of copyToBusinessTypeObj" [value]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                  <div class="input-group-append">
+                    <span class="input-group-btn">
+                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToBusinessCompany()">
+                        <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <lib-ucaddress [addressObj]="inputAddrBusinessCompanyObj" [enjiForm]="enjiFormCompany" [identifier]="'businessAddrCompany'"
+              [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
+          </div>
           <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'" [panel]="'mailingAddrCompany'">
           </lib-ucSubsection>
           <div id="mailingAddrCompany">

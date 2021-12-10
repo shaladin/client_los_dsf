@@ -16,6 +16,7 @@ export class MouCustCompanyDataObj {
     MouCustCompanyObj: MouCustCompanyObj;
     MouCustAddrLegalObj: MouCustAddrObj;
     MouCustAddrMailingObj: MouCustAddrObj;
+    MouCustAddrBusinessObj: MouCustAddrObj;
     MouCustCompanyMgmntShrholderObjs: Array<MouCustCompanyMgmntShrholderObj>;
     MouCustCompanyContactPersonObjs: Array<MouCustPersonalContactPersonObj>;
     MouCustCompanyFinDataObj: MouCustCompanyFinDataObj;
@@ -31,6 +32,7 @@ export class MouCustCompanyDataObj {
         this.MouCustCompanyObj = new MouCustCompanyObj();
         this.MouCustAddrLegalObj = new MouCustAddrObj();
         this.MouCustAddrMailingObj = new MouCustAddrObj();
+        this.MouCustAddrBusinessObj = new MouCustAddrObj();
         this.MouCustCompanyFinDataObj = new MouCustCompanyFinDataObj();
         this.RowVersion = ""; 
     }

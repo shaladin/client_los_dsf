@@ -72,6 +72,7 @@ export class MouCustTabComponent implements OnInit {
   });
 
   CustDataCompanyForm = this.fb.group({
+    CopyFromBusiness: [''],
     CopyFromMailing: ['']
   });
 
@@ -97,8 +98,11 @@ export class MouCustTabComponent implements OnInit {
   inputFieldMailingObj: InputFieldObj;
   copyFromMailing: string;
   mailingAddrCompanyObj: AddrObj;
+  businessAddrCompanyObj: AddrObj;
   inputFieldMailingCompanyObj: InputFieldObj;
+  inputFieldBusinessCompanyObj: InputFieldObj;
   copyFromMailingCompany: string;
+  copyFromBusinessCompany: string;
   MouCustPersonalId: number = 0;
   MouCustAddrId: number;
   MouCustFinDataId: number = 0;
@@ -106,6 +110,7 @@ export class MouCustTabComponent implements OnInit {
   MouCustAddrLegalId: number = 0;
   MouCustAddrResidenceId: number = 0;
   MouCustAddrMailingId: number = 0;
+  MouCustAddrBusinessId: number = 0;
   MouCustCompanyId: number = 0;
   listMouCustPersonalContactInformation: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();
   returnMouObj: MouCustObj;
@@ -136,11 +141,22 @@ export class MouCustTabComponent implements OnInit {
     }
   ];
 
+  copyToBusinessTypeObj: Array<KeyValueObj> = [
+    {
+      Key: "LEGAL",
+      Value: "Legal"
+    },
+  ];
+
   copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
-    }
+    },
+    {
+      Key: "BIZ",
+      Value: "Business"
+    },
   ];
 
   defCustModelCode: string;
@@ -156,6 +172,7 @@ export class MouCustTabComponent implements OnInit {
   inputAddrResidenceObj: InputAddressObj = new InputAddressObj();
   inputAddressObjForMailing: InputAddressObj = new InputAddressObj();
   inputAddrMailingCompanyObj: InputAddressObj = new InputAddressObj();
+  inputAddrBusinessCompanyObj: InputAddressObj = new InputAddressObj();
 
   AttrGroupsPersonal: Array<string> = [
     CommonConstant.AttrGroupCustPersonalFinData,
@@ -411,6 +428,7 @@ export class MouCustTabComponent implements OnInit {
     this.setMouCust();
     this.setMouCustCompany();
     this.setMouCustAddrLegal();
+    this.setMouCustAddrBusiness();
     this.setMouCustAddrMailing();
     this.custDataCompanyObj.MouCustCompanyMgmntShrholderObjs = this.listShareholder;
     this.custDataCompanyObj.MouCustCompanyContactPersonObjs = this.listContactPersonCompany;
@@ -567,6 +585,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj.MouCustAddrLegalObj.PhnExt2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt2.value;
       this.custDataPersonalObj.MouCustAddrLegalObj.FaxArea = this.CustDataForm.controls["legalAddr"]["controls"].FaxArea.value;
       this.custDataPersonalObj.MouCustAddrLegalObj.Fax = this.CustDataForm.controls["legalAddr"]["controls"].Fax.value;
+      this.custDataPersonalObj.MouCustAddrLegalObj.MrHouseOwnershipCode = this.CustDataForm.controls["legalAddr"]["controls"].MrHouseOwnershipCode.value;
       this.custDataPersonalObj.MouCustAddrLegalObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
       this.custDataPersonalObj.MouCustAddrLegalObj.MouCustId = this.MouCustId;
       if (this.MouCustAddrLegalId != 0) {
@@ -591,6 +610,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataCompanyObj.MouCustAddrLegalObj.PhnExt2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt2.value;
       this.custDataCompanyObj.MouCustAddrLegalObj.FaxArea = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].FaxArea.value;
       this.custDataCompanyObj.MouCustAddrLegalObj.Fax = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Fax.value;
+      this.custDataCompanyObj.MouCustAddrLegalObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].MrHouseOwnershipCode.value;
       this.custDataCompanyObj.MouCustAddrLegalObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
       if (this.MouCustAddrLegalId != 0) {
         this.custDataCompanyObj.MouCustAddrLegalObj.MouCustAddrId = this.MouCustAddrLegalId;
@@ -641,6 +661,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj.MouCustAddrMailingObj.PhnExt2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt2.value;
       this.custDataPersonalObj.MouCustAddrMailingObj.FaxArea = this.CustDataForm.controls["mailingAddr"]["controls"].FaxArea.value;
       this.custDataPersonalObj.MouCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
+      this.custDataPersonalObj.MouCustAddrMailingObj.MrHouseOwnershipCode = this.CustDataForm.controls["mailingAddr"]["controls"].MrHouseOwnershipCode.value;
       this.custDataPersonalObj.MouCustAddrMailingObj.SubZipcode = this.CustDataForm.controls["mailingAddr"]["controls"].SubZipcode.value;
       this.custDataPersonalObj.MouCustAddrMailingObj.MouCustId = this.MouCustId;
       if (this.MouCustAddrMailingId != 0) {
@@ -665,10 +686,36 @@ export class MouCustTabComponent implements OnInit {
       this.custDataCompanyObj.MouCustAddrMailingObj.PhnExt2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt2.value;
       this.custDataCompanyObj.MouCustAddrMailingObj.FaxArea = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].FaxArea.value;
       this.custDataCompanyObj.MouCustAddrMailingObj.Fax = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Fax.value;
+      this.custDataCompanyObj.MouCustAddrMailingObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].MrHouseOwnershipCode.value;
       this.custDataCompanyObj.MouCustAddrMailingObj.SubZipcode = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].SubZipcode.value;
       if (this.MouCustAddrMailingId != 0) {
         this.custDataCompanyObj.MouCustAddrMailingObj.MouCustAddrId = this.MouCustAddrMailingId;
       }
+    }
+  }
+
+  setMouCustAddrBusiness() {
+    this.custDataCompanyObj.MouCustAddrBusinessObj.MrCustAddrTypeCode = CommonConstant.AddrTypeBiz;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.Addr = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Addr.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.AreaCode3 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode3.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.AreaCode4 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode4.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.Zipcode = this.CustDataCompanyForm.controls["businessAddrCompanyZipcode"]["controls"].value.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.AreaCode1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode1.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.AreaCode2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode2.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.City = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].City.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.PhnArea1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnArea1.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.Phn1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Phn1.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.PhnExt1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnExt1.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.PhnArea2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnArea2.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.Phn2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Phn2.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.PhnExt2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnExt2.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.FaxArea = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].FaxArea.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.Fax = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Fax.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].MrHouseOwnershipCode.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.SubZipcode = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].SubZipcode.value;
+    this.custDataCompanyObj.MouCustAddrBusinessObj.MouCustId = this.MouCustId;
+    if (this.MouCustAddrBusinessId != 0) {
+      this.custDataCompanyObj.MouCustAddrBusinessObj.MouCustAddrId = this.MouCustAddrBusinessId;
     }
   }
 
@@ -1067,6 +1114,53 @@ export class MouCustTabComponent implements OnInit {
       this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
       this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
     }
+    else{
+      this.mailingAddrCompanyObj.Addr = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Addr.value;
+      this.mailingAddrCompanyObj.AreaCode1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode1.value;
+      this.mailingAddrCompanyObj.AreaCode2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode2.value;
+      this.mailingAddrCompanyObj.AreaCode3 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode3.value;
+      this.mailingAddrCompanyObj.AreaCode4 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode4.value;
+      this.mailingAddrCompanyObj.City = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].City.value;
+      this.mailingAddrCompanyObj.Fax = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Fax.value;
+      this.mailingAddrCompanyObj.FaxArea = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].FaxArea.value;
+      this.mailingAddrCompanyObj.Phn1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Phn1.value;
+      this.mailingAddrCompanyObj.Phn2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Phn2.value;
+      this.mailingAddrCompanyObj.PhnArea1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnArea1.value;
+      this.mailingAddrCompanyObj.PhnArea2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnArea2.value;
+      this.mailingAddrCompanyObj.PhnExt1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnExt1.value;
+      this.mailingAddrCompanyObj.PhnExt2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnExt2.value;
+      this.mailingAddrCompanyObj.SubZipcode = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].SubZipcode.value;
+
+      this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["businessAddrCompanyZipcode"]["controls"].value.value;
+      this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["businessAddrCompanyZipcode"]["controls"].value.value };
+      this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
+      this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
+    }
+  }
+
+  copyToBusinessCompany() {
+    if (this.copyFromBusinessCompany == CommonConstant.AddrTypeLegal) {
+      this.businessAddrCompanyObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
+      this.businessAddrCompanyObj.AreaCode1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode1.value;
+      this.businessAddrCompanyObj.AreaCode2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode2.value;
+      this.businessAddrCompanyObj.AreaCode3 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode3.value;
+      this.businessAddrCompanyObj.AreaCode4 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode4.value;
+      this.businessAddrCompanyObj.City = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].City.value;
+      this.businessAddrCompanyObj.Fax = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Fax.value;
+      this.businessAddrCompanyObj.FaxArea = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].FaxArea.value;
+      this.businessAddrCompanyObj.Phn1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn1.value;
+      this.businessAddrCompanyObj.Phn2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn2.value;
+      this.businessAddrCompanyObj.PhnArea1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea1.value;
+      this.businessAddrCompanyObj.PhnArea2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea2.value;
+      this.businessAddrCompanyObj.PhnExt1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt1.value;
+      this.businessAddrCompanyObj.PhnExt2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt2.value;
+      this.businessAddrCompanyObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
+
+      this.inputFieldBusinessCompanyObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
+      this.inputFieldBusinessCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value };
+      this.inputAddrBusinessCompanyObj.inputField = this.inputFieldBusinessCompanyObj;
+      this.inputAddrBusinessCompanyObj.default = this.businessAddrCompanyObj;
+    }
   }
 
   async getCustData() {
@@ -1117,6 +1211,7 @@ export class MouCustTabComponent implements OnInit {
             this.custDataCompanyObj.MouCustCompanyObj = response["MouCustCompanyObj"];
             this.custDataCompanyObj.MouCustAddrLegalObj = response["MouCustAddrLegalObj"];
             this.custDataCompanyObj.MouCustAddrMailingObj = response["MouCustAddrMailingObj"];
+            this.custDataCompanyObj.MouCustAddrBusinessObj = response["MouCustAddrBusinessObj"];
             this.custDataCompanyObj.MouCustCompanyMgmntShrholderObjs = response["MouCustCompanyMgmntShrholderObjs"];
             this.listShareholder = this.custDataCompanyObj.MouCustCompanyMgmntShrholderObjs;
             this.custDataCompanyObj.MouCustCompanyContactPersonObjs = response["MouCustCompanyContactPersonObjs"];
@@ -1134,13 +1229,14 @@ export class MouCustTabComponent implements OnInit {
             this.custDataCompanyObj.MouCustGrpObjs = response["MouCustGrpObjs"];
 
             this.setAddrLegalObj(CommonConstant.CustTypeCompany);
+            this.setAddrBusinessObj();
             this.setAddrMailingObj(CommonConstant.CustTypeCompany);
 
             this.MouCustCompanyId = this.custDataCompanyObj.MouCustCompanyObj.MouCustCompanyId;
             this.MouCustFinDataId = this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyFinDataId;
             this.MouCustAddrLegalId = this.custDataCompanyObj.MouCustAddrLegalObj.MouCustAddrId;
             this.MouCustAddrMailingId = this.custDataCompanyObj.MouCustAddrMailingObj.MouCustAddrId;
-
+            this.MouCustAddrBusinessId = this.custDataCompanyObj.MouCustAddrBusinessObj.MouCustAddrId;
 
             this.MrCustTypeCode = this.custDataCompanyObj.MouCustObj.MrCustTypeCode;
           }
@@ -1163,6 +1259,7 @@ export class MouCustTabComponent implements OnInit {
     this.initAddrResidenceObj();
     this.initAddrMailingObj();
     this.initAddrMailingCompanyObj();
+    this.initAddrBusinessCompanyObj();
   }
 
   initAddrLegalObj() {
@@ -1172,6 +1269,8 @@ export class MouCustTabComponent implements OnInit {
 
     this.inputAddrLegalPersonalObj = new InputAddressObj;
     this.inputAddrLegalPersonalObj.showAllPhn = false;
+    this.inputAddrLegalPersonalObj.showOwnership = true;
+    this.inputAddrLegalPersonalObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
   }
 
   initAddrLegalCompanyObj() {
@@ -1182,7 +1281,8 @@ export class MouCustTabComponent implements OnInit {
     this.inputAddrLegalCompanyObj = new InputAddressObj();
     this.inputAddrLegalCompanyObj.showPhn3 = false;
     this.inputAddrLegalCompanyObj.showSubsection = false;
-    this.inputAddrLegalCompanyObj.showOwnership = false;
+    this.inputAddrLegalCompanyObj.showOwnership = true;
+    this.inputAddrLegalCompanyObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
   }
 
   initAddrResidenceObj() {
@@ -1205,6 +1305,8 @@ export class MouCustTabComponent implements OnInit {
     this.inputAddressObjForMailing = new InputAddressObj();
     this.inputAddressObjForMailing.showSubsection = false;
     this.inputAddressObjForMailing.showPhn3 = false;
+    this.inputAddressObjForMailing.showOwnership = true;
+    this.inputAddressObjForMailing.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeMailing);
   }
 
   initAddrMailingCompanyObj() {
@@ -1215,6 +1317,20 @@ export class MouCustTabComponent implements OnInit {
     this.inputAddrMailingCompanyObj = new InputAddressObj();
     this.inputAddrMailingCompanyObj.showPhn3 = false;
     this.inputAddrMailingCompanyObj.showSubsection = false;
+    this.inputAddrMailingCompanyObj.showOwnership = true;
+    this.inputAddrMailingCompanyObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeMailing);
+  }
+
+  initAddrBusinessCompanyObj() {
+    this.businessAddrCompanyObj = new AddrObj();
+    this.inputFieldBusinessCompanyObj = new InputFieldObj();
+    this.inputFieldBusinessCompanyObj.inputLookupObj = new InputLookupObj();
+
+    this.inputAddrBusinessCompanyObj = new InputAddressObj();
+    this.inputAddrBusinessCompanyObj.showPhn3 = false;
+    this.inputAddrBusinessCompanyObj.showSubsection = false;
+    this.inputAddrBusinessCompanyObj.showOwnership = true;
+    this.inputAddrBusinessCompanyObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeBiz);
   }
 
   setAddrLegalObj(custTypeCode) {
@@ -1236,6 +1352,7 @@ export class MouCustTabComponent implements OnInit {
         this.legalAddrObj.PhnArea2 = this.custDataPersonalObj.MouCustAddrLegalObj.PhnArea2;
         this.legalAddrObj.PhnExt1 = this.custDataPersonalObj.MouCustAddrLegalObj.PhnExt1;
         this.legalAddrObj.PhnExt2 = this.custDataPersonalObj.MouCustAddrLegalObj.PhnExt2;
+        this.legalAddrObj.MrHouseOwnershipCode = this.custDataPersonalObj.MouCustAddrLegalObj.MrHouseOwnershipCode;
         this.legalAddrObj.SubZipcode = this.custDataPersonalObj.MouCustAddrLegalObj.SubZipcode;
 
         this.inputFieldLegalObj.inputLookupObj.nameSelect = this.custDataPersonalObj.MouCustAddrLegalObj.Zipcode;
@@ -1263,6 +1380,7 @@ export class MouCustTabComponent implements OnInit {
         this.legalAddrCompanyObj.PhnArea2 = this.custDataCompanyObj.MouCustAddrLegalObj.PhnArea2;
         this.legalAddrCompanyObj.PhnExt1 = this.custDataCompanyObj.MouCustAddrLegalObj.PhnExt1;
         this.legalAddrCompanyObj.PhnExt2 = this.custDataCompanyObj.MouCustAddrLegalObj.PhnExt2;
+        this.legalAddrCompanyObj.MrHouseOwnershipCode = this.custDataCompanyObj.MouCustAddrLegalObj.MrHouseOwnershipCode;
         this.legalAddrCompanyObj.SubZipcode = this.custDataCompanyObj.MouCustAddrLegalObj.SubZipcode;
 
         this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = this.custDataCompanyObj.MouCustAddrLegalObj.Zipcode;
@@ -1321,6 +1439,7 @@ export class MouCustTabComponent implements OnInit {
         this.mailingAddrObj.PhnArea2 = this.custDataPersonalObj.MouCustAddrMailingObj.PhnArea2;
         this.mailingAddrObj.PhnExt1 = this.custDataPersonalObj.MouCustAddrMailingObj.PhnExt1;
         this.mailingAddrObj.PhnExt2 = this.custDataPersonalObj.MouCustAddrMailingObj.PhnExt2;
+        this.mailingAddrObj.MrHouseOwnershipCode = this.custDataPersonalObj.MouCustAddrMailingObj.MrHouseOwnershipCode;
         this.mailingAddrObj.SubZipcode = this.custDataPersonalObj.MouCustAddrMailingObj.SubZipcode;
 
         this.inputFieldMailingObj.inputLookupObj.nameSelect = this.custDataPersonalObj.MouCustAddrMailingObj.Zipcode;
@@ -1348,6 +1467,7 @@ export class MouCustTabComponent implements OnInit {
         this.mailingAddrCompanyObj.PhnArea2 = this.custDataCompanyObj.MouCustAddrMailingObj.PhnArea2;
         this.mailingAddrCompanyObj.PhnExt1 = this.custDataCompanyObj.MouCustAddrMailingObj.PhnExt1;
         this.mailingAddrCompanyObj.PhnExt2 = this.custDataCompanyObj.MouCustAddrMailingObj.PhnExt2;
+        this.mailingAddrCompanyObj.MrHouseOwnershipCode = this.custDataCompanyObj.MouCustAddrMailingObj.MrHouseOwnershipCode;
         this.mailingAddrCompanyObj.SubZipcode = this.custDataCompanyObj.MouCustAddrMailingObj.SubZipcode;
 
         this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = this.custDataCompanyObj.MouCustAddrMailingObj.Zipcode;
@@ -1355,6 +1475,33 @@ export class MouCustTabComponent implements OnInit {
         this.inputAddrMailingCompanyObj.inputField = this.inputFieldMailingCompanyObj;
         this.inputAddrMailingCompanyObj.default = this.mailingAddrCompanyObj;
       }
+    }
+  }
+
+  setAddrBusinessObj(){
+    this.initAddrBusinessCompanyObj();
+    if (this.custDataCompanyObj.MouCustAddrBusinessObj != undefined) {
+      this.businessAddrCompanyObj.Addr = this.custDataCompanyObj.MouCustAddrBusinessObj.Addr;
+      this.businessAddrCompanyObj.AreaCode1 = this.custDataCompanyObj.MouCustAddrBusinessObj.AreaCode1;
+      this.businessAddrCompanyObj.AreaCode2 = this.custDataCompanyObj.MouCustAddrBusinessObj.AreaCode2;
+      this.businessAddrCompanyObj.AreaCode3 = this.custDataCompanyObj.MouCustAddrBusinessObj.AreaCode3;
+      this.businessAddrCompanyObj.AreaCode4 = this.custDataCompanyObj.MouCustAddrBusinessObj.AreaCode4;
+      this.businessAddrCompanyObj.City = this.custDataCompanyObj.MouCustAddrBusinessObj.City;
+      this.businessAddrCompanyObj.Fax = this.custDataCompanyObj.MouCustAddrBusinessObj.Fax;
+      this.businessAddrCompanyObj.FaxArea = this.custDataCompanyObj.MouCustAddrBusinessObj.FaxArea;
+      this.businessAddrCompanyObj.Phn1 = this.custDataCompanyObj.MouCustAddrBusinessObj.Phn1;
+      this.businessAddrCompanyObj.Phn2 = this.custDataCompanyObj.MouCustAddrBusinessObj.Phn2;
+      this.businessAddrCompanyObj.PhnArea1 = this.custDataCompanyObj.MouCustAddrBusinessObj.PhnArea1;
+      this.businessAddrCompanyObj.PhnArea2 = this.custDataCompanyObj.MouCustAddrBusinessObj.PhnArea2;
+      this.businessAddrCompanyObj.PhnExt1 = this.custDataCompanyObj.MouCustAddrBusinessObj.PhnExt1;
+      this.businessAddrCompanyObj.PhnExt2 = this.custDataCompanyObj.MouCustAddrBusinessObj.PhnExt2;
+      this.businessAddrCompanyObj.MrHouseOwnershipCode = this.custDataCompanyObj.MouCustAddrBusinessObj.MrHouseOwnershipCode;
+      this.businessAddrCompanyObj.SubZipcode = this.custDataCompanyObj.MouCustAddrBusinessObj.SubZipcode;
+
+      this.inputFieldBusinessCompanyObj.inputLookupObj.nameSelect = this.custDataCompanyObj.MouCustAddrBusinessObj.Zipcode;
+      this.inputFieldBusinessCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.custDataCompanyObj.MouCustAddrBusinessObj.Zipcode };
+      this.inputAddrBusinessCompanyObj.inputField = this.inputFieldBusinessCompanyObj;
+      this.inputAddrBusinessCompanyObj.default = this.businessAddrCompanyObj;
     }
   }
 
