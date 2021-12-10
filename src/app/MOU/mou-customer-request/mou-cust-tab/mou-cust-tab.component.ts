@@ -456,6 +456,7 @@ export class MouCustTabComponent implements OnInit {
       }
       this.custDataPersonalObj.MouCustObj.TaxIdNo = this.CustDataForm.controls["PersonalMain"]["controls"].TaxIdNo.value;
       this.custDataPersonalObj.MouCustObj.IsVip = this.CustDataForm.controls["PersonalMain"]["controls"].IsVip.value;
+      this.custDataPersonalObj.MouCustObj.IsAffiliateWithMf = this.CustDataForm.controls["PersonalMain"]["controls"].IsAffiliateWithMf.value;
       this.custDataPersonalObj.MouCustObj.MouCustId = this.MouCustId;
 
       if (this.custDataPersonalObj.MouCustObj.CustNo != "" && this.custDataPersonalObj.MouCustObj.CustNo != undefined) {
@@ -520,6 +521,10 @@ export class MouCustTabComponent implements OnInit {
     this.custDataPersonalObj.MouCustPersonalObj.FamilyCardNo = this.CustDataForm.controls["PersonalMain"]["controls"].FamilyCardNo.value;
     this.custDataPersonalObj.MouCustPersonalObj.NoOfResidence = this.CustDataForm.controls["PersonalMain"]["controls"].NoOfResidence.value;
     this.custDataPersonalObj.MouCustPersonalObj.NoOfDependents = this.CustDataForm.controls["PersonalMain"]["controls"].NoOfDependents.value;
+    this.custDataPersonalObj.MouCustPersonalObj.NickName = this.CustDataForm.controls["PersonalMain"]["controls"].NickName.value;
+    this.custDataPersonalObj.MouCustPersonalObj.MrSalutationCode = this.CustDataForm.controls["PersonalMain"]["controls"].MrSalutationCode.value;
+    this.custDataPersonalObj.MouCustPersonalObj.CustPrefixName = this.CustDataForm.controls["PersonalMain"]["controls"].CustPrefixName.value;
+    this.custDataPersonalObj.MouCustPersonalObj.CustSuffixName = this.CustDataForm.controls["PersonalMain"]["controls"].CustSuffixName.value;
     this.custDataPersonalObj.MouCustPersonalObj.MouCustId = this.MouCustId;
     if (this.MouCustPersonalId != 0) {
       this.custDataPersonalObj.MouCustPersonalObj.MouCustPersonalId = this.MouCustPersonalId;

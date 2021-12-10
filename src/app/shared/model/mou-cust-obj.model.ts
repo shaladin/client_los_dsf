@@ -30,6 +30,7 @@ export class MouCustObj {
     IsFreeze: boolean;
     PlafondType: string;
     PlafondCollateralAmt: number;
+    IsAffiliateWithMf: boolean;
     constructor() { this.MouCustId = 0; this.RowVersion = '' }
 }
 
