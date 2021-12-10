@@ -1474,6 +1474,7 @@ export class MouCustTabComponent implements OnInit {
 
   }
   
+  
   copyAddrFromLookup(event) {
     var custAddrObjs: Array<CustAddrObj> = event["CustAddrObjs"];
     var custAddrLegalObj = custAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
