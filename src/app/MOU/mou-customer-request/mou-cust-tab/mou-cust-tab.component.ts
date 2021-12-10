@@ -253,7 +253,7 @@ export class MouCustTabComponent implements OnInit {
       if (this.listShareholder != undefined) {
         for (let i = 0; i < this.listShareholder.length; i++) {
           if (this.listShareholder[i].IsActive) {
-            totalSharePrcnt += this.listShareholder[i].SharePrcnt;
+            totalSharePrcnt = Math.round((totalSharePrcnt + this.listShareholder[i].SharePrcnt) * 1000000) / 1000000;
           }
         }
         for (const item of this.listShareholder) {

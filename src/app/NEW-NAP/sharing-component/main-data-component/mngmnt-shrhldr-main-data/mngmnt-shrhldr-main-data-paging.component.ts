@@ -109,7 +109,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       this.isDetail = true;
       this.inputMode = "EDIT";
       this.appCustId = ev.RowObj.AppCustId;
-      this.tempTotalSharePrct -= ev.RowObj.SharePrcnt;
+      this.tempTotalSharePrct = Math.round((this.tempTotalSharePrct - ev.RowObj.SharePrcnt) * 1000000) / 1000000;
       this.MrCustTypeCode = ev.RowObj.ShareholderType;
       this.AppCustCompanyMgmntShrholderId = ev.RowObj.AppCustCompanyMgmntShrholderId;
 
@@ -145,7 +145,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
             for (let index = 0; index < this.listMgmntShrholder.length; index++) {
               const element = this.listMgmntShrholder[index];
               if (element.IsActive) {
-                tempTotalSharePrct += element.SharePrcnt;
+                tempTotalSharePrct = Math.round((tempTotalSharePrct + element.SharePrcnt) * 1000000) / 1000000;
               }
               if (element.IsOwner) {
                 tempIsOwner = true;
