@@ -30,7 +30,6 @@ export class AppSourceOfficeMemberAddComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppSource.json";
-    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url + "/v1";
     
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/refAppSrcOfficeMbrTempPaging.json";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/refAppSrcOfficeMbrTempPaging.json";
