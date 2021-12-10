@@ -56,13 +56,13 @@
                     <th class="text-center"><span translate >View</span></th>
                 </tr>
                 </thead>
-                <tbody *ngIf = "appCustCompanyMgmntShrholderObjs?.length == 0">
+                <tbody *ngIf = "appCustCompanyMgmntShrholderObjXs?.length == 0">
                     <tr>
                         <td colspan="100%">No Data Available</td>
                     </tr>
                 </tbody>
                 <tbody>
-                <ng-container *ngFor="let item of appCustCompanyMgmntShrholderObjs; let i=index">
+                <ng-container *ngFor="let item of appCustCompanyMgmntShrholderObjXs; let i=index">
                     <tr>
                     <td class="text-center">{{i + 1}}</td>
                     <td class="text-center">{{item.IdNo}}</td>

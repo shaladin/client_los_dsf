@@ -3,7 +3,7 @@
   "headerList": [
     {
       "type": "label",
-      "position": "center",
+      "position": "left",
       "label": "Id No",
       "name": "IdNo"
     },
@@ -18,12 +18,6 @@
       "position": "left",
       "label": "Position Slik",
       "name": "PositionSlik"
-    },
-    {
-      "type": "label",
-      "position": "left",
-      "label": "Shareholder Type",
-      "name": "ShareholderTypeDesc"
     },
     {
       "type": "label",
@@ -53,7 +47,7 @@
   "bodyList": [
     {
       "type": "text",
-      "position": "center",
+      "position": "left",
       "property": "IdNo"
     },
     {
@@ -65,11 +59,6 @@
       "type": "text",
       "position": "left",
       "property": "PositionSlik"
-    },
-    {
-      "type": "text",
-      "position": "left",
-      "property": "ShareholderTypeDesc"
     },
     {
       "type": "decimal",
