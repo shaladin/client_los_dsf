@@ -1492,7 +1492,7 @@ export class CustMainDataXComponent implements OnInit {
           }
         );
       } else {
-        //this.http.post(URLConstant.EditCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+        //butuh jadi v2
         this.http.post(URLConstantX.EditCustMainDataPersonalX, this.custDataPersonalObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
@@ -1529,6 +1529,7 @@ export class CustMainDataXComponent implements OnInit {
           }
         );
       } else {
+      	//butuh update jadi v2
         this.http.post(URLConstant.EditCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {

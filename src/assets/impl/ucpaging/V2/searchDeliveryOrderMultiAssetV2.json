@@ -44,7 +44,7 @@
         {
             "type": "officeRoleCodes",
             "datatype": "text",
-            "name": "TaskOfficeCode",
+            "name": "DOD.ORI_OFFICE_CODE",
             "id": "OfficeCodeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -59,11 +59,11 @@
             "itemsUrl": []
         },
         {
-            "type": "claim",
+            "type" : "claim",
             "label": "Task Claim Status",
             "id": "ClaimStatId",
-            "ddlType": "all",
-            "isCriteriaDataTable": true
+            "ddlType" : "all",
+            "isCriteriaDataTable" : true
         },
         {
             "type": "textbox",
@@ -72,7 +72,7 @@
             "value": "",
             "label": "Task Claim By",
             "placeholder": "Placeholder",
-            "isCriteriaDataTable": true
+            "isCriteriaDataTable" : true
         }
     ],
     "querystring": {
@@ -207,20 +207,67 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    },
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "AppId",
-                            "property": "AppId"
-                        },
-                        {
-                            "type": "WfTaskListId",
-                            "property": "Id"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    },
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }
