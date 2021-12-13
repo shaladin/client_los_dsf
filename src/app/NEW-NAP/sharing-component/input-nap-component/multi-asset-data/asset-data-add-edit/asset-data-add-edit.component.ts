@@ -239,12 +239,11 @@ export class AssetDataAddEditComponent implements OnInit {
   InputLookupCityIssuerObj: any;
   DpObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   IsReady: boolean = false;
-  UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
-  isUCReady: boolean = false;
   OwnerTypeObj: Array<KeyValueObj>;
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
   AppCustCoyObj: AppCustCompanyObj;
+  RMAssetCondObj: Array<KeyValueObj> = new Array<KeyValueObj>();
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
@@ -392,13 +391,15 @@ export class AssetDataAddEditComponent implements OnInit {
         let AppCollateralDocs = new Array();
         AppCollateralDocs = response["AppCollateralDocs"];
         if (AppCollateralDocs["length"] > 0) {
-          for (let i = 0; i < AppCollateralDocs.length; i++) {
+          for (let i = 0; i < this.AssetDataForm.controls.ListDoc["controls"].length; i++) {
+            let AppCollatralDocId = AppCollateralDocs.findIndex(x => x.DocCode == this.AssetDataForm.controls.ListDoc["controls"][i]["controls"].DocCode.value);
+
             this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
-              DocNo: AppCollateralDocs[i].DocNo,
-              DocNotes: AppCollateralDocs[i].DocNotes,
-              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: AppCollateralDocs[i].IsReceived,
-              RowVersion: AppCollateralDocs[i].RowVersion,
+              DocNo: AppCollateralDocs[AppCollatralDocId].DocNo,
+              DocNotes: AppCollateralDocs[AppCollatralDocId].DocNotes,
+              ACDExpiredDt: AppCollateralDocs[AppCollatralDocId].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[AppCollatralDocId].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              IsReceived: AppCollateralDocs[AppCollatralDocId].IsReceived,
+              RowVersion: AppCollateralDocs[AppCollatralDocId].RowVersion,
             })
           }
         }
@@ -481,7 +482,6 @@ export class AssetDataAddEditComponent implements OnInit {
           Username: this.appCustObj.CustName,
           UserRelationship: "SELF",
         });
-        this.SelfOwnerChange(false, this.appCustObj.MrCustTypeCode);
       }
     );
   }
@@ -730,10 +730,7 @@ export class AssetDataAddEditComponent implements OnInit {
   }
   readonly AssetUsed: string = CommonConstant.AssetConditionUsed;
   async ngOnInit(): Promise<void> {
-    this.UcDDLAssetCond = new UcDropdownListObj();
-    this.UcDDLAssetCond.ddlType = "one";
-    this.UcDDLAssetCond.isSelectOutput = true;
-    this.UcDDLAssetCond.isCustomList = true;
+    this.items = this.AssetDataForm.get('items') as FormArray;
 
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
@@ -764,6 +761,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.SetLookupSupplier();
     await this.GetAppCust();
     await this.bindIdTypeObj();
+    await this.bindAssetConditionObj();
     if(this.custType == CommonConstant.CustTypePersonal){
       await this.GetAppCustPersonalJobData();
     }else{
@@ -771,7 +769,6 @@ export class AssetDataAddEditComponent implements OnInit {
     }
 
     await this.bindOwnerTypeAndProfessionObj();
-    this.items = this.AssetDataForm.get('items') as FormArray;
 
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.title = "Asset Location";
@@ -810,7 +807,6 @@ export class AssetDataAddEditComponent implements OnInit {
         let assetSchm = response[3];
         this.SerialNoRegex = response[4]["GsValue"];
         this.assetTypeCompntValue = assetType["CompntValue"];
-        this.isUCReady = true;
 
         let obj: CustomPatternObj = {
           pattern: this.SerialNoRegex,
@@ -827,6 +823,12 @@ export class AssetDataAddEditComponent implements OnInit {
           });
 
           this.ChangeAssetCondition();
+        }
+
+        if(this.returnAssetConditionObj.length > 1){
+          this.AssetDataForm.controls["MrAssetConditionCode"].enable();
+        }else{
+          this.AssetDataForm.controls["MrAssetConditionCode"].disable();
         }
 
         if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
@@ -911,7 +913,6 @@ export class AssetDataAddEditComponent implements OnInit {
         this.InputLookupAssetObj.isReady = true;
       });
 
-      this.UcAddressHandler();
     this.downPaymentObj = new RefMasterObj();
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.downPaymentObj).subscribe(
@@ -1078,6 +1079,14 @@ export class AssetDataAddEditComponent implements OnInit {
           this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
             async (response) => {
               this.returnAppCollateralRegistObj = response;
+              
+              let MrOwnerTypeCode = this.returnAppCollateralRegistObj.MrOwnerTypeCode;
+              let isFromDB = true;
+              if (MrOwnerTypeCode == null){
+                MrOwnerTypeCode = this.custType;
+                isFromDB = false;
+              }
+
               this.AssetDataForm.patchValue({
                 Username: this.returnAppCollateralRegistObj.UserName,
                 UserRelationship: this.returnAppCollateralRegistObj.MrUserRelationshipCode,
@@ -1103,11 +1112,12 @@ export class AssetDataAddEditComponent implements OnInit {
                 SelfUsage: (this.returnAppCollateralRegistObj.MrUserRelationshipCode == CommonConstant.SelfCustomer),
                 SelfOwner: (this.returnAppCollateralRegistObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer),
                 OwnerProfessionCode: this.returnAppCollateralRegistObj.OwnerProfessionCode,
-                MrOwnerTypeCode: this.returnAppCollateralRegistObj.MrOwnerTypeCode
+                MrOwnerTypeCode: MrOwnerTypeCode
               });
+
               await this.SelfUsageChange({ checked: (this.returnAppCollateralRegistObj.MrUserRelationshipCode == CommonConstant.SelfCustomer) });
-              await this.SelfOwnerChange(false, this.returnAppCollateralRegistObj.MrOwnerTypeCode);
-              await this.OwnerTypeChange(this.returnAppCollateralRegistObj.MrOwnerTypeCode);
+              await this.SelfOwnerChange(false, MrOwnerTypeCode);
+              await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
 
               this.inputFieldOwnerAddrObj = new InputFieldObj();
               this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -2259,7 +2269,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   IdTypeObj: Array<KeyValueObj> = new Array();
   async bindIdTypeObj() {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
       }
@@ -2348,5 +2358,13 @@ export class AssetDataAddEditComponent implements OnInit {
         });
       }
     }
+  }
+
+  async bindAssetConditionObj() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition }).toPromise().then(
+      (response) => {
+        this.RMAssetCondObj = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 }

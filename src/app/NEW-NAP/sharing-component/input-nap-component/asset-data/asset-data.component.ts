@@ -1544,6 +1544,14 @@ export class AssetDataComponent implements OnInit {
           }
 
           if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
+            
+            let MrOwnerTypeCode = this.returnAppCollateralRegistObj.MrOwnerTypeCode;
+            let isFromDB = true;
+            if (MrOwnerTypeCode == null){
+              MrOwnerTypeCode = this.CustType;
+              isFromDB = false;
+            }
+
             this.AssetDataForm.patchValue({
               UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
               MrUserRelationshipCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode,
@@ -1569,12 +1577,12 @@ export class AssetDataComponent implements OnInit {
               SelfUsage: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF"),
               SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
               OwnerProfessionCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode,
-              MrOwnerTypeCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerTypeCode
+              MrOwnerTypeCode: MrOwnerTypeCode
             });
 
             await this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
-            await this.SelfOwnerChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")}, this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerTypeCode);
-            await this.OwnerTypeChange(this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerTypeCode);
+            await this.SelfOwnerChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")}, MrOwnerTypeCode);
+            await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
           }
 
           this.AssetConditionChanged(mode);
@@ -2623,13 +2631,14 @@ export class AssetDataComponent implements OnInit {
         AppCollateralDocs = response["AppCollateralDocs"];
         if (AppCollateralDocs["length"] > 0) {
           for (let i = 0; i < AppCollateralDocs.length; i++) {
+            let AppCollatralDocId = AppCollateralDocs.findIndex(x => x.DocCode == this.AssetDataForm.controls.ListDoc["controls"][i]["controls"].DocCode.value);
+
             this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
-              AssetDocName: AppCollateralDocs[i].DocName,
-              DocNo: AppCollateralDocs[i].DocNo,
-              DocNotes: AppCollateralDocs[i].DocNotes,
-              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: AppCollateralDocs[i].IsReceived,
-              RowVersion: AppCollateralDocs[i].RowVersion,
+              DocNo: AppCollateralDocs[AppCollatralDocId].DocNo,
+              DocNotes: AppCollateralDocs[AppCollatralDocId].DocNotes,
+              ACDExpiredDt: AppCollateralDocs[AppCollatralDocId].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[AppCollatralDocId].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              IsReceived: AppCollateralDocs[AppCollatralDocId].IsReceived,
+              RowVersion: AppCollateralDocs[AppCollatralDocId].RowVersion,
             })
           }
         }
