@@ -33,6 +33,8 @@ export class CrdRvwAppObjX {
     AppInPrc: number;
     AppLiv: number;
     CrdScoreRating: number;
+    TotalDownPaymentNettAmt: number; 
+
     constructor() {
         this.CreditScoreIndicator = CommonConstant.WhiteIndicator;
         this.CreditScoreIndicatorDescr = CommonConstant.NoData;
@@ -57,5 +59,6 @@ export class CrdRvwAppObjX {
         this.AppInPrc = 0;
         this.AppLiv = 0;
         this.CrdScoreRating = 0;
+        this.TotalDownPaymentNettAmt = 0; 
     }
 }
