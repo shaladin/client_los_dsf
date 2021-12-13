@@ -1280,15 +1280,6 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     //   }
     // });
 
-    this.groupAddCvrSumInsuredDropDown[MainCvgIndex] = new Object();
-    response.InsRateAddCvgRuleObjs.forEach(currAddCvrItem => {
-      if (currAddCvrItem.PremiumType == CommonConstant.PremiumTypeAmt) {
-        if (typeof (this.groupAddCvrSumInsuredDropDown[MainCvgIndex][currAddCvrItem.AdditionalCoverageType]) == 'undefined')
-          this.groupAddCvrSumInsuredDropDown[MainCvgIndex][currAddCvrItem.AdditionalCoverageType] = new Array<InsRateAddCvgRuleObj>();
-        this.groupAddCvrSumInsuredDropDown[MainCvgIndex][currAddCvrItem.AdditionalCoverageType].push(currAddCvrItem);
-      }
-    });
-
     let currPaidByBhv = this.paidByBhv.find(i => i.PaidByYearNo == insMainCvg.YearNo);
     let group = this.fb.group({
       MrInsPaidByCode: insMainCvg.MrInsPaidByCode,
