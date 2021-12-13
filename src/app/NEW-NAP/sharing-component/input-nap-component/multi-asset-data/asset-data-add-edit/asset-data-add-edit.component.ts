@@ -730,8 +730,6 @@ export class AssetDataAddEditComponent implements OnInit {
   }
   readonly AssetUsed: string = CommonConstant.AssetConditionUsed;
   async ngOnInit(): Promise<void> {
-    this.items = this.AssetDataForm.get('items') as FormArray;
-
     this.InputLookupCityIssuerObj = new InputLookupObj();
     this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
     this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -769,6 +767,7 @@ export class AssetDataAddEditComponent implements OnInit {
     }
 
     await this.bindOwnerTypeAndProfessionObj();
+    this.items = this.AssetDataForm.get('items') as FormArray;
 
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.title = "Asset Location";
@@ -901,6 +900,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.InputLookupAssetObj.isReady = true;
       });
 
+      this.UcAddressHandler();
     this.downPaymentObj = new RefMasterObj();
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.downPaymentObj).subscribe(
