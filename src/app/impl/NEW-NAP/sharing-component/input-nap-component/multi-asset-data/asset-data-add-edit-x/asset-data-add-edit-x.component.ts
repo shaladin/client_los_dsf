@@ -871,12 +871,6 @@ export class AssetDataAddEditXComponent implements OnInit {
             // MrAssetConditionCode: this.returnAssetConditionObj[0]["Key"],
             MrAssetConditionCodeView: this.returnAssetConditionObj[0]['Value']
           });
-          this.ChangeAssetCondition();
-        }
-
-        if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
-          this.isUsed = true;
-          this.InputLookupCityIssuerObj.isRequired = true;
         }
 
         this.GenerataAppAssetAttr(false);
@@ -942,7 +936,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         this.InputLookupAssetObj.isReady = true;
       });
 
-    this.UcAddressHandler();
+    // this.UcAddressHandler();
     this.downPaymentObj = new RefMasterObj();
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.downPaymentObj).subscribe(
@@ -1052,7 +1046,8 @@ export class AssetDataAddEditXComponent implements OnInit {
             TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
 
-          this.ChangeAssetCondition();
+          this.UcAddressHandler(this.returnAppAssetObj.MrAssetConditionCode); 
+
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
 
@@ -2171,11 +2166,11 @@ export class AssetDataAddEditXComponent implements OnInit {
 
   }
 
-  UcAddressHandler() {
+  UcAddressHandler(AssetCondition: string) {
     let serialNoIsRequired: boolean = false;
     this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
     this.inputAddressObjForLoc.isRequired = true;
-    if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
+    if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed || AssetCondition == CommonConstant.AssetConditionUsed) {
       this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = false;
       this.inputAddressObjForLoc.isRequired = false;
       serialNoIsRequired = true;
@@ -2199,15 +2194,6 @@ export class AssetDataAddEditXComponent implements OnInit {
         tempSerialNo.updateValueAndValidity();
       }
     }
-  }
-
-  ChangeAssetCondition(){
-    if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed){
-      this.AssetDataForm.controls.TaxCityIssuer.setValidators([Validators.required]);
-    }else{
-      this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
-    }
-    this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
   }
 
   async bindDownPaymentTypeObj() {
