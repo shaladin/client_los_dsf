@@ -1,6 +1,7 @@
 {
     "url": "",
     "title":"Lookup - MF Signer",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

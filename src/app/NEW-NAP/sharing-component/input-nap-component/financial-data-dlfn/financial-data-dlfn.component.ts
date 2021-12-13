@@ -130,10 +130,13 @@ export class FinancialDataDlfnComponent implements OnInit {
         TotalTopAmount: 0,
         NeedReCalculate: true,
         IsReCalculate: false,
-        ExistingFinData: false
+        ExistingFinData: false,
+
+        InterestCalcBased: "" 
       }
     );
     this.LoadAppFinData();
+    this.LoadMouDlfn(); 
     console.log(this.FinDataForm.controls.MrInstTypeCode.value);
   }
 
@@ -141,6 +144,15 @@ export class FinancialDataDlfnComponent implements OnInit {
     this.outputCancel.emit();
   }
 
+  LoadMouDlfn() {
+    this.http.post(URLConstant.GetMouCustDlrFncngByAppId, { Id: this.AppId }).subscribe(
+      (response) => {
+        this.FinDataForm.patchValue({
+          InterestCalcBased: response["InterestCalcBased"],
+        });
+      });
+  }
+  
   LoadAppFinData() {
     let InitAppFinDataUrl = environment.isCore ? URLConstant.GetInitAppFinDataDFByAppIdV2 : URLConstant.GetInitAppFinDataDFByAppId;
     this.http.post<AppFinDataObj>(InitAppFinDataUrl, { Id: this.AppId }).subscribe(

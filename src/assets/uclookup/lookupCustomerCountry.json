@@ -1,5 +1,6 @@
 {
-    "sectionTitle": "Country",
+    "title": "Lookup - Country",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

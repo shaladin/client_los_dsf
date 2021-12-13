@@ -225,15 +225,15 @@ export class AdInsHelper {
     return encrypted
   }
 
-  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}) {
+  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}, isSkipLocation: boolean = false, isReuseRoute: boolean = false) {
     // Ngebuat bisa jalanin Constructor dan NgOnInit lagi
     router.routeReuseStrategy.shouldReuseRoute = () => {
-      return false;
+      return isReuseRoute;
     }
     router.navigateByUrl(
       router.createUrlTree(
-        [url.toString()], {queryParams: queryParams, skipLocationChange: false}
-      )
+        [url.toString()], { queryParams: queryParams }
+      ), { skipLocationChange: isSkipLocation }
     );
   }
 

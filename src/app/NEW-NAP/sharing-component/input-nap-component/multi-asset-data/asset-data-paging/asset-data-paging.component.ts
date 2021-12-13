@@ -18,6 +18,7 @@ import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.m
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { ResAssetTypeObj } from 'app/shared/model/app-asset-type/app-asset-type-obj.model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -343,17 +344,38 @@ export class AssetDataPagingComponent implements OnInit {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
-  checkValidityAssetUsed() {
+  async checkValidityAssetUsed() {
     let listAsset: Array<AppAssetObj> = this.gridAssetDataObj.resultData.Data;
     let flag: boolean = false;
+    let ListAssetTypeObj = new ResAssetTypeObj();
+
+    let reqListAssetTypeCodes = new GenericListByCodeObj();
     for (let index = 0; index < listAsset.length; index++) {
       const element = listAsset[index];
+      if (element.AssetTypeCode != null) {
+        reqListAssetTypeCodes.Codes.push(element.AssetTypeCode);
+      }
+    }
+
+    await this.http.post<ResAssetTypeObj>(URLConstant.GetListAssetTypeByListAssetTypeCodes, reqListAssetTypeCodes).toPromise().then(
+      (response: ResAssetTypeObj) => {
+        ListAssetTypeObj = response;
+      }
+    );
+
+    for (let i = 0; i < listAsset.length; i++) {
+      const element = listAsset[i];
       if (element.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
-        for (let index = 0; index < this.SerialNoList.length; index++) {
-          if (!element["SerialNo" + (index + 1)]) {
-            flag = true;
-            this.toastr.warningMessage(element.FullAssetName + "\'s data not complete");
-            break;
+        for(let j = 0; j< ListAssetTypeObj.resAssetTypeObjs.length; j++){
+          let AssetType = ListAssetTypeObj.resAssetTypeObjs[j];
+          if(element.AssetTypeCode == AssetType.AssetTypeCode){
+            for (let k = 0; k < this.SerialNoList.length; k++) {
+              if (!element["SerialNo" + (k + 1)] && AssetType["IsMndtrySerialNo" + (k + 1)] == true) {
+                flag = true;
+                this.toastr.warningMessage(element.FullAssetName + "\'s data not complete");
+                break;
+              }
+            }
           }
         }
       }
@@ -361,7 +383,9 @@ export class AssetDataPagingComponent implements OnInit {
     return flag;
   }
 
-  next() {
+
+
+  async next() {
     if (this.gridAssetDataObj.resultData.Data.length < 1) {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;
@@ -374,7 +398,7 @@ export class AssetDataPagingComponent implements OnInit {
         }
       }
     }
-    if (this.checkValidityAssetUsed()) return;
+    if (await this.checkValidityAssetUsed()) return;
 
     if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
 

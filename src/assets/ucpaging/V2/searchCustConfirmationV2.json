@@ -182,32 +182,87 @@
         "type": "action",
         "position": "center",
         "action": [
-          {
-            "type": "edit",
-            "path": "NAP_ADM_PRCS_CUST_CONFIRM_DETAIL",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              },
-              {
-                "type": "AgrmntNo",
-                "property": "AgrmntNo"
-              },
-              {
-                "type": "TaskListId",
-                "property": "Id"
-              },
-              {
-                "type": "AppId",
-                "property": "AppId"
-              },
-              {
-                "type": "BizTemplateCode",
-                "property": "BizTemplateCode"
-              }
-            ]
-          }
+            {
+                "type": "switch",
+                "case": [
+                    {
+                        "conditions": [
+                            {
+                                "isUser": true,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "NAP_ADM_PRCS_CUST_CONFIRM_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "AgrmntId",
+                                "property": "AgrmntId"
+                              },
+                              {
+                                "type": "AgrmntNo",
+                                "property": "AgrmntNo"
+                              },
+                              {
+                                "type": "TaskListId",
+                                "property": "Id"
+                              },
+                              {
+                                "type": "AppId",
+                                "property": "AppId"
+                              },
+                              {
+                                "type": "BizTemplateCode",
+                                "property": "BizTemplateCode"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "isUser": false,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "NAP_ADM_PRCS_CUST_CONFIRM_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "AgrmntId",
+                                "property": "AgrmntId"
+                              },
+                              {
+                                "type": "AgrmntNo",
+                                "property": "AgrmntNo"
+                              },
+                              {
+                                "type": "TaskListId",
+                                "property": "Id"
+                              },
+                              {
+                                "type": "AppId",
+                                "property": "AppId"
+                              },
+                              {
+                                "type": "BizTemplateCode",
+                                "property": "BizTemplateCode"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    }
+                ]
+            }
         ]
       }
     ]

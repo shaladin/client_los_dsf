@@ -56,7 +56,9 @@ export class AppViewInsuranceDetailComponent implements OnInit {
             CustMainPremiAmt: item.appInsMainCvgObj.CustMainPremiAmt,
             CustAddPremiAmt: item.appInsMainCvgObj.TotalCustAddPremiAmt,
             InscoMainPremiAmt: item.appInsMainCvgObj.InscoMainPremiAmt,
-            InscoAddPremiAmt: item.appInsMainCvgObj.TotalInscoAddPremiAmt
+            InscoAddPremiAmt: item.appInsMainCvgObj.TotalInscoAddPremiAmt,
+            PaidBy: item.appInsMainCvgObj.PaidByDescr,
+            IsCapitalized: item.appInsMainCvgObj.IsCapitalized
           });
         }
       });

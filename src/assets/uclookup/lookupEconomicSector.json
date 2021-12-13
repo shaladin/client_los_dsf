@@ -1,6 +1,7 @@
 {
     "url": "",
-    "sectionTitle":"LOOK UP - Economic Sector",
+    "title":"Lookup - Economic Sector",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

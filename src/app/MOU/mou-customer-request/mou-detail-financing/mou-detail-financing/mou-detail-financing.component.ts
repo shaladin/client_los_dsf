@@ -50,12 +50,15 @@ export class MouDetailFinancingComponent implements OnInit {
   payFreqList: Array<RefPayFreqObj>;
   instSchmList: Array<KeyValueObj>;
   currencyList: Array<KeyValueObj>;
+  interestCalcBasedList: Array<KeyValueObj>; 
   isListedFctr: boolean;
   shouldComponentLoad: boolean;
   isTenorInvalid: boolean;
   tenorInvalidMsg: string;
   private mode: string = "add";
   IsSingleIns: boolean = true;
+  IsInterest: boolean = false; 
+  IsTop: boolean = false; 
   DealerCustNo: string;
   DealerCode: string = "-";
   ManufacturerCustNo: string;
@@ -79,18 +82,19 @@ export class MouDetailFinancingComponent implements OnInit {
     WopCode: ['', [Validators.required]],
     MrInstTypeCode: ['', [Validators.required]],
     TopDays: [0, [Validators.min(0)]],
-    InterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
+    InterestRatePrcnt: [0, [Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
     Notes: [''],
     CurrCode: ['', [Validators.required]],
     RowVersion: [''],
-    TopInterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
-    ExtendRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
-    MmForExtend: [0, [Validators.required]],
-    PpForExtendPrcnt: [0, [Validators.min(0), Validators.max(100)]],
+    TopInterestRatePrcnt: [0, [Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
+    ExtendRatePrcnt: [0, [Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
+    MmForExtend: [0, [Validators.required, Validators.min(1)]],
+    PpForExtendPrcnt: [0, [Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
     SpareDayToPay: [0, [Validators.required]],
     AssetCondition: ['', [Validators.required]],
-    LcRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
-    MaximumExtendTimes: [0, [Validators.required]]
+    LcRatePrcnt: [0, [Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
+    MaximumExtendTimes: [0, [Validators.required, Validators.min(1) ]],
+    InterestCalcBased: ['', [Validators.required, Validators.min(1)]]
   });
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
@@ -169,7 +173,11 @@ export class MouDetailFinancingComponent implements OnInit {
     rmAssetStatus.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
     let getssetStatus = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmAssetStatus);
 
-    forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouDlrFin, getssetStatus]).subscribe(
+    var rmInterestCalcBase = new RefMasterObj();
+    rmInterestCalcBase.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInterestCalcBased;
+    let getInterestCalcBase = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmInterestCalcBase);
+
+    forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouDlrFin, getssetStatus, getInterestCalcBase]).subscribe(
       (response: any) => {
         this.wopList = response[1].ReturnObject;
         this.instTypeList = response[3].ReturnObject;
@@ -179,13 +187,14 @@ export class MouDetailFinancingComponent implements OnInit {
         this.currencyList = response[7].ReturnObject;
         this.MouDlrFinData = response[8];
         this.AsseConditionLis = response[9].ReturnObject;
+        this.interestCalcBasedList = response[10].ReturnObject; 
 
         this.MouDetailFinancingForm.patchValue({
           WopCode: this.wopList[0].Key,
           CurrCode: this.currencyList[0].Key,
-          AssetCondition: this.AsseConditionLis[0],
-          MrInstTypeCode: this.instTypeList[0].Key,
+          MrInstTypeCode: this.instTypeList[0].Key
         });
+
         if (this.MouDlrFinData["MouCustDlrFncngId"] != 0) {
           this.mode = "edit";
 
@@ -210,7 +219,8 @@ export class MouDetailFinancingComponent implements OnInit {
             LcRatePrcnt: this.MouDlrFinData["LcRate"],
             MaximumExtendTimes: this.MouDlrFinData["MaximumExtendTimes"],
             MrInstTypeCode: this.MouDlrFinData["MrInstTypeCode"],
-            VirtualAccNo: this.MouDlrFinData["VirtualAccNo"]
+            VirtualAccNo: this.MouDlrFinData["VirtualAccNo"],
+            InterestCalcBased: this.MouDlrFinData["InterestCalcBased"]
           });
 
           if(this.MouDlrFinData['MrInstTypeCode'] == CommonConstant.InstTypeMultiple){
@@ -224,8 +234,7 @@ export class MouDetailFinancingComponent implements OnInit {
           this.MouDetailFinancingForm.patchValue({
             MouCustId: this.MouCustId
           });
-
-          this.instTypeHandler(this.MouDetailFinancingForm.controls.MrInstTypeCode.value);
+          this.instTypeHandler(this.instTypeList[0].Key);
         }
         this.shouldComponentLoad = true;
         if (this.MouDlrFinData["AssetCondition"] != null) {
@@ -362,10 +371,7 @@ export class MouDetailFinancingComponent implements OnInit {
   BindData() {
     this.MouCustDlrFindData = new MouCustDlrFinObj();
     this.MouCustDlrFindData.MouCustId = this.MouCustId;
-    this.MouCustDlrFindData.WopCode = this.MouDetailFinancingForm.controls.WopCode.value;
-    this.MouCustDlrFindData.TopDays = this.MouDetailFinancingForm.controls.TopDays.value;
-    this.MouCustDlrFindData.TopInterestRatePrcnt = this.MouDetailFinancingForm.controls.TopInterestRatePrcnt.value;
-    this.MouCustDlrFindData.InterestRatePrcnt = this.MouDetailFinancingForm.controls.InterestRatePrcnt.value;
+    this.MouCustDlrFindData.WopCode = this.MouDetailFinancingForm.controls.WopCode.value; 
     this.MouCustDlrFindData.MaximumMonthsForExtend = this.MouDetailFinancingForm.controls.MmForExtend.value;
     this.MouCustDlrFindData.MaximumTimesForExtends = this.MouDetailFinancingForm.controls.MaximumExtendTimes.value;
     this.MouCustDlrFindData.ExtendRatePrcnt = this.MouDetailFinancingForm.controls.ExtendRatePrcnt.value;
@@ -379,7 +385,27 @@ export class MouDetailFinancingComponent implements OnInit {
     this.MouCustDlrFindData.MaximumExtendTimes = this.MouDetailFinancingForm.controls.MaximumExtendTimes.value;
     this.MouCustDlrFindData.MrInstTypeCode = this.MouDetailFinancingForm.controls.MrInstTypeCode.value;
     this.MouCustDlrFindData.VirtualAccNo = this.MouDetailFinancingForm.controls["VirtualAccNo"].value;
-    this.MouCustDlrFindData.CurrCode = this.MouDetailFinancingForm.controls.CurrCode.value;
+    this.MouCustDlrFindData.CurrCode = this.MouDetailFinancingForm.controls.CurrCode.value; 
+
+    if (this.MouCustDlrFindData.MrInstTypeCode == CommonConstant.SINGLE_INST_TYPE) {
+      this.MouCustDlrFindData.InterestCalcBased = this.MouDetailFinancingForm.controls.InterestCalcBased.value;
+    } else {
+      this.MouCustDlrFindData.InterestCalcBased = ""; 
+      this.MouCustDlrFindData.InterestRatePrcnt = this.MouDetailFinancingForm.controls.InterestRatePrcnt.value;
+    }
+    
+    if (this.MouCustDlrFindData.InterestCalcBased == CommonConstant.TOP_INTEREST_CALC_BASED) {
+      this.MouCustDlrFindData.TopDays = this.MouDetailFinancingForm.controls.TopDays.value;
+      this.MouCustDlrFindData.TopInterestRatePrcnt = this.MouDetailFinancingForm.controls.TopInterestRatePrcnt.value;
+      this.MouCustDlrFindData.InterestRatePrcnt = 0; 
+    } else if (this.MouCustDlrFindData.InterestCalcBased == CommonConstant.INTEREST_INTEREST_CALC_BASED)  {
+      this.MouCustDlrFindData.TopDays = 0;
+      this.MouCustDlrFindData.TopInterestRatePrcnt = 0; 
+      this.MouCustDlrFindData.InterestRatePrcnt = this.MouDetailFinancingForm.controls.InterestRatePrcnt.value;
+    } else {
+      this.MouCustDlrFindData.TopDays = 0;
+      this.MouCustDlrFindData.TopInterestRatePrcnt = 0; 
+    }
 
     if (this.MouCustDlrFindData.Notes === "") {
       this.MouCustDlrFindData.Notes = "-";
@@ -405,17 +431,49 @@ export class MouDetailFinancingComponent implements OnInit {
     if (insType == CommonConstant.SINGLE_INST_TYPE) {
       this.IsSingleIns = true;
       this.listSelectedItem = new Array<any>();
-      this.MouDetailFinancingForm.controls['TopDays'].clearValidators();
-      this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(1)]);
-      this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
+      this.MouDetailFinancingForm.controls['InterestCalcBased'].setValidators(Validators.required);
+      this.MouDetailFinancingForm.controls['InterestCalcBased'].updateValueAndValidity();
+      this.interestCalcBaseHandler(this.MouDetailFinancingForm.controls['InterestCalcBased'].value); 
       // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].enable();
     }
     else if (insType == CommonConstant.MULTIPLE_INST_TYPE) {
       this.IsSingleIns = false;
+      this.IsInterest = true; 
       // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].disable();
+      this.MouDetailFinancingForm.controls['InterestCalcBased'].clearValidators();
+      this.MouDetailFinancingForm.controls['InterestCalcBased'].updateValueAndValidity();
       this.MouDetailFinancingForm.controls['TopDays'].clearValidators();
-      this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(0)]);
       this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
+      this.MouDetailFinancingForm.controls['TopInterestRatePrcnt'].clearValidators();
+      this.MouDetailFinancingForm.controls['TopInterestRatePrcnt'].updateValueAndValidity();
+      this.MouDetailFinancingForm.controls['InterestRatePrcnt'].setValidators([Validators.min(CommonConstant.PrcntMinValue)]);
+      this.MouDetailFinancingForm.controls['InterestRatePrcnt'].updateValueAndValidity();
+    }
+  }
+
+  interestCalcBaseHandler (interestType) {
+    
+    if (interestType == CommonConstant.TOP_INTEREST_CALC_BASED) {
+      this.IsTop = true; 
+      this.IsInterest = false; 
+      this.MouDetailFinancingForm.controls['TopDays'].setValidators([Validators.min(1)]);
+      this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
+      this.MouDetailFinancingForm.controls['TopInterestRatePrcnt'].setValidators([Validators.min(CommonConstant.PrcntMinValue)]);
+      this.MouDetailFinancingForm.controls['TopInterestRatePrcnt'].updateValueAndValidity();
+      this.MouDetailFinancingForm.controls['InterestRatePrcnt'].clearValidators();
+      this.MouDetailFinancingForm.controls['InterestRatePrcnt'].updateValueAndValidity();
+    } else if (interestType == CommonConstant.INTEREST_INTEREST_CALC_BASED) {
+      this.IsInterest = true; 
+      this.IsTop = false; 
+      this.MouDetailFinancingForm.controls['TopDays'].clearValidators();
+      this.MouDetailFinancingForm.controls['TopDays'].updateValueAndValidity();
+      this.MouDetailFinancingForm.controls['TopInterestRatePrcnt'].clearValidators();
+      this.MouDetailFinancingForm.controls['TopInterestRatePrcnt'].updateValueAndValidity();
+      this.MouDetailFinancingForm.controls['InterestRatePrcnt'].setValidators([Validators.min(CommonConstant.PrcntMinValue)]);
+      this.MouDetailFinancingForm.controls['InterestRatePrcnt'].updateValueAndValidity();
+    } else {
+      this.IsTop = false;
+      this.IsInterest = false; 
     }
   }
 

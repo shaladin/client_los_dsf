@@ -1,6 +1,7 @@
 {
     "url": "",
     "title":"Lookup - User List",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

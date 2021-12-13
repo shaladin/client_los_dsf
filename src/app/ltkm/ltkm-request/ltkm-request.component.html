@@ -324,7 +324,7 @@
                       <label class="col-md-3 adins-required-label" translate>Application No </label>
                       <div  class="col-md-4">
                         <lib-uclookupgeneric *ngIf="isCustomerCompanySelected" [lookupInput]="inputLookupApplicationCompanyObj" [parentForm]='CustDataCompanyForm'
-                          [enjiForm]='enjiForm' [identifier]="'appNo'" #applicationCompanyData (lookup)="getLookupAppNo($event)"
+                          [enjiForm]='enjiFormCompany' [identifier]="'appNo'" #applicationCompanyData (lookup)="getLookupAppNo($event)"
                           >
                         </lib-uclookupgeneric>
                         <label class="col-md-9" *ngIf="!isCustomerCompanySelected" style="color: red;">Choose Customer First</label>
