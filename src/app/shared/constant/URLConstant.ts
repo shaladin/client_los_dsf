@@ -1122,6 +1122,7 @@ export class URLConstant {
   public static CalculateInsurance = environment.losUrl + "/v1" + "/AppIns/CalculateInsurance";
   public static GetCuCoInsLength = environment.losUrl + "/v1" + "/AppIns/GetCuCoInsLength";
   public static ExecuteInsRateCvgRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateCvgRule";
+  public static ExecuteInsRateCvgRuleV2_1 = environment.losUrl + "/v2.1" + "/AppIns/ExecuteInsRateCvgRule";
   
 
   //AGREEMENT DOC
