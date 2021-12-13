@@ -13,6 +13,8 @@ import { AppInquiryPagingComponent } from "./app-inquiry/app-inquiry-paging.comp
 import { PurchaseTrackingInquiryComponent } from './purchase-tracking-inquiry/purchase-tracking-inquiry.component';
 import { AppInquiryPagingXComponent } from "app/impl/inquiry/app-inquiry/app-inquiry-paging-x/app-inquiry-paging-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ProdHoInquiryComponent } from "./prod-ho-inquiry/prod-ho-inquiry.component";
+import { ProdOfferingInquiryComponent } from "./prod-offering-inquiry/prod-offering-inquiry.component";
 
 @NgModule({
   imports: [
@@ -31,8 +33,10 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
   ],
   declarations: [
     AppInquiryPagingComponent,
-    PurchaseTrackingInquiryComponent,
-    AppInquiryPagingXComponent
+    AppInquiryPagingXComponent,
+    ProdHoInquiryComponent,
+    ProdOfferingInquiryComponent,
+    PurchaseTrackingInquiryComponent
   ]
 })
 export class InquiryModule { }

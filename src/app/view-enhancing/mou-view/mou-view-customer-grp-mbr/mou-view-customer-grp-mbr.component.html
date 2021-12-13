@@ -1,0 +1,37 @@
+<lib-ucSubsection [id]="'custGrpId'" [title]="'Customer Group Member'" [panel]="'custGrp'">
+</lib-ucSubsection>
+<div id="custGrp">
+  <div>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span translate class="thead-header">No</span></th>
+          <th><span translate class="thead-header">Customer Name</span></th>
+          <th><span translate class="thead-header">Customer Relationship</span></th>
+          <th><span translate class="thead-header">Notes</span></th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "MouCustGrpObjs.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "MouCustGrpObjs.length > 0">
+        <tr *ngFor="let item of MouCustGrpObjs;let i = index">
+          <td class="text-center">
+            {{i + 1}}
+          </td>
+          <td>
+            {{item.CustName}}
+          </td>
+          <td class="text-center">  
+            {{ CustRelationship }}        
+          </td>
+          <td class="text-center">
+            {{ item.CustGrpNotes }}         
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

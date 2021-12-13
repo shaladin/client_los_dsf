@@ -1,0 +1,60 @@
+<lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
+</lib-ucSubsection>
+<div id="financialData">
+  <div id="financialDataPersonal">
+    <div class="form-group row">
+      <label class="col-md-2" for="monthlyIncome" translate>Monthly Income </label>
+      <div class="col-md-4">
+        {{ MouCustPersonalFinDataObj.MonthlyIncomeAmt | number:'.2':'en-US' }}
+      </div>
+      <label class="col-md-2" for="monthlyExpense" translate>Monthly Expense </label>
+      <div class="col-md-4">
+        {{ MouCustPersonalFinDataObj.MonthlyExpenseAmt | number:'.2':'en-US' }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" for="sourceOfIncome" translate>Source of Income </label>
+      <div class="col-md-4">
+        {{ MouCustPersonalFinDataObj.MrSourceOfIncomeTypeCode }}
+      </div>
+      <label class="col-md-2" for="monthlyInstallment" translate>Monthly Installment </label>
+      <div class="col-md-4">
+        {{ MouCustPersonalFinDataObj.MonthlyInstallmentAmt | number:'.2':'en-US' }}
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="MrMaritalStatCode == 'MARRIED'">
+      <label class="col-md-2" translate>Join Income </label>
+      <div class="col-md-4">
+        {{ MouCustPersonalFinDataObj.IsJoinIncome == false? "No" : "Yes" }}
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="MouCustPersonalFinDataObj.IsJoinIncome == true && MrMaritalStatCode == 'MARRIED'">
+      <label class="col-md-2" for="spouseMonthlyIncome" translate>Spouse Monthly Income </label>
+      <div class="col-md-4">
+        {{ MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt | number:'.2':'en-US' }}
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 form-inline">
+          <label class="adInsLabel"> Total Monthly Income </label>
+        </div>
+        <div class="col-md-4 form-inline form-inline-right">
+          <label> {{ TotalMonthlyIncome | number:'.2':'en-US'}} </label>
+        </div>
+        <div class="col-md-2 form-inline">
+          <label class="adInsLabel"> Total Monthly Expense </label>
+        </div>
+        <div class="col-md-4 form-inline form-inline-right">
+          <label> {{ TotalMonthlyExpense | number:'.2':'en-US'}} </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 form-inline">
+          <label class="adInsLabel"> Nett Monthly Income </label>
+        </div>
+        <div class="col-md-4 form-inline form-inline-right">
+          <label> {{ NettMonthlyIncome | number:'.2':'en-US'}} </label>
+        </div>
+    </div>
+  </div>
+</div>

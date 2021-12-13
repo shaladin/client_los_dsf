@@ -46,6 +46,7 @@ import { ResThirdPartyRsltHObj } from 'app/shared/model/response/third-party-res
 import { AppCustAssetObj } from 'app/shared/model/app-cust-asset/app-cust-asset-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { AddressService } from 'app/shared/services/custAddr.service';
 
 @Component({
   selector: 'app-customer-data',
@@ -158,6 +159,7 @@ export class CustomerDataComponent implements OnInit {
   thirdPartyRsltHId: number;
   latestReqDtCheckIntegrator: Date;
   reqLatestJson: any;
+  listAddrRequiredOwnership: Array<string> = new Array();
 
   constructor(
     private fb: FormBuilder,
@@ -172,7 +174,7 @@ export class CustomerDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.GetGS();
+    await this.GetGS();
     this.inputAddressObjForLegal = new InputAddressObj();
     this.inputAddressObjForLegal.title = "Legal Address";
     this.inputAddressObjForLegal.showAllPhn = false;
@@ -181,6 +183,7 @@ export class CustomerDataComponent implements OnInit {
     this.inputAddressObjForResidence.showSubsection = false;
     this.inputAddressObjForResidence.showPhn3 = false;
     this.inputAddressObjForResidence.showOwnership = true;
+    this.inputAddressObjForResidence.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeResidence);
     this.inputAddressObjForResidence.showStayLength = true;
 
     this.inputAddressObjForMailing = new InputAddressObj();
@@ -213,6 +216,13 @@ export class CustomerDataComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  setOwnership(MrCustAddrTypeCode: string) : boolean {
+    if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+        return true;
+    }
+    return false;
   }
 
   checkIntegrator() {
@@ -279,18 +289,22 @@ export class CustomerDataComponent implements OnInit {
     }
 
   }
-  GetGS() {
+
+  async GetGS() {
     this.generalSettingObj = new GenericListByCodeObj();
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
     this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeOwnershipMandatoryAddrType);
 
-    this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
+    await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
         var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
         returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
         var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        let gsListOwnershipMandatoryType = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeOwnershipMandatoryAddrType);
+        this.listAddrRequiredOwnership = gsListOwnershipMandatoryType.GsValue.split(',');
         
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;

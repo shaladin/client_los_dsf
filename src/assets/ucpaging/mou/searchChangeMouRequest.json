@@ -87,19 +87,18 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "officeRoleCodes",
-            "datatype": "text",
+            "type": "dropdown",
             "name": "MOU.ORI_OFFICE_CODE",
-            "id": "OfficeCodeId",
+            "id": "OfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
             "ddlType": "all",
-            "isQueryIn": true,
+            "isQueryIn" : true,
             "url": "",
             "environment": "FOU",
-            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "Office Name",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
             "items": [],
             "itemsUrl": []
         }

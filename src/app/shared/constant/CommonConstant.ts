@@ -743,6 +743,7 @@ export class CommonConstant {
   public static LoadingFeeCountType_CountingYear = "CY";
   public static GSCodeFilterAppDataSalesOfficerCode = "FILTER_APP_DATA_SALES_OFFICER_CODE";
   public static GSCodeAgrStepToCheckSerialMandatoryEaaa = "AGR_STEP_TO_CHECK_SERIAL_MANDATORY_EAAA";
+  public static GSCodeOwnershipMandatoryAddrType = "OWNERSHIP_MANDATORY_BY_ADDR_TYPE";
   
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -956,6 +957,7 @@ export class CommonConstant {
 
   // GENERAL SETTING CODE
   public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
+  
 
   // JOIN TYPE
   public static JOIN_TYPE_INNER = "Inner";
@@ -1101,4 +1103,6 @@ export class CommonConstant {
     "CMPLTN": CommonConstant.AppStepCustCmpltn,
     "AEX": CommonConstant.AppStepAssetExpense
   }
+
+  public static CompanyTypePT = "PT";
 }

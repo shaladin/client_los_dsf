@@ -41,7 +41,7 @@ export class MouCustPersonalMainComponent implements OnInit {
   selectedCustNo: string = "";
   selectedNationalityCountryCode: string = "";
   custDataObj: CustDataObj;
-
+  SalutationObj: Array<KeyValueObj> = new Array();
   InputLookupCustomerObj: InputLookupObj = new InputLookupObj();
   InputLookupCountryObj: InputLookupObj = new InputLookupObj();
   IdTypeObj: Array<RefMasterObj>;
@@ -89,6 +89,11 @@ export class MouCustPersonalMainComponent implements OnInit {
       NoOfResidence: ['', [Validators.maxLength(4)]],
       Email3: ['', [Validators.maxLength(100), Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]],
       NoOfDependents: ['', [Validators.maxLength(4)]],
+      NickName: [''],
+      MrSalutationCode: [''],
+      CustPrefixName: [''],
+      CustSuffixName: [''],
+      IsAffiliateWithMf: [false],
     }));
 
     this.bindAllRefMasterObj();
@@ -123,6 +128,7 @@ export class MouCustPersonalMainComponent implements OnInit {
         IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
         TaxIdNo: response["CustObj"].TaxIdNo,
         IsVip: response["CustObj"].IsVip,
+        IsAffiliateWithMf: response["CustObj"].IsAffiliateWithMf
       });
       this.InputLookupCustomerObj.jsonSelect = { CustName: response["CustObj"].CustName };
       this.selectedCustNo = response["CustObj"].CustNo;
@@ -150,7 +156,11 @@ export class MouCustPersonalMainComponent implements OnInit {
         Email2: response["CustPersonalObj"].Email2,
         NoOfResidence: response["CustPersonalObj"].NoOfResidence,
         Email3: response["CustPersonalObj"].Email3,
-        NoOfDependents: response["CustPersonalObj"].NoOfDependents
+        NoOfDependents: response["CustPersonalObj"].NoOfDependents,
+        NickName: response["CustPersonalObj"].NickName,
+        MrSalutationCode:  response["CustPersonalObj"].MrSalutationCode,
+        CustPrefixName: response["CustPersonalObj"].CustPrefixName,
+        CustSuffixName: response["CustPersonalObj"].CustSuffixName
       });
 
 
@@ -209,6 +219,7 @@ export class MouCustPersonalMainComponent implements OnInit {
         IdExpiredDt: this.custDataPersonalObj.MouCustObj.IdExpiredDt != undefined ? formatDate(this.custDataPersonalObj.MouCustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : '',
         TaxIdNo: this.custDataPersonalObj.MouCustObj.TaxIdNo,
         IsVip: this.custDataPersonalObj.MouCustObj.IsVip,
+        IsAffiliateWithMf: this.custDataPersonalObj.MouCustObj.IsAffiliateWithMf
       });
       this.InputLookupCustomerObj.nameSelect = this.custDataPersonalObj.MouCustObj.CustName;
       this.InputLookupCustomerObj.jsonSelect = { CustName: this.custDataPersonalObj.MouCustObj.CustName };
@@ -244,7 +255,11 @@ export class MouCustPersonalMainComponent implements OnInit {
         Email2: this.custDataPersonalObj.MouCustPersonalObj.Email2,
         NoOfResidence: this.custDataPersonalObj.MouCustPersonalObj.NoOfResidence,
         Email3: this.custDataPersonalObj.MouCustPersonalObj.Email3,
-        NoOfDependents: this.custDataPersonalObj.MouCustPersonalObj.NoOfDependents
+        NoOfDependents: this.custDataPersonalObj.MouCustPersonalObj.NoOfDependents,
+        NickName: this.custDataPersonalObj.MouCustPersonalObj.NickName,
+        MrSalutationCode: this.custDataPersonalObj.MouCustPersonalObj.MrSalutationCode,
+        CustPrefixName: this.custDataPersonalObj.MouCustPersonalObj.CustPrefixName,
+        CustSuffixName: this.custDataPersonalObj.MouCustPersonalObj.CustSuffixName
       });
 
       this.selectedNationalityCountryCode = this.custDataPersonalObj.MouCustPersonalObj.NationalityCountryCode;
@@ -363,6 +378,16 @@ export class MouCustPersonalMainComponent implements OnInit {
         }
       }
     );
+
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSalutation }).toPromise().then(
+      (response) => {
+        this.SalutationObj = response[CommonConstant.ReturnObj];
+        if (this.custDataPersonalObj.MouCustPersonalObj.MrSalutationCode == null && this.custDataPersonalObj.MouCustObj.MouCustId == 0) {
+          this.parentForm.controls[this.identifier].patchValue({
+            MrSalutationCode: this.SalutationObj[0].Key
+          });
+        }
+    });
   }
 
   clearExpDt() {

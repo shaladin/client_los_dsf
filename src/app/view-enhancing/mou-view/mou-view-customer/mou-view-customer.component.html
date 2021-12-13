@@ -1,0 +1,11 @@
+<div *ngIf="isBindDataDone == true">
+
+  <div *ngIf="MrCustTypeCode == 'PERSONAL'">
+    <app-mou-view-customer-personal [custDataPersonalObj]="custDataPersonalObj" [CountryName]="CountryName"></app-mou-view-customer-personal>
+  </div>
+  
+  <div *ngIf="MrCustTypeCode == 'COMPANY'">
+    <app-mou-view-customer-company [custDataCompanyObj]="custDataCompanyObj"></app-mou-view-customer-company>
+  </div>
+</div>
+

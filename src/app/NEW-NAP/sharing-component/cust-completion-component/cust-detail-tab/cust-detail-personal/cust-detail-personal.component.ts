@@ -73,6 +73,7 @@ export class CustDetailPersonalComponent implements OnInit {
     this.lookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.isRequired = false;
     this.lookupCustGrpObj.isReady = true;
+    this.lookupCustGrpObj.isClear = true;
     await this.GetRefMaster();
     this.GetData();
   }

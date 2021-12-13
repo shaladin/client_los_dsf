@@ -31,6 +31,7 @@ export class MouCustCompanyMgmntShrholderObj {
     PublicName: string;
     PublicIdentityNo: string;
     MrShrholderTypeCode: string;
+    MrShrholderTypeName: string;
 
     constructor() {
       this.MouCustCompanyId = 0;

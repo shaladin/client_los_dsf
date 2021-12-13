@@ -41,10 +41,12 @@ export class MouCustPersonalFinancialComponent implements OnInit {
       SpouseMonthlyIncomeAmt: [0],
       TotalMonthlyIncome: [this.MouCustPersonalFinDataObj.MonthlyIncomeAmt + this.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt],
       TotalMonthlyExpense: [this.MouCustPersonalFinDataObj.MonthlyExpenseAmt + this.MouCustPersonalFinDataObj.MonthlyInstallmentAmt],
-      NettMonthlyIncome: [(this.MouCustPersonalFinDataObj.MonthlyIncomeAmt + this.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt)-(this.MouCustPersonalFinDataObj.MonthlyExpenseAmt + this.MouCustPersonalFinDataObj.MonthlyInstallmentAmt)]
+      NettMonthlyIncome: [(this.MouCustPersonalFinDataObj.MonthlyIncomeAmt + this.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt)-(this.MouCustPersonalFinDataObj.MonthlyExpenseAmt + this.MouCustPersonalFinDataObj.MonthlyInstallmentAmt)],
+      OtherIncomeAmt: [0]
     }));
 
     this.bindSourceOfIncomeObj();
+    this.bindAppCustPersonalFinData();
   }
 
   setSpouseMonthlyIncome(){
@@ -66,16 +68,17 @@ export class MouCustPersonalFinancialComponent implements OnInit {
         MrSourceOfIncomeTypeCode: this.MouCustPersonalFinDataObj.MrSourceOfIncomeTypeCode,
         IsJoinIncome: this.MouCustPersonalFinDataObj.IsJoinIncome,
         SpouseMonthlyIncomeAmt: this.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt,
+        OtherIncomeAmt: this.MouCustPersonalFinDataObj.OtherIncomeAmt
       });
       this.ChangeTotalMonthly();
     }
   }
 
   bindSourceOfIncomeObj(){
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {"RefMasterTypeCode": CommonConstant.RefMasterTypeCodeSourceIncome}).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {"RefMasterTypeCode": CommonConstant.RefMasterTypeCodeSourceIncome}).toPromise().then(
       (response) => {
         this.SourceOfIncomeObj = response[CommonConstant.ReturnObj];
-        if(this.SourceOfIncomeObj.length > 0){
+        if(this.SourceOfIncomeObj.length > 0 && this.MouCustPersonalFinDataObj.MouCustPersonalFinDataId == 0){
           this.parentForm.controls[this.identifier].patchValue({
             MrSourceOfIncomeTypeCode: this.SourceOfIncomeObj[0].Key
           });
@@ -85,7 +88,7 @@ export class MouCustPersonalFinancialComponent implements OnInit {
   }
 
   ChangeTotalMonthly(){
-    let TotalMonthlyIncome = this.parentForm.controls[this.identifier].get("MonthlyIncomeAmt").value + this.parentForm.controls[this.identifier].get("SpouseMonthlyIncomeAmt").value;
+    let TotalMonthlyIncome = this.parentForm.controls[this.identifier].get("MonthlyIncomeAmt").value + this.parentForm.controls[this.identifier].get("SpouseMonthlyIncomeAmt").value  + this.parentForm.controls[this.identifier].get("OtherIncomeAmt").value;
     let TotalMonthlyExpense = this.parentForm.controls[this.identifier].get("MonthlyExpenseAmt").value + this.parentForm.controls[this.identifier].get("MonthlyInstallmentAmt").value;
     this.parentForm.controls[this.identifier].patchValue({
       TotalMonthlyIncome: TotalMonthlyIncome,
