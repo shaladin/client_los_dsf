@@ -12,8 +12,8 @@
     </div>
     <div *ngIf="MouType == 'FACTORING'">
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Plafond Amount</label>
-        <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{PlafondAmt | number}} </label>
+        <label class="col-md-2 adInsLabel" translate>Remaining Plafond Amount</label>
+        <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{PlafondAmt - RealisationAmt | number:'.2':'en-US'}} </label>
 
         <label class="col-md-2 adInsLabel" translate>Realisation Amount</label>
         <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{RealisationAmt | number}} </label>
@@ -149,8 +149,8 @@
         <label class="col-md-2 adInsLabel" translate>WoP </label>
         <label class="col-md-4 adInsLabel" translate>{{dictMasterCode['WopCode']}} </label>
 
-        <label class="col-md-2 adInsLabel" translate>Realisation Amount</label>
-        <label class="col-md-4 adInsLabel" translate>{{RealisationAmt | number}} </label>
+        <label class="col-md-2 adInsLabel" translate>Realisation Amount </label>
+        <label class="col-md-4 adInsLabel" translate>{{RealisationAmt | number:'.2':'en-US'}} </label>
       </div>
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Term of Payment (in Days) </label>

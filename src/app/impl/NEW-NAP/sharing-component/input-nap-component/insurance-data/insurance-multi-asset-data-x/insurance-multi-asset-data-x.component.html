@@ -295,7 +295,7 @@
                   [panel]="'insuranceCoverage'">
                 </lib-ucSubsection>
                 <div id="insuranceCoverage">
-                  <div [hidden]="InsuranceDataForm.controls.InsLength.value <= 12" class="form-group row">
+                  <div class="form-group row">
                     <label class="col-md-2" for="mainCvg" translate>Main Coverage</label>
                     <div class="col-md-4">
                       <select class="form-control width-75-per" id="mainCvg" formControlName="InsMainCvgType">
@@ -310,7 +310,7 @@
                       </button>
                     </div>
                   </div>
-                  <div [hidden]="InsuranceDataForm.controls.InsLength.value <= 12" class="form-group row">
+                  <div class="form-group row">
                     <label class="col-md-2" for="startDt" translate>Additional Coverage</label>
                     <div class="col-md-10">
                       <label formArrayName="InsAddCvgTypes"

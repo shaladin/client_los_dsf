@@ -757,7 +757,6 @@ export class MouRequestAddcollXComponent implements OnInit {
           this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
           this.maxPrcnt = this.collateralObj.MaxCollPrcnt - e.SumCollateralPrcnt;
-          this.CollateralPortionTypeChange();
 
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
@@ -845,6 +844,8 @@ export class MouRequestAddcollXComponent implements OnInit {
 
           this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
+
+          this.CollateralPortionTypeChange();
 
           this.AddCollForm.controls.SelfOwner.disable();
           this.AddCollForm.controls.CopyFromLegal.disable();

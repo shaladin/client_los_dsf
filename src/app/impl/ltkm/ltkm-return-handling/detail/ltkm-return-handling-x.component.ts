@@ -59,6 +59,7 @@ import { LtkmCustAddrObj } from 'app/shared/model/ltkm/ltkm-cust-addr-obj.model'
 import { AppCustSocmedObj } from 'app/shared/model/app-cust-socmed-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { AddressService } from 'app/shared/services/custAddr.service';
 @Component({
     selector: 'app-ltkm-return-handling-x',
     templateUrl: './ltkm-return-handling-x.component.html',
@@ -189,7 +190,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     listLtkmCustCoyFinData: Array<LtkmCustCompanyFinDataObj> = new Array<LtkmCustCompanyFinDataObj>();
     listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
     listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
-
+    listAddrRequiredOwnership: Array<string> = new Array();
     AttrGroup: string = CommonConstant.AttrGroupCustPersonalOther;
     AttrGroupFinData: string = CommonConstant.AttrGroupCustPersonalFinData;
     isLockMode: boolean = true;
@@ -209,7 +210,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         private toastr: NGXToastrService,
         private route: ActivatedRoute,
         private cookieService: CookieService,
-        private claimTaskService: ClaimTaskService) {
+        private claimTaskService: ClaimTaskService,
+        private addressService: AddressService) {
         this.route.queryParams.subscribe(params => {
             if (params["AppId"] != undefined && params["AppId"] != null) {
                 this.appId = params["AppId"];
@@ -233,16 +235,20 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
         this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
 
+        await this.getAddrTypeOwnershipRequired();
+
         this.inputAddressObjForLegal = new InputAddressObj();
         this.inputAddressObjForLegal.title = "Legal Address";
         this.inputAddressObjForLegal.showAllPhn = false;
         this.inputAddressObjForLegal.showOwnership = true;
+        this.inputAddressObjForLegal.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
         this.inputAddressObjForLegal.showStayLength = true;
 
         this.inputAddressObjForResidence = new InputAddressObj();
         this.inputAddressObjForResidence.showSubsection = false;
         this.inputAddressObjForResidence.showPhn3 = false;
         this.inputAddressObjForResidence.showOwnership = true;
+        this.inputAddressObjForResidence.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeResidence);
         this.inputAddressObjForResidence.showStayLength = true;
 
         this.inputAddressObjForMailing = new InputAddressObj();
@@ -253,11 +259,13 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         this.inputAddressObjForLegalCoy.title = "Company Legal Address";
         this.inputAddressObjForLegalCoy.showPhn3 = false;
         this.inputAddressObjForLegalCoy.showOwnership = true;
+        this.inputAddressObjForLegalCoy.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
 
         this.inputAddressObjForMailingCoy = new InputAddressObj();
         this.inputAddressObjForMailingCoy.showSubsection = false;
         this.inputAddressObjForMailingCoy.showPhn3 = false;
         this.inputAddressObjForMailingCoy.showOwnership = true;
+        this.inputAddressObjForMailingCoy.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeMailing);
 
         await this.bindCustTypeObj();
         this.initAddrObj();
@@ -292,7 +300,18 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         else if (this.WfTaskListId > 0) {
           this.claimTaskService.ClaimTask(this.WfTaskListId);
         }
-      }
+    }
+
+    async getAddrTypeOwnershipRequired(){
+        this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
+    }
+
+    setOwnership(MrCustAddrTypeCode: string) : boolean {
+        if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+            return true;
+        }
+        return false;
+    }
 
     SaveForm() {
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
