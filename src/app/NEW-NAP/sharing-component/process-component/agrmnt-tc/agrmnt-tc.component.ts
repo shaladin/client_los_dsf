@@ -125,7 +125,6 @@ export class AgrmntTcComponent implements OnInit {
     var listTC = this.parentForm.get(this.identifier) as FormArray
     var item = listTC.at(index);
     item.patchValue({
-      PromisedDt: null,
       ExpiredDt: null
     });
     this.ReconstructForm();
