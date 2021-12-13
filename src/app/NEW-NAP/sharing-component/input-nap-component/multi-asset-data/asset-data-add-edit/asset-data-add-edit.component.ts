@@ -784,7 +784,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     await this.GetListAddr();
 
-    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
       map((response: AppObj) => {
         this.appData = response;
         return response;
@@ -798,8 +798,8 @@ export class AssetDataAddEditComponent implements OnInit {
 
         return forkJoin([getVendorSchmCode, getAssetCond, getAssetType, getAssetSchm, RegexSerialNo]);
       })
-    ).subscribe(
-      (response) => {
+    ).toPromise().then(
+      async (response) => {
         this.vendorSchmCode = response[0];
         this.bindAccessories();
         this.returnAssetConditionObj = response[1]["DDLRefProdComptCode"];
@@ -838,9 +838,9 @@ export class AssetDataAddEditComponent implements OnInit {
 
         this.GenerataAppAssetAttr(false);
 
-        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+        await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           Code: assetType["CompntValue"]
-        }).subscribe(
+        }).toPromise().then(
           (response: any) => {
             while (this.items.length) {
               this.items.removeAt(0);
@@ -863,19 +863,7 @@ export class AssetDataAddEditComponent implements OnInit {
                   this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
                 }
               }
-            }
-
-            if (this.returnAppAssetObj != undefined || this.returnAppAssetObj != null) {
-              for (let i = 0; i < this.items.length; i++) {
-                if (this.items.controls[i] != null) {
-                  this.items.controls[i]['controls']['SerialNoValue'].value = this.returnAppAssetObj["SerialNo" + (i + 1)];
-                  if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No") {
-                    this.indexChassis = i;
-                  }
-                }
-              }
-              this.GetThirdPartyResultH();
-            }
+            }           
           });
 
         let arrCritSuppl = new Array<CriteriaObj>();
@@ -984,6 +972,23 @@ export class AssetDataAddEditComponent implements OnInit {
           this.ChangeAssetCondition();
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
+
+          if (this.returnAppAssetObj) 
+          {
+            for (let i = 0; i < this.items.length; i++) 
+            {
+              if (!this.items.controls[i]) continue;
+              
+              this.items.controls[i].patchValue({
+                'SerialNoValue' : this.returnAppAssetObj["SerialNo" + (i + 1)]
+              });
+              this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+              if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No"){
+                this.indexChassis = i;
+              }
+            }
+            this.GetThirdPartyResultH();
+          }
         });
 
       this.InputLookupCityIssuerObj.nameSelect = this.returnAppAssetObj.TaxCityIssuer;
