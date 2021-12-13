@@ -32,6 +32,7 @@ import { environment } from 'environments/environment';
 import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail-x',
@@ -76,6 +77,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   PODt: Date = new Date();
   isHasPO: boolean = false;
   LobCode: string;
+  DeliveryDt: Date = new Date();
 
   constructor(
     private httpClient: HttpClient,
@@ -186,6 +188,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           });
           console.log("AAAAAAAAAA");
           if (item.DeliveryDt != null) {
+            this.DeliveryDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'));
             let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
             if (new Date(tempDt) < devDt) {
               this.minDt = devDt;
@@ -318,6 +321,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
               });
               console.log("AAAAAAAAAA");
               if (item.DeliveryDt != null) {
+                this.DeliveryDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'));
                 let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
                 if (new Date(tempDt) < devDt) {
                   this.minDt = devDt;
@@ -423,6 +427,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
             });
             console.log("AAAAAAAAAA");
             if (item.DeliveryDt != null) {
+              this.DeliveryDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'));
               let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
               if (new Date(tempDt) < devDt) {
                 this.minDt = devDt;
@@ -452,6 +457,10 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
 
   SaveForm() {
     if (this.doList.length > 0) {
+      if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
+        this.toastr.warningMessage(ExceptionConstantX.EFF_DATE_MUST_LOWER_THAN_DEL_DT);
+        return;
+      }
       var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
       reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
       reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
@@ -484,6 +493,10 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
     else {
+      if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
+        this.toastr.warningMessage(ExceptionConstantX.EFF_DATE_MUST_LOWER_THAN_DEL_DT);
+        return;
+      }
       var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
       reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
       reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
