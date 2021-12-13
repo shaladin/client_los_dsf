@@ -53,10 +53,10 @@ export class PreGoLiveXComponent implements OnInit {
   AgrmntObj: AgrmntObj = new AgrmntObj();
   ReqByIdObj: GenericObj = new GenericObj();
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-
+  ReturnName: string = "DO";
   IsCheckedAll: boolean = false;
-
-
+  custType: string = CommonConstant.CustTypePersonal;
+  isOktoBack: boolean = true;
   MainInfoForm = this.fb.group({
     AgrmntCreatedDt: [''], //DSF INTERNAL-0229 Udin : Lepas validasi AgrmntDt mandatory
     EffectiveDt: ['', Validators.required],
@@ -115,6 +115,9 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    if (this.BizTemplateCode == CommonConstant.CFNA) {
+      this.ReturnName = "Cust Confirm"
+    }
     this.businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     this.MainInfoForm.patchValue({
       GoLiveEstimated: formatDate(this.businessDt, 'yyyy-MM-dd', 'en-US'),
@@ -150,18 +153,20 @@ export class PreGoLiveXComponent implements OnInit {
         this.AgrmntResult = response;
         this.MainInfoForm.patchValue({
           AgrmntCreatedDt: formatDate(this.AgrmntResult.AgrmntCreatedDt, 'yyyy-MM-dd', 'en-US'),
+          GoLiveEstimated: formatDate(this.AgrmntResult.GoLiveDt, 'yyyy-MM-dd', 'en-US'),
         })
-        if(this.AgrmntResult.EffectiveDt==null){
+        if (this.AgrmntResult.EffectiveDt == null) {
           this.MainInfoForm.patchValue({
             EffectiveDt: formatDate(this.businessDt, 'yyyy-MM-dd', 'en-US'),
           })
-        }else{
+        } else {
           this.MainInfoForm.patchValue({
             EffectiveDt: formatDate(this.AgrmntResult.EffectiveDt, 'yyyy-MM-dd', 'en-US'),
           })
         }
         this.AgrmntId = this.AgrmntResult.AgrmntId;
         this.AppId = this.AgrmntResult.AppId;
+        this.calculateAddInterest();
       });
 
     const agrObj = { Id: this.AgrmntId };
@@ -176,6 +181,7 @@ export class PreGoLiveXComponent implements OnInit {
       (response) => {
         this.agrNo = response[0]['AgrmntNo'];
         this.custNo = response[1]['CustNo'];
+        this.custType = response[1]['MrCustTypeCode'];
         this.AppObj = response[2];
         this.SysConfigResultObj = response[3];
 
@@ -203,6 +209,8 @@ export class PreGoLiveXComponent implements OnInit {
 
             }
           )
+        }else if (this.BizTemplateCode == CommonConstant.CFNA && this.custType == CommonConstant.CustTypeCompany) {
+          this.isOktoBack = false;
         }
       }
     );
@@ -606,5 +614,24 @@ export class PreGoLiveXComponent implements OnInit {
       (response) => {
         this.ApvAmt = response["Result"];
       });
+  }
+
+  Return(){
+    let message = "Are you sure you want to go back to "+this.ReturnName+"?";
+    if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W){
+      message = message+", It will delete all Insurance Order for this Agreement"
+    }
+    if (confirm(message)) {
+      let obj = {
+        AgrmntId : this.AgrmntId,
+        TaskListId : this.TaskListId
+      }
+      let url = environment.isCore ? URLConstantX.BackToDeliveryOrderCustConfirmV2 : URLConstantX.BackToDeliveryOrderCustConfirm;
+      this.http.post(url, obj).subscribe(
+        (response) => {
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
+          this.toastr.successMessage(response['message']);
+        });
+    }
   }
 }

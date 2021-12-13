@@ -32,7 +32,7 @@
                 </div>
                 <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
                 <div class="col-md-4">
-                  <input type="date" id="EffectiveDt" class="form-control adInsInput name" formControlName="EffectiveDt"
+                  <input type="date" id="EffectiveDt" class="form-control adInsInput name" formControlName="EffectiveDt" (change)="checkAddInterestPaidBy()"
                     min="{{minDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.EffectiveDt">
                   </lib-uc-show-errors>
@@ -43,7 +43,7 @@
                   class="col-md-2 adins-required-label" translate>Additional Interest
                   Paid By</label>
                 <div *ngIf="IsGSAddInerestExists" class="col-md-4">
-                  <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy"
+                  <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy" (change)="changeAddInterestPaidBy()"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetForm.controls.AdditionalInterestPaidBy.invalid }">
                     <option value="">--Select One--</option>
                     <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
@@ -52,7 +52,7 @@
                     [submit]="AppTcForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adinsLabel" for="GoLiveEstimated" translate>Golive Date Estimation</label>
+                <label class="col-md-2 adins-required-label" for="GoLiveEstimated" translate>Golive Date Estimation</label>
                 <div class="col-md-4">
                   <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
                     formControlName="GoLiveEstimated" min="{{minDt | date:'yyyy-MM-dd'}}">
