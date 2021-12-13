@@ -27,6 +27,7 @@ export class AgrmntTcComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
   @Input() identifier: string = "TCList";
+  @Input() IsFromOutstandingTc: boolean = false;
   businessDt: Date;
   IsOpl: boolean = false;
 
@@ -148,7 +149,9 @@ export class AgrmntTcComponent implements OnInit {
       console.log(priorTo);
       if (isMandatory) {
         //logic PriorTo
-        if(priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
+        if(!this.IsFromOutstandingTc){
+          if(priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
+        }
         if (isChecked) {
           tempExpiredDt.enable();
           if(isExpDtMandatory){
