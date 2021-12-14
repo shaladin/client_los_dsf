@@ -4,6 +4,7 @@ export class MouCustPersonalContactPersonObj {
     ContactPersonName: string; 
     MrIdTypeCode: string; 
     IdNo: string; 
+    IdExpiredDt : Date;
     BirthPlace: string; 
     BirthDt: Date; 
     MotherMaidenName: string; 
@@ -35,11 +36,21 @@ export class MouCustPersonalContactPersonObj {
     FullAddr: string;
     IsGuarantor: boolean;
     RowVersion: string;
-
+    PhnArea1 : string;
+    Phn1 : string;
+    PhnExt1 : string;
+    PhnArea2 : string;
+    Phn2 : string;
+    PhnExt2 : string;
+    PhnArea3 : string;
+    Phn3 : string;
+    PhnExt3 : string;
+    
     constructor()
     {
       this.MouCustPersonalContactPersonId = 0;
       this.IsGuarantor = false;
+      this.IdExpiredDt = new Date();
       this.RowVersion = "";
     }
 }
