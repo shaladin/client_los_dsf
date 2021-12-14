@@ -744,6 +744,7 @@ export class CommonConstant {
   public static GSCodeFilterAppDataSalesOfficerCode = "FILTER_APP_DATA_SALES_OFFICER_CODE";
   public static GSCodeAgrStepToCheckSerialMandatoryEaaa = "AGR_STEP_TO_CHECK_SERIAL_MANDATORY_EAAA";
   public static GSCodeOwnershipMandatoryAddrType = "OWNERSHIP_MANDATORY_BY_ADDR_TYPE";
+  public static GsCodePasswordRegex = "PASSWORD_REGEX";
   
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
