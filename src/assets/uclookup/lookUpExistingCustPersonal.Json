@@ -1,5 +1,6 @@
 {
-    "sectionTitle": "Customer Personal",
+    "title":"Lookup - Customer Personal",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

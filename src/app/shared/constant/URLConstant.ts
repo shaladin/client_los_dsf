@@ -29,7 +29,7 @@ export class URLConstant {
   public static AddNewApplication = environment.losUrl + "/v1" + "/Application/AddNewApplication";
   public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/Application/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationFromCopy";
-  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2.1" + "/Application/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2.2" + "/Application/AddNewApplicationFromCopy";
   public static AddNewApplicationOplFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationOplFromCopy";
 
   // APP Application
@@ -783,6 +783,9 @@ export class URLConstant {
   public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/v1" + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
   public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/v1" + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
 
+  //MOU CUST FIN DATA ATTR
+  public static GetListMouCustFinDataAttrContentByMouCustIdAndListAttrGroup = environment.losUrl + "/v1" + "/MouCustFinDataAttrContent/GetListMouCustFinDataAttrContentByMouCustIdAndListAttrGroup";
+
   // REF COUNTRY
   public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/v1" + "/RefCountry/GetRefCountryByCountryCode";
 
@@ -826,7 +829,7 @@ export class URLConstant {
   public static SubmitDeliveryOrderData = environment.losUrl + "/v1" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static SubmitDeliveryOrderDataV2 = environment.losUrl + "/v2" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static SubmitDeliveryOrderDataV2_1 = environment.losUrl + "/v2.1" + "/DeliveryOrder/SubmitDeliveryOrderData";
-  public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
+  public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocList/GetListActiveAssetDocListByAssetTypeCode";
   public static GetDeliveryOrderHByAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderHByAgrmntId";
   public static GetAssetListForDOMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAsset";
   public static GetListDeliveryOrderHByAppIdAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetListDeliveryOrderHByAppIdAgrmntId";
@@ -934,8 +937,10 @@ export class URLConstant {
   public static GetListAppCustMainDataByAppId = environment.losUrl + "/v1" + "/AppCust/GetListAppCustMainDataByAppId";
   public static AddCustMainDataPersonal = environment.losUrl + "/v1" + "/AppCust/AddCustMainDataPersonal";
   public static EditCustMainDataPersonal = environment.losUrl + "/v1" + "/AppCust/EditCustMainDataPersonal";
+  public static EditCustMainDataPersonalV2 = environment.losUrl + "/v2" + "/AppCust/EditCustMainDataPersonal";
   public static AddCustMainDataCompanyData = environment.losUrl + "/v1" + "/AppCust/AddCustMainDataCompanyData";
   public static EditCustMainDataCompanyData = environment.losUrl + "/v1" + "/AppCust/EditCustMainDataCompanyData";
+  public static EditCustMainDataCompanyDataV2 = environment.losUrl + "/v2" + "/AppCust/EditCustMainDataCompanyData";
   public static DeleteAppCustMainData = environment.losUrl + "/v1" + "/AppCust/DeleteAppCustMainData";
   public static CheckAppCustShareholderMandatoryData = environment.losUrl + "/v1" + "/AppCust/CheckAppCustShareholderMandatoryData";
   public static DeleteAllAppCust = environment.losUrl + "/v1" + "/AppCust/DeleteAllAppCust";
@@ -1116,6 +1121,7 @@ export class URLConstant {
   public static CalculateInsurance = environment.losUrl + "/v1" + "/AppIns/CalculateInsurance";
   public static GetCuCoInsLength = environment.losUrl + "/v1" + "/AppIns/GetCuCoInsLength";
   public static ExecuteInsRateCvgRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateCvgRule";
+  public static ExecuteInsRateCvgRuleV2_1 = environment.losUrl + "/v2.1" + "/AppIns/ExecuteInsRateCvgRule";
   
 
   //AGREEMENT DOC

@@ -69,6 +69,8 @@ import { DocumentViewXComponent } from 'app/impl/NEW-NAP/business-process/admin-
 import { NewPurchaseOrderDetailXComponent } from 'app/impl/NEW-NAP/admin-process/new-purchase-order/new-purchase-order-detail-x/new-purchase-order-detail-x.component';
 import { DocSignerDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-detail/doc-signer-detail-x.component';
 import { DocSignerPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-paging/doc-signer-paging-x.component';
+import { DeliveryOrderMultiAssetXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-x.component';
+import { CustConfirmationPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-paging/cust-confirmation-paging-x.component';
 
 
 const routes: Routes = [
@@ -528,6 +530,20 @@ const routes: Routes = [
         component: NewPurchaseOrderDetailXComponent,
         data: {
           title: "Purchase Order Detail"
+        }
+      },
+      {
+        path: PathConstantX.DO_MULTI_ASSET_PAGING_X,
+        component: DeliveryOrderMultiAssetXComponent,
+        data: {
+          title: "Delivery Multi Asset Paging"
+        }
+      },
+      {
+        path: PathConstantX.CUST_CONFIRM_PAGING_X,
+        component: CustConfirmationPagingXComponent,
+        data: {
+          title: 'Customer Confirmation Paging'
         }
       }
     ]

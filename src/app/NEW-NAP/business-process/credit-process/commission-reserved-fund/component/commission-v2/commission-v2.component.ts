@@ -427,6 +427,7 @@ export class CommissionV2Component implements OnInit {
 
       this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYield, obj).subscribe(
         (response) => {
+          console.log(response);
           let idxStart = 0;
           let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
           let totalSupplEmpData = this.CommissionForm.value[this.identifierSupplierEmp].length;

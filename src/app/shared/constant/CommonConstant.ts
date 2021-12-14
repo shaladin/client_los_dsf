@@ -463,6 +463,10 @@ export class CommonConstant {
   public static PAY_FREQ_MONTHLY = "MONTHLY";
   public static INST_SCHM_REGULAR_FIXED = "RF";
 
+  // INTEREST CALC BASED
+  public static TOP_INTEREST_CALC_BASED = "TOP"; 
+  public static INTEREST_INTEREST_CALC_BASED = "INTEREST"; 
+
   // MR ID TYPE CODE
   public static MrIdTypeCodeEKTP = "EKTP";
   public static MrIdTypeCodeSIM = "SIM";
@@ -633,6 +637,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
   public static RefMasterTypeCodePublicType = "PUBLIC_TYPE";
   public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
+  public static RefMasterTypeCodeInterestCalcBased = "INTEREST_CALC_BASED"; 
+
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
@@ -737,6 +743,7 @@ export class CommonConstant {
   public static LoadingFeeCountType_CountingYear = "CY";
   public static GSCodeFilterAppDataSalesOfficerCode = "FILTER_APP_DATA_SALES_OFFICER_CODE";
   public static GSCodeAgrStepToCheckSerialMandatoryEaaa = "AGR_STEP_TO_CHECK_SERIAL_MANDATORY_EAAA";
+  public static GSCodeOwnershipMandatoryAddrType = "OWNERSHIP_MANDATORY_BY_ADDR_TYPE";
   
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -950,6 +957,7 @@ export class CommonConstant {
 
   // GENERAL SETTING CODE
   public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
+  
 
   // JOIN TYPE
   public static JOIN_TYPE_INNER = "Inner";
@@ -1095,4 +1103,6 @@ export class CommonConstant {
     "CMPLTN": CommonConstant.AppStepCustCmpltn,
     "AEX": CommonConstant.AppStepAssetExpense
   }
+
+  public static CompanyTypePT = "PT";
 }

@@ -5,7 +5,7 @@
         {
             "type": "officeRoleCodes",
             "datatype": "text",
-            "name": "TaskOfficeCode",
+            "name": "MOU.ORI_OFFICE_CODE",
             "id": "OfficeCodeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -40,6 +40,12 @@
     "name": "searchMouRequestForExecV2"
   },
     "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "SLA",
+            "name": "IndicatorSLA"
+        },
         {
             "type": "label",
             "position": "left",
@@ -89,6 +95,11 @@
         }
     ],
     "bodyList": [
+        {
+            "type": "sla",
+            "position": "center",
+            "property": "IndicatorSLA"
+        },
         {
             "type": "text",
             "position": "left",

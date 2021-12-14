@@ -1,5 +1,6 @@
 {
-    "title": "Job Position",
+    "title": "Lookup - Job Position",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

@@ -29,7 +29,7 @@
         {
             "type": "officeRoleCodes",
             "datatype": "text",
-            "name": "TaskOfficeCode",
+            "name": "A.ORI_OFFICE_CODE",
             "id": "OfficeCodeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -53,6 +53,12 @@
             "position": "center",
             "label": "SLA",
             "name": "IndicatorSLA"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Claim By",
+            "name": "Assignee"
         },
         {
             "type": "sort",
@@ -85,6 +91,11 @@
             "property": "IndicatorSLA"
         },
         {
+            "type": "text",
+            "position": "center",
+            "property": "Assignee"
+        },
+        {
             "type": "link",
             "position": "center",
             "property": "ApplicationNo",
@@ -113,16 +124,59 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "NAP_ADM_PRCS_INVOICE_VERIF_DETAIL",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AppId",
-                            "property": "AppId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_INVOICE_VERIF_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type" : "TaskListId",
+                                        "property" : "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type" : "TaskListId",
-                            "property" : "Id"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_INVOICE_VERIF_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type" : "TaskListId",
+                                        "property" : "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }

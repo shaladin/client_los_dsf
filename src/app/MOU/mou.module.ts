@@ -143,6 +143,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
 import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
 import { MouCustMgmntShrholderPublicComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
 import { MouCustTabXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-tab-x.component';
+import { MouCustAttrContentComponentComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-attr-content-component/mou-cust-attr-content-component.component";
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -314,8 +315,9 @@ export const customCurrencyMaskConfig = {
     LegalReviewDetailXComponent,
     ChangeMouDetailDealerFinancingXComponent,
     ChangeMouDetailFactoringXComponent,
+    MouCustTabXComponent,
     MouCancelDetailComponent,
-    MouCustTabXComponent
+    MouCustAttrContentComponentComponent
   ],
   exports: [],
   providers: [NGXToastrService],

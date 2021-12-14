@@ -95,6 +95,8 @@ import { DoAssetDetailXComponent } from "app/impl/NEW-NAP/business-process/admin
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { DeliveryOrderAssetOwnerComponent } from './delivery-order-component/delivery-order-asset-owner/delivery-order-asset-owner.component';
 import { DeliveryOrderAssetLocationComponent } from './delivery-order-component/delivery-order-asset-location/delivery-order-asset-location.component';
+import { DeliveryOrderMultiAssetXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-x.component";
+import { CustConfirmationPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-paging/cust-confirmation-paging-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -203,7 +205,9 @@ export const customCurrencyMaskConfig = {
     CreateDoMultiAssetXComponent,
     DoAssetDetailXComponent,
     DeliveryOrderAssetOwnerComponent,
-    DeliveryOrderAssetLocationComponent
+    DeliveryOrderAssetLocationComponent,
+    DeliveryOrderMultiAssetXComponent,
+    CustConfirmationPagingXComponent
   ],
   providers: [
     NGXToastrService,

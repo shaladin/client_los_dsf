@@ -144,28 +144,79 @@
         "type": "action",
         "position": "center",
         "action": [
-          {
-            "type": "edit",
-            "path": "/Ltkm/Verify/Detail",
-            "param": [
-              {
-                "type": "LtkmCustId",
-                "property": "LtkmCustId"
-              },
-              {
-                "type": "WfTaskListId",
-                "property": "Id"
-              },
-              {
-                "type": "LtkmNo",
-                "property": "LtkmNo"
-              },
-              {
-                "type": "MrCustTypeCode",
-                "property": "MrCustTypeCode"
-              }
-            ]
-          }
+            {
+                "type": "switch",
+                "case": [
+                    {
+                        "conditions": [
+                            {
+                                "isUser": true,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "LTKM_VERIFY_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "LtkmCustId",
+                                "property": "LtkmCustId"
+                              },
+                              {
+                                "type": "WfTaskListId",
+                                "property": "Id"
+                              },
+                              {
+                                "type": "LtkmNo",
+                                "property": "LtkmNo"
+                              },
+                              {
+                                "type": "MrCustTypeCode",
+                                "property": "MrCustTypeCode"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "isUser": false,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "LTKM_VERIFY_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "LtkmCustId",
+                                "property": "LtkmCustId"
+                              },
+                              {
+                                "type": "WfTaskListId",
+                                "property": "Id"
+                              },
+                              {
+                                "type": "LtkmNo",
+                                "property": "LtkmNo"
+                              },
+                              {
+                                "type": "MrCustTypeCode",
+                                "property": "MrCustTypeCode"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    }
+                ]
+            }
         ]
       }
     ]

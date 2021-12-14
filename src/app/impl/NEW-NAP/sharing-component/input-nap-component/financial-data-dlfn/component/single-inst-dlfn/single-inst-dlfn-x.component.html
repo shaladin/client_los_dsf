@@ -24,11 +24,15 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline">
-              Top Interest Rate
+            <div class="col-md-3 form-inline" *ngIf="isInterestCalcBasedTOP">
+              Term Of Payment Interest Rate Percent (%)
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              {{ParentForm.controls.TopInterestRatePrcnt.value | number:'.6':'en-US'}} %
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="isInterestCalcBasedTOP">
+              <input type="" currencyMask id="TopInterestRatePrcnt" class="form-control full-width"
+                formControlName="TopInterestRatePrcnt" [options]="CurrencyMaskPrct"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TopInterestRatePrcnt.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.TopInterestRatePrcnt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
               <label>Maturity Date</label>
@@ -42,10 +46,10 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline" *ngIf="isInterestCalcBasedTOP">
               <label>Term of Payment Calculation Based</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="isInterestCalcBasedTOP">
               <label>{{ParentForm.controls.TopBasedName.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
@@ -71,10 +75,10 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInvcAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline" *ngIf="isInterestCalcBasedTOP">
               <label>Term of Payment (days)</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="isInterestCalcBasedTOP">
               <label>{{ParentForm.controls.TopDays.value}}</label>
             </div>
           </div>
@@ -89,10 +93,10 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline" *ngIf="isInterestCalcBasedTOP">
               Total Top Amount
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="isInterestCalcBasedTOP">
               {{ParentForm.controls.TotalTopAmount.value | number : '1.2-2'}}
             </div>
           </div>
@@ -142,7 +146,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="!isInterestCalcBasedTOP">
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
@@ -169,10 +173,12 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline">
+            <div *ngIf="ParentForm.controls.InterestType.value == 'AMT' && !isInterestCalcBasedTOP"
+              class="col-md-3 form-inline">
               <label>Interest Amount</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="ParentForm.controls.InterestType.value == 'AMT' && !isInterestCalcBasedTOP"
+              class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="TotalInterestAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TotalInterestAmt.invalid}"
                 (keyup)="SetNeedReCalculate(true)" currencyMask>
@@ -186,10 +192,11 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline">
+            <div *ngIf="ParentForm.controls.InterestType.value == 'PRCNT' && !isInterestCalcBasedTOP" class="col-md-3 form-inline">
               <label>Interest Rate Percentage</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="ParentForm.controls.InterestType.value == 'PRCNT' && !isInterestCalcBasedTOP"
+              class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
                 [options]="CurrencyMaskPrct"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
@@ -233,6 +240,17 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Interest Calculation Based On</label>
+            </div>
+            <label
+              class="col-md-3 form-inline form-inline-right">{{ParentForm.controls.InterestCalcBased.value}}</label>
           </div>
         </div>
       </div>

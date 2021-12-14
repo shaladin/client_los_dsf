@@ -37,7 +37,7 @@
       {
         "type": "officeRoleCodes",
         "datatype": "text",
-        "name": "TaskOfficeCode",
+        "name": "A.ORI_OFFICE_CODE",
         "id": "OfficeCodeId",
         "value": "",
         "placeholder": "Placeholder",
@@ -174,28 +174,79 @@
         "type": "action",
         "position": "center",
         "action": [
-          {
-            "type": "edit",
-            "path": "NAP_ADM_PRCS_NEW_PO_DETAIL",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              },
-              {
-                "type": "LobCode",
-                "property": "LobCode"
-              },
-              {
-                "type": "AppId",
-                "property": "AppId"
-              },
-              {
-                "type": "TaskListId",
-                "property": "Id"
-              }
-            ]
-          }
+            {
+                "type": "switch",
+                "case": [
+                    {
+                        "conditions": [
+                            {
+                                "isUser": true,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "NAP_ADM_PRCS_NEW_PO_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "AgrmntId",
+                                "property": "AgrmntId"
+                              },
+                              {
+                                "type": "LobCode",
+                                "property": "LobCode"
+                              },
+                              {
+                                "type": "AppId",
+                                "property": "AppId"
+                              },
+                              {
+                                "type": "TaskListId",
+                                "property": "Id"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "isUser": false,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                          "type": "url",
+                          "path": "NAP_ADM_PRCS_NEW_PO_DETAIL",
+                          "icon" : "ft-edit-2",
+                          "param": [
+                            {
+                              "type": "AgrmntId",
+                              "property": "AgrmntId"
+                            },
+                            {
+                              "type": "LobCode",
+                              "property": "LobCode"
+                            },
+                            {
+                              "type": "AppId",
+                              "property": "AppId"
+                            },
+                            {
+                              "type": "TaskListId",
+                              "property": "Id"
+                            }
+                          ]
+                        },
+                        "isHide": false
+                    }
+                ]
+            }
         ]
       }
     ]

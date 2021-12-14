@@ -1,5 +1,6 @@
 {
-    "title": "Lookup Supplier Employee For Edit App After Approval",
+    "title": "Lookup - Supplier Employee For Edit App After Approval",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

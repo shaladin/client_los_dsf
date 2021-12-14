@@ -42,6 +42,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { NGXToastrService } from './components/extra/toastr/toastr.service';
 import { ApprovalTaskService } from './shared/services/ApprovalTask.service';
 import { AdInsHelperService } from './shared/services/AdInsHelper.service';
+import { AddressService } from './shared/services/custAddr.service';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -111,6 +112,7 @@ const urlConstantConfig = (urlConfig: UrlConstantService) => {
         EnviConfigService,
         ApprovalTaskService,
         AdInsHelperService,
+        AddressService,
         // EnviConfigService,
         // {
         //     provide: APP_INITIALIZER, useFactory: enviConfig, multi: true, deps: [EnviConfigService]

@@ -58,7 +58,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     AgrmntCreatedDt: ['', Validators.required],
     EffectiveDt: ['', Validators.required],
     AddIntrstAmt: [0],
-    GoLiveEstimated: [''],
+    GoLiveEstimated: ['',Validators.required],
     AdditionalInterestPaidBy: ['']
   });
 
@@ -125,14 +125,17 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response: AgrmntObj) => {
         this.bizTemplateCode = response.BizTemplateCode;
-        if (response["EffectiveDt"] == null) {
+        this.DOAssetForm.patchValue({
+          AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
+        })
+        if (response["EffectiveDt"] != null) {
           this.DOAssetForm.patchValue({
-            AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
-          })
-        } else {
-          this.DOAssetForm.patchValue({
-            AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
             EffectiveDt: formatDate(response["EffectiveDt"], 'yyyy-MM-dd', 'en-US'),
+          })
+        }
+        if (response["GoLiveDt"] != null) {
+          this.DOAssetForm.patchValue({
+            GoLiveEstimated: formatDate(response.GoLiveDt, 'yyyy-MM-dd', 'en-US'),
           })
         }
       }
@@ -469,6 +472,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
         EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
         AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
+        GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
       };
       let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
       let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
@@ -505,6 +509,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
         EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
         AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
+        GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
       };
       let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
       var submitDO = null;
@@ -623,5 +628,25 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         }
       }
     );
+  }
+
+  changeAddInterestPaidBy(){
+    if(this.DOAssetForm.controls.AdditionalInterestPaidBy.value == CommonConstantX.REF_MASTER_CODE_NO_ADD_INTEREST){
+      this.DOAssetForm.patchValue({
+        GoLiveEstimated: this.DOAssetForm.controls.EffectiveDt.value
+      });
+      this.DOAssetForm.controls['GoLiveEstimated'].disable();
+    }
+    else{
+      this.DOAssetForm.controls['GoLiveEstimated'].enable();
+    }
+  }
+
+  checkAddInterestPaidBy(){
+    if(this.DOAssetForm.controls.AdditionalInterestPaidBy.value == CommonConstantX.REF_MASTER_CODE_NO_ADD_INTEREST){
+      this.DOAssetForm.patchValue({
+        GoLiveEstimated: this.DOAssetForm.controls.EffectiveDt.value
+      });
+    }
   }
 }

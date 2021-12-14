@@ -1,0 +1,277 @@
+{
+    "title": "DELIVERY ORDER PAGING",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "DOD.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "DOD.AGRMNT_NO",
+            "id": "AgreementNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "DOD.PURCHASE_ORDER_NO",
+            "id": "PurchaseNoId",
+            "value": "",
+            "label": "Purchase Order No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "DOD.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "DOD.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "officeRoleCodes",
+            "datatype": "text",
+            "name": "DOD.ORI_OFFICE_CODE",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn": true,
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type" : "claim",
+            "label": "Task Claim Status",
+            "id": "ClaimStatId",
+            "ddlType" : "all",
+            "isCriteriaDataTable" : true
+        },
+        {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "ClaimById",
+            "value": "",
+            "label": "Task Claim By",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+        }
+    ],
+    "querystring": {
+        "name": "searchDeliveryOrderMultiAssetV2X"
+    },
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "SLA",
+            "name": "IndicatorSLA"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Claim By",
+            "name": "Assignee"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "OFFICE",
+            "name": "DOD.ORI_OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "DOD.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "DOD.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "PURCHASE ORDER NO",
+            "name": "DOD.PURCHASE_ORDER_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "DOD.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "PRODUCT OFFERING NAME",
+            "name": "DOD.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "AGREEMENT LAST STEP",
+            "name": "DOD.AGRMNT_LAST_STEP"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "sla",
+            "position": "center",
+            "property": "IndicatorSLA"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target": "_blank",
+            "path": "VIEW_APP",
+            "param": [
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
+            ]
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target": "_blank",
+            "path": "VIEW_AGRMNT",
+            "param": [
+                {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "PONumber"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "ViewProdOffering",
+            "position": "left",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AgrmntLastStep"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    },
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    },
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

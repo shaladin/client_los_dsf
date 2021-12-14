@@ -21,6 +21,9 @@ export class MouCustPersonalObj {
     Email1: string;
     Email2: string;
     Email3: string;
+    MrSalutationCode: string;
+    CustPrefixName: string;
+    CustSuffixName: string;
     RowVersion: string;
 
 constructor() { 
@@ -44,6 +47,9 @@ constructor() {
         this.Email1 = "";
         this.Email2 = "";
         this.Email3 = "";
+        this.MrSalutationCode = "";
+        this.CustPrefixName = "";
+        this.CustSuffixName = "";
         this.RowVersion = "";
     }
 }

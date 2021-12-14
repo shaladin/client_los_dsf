@@ -54,7 +54,7 @@
                   </lib-uc-show-errors>
                 </div>
 
-                <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" *ngIf="BizTemplateCode != 'DLFN'"
+                <!-- <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" *ngIf="BizTemplateCode != 'DLFN'"
                   translate>Golive Date Estimation</label>
                 <div class="col-md-4" *ngIf="BizTemplateCode != 'DLFN'">
                   <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
@@ -62,7 +62,12 @@
                   <lib-uc-show-errors [control]="MainInfoForm.controls.GoLiveEstimated"
                     [submit]="GoLiveApvReqForm.submitted">
                   </lib-uc-show-errors>
-                </div>
+                </div> -->
+
+                <label class="col-md-2 adinsLabel" *ngIf="BizTemplateCode != 'DLFN'" translate>Golive Date
+                  Estimation</label>
+                <label class="col-md-4 adinsLabel" *ngIf="BizTemplateCode != 'DLFN'" translate>{{MainInfoForm.controls.GoLiveEstimated.value | date:
+                    'dd-MMMM-yyyy'}}</label>
               </div>
 
               <div class="form-group row">
@@ -148,6 +153,10 @@
               <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="button"
                 class="btn btn-raised btn-primary mr-1" (click)="RFA()">
                 <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Request For Approval</span>
+              </button>
+              <button *ngIf="BizTemplateCode != 'DLFN' && isOktoBack" type="button" class="btn btn-raised btn-primary mr-1"
+                (click)="Return()">
+                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Return to {{ReturnName}}</span>
               </button>
               <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
                 [queryParams]="{BizTemplateCode: BizTemplateCode}">

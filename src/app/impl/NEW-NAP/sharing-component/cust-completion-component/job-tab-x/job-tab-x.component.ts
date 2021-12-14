@@ -31,6 +31,7 @@ import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-c
 import { ResListGeneralSettingObj, ResGeneralSettingObj } from 'app/shared/model/response/general-setting/res-general-setting-obj.model';
 import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/model/request/nap/third-party/req-get-third-party-result-h-by-trx-type-code-and-trx-no-obj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/response/third-party-result/res-third-party-rslt-h-obj.model';
+import { AddressService } from 'app/shared/services/custAddr.service';
 
 @Component({
   selector: 'app-job-tab-x',
@@ -113,6 +114,7 @@ export class JobTabXComponent implements OnInit {
   IsNeedIntegrator: boolean = false;
   IsWellKnownBeforeChanged: boolean = true;
   IsReady: boolean = false;
+  listAddrRequiredOwnership: Array<string> = new Array();
   ReturnAppCustJobDataObj: any;
   ReturnSectorEconomySlikObj: any;
   TempRefSectorEconomySlikCode: any;
@@ -137,7 +139,7 @@ export class JobTabXComponent implements OnInit {
   async ngOnInit() {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
-    this.GetGeneralSetting();
+    await this.GetGeneralSetting();
     await this.InitLookup();
 
     await this.GetCustMainData();
@@ -154,14 +156,17 @@ export class JobTabXComponent implements OnInit {
 
     this.InputJobAddrObj.title = "Job Address";
     this.InputJobAddrObj.showOwnership = true;
+    this.InputJobAddrObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeJob);
     
     this.InputPrevJobAddrObj.title = "Previous Job Address";
     this.InputPrevJobAddrObj.isRequired = false;
     this.InputPrevJobAddrObj.showOwnership = true;
+    this.InputPrevJobAddrObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypePrevJob);
 
     this.InputOthBizAddrObj.title = "Other Business Address";
     this.InputOthBizAddrObj.isRequired = false;
     this.InputOthBizAddrObj.showOwnership = true;
+    this.InputOthBizAddrObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeOthBiz);
 
     this.InputFieldJobAddrObj.inputLookupObj = new InputLookupObj();
     this.InputFieldPrevJobAddrObj.inputLookupObj = new InputLookupObj();
@@ -172,6 +177,13 @@ export class JobTabXComponent implements OnInit {
     this.InputOthBizAddrObj.inputField = this.InputFieldOthBizObj;
 
     await this.GetData();
+  }
+
+  setOwnership(MrCustAddrTypeCode: string) : boolean {
+    if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+        return true;
+    }
+    return false;
   }
 
   async GetCustMainData() {
@@ -188,6 +200,7 @@ export class JobTabXComponent implements OnInit {
     var generalSettingObj = new GenericListByCodeObj();
     generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
     generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
+    generalSettingObj.Codes.push(CommonConstant.GSCodeOwnershipMandatoryAddrType);
 
     await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, generalSettingObj).toPromise().then(
       (response) => {
@@ -196,6 +209,8 @@ export class JobTabXComponent implements OnInit {
 
         var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        let gsListOwnershipMandatoryType = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeOwnershipMandatoryAddrType);
+        this.listAddrRequiredOwnership = gsListOwnershipMandatoryType.GsValue.split(',');
 
         if (gsNeedCheckBySystem != undefined) {
           this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;

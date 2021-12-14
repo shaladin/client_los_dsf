@@ -36,7 +36,7 @@
         {
             "type": "officeRoleCodes",
             "datatype": "text",
-            "name": "TaskOfficeCode",
+            "name": "AG.OFFICE_CODE",
             "id": "OfficeCodeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -126,7 +126,7 @@
             "key": "ViewAgrmnt",
             "position": "center",
             "property": "AgrmntNo"
-          },  
+        },  
         {
             "type": "link",
             "position": "center",
@@ -139,7 +139,7 @@
                 "property": "AppId"
               }
             ]
-          },
+        },
         {
             "type": "text",
             "position": "left",
@@ -150,30 +150,81 @@
             "key": "ViewProdOffering",
             "position": "left",
             "property": "ProdOfferingName"
-          },
+        },
         {
             "type": "action",
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "NAP_ADM_PRCS_DO_DETAIL",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AppId",
-                            "property": "AppId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_DO_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    },
+                                    {
+                                        "type": "AppAssetId",
+                                        "property": "AppAssetId"
+                                    },
+                                    {
+                                        "type": "TaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        },
-                        {
-                            "type": "AppAssetId",
-                            "property": "AppAssetId"
-                        },
-                        {
-                            "type": "TaskListId",
-                            "property": "Id"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_DO_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    },
+                                    {
+                                        "type": "AppAssetId",
+                                        "property": "AppAssetId"
+                                    },
+                                    {
+                                        "type": "TaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }

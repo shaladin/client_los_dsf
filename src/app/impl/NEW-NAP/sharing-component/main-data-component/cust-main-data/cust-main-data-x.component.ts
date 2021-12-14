@@ -51,6 +51,7 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-jo
 import { AppCustAttrContentObj } from 'app/shared/model/app-cust/cust-attr-content/app-cust-attr-content-obj.model';
 import { LeadCustObj } from 'app/shared/model/request/lead/lead-cust-obj.model';
 import { CustObj } from 'app/shared/model/cust-obj.model';
+import { AddressService } from 'app/shared/services/custAddr.service';
 
 @Component({
   selector: 'app-cust-main-data-x',
@@ -164,6 +165,7 @@ export class CustMainDataXComponent implements OnInit {
   readonly AttrGroupCustPersonalOther: string = CommonConstant.AttrGroupCustPersonalOther;
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
   MaxDaysThirdPartyChecking: number;
+  listAddrRequiredOwnership: Array<string> = new Array();
   LobCode: string;
   checkIsAddressKnown: boolean = false;
 
@@ -174,7 +176,8 @@ export class CustMainDataXComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    public formValidate: FormValidateService, private cookieService: CookieService) {
+    public formValidate: FormValidateService, private cookieService: CookieService,
+    private addressService: AddressService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
     })
@@ -258,6 +261,7 @@ export class CustMainDataXComponent implements OnInit {
     }
     await this.initcustMainDataMode();
     await this.setLookup();
+    await this.getAddrTypeOwnershipRequired();
 
     this.ddlCustModelObj.isSelectOutput = true;
 
@@ -268,7 +272,7 @@ export class CustMainDataXComponent implements OnInit {
     this.inputAddressObj.showAllPhn = false;
     this.inputAddressObj.showFax = false;
     this.inputAddressObj.showOwnership = true;
-    this.inputAddressObj.requiredOwnership = true;
+    this.inputAddressObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
     this.isUcAddressReady = true;
 
     this.http.post(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GS_MAX_DAYS_CUST_THIRD_PARTY_CHECK }).toPromise().then(
@@ -305,6 +309,17 @@ export class CustMainDataXComponent implements OnInit {
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
+  }
+
+  async getAddrTypeOwnershipRequired(){
+    this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
+  }
+  
+  setOwnership(MrCustAddrTypeCode: string) : boolean {
+    if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
+      return true;
+    }
+    return false;
   }
   
   //#region Country
@@ -1492,7 +1507,7 @@ export class CustMainDataXComponent implements OnInit {
           }
         );
       } else {
-        //this.http.post(URLConstant.EditCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+        //butuh jadi v2
         this.http.post(URLConstantX.EditCustMainDataPersonalX, this.custDataPersonalObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
@@ -1529,6 +1544,7 @@ export class CustMainDataXComponent implements OnInit {
           }
         );
       } else {
+      	//butuh update jadi v2
         this.http.post(URLConstant.EditCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {

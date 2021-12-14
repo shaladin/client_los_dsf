@@ -1,5 +1,6 @@
 {
-  "title": "Lookup Asset Number",
+  "title": "Lookup - Asset Number",
+  "sectionTitle": "Search",
   "component": [
     {
       "type": "textbox",

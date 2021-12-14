@@ -10,6 +10,7 @@ export class MouCustBankAccObj {
     BankBranchRegRptCode: string;
     BalanceAmt: number;
     IsDefault: boolean;
+    IsActive: boolean;
     BankInfo: string;
     MouCustBankStmntObjs: Array<any>;
 

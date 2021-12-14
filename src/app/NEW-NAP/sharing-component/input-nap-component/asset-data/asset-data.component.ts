@@ -59,7 +59,7 @@ export class AssetDataComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Input() BizTemplateCode: string = "";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter(); 
   BranchManagerName: string = "-";
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
@@ -170,6 +170,7 @@ export class AssetDataComponent implements OnInit {
     LocationCity: ['', Validators.maxLength(50)],
     LocationZipcode: ['', Validators.maxLength(50)],
     OwnerProfessionCode: [''],
+    MrOwnerTypeCode: [''],
 
     LocationAddrType: [''],
     DelivAddrType: [''],
@@ -324,6 +325,8 @@ export class AssetDataComponent implements OnInit {
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   LastRequestedDate: any = "";
+  OwnerTypeObj: Array<KeyValueObj>;
+  OwnerProfessionObj: Array<KeyValueObj> = new Array();
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
@@ -352,15 +355,25 @@ export class AssetDataComponent implements OnInit {
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
 
+    this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.isRequired = false;
+    this.InputLookupProfessionObj.isReady = true;
+
     this.items = this.AssetDataForm.get('items') as FormArray;
     this.isOnlookup = false;
     await this.GetAppData();
     await this.GetRefProdCompt();
     await this.GetAppCust();
-    await this.GetAppCustPersonalJobData();
+    if (this.CustType == CommonConstant.CustTypeCompany) {
+      await this.GetAppCustCoy();
+    }else{
+      await this.GetAppCustPersonalJobData();
+    }
     await this.GetAppCustPhone();
     await this.bindAllRefMasterObj();
-    this.initLookup();
+    await this.initLookup();
     this.locationAddrObj = new AddrObj();
     this.delivAddrObj = new AddrObj();
     this.ownerAddrObj = new AddrObj();
@@ -371,9 +384,6 @@ export class AssetDataComponent implements OnInit {
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
 
-    if (this.CustType == CommonConstant.CustTypeCompany) {
-      await this.GetAppCustCoy();
-    }
     await this.GetListAddr();
     if (this.BizTemplateCode !== CommonConstant.OPL) {
       this.AssetConditionChanged();
@@ -1086,6 +1096,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.AssetDataForm.controls.OwnerIdNo.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AssetDataForm.controls.MrOwnerRelationshipCode.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AssetDataForm.controls.OwnerProfessionCode.value;
+    this.allAssetDataObj.AppCollateralRegistrationObj.MrOwnerTypeCode = this.AssetDataForm.controls.MrOwnerTypeCode.value;
 
     if (this.BizTemplateCode !== "OPL") {
       for (let i = 0; i < this.items.length; i++) {
@@ -1389,7 +1400,7 @@ export class AssetDataComponent implements OnInit {
     };
   }
 
-  async SelfOwnerChange(event) {
+  async SelfOwnerChange(event: any, OwnerType: string = this.CustType) {
     if (event.checked == true) {
       this.AssetDataForm.patchValue({
         OwnerName: this.AppCustObj.CustName,
@@ -1405,8 +1416,10 @@ export class AssetDataComponent implements OnInit {
         OwnerZipcode: this.AddrLegalObj[0].Zipcode,
         OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
         OwnerAddrType: CommonConstant.AddrTypeLegal,
-        OwnerProfessionCode: this.AppCustPersonalJobData.MrProfessionCode
+        OwnerProfessionCode: OwnerType == CommonConstant.CustTypePersonal ? this.AppCustPersonalJobData.MrProfessionCode : this.AppCustCoyObj.MrCompanyTypeCode,
+        MrOwnerTypeCode: OwnerType
       });
+
       this.inputFieldOwnerAddrObj = new InputFieldObj();
       this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
       this.ownerAddrObj = new AddrObj();
@@ -1432,6 +1445,8 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls["OwnerMobilePhnNo"].disable();
       this.AssetDataForm.controls["ownerData"].disable();
       this.AssetDataForm.controls["OwnerAddrType"].disable();
+      this.AssetDataForm.controls["OwnerProfessionCode"].disable();
+      this.AssetDataForm.controls["MrOwnerTypeCode"].disable();
     }
     else {
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
@@ -1443,7 +1458,11 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls["OwnerMobilePhnNo"].enable();
       this.AssetDataForm.controls["ownerData"].enable();
       this.AssetDataForm.controls["OwnerAddrType"].enable();
+      this.AssetDataForm.controls["OwnerProfessionCode"].enable();
+      this.AssetDataForm.controls["MrOwnerTypeCode"].enable();
     };
+
+    await this.OwnerTypeChange(OwnerType, true);
   }
 
   async getAllAssetData() {
@@ -1454,8 +1473,8 @@ export class AssetDataComponent implements OnInit {
       async (response) => {
         this.appAssetObj = response;
 
-
         if (this.appAssetObj.ResponseAppAssetObj != null) {
+          this.mode = "Edit";
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.appAssetObj['ResponseAppCollateralObj']['AppCollateralId'];
           this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
@@ -1524,14 +1543,13 @@ export class AssetDataComponent implements OnInit {
           }
 
           if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
-            let reqByCode: GenericObj = new GenericObj();
-            reqByCode.Code = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
-            this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).subscribe(
-              (response) =>{
-                this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
-                this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
-              }
-            );
+            
+            let MrOwnerTypeCode = this.returnAppCollateralRegistObj.MrOwnerTypeCode;
+            let isFromDB = true;
+            if (MrOwnerTypeCode == null){
+              MrOwnerTypeCode = this.CustType;
+              isFromDB = false;
+            }
 
             this.AssetDataForm.patchValue({
               UserName: this.appAssetObj.ResponseAppCollateralRegistrationObj.UserName,
@@ -1557,11 +1575,13 @@ export class AssetDataComponent implements OnInit {
               LocationZipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode,
               SelfUsage: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF"),
               SelfOwner: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
-              OwnerProfessionCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode
+              OwnerProfessionCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode,
+              MrOwnerTypeCode: MrOwnerTypeCode
             });
 
-            this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
-            this.SelfOwnerChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")});
+            await this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
+            await this.SelfOwnerChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")}, MrOwnerTypeCode);
+            await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
           }
 
           this.AssetConditionChanged(mode);
@@ -1757,7 +1777,7 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  initLookup() {
+  async initLookup() {
     this.InputLookupSupplierObj = this.initLookupSupp();
 
     this.InputLookupCityIssuerObj = new InputLookupObj();
@@ -1800,12 +1820,6 @@ export class AssetDataComponent implements OnInit {
 
     this.InputLookupAccObj = this.initLookupAcc();
     this.isOnlookup = true;
-
-    this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
-    this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
-    this.InputLookupProfessionObj.isRequired = false;
-    this.InputLookupProfessionObj.isReady = true;
   }
 
   initLookupAcc() {
@@ -1892,6 +1906,8 @@ export class AssetDataComponent implements OnInit {
     await this.bindUserOwnerRelationshipObj();
     await this.bindAsseConditionObj();
     await this.bindDownPaymentTypeObj();
+    await this.bindOwnerTypeObj();
+    await this.bindCompanyTypeObj();
   }
 
   setValidatorBpkb() {
@@ -2506,13 +2522,14 @@ export class AssetDataComponent implements OnInit {
       Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
-      (response) => {
+      async (response) => {
         this.AppCustObj = response;
         this.CustType = this.AppCustObj.MrCustTypeCode;
         if (this.CustType == CommonConstant.CustTypePersonal) {
           this.AssetDataForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
           this.AssetDataForm.controls.MrIdTypeCode.updateValueAndValidity();
         }
+        await this.OwnerTypeChange(this.CustType);
       }
     );
   }
@@ -2613,13 +2630,14 @@ export class AssetDataComponent implements OnInit {
         AppCollateralDocs = response["AppCollateralDocs"];
         if (AppCollateralDocs["length"] > 0) {
           for (let i = 0; i < AppCollateralDocs.length; i++) {
+            let AppCollatralDocId = AppCollateralDocs.findIndex(x => x.DocCode == this.AssetDataForm.controls.ListDoc["controls"][i]["controls"].DocCode.value);
+
             this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
-              AssetDocName: AppCollateralDocs[i].DocName,
-              DocNo: AppCollateralDocs[i].DocNo,
-              DocNotes: AppCollateralDocs[i].DocNotes,
-              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: AppCollateralDocs[i].IsReceived,
-              RowVersion: AppCollateralDocs[i].RowVersion,
+              DocNo: AppCollateralDocs[AppCollatralDocId].DocNo,
+              DocNotes: AppCollateralDocs[AppCollatralDocId].DocNotes,
+              ACDExpiredDt: AppCollateralDocs[AppCollatralDocId].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[AppCollatralDocId].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              IsReceived: AppCollateralDocs[AppCollatralDocId].IsReceived,
+              RowVersion: AppCollateralDocs[AppCollatralDocId].RowVersion,
             })
           }
         }
@@ -2803,5 +2821,59 @@ export class AssetDataComponent implements OnInit {
         this.IsSvcExist = true;
       }
     }
+  }
+
+  async bindOwnerTypeObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.OwnerTypeObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({
+          MrOwnerTypeCode : this.CustType
+        });
+      }
+    );
+  }
+
+  async OwnerTypeChange(OwnerType: string, IsClicked: boolean = false, IsFromOwnerType: boolean = false){
+    if(OwnerType == CommonConstant.CustTypePersonal){
+      if(this.mode == "Edit" && !IsClicked){
+        let reqByCode: GenericObj = new GenericObj();
+        reqByCode.Code = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
+        
+        await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
+          (response) =>{
+            this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
+          }
+        );
+      }else if(IsClicked){
+        this.AssetDataForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      }
+    }else{
+      if(this.mode == "Edit" && !IsClicked){
+        this.AssetDataForm.patchValue({
+          OwnerProfessionCode : this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode
+        });
+      }else if(IsFromOwnerType){
+        this.AssetDataForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+      }
+    }
+  }
+
+  async bindCompanyTypeObj(){
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+      (response) => {
+        this.OwnerProfessionObj = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 }

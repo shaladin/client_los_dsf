@@ -29,7 +29,7 @@
         {
             "type": "officeRoleCodes",
             "datatype": "text",
-            "name": "TaskOfficeCode",
+            "name": "A.ORI_OFFICE_CODE",
             "id": "OfficeCodeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -140,20 +140,67 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "NAP_ADM_PRCS_AGRMNT_ACT_DETAIL",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AppId",
-                            "property": "AppId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_AGRMNT_ACT_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type" : "WFTaskListId",
+                                        "property" : "Id"
+                                    },
+                                    {
+                                        "type" : "TrxNo",
+                                        "property" : "AppNo"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type" : "WFTaskListId",
-                            "property" : "Id"
-                        },
-                        {
-                            "type" : "TrxNo",
-                            "property" : "AppNo"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_AGRMNT_ACT_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type" : "WFTaskListId",
+                                        "property" : "Id"
+                                    },
+                                    {
+                                        "type" : "TrxNo",
+                                        "property" : "AppNo"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }
