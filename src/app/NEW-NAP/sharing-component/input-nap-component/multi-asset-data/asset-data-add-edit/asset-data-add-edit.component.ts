@@ -1000,6 +1000,23 @@ export class AssetDataAddEditComponent implements OnInit {
           await this.UcAddressHandler();
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
+
+          if (this.returnAppAssetObj) 
+          {
+            for (let i = 0; i < this.items.length; i++) 
+            {
+              if (!this.items.controls[i]) continue;
+              
+              this.items.controls[i].patchValue({
+                'SerialNoValue' : this.returnAppAssetObj["SerialNo" + (i + 1)]
+              });
+              this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+              if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No"){
+                this.indexChassis = i;
+              }
+            }
+            this.GetThirdPartyResultH();
+          }
         });
 
       this.InputLookupCityIssuerObj.nameSelect = this.returnAppAssetObj.TaxCityIssuer;
