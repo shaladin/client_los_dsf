@@ -244,7 +244,7 @@ export class AssetDataComponent implements OnInit {
   allAssetDataObj: AllAssetDataObj;
 
   InputLookupSupplierObj: InputLookupObj;
-  InputLookupCityIssuerObj: InputLookupObj;
+  InputLookupCityIssuerObj: InputLookupObj = new InputLookupObj();
   InputLookupAssetObj: InputLookupObj;
   InputLookupSupplAccObj: InputLookupObj;
   InputLookupAccObj: InputLookupObj;
@@ -315,6 +315,7 @@ export class AssetDataComponent implements OnInit {
   inputAddressObjForDeliv: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
   isDiffWithRefAttr: boolean;
+  serialNoIsRequired: boolean = false;
 
   generalSettingObj: GenericListByCodeObj = new GenericListByCodeObj();
   IntegratorCheckBySystemGsValue: string = "1";
@@ -466,6 +467,7 @@ export class AssetDataComponent implements OnInit {
             }
           }
         }
+        this.SetValidatorItemsSerialNo(this.serialNoIsRequired);
       });
     await this.GetGS();
   }
@@ -2185,6 +2187,9 @@ export class AssetDataComponent implements OnInit {
   AssetConditionChanged(mode: string = "add") {
     if (this.AssetConditionObj != null && this.AssetDataForm.controls.MrAssetConditionCode.value != "") {
       let filter: any;
+      // this.AssetDataForm.patchValue({ //delete later
+      //   MrAssetConditionCode : 'USED'
+      // });
       filter = this.AssetConditionObj.filter(
         cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value);
       this.AssetConditionName = filter[0].Value;
@@ -2193,15 +2198,16 @@ export class AssetDataComponent implements OnInit {
       this.SetDpValue(mode);
     }
 
-    let serialNoIsRequired: boolean = false;
+    //let serialNoIsRequired: boolean = false;
+    this.serialNoIsRequired = false;
     this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
     this.inputAddressObjForLoc.isRequired = true;
     if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
       this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = false;
       this.inputAddressObjForLoc.isRequired = false;
-      serialNoIsRequired = true;
+      this.serialNoIsRequired = true;
     }
-    this.SetValidatorItemsSerialNo(serialNoIsRequired);
+    this.SetValidatorItemsSerialNo(this.serialNoIsRequired);
     this.setValidatorBpkb();
   }
 
