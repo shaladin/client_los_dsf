@@ -288,13 +288,15 @@ export class CollateralAddEditComponent implements OnInit {
         let AppCollateralDocs = new Array();
         AppCollateralDocs = response["AppCollateralDocs"];
         if (AppCollateralDocs["length"] > 0) {
-          for (let i = 0; i < AppCollateralDocs.length; i++) {
+          for (let i = 0; i < this.AddCollForm.controls.ListDoc["controls"].length; i++) {
+            let AppCollatralDocId = AppCollateralDocs.findIndex(x => x.DocCode == this.AddCollForm.controls.ListDoc["controls"][i]["controls"].DocCode.value);
+
             this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
-              DocNo: AppCollateralDocs[i].DocNo,
-              DocNotes: AppCollateralDocs[i].DocNotes,
-              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: AppCollateralDocs[i].IsReceived,
-              RowVersion: AppCollateralDocs[i].RowVersion,
+              DocNo: AppCollateralDocs[AppCollatralDocId].DocNo,
+              DocNotes: AppCollateralDocs[AppCollatralDocId].DocNotes,
+              ACDExpiredDt: AppCollateralDocs[AppCollatralDocId].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[AppCollatralDocId].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              IsReceived: AppCollateralDocs[AppCollatralDocId].IsReceived,
+              RowVersion: AppCollateralDocs[AppCollatralDocId].RowVersion,
             })
           }
         }
@@ -491,7 +493,8 @@ export class CollateralAddEditComponent implements OnInit {
       SelfOwner: fouExistObj["MrOwnerRelationshipCode"] == "SELF" ? true : false,
       CollPercentage: 0,
       CollateralPortionAmt: 0,
-      OutstandingCollPrcnt: 0
+      OutstandingCollPrcnt: 0,
+      //MrOwnerTypeCode: fouExistObj["OwnerType"],
     });
 
     await this.collateralTypeHandler(true);
@@ -866,6 +869,14 @@ export class CollateralAddEditComponent implements OnInit {
       this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
         async (response) => {
           this.returnAppCollateralRegistObj = response;
+
+          let MrOwnerTypeCode = this.returnAppCollateralRegistObj.MrOwnerTypeCode;
+          let isFromDB = true;
+          if (MrOwnerTypeCode == null){
+            MrOwnerTypeCode = this.custType;
+            isFromDB = false;
+          }
+
           this.AddCollForm.patchValue({
             OwnerRelationship: this.returnAppCollateralRegistObj.MrOwnerRelationshipCode,
             OwnerName: this.returnAppCollateralRegistObj.OwnerName,
@@ -874,10 +885,10 @@ export class CollateralAddEditComponent implements OnInit {
             OwnerMobilePhn: this.returnAppCollateralRegistObj.OwnerMobilePhnNo,
             SelfOwner: (this.returnAppCollateralRegistObj.MrOwnerRelationshipCode == "SELF"),
             OwnerProfessionCode: this.returnAppCollateralRegistObj.OwnerProfessionCode,
-            MrOwnerTypeCode: this.returnAppCollateralRegistObj.MrOwnerTypeCode
+            MrOwnerTypeCode: MrOwnerTypeCode
           });
           
-          await this.OwnerTypeChange(this.returnAppCollateralRegistObj.MrOwnerTypeCode);
+          await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
 
           if (this.AddCollForm.controls.SelfOwner.value == true) {
             this.AddCollForm.controls.OwnerName.disable();
@@ -890,15 +901,6 @@ export class CollateralAddEditComponent implements OnInit {
             this.AddCollForm.controls.MrOwnerTypeCode.disable();
             this.InputLookupProfessionObj.isDisable = true;
           }
-
-          let reqByCode: GenericObj = new GenericObj();
-          reqByCode.Code = this.returnAppCollateralRegistObj.OwnerProfessionCode;
-          this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).subscribe(
-            (response) =>{
-              this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
-              this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
-            }
-          );
 
           this.collOwnerAddrObj = new AppCustAddrObj();
           this.collOwnerAddrObj.Addr = this.returnAppCollateralRegistObj.OwnerAddr;
