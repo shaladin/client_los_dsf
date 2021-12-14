@@ -954,7 +954,7 @@ export class InsuranceDataComponent implements OnInit {
   
   async addGroupFromDB(MainCvgIndex: number, insMainCvg: AppInsMainCvgObj, ManufYearDiff) {
     let response: ResExecRuleInsRateCvgV2_1obj;
-    response = await this.ExecuteInstRateCvgRule(insMainCvg.MrMainCvgTypeCode);
+    response = await this.ExecuteInstRateCvgRule(insMainCvg.MrMainCvgTypeCode, MainCvgIndex);
     let AddCvg = response.ReturnObject[0].AdditionalCoverage;
 
     this.groupAddCvrSumInsuredDropDown[MainCvgIndex] = new Object();
