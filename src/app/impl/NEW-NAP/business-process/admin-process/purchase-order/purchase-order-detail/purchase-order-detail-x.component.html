@@ -25,23 +25,26 @@
                                     <label class="col-md-6">{{AssetObj?.VendorAddrObj?.Addr}} </label>
                                 </div>
                                 <div class="row" *ngIf="lobCode!='SLB'">
-                                    <label class="col-md-6" translate>Supplier Bank Account No </label>
-                                    <label class="col-md-6">{{AssetObj?.VendorBankAccObj?.BankAccountNo}} </label>
+                                    <label class="col-md-6 adins-required-label" translate>Supplier Bank Account No </label>
+                                    <div class="col-md-6">
+                                        <lib-ucdropdownlist [dropdownListObj]="ucDdlVendorBankAccObj" [genericList]="this.AssetObj.ListVendorBankAccObj"
+                                        [parentForm]="POForm" [enjiForm]="enjiForm" [identifier]="'VendorBankAccNo'"
+                                        (callback)="vendorBankAccChange($event)" *ngIf="isDdlVendorBankAccReady"></lib-ucdropdownlist>
+                                    </div>
                                 </div>
                                 <div class="row" *ngIf="lobCode=='SLB'">
                                     <label class="col-md-6" translate>Customer Bank Account No </label>
                                     <div class="col-md-6">
-                                        <select class="form-control adInsInput" style="width: 100%" formControlName="CustBankAcc"
-                                          (change)="selectedBank()"
-                                          [ngClass]="{ 'is-invalid': enjiForm.submitted && POForm.controls.CustBankAcc.invalid }">
-                                          <option value="">-Select One-</option>
-                                          <option *ngFor="let item of listCustBankAcc" [value]="item.AppCustBankAccId">
-                                            {{item.BankName}} - {{item.BankAccNo}} - {{item.BankAccName}}
-                                          </option>
+                                        <select class="form-control adInsInput" style="width: 100%" formControlName="CustBankAcc" (change)="selectedBank()"
+                                            [ngClass]="{ 'is-invalid': enjiForm.submitted && POForm.controls.CustBankAcc.invalid }">
+                                            <option value="">-Select One-</option>
+                                            <option *ngFor="let item of listCustBankAcc" [value]="item.AppCustBankAccId">
+                                                {{item.BankName}} - {{item.BankAccNo}} - {{item.BankAccName}}
+                                            </option>
                                         </select>
                                         <lib-uc-show-errors [control]="POForm.controls.CustBankAcc" [submit]="enjiForm.submitted">
                                         </lib-uc-show-errors>
-                                      </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -217,7 +220,7 @@
                                 <div class="row">
                                     <label class="col-md-6">No Need to Pay</label>                                
                                     <div class="col-md-6" (change)="selectedOption($event.target.value)">
-                                        <select>                                            
+                                        <select class="form-control">                                            
                                             <option value="Yes">Yes</option> 
                                             <option value="No" selected>No</option>                                           
                                         </select>

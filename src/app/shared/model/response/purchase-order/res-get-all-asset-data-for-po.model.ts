@@ -21,7 +21,7 @@ export class ResGetAllAssetDataForPOByAsset {
     VendorAddrObj: ResVendorAddrForPOObj;
     VendorBankAccObj : ResVendorBankAccForPOObj;
     PurchaseOrderExpiredDt : Date;
-
+    ListVendorBankAccObj: Array<VendorBankAccForPOObj>
     ProportionalValue : number;
     TotalInsCustAmt : number;
     TotalLifeInsCustAmt : number;
@@ -38,6 +38,21 @@ export class ResGetAllAssetDataForPOByAsset {
 
 }
 
+export class VendorBankAccForPOObj{
+    BankName : string;
+    BankCode : string;
+    BankAccountNo : string;
+    BankAccountName : string;
+    IsDefault: boolean;
+
+    constructor(){
+        this.BankName = "";
+        this.BankCode = "";
+        this.BankAccountNo = "";
+        this.BankAccountName = "";
+        this.IsDefault = false;
+    }
+}
 export class ResAppAssetForPOObj {
     
     FullAssetName : string;
