@@ -14,7 +14,6 @@ import { UclookupgenericComponent, UclookupgenericModule } from "@adins/uclookup
 import { UcviewgenericComponent, UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcgridviewModule, UcgridviewComponent } from "@adins/ucgridview";
 import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapprovalhist";
-
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AgrViewRoutingModule } from "./agr-view-routing.module";
 import { AgreementViewContainerComponent } from "./agreement-view-container.component";
@@ -40,6 +39,10 @@ import { SharedModule } from "app/shared/shared.module";
 import { ViewInsuranceDetailComponent } from "./view-insurance-detail/view-insurance-detail.component";
 import { ViewAgrmntTcComponent } from "./view-agrmnt-tc/view-agrmnt-tc.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewPurchaseOrderListComponent } from "./view-purchase-order-list/view-purchase-order-list.component";
+import { ViewPurchaseOrderDetailComponent } from "./view-purchase-order-detail/view-purchase-order-detail.component";
+import { ViewPurchaseOrderNewListComponent } from "./view-purchase-order-new-list/view-purchase-order-new-list.component";
+import { ViewPurchaseOrderNewDetailComponent } from "./view-purchase-order-new-detail/view-purchase-order-new-detail.component";
 
 @NgModule({
     imports: [
@@ -85,14 +88,20 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         AgrMainInfoComponent,
         ViewAssetCollateralDetailComponent, 
         ViewInsuranceDetailComponent,
-        ViewAgrmntTcComponent
+        ViewAgrmntTcComponent,
+        ViewPurchaseOrderListComponent,
+        ViewPurchaseOrderDetailComponent,
+        ViewPurchaseOrderNewListComponent,
+        ViewPurchaseOrderNewDetailComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
-        ViewAssetCollateralDetailComponent
+        ViewAssetCollateralDetailComponent,
+        ViewPurchaseOrderDetailComponent,
+        ViewPurchaseOrderNewDetailComponent
     ]
 
 })
