@@ -54,6 +54,8 @@ export class MouRequestAddcollComponent implements OnInit {
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   private ucLookupCollateral: UclookupgenericComponent;
+  readonly ownerTypePersonal: string = CommonConstant.CustTypePersonal;
+  readonly ownerTypeCompany: string = CommonConstant.CustTypeCompany;
   IsCalledIntegrator: boolean = false;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   latestReqDtCheckIntegrator: Date;
@@ -149,6 +151,7 @@ export class MouRequestAddcollComponent implements OnInit {
     OwnerIdNo: ['', [Validators.required]],
     MrIdType: ['', [Validators.required]],
     Notes: [''],
+    MrOwnerTypeCode: [''],
     OwnerProfessionCode: [''],
     OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.required]],
     SelfOwner: [false],
@@ -183,6 +186,8 @@ export class MouRequestAddcollComponent implements OnInit {
     this.bindUcLookup()
     this.initAddrObj();
     this.GetMouCustListAddrByMouCustId();
+    await this.bindOwnerTypeObj();
+    await this.bindCompanyTypeObj();
     await this.getInitPattern();
     this.bindMouData();
     this.bindUcAddToTempData();
@@ -209,6 +214,57 @@ export class MouRequestAddcollComponent implements OnInit {
     addCritCustNo.restriction = AdInsConstant.RestrictionEq;
     addCritCustNo.value = this.custNo;
     this.tempPagingObj.addCritInput.push(addCritCustNo);
+  }
+
+  OwnerTypeObj: Array<KeyValueObj> = new Array();
+  async bindOwnerTypeObj() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
+      (response) => {
+        this.OwnerTypeObj = response[CommonConstant.ReturnObj];
+        this.AddCollForm.patchValue({
+          MrOwnerTypeCode: this.OwnerTypeObj[0].Key
+        });
+      }
+    );
+  }
+
+  OwnerProfessionObj: Array<KeyValueObj> = new Array();
+  async bindCompanyTypeObj(){
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).toPromise().then(
+      (response) => {
+        this.OwnerProfessionObj = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false) {
+    if (OwnerType == CommonConstant.CustTypePersonal) {
+      if (IsOwnerTypeChanged) {
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode: ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      } else {
+        await this.http.post(URLConstant.GetRefProfessionByCode, { Code: this.collateralRegistrationObj.OwnerProfessionCode }).toPromise().then(
+          (response) => {
+            this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
+          }
+        );
+      }
+    } else {
+      if (IsOwnerTypeChanged) {
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode: ""
+        });
+      } else {
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode
+        });
+      }
+    }
   }
 
   bindMouData() {
@@ -1001,6 +1057,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.mouCustCollateralRegistrationObj.MrUserRelationshipCode = this.AddCollForm.controls.OwnerRelationship.value;
     this.mouCustCollateralRegistrationObj.Notes = this.AddCollForm.controls.Notes.value;
     this.mouCustCollateralRegistrationObj.OwnerProfessionCode = this.AddCollForm.controls.OwnerProfessionCode.value;
+    this.mouCustCollateralRegistrationObj.MrOwnerTypeCode = this.AddCollForm.controls.MrOwnerTypeCode.value;
     this.mouCustCollateralRegistrationObj.OwnerMobilePhnNo = this.AddCollForm.controls.OwnerMobilePhnNo.value;
 
     this.mouCustCollateralRegistrationObj.OwnerAddr = this.AddCollForm.controls["legalAddr"]["controls"].Addr.value;
