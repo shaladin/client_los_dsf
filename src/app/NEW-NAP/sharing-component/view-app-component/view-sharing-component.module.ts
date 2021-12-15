@@ -9,13 +9,15 @@ import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-a
 import { ViewAssetDataDetailXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-detail/view-asset-data-detail-x.component";
 import { AppViewComponentsModule } from "app/components/general/app-view/app-view.components.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewFinancialXComponent } from "app/impl/view-enhancing/app-view/view-financial/view-financial-x.component";
 
 @NgModule({
     exports: [
         AppCustViewComponentsModule,
         ViewHighlightCommentComponent,
         ViewAssetDataXComponent,
-        ViewAssetDataDetailXComponent
+        ViewAssetDataDetailXComponent,
+        ViewFinancialXComponent
     ],
     imports: [
         CommonModule,
@@ -27,7 +29,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     declarations: [
         ViewHighlightCommentComponent,
         ViewAssetDataXComponent,
-        ViewAssetDataDetailXComponent
+        ViewAssetDataDetailXComponent,
+        ViewFinancialXComponent
     ],
     entryComponents: [
         ViewAssetDataDetailXComponent
