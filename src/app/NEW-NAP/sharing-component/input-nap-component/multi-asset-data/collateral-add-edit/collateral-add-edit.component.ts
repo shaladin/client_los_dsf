@@ -288,13 +288,15 @@ export class CollateralAddEditComponent implements OnInit {
         let AppCollateralDocs = new Array();
         AppCollateralDocs = response["AppCollateralDocs"];
         if (AppCollateralDocs["length"] > 0) {
-          for (let i = 0; i < AppCollateralDocs.length; i++) {
+          for (let i = 0; i < this.AddCollForm.controls.ListDoc["controls"].length; i++) {
+            let AppCollatralDocId = AppCollateralDocs.findIndex(x => x.DocCode == this.AddCollForm.controls.ListDoc["controls"][i]["controls"].DocCode.value);
+
             this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
-              DocNo: AppCollateralDocs[i].DocNo,
-              DocNotes: AppCollateralDocs[i].DocNotes,
-              ACDExpiredDt: AppCollateralDocs[i].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-              IsReceived: AppCollateralDocs[i].IsReceived,
-              RowVersion: AppCollateralDocs[i].RowVersion,
+              DocNo: AppCollateralDocs[AppCollatralDocId].DocNo,
+              DocNotes: AppCollateralDocs[AppCollatralDocId].DocNotes,
+              ACDExpiredDt: AppCollateralDocs[AppCollatralDocId].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[AppCollatralDocId].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              IsReceived: AppCollateralDocs[AppCollatralDocId].IsReceived,
+              RowVersion: AppCollateralDocs[AppCollatralDocId].RowVersion,
             })
           }
         }
@@ -347,12 +349,14 @@ export class CollateralAddEditComponent implements OnInit {
       }
     );
     
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.RefMasterTypeCodeCustType}).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.RefMasterTypeCodeCustType}).toPromise().then(
       (response) => {
         this.OwnerTypeObj = response[CommonConstant.ReturnObj];
-        this.AddCollForm.patchValue({
-          MrOwnerTypeCode : this.custType
-        });
+        if(this.mode == CommonConstant.ModeAddColl){
+          this.AddCollForm.patchValue({
+            MrOwnerTypeCode : this.custType
+          });
+        }
       }
     );
     
@@ -491,7 +495,8 @@ export class CollateralAddEditComponent implements OnInit {
       SelfOwner: fouExistObj["MrOwnerRelationshipCode"] == "SELF" ? true : false,
       CollPercentage: 0,
       CollateralPortionAmt: 0,
-      OutstandingCollPrcnt: 0
+      OutstandingCollPrcnt: 0,
+      //MrOwnerTypeCode: fouExistObj["OwnerType"],
     });
 
     await this.collateralTypeHandler(true);
@@ -689,7 +694,7 @@ export class CollateralAddEditComponent implements OnInit {
             OwnerProfessionCode: this.custType == CommonConstant.CustTypePersonal ? this.AppCustPersonalJobData.MrProfessionCode : this.AppCustCoyObj.MrCompanyTypeCode,
             MrOwnerTypeCode : this.custType
           });
-          await this.OwnerTypeChange(this.custType, true);
+          await this.OwnerTypeChange(this.custType);
 
           this.collOwnerAddrObj = new AppCustAddrObj();
           this.collOwnerAddrObj.Addr = this.returnCollOwnerObj.Addr;
@@ -866,6 +871,14 @@ export class CollateralAddEditComponent implements OnInit {
       this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
         async (response) => {
           this.returnAppCollateralRegistObj = response;
+
+          let MrOwnerTypeCode = this.returnAppCollateralRegistObj.MrOwnerTypeCode;
+          let isFromDB = true;
+          if (MrOwnerTypeCode == null){
+            MrOwnerTypeCode = this.custType;
+            isFromDB = false;
+          }
+
           this.AddCollForm.patchValue({
             OwnerRelationship: this.returnAppCollateralRegistObj.MrOwnerRelationshipCode,
             OwnerName: this.returnAppCollateralRegistObj.OwnerName,
@@ -874,10 +887,10 @@ export class CollateralAddEditComponent implements OnInit {
             OwnerMobilePhn: this.returnAppCollateralRegistObj.OwnerMobilePhnNo,
             SelfOwner: (this.returnAppCollateralRegistObj.MrOwnerRelationshipCode == "SELF"),
             OwnerProfessionCode: this.returnAppCollateralRegistObj.OwnerProfessionCode,
-            MrOwnerTypeCode: this.returnAppCollateralRegistObj.MrOwnerTypeCode
+            MrOwnerTypeCode: MrOwnerTypeCode
           });
           
-          await this.OwnerTypeChange(this.returnAppCollateralRegistObj.MrOwnerTypeCode);
+          await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
 
           if (this.AddCollForm.controls.SelfOwner.value == true) {
             this.AddCollForm.controls.OwnerName.disable();
@@ -890,15 +903,6 @@ export class CollateralAddEditComponent implements OnInit {
             this.AddCollForm.controls.MrOwnerTypeCode.disable();
             this.InputLookupProfessionObj.isDisable = true;
           }
-
-          let reqByCode: GenericObj = new GenericObj();
-          reqByCode.Code = this.returnAppCollateralRegistObj.OwnerProfessionCode;
-          this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).subscribe(
-            (response) =>{
-              this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
-              this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
-            }
-          );
 
           this.collOwnerAddrObj = new AppCustAddrObj();
           this.collOwnerAddrObj.Addr = this.returnAppCollateralRegistObj.OwnerAddr;
@@ -1406,9 +1410,16 @@ export class CollateralAddEditComponent implements OnInit {
     );
   }
 
-  async OwnerTypeChange(OwnerType: string, IsClicked: boolean = false, IsFromOwnerType: boolean = false){
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
     if(OwnerType == CommonConstant.CustTypePersonal){
-      if(this.mode == CommonConstant.ModeEditColl && !IsClicked){
+      if(IsOwnerTypeChanged){
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      }else{
         let reqByCode: GenericObj = new GenericObj();
         reqByCode.Code = this.AppCustPersonalJobData.MrProfessionCode;
         
@@ -1418,22 +1429,15 @@ export class CollateralAddEditComponent implements OnInit {
             this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
           }
         );
-      }else if(IsClicked){
-        this.AddCollForm.patchValue({
-          OwnerProfessionCode : ""
-        });
-
-        this.InputLookupProfessionObj.nameSelect = "";
-        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
       }
     }else{
-      if(this.mode == CommonConstant.ModeEditColl && !IsClicked){
-        this.AddCollForm.patchValue({
-          OwnerProfessionCode : this.returnAppCollateralRegistObj.OwnerProfessionCode
-        });
-      }else if(IsFromOwnerType){
+      if(IsOwnerTypeChanged){
         this.AddCollForm.patchValue({
           OwnerProfessionCode : ""
+        });
+      }else{
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode : this.returnAppCollateralRegistObj.OwnerProfessionCode
         });
       }
     }
