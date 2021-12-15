@@ -569,7 +569,7 @@ export class CommissionV2Component implements OnInit {
           break;
       }
       this.Summary.TotalCommisionAmount += totalAllocationAmount;
-      this.Summary.TotalTaxAmmount += totalTaxAmount;
+      this.Summary.TotalTaxAmmount += (totalTaxAmount + totalPenaltyAmt);
       this.Summary.TotalVATAmount += totalVATAmount;
       this.totalExpenseAmt += totalExpenseAmount;
       idxStart++;
