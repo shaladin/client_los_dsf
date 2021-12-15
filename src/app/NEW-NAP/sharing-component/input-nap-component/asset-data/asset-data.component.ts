@@ -325,7 +325,7 @@ export class AssetDataComponent implements OnInit {
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   LastRequestedDate: any = "";
-  OwnerTypeObj: Array<KeyValueObj>;
+  OwnerTypeObj: Array<KeyValueObj> = new Array();
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;

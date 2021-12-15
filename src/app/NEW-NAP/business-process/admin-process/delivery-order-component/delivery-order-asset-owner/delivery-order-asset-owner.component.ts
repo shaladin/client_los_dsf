@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
@@ -22,7 +23,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   @Input() AppId: number;
   @Input() AppCustObj: any;
   @Input() AppCustAddrObj: Array<AppCustAddrObj>;
-  @Input() AppCollateralRegistrationObj: any;
+  @Input() AppCollateralRegistrationObj: AppCollateralRegistrationObj;
   @Input() identifier: string;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
@@ -58,6 +59,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
       OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       OwnerProfessionCode: [''],
       OwnerAddrType: [''],
+      MrOwnerTypeCode: [''],
       SelfOwner: [false]
     }));
 
@@ -69,6 +71,8 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
 
     await this.bindAllRefMasterObj();
+    await this.bindOwnerTypeObj();
+    await this.bindCompanyTypeObj();
     await this.GetListAddr();
     this.initLookup();
 
@@ -77,6 +81,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   }
 
   async setAssetOwnerData() {
+    console.log(this.AppCollateralRegistrationObj);
     this.parentForm.controls[this.identifier].patchValue({
       OwnerName: this.AppCollateralRegistrationObj.OwnerName,
       MrIdTypeCode: this.AppCollateralRegistrationObj.MrIdTypeCode,
@@ -91,7 +96,8 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
       OwnerZipcode: this.AppCollateralRegistrationObj.OwnerZipcode,
       OwnerMobilePhnNo: this.AppCollateralRegistrationObj.OwnerMobilePhnNo,
       SelfOwner: (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer),
-      OwnerProfessionCode: this.AppCollateralRegistrationObj.OwnerProfessionCode
+      OwnerProfessionCode: this.AppCollateralRegistrationObj.OwnerProfessionCode,
+      MrOwnerTypeCode: this.AppCollateralRegistrationObj.MrOwnerTypeCode
     });
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -107,7 +113,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
     this.inputAddressObjForOwner.default = this.ownerAddrObj;
     this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
     await this.GetOwnerProfessionByCode();
-    if(this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer){
+    if (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer) {
       this.disableAssetDataForm();
     }
   }
@@ -115,8 +121,10 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   async GetOwnerProfessionByCode() {
     let reqByCode: GenericObj = new GenericObj();
     reqByCode.Code = this.AppCollateralRegistrationObj.OwnerProfessionCode;
+    console.log(reqByCode.Code);
     await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
-      (response) =>{
+      (response) => {
+        console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
       }
@@ -126,7 +134,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   async GetAppCustPersonalJobData() {
     await this.http.post(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
       (response: ResponseJobDataPersonalObj) => {
-        if(response.AppCustPersonalJobDataObj != null){
+        if (response.AppCustPersonalJobDataObj != null) {
           this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
         }
       }
@@ -213,7 +221,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
       this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
       this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
       this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName };
-      this.disableAssetDataForm();      
+      this.disableAssetDataForm();
     }
     else {
       this.enableAssetDataForm();
@@ -229,6 +237,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
     this.parentForm.controls[this.identifier]["controls"]["MrOwnerRelationshipCode"].disable();
     this.parentForm.controls[this.identifier]["controls"]["OwnerMobilePhnNo"].disable();
     this.parentForm.controls[this.identifier]["controls"]["OwnerAddrType"].disable();
+    this.parentForm.controls[this.identifier]["controls"]["MrOwnerTypeCode"].disable();
     this.parentForm.controls["ownerData"].disable();
   }
 
@@ -241,6 +250,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
     this.parentForm.controls[this.identifier]["controls"]["MrOwnerRelationshipCode"].enable();
     this.parentForm.controls[this.identifier]["controls"]["OwnerMobilePhnNo"].enable();
     this.parentForm.controls[this.identifier]["controls"]["OwnerAddrType"].enable();
+    this.parentForm.controls[this.identifier]["controls"]["MrOwnerTypeCode"].enable();
     this.parentForm.controls["ownerData"].enable();
   }
 
@@ -278,4 +288,61 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
     }
   }
 
+  OwnerTypeObj: Array<KeyValueObj> = new Array();
+  async bindOwnerTypeObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.OwnerTypeObj = response[CommonConstant.ReturnObj];
+        this.parentForm.patchValue({
+          MrOwnerTypeCode: this.CustType
+        });
+      }
+    );
+  }
+
+  OwnerProfessionObj: Array<KeyValueObj> = new Array();
+  async bindCompanyTypeObj(){
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+      (response) => {
+        this.OwnerProfessionObj = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
+  MrOwnerTypeCodePersonal: string = CommonConstant.CustTypePersonal;
+  MrOwnerTypeCodeCompany: string = CommonConstant.CustTypeCompany;
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false) {
+    if (OwnerType == CommonConstant.CustTypePersonal) {
+      if (IsOwnerTypeChanged) {
+        this.parentForm.patchValue({
+          OwnerProfessionCode: ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      } else {
+        let reqByCode: GenericObj = new GenericObj();
+        reqByCode.Code = this.AppCollateralRegistrationObj.OwnerProfessionCode;
+
+        await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
+          (response) => {
+            this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
+          }
+        );
+      }
+    } else {
+      if (IsOwnerTypeChanged) {
+        this.parentForm.patchValue({
+          OwnerProfessionCode: ""
+        });
+      } else {
+        this.parentForm.patchValue({
+          OwnerProfessionCode: this.AppCollateralRegistrationObj.OwnerProfessionCode
+        });
+      }
+    }
+  }
 }

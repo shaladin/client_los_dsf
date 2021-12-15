@@ -11,7 +11,6 @@ import { forkJoin } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
@@ -33,6 +32,8 @@ export class CreateDoMultiAssetComponent implements OnInit {
   relationshipList: Array<KeyValueObj>;
   PODt: Date;
 
+  readonly ModeAdd: string = CommonConstant.ADD;
+  readonly ModeEdit: string = CommonConstant.EDIT;
   DeliveryOrderForm = this.fb.group({
     DeliveryOrderHId: [0, [Validators.required]],
     AppId: [0, [Validators.required]],
@@ -63,7 +64,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
 
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    if (this.Mode == "add") {
+    if (this.Mode == this.ModeAdd) {
       this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
         (response: GenericListObj) => {
           this.relationshipList = response.ReturnObject;
@@ -72,7 +73,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
           });
         });
     }
-    else if (this.Mode == "edit") {
+    else if (this.Mode == this.ModeEdit) {
       var reqDeliveryOrderH = { Id: this.DeliveryOrderHId };
       this.httpClient.post(URLConstant.GetDeliveryOrderHByDeliveryOrderHId, reqDeliveryOrderH).pipe(
         map((response) => {
@@ -158,10 +159,10 @@ export class CreateDoMultiAssetComponent implements OnInit {
     }
     var DOData = { DeliveryOrderH, DeliveryOrderDs };
 
-    if (this.Mode == "add") {
+    if (this.Mode == this.ModeAdd) {
       url = URLConstant.AddDeliveryOrderMultiAsset;
     }
-    else if (this.Mode == "edit") {
+    else if (this.Mode == this.ModeEdit) {
       url = URLConstant.EditDeliveryOrderMultiAsset;
     }
     this.httpClient.post(url, DOData).subscribe(
