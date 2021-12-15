@@ -94,7 +94,7 @@ import { ViewPurchaseOrderNewDetailComponent } from "./view-purchase-order-new-d
         ViewAgrmntTcComponent,
         ViewDeliveryOrderMultiComponent,
         ViewDeliveryOrderDetailComponent,
-        ViewDeliveryOrderAssetSingleComponent
+        ViewDeliveryOrderAssetSingleComponent,
         ViewPurchaseOrderListComponent,
         ViewPurchaseOrderDetailComponent,
         ViewPurchaseOrderNewListComponent,
@@ -106,7 +106,7 @@ import { ViewPurchaseOrderNewDetailComponent } from "./view-purchase-order-new-d
         UcgridviewComponent,
         UcapprovalhistComponent,
         ViewAssetCollateralDetailComponent,
-        ViewDeliveryOrderAssetSingleComponent
+        ViewDeliveryOrderAssetSingleComponent,
         ViewPurchaseOrderDetailComponent,
         ViewPurchaseOrderNewDetailComponent
     ]
