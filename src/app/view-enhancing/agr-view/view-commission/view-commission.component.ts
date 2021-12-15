@@ -62,7 +62,7 @@ export class ViewCommissionComponent implements OnInit {
             this.ListReferantorData.push(tempObj);
 
           this.SummaryData.totalCommAmt += tempObj.TotalCommissionAmt;
-          this.SummaryData.totalTaxAmt += tempObj.TaxAmt;
+          this.SummaryData.totalTaxAmt += (tempObj.TaxAmt + tempObj.PenaltyAmt);
           this.SummaryData.totalVatAmt += tempObj.VatAmt;
           this.SummaryData.totalExpenseAmt += tempObj.TotalExpenseAmt;
         }
