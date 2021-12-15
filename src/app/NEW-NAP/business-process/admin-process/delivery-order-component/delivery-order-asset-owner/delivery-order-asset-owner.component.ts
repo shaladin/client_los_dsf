@@ -81,7 +81,6 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   }
 
   async setAssetOwnerData() {
-    console.log(this.AppCollateralRegistrationObj);
     this.parentForm.controls[this.identifier].patchValue({
       OwnerName: this.AppCollateralRegistrationObj.OwnerName,
       MrIdTypeCode: this.AppCollateralRegistrationObj.MrIdTypeCode,
@@ -121,10 +120,8 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   async GetOwnerProfessionByCode() {
     let reqByCode: GenericObj = new GenericObj();
     reqByCode.Code = this.AppCollateralRegistrationObj.OwnerProfessionCode;
-    console.log(reqByCode.Code);
     await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
       (response) => {
-        console.log(response);
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
       }
