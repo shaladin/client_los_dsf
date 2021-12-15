@@ -11,6 +11,7 @@ export class AppCustBankAccObj {
     IsBankStmnt: boolean;
     BankBranchRegRptCode: string;
     BalanceAmt: number;
+    BegBalanceAmt: number;
     IsDefault: boolean;
     IsActive: boolean;
     BankInfo: string;
