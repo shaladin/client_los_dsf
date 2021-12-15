@@ -845,6 +845,7 @@ export class URLConstant {
   public static SubmitDeliveryOrderMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/SubmitDeliveryOrderMultiAsset";
   public static SubmitDeliveryOrderMultiAssetV2 = environment.losUrl + "/v2" + "/DeliveryOrder/SubmitDeliveryOrderMultiAsset";
   public static CheckAllDeliveryOrderData = environment.losUrl + "/v1" + "/DeliveryOrder/CheckAllDeliveryOrderData";
+  public static GetAssetListForDOMultiAssetView = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAssetView";
 
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitPurchaseOrder";

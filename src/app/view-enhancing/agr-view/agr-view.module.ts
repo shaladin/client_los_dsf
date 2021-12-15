@@ -40,6 +40,9 @@ import { SharedModule } from "app/shared/shared.module";
 import { ViewInsuranceDetailComponent } from "./view-insurance-detail/view-insurance-detail.component";
 import { ViewAgrmntTcComponent } from "./view-agrmnt-tc/view-agrmnt-tc.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewDeliveryOrderMultiComponent } from './view-delivery-order/view-delivery-order-multi/view-delivery-order-multi.component';
+import { ViewDeliveryOrderDetailComponent } from './view-delivery-order/view-delivery-order-detail/view-delivery-order-detail.component';
+import { ViewDeliveryOrderAssetSingleComponent } from './view-delivery-order/view-delivery-order-detail/view-delivery-order-asset-single/view-delivery-order-asset-single.component';
 
 @NgModule({
     imports: [
@@ -85,14 +88,18 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         AgrMainInfoComponent,
         ViewAssetCollateralDetailComponent, 
         ViewInsuranceDetailComponent,
-        ViewAgrmntTcComponent
+        ViewAgrmntTcComponent,
+        ViewDeliveryOrderMultiComponent,
+        ViewDeliveryOrderDetailComponent,
+        ViewDeliveryOrderAssetSingleComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
-        ViewAssetCollateralDetailComponent
+        ViewAssetCollateralDetailComponent,
+        ViewDeliveryOrderAssetSingleComponent
     ]
 
 })
