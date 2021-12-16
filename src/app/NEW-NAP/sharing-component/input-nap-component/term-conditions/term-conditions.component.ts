@@ -180,7 +180,6 @@ export class TermConditionsComponent implements OnInit {
     let listTC = this.parentForm.get(this.identifier) as FormArray
     let item = listTC.at(index);
     item.patchValue({
-      PromisedDt: null,
       ExpiredDt: null
     });
     this.ReconstructForm();

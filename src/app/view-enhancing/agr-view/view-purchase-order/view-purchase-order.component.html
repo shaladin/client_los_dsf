@@ -219,9 +219,10 @@
               </div>
               <div class="row">
                 <label class="col-md-6 adInsLabel" translate> First Installment in Advance </label>
-                <label class="col-md-6 adInsLabel" *ngIf="ResponseAgrmntFinDataData?.MrFirstInstTypeCode == 'AD'">
-                  {{ResponseAgrmntFinDataData?.InstAmt}} </label>
-                <label class="col-md-6 adInsLabel" *ngIf="ResponseAgrmntFinDataData?.MrFirstInstTypeCode == 'AR'"> {{0}}
+                <label class="col-md-6 adInsLabel" *ngIf="ResponseAppAssetData?.MrFirstInstTypeCode == 'AD'">
+                  {{ResponseAgrmntFinDataData?.InstAmt | number:'.2':'en-US'}} </label>
+                <label class="col-md-6 adInsLabel" *ngIf="ResponseAppAssetData?.MrFirstInstTypeCode == 'AR'"> 
+                  {{0}}
                 </label>
               </div>
               <div class="row">

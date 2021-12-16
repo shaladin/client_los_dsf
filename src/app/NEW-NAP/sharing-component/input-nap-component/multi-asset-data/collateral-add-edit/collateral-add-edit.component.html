@@ -258,7 +258,7 @@
                 </div>
                 <label class="col-md-2" translate>Owner Type</label>
                   <div class="col-md-4">
-                    <mat-radio-group formControlName="MrOwnerTypeCode" (change)="OwnerTypeChange($event.value, true, true)">
+                    <mat-radio-group formControlName="MrOwnerTypeCode" (change)="OwnerTypeChange($event.value, true)">
                       <mat-radio-button class="custom-control custom-radio display-inline-block"
                         *ngFor="let item of OwnerTypeObj" [value]="item.Key">
                         {{item.Value}}

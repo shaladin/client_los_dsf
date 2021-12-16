@@ -9,6 +9,7 @@ import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.mo
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppDlrFncng } from 'app/shared/model/app-data/app-dlr-fncng.model';
+import { AppFctrObj } from 'app/shared/model/app-fctr/app-fctr.model';
 
 @Component({
   selector: "view-financial",
@@ -26,6 +27,7 @@ export class ViewFinancialComponent implements OnInit {
   
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   appObj: NapAppModel = new NapAppModel();
+  appFctrObj: AppFctrObj = new AppFctrObj();
 
   //FIN DATA
   provisionFeeType: string = "-";
@@ -64,6 +66,9 @@ export class ViewFinancialComponent implements OnInit {
     }
     else {
       await this.getFinancialData();
+      if(this.BizTemplateCode === CommonConstant.FCTR) {
+        await this.getAppFctrData();
+      }
     }
   }
 
@@ -97,6 +102,15 @@ export class ViewFinancialComponent implements OnInit {
         }
       }
     );
+  }
+
+  async getAppFctrData() {
+    let reqObj = { Id: this.AppId };
+    await this.http.post(URLConstant.GetAppFctrByAppId, reqObj).toPromise().then(
+      (response: AppFctrObj) => {
+        this.appFctrObj = response;
+      }
+    )
   }
 
   async GetListAllAssetFinancialData() {
