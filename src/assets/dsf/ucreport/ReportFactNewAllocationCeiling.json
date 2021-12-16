@@ -2,7 +2,31 @@
     "title" : "REPORT FACT NEW ALLOCATION CEILING ",
     "reportName": "Report of New Allocation Ceiling",
     "reportTemplateCode": "FACT_NEWALLOCATIONCEILING",
-    "component": [ 
+    "component": [
+        {
+            "type" : "dropdown",
+            "label" : "Product Type",
+            "name" : "CrtProductType",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+                {
+                "key": "UN",
+                "value": "Unit"
+            },
+            {
+                "key": "SP",
+                "value": "Sparepart"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        }, 
         {
             "type" : "datepicker",
             "label" : "Date As Of",
