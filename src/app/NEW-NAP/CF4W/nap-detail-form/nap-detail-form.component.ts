@@ -314,6 +314,12 @@ export class NapDetailFormComponent implements OnInit {
   async NextStep(Step) {
     if (Step == CommonConstant.AppStepUplDoc) {
       await this.initDms();
+    }else if(Step == CommonConstant.AppStepIns){
+      let ReqByIdObj = new GenericObj();
+      ReqByIdObj.Id = this.appId;
+      this.http.post(URLConstant.CalculateDownPaymentNettPercent, ReqByIdObj).subscribe(
+        (response) => {
+        })
     }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
