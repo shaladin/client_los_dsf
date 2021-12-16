@@ -135,6 +135,7 @@ export class ChangeMouDetailFactoringXComponent implements OnInit {
 
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
+    rmInstSchm.MappingCode = CommonConstant.FCTR;
     let getInstSchm = this.httpClient.post(
       URLConstant.GetRefMasterListKeyValueActiveByCode,
       rmInstSchm

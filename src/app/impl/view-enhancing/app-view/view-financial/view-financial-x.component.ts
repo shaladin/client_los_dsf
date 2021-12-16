@@ -9,6 +9,7 @@ import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.mo
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppDlrFncng } from 'app/shared/model/app-data/app-dlr-fncng.model';
+import { AppFctrObj } from 'app/shared/model/app-fctr/app-fctr.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
@@ -27,6 +28,7 @@ export class ViewFinancialXComponent implements OnInit {
   
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   appObj: NapAppModel = new NapAppModel();
+  appFctrObj: AppFctrObj = new AppFctrObj();
 
   //FIN DATA
   provisionFeeType: string = "-";
@@ -65,6 +67,9 @@ export class ViewFinancialXComponent implements OnInit {
     }
     else {
       await this.getFinancialData();
+      if(this.BizTemplateCode === CommonConstant.FCTR) {
+        await this.getAppFctrData();
+      }
     }
   }
 
@@ -99,32 +104,43 @@ export class ViewFinancialXComponent implements OnInit {
       }
     );
 
-    //START DSF X	UATDSFCF-539
-    await this.http.post(URLConstantX.GetAppSubsidyProfitabilityXByAppId, reqObj).toPromise().then(
-      async (response) => {
-        if(!response || !response["ListObjs"] || response["ListObjs"].length <= 0) return;
-
-        for(let i=0; i<response["ListObjs"].length; i++)
-        {
-          let sub = new AppSubsidyObj();
-          sub.MrSubsidyFromTypeCode = response["ListObjs"][i]["MrSubsidyFromTypeCode"];
-          sub.MrSubsidyFromTypeName = response["ListObjs"][i]["MrSubsidyFromTypeDescr"];
-          sub.MrSubsidyFromValueCode = "";
-          sub.MrSubsidyFromValueName = "";
-          sub.MrSubsidyAllocCode = "";
-          sub.MrSubsidyAllocName = "";
-          sub.MrSubsidySourceCode = response["ListObjs"][i]["MrSubsidyProfitabilityTypeCode"];
-          sub.MrSubsidySourceName = response["ListObjs"][i]["MrSubsidyProfitabilityTypeDescr"];
-          sub.MrSubsidyValueTypeCode = "";
-          sub.MrSubsidyValueTypeName = "AMOUNT";
-          sub.SubsidyPrcnt = 0;
-          sub.SubsidyAmt = response["ListObjs"][i]["SubsidyAmt"];
-          this.listSubsidy.push(sub);
-        }
-      }
-    );
-    //END DSF X	UATDSFCF-539
+        //START DSF X	UATDSFCF-539
+        await this.http.post(URLConstantX.GetAppSubsidyProfitabilityXByAppId, reqObj).toPromise().then(
+          async (response) => {
+            if(!response || !response["ListObjs"] || response["ListObjs"].length <= 0) return;
+    
+            for(let i=0; i<response["ListObjs"].length; i++)
+            {
+              let sub = new AppSubsidyObj();
+              sub.MrSubsidyFromTypeCode = response["ListObjs"][i]["MrSubsidyFromTypeCode"];
+              sub.MrSubsidyFromTypeName = response["ListObjs"][i]["MrSubsidyFromTypeDescr"];
+              sub.MrSubsidyFromValueCode = "";
+              sub.MrSubsidyFromValueName = "";
+              sub.MrSubsidyAllocCode = "";
+              sub.MrSubsidyAllocName = "";
+              sub.MrSubsidySourceCode = response["ListObjs"][i]["MrSubsidyProfitabilityTypeCode"];
+              sub.MrSubsidySourceName = response["ListObjs"][i]["MrSubsidyProfitabilityTypeDescr"];
+              sub.MrSubsidyValueTypeCode = "";
+              sub.MrSubsidyValueTypeName = "AMOUNT";
+              sub.SubsidyPrcnt = 0;
+              sub.SubsidyAmt = response["ListObjs"][i]["SubsidyAmt"];
+              this.listSubsidy.push(sub);
+            }
+          }
+        );
+        //END DSF X	UATDSFCF-539
   }
+
+  async getAppFctrData() {
+    let reqObj = { Id: this.AppId };
+    await this.http.post(URLConstant.GetAppFctrByAppId, reqObj).toPromise().then(
+      (response: AppFctrObj) => {
+        this.appFctrObj = response;
+      }
+    )
+  }
+
+  
 
   async GetListAllAssetFinancialData() {
     var requestAppId = {
