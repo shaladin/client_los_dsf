@@ -1073,7 +1073,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.setCollateralPercentage();
     this.setCollateralAttribute();
     for (const key in this.appCollateralDataObj.AppCollateralRegistrationObj) {
-      if(key === "Id" || key === "AppCollateralRegistrationId" || key === "AppCollateralId" || key === "RowVersion" || key === "Notes" || key === "OwnerProfessionCode"){
+      if(key === "Id" || key === "AppCollateralRegistrationId" || key === "AppCollateralId" || key === "RowVersion" || key === "Notes" || key === "OwnerProfessionCode" || key === "MrOwnerTypeCode"){
         continue;
       }
       if(key === "OwnerMobilePhnNo" && this.AppCustData.MrCustTypeCode == CommonConstant.CustTypeCompany){
