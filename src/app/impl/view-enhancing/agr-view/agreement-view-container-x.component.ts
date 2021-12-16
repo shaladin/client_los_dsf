@@ -154,7 +154,7 @@ export class AgreementViewContainerXComponent implements OnInit {
       this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).subscribe(
         (response) => {
           if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
-            this.IsNeedPO = response["CompntValue"] == 'N' ? true : false;
+            this.IsNeedPO = response["CompntValue"] == 'Y' ? true : false;
           }
         });
     }
@@ -228,7 +228,10 @@ export class AgreementViewContainerXComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsCollateral = false;
           this.IsDeviation = false;
-          if(!this.IsNeedPO){
+          if(this.IsNeedPO){
+            this.IsPurchaseOrder = true;
+          }
+          else{
             this.IsPurchaseOrder = false;
           }
         }

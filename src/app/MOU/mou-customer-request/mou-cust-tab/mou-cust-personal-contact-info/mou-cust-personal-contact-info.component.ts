@@ -72,12 +72,13 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   UserAccess: CurrentUserContext;
   MaxDate: Date;
   inputAddressObjForCP: InputAddressObj;
+  BusinessDt: Date;
 
   ContactInfoPersonalForm = this.fb.group({
     ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
-    MrCustRelationshipCode: ['', Validators.maxLength(50)],
+    MrCustRelationshipCode: ['', [Validators.required,Validators.maxLength(50)]],
     IdNo: ['', Validators.maxLength(100)],
     BirthPlace: ['', Validators.maxLength(100)],
     BirthDt: [''],
@@ -85,9 +86,10 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100)]],
     MobilePhnNo2: ['', [Validators.required, Validators.maxLength(100)]],
     IsFamily: [false],
-    Email: ['', Validators.maxLength(100)],
+    Email: ['', Validators.pattern(CommonConstant.regexEmail)],
     CopyFromContactPerson: [''],
-    IsGuarantor: [false]
+    IsGuarantor: [false],
+    IdExpiredDt: [''],
   });
 
 
@@ -104,6 +106,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.customPattern = new Array<CustomPatternObj>();
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
+    this.BusinessDt = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
     this.initLookup();
     this.bindAllRefMasterObj();
@@ -131,6 +134,10 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       return;
     }
 
+    if (this.checkEmergencyCustContactPerson() == false) {
+      return;
+    }
+
     this.setAppCustPersonalContactPerson();
     if (this.mode == "Add") {
       this.listContactPersonPersonal.push(this.MouCustPersonalContactPersonObj);
@@ -142,6 +149,40 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.modalService.dismissAll();
     this.clearForm();
   }
+
+  checkEmergencyCustContactPerson() {
+    var isValid: boolean = true;
+
+    let max17Yodt = new Date(this.BusinessDt);
+    let birthDt = new Date(this.ContactInfoPersonalForm.controls.BirthDt.value);
+    let tempBusinessDt = new Date(this.BusinessDt);
+    let idExpiredDt = new Date(this.ContactInfoPersonalForm.controls.IdExpiredDt.value);
+    max17Yodt.setFullYear(tempBusinessDt.getFullYear() - 17);
+
+    if (birthDt > max17Yodt) {
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      isValid = false;
+    }
+
+    if (birthDt > tempBusinessDt) {
+      this.toastr.warningMessage(ExceptionConstant.BIRTH_DATE_CANNOT_MORE_THAN + 'Business Date');
+      isValid = false;
+    }
+
+    if (tempBusinessDt >= idExpiredDt) {
+      let checkIdType = this.ContactInfoPersonalForm.controls.MrIdTypeCode.value;
+      if (checkIdType == CommonConstant.MrIdTypeCodeEKTP || checkIdType == CommonConstant.MrIdTypeCodeNPWP || checkIdType == CommonConstant.MrIdTypeCodeAKTA) {
+        isValid = true;
+      }
+      else {
+        this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + 'Equal Business Date');
+        isValid = false;
+      }
+    }
+
+    return isValid;
+  }
+
 
   add(content) {
     this.mode = "Add";
@@ -170,6 +211,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       MrIdTypeCode: this.listContactPersonPersonal[i].MrIdTypeCode,
       MrCustRelationshipCode: this.listContactPersonPersonal[i].MrCustRelationshipCode,
       IdNo: this.listContactPersonPersonal[i].IdNo,
+      IdExpiredDt: this.listContactPersonPersonal[i].IdExpiredDt != null ? formatDate(this.listContactPersonPersonal[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
       BirthPlace: this.listContactPersonPersonal[i].BirthPlace,
       BirthDt: birthDt,
       IsEmergencyContact: this.listContactPersonPersonal[i].IsEmergencyContact,
@@ -208,7 +250,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
       MrGenderCode: [this.defaultGender, [Validators.required, Validators.maxLength(50)]],
       MrIdTypeCode: [this.defaultIdType, Validators.maxLength(50)],
-      MrCustRelationshipCode: [this.defaultCustRelationship, Validators.maxLength(50)],
+      MrCustRelationshipCode: [this.defaultCustRelationship, [Validators.required,Validators.maxLength(50)]],
       IdNo: ['', Validators.maxLength(100)],
       BirthPlace: ['', Validators.maxLength(100)],
       BirthDt: [''],
@@ -216,9 +258,10 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       MobilePhnNo2: ['', [Validators.maxLength(100), Validators.pattern("^[0-9]+$")]],
       IsFamily: [false],
-      Email: ['', Validators.maxLength(100)],
+      Email: ['', Validators.pattern(CommonConstant.regexEmail)],
       CopyFromContactPerson: [''],
-      IsGuarantor: [false]
+      IsGuarantor: [false],
+      IdExpiredDt: [''],
     });
 
     this.copyFromContactPerson = "";
@@ -243,6 +286,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.MouCustPersonalContactPersonObj.MrIdTypeCode = this.ContactInfoPersonalForm.controls.MrIdTypeCode.value;
     this.MouCustPersonalContactPersonObj.MrCustRelationshipCode = this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value;
     this.MouCustPersonalContactPersonObj.IdNo = this.ContactInfoPersonalForm.controls.IdNo.value;
+    this.MouCustPersonalContactPersonObj.IdExpiredDt = this.ContactInfoPersonalForm.controls.IdExpiredDt.value;
     this.MouCustPersonalContactPersonObj.MrJobProfessionCode = this.selectedProfessionCode;
     this.MouCustPersonalContactPersonObj.BirthPlace = this.ContactInfoPersonalForm.controls.BirthPlace.value;
     this.MouCustPersonalContactPersonObj.BirthDt = this.ContactInfoPersonalForm.controls.BirthDt.value;
@@ -258,6 +302,15 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.MouCustPersonalContactPersonObj.AreaCode3 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].AreaCode3.value;
     this.MouCustPersonalContactPersonObj.AreaCode4 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].AreaCode4.value;
     this.MouCustPersonalContactPersonObj.City = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].City.value;
+    this.MouCustPersonalContactPersonObj.Phn1 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].Phn1.value;
+    this.MouCustPersonalContactPersonObj.Phn2 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].Phn2.value;
+    this.MouCustPersonalContactPersonObj.Phn3 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].Phn3.value;
+    this.MouCustPersonalContactPersonObj.PhnArea1 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].PhnArea1.value;
+    this.MouCustPersonalContactPersonObj.PhnArea2 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].PhnArea2.value;
+    this.MouCustPersonalContactPersonObj.PhnArea3 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].PhnArea3.value;
+    this.MouCustPersonalContactPersonObj.PhnExt1 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].PhnExt1.value;
+    this.MouCustPersonalContactPersonObj.PhnExt2 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].PhnExt2.value;
+    this.MouCustPersonalContactPersonObj.PhnExt3 = this.ContactInfoPersonalForm.controls["contactPersonAddr"]["controls"].PhnExt3.value;
     this.MouCustPersonalContactPersonObj.GenderName = this.selectedGenderName;
     this.MouCustPersonalContactPersonObj.RelationshipName = this.selectedRelationshipName;
     this.MouCustPersonalContactPersonObj.IsGuarantor = this.ContactInfoPersonalForm.controls.IsGuarantor.value;
@@ -291,10 +344,13 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.contactPersonAddrObj.FaxArea = MouCustPersonalContactPerson.FaxArea;
     this.contactPersonAddrObj.Phn1 = MouCustPersonalContactPerson.Phn1;
     this.contactPersonAddrObj.Phn2 = MouCustPersonalContactPerson.Phn2;
+    this.contactPersonAddrObj.Phn3 = MouCustPersonalContactPerson.Phn3;
     this.contactPersonAddrObj.PhnArea1 = MouCustPersonalContactPerson.PhnArea1;
     this.contactPersonAddrObj.PhnArea2 = MouCustPersonalContactPerson.PhnArea2;
+    this.contactPersonAddrObj.PhnArea3 = MouCustPersonalContactPerson.PhnArea3;
     this.contactPersonAddrObj.PhnExt1 = MouCustPersonalContactPerson.PhnExt1;
     this.contactPersonAddrObj.PhnExt2 = MouCustPersonalContactPerson.PhnExt2;
+    this.contactPersonAddrObj.PhnExt3 = MouCustPersonalContactPerson.PhnExt3;
 
     this.inputFieldContactPersonObj.inputLookupObj.nameSelect = MouCustPersonalContactPerson.Zipcode;
     this.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: MouCustPersonalContactPerson.Zipcode };
@@ -320,7 +376,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.inputFieldContactPersonObj.inputLookupObj = new InputLookupObj();
 
     this.inputAddressObjForCP = new InputAddressObj();
-    this.inputAddressObjForCP.showAllPhn = false;
+    this.inputAddressObjForCP.showFax = false;
     this.inputAddressObjForCP.showSubsection = false;
   }
 
@@ -363,6 +419,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
           this.defaultIdType = this.IdTypeObj[0].Key;
+          this.onChangeIdType(this.defaultIdType);
         }
         console.log(this.defaultIdType);
       }
@@ -430,7 +487,24 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     }
   }
 
-  onChangeIdType(){
+  onChangeIdType(IdType: string){
+    this.ContactInfoPersonalForm.controls.IdExpiredDt.patchValue("");
+
+    if (IdType == "KITAS" || IdType == "SIM") {
+      this.ContactInfoPersonalForm.controls.IdExpiredDt.setValidators([Validators.required]);
+    } else {
+      this.ContactInfoPersonalForm.controls.IdExpiredDt.clearValidators();
+    }
+    this.ContactInfoPersonalForm.controls.IdExpiredDt.updateValueAndValidity();
+
+    let IdTypeCode = this.ContactInfoPersonalForm.get("MrIdTypeCode").value;
+    if (IdTypeCode == CommonConstant.MrIdTypeCodeNPWP) {
+      this.ContactInfoPersonalForm.controls.IdNo.setValidators(Validators.required);
+    } else {
+      this.ContactInfoPersonalForm.controls.IdNo.clearValidators();
+    }
+    this.ContactInfoPersonalForm.controls.IdNo.updateValueAndValidity();
+
     this.setValidatorPattern();
   }
 

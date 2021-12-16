@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
@@ -91,7 +91,6 @@ export class AssetDataComponent implements OnInit {
   IsReady: boolean = false;
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
-  UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -193,7 +192,7 @@ export class AssetDataComponent implements OnInit {
     Id: 0,
   };
 
-  assetCondObj: ProdOfferingDObj;
+  ProdOffAssetCondObj: ProdOfferingDObj;
 
   vendorObj = {
     VendorId: 0,
@@ -245,7 +244,7 @@ export class AssetDataComponent implements OnInit {
   allAssetDataObj: AllAssetDataObj;
 
   InputLookupSupplierObj: InputLookupObj;
-  InputLookupCityIssuerObj: InputLookupObj;
+  InputLookupCityIssuerObj: InputLookupObj = new InputLookupObj();
   InputLookupAssetObj: InputLookupObj;
   InputLookupSupplAccObj: InputLookupObj;
   InputLookupAccObj: InputLookupObj;
@@ -316,6 +315,7 @@ export class AssetDataComponent implements OnInit {
   inputAddressObjForDeliv: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
   isDiffWithRefAttr: boolean;
+  serialNoIsRequired: boolean = false;
 
   generalSettingObj: GenericListByCodeObj = new GenericListByCodeObj();
   IntegratorCheckBySystemGsValue: string = "1";
@@ -325,7 +325,7 @@ export class AssetDataComponent implements OnInit {
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
   LastRequestedDate: any = "";
-  OwnerTypeObj: Array<KeyValueObj>;
+  OwnerTypeObj: Array<KeyValueObj> = new Array();
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
@@ -385,9 +385,6 @@ export class AssetDataComponent implements OnInit {
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
 
     await this.GetListAddr();
-    if (this.BizTemplateCode !== CommonConstant.OPL) {
-      this.AssetConditionChanged();
-    }
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
 
@@ -413,10 +410,12 @@ export class AssetDataComponent implements OnInit {
       await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
         (response: any) => {
           this.RefProdCmptAssetCond = response;
-          if (this.RefProdCmptAssetCond.CompntValue == "USED") {
-            this.isUsed = true;
-          } else {
-            this.isUsed = false;
+          if(this.mode != "Edit"){
+            if (this.RefProdCmptAssetCond.CompntValue == "USED") {
+              this.isUsed = true;
+            } else {
+              this.isUsed = false;
+            }
           }
         }
       );
@@ -449,10 +448,12 @@ export class AssetDataComponent implements OnInit {
           this.items.push(eachDataDetail);
         }
 
-        for (let i = 0; i < this.items.length; i++) {
-          if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
-            this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required, Validators.pattern(this.SerialNoRegex)]);
-            this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+        if(this.isUsed){
+          for (let i = 0; i < this.items.length; i++) {
+            if (this.items.controls[i]['controls']['IsMandatory'].value == true) {
+              this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required, Validators.pattern(this.SerialNoRegex)]);
+              this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+            }
           }
         }
 
@@ -466,6 +467,7 @@ export class AssetDataComponent implements OnInit {
             }
           }
         }
+        this.SetValidatorItemsSerialNo(this.serialNoIsRequired);
       });
     await this.GetGS();
   }
@@ -1461,8 +1463,6 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls["OwnerProfessionCode"].enable();
       this.AssetDataForm.controls["MrOwnerTypeCode"].enable();
     };
-
-    await this.OwnerTypeChange(OwnerType, true);
   }
 
   async getAllAssetData() {
@@ -1511,6 +1511,15 @@ export class AssetDataComponent implements OnInit {
           });
           this.setValidatorBpkb();
 
+          
+          if(this.mode == "Edit"){
+            if(this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed){
+              this.isUsed = true;
+            }else{
+              this.isUsed = false;
+            }
+          }
+
           if (this.appAssetObj.ResponseAppAssetObj.TaxIssueDt != null) {
             this.AssetDataForm.patchValue({
               TaxIssueDt: formatDate(this.appAssetObj.ResponseAppAssetObj.TaxIssueDt, 'yyyy-MM-dd', 'en-US')
@@ -1544,7 +1553,7 @@ export class AssetDataComponent implements OnInit {
 
           if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null) {
             
-            let MrOwnerTypeCode = this.returnAppCollateralRegistObj.MrOwnerTypeCode;
+            let MrOwnerTypeCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerTypeCode;
             let isFromDB = true;
             if (MrOwnerTypeCode == null){
               MrOwnerTypeCode = this.CustType;
@@ -1794,6 +1803,10 @@ export class AssetDataComponent implements OnInit {
     critDisObj.value = 'DIS';
     disCrit.push(critDisObj);
     this.InputLookupCityIssuerObj.addCritInput = disCrit;
+    
+    if (this.BizTemplateCode !== CommonConstant.OPL) {
+      this.AssetConditionChanged();
+    }
 
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";
@@ -1915,9 +1928,11 @@ export class AssetDataComponent implements OnInit {
     if (MrAssetConditionCode == 'USED') {
       this.AssetDataForm.controls.TaxCityIssuer.setValidators(Validators.required);
       this.AssetDataForm.controls.TaxIssueDt.setValidators(Validators.required);
+      this.InputLookupCityIssuerObj.isRequired = true;
     } else {
       this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
       this.AssetDataForm.controls.TaxIssueDt.clearValidators();
+      this.InputLookupCityIssuerObj.isRequired = false;
     }
     this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
     this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
@@ -1997,19 +2012,23 @@ export class AssetDataComponent implements OnInit {
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response: any) => {
-        this.assetCondObj = response;
+        this.ProdOffAssetCondObj = response;
         
-        this.AssetDataForm.patchValue({
-          MrAssetConditionCode: this.assetCondObj.CompntValue
-        });
+        if(this.mode != "Edit"){
+          this.AssetDataForm.patchValue({
+            MrAssetConditionCode: this.ProdOffAssetCondObj.DDLRefProdComptCode[0].Key
+          });
+        }
+        
+        if(this.ProdOffAssetCondObj.DDLRefProdComptCode.length > 1){
+          this.AssetDataForm.controls["MrAssetConditionCode"].enable();
+        }else{
+          this.AssetDataForm.controls["MrAssetConditionCode"].disable();
+        }
+
         this.setValidatorBpkb();
       }
     );
-    
-    this.UcDDLAssetCond = new UcDropdownListObj;
-    this.UcDDLAssetCond.ddlType = "one";
-    this.UcDDLAssetCond.isCustomList = true;
-    this.UcDDLAssetCond.isSelectOutput = true;
   }
 
   GetProfession(event) {
@@ -2167,6 +2186,9 @@ export class AssetDataComponent implements OnInit {
   AssetConditionChanged(mode: string = "add") {
     if (this.AssetConditionObj != null && this.AssetDataForm.controls.MrAssetConditionCode.value != "") {
       let filter: any;
+      // this.AssetDataForm.patchValue({ //delete later
+      //   MrAssetConditionCode : 'USED'
+      // });
       filter = this.AssetConditionObj.filter(
         cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value);
       this.AssetConditionName = filter[0].Value;
@@ -2174,6 +2196,18 @@ export class AssetDataComponent implements OnInit {
     if (this.AssetDataForm.controls.MrAssetConditionCode.value != '' && this.AssetDataForm.controls.MrAssetConditionCode.value != undefined && this.AssetDataForm.controls.ManufacturingYear.value != '' && this.AssetDataForm.controls.ManufacturingYear.value != undefined && this.AssetDataForm.controls.AssetCategoryCode.value != '' && this.AssetDataForm.controls.AssetCategoryCode.value != undefined && this.AssetDataForm.controls.MrAssetUsageCode.value != '' && this.AssetDataForm.controls.MrAssetUsageCode.value != undefined) {
       this.SetDpValue(mode);
     }
+
+    //let serialNoIsRequired: boolean = false;
+    this.serialNoIsRequired = false;
+    this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = true;
+    this.inputAddressObjForLoc.isRequired = true;
+    if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
+      this.inputAddressObjForLoc.inputField.inputLookupObj.isRequired = false;
+      this.inputAddressObjForLoc.isRequired = false;
+      this.serialNoIsRequired = true;
+    }
+    this.SetValidatorItemsSerialNo(this.serialNoIsRequired);
+    this.setValidatorBpkb();
   }
 
   setAddrOwnerObj() {
@@ -2529,7 +2563,7 @@ export class AssetDataComponent implements OnInit {
           this.AssetDataForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
           this.AssetDataForm.controls.MrIdTypeCode.updateValueAndValidity();
         }
-        await this.OwnerTypeChange(this.CustType);
+        await this.OwnerTypeChange(this.CustType, true);
       }
     );
   }
@@ -2835,9 +2869,16 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  async OwnerTypeChange(OwnerType: string, IsClicked: boolean = false, IsFromOwnerType: boolean = false){
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
     if(OwnerType == CommonConstant.CustTypePersonal){
-      if(this.mode == "Edit" && !IsClicked){
+      if(IsOwnerTypeChanged){
+        this.AssetDataForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      }else{
         let reqByCode: GenericObj = new GenericObj();
         reqByCode.Code = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
         
@@ -2847,22 +2888,15 @@ export class AssetDataComponent implements OnInit {
             this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
           }
         );
-      }else if(IsClicked){
-        this.AssetDataForm.patchValue({
-          OwnerProfessionCode : ""
-        });
-
-        this.InputLookupProfessionObj.nameSelect = "";
-        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
       }
     }else{
-      if(this.mode == "Edit" && !IsClicked){
-        this.AssetDataForm.patchValue({
-          OwnerProfessionCode : this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode
-        });
-      }else if(IsFromOwnerType){
+      if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
           OwnerProfessionCode : ""
+        });
+      }else{
+        this.AssetDataForm.patchValue({
+          OwnerProfessionCode : this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode
         });
       }
     }
@@ -2875,5 +2909,23 @@ export class AssetDataComponent implements OnInit {
         this.OwnerProfessionObj = response[CommonConstant.ReturnObj];
       }
     );
+  }
+  
+  private SetValidatorItemsSerialNo(SerialNoIsRequired: boolean) {
+    let itemsSerialNo: FormArray = this.AssetDataForm.get("items") as FormArray;
+    for (let i = 0; i < itemsSerialNo.length; i++) {
+      let tempForm: FormGroup = itemsSerialNo.get(i.toString()) as FormGroup;
+      let tempValidators: Array<ValidatorFn> = new Array();
+      if (this.SerialNoRegex) tempValidators.push(Validators.pattern(this.SerialNoRegex));
+      if (SerialNoIsRequired) {
+        let tempIsMandatory: boolean = tempForm.get("IsMandatory").value;
+        if (tempIsMandatory) tempValidators.push(Validators.required);
+      }
+      let tempSerialNo = tempForm.get("SerialNoValue") as AbstractControl;
+      if (tempValidators.length) {
+        tempSerialNo.setValidators(tempValidators);
+        tempSerialNo.updateValueAndValidity();
+      }
+    }
   }
 }

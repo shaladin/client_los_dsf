@@ -98,7 +98,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   isUsed : boolean = false;
   CustType: string;
   AppCustObj: any;
-  AppCollateralRegistrationObj: any;
+  AppCollateralRegistrationObj: AppCollateralRegistrationObj;
   AppCustAddrObj: Array<AppCustAddrObj> = new Array();
   AddrLegalObj: Array<AppCustAddrObj> = new Array();
   isOwnerReady: boolean = false;
@@ -391,6 +391,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.AppCollateralRegistrationObj.AppCollateralId = this.AppCollateralRegistrationObj.AppCollateralId;
     this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerName = this.DeliveryOrderForm.controls.AssetOwner["controls"].OwnerName.value;
     this.deliveryOrderObj.AppCollateralRegistrationObj.MrIdTypeCode = this.DeliveryOrderForm.controls.AssetOwner["controls"].MrIdTypeCode.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.MrOwnerTypeCode = this.DeliveryOrderForm.controls.AssetOwner["controls"].MrOwnerTypeCode.value;
     this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerIdNo = this.DeliveryOrderForm.controls.AssetOwner["controls"].OwnerIdNo.value;
     this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerAddr = this.DeliveryOrderForm.controls.ownerData["controls"].Addr.value;
     this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.DeliveryOrderForm.controls.ownerData["controls"].AreaCode1.value;
@@ -408,7 +409,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.DeliveryOrderForm.controls.locationData["controls"].AreaCode4.value;
     this.deliveryOrderObj.AppCollateralRegistrationObj.LocationCity = this.DeliveryOrderForm.controls.locationData["controls"].City.value;
     this.deliveryOrderObj.AppCollateralRegistrationObj.LocationZipcode = this.DeliveryOrderForm.controls.locationDataZipcode.value['value'];
-    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.DeliveryOrderForm.controls.AssetOwner["controls"].OwnerName.value;
+    this.deliveryOrderObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.DeliveryOrderForm.controls.AssetOwner["controls"].OwnerProfessionCode.value;
     this.deliveryOrderObj.AppCollateralRegistrationObj.RowVersion = this.AppCollateralRegistrationObj.RowVersion;
 
     this.deliveryOrderObj.AppCollateralDocObj = [...this.DeliveryOrderForm.value.DOAssetDocList];

@@ -84,6 +84,11 @@
             "type": "text",
             "label": "Calculate Method",
             "property": "calcMethod"
+          } ,
+          {
+            "type": "text",
+            "label": "Installment Scheme",
+            "property": "instSchm"
           }    
         ],
         "querystring": {
