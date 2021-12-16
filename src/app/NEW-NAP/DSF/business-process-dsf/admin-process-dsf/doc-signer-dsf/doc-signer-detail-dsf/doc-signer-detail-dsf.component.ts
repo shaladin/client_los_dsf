@@ -278,66 +278,98 @@ export class DocSignerDetailDsfComponent implements OnInit {
     this.officeCodeList.push(this.OfficeCode);
     this.officeCodeList.push(CommonConstant.HeadOffice);
 
-    var critSignerRoleObj = new CriteriaObj();
-    critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
-    critSignerRoleObj.restriction = AdInsConstant.RestrictionIn;
-    critSignerRoleObj.listValue = this.roleCodeList;
-
-    this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
-    this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
-
-    var crit3Obj = new CriteriaObj();
-    crit3Obj.propName = 'RO.OFFICE_CODE';
-    crit3Obj.restriction = AdInsConstant.RestrictionEq;
-    crit3Obj.value = this.OfficeCode;
-
-    this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
-    this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
-
-
-    var count = this.roleCodeList.length;
-    for (var i = 0; i < count; i++)
+    var lengthData = this.roleCodeList.length;
+    var isArea = false;
+    for (var i = 0; i < lengthData; i++)
     {
       if (this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_DIR)
       {
-        var critSignerRoleObj = new CriteriaObj();
-        critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
-        critSignerRoleObj.restriction = AdInsConstant.RestrictionOr;
-        critSignerRoleObj.value = CommonConstantDsf.JOB_TITLE_CODE_DIR;
-
-        this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
-        this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
-      }
-      else if (this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_EGM)
-      {
-        var critSignerRoleObj = new CriteriaObj();
-        critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
-        critSignerRoleObj.restriction = AdInsConstant.RestrictionOr;
-        critSignerRoleObj.value = CommonConstantDsf.JOB_TITLE_CODE_EGM;
-
-        this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
-        this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
-      }
-      else if (this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_PD)
-      {
-        var critSignerRoleObj = new CriteriaObj();
-        critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
-        critSignerRoleObj.restriction = AdInsConstant.RestrictionOr;
-        critSignerRoleObj.value = CommonConstantDsf.JOB_TITLE_CODE_PD;
-
-        this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
-        this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
+        isArea = true;
       }
       else if (this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_VP)
       {
-        var critSignerRoleObj = new CriteriaObj();
-        critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
-        critSignerRoleObj.restriction = AdInsConstant.RestrictionOr;
-        critSignerRoleObj.value = CommonConstantDsf.JOB_TITLE_CODE_VP;
-
-        this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
-        this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
+        isArea = true;
       }
+      else if(this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_PD)
+      {
+        isArea = true;
+      }
+    }
+    
+    if (!isArea)
+    {
+      var critSignerRoleObj = new CriteriaObj();
+      critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
+      critSignerRoleObj.restriction = AdInsConstant.RestrictionIn;
+      critSignerRoleObj.listValue = this.roleCodeList;
+
+      this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
+      this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
+
+      var crit3Obj = new CriteriaObj();
+      crit3Obj.propName = 'RO.OFFICE_CODE';
+      crit3Obj.restriction = AdInsConstant.RestrictionEq;
+      crit3Obj.value = this.OfficeCode;
+
+      this.inputLookupOfficeEmp1Obj.addCritInput.push(crit3Obj);
+      this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
+
+
+      var count = this.roleCodeList.length;
+      for (var i = 0; i < count; i++)
+      {
+        if (this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_DIR)
+        {
+          var critSignerRoleObj = new CriteriaObj();
+          critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
+          critSignerRoleObj.restriction = AdInsConstant.RestrictionOr;
+          critSignerRoleObj.value = CommonConstantDsf.JOB_TITLE_CODE_DIR;
+
+          this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
+          this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
+        }
+        else if (this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_EGM)
+        {
+          var critSignerRoleObj = new CriteriaObj();
+          critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
+          critSignerRoleObj.restriction = AdInsConstant.RestrictionOr;
+          critSignerRoleObj.value = CommonConstantDsf.JOB_TITLE_CODE_EGM;
+
+          this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
+          this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
+        }
+        else if (this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_PD)
+        {
+          var critSignerRoleObj = new CriteriaObj();
+          critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
+          critSignerRoleObj.restriction = AdInsConstant.RestrictionOr;
+          critSignerRoleObj.value = CommonConstantDsf.JOB_TITLE_CODE_PD;
+
+          this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
+          this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
+        }
+        else if (this.roleCodeList[i].toString() == CommonConstantDsf.JOB_TITLE_CODE_VP)
+        {
+          var critSignerRoleObj = new CriteriaObj();
+          critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
+          critSignerRoleObj.restriction = AdInsConstant.RestrictionOr;
+          critSignerRoleObj.value = CommonConstantDsf.JOB_TITLE_CODE_VP;
+
+          this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
+          this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
+        }
+      }
+    }
+
+    else
+    {
+      var critSignerRoleObj = new CriteriaObj();
+      critSignerRoleObj.propName = 'RJT.JOB_TITLE_CODE';
+      critSignerRoleObj.restriction = AdInsConstant.RestrictionIn;
+      critSignerRoleObj.listValue = this.roleCodeList;
+
+      this.inputLookupOfficeEmp1Obj.addCritInput.push(critSignerRoleObj);
+      this.inputLookupOfficeEmp2Obj.addCritInput.push(critSignerRoleObj);
     }
     // var critSignerRoleDIRObj = new CriteriaObj();
     // critSignerRoleDIRObj.propName = 'RR.ROLE_CODE';
