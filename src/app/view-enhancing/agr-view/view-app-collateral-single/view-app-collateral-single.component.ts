@@ -37,7 +37,7 @@ export class ViewAppCollateralSingleComponent implements OnInit {
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
     this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
-    this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryFL4W.json";
+    this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppCollateralAccessory.json";
 
     if (this.AppCollateralId != 0) {
       this.arrValue.push(this.AppCollateralId);
