@@ -3,35 +3,6 @@
     <h4 class="card-title ucSearch-title" translate> Bank Account </h4>
   </div>
   <div id="BankAccount">
-    <div class="col-md-12" *ngIf="ListAppCustBankAccObjs.length == 0">
-      <table class="table table-responsive-md text-center table-hover">
-        <thead>
-          <tr class="table-header">
-            <th style="text-align: left;">
-              <span  name='month' translate>MONTH</span>
-            </th>
-            <th style="text-align: left;">
-              <span  name='year' translate>YEAR</span>
-            </th>
-            <th style="text-align: left;">
-              <span  name='debit' translate>DEBIT (-)</span>
-            </th>
-            <th style="text-align: left;">
-              <span  name='credit' translate>CREDIT (+)</span>
-            </th>
-            <th style="text-align: left;">
-              <span  name='endingBalance' translate>ENDING BALANCE</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="100%">No Data Available</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
     <div class="col-md-12" *ngFor="let item of ListAppCustBankAccObjs; let i = index">
       <div class="col-md-12" style="padding: 0;">
         <h5 style="display: inline-block;">
@@ -50,8 +21,14 @@
               <th style="text-align: left;">
                 <span  name='year' translate>YEAR</span>
               </th>
+              <th style="text-align: center;">
+                <span class="thead-header" name='debitTrxCount' translate>DEBIT TRANSACTION COUNT</span>
+              </th>
               <th style="text-align: left;">
                 <span  name='debit' translate>DEBIT (-)</span>
+              </th>
+              <th style="text-align: center;">
+                <span class="thead-header" name='creditTrxCount' translate>CREDIT TRANSACTION COUNT</span>
               </th>
               <th style="text-align: left;">
                 <span  name='credit' translate>CREDIT (+)</span>
@@ -61,16 +38,27 @@
               </th>
             </tr>
           </thead>
-          <tbody *ngIf="item.AppCustBankStmntObjs?.length == 0">
+          <!-- <tbody *ngIf="item.ListAppCustBankAccStmntObj?.length == 0">
             <tr>
               <td colspan="100%">No Data Available</td>
             </tr>
-          </tbody>
+          </tbody> -->
           <tbody>
-            <tr *ngFor="let stmnt of item.AppCustBankStmntObjs">
-              <td style="text-align: left;">{{stmnt.MonthName}}</td>
+            <tr>
+              <td style="text-align: left;">Beginning Balance</td>
+              <td style="text-align: left;"></td>
+              <td style="text-align: center;"></td>
+              <td style="text-align: left;"></td>
+              <td style="text-align: center;"></td>
+              <td style="text-align: left;"></td>
+              <td style="text-align: left;">{{item.BegBalanceAmt | number:'.2':'en-US'}}</td>
+            </tr>
+            <tr *ngFor="let stmnt of item.ListAppCustBankAccStmntObj">
+              <td style="text-align: left;">{{stmnt.Month}}</td>
               <td style="text-align: left;">{{stmnt.Year}}</td>
+              <td style="text-align: center;">{{stmnt.DebitTrxCount}}</td>
               <td style="text-align: left;">{{stmnt.DebitAmt | number:'.2':'en-US'}}</td>
+              <td style="text-align: center;">{{stmnt.CreditTrxCount}}</td>
               <td style="text-align: left;">{{stmnt.CreditAmt | number:'.2':'en-US'}}</td>
               <td style="text-align: left;">{{stmnt.BalanceAmt | number:'.2':'en-US'}}</td>
             </tr>

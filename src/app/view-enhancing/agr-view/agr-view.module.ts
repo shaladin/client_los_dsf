@@ -14,7 +14,6 @@ import { UclookupgenericComponent, UclookupgenericModule } from "@adins/uclookup
 import { UcviewgenericComponent, UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcgridviewModule, UcgridviewComponent } from "@adins/ucgridview";
 import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapprovalhist";
-
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AgrViewRoutingModule } from "./agr-view-routing.module";
 import { AgreementViewContainerComponent } from "./agreement-view-container.component";
@@ -45,6 +44,13 @@ import { AgrMainInfoXComponent } from "app/impl/view-enhancing/agr-main-info/agr
 import { AgreementViewContainerXComponent } from "app/impl/view-enhancing/agr-view/agreement-view-container-x.component";
 import { ViewAgrmntTcComponent } from "./view-agrmnt-tc/view-agrmnt-tc.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewDeliveryOrderMultiComponent } from './view-delivery-order/view-delivery-order-multi/view-delivery-order-multi.component';
+import { ViewDeliveryOrderDetailComponent } from './view-delivery-order/view-delivery-order-detail/view-delivery-order-detail.component';
+import { ViewDeliveryOrderAssetSingleComponent } from './view-delivery-order/view-delivery-order-detail/view-delivery-order-asset-single/view-delivery-order-asset-single.component';
+import { ViewPurchaseOrderListComponent } from "./view-purchase-order-list/view-purchase-order-list.component";
+import { ViewPurchaseOrderDetailComponent } from "./view-purchase-order-detail/view-purchase-order-detail.component";
+import { ViewPurchaseOrderNewListComponent } from "./view-purchase-order-new-list/view-purchase-order-new-list.component";
+import { ViewPurchaseOrderNewDetailComponent } from "./view-purchase-order-new-detail/view-purchase-order-new-detail.component";
 
 @NgModule({
     imports: [
@@ -95,7 +101,14 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         ViewInsuranceDetailComponent,
         ViewInsuranceDataXComponent,
         ViewInsuranceDataDetailXComponent,
-        ViewAgrmntTcComponent
+        ViewAgrmntTcComponent,
+        ViewDeliveryOrderMultiComponent,
+        ViewDeliveryOrderDetailComponent,
+        ViewDeliveryOrderAssetSingleComponent,
+        ViewPurchaseOrderListComponent,
+        ViewPurchaseOrderDetailComponent,
+        ViewPurchaseOrderNewListComponent,
+        ViewPurchaseOrderNewDetailComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -106,7 +119,10 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         ViewInsuranceDataDetailXComponent
     ],
     exports: [
-        AgrMainInfoXComponent
+        AgrMainInfoXComponent,
+        ViewDeliveryOrderAssetSingleComponent,
+        ViewPurchaseOrderDetailComponent,
+        ViewPurchaseOrderNewDetailComponent
     ]
 
 })

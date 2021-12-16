@@ -61,7 +61,7 @@
             "id": "RequestDateId",
             "value": "BD",
             "restriction": "gte",
-            "label": "Request Date >=",
+            "label": "Request Date From",
             "placeholder": "Placeholder",
             "isCriteriaDataTable" : true
         },
@@ -72,7 +72,7 @@
             "id": "RequestDateId",
             "value": "BD",
             "restriction": "lte",
-            "label": "Request Date <=",
+            "label": "Request Date To",
             "placeholder": "Placeholder",
             "isCriteriaDataTable" : true
         }

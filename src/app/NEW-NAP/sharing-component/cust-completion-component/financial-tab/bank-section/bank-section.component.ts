@@ -43,6 +43,7 @@ export class BankSectionComponent implements OnInit {
     BankAccNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     IsDefault: [false],
     IsActive: [false],
+    BegBalanceAmt: [0, Validators.required],
     BankStmntObjs: this.fb.array([])
   })
 
@@ -136,6 +137,7 @@ export class BankSectionComponent implements OnInit {
       BankAccNo: BankAccAndStmntObj.BankAccNo,
       IsDefault: BankAccAndStmntObj.IsDefault,
       IsActive: BankAccAndStmntObj.IsActive,
+      BegBalanceAmt: BankAccAndStmntObj.BegBalanceAmt,
     })
 
     this.CheckDefault();
@@ -200,11 +202,16 @@ export class BankSectionComponent implements OnInit {
 
   AddRowCustBankStmnt() {
     var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
+    if (bankStmnObjs.length == 12) {
+      return false;
+    }
     bankStmnObjs.push(this.AddGroup(undefined));
     this.FormValidity(this.IsDetail);
+    this.isAlreadyCalc = false;
   }
 
-  AddGroup(bankStmntObj) {
+  AddGroup(bankStmntObj: AppCustBankStmntObj = undefined) {
+    this.isAlreadyCalc = false;
     if (bankStmntObj == undefined) {
       var dateYear = 0;
       if (this.BankAccStmntForm.value['BankStmntObjs'].length > 0)
@@ -221,7 +228,9 @@ export class BankSectionComponent implements OnInit {
         Year: [dateYear, [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
         DebitAmt: [0, Validators.required],
         CreditAmt: [0, Validators.required],
-        BalanceAmt: [0, Validators.required]
+        BalanceAmt: [0, Validators.required],
+        DebitTrxCount: [0, Validators.required],
+        CreditTrxCount: [0, Validators.required]
       })
     } else {
       return this.fb.group({
@@ -229,7 +238,9 @@ export class BankSectionComponent implements OnInit {
         Year: [bankStmntObj.Year, [Validators.required, Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
         DebitAmt: [bankStmntObj.DebitAmt, Validators.required],
         CreditAmt: [bankStmntObj.CreditAmt, Validators.required],
-        BalanceAmt: [bankStmntObj.BalanceAmt, Validators.required]
+        BalanceAmt: [bankStmntObj.BalanceAmt, Validators.required],
+        DebitTrxCount: [bankStmntObj.DebitTrxCount, Validators.required],
+        CreditTrxCount: [bankStmntObj.CreditTrxCount, Validators.required]
       })
     }
   }
@@ -263,6 +274,10 @@ export class BankSectionComponent implements OnInit {
   }
 
   SaveForm(enjiForm: NgForm) {
+    if (!this.isAlreadyCalc) {
+      this.toastr.warningMessage(ExceptionConstant.CALC_FIRST);
+      return false;
+    }
     this.ListBankStmntObj = new Array();
     this.BankAccObj.AppCustId = this.AppCustId;
     this.BankAccObj.BankBranch = this.BankAccStmntForm.controls.BankBranch.value;
@@ -270,6 +285,7 @@ export class BankSectionComponent implements OnInit {
     this.BankAccObj.BankAccNo = this.BankAccStmntForm.controls.BankAccNo.value;
     this.BankAccObj.IsDefault = this.BankAccStmntForm.controls.IsDefault.value;
     this.BankAccObj.IsActive = this.BankAccStmntForm.controls.IsActive.value;
+    this.BankAccObj.BegBalanceAmt = this.BankAccStmntForm.controls.BegBalanceAmt.value;
 
     for (let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++) {
       this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
@@ -310,4 +326,38 @@ export class BankSectionComponent implements OnInit {
     }
     this.IsDetail = false
   }
+
+  //#region Calculate
+  calculate() {
+    let begBalance: number = this.BankAccStmntForm.controls['BegBalanceAmt'].value;
+
+    let startBegBalance = begBalance;
+    let arrayControl = this.BankAccStmntForm.get('BankStmntObjs') as FormArray;
+
+    for (let i = 0; i < arrayControl.length; i++) {
+      const bankStmntD = arrayControl.at(i).value;
+
+      bankStmntD.BalanceAmt = startBegBalance - bankStmntD.DebitAmt + bankStmntD.CreditAmt;
+      startBegBalance = bankStmntD.BalanceAmt;
+    }
+
+    this.isAlreadyCalc = true;
+  }
+  
+  isAlreadyCalc: boolean = false;
+  onBegBalanceAmtChange(e) {
+    this.isAlreadyCalc = false;
+  }
+  onDebitAmtChange(e) {
+    this.isAlreadyCalc = false;
+  }
+
+  onCreditAmtChange(e) {
+    this.isAlreadyCalc = false;
+  }
+
+  onMonthChange() {
+    this.isAlreadyCalc = false;
+  }
+  //#endregion
 }

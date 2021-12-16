@@ -270,10 +270,10 @@ export class NapDetailFormComponent implements OnInit {
       })
   }
 
-  ChangeTab(AppStep) {
+  async ChangeTab(AppStep) {
     this.IsSavedTC = false;
     if (this.ReturnHandlingHId == 0) {
-      this.UpdateAppStep(AppStep);
+      await this.UpdateAppStep(AppStep);
     }
     switch (AppStep) {
       case CommonConstant.AppStepRef:
@@ -315,7 +315,7 @@ export class NapDetailFormComponent implements OnInit {
     if (Step == CommonConstant.AppStepUplDoc) {
       await this.initDms();
     }
-    this.ChangeTab(Step);
+    await this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
     } else if (this.custType == CommonConstant.CustTypeCompany) {
@@ -324,9 +324,9 @@ export class NapDetailFormComponent implements OnInit {
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
-  UpdateAppStep(Step: string) {
+  async UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    await this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
       (response) => {
       }
     )

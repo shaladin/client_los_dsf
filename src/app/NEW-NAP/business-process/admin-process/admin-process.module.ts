@@ -52,7 +52,7 @@ import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
-import { MatTabsModule } from "@angular/material";
+import { MatRadioModule, MatTabsModule } from "@angular/material";
 import { SharedModule } from "app/shared/shared.module";
 import { DocChecklistPagingComponent } from "./doc-checklist/doc-checklist-paging/doc-checklist-paging.component";
 import { DocChecklistDetailComponent } from "./doc-checklist/doc-checklist-detail/doc-checklist-detail.component";
@@ -127,8 +127,9 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
-    SharedModule,
-    AgrViewModule
+    AgrViewModule,
+    MatRadioModule,
+    SharedModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,

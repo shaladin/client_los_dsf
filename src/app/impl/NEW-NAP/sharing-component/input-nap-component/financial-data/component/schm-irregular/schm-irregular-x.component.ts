@@ -32,8 +32,8 @@ export class SchmIrregularXComponent implements OnInit {
   listInstallment: Array<InstallmentObj>;
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
-  EffRateAfterCalc: number = 0;
-  FlatRateAfterCalc: number = 0;
+  EffRateAfterCalc: number = -1;
+  FlatRateAfterCalc: number = -1;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;

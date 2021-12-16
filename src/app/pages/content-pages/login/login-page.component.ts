@@ -11,12 +11,14 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
-  providers: [RolePickService]
+  providers: [RolePickService, NGXToastrService]
 })
 
 export class LoginPageComponent implements OnInit {
@@ -36,7 +38,7 @@ export class LoginPageComponent implements OnInit {
   };
 
   constructor(private router: Router, private http: HttpClient, public rolePickService: RolePickService,
-    private route: ActivatedRoute, private cookieService: CookieService) {
+    private route: ActivatedRoute, private cookieService: CookieService,private toastr: NGXToastrService) {
     //Ini buat check klo misal udah login jadi lgsg lempar ke tempat laennya lagi
 
     this.version = localStorage.getItem(CommonConstant.VERSION);
@@ -106,7 +108,8 @@ export class LoginPageComponent implements OnInit {
             (response) => {
               this.result = response;
               if (this.result.IsNeedUpdatePassword) {
-                this.router.navigate(['/pages/ChangePassword'], { queryParams: { "Username": username } });
+                this.toastr.warningMessage(ExceptionConstant.EXP_PASSWORD);
+                this.router.navigate([NavigationConstant.PAGES_CHANGE_PASSWORD], { queryParams: { "Username": username } });
               }
               else {
                 this.rolePickService.openDialog(this.loginObj);

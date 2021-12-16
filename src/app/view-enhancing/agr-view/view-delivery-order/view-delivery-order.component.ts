@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
-import { DatePipe, formatDate } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/request/delivery-order/req-get-do-multi-asset-information-obj.model';
 
 @Component({
   selector: "agrmnt-view-delivery-order",
@@ -18,6 +18,11 @@ import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 export class ViewDeliveryOrderComponent implements OnInit {
   DeliveryDt: string;
   @Input() agrmntId: number;
+  @Input() appId: number;
+  isMultiAsset: boolean = false;
+  isReady: boolean = false;
+  DeliveryOrderHObjs: Array<DeliveryOrderHObj> = new Array<DeliveryOrderHObj>();
+  doDetailObj: DeliveryOrderHObj;
 
   agrmntObj = {
     AgrmntId: 0,
@@ -27,17 +32,14 @@ export class ViewDeliveryOrderComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
-    //this.route.queryParams.subscribe(params => {
-    //  if (params['AppId'] != null) {
-    //    this.agrmntId = params['AppId'];
-    //  }
-    //});
   }
 
 
   async ngOnInit() {
     this.agrmntObj.AgrmntId = this.agrmntId;
     await this.GetDeliveryOrderData();
+    await this.GetListDeliveryOrderData();
+    this.isReady = true;
   }
 
   async GetDeliveryOrderData() {
@@ -47,6 +49,21 @@ export class ViewDeliveryOrderComponent implements OnInit {
         this.DeliveryDt = formatDate(this.DeliverOrderData.DeliveryOrderH.DeliveryDt, 'yyyy-MM-dd', 'en-US');
       }
     );
+  }
+
+  async GetListDeliveryOrderData() {
+    let GetDoObj = new ReqGetDOMultiAssetInformationObj();
+    GetDoObj.AppId = this.appId;
+    GetDoObj.AgrmntId = this.agrmntId;
+    await this.http.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, GetDoObj).toPromise().then(
+      response => {
+        this.DeliveryOrderHObjs = response['DeliveryOrderHObjs']; 
+        this.doDetailObj = this.DeliveryOrderHObjs[0];
+        if(response['DeliveryOrderHObjs'].length > 1){
+          this.isMultiAsset = true;
+        }
+      }
+    )
   }
 
 }
