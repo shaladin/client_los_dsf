@@ -37,7 +37,7 @@
             <label class="adInsLabel" translate> Tax Amount </label>
           </div>
           <div class="col-md-6" style="text-align: right;">
-            <label class="adInsLabel"> {{item.TaxAmt | number:'.2':'en-US'}} </label>
+            <label class="adInsLabel"> {{(item.TaxAmt + item.PenaltyAmt) | number:'.2':'en-US'}} </label>
           </div>
         </div>
         <div class="form-group row">

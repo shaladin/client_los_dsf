@@ -210,9 +210,9 @@ export class NapDetailFormComponent implements OnInit {
       })
   }
 
-  UpdateAppStep(Step: string) {
+  async UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    await this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
       (response) => {
         this.spinner.show();
         setTimeout(() => { this.spinner.hide(); }, 1500);
@@ -220,9 +220,9 @@ export class NapDetailFormComponent implements OnInit {
     )
   }
 
-  ChangeTab(AppStep: string) {
+  async ChangeTab(AppStep: string) {
     if (this.ReturnHandlingHId == 0) {
-      this.UpdateAppStep(AppStep);
+      await this.UpdateAppStep(AppStep);
     }
     switch (AppStep) {
       case CommonConstant.AppStepRef:
@@ -260,11 +260,11 @@ export class NapDetailFormComponent implements OnInit {
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
-  NextStep(Step) {
+  async NextStep(Step) {
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
-    this.ChangeTab(Step);
+    await this.ChangeTab(Step);
     this.stepper.to(this.AppStepIndex)
   }
 

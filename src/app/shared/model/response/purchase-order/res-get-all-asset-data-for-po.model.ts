@@ -8,6 +8,16 @@ export class ResGetAllAssetDataForPOByAssetObj {
 
 }
 
+export class ResGetAllAssetDataForPOViewByAssetObj {
+
+    ReturnObject : ResGetAllAssetDataForPOViewByAsset;
+
+    constructor(){
+        this.ReturnObject = new ResGetAllAssetDataForPOViewByAsset;
+    }
+
+}
+
 export class ResGetAllAssetDataForPOByAsset {
 
     AppAssetListObj : Array<ResAppAssetForPOObj>;
@@ -30,9 +40,43 @@ export class ResGetAllAssetDataForPOByAsset {
     PurchaseOrderHId : number;
     Notes : string;
     RowVersionPO : string;
+    PurchaseOrderBankCode : string;
+    PurchaseOrderBankBranch : string;
+    PurchaseOrderBankAccNo : string;
+    PurchaseOrderBankAccName : string;
     
     constructor(){
         this.AppAssetListObj = new Array<ResAppAssetForPOObj>();
+        this.PurchaseOrderExpiredDt = new Date();
+    }
+
+}
+
+export class ResGetAllAssetDataForPOViewByAsset {
+
+    AppAssetListObj : Array<ResAppAssetForPOViewObj>;
+    AppAssetAccListObj : Array<ResAppAssetAccForPoObj>
+    AppCustAddrObj : ResAppCustAddrForPOObj;
+    AgrmntObj : ResAgrmntForPOObj;
+    AgrmntFeeListObj : Array<ResAgrmntFeeForPOObj>;
+    AgrmntFinDataObj : ResAgrmntFinDataForPOObj;
+    AgrmntSubsidyListObj : Array<ResAgrmntSubsidyObj>;
+    VendorObj :  ResVendorForPOObj;
+    VendorAddrObj: ResVendorAddrForPOObj;
+    VendorBankAccObj : ResVendorBankAccForPOObj;
+    PurchaseOrderExpiredDt : Date;
+
+    ProportionalValue : number;
+    TotalInsCustAmt : number;
+    TotalLifeInsCustAmt : number;
+    TotalPurchaseOrderAmt : number;
+    DiffRateAmt : number;
+    PurchaseOrderHId : number;
+    Notes : string;
+    RowVersionPO : string;
+    
+    constructor(){
+        this.AppAssetListObj = new Array<ResAppAssetForPOViewObj>();
         this.PurchaseOrderExpiredDt = new Date();
     }
 
@@ -57,6 +101,34 @@ export class ResAppAssetForPOObj {
         this.SerialNo2 = "";
         this.SerialNo3 = "";
         this.AssetNotes = "";
+        this.RowVersion = "";
+    }
+
+}
+
+export class ResAppAssetForPOViewObj {
+    
+    FullAssetName : string;
+    AssetPriceAmt : number;
+    DownPaymentAmt : number;
+    SerialNo1 : string;
+    SerialNo2 : string;
+    SerialNo3 : string;
+    AssetNotes : string;
+    MrAssetConditionCodeDesc : string;
+    MrAssetUsageCodeDesc : string;
+    RowVersion : string;
+
+    constructor(){
+        this.FullAssetName = "";
+        this.AssetPriceAmt = 0;
+        this.DownPaymentAmt = 0;
+        this.SerialNo1 = "";
+        this.SerialNo2 = "";
+        this.SerialNo3 = "";
+        this.AssetNotes = "";
+        this.MrAssetConditionCodeDesc = "";
+        this.MrAssetUsageCodeDesc = "";
         this.RowVersion = "";
     }
 
@@ -125,12 +197,14 @@ export class ResVendorBankAccForPOObj {
     BankCode : string;
     BankAccountNo : string;
     BankAccountName : string;
+    BankBranch : string;
 
     constructor(){
         this.BankName = "";
         this.BankCode = "";
         this.BankAccountNo = "";
         this.BankAccountName = "";
+        this.BankBranch = "";
     }
 
 }
