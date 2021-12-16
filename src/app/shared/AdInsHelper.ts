@@ -227,9 +227,9 @@ export class AdInsHelper {
 
   public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}, isSkipLocation: boolean = false, isReuseRoute: boolean = false) {
     // Ngebuat bisa jalanin Constructor dan NgOnInit lagi
-    router.routeReuseStrategy.shouldReuseRoute = () => {
-      return isReuseRoute;
-    }
+    // router.routeReuseStrategy.shouldReuseRoute = () => {
+    //   return isReuseRoute;
+    // }
     router.navigateByUrl(
       router.createUrlTree(
         [url.toString()], { queryParams: queryParams }

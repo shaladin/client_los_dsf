@@ -8,7 +8,6 @@ import { ROUTES } from './sidebar-routes.config';
 import { environment } from 'environments/environment';
 import { CommonConstant } from '../constant/CommonConstant';
 import { AdInsHelper } from '../AdInsHelper';
-import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsConstant } from '../AdInstConstant';
 import { StorageService } from '../services/StorageService';
