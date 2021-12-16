@@ -134,13 +134,13 @@
       <div class="bs-stepper-content">
         <!-- your steps content here -->
         <div id="reserved-fund-tab" class="content" role="tabpanel" aria-labelledby="reserved-fund-tab-trigger">
-          <app-reserved-fund-x *ngIf="StepIndex == 1 && isView" [AppId]="ReturnHandlingHObj.AppId" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode"
+          <app-reserved-fund-x *ngIf="StepIndex == 1 && isView && isRefundNotDouble" [AppId]="ReturnHandlingHObj.AppId" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo" [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode"
           (outputTab)="NextStep('COM')" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromReservedFund($event)"
           (outputCommCondition)="checkCommData($event)">
           </app-reserved-fund-x>
         </div>
         <div id="commission-tab" class="content" role="tabpanel" aria-labelledby="commission-tab-trigger">
-          <app-commission-v2-x *ngIf="StepIndex == 2 && isView" [LobCode]="NapObj.LobCode" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo"  [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode" [maxAllocRefundAmt]="viewIncomeInfoObj.MaxAllocatedRefundAmt"
+          <app-commission-v2-x *ngIf="StepIndex == 2 && isView && isRefundNotDouble" [LobCode]="NapObj.LobCode" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo"  [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode" [maxAllocRefundAmt]="viewIncomeInfoObj.MaxAllocatedRefundAmt"
           (outputTab)="LastStepHandler($event)" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)">
         </app-commission-v2-x>
         </div>
