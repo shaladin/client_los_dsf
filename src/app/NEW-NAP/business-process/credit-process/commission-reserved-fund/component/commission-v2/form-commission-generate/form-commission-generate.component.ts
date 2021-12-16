@@ -29,6 +29,7 @@ export class FormCommissionGenerateComponent implements OnInit {
   @Input() identifier: string;
   @Input() FormInputObj: object = {};
   @Input() DictMaxIncomeForm: object = {};
+  @Input() DictCalcMethod: { [id: string]: string } = {};
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
