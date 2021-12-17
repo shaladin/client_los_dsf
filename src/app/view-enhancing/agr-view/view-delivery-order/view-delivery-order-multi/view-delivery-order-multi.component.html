@@ -1,0 +1,54 @@
+<div class="px-3">
+  <lib-ucSubsection [hidden]="doDetail" [id]="'DeliveryListId'" [title]="'Delivery List'" [panel]="'DeliveryListSection'">
+  </lib-ucSubsection>
+  <div class="form-body" id="DeliveryListSection" [hidden]="doDetail">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;">
+            <span class="thead-header" name='no' translate>DELIVERY ORDER NO.</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='seqNo' translate>DELIVERY DATE</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='assetName' translate>CUST RELATIONSHIP</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='assetPrice' translate>RECIPIENT NAME</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='downPayment' translate>RECIPIENT ADDRESS</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='serialNo1' translate>ACTION</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of doList; let i = index">
+          <td style="text-align: center;">
+            {{item.DeliveryNo}}
+          </td>
+          <td style="text-align: center;">
+            {{item.DeliveryDt | date: "dd-MMM-yyyy"}}  
+          </td>
+          <td style="text-align: left;">
+            {{item.MrCustRelationshipCode}}
+          </td>
+          <td style="text-align: left;">
+            {{item.RecipientName}} 
+          </td>
+          <td style="text-align: left;">
+            {{item.DeliveryAddr}}
+          </td>
+          <td style="text-align: center;">
+            <a (click)="editDOHandler(i)"><i class="fas fa-pencil-alt mr-2"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-view-delivery-order-detail *ngIf="doDetail" [doDetailObj]="doDetailObj" [showBackButton]="showBackButton" [appId]="appId" (backButton)="backButton(event)"></app-view-delivery-order-detail>
+</div>

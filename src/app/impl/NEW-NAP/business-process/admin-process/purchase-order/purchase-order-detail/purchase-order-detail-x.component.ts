@@ -18,6 +18,7 @@ import { ReqAssetDataObj } from 'app/shared/model/request/app-asset/req-app-asse
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { PurchaseOrderDObj } from 'app/shared/model/purchase-order-d-obj.model';
+import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 
 @Component({
   selector: 'app-purchase-order-detail-x',
@@ -47,10 +48,13 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   BizTemplateCode: string;
   bankVisible:boolean = false;
   responseRefBank: any
+  ucDdlVendorBankAccObj: UcDropdownListObj = new UcDropdownListObj();
+  isDdlVendorBankAccReady: boolean = false;
 
   POForm = this.fb.group({
     Notes: [''],
     CustBankAcc: ['', Validators.required],
+    VendorBankAccNo: ['', Validators.required]
   });
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT;
   constructor(private fb: FormBuilder,
@@ -96,6 +100,10 @@ export class PurchaseOrderDetailXComponent implements OnInit {
     appAssetObj.AppId = this.AppId;
     appAssetObj.AgrmntId = this.AgrmntId;
     appAssetObj.SupplCode = this.SupplCode;
+    
+    if(this.lobCode == CommonConstantX.SLB){
+      this.POForm.get("VendorBankAccNo").clearValidators();
+    }
 
     await this.http.post<ResGetAllAssetDataForPOByAssetObj>(poUrl, appAssetObj).toPromise().then(
       async (response) => {
@@ -133,13 +141,26 @@ export class PurchaseOrderDetailXComponent implements OnInit {
           }
         }
         else{
-          this.POForm.patchValue({
-            CustBankAcc: 0
-          });
-          this.purchaseOrderHObj.BankCode = this.AssetObj.VendorBankAccObj.BankCode;
-          this.purchaseOrderHObj.BankBranch = this.AssetObj.VendorBankAccObj.BankName;
-          this.purchaseOrderHObj.BankAccNo = this.AssetObj.VendorBankAccObj.BankAccountNo;
-          this.purchaseOrderHObj.BankAccName = this.AssetObj.VendorBankAccObj.BankAccountName;
+          let defaultBankAcc = this.AssetObj.ListVendorBankAccObj.find(obj => obj.IsDefault == true);
+          if(defaultBankAcc != undefined){
+            this.POForm.patchValue({
+              CustBankAcc: 0,
+              VendorBankAccNo: defaultBankAcc.BankAccountNo
+            });
+            
+            this.purchaseOrderHObj.BankCode = defaultBankAcc.BankCode;
+            this.purchaseOrderHObj.BankBranch = defaultBankAcc.BankName;
+            this.purchaseOrderHObj.BankAccNo = defaultBankAcc.BankAccountNo;
+            this.purchaseOrderHObj.BankAccName = defaultBankAcc.BankAccountName;
+          }
+          else{
+            this.POForm.patchValue({
+              CustBankAcc: 0,
+              VendorBankAccNo: ''
+            });
+          }
+          
+          this.initDdlVendorBankAcc();
         }
       });
     this.checkValidExpDt();
@@ -330,5 +351,22 @@ export class PurchaseOrderDetailXComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  initDdlVendorBankAcc(){
+    this.ucDdlVendorBankAccObj = new UcDropdownListObj;
+    this.ucDdlVendorBankAccObj.ddlType = "one";
+    this.ucDdlVendorBankAccObj.isCustomList = true;
+    this.ucDdlVendorBankAccObj.isSelectOutput = true;
+    this.ucDdlVendorBankAccObj.customKey = "BankAccountNo";
+    this.ucDdlVendorBankAccObj.customValue = "BankAccountNo"
+    this.isDdlVendorBankAccReady = true
+  }
+  
+  vendorBankAccChange(ev){
+    this.purchaseOrderHObj.BankCode = ev.selectedObj.BankCode;
+    this.purchaseOrderHObj.BankBranch = ev.selectedObj.BankName;
+    this.purchaseOrderHObj.BankAccNo = ev.selectedObj.BankAccountNo;
+    this.purchaseOrderHObj.BankAccName = ev.selectedObj.BankAccountName;
   }
 }

@@ -40,6 +40,9 @@ import { CustAddrObj } from 'app/shared/model/cust-addr-obj.model';
 import { MouCustObjForAddTrxData } from 'app/shared/model/mou-cust-obj-for-add-trx-data.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/response/third-party-result/res-third-party-rslt-h-obj.model';
 import { MouCustCompanyFinDataAttrObj } from 'app/shared/model/mou-cust-fin-data-attr-content-obj.model';
+import { MouCustCompanyContactInfoComponent } from 'app/MOU/mou-customer-request/mou-cust-tab/mou-cust-company-contact-info/mou-cust-company-contact-info.component';
+
+
 
 @Component({
   selector: 'app-mou-cust-tab-x',
@@ -48,6 +51,7 @@ import { MouCustCompanyFinDataAttrObj } from 'app/shared/model/mou-cust-fin-data
 export class MouCustTabXComponent implements OnInit {
   @ViewChild(MouCustPersonalMainComponent) mainDataComponent;
   @ViewChild(MouCustPersonalContactInfoComponent) custContactInformationComponent;
+  @ViewChild(MouCustCompanyContactInfoComponent) custContactCompInformationComponent;
   @ViewChild(MouCustJobDataComponent) custJobDataComponent;
   @ViewChild(MouCustGrpMbrComponent) custGrpMemberComponent;
 
@@ -1014,6 +1018,74 @@ export class MouCustTabXComponent implements OnInit {
       this.custContactInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value };
       this.custContactInformationComponent.inputAddressObjForCP.default = this.custContactInformationComponent.contactPersonAddrObj;
       this.custContactInformationComponent.inputAddressObjForCP.inputField = this.custContactInformationComponent.inputFieldContactPersonObj;
+    }
+  }
+
+  copyToContactPersonCompAddr(event) {
+    if (event == CommonConstant.AddrTypeLegal) {
+      this.custContactCompInformationComponent.contactPersonAddrObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode3 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode3.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode4 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode4.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.City = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].City.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Fax = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Fax.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.FaxArea = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].FaxArea.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Phn1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Phn2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnArea1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnArea2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnExt1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnExt2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt2.value;
+
+      this.custContactCompInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
+      this.custContactCompInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value };
+      this.custContactCompInformationComponent.inputAddressObjForCPComp.default = this.custContactCompInformationComponent.contactPersonAddrObj;
+      this.custContactCompInformationComponent.inputAddressObjForCPComp.inputField = this.custContactCompInformationComponent.inputFieldContactPersonObj;
+    }
+
+    if (event == CommonConstant.AddrTypeBiz) {
+      this.custContactCompInformationComponent.contactPersonAddrObj.Addr = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Addr.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode3 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode3.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode4 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].AreaCode4.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.City = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].City.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Fax = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Fax.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.FaxArea = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].FaxArea.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Phn1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Phn1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Phn2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].Phn2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnArea1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnArea1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnArea2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnArea2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnExt1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnExt1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnExt2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnExt2.value;
+
+      this.custContactCompInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["businessAddrCompanyZipcode"]["controls"].value.value;
+      this.custContactCompInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["businessAddrCompanyZipcode"]["controls"].value.value };
+      this.custContactCompInformationComponent.inputAddressObjForCPComp.default = this.custContactCompInformationComponent.contactPersonAddrObj;
+      this.custContactCompInformationComponent.inputAddressObjForCPComp.inputField = this.custContactCompInformationComponent.inputFieldContactPersonObj;
+    }
+
+    if (event == CommonConstant.AddrTypeMailing) {
+      this.custContactCompInformationComponent.contactPersonAddrObj.Addr = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Addr.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode3 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode3.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.AreaCode4 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode4.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.City = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].City.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Fax = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Fax.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.FaxArea = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].FaxArea.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Phn1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Phn1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.Phn2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Phn2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnArea1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnArea1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnArea2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnArea2.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnExt1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt1.value;
+      this.custContactCompInformationComponent.contactPersonAddrObj.PhnExt2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt2.value;
+
+      this.custContactCompInformationComponent.inputFieldContactPersonObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["mailingAddrCompanyZipcode"]["controls"].value.value;
+      this.custContactCompInformationComponent.inputFieldContactPersonObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["mailingAddrCompanyZipcode"]["controls"].value.value };
+      this.custContactCompInformationComponent.inputAddressObjForCPComp.default = this.custContactCompInformationComponent.contactPersonAddrObj;
+      this.custContactCompInformationComponent.inputAddressObjForCPComp.inputField = this.custContactCompInformationComponent.inputFieldContactPersonObj;
     }
   }
 

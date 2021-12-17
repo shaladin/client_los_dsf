@@ -192,6 +192,8 @@ export class ExceptionConstant {
     public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
     
     public static JOB_POSITION_CANT_BE_EMPTY = "Job Position Cannot Be Empty - Shareholder {0}";
-    public static INS_ASSET_CATEGORY_NOT_FOUND = "Ins Asset Category Not Found, Please Setting Rule First"
+    public static INS_ASSET_CATEGORY_NOT_FOUND = "Ins Asset Category Not Found, Please Setting Rule First";
+    public static EXP_PASSWORD = "Password has expired. Please change your password."; 
+    public static PWD_EXCEPTION = "Minimum 8 characters, at least 1 letter, 1 number and 1 special character.";
 }
 

@@ -224,13 +224,13 @@ export class AppViewXComponent implements OnInit {
       this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CF4W) {
-      this.IsAsset = this.NumOfAsset < 2 ? true : false;
+      this.IsAsset = false;
       this.IsCollateral = false;
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
-      this.IsInsurance = this.NumOfAsset < 2 ? true : false;
-      this.IsMultiAsset = this.NumOfAsset > 1 ? true : false;
-      this.IsMultiInsurance = this.NumOfAsset > 1 ? true : false;
+      this.IsInsurance = false;
+      this.IsMultiAsset = true;
+      this.IsMultiInsurance =  true;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;

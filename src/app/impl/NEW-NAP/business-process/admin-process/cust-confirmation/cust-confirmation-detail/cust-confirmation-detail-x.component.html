@@ -14,16 +14,21 @@
         <div class="form-body" id="DoInfoForm">
           <div class="form-group row">
             <label class="col-md-2 adins-required-label" for="AgrmntCreatedDt" translate>Agreement Date</label>
-            <div *ngIf = "checkPOReady" class="col-md-4">
+            <!-- <div *ngIf = "checkPOReady" class="col-md-4">
               <input *ngIf = "!isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
               <input *ngIf = "isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
               <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntCreatedDt" [submit]="CustConfirmForm.submitted">
+              </lib-uc-show-errors>
+            </div> -->
+            <div class="col-md-4">
+              <input type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt">
+              <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntDt">
               </lib-uc-show-errors>
             </div>
             <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
             <div class="col-md-4">
               <input type="date" id="EffectiveDt" class="form-control adInsInput name" (change)="checkAddInterestPaidBy()"
-                formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                formControlName="EffectiveDt">
               <lib-uc-show-errors [control]="CustConfirmForm.controls.EffectiveDt"
                 [submit]="CustConfirmForm.submitted">
               </lib-uc-show-errors>
