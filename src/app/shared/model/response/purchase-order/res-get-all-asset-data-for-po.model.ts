@@ -30,6 +30,7 @@ export class ResGetAllAssetDataForPOByAsset {
     PurchaseOrderHId : number;
     Notes : string;
     RowVersionPO : string;
+    PurchaseOrderHBankAccNo: string;
     
     constructor(){
         this.AppAssetListObj = new Array<ResAppAssetForPOObj>();
