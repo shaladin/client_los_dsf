@@ -99,7 +99,7 @@ export class FinancialDataXComponent implements OnInit {
         AppSupplEffectiveRatePrcnt: 0,
 
         DiffRateAmt: 0,
-        SubsidyAmtFromDiffRate: { value: 0, disabled: true },
+        SubsidyAmtFromDiffRate: { value: 0, disabled: false },
         CommissionAmtFromDiffRate: 0,
         IsSubsidyRateExist: false,
         ResidualValueAmt: [0, this.BizTemplateCode == CommonConstant.FL4W ? [Validators.min(0)] : []],
