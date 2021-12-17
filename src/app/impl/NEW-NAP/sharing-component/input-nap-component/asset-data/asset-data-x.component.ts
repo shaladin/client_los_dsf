@@ -148,7 +148,7 @@ import {UcDropdownListObj} from 'app/shared/model/library/uc-dropdown-list-obj.m
       /*App Collateral Regist*/
       UserName: ['', Validators.maxLength(50)],
       MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-      OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
+      OwnerName: ['', [Validators.required, Validators.maxLength(100)]],
       MrIdTypeCode: ['', Validators.maxLength(50)],
       OwnerIdNo: ['', Validators.maxLength(50)],
       MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
