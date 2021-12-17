@@ -24,6 +24,7 @@ export class MouCustCollateralRegistrationObj {
     LocationZipcode: string;
     Notes: string;
     OwnerProfessionCode: string;
+    MrOwnerTypeCode: string;
     Phn1: string;
     Phn2: string;
     PhnArea1: string;
