@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cust-sync',
@@ -46,7 +47,14 @@ export class CustSyncComponent implements OnInit {
   GetCallBack(e: any) {
     if (e.Key == "Sync") {
       if(confirm("Are You Sure To Sync This Data ?")){
-        this.http.post(URLConstant.SyncAppCustWithCustFOU, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo }).toPromise().then(
+        this.http.post(URLConstant.SyncAppCustWithCustFOU, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo }).pipe(
+          map((response) => {
+            return response;
+          }),
+          mergeMap((response) => {
+            return this.http.post(URLConstant.SyncAppCustWithCustFOUSecondary, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo });
+          })
+        ).toPromise().then(
           (response) => {
             if(response["StatusCode"] == 200){
               this.toastr.successMessage("Data Synced Successfully");

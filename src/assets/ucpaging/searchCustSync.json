@@ -139,10 +139,16 @@
             "property": "CustName"
         },
         {
-            "type": "callback",
-            "key": "Sync",
+            "type": "action",
             "position": "center",
-            "icon": "ft-edit-2"
+            "action": [
+                {
+                    "type": "callback",
+                    "key": "Sync",
+                    "position": "center",
+                    "icon": "ft-edit-2"
+                }
+            ]
         }
     ]
 }
