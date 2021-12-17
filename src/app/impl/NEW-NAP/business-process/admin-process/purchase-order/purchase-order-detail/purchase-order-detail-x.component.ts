@@ -141,7 +141,14 @@ export class PurchaseOrderDetailXComponent implements OnInit {
           }
         }
         else{
-          let defaultBankAcc = this.AssetObj.ListVendorBankAccObj.find(obj => obj.IsDefault == true);
+          let defaultBankAcc;
+          if(this.AssetObj.PurchaseOrderHBankAccNo != null){
+            defaultBankAcc = this.AssetObj.ListVendorBankAccObj.find(obj => obj.BankAccountNo == this.AssetObj.PurchaseOrderHBankAccNo);
+          }
+          else{
+            defaultBankAcc = this.AssetObj.ListVendorBankAccObj.find(obj => obj.IsDefault == true);
+          }
+
           if(defaultBankAcc != undefined){
             this.POForm.patchValue({
               CustBankAcc: 0,
