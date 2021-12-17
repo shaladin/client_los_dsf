@@ -35,8 +35,8 @@ export class SchmBalloonComponent implements OnInit {
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
   IsFirstCalc: boolean = true;
-  EffRateAfterCalc: number = 0;
-  FlatRateAfterCalc: number = 0;
+  EffRateAfterCalc: number = -1;
+  FlatRateAfterCalc: number = -1;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;

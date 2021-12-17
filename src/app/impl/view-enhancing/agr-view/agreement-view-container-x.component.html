@@ -118,7 +118,9 @@
 
             <mat-tab *ngIf="IsPurchaseOrder" label="Purchase Order">
               <ng-template matTabContent>
-                <app-view-purchase-order [agrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></app-view-purchase-order>
+                <app-view-purchase-order-list [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode" *ngIf="BizTemplateCode != 'CFNA'"></app-view-purchase-order-list>
+                <app-view-purchase-order-new-list [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode" [AppId]="AppId" *ngIf="BizTemplateCode == 'CFNA'" ></app-view-purchase-order-new-list>
+                <!-- <app-view-purchase-order [agrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></app-view-purchase-order> -->
               </ng-template>
             </mat-tab>
 
@@ -140,7 +142,7 @@
 
             <mat-tab *ngIf="IsDeliveryOrder" label="Delivery Order">
               <ng-template matTabContent>
-                <agrmnt-view-delivery-order [agrmntId]="AgrmntId"></agrmnt-view-delivery-order>
+                <agrmnt-view-delivery-order [agrmntId]="AgrmntId" [appId]="AppId"></agrmnt-view-delivery-order>
               </ng-template>
             </mat-tab>
 

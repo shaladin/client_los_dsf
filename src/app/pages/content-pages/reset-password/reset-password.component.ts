@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { DatePipe } from '@angular/common';
-import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { RefUserObj } from 'app/shared/model/ref-user-obj.model';
+import { CustomPatternObj } from 'app/shared/model/library/custom-pattern-obj.model';
 
 
 
@@ -33,6 +31,8 @@ export class ResetPasswordComponent implements OnInit {
   isLoaded: boolean = false;
   code: string = "";
   RefUserObj: RefUserObj;
+  customPattern = new Array<CustomPatternObj>();
+  
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     this.version = localStorage.getItem(CommonConstant.VERSION);
     this.code = this.route.snapshot.paramMap.get('code');
@@ -42,6 +42,16 @@ export class ResetPasswordComponent implements OnInit {
     if (this.code != "") {
       this.getRefUser();
     }
+    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodePasswordRegex }).subscribe(
+      (response: { GsValue }) => {
+        let patternObj: CustomPatternObj = new CustomPatternObj();
+        patternObj.pattern = response.GsValue;
+        patternObj.invalidMsg = ExceptionConstant.PWD_EXCEPTION;
+        this.customPattern.push(patternObj);
+        this.ResetPassForm.controls.NewPassword.setValidators([Validators.required, Validators.pattern(response.GsValue)]);
+        this.ResetPassForm.controls.NewPassword.updateValueAndValidity();
+      }
+    );
   }
 
   SaveForm() {

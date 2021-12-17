@@ -166,7 +166,7 @@
           <app-mou-cust-mgmnt-shrholder (callbackSubmit)="getMouCustShareholder($event)"
             [listShareholder]="listShareholder">
           </app-mou-cust-mgmnt-shrholder>
-          <app-mou-cust-company-contact-info (callbackSubmit)="getMouCustCompanyContactPerson($event)"
+          <app-mou-cust-company-contact-info (callbackSubmit)="getMouCustCompanyContactPerson($event)" (callbackCopyAddrComp)="copyToContactPersonCompAddr($event)"
             [listContactPersonCompany]="listContactPersonCompany"></app-mou-cust-company-contact-info>
           <app-mou-cust-company-financial [MouCustCompanyFinDataObj]="custDataCompanyObj.MouCustCompanyFinDataObj"
             [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm" [identifier]="'financialDataCompany'">

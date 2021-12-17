@@ -1,0 +1,28 @@
+<div *ngIf="IsHidden">
+  <lib-ucSubsection [id]="'SupplierListId'" [title]="'Purchase Order Supplier List'" [panel]="'SupplierList'">
+  </lib-ucSubsection>
+  <div class="form-body" id="SupplierList">
+      <table class="table table-responsive-md text-center table-hover">
+          <thead>
+              <tr class="table-header">
+                  <th class="text-left"><span translate class="thead-header">SUPPLIER CODE</span></th>
+                  <th class="text-left"><span translate class="thead-header">SUPPLIER NAME</span></th>
+                  <th class="text-center"><span translate class="thead-header">PURCHASE ORDER NO</span></th>
+                  <th class="text-center" translate>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of AppAssetList">
+                  <td style="text-align: left;">{{item.SupplCode}}</td>
+                  <td style="text-align: left;">{{item.SupplName}}</td>
+                  <td style="text-align: center;" >{{item.PurchaseOrderNo}}</td>
+                  <td style="text-align: center;">
+                      <a (click)="viewPurchaseOrderDetailHandler(item)" class="success p-0">
+                          <i class="fas fa-pencil-alt"></i>
+                      </a>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
