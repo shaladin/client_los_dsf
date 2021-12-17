@@ -669,7 +669,7 @@ export class URLConstant {
   public static DeleteMouCustListedCustFctr = environment.losUrl + "/v1" + "/MouCustListedCustFctr/DeleteMouCustListedCustFctr";
   public static AddMouCustListedCustFctr = environment.losUrl + "/v1" + "/MouCustListedCustFctr/AddMouCustListedCustFctr";
   public static SubmitWorkflowMouRequest = environment.losUrl + "/v1" + "/MouCust/SubmitWorkflowMouRequest";
-  public static SubmitWorkflowMouRequestV2 = environment.losUrl + "/v2" + "/MouCust/SubmitWorkflowMouRequest";
+  public static SubmitWorkflowMouRequestV2 = environment.losUrl + "/v2" + "/MouCustX/SubmitWorkflowMouRequest";
   public static SubmitMouReview = environment.losUrl + "/v1" + "/MouCust/SubmitMouReview";
   public static SubmitMouReviewNew = environment.losUrl + "/v1" + "/MouCust/SubmitMouReviewNew";
   public static SubmitMouReviewNewV2 = environment.losUrl + "/v2" + "/MouCust/SubmitMouReviewNew";
