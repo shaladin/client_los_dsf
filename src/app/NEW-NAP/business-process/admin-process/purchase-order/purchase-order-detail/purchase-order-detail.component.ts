@@ -214,8 +214,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.purchaseOrderHObj.MouNo = this.MouNo;
 
-    if(this.PODetailForm.controls.Notes.value == ""){
-      throw this.toastr.warningMessage("Please Choose Vendor Bank Account No");
+    if(this.PODetailForm.controls.BankAccNo.value == ""){
+      throw this.toastr.warningMessage(ExceptionConstant.PLEASE_CHOOSE_VENDOR_BANK_ACCOUNT);
     }
     else{
       this.purchaseOrderHObj.BankCode = this.VendorBankAcc.BankCode;
