@@ -184,9 +184,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
       (response) => {
         this.OwnerTypeObj = response[CommonConstant.ReturnObj];
-        this.AddCollForm.patchValue({
-          MrOwnerTypeCode: this.OwnerTypeObj[0].Key
-        });
       }
     );
   }
@@ -424,6 +421,11 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response: AppObj) => {
         this.AppData = response;
+        
+        this.AddCollForm.patchValue({
+          MrOwnerTypeCode: this.AppData.MrCustTypeCode
+        });
+
         this.http.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
           (response: AppCustObj) => {
             this.AppCustData = response;
@@ -599,10 +601,13 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         MrOwnerRelationshipCode: response["MrOwnerRelationshipCode"],
         UserName: response["Username"],
         MrUserRelationshipCode: response["MrUserRelationshipCode"],
-        SelfOwner: response["MrOwnerRelationshipCode"] == CommonConstant.SelfCustomer ? true : false
+        SelfOwner: response["MrOwnerRelationshipCode"] == CommonConstant.SelfCustomer ? true : false,
+        MrOwnerTypeCode: response["MrOwnerTypeCode"]
         // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
 
+      this.CopyUserForSelfOwner();
+      
       for (var i = 0; i < this.items.controls.length; i++) {
         var formGroupItem = this.items.controls[i] as FormGroup;
         formGroupItem.patchValue({
@@ -662,6 +667,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.AddCollForm.controls.OwnerMobilePhnNo.disable();
       this.AddCollForm.controls.OwnerIdNo.disable();
       this.AddCollForm.controls.MrIdTypeCode.disable(); 
+      this.AddCollForm.controls.MrOwnerTypeCode.disable(); 
       this.inputAddressObjForOwner.isReadonly = true;
       this.inputAddressObjForLoc.isReadonly = true; 
       this.getRefAssetDocList(true);
@@ -778,6 +784,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               this.AddCollForm.controls.OwnerMobilePhnNo.disable();
               this.AddCollForm.controls.OwnerIdNo.disable();
               this.AddCollForm.controls.MrIdTypeCode.disable(); 
+              this.AddCollForm.controls.MrOwnerTypeCode.disable(); 
               this.inputAddressObjForOwner.isReadonly = true;
               this.inputAddressObjForLoc.isReadonly = true; 
             }
@@ -789,6 +796,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               this.AddCollForm.controls.MrIdTypeCode.disable();
               this.AddCollForm.controls.OwnerIdNo.disable();
               this.AddCollForm.controls.OwnerAddrObj.disable();
+              this.AddCollForm.controls.MrOwnerTypeCode.disable(); 
               this.InputLookupProfessionObj.isDisable = true;
             }
 

@@ -107,6 +107,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
   CustPersonalObj: any;
   CustPersonalJobDataObj: any;
+  CustCompanyObj: any;
 
   copyToLocationObj: Array<KeyValueObj> = [
     {
@@ -221,9 +222,6 @@ export class MouRequestAddcollComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
       (response) => {
         this.OwnerTypeObj = response[CommonConstant.ReturnObj];
-        this.AddCollForm.patchValue({
-          MrOwnerTypeCode: this.OwnerTypeObj[0].Key
-        });
       }
     );
   }
@@ -279,6 +277,11 @@ export class MouRequestAddcollComponent implements OnInit {
         this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
         this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
         this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
+        
+        this.AddCollForm.patchValue({
+          MrOwnerTypeCode: this.returnMouCust.MrCustTypeCode,
+        });
+
         if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
             (response: ResThirdPartyRsltHObj) => {
@@ -387,14 +390,16 @@ export class MouRequestAddcollComponent implements OnInit {
           let CustAddrObj = response["MouCustAddrLegalObj"];
           this.CustPersonalObj = response["MouCustPersonalObj"];
           this.CustPersonalJobDataObj = response["MouCustPersonalJobDataObj"];
+          this.CustCompanyObj = response["MouCustCompanyObj"];
 
           this.AddCollForm.patchValue({
             OwnerName: CustObj.CustName,
             OwnerRelationship: CommonConstant.SelfCustomer,
             MrIdType: CustObj.MrIdTypeCode,
             OwnerIdNo: CustObj.IdNo,
-            OwnerProfessionCode: typeof(response['MouCustPersonalJobDataObj']) != 'undefined' ? this.CustPersonalJobDataObj.MrProfessionCode : '',
+            OwnerProfessionCode: typeof(response['MouCustPersonalJobDataObj']) != 'undefined' ? this.CustPersonalJobDataObj.MrProfessionCode : this.CustCompanyObj.MrCompanyTypeCode,
             OwnerMobilePhnNo: typeof (response['MouCustPersonalObj']) != 'undefined' ? this.CustPersonalObj.MobilePhnNo1 : '',
+            MrOwnerTypeCode: CustObj.MrCustTypeCode
           })
 
           this.inputFieldLegalObj.inputLookupObj.nameSelect = CustAddrObj.Zipcode;
@@ -427,6 +432,8 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.legalAddr.disable();
       this.isSelfCust = true
       this.InputLookupProfessionObj.isDisable = true;
+      this.AddCollForm.controls.OwnerProfessionCode.disable();
+      this.AddCollForm.controls.MrOwnerTypeCode.disable();
       return;
     }
     this.InputLookupProfessionObj.isDisable = false;
@@ -436,6 +443,8 @@ export class MouRequestAddcollComponent implements OnInit {
     this.AddCollForm.controls.MrIdType.enable();
     this.AddCollForm.controls.OwnerIdNo.enable();
     this.AddCollForm.controls.legalAddr.enable();
+    this.AddCollForm.controls.OwnerProfessionCode.enable();
+    this.AddCollForm.controls.MrOwnerTypeCode.enable();
     this.isSelfCust = false
   }
 
@@ -850,8 +859,13 @@ export class MouRequestAddcollComponent implements OnInit {
             Notes: this.collateralRegistrationObj.Notes,
             OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode,
             OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
-            RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
+            RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
+            MrOwnerTypeCode: this.collateralRegistrationObj.MrOwnerTypeCode
           });
+
+          this.CopyUserForSelfOwner();
+          this.OwnerTypeChange(this.collateralRegistrationObj.MrOwnerTypeCode);
+          
           this.GenerateCollateralAttr(true, this.collateralObj["MouCustCollateralId"], true);
           this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
           this.legalAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
