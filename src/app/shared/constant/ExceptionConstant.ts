@@ -153,6 +153,7 @@ export class ExceptionConstant {
     public static PLEASE_INPUT_AGREEMENT_PARENT = "Please input Agreement Parent";
     public static FINANCING_AMOUNT_EXCEEDED = "Exceeded Maximum Financing Amount.";
     public static TENOR_EXCEEDED = "Exceeded Maximum Tenor.";
+    public static PLEASE_CHOOSE_VENDOR_BANK_ACCOUNT= "Please Choose Vendor Bank Account No";
 
     public static NO_DATA_EDITED = "Please edit at least one data!";
     
