@@ -1,15 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
-import { environment } from 'environments/environment';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({

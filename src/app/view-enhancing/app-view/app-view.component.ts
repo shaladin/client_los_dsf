@@ -131,7 +131,7 @@ export class AppViewComponent implements OnInit {
       );
       this.dmsObj.ViewCode = "APP";
       this.dmsObj.UsingDmsAdIns = this.usingDmsAdins;
-      this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+      this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
 
       let reqAppId = { Id: this.AppId };
       this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsOfficeCode, this.OriOfficeCode));
@@ -169,7 +169,7 @@ export class AppViewComponent implements OnInit {
             this.dmsObj.MetadataParent = null;
           }
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.AppNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
           if (this.MouCustId != null && this.MouCustId != 0) {
             var mouObj = { Id: this.MouCustId };
             this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(

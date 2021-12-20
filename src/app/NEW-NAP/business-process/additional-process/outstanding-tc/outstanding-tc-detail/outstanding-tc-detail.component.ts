@@ -80,7 +80,7 @@ export class OutstandingTcDetailComponent implements OnInit {
             this.dmsObj.MetadataParent = null;
           }
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           if (mouCustId != null && mouCustId != '') {
             this.http.post(URLConstant.GetMouCustById, { Id: mouCustId }).subscribe(
               (response: MouCustObj) => {
