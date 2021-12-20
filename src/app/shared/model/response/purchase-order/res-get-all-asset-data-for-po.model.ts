@@ -40,7 +40,10 @@ export class ResGetAllAssetDataForPOByAsset {
     PurchaseOrderHId : number;
     Notes : string;
     RowVersionPO : string;
-    PurchaseOrderHBankAccNo: string;
+    PurchaseOrderBankCode : string;
+    PurchaseOrderBankBranch : string;
+    PurchaseOrderBankAccNo : string;
+    PurchaseOrderBankAccName : string;
     
     constructor(){
         this.AppAssetListObj = new Array<ResAppAssetForPOObj>();
@@ -209,12 +212,14 @@ export class ResVendorBankAccForPOObj {
     BankCode : string;
     BankAccountNo : string;
     BankAccountName : string;
+    BankBranch : string;
 
     constructor(){
         this.BankName = "";
         this.BankCode = "";
         this.BankAccountNo = "";
         this.BankAccountName = "";
+        this.BankBranch = "";
     }
 
 }
