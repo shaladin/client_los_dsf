@@ -48,6 +48,7 @@ export class MouCustBankAccComponent implements OnInit {
     BankAccName: ['', [Validators.required, Validators.maxLength(50)]],
     BankAccNo: ['', [Validators.required, Validators.maxLength(50)]],
     IsDefault: [false],
+    IsActive: [false],
     BankStmntObjs: this.fb.array([])
   });
 
@@ -113,9 +114,12 @@ export class MouCustBankAccComponent implements OnInit {
       BankBranch: this.listBankAcc[i].BankBranch,
       BankAccName: this.listBankAcc[i].BankAccName,
       BankAccNo: this.listBankAcc[i].BankAccNo,
-      IsDefault: this.listBankAcc[i].IsDefault
+      IsDefault: this.listBankAcc[i].IsDefault,
+      IsActive: this.listBankAcc[i].IsActive
     });
 
+    this.CheckDefault();
+    
     if (this.listBankAcc[i].MouCustBankStmntObjs != undefined) {
       for (let j = 0; j < this.listBankAcc[i].MouCustBankStmntObjs.length; j++) {
         var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
@@ -138,12 +142,25 @@ export class MouCustBankAccComponent implements OnInit {
     }
   }
 
+  CheckDefault() {
+    if (this.CustBankAccountForm.controls.IsDefault.value) {
+      this.CustBankAccountForm.patchValue({
+        IsActive: true
+      });
+      this.CustBankAccountForm.controls.IsActive.disable();
+    }
+    else {
+      this.CustBankAccountForm.controls.IsActive.enable();
+    }
+  }
+
   clearForm() {
     this.CustBankAccountForm = this.fb.group({
       BankBranch: ['', [Validators.required, Validators.maxLength(50)]],
       BankAccName: ['', [Validators.required, Validators.maxLength(50)]],
       BankAccNo: ['', [Validators.required, Validators.maxLength(50)]],
       IsDefault: [false],
+      IsActive: [false],
       BankStmntObjs: this.fb.array([])
     });
     this.selectedBankCode = "";
@@ -159,6 +176,7 @@ export class MouCustBankAccComponent implements OnInit {
     this.MouCustBankAccObj.BankAccNo = this.CustBankAccountForm.controls.BankAccNo.value;
     this.MouCustBankAccObj.BalanceAmt = 0;
     this.MouCustBankAccObj.IsDefault = this.CustBankAccountForm.controls.IsDefault.value;
+    this.MouCustBankAccObj.IsActive = this.CustBankAccountForm.controls.IsActive.value;
     this.MouCustBankAccObj.MouCustBankStmntObjs = new Array<AppCustBankStmntObj>();
     for (let i = 0; i < this.CustBankAccountForm.controls["BankStmntObjs"].value.length; i++) {
       var appCustBankStmntObj = new AppCustBankStmntObj();

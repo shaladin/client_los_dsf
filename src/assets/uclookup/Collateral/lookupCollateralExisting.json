@@ -1,5 +1,6 @@
 {
-    "title": "Lookup Collateral Type",
+    "title": "Lookup - Collateral Type",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

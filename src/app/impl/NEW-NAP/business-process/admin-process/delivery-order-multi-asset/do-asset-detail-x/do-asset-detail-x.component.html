@@ -132,15 +132,17 @@
             </div>
           </div>
         </div>
-        <app-delivery-order-asset-owner *ngIf="isOwnerReady" [CustType]="CustType" [AppId]="AppId" [AppCustObj]="AppCustObj"
-                                        [AppCustAddrObj]="AppCustAddrObj" [AppCollateralRegistrationObj]="AppCollateralRegistrationObj"
-                                        [parentForm]="DOAssetDetail" [identifier]="'AssetOwner'" [enjiForm]="enjiForm">
-        </app-delivery-order-asset-owner>
 
-        <app-delivery-order-asset-location *ngIf="isOwnerReady" [AppCustAddrObj]="AppCustAddrObj"
-                                           [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" [parentForm]="DOAssetDetail"
-                                           [identifier]="'AssetLocation'" [enjiForm]="enjiForm">
+        <app-delivery-order-asset-owner *ngIf="isOwnerReady" [CustType]="CustType" [AppId]="AppId" [AppCustObj]="AppCustObj" 
+          [AppCustAddrObj]="AppCustAddrObj" [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" 
+          [parentForm]="DOAssetDetail" [identifier]="'AssetOwner'" [enjiForm]="enjiForm">
+        </app-delivery-order-asset-owner>
+        
+        <app-delivery-order-asset-location *ngIf="isOwnerReady" [AppCustAddrObj]="AppCustAddrObj" 
+          [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" [parentForm]="DOAssetDetail" 
+          [identifier]="'AssetLocation'" [enjiForm]="enjiForm">
         </app-delivery-order-asset-location>
+
         <lib-ucSubsection [id]="'MainDocLetterId'" [title]="'MAIN DOCUMENT LETTER'" [panel]="'MainDocLetterSection'"></lib-ucSubsection>
         <div id="MainDocLetterSection" class="form-body">
           <div class="col-md-12">

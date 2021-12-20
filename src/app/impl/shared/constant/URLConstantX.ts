@@ -252,4 +252,7 @@ export class URLConstantX {
   public static EditAppAssetDOMultiAsset = environment.losUrl + "/v1" + "/AppAssetX/EditAppAssetDOMultiAsset";
   public static ValidateDeliveryOrderMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrderX/ValidateDeliveryOrderMultiAsset";
 
+  //AppSubsidyProfitabilityX
+  public static GetAppSubsidyProfitabilityXByAppId = environment.losUrl + "/v1" + "/AppSubsidyProfitabilityX/GetAppSubsidyProfitabilityXByAppId";
+
 }

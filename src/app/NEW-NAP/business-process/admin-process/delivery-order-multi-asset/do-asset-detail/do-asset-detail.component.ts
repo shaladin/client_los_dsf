@@ -357,7 +357,8 @@ export class DoAssetDetailComponent implements OnInit {
     this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.DOAssetDetail.controls.locationData["controls"].AreaCode4.value;
     this.reqAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.DOAssetDetail.controls.locationData["controls"].City.value;
     this.reqAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.DOAssetDetail.controls.locationDataZipcode.value['value'];
-    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerName.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerProfessionCode.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.MrOwnerTypeCode = this.DOAssetDetail.controls.AssetOwner["controls"].MrOwnerTypeCode.value;
     this.reqAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.AppCollateralRegistrationObj.RowVersion;
 
   }

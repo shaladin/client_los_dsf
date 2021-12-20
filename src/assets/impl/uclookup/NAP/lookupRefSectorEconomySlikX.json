@@ -1,6 +1,7 @@
 {
     "url": "",
-    "sectionTitle":"LOOK UP - Economic Sector SLIK",
+    "title":"Lookup - Sector Economy SLIK",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",
@@ -23,7 +24,7 @@
         "name": "RITC.REF_INDUSTRY_TYPE_CATEGORY_CODE",
         "id": "refIndustryTypeCategoryCodeId",
         "value": "",
-        "label": "Industry Type Cateogry Code",
+        "label": "Industry Type Category Code",
         "placeholder": ""
       },
       {
@@ -31,7 +32,7 @@
         "name": "RITC.REF_INDUSTRY_TYPE_CATEGORY_NAME",
         "id": "refIndustryTypeCategoryNameId",
         "value": "",
-        "label": "Industry Type Cateogry Name",
+        "label": "Industry Type Category Name",
         "placeholder": ""
       },
       {
@@ -55,7 +56,7 @@
         "name": "RSS.REF_SECTOR_ECONOMY_SLIK_CODE",
         "id": "refSectorEconomySlikCodeId",
         "value": "",
-        "label": "Sector Economy Slik Code",
+        "label": "Economic Sector Slik Code",
         "placeholder": ""
       },
       {
@@ -63,7 +64,7 @@
         "name": "RSS.REF_SECTOR_ECONOMY_SLIK_NAME",
         "id": "refSectorEconomySlikNameId",
         "value": "",
-        "label": "Sector Economy Slik Name",
+        "label": "Economic Sector Slik Name",
         "placeholder": ""
       } 
     ],
@@ -110,14 +111,14 @@
       {
         "type": "sort",
         "position": "left",
-        "label": "Economy Sector Slik Code",
+        "label": "Economic Sector Slik Code",
         "name": "RSS.REF_SECTOR_ECONOMY_SLIK_CODE"
       },
       
       {
         "type": "sort",
         "position": "center",
-        "label": "Economy Sector Slik Name",
+        "label": "Economic Sector Slik Name",
         "name": "RSS.REF_SECTOR_ECONOMY_SLIK_NAME"
       },
       {

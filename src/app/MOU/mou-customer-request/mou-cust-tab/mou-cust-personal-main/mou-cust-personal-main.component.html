@@ -135,6 +135,18 @@
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
           </div>
+          <div class="form-group row">
+            <label class="col-md-4" for="noOfResidence" translate>Number of Residence</label>
+            <div class="col-md-8">
+              <input type="number" class="form-control" formControlName="NoOfResidence" id="noOfResidence">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4" for="noOfDependents" translate>Number of Dependents</label>
+            <div class="col-md-8">
+              <input type="number" class="form-control" formControlName="NoOfDependents" id="noOfDependents">
+            </div>
+          </div>
         </div>
         <!-- right -->
         <div class="col-md-6 ">
@@ -150,12 +162,49 @@
           <div class="form-group row">
             <label class="col-md-4 adins-required-label" for="gender" translate>Gender</label>
             <div class="col-md-4">
-              <select class="form-control adInsInput" id="gender" formControlName="MrGenderCode"
+              <select class="form-control adInsInput full-width" id="gender" formControlName="MrGenderCode"
                 (change)="ChangeGender()">
                 <option *ngFor="let item of GenderObj" [value]="item.Key">
                   {{item.Value}}
                 </option>
               </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4" for="nickName" translate>Nick Name</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" formControlName="NickName" id="nickName"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].NickName.invalid}">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].NickName"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4" for="mrSalutationCode" translate>Salutation</label>
+            <div class="col-md-4">
+              <select class="form-control adInsInput full-width" id="mrSalutationCode" formControlName="MrSalutationCode">
+                <option *ngFor="let item of SalutationObj" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4" for="custPrefixName" translate>Gelar Depan Nama</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" formControlName="CustPrefixName" id="custPrefixName"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CustPrefixName.invalid}">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CustPrefixName"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4" for="custSuffixName" translate>Gelar Belakang Nama</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" formControlName="CustSuffixName" id="custSuffixName"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CustSuffixName.invalid}">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CustSuffixName"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
           </div>
           <div class="form-group row">
@@ -227,25 +276,19 @@
           <div class="form-group row">
             <label class="col-md-4" for="vip" translate>VIP</label>
             <div class="col-md-8">
-              <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsVip" />
+              <input class="border-primary" type="checkbox"  formControlName="IsVip" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4" translate>Affiliation with Multifinance</label>
+            <div class="col-md-8">
+              <input class="border-primary" type="checkbox" formControlName="IsAffiliateWithMf"/>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-4" for="familyCardNo" translate>Family Card No</label>
             <div class="col-md-8">
               <input type="text" class="form-control" id="familyCardNo" formControlName="FamilyCardNo">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-md-4" for="noOfResidence" translate>Number of Residence</label>
-            <div class="col-md-4">
-              <input type="number" class="form-control" formControlName="NoOfResidence" id="noOfResidence">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-md-4" for="noOfDependents" translate>Number of Dependents</label>
-            <div class="col-md-4">
-              <input type="number" class="form-control" formControlName="NoOfDependents" id="noOfDependents">
             </div>
           </div>
         </div>

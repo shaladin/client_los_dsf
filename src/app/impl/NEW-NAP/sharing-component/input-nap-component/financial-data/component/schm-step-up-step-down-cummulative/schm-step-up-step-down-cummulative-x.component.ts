@@ -36,8 +36,8 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
   IsFirstCalc: boolean = true;
-  EffRateAfterCalc: number = 0;
-  FlatRateAfterCalc: number = 0;
+  EffRateAfterCalc: number = -1;
+  FlatRateAfterCalc: number = -1;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -99,6 +99,7 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMaster, tempReq).subscribe(
       (response) => {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions.sort((a,b) => a.SeqNo - b.SeqNo);
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmStepUpStepDownCummulative) !== -1);
 
         if (this.CalcBaseOptions.length > 0) {

@@ -1,0 +1,124 @@
+<lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialDataCompany'">
+</lib-ucSubsection>
+<div id="financialDataCompany">
+  <div class="form-group row">
+    <label class="col-md-2" for="monthlyIncome" translate>Monthly Income </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.GrossMonthlyIncomeAmt | number:'.2':'en-US' }}
+    </div>
+    <label class="col-md-2" for="monthlyExpense" translate>Monthly Expense </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.GrossMonthlyIncomeAmt | number:'.2':'en-US' }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="returnInvest" translate>Return of Investment (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.ReturnOfInvestmentPrcnt | number:'.6':'en-US' }} %
+    </div>
+    <label class="col-md-2" for="returnEquity" translate>Return of Equity (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.ReturnOfEquityPrcnt | number:'.6':'en-US' }} %
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="returnAsset" translate>Return of Asset (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.ReturnOfAssetPrcnt | number:'.6':'en-US' }} %
+    </div>
+    <label class="col-md-2" for="profitMarginPrcnt" translate>Profit Margin (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.ProfitMarginPrcnt | number:'.6':'en-US' }} %
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="currentRatioPrcnt" translate>Current Ratio (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.CurrentRatioPrcnt | number:'.6':'en-US' }} %
+    </div>
+    <label class="col-md-2" for="debtEquityRatioPrcnt" translate>Debt Equity Ratio (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.DebtEquityRatioPrcnt | number:'.6':'en-US' }} %
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="invTurnOverPrcnt" translate>Inventory Turn Over (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.InvTurnOverPrcnt | number:'.6':'en-US' }} %
+    </div>
+    <label class="col-md-2" for="arTurnOverPrcnt" translate>AR Turn Over (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.ArTurnOverPrcnt | number:'.6':'en-US' }} %
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="growthPrcnt" translate>Growth (%) </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.GrowthPrcnt | number:'.6':'en-US' }} %
+    </div>
+    <label class="col-md-2" for="workingCapitalAmt" translate>Working Capital (Amt)</label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.WorkingCapitalAmt | number:'.2':'en-US' }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="othMonthlyInstAmt" translate>Other Monthly Installment </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.OthMonthlyInstAmt | number:'.2':'en-US' }}
+    </div>
+    <label class="col-md-2" for="dateAsOf" translate>Date As Of</label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.DateAsOf | date: 'dd-MM-yyyy' }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="revenue" translate>Revenue </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.Revenue | number:'.2':'en-US' }}
+    </div>
+    <label class="col-md-2" for="oprCost" translate>Opr Cost</label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.OprCost | number:'.2':'en-US' }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="profitBeforeTax" translate>Profit Before Tax</label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.ProfitBeforeTax | number:'.2':'en-US' }}
+    </div>
+    <label class="col-md-2" for="currAsset" translate>Current Asset </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.CurrAsset | number:'.2':'en-US' }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="netFixedAsset" translate>Net Fixed Asset</label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.NetFixedAsset | number:'.2':'en-US' }}
+    </div>
+    <label class="col-md-2" for="totalAsset" translate>Total Asset </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.TotalAsset | number:'.2':'en-US' }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="currLiablts" translate>Current Liabilities</label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.CurrLiablts | number:'.2':'en-US' }}
+    </div>
+    <label class="col-md-2" for="longTemrLiablts" translate>Long Term Liabilities </label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.LongTemrLiablts | number:'.2':'en-US' }}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2" for="shareholderEquity" translate>Shareholder Equity</label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.ShareholderEquity | number:'.2':'en-US' }}
+    </div>
+    <label class="col-md-2" for="currRatio" translate>Current Ratio</label>
+    <div class="col-md-4">
+      {{ MouCustCompanyFinDataObj.CurrRatio | number:'.2':'en-US' }}
+    </div>
+  </div>
+</div>

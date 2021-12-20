@@ -141,7 +141,7 @@ export class MouRequestAddcollComponent implements OnInit {
     AssetTypeCode: ['', [Validators.required]],
     CollateralValueAmt: [0, [Validators.required]],
     CollateralPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
-    MaxCollPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
+    MaxCollPrcnt: [100, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
     FullAssetCode: [''],
     AssetCategoryCode: [''],
     OwnerName: ['', [Validators.required]],
@@ -724,7 +724,6 @@ export class MouRequestAddcollComponent implements OnInit {
           this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
           this.maxPrcnt = this.collateralObj.MaxCollPrcnt - e.SumCollateralPrcnt;
-          this.CollateralPortionTypeChange();
 
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
@@ -812,6 +811,8 @@ export class MouRequestAddcollComponent implements OnInit {
 
           this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
+
+          this.CollateralPortionTypeChange();
 
           this.AddCollForm.controls.SelfOwner.disable();
           this.AddCollForm.controls.CopyFromLegal.disable();
@@ -1294,7 +1295,7 @@ export class MouRequestAddcollComponent implements OnInit {
       AssetTypeCode: ['', [Validators.required]],
       CollateralValueAmt: [0, [Validators.required]],
       CollateralPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
-      MaxCollPrcnt: [0, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
+      MaxCollPrcnt: [100, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
       FullAssetCode: [''],
       AssetCategoryCode: [''],
       OwnerName: ['', [Validators.required]],

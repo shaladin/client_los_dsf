@@ -40,6 +40,20 @@ import { MouViewDetailXComponent } from "app/impl/view-enhancing/mou-view/mou-vi
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 import { MouViewChangeMouHistoryXComponent } from "app/impl/view-enhancing/mou-view/mou-view-change-mou-history/mou-view-change-mou-history-x/mou-view-change-mou-history-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { MouViewCustomerComponent } from "./mou-view-customer/mou-view-customer.component";
+import { MouViewCustomerPersonalComponent } from "./mou-view-customer-personal/mou-view-customer-personal.component";
+import { MouViewCustomerCompanyComponent } from "./mou-view-customer-company/mou-view-customer-company.component";
+import { MouViewCustomerBankAccountComponent } from "./mou-view-customer-bank-account/mou-view-customer-bank-account.component";
+import { MouViewCustomerJobDataComponent } from "./mou-view-customer-job-data/mou-view-customer-job-data.component";
+import { MouViewCustomerSocmedComponent } from "./mou-view-customer-socmed/mou-view-customer-socmed.component";
+import { MouViewCustomerGrpMbrComponent } from "./mou-view-customer-grp-mbr/mou-view-customer-grp-mbr.component";
+import { MouViewCustomerAddrComponent } from "./mou-view-customer-addr/mou-view-customer-addr.component";
+import { MouViewCustomerMgmntShrholderComponent } from "./mou-view-customer-mgmnt-shrholder/mou-view-customer-mgmnt-shrholder.component";
+import { MouViewCustomerCompLegalDocComponent } from "./mou-view-customer-comp-legal-doc/mou-view-customer-comp-legal-doc.component";
+import { MouViewCustomerCompFinDataComponent } from "./mou-view-customer-comp-fin-data/mou-view-customer-comp-fin-data.component";
+import { MouViewCustomerCompContactInfoComponent } from "./mou-view-customer-comp-contact-info/mou-view-customer-comp-contact-info.component";
+import { MouViewCustomerPersonalContactInfoComponent } from "./mou-view-customer-personal-contact-info/mou-view-customer-personal-contact-info.component";
+import { MouViewCustomerPersonalPersonalFinDataComponent } from "./mou-view-customer-personal-personal-fin-data/mou-view-customer-personal-personal-fin-data.component";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -84,7 +98,21 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         MouViewApprovalRecommendationComponent,
         MouViewXComponent,
         MouViewAddcollXComponent,
-        MouViewDetailXComponent
+        MouViewDetailXComponent,
+        MouViewCustomerComponent,
+        MouViewCustomerPersonalComponent,
+        MouViewCustomerCompanyComponent,
+        MouViewCustomerBankAccountComponent,
+        MouViewCustomerJobDataComponent,
+        MouViewCustomerSocmedComponent,
+        MouViewCustomerGrpMbrComponent,
+        MouViewCustomerAddrComponent,
+        MouViewCustomerMgmntShrholderComponent,
+        MouViewCustomerCompFinDataComponent,
+        MouViewCustomerCompContactInfoComponent,
+        MouViewCustomerCompLegalDocComponent,
+        MouViewCustomerPersonalContactInfoComponent,
+        MouViewCustomerPersonalPersonalFinDataComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

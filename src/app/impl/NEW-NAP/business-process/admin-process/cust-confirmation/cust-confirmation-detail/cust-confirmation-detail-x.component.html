@@ -14,16 +14,21 @@
         <div class="form-body" id="DoInfoForm">
           <div class="form-group row">
             <label class="col-md-2 adins-required-label" for="AgrmntCreatedDt" translate>Agreement Date</label>
-            <div *ngIf = "checkPOReady" class="col-md-4">
+            <!-- <div *ngIf = "checkPOReady" class="col-md-4">
               <input *ngIf = "!isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
               <input *ngIf = "isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
               <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntCreatedDt" [submit]="CustConfirmForm.submitted">
               </lib-uc-show-errors>
+            </div> -->
+            <div class="col-md-4">
+              <input type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt">
+              <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntDt">
+              </lib-uc-show-errors>
             </div>
             <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
             <div class="col-md-4">
-              <input type="date" id="EffectiveDt" class="form-control adInsInput name"
-                formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+              <input type="date" id="EffectiveDt" class="form-control adInsInput name" (change)="checkAddInterestPaidBy()"
+                formControlName="EffectiveDt">
               <lib-uc-show-errors [control]="CustConfirmForm.controls.EffectiveDt"
                 [submit]="CustConfirmForm.submitted">
               </lib-uc-show-errors>
@@ -34,7 +39,7 @@
               class="col-md-2 adins-required-label" translate>Additional Interest
               Paid By</label>
             <div *ngIf="IsGSAddInerestExists" class="col-md-4">
-              <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy"
+              <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy" (change)="changeAddInterestPaidBy()"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirmForm.controls.AdditionalInterestPaidBy.invalid }">
                 <option value="">--Select One--</option>
                 <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
@@ -43,7 +48,7 @@
                 [submit]="CustConfirmForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <label class="col-md-2 adinsLabel" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
+            <label class="col-md-2 adins-required-label" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
             <div class="col-md-4">
               <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
                 formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">

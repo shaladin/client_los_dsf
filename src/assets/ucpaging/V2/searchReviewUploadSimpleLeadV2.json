@@ -3,7 +3,7 @@
     "exportExcel": false,
     "component": [
       {
-        "type": "dropdown",
+        "type": "officeRoleCodes",
         "name": "UMH.OFFICE_CODE",
         "id": "OriOfficeNameId",
         "value": "",
@@ -129,35 +129,114 @@
         "type": "action",
         "position": "center",
         "action": [
-          {
-            "type": "edit",
-            "path": "/Lead/SimpleLead/ReviewMonitoring/Detail",
-            "param": [
-              {
-                "type": "UploadMonitoringHId",
-                "property": "UploadMonitoringHId"
-              },
-              {
-                "type": "UploadNo",
-                "property": "UploadNo"
-              },
-              {
-                "type": "TaskListId",
-                "property": "Id"
-              }
-            ]
-          }
+            {
+                "type": "switch",
+                "case": [
+                    {
+                        "conditions": [
+                            {
+                                "isUser": true,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "/Lead/SimpleLead/ReviewMonitoring/Detail",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "UploadMonitoringHId",
+                                "property": "UploadMonitoringHId"
+                              },
+                              {
+                                "type": "UploadNo",
+                                "property": "UploadNo"
+                              },
+                              {
+                                "type": "TaskListId",
+                                "property": "Id"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "isUser": false,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                          "type": "url",
+                            "path": "/Lead/SimpleLead/ReviewMonitoring/Detail",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "UploadMonitoringHId",
+                                "property": "UploadMonitoringHId"
+                              },
+                              {
+                                "type": "UploadNo",
+                                "property": "UploadNo"
+                              },
+                              {
+                                "type": "TaskListId",
+                                "property": "Id"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    }
+                ]
+            }
         ]
       },
       {
         "type": "action",
         "position": "center",
         "action": [
-          {
-            "type": "callback",
-            "property": "UploadMonitoringHId",
-            "icon": "ft-x"
-          }
+            {
+                "type": "switch",
+                "case": [
+                    {
+                        "conditions": [
+                            {
+                                "isUser": true,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                          "type": "callback",
+                          "property": "UploadMonitoringHId",
+                          "icon": "ft-x"
+                        },
+                        "isHide": false
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "isUser": false,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                          "type": "callback",
+                          "property": "UploadMonitoringHId",
+                          "icon": "ft-x"
+                        },
+                        "isHide": false
+                    }
+                ]
+            }
         ]
       }
     ]

@@ -1,5 +1,6 @@
 {
-    "sectionTitle": "Debtor Business Scale",
+    "title": "Lookup - Debtor Business Scale",
+    "sectionTitle": "Search",
     "component": [
         {
             "type": "textbox",

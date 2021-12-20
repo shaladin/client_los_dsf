@@ -1,5 +1,6 @@
 {
-    "title": "Lookup Copy Application",
+    "title": "Lookup - Copy Application",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

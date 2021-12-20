@@ -135,6 +135,7 @@ export class ChangeMouDetailFactoringXComponent implements OnInit {
 
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
+    rmInstSchm.MappingCode = CommonConstant.FCTR;
     let getInstSchm = this.httpClient.post(
       URLConstant.GetRefMasterListKeyValueActiveByCode,
       rmInstSchm
@@ -242,7 +243,7 @@ export class ChangeMouDetailFactoringXComponent implements OnInit {
       }
       this.MouDetailFactoringForm.updateValueAndValidity();
 
-      this.instTypeHandler();
+      this.instTypeHandler(true);
       this.shouldComponentLoad = true;
       if (this.paidByList != null) {
         if (this.paidByList != null) {
@@ -289,7 +290,7 @@ export class ChangeMouDetailFactoringXComponent implements OnInit {
     });
   }
 
-  instTypeHandler() {
+  instTypeHandler(isOnInit: boolean = false) {
     var value = this.MouDetailFactoringForm.controls["MrInstTypeCode"].value;
     if (value == CommonConstant.SINGLE_INST_TYPE) {
       this.IsSingleIns = true;
@@ -300,6 +301,11 @@ export class ChangeMouDetailFactoringXComponent implements OnInit {
       this.MouDetailFactoringForm.controls["PayFreqCode"].disable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].enable();
+      if(!isOnInit){
+        this.MouDetailFactoringForm.patchValue({
+          SingleInstCalcMthd: this.singleInstCalcMthdList[0].Key,
+        });
+      }
     } else if (value == CommonConstant.MULTIPLE_INST_TYPE) {
       this.IsSingleIns = false;
       this.MouDetailFactoringForm.controls["PayFreqCode"].enable();

@@ -130,10 +130,13 @@ export class FinancialDataDlfnXComponent implements OnInit {
         TotalTopAmount: 0,
         NeedReCalculate: true,
         IsReCalculate: false,
-        ExistingFinData: false
+        ExistingFinData: false,
+
+        InterestCalcBased: "" 
       }
     );
     this.LoadAppFinData();
+    this.LoadMouDlfn(); 
     console.log(this.FinDataForm.controls.MrInstTypeCode.value);
   }
 
@@ -141,6 +144,15 @@ export class FinancialDataDlfnXComponent implements OnInit {
     this.outputCancel.emit();
   }
 
+  LoadMouDlfn() {
+    this.http.post(URLConstant.GetMouCustDlrFncngByAppId, { Id: this.AppId }).subscribe(
+      (response) => {
+        this.FinDataForm.patchValue({
+          InterestCalcBased: response["InterestCalcBased"],
+        });
+      });
+  }
+  
   LoadAppFinData() {
     // note rework: Url V2 belum ditambahin di X, baru ada di Core doank. PERLU DITAMBAHIN !
     // const InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataDFByAppIdV2X : URLConstantX.GetInitAppFinDataDFByAppIdX;

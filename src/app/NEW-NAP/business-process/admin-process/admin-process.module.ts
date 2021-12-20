@@ -52,7 +52,7 @@ import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
-import { MatTabsModule } from "@angular/material";
+import { MatRadioModule, MatTabsModule } from "@angular/material";
 import { SharedModule } from "app/shared/shared.module";
 import { DocChecklistPagingComponent } from "./doc-checklist/doc-checklist-paging/doc-checklist-paging.component";
 import { DocChecklistDetailComponent } from "./doc-checklist/doc-checklist-detail/doc-checklist-detail.component";
@@ -93,6 +93,8 @@ import { DoAssetDetailXComponent } from "app/impl/NEW-NAP/business-process/admin
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { DeliveryOrderAssetOwnerComponent } from './delivery-order-component/delivery-order-asset-owner/delivery-order-asset-owner.component';
 import { DeliveryOrderAssetLocationComponent } from './delivery-order-component/delivery-order-asset-location/delivery-order-asset-location.component';
+import { DeliveryOrderMultiAssetXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-x.component";
+import { CustConfirmationPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-paging/cust-confirmation-paging-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -123,8 +125,9 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
-    SharedModule,
-    AgrViewModule
+    AgrViewModule,
+    MatRadioModule,
+    SharedModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
@@ -199,7 +202,9 @@ export const customCurrencyMaskConfig = {
     CreateDoMultiAssetXComponent,
     DoAssetDetailXComponent,
     DeliveryOrderAssetOwnerComponent,
-    DeliveryOrderAssetLocationComponent
+    DeliveryOrderAssetLocationComponent,
+    DeliveryOrderMultiAssetXComponent,
+    CustConfirmationPagingXComponent
   ],
   providers: [
     NGXToastrService,

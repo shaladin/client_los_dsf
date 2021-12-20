@@ -3,6 +3,7 @@ import { MouCustPersonalObj } from "./mou-cust-personal-obj.model";
 import { MouCustAddrObj } from "./mou-cust-addr-obj.model";
 import { MouCustPersonalFinDataObj } from "./mou-cust-personal-fin-data-obj.model";
 import { MouCustPersonalJobDataObj } from "./mou-cust-personal-job-data-obj.model";
+import { MouCustCompanyFinDataAttrObj } from "./mou-cust-fin-data-attr-content-obj.model";
 
 
 export class MouCustPersonalDataObj {
@@ -17,6 +18,8 @@ export class MouCustPersonalDataObj {
     MouCustPersonalJobDataObj: MouCustPersonalJobDataObj;
     MouCustSocmedObjs: any;
     MouCustGrpObjs: any;
+    MouCustFinDataAttrObjs: Array<MouCustCompanyFinDataAttrObj>;
+    AttrGroups: Array<string>;
     RowVersion: string;
 
     constructor() { 

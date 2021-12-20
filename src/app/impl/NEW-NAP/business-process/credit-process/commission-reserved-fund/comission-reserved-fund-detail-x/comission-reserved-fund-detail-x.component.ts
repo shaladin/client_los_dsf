@@ -40,6 +40,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
   IsViewReady: boolean = false;
   isShow: boolean = false;
   lockCommissionTab: boolean = false;
+  isRefundNotDouble: boolean = true;
 
   Step = {
     "RSV": 1,
@@ -52,7 +53,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
   });
 
   constructor(
-    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
+    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService, private toastr: NGXToastrService) {
     this.ReturnHandlingHObj = new ReturnHandlingHObj();
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -112,7 +113,13 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
         this.ListResultRefundIncomeInfo = response.ResultRefundRsvFundObjs;
         this.TotalHalfListResultRefundIncomeInfo = Math.floor(this.ListResultRefundIncomeInfo.length / 2);
         let totalListResultRefundIncomeInfoAmount = 0;
+        let dupe = "";
         for (var i = 0; i < this.ListResultRefundIncomeInfo.length; i++) {
+          let x = this.ListResultRefundIncomeInfo.filter(x=>x.RefundAllocationFrom==this.ListResultRefundIncomeInfo[i].RefundAllocationFrom);
+          if(x.length>1){
+            this.isRefundNotDouble = false;
+            dupe = this.ListResultRefundIncomeInfo[i].RefundAllocationFromDesc;
+          }
           this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom] = this.ListResultRefundIncomeInfo[i];
           if (this.ListResultRefundIncomeInfo[i].RefundAmount < 0) this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount = 0;
           totalListResultRefundIncomeInfoAmount += this.DictMaxIncomeForm[this.ListResultRefundIncomeInfo[i].RefundAllocationFrom].RefundAmount;
@@ -132,6 +139,9 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
         this.viewIncomeInfoObj.ExpenseAmount = response.CommissionAllocatedAmt;
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
         this.tempTotalExpenseAmt = this.viewIncomeInfoObj.ExpenseAmount;
+        if(!this.isRefundNotDouble){
+          this.toastr.warningMessage("Refund "+dupe+" is Duplicated")
+        }
       });
   }
 

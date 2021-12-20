@@ -29,7 +29,7 @@ export class URLConstant {
   public static AddNewApplication = environment.losUrl + "/v1" + "/Application/AddNewApplication";
   public static AddNewApplicationV2 = environment.losUrl + "/v2" + "/Application/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationFromCopy";
-  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2.1" + "/Application/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2.2" + "/Application/AddNewApplicationFromCopy";
   public static AddNewApplicationOplFromCopy = environment.losUrl + "/v1" + "/Application/AddNewApplicationOplFromCopy";
 
   // APP Application
@@ -669,7 +669,7 @@ export class URLConstant {
   public static DeleteMouCustListedCustFctr = environment.losUrl + "/v1" + "/MouCustListedCustFctr/DeleteMouCustListedCustFctr";
   public static AddMouCustListedCustFctr = environment.losUrl + "/v1" + "/MouCustListedCustFctr/AddMouCustListedCustFctr";
   public static SubmitWorkflowMouRequest = environment.losUrl + "/v1" + "/MouCust/SubmitWorkflowMouRequest";
-  public static SubmitWorkflowMouRequestV2 = environment.losUrl + "/v2" + "/MouCust/SubmitWorkflowMouRequest";
+  public static SubmitWorkflowMouRequestV2 = environment.losUrl + "/v2" + "/MouCustX/SubmitWorkflowMouRequest";
   public static SubmitMouReview = environment.losUrl + "/v1" + "/MouCust/SubmitMouReview";
   public static SubmitMouReviewNew = environment.losUrl + "/v1" + "/MouCust/SubmitMouReviewNew";
   public static SubmitMouReviewNewV2 = environment.losUrl + "/v2" + "/MouCust/SubmitMouReviewNew";
@@ -783,6 +783,9 @@ export class URLConstant {
   public static GetListMouCustDocPrintForViewByMouCustId = environment.losUrl + "/v1" + "/MouCustDocPrint/GetListMouCustDocPrintForViewByMouCustId";
   public static EditMouCustDocPrintSequenceNo = environment.losUrl + "/v1" + "/MouCustDocPrint/EditMouCustDocPrintSequenceNo";
 
+  //MOU CUST FIN DATA ATTR
+  public static GetListMouCustFinDataAttrContentByMouCustIdAndListAttrGroup = environment.losUrl + "/v1" + "/MouCustFinDataAttrContent/GetListMouCustFinDataAttrContentByMouCustIdAndListAttrGroup";
+
   // REF COUNTRY
   public static GetRefCountryByCountryCode = environment.FoundationR3Url + "/v1" + "/RefCountry/GetRefCountryByCountryCode";
 
@@ -810,6 +813,8 @@ export class URLConstant {
   public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
   public static GetCustCompanyForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
   public static GetListKeyValueMobilePhnByAppId = environment.losUrl + "/v1" + "/AppCust/GetListKeyValueMobilePhnByAppId";
+  public static SyncAppCustWithCustFOU = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOU";
+  public static SyncAppCustWithCustFOUSecondary = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOUSecondary";
 
   public static AddAppCustHighlightComment = environment.losUrl + "/v1" + "/AppCust/AddAppCustHighlightComment";
   public static GetAppCustHighlightCommentByCustNo = environment.losUrl + "/v1" + "/AppCust/GetAppCustHighlightCommentByCustNo";
@@ -826,7 +831,7 @@ export class URLConstant {
   public static SubmitDeliveryOrderData = environment.losUrl + "/v1" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static SubmitDeliveryOrderDataV2 = environment.losUrl + "/v2" + "/DeliveryOrder/SubmitDeliveryOrderData";
   public static SubmitDeliveryOrderDataV2_1 = environment.losUrl + "/v2.1" + "/DeliveryOrder/SubmitDeliveryOrderData";
-  public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocList/GetListAssetDocListByAssetTypeCode";
+  public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocList/GetListActiveAssetDocListByAssetTypeCode";
   public static GetDeliveryOrderHByAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetDeliveryOrderHByAgrmntId";
   public static GetAssetListForDOMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAsset";
   public static GetListDeliveryOrderHByAppIdAgrmntId = environment.losUrl + "/v1" + "/DeliveryOrder/GetListDeliveryOrderHByAppIdAgrmntId";
@@ -841,6 +846,7 @@ export class URLConstant {
   public static SubmitDeliveryOrderMultiAsset = environment.losUrl + "/v1" + "/DeliveryOrder/SubmitDeliveryOrderMultiAsset";
   public static SubmitDeliveryOrderMultiAssetV2 = environment.losUrl + "/v2" + "/DeliveryOrder/SubmitDeliveryOrderMultiAsset";
   public static CheckAllDeliveryOrderData = environment.losUrl + "/v1" + "/DeliveryOrder/CheckAllDeliveryOrderData";
+  public static GetAssetListForDOMultiAssetView = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAssetView";
 
   //PURCHASE ORDER
   public static SubmitPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitPurchaseOrder";
@@ -934,8 +940,10 @@ export class URLConstant {
   public static GetListAppCustMainDataByAppId = environment.losUrl + "/v1" + "/AppCust/GetListAppCustMainDataByAppId";
   public static AddCustMainDataPersonal = environment.losUrl + "/v1" + "/AppCust/AddCustMainDataPersonal";
   public static EditCustMainDataPersonal = environment.losUrl + "/v1" + "/AppCust/EditCustMainDataPersonal";
+  public static EditCustMainDataPersonalV2 = environment.losUrl + "/v2" + "/AppCust/EditCustMainDataPersonal";
   public static AddCustMainDataCompanyData = environment.losUrl + "/v1" + "/AppCust/AddCustMainDataCompanyData";
   public static EditCustMainDataCompanyData = environment.losUrl + "/v1" + "/AppCust/EditCustMainDataCompanyData";
+  public static EditCustMainDataCompanyDataV2 = environment.losUrl + "/v2" + "/AppCust/EditCustMainDataCompanyData";
   public static DeleteAppCustMainData = environment.losUrl + "/v1" + "/AppCust/DeleteAppCustMainData";
   public static CheckAppCustShareholderMandatoryData = environment.losUrl + "/v1" + "/AppCust/CheckAppCustShareholderMandatoryData";
   public static DeleteAllAppCust = environment.losUrl + "/v1" + "/AppCust/DeleteAllAppCust";
@@ -988,6 +996,7 @@ export class URLConstant {
   public static GetAppAssetListForInsuranceByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetListForInsuranceByAgrmntId"
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataForPOByAsset";
   public static GetAllAssetDataForPOByAssetV2 = environment.losUrl + "/v2" + "/AppAsset/GetAllAssetDataForPOByAsset";
+  public static GetAllAssetDataForPOViewByAsset = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataForPOViewByAsset";
   public static GetAllAssetDataForPOMultiAsset = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataForPOMultiAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAppId";
@@ -1116,6 +1125,7 @@ export class URLConstant {
   public static CalculateInsurance = environment.losUrl + "/v1" + "/AppIns/CalculateInsurance";
   public static GetCuCoInsLength = environment.losUrl + "/v1" + "/AppIns/GetCuCoInsLength";
   public static ExecuteInsRateCvgRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateCvgRule";
+  public static ExecuteInsRateCvgRuleV2_1 = environment.losUrl + "/v2.1" + "/AppIns/ExecuteInsRateCvgRule";
   
 
   //AGREEMENT DOC

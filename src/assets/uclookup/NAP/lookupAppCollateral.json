@@ -1,5 +1,6 @@
 {
-    "title": "Lookup App Collateral",
+    "title": "Lookup - App Collateral",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

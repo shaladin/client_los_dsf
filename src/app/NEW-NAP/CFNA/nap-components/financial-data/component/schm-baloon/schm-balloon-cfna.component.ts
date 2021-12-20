@@ -71,6 +71,7 @@ export class SchmBalloonCFNAComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMaster, tempReq).subscribe(
       (response) => {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions.sort((a,b) => a.SeqNo - b.SeqNo);
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmBalloon) !== -1);
 
         if (this.CalcBaseOptions.length == 1) {

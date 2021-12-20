@@ -6,6 +6,13 @@
           <h4 class="form-section card-title" translate>MOU View</h4>
           <app-mou-main-info-x [MouCustId]="MouCustId"></app-mou-main-info-x>
           <mat-tab-group>
+            <mat-tab label="MoU Customer">
+              <ng-template matTabContent>                
+                <div class="px-3">
+                    <app-mou-view-customer [MouCustId]="MouCustId"></app-mou-view-customer>           
+                </div>
+              </ng-template>
+            </mat-tab>
             <mat-tab label="MoU Detail">
               <ng-template matTabContent>
                 <app-mou-view-detail-x *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId"

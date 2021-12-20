@@ -322,25 +322,25 @@ export class CustMainDataAddXComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         switch (this.bizTemplateCode) {
           case CommonConstant.CF4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });
             break;
           case CommonConstant.CFRFN4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });
             break;
           case CommonConstant.FCTR:
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.FL4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });
             break;
           case CommonConstant.CFNA:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });
             break;
           case CommonConstant.OPL:
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.DF :
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": response.Id});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": response.Id });
           break;
         }
       }

@@ -73,6 +73,7 @@ import { EditAppAfterApprovalDetailXComponent } from "app/impl/NEW-NAP/business-
 import { EditAppAfterApprovalPurchaseOrderDataXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-purchase-order-data/edit-app-after-approval-purchase-order-data-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
+import { CustSyncComponent } from './cust-sync/cust-sync.component';
 
 
 
@@ -166,7 +167,8 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingPagingXComponent,
     ReturnHandlingDetailXComponent,
     EditAppAfterApprovalDetailXComponent,
-    EditAppAfterApprovalPurchaseOrderDataXComponent
+    EditAppAfterApprovalPurchaseOrderDataXComponent,
+    CustSyncComponent
   ],
   providers: [
     NGXToastrService

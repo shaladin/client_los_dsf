@@ -47,8 +47,8 @@ export class SchmRegulerFixXComponent implements OnInit {
   showGenerateReportBtn: boolean;
 
   IsFirstCalc: boolean = true;
-  EffRateAfterCalc: number = 0;
-  FlatRateAfterCalc: number = 0;
+  EffRateAfterCalc: number = -1;
+  FlatRateAfterCalc: number = -1;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
   constructor(private fb: FormBuilder,
@@ -244,6 +244,7 @@ export class SchmRegulerFixXComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMaster, tempReq).subscribe(
       (response) => {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions.sort((a,b) => a.SeqNo - b.SeqNo);
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmRegularFix) !== -1);
 
         if (this.CalcBaseOptions.length > 0) {
@@ -354,9 +355,7 @@ export class SchmRegulerFixXComponent implements OnInit {
             SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
 
-            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
-            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt,
-            //End SITDSFCFRTHREE-171
+            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt,
 
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,

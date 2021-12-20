@@ -1,5 +1,6 @@
 {
-    "title": "Lookup Loan Object",
+    "title": "Lookup - Loan Object",
+    "sectionTitle": "Search",
     "component": [
         {
             "type": "textbox",

@@ -14,6 +14,7 @@ import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { AddressService } from 'app/shared/services/custAddr.service';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
@@ -43,20 +44,16 @@ export class CcAddressDetailComponent implements OnInit {
     CopyAddrFrom: []
   })
 
-  listAddrRequiredOwnership: Array<string> = [
-    CommonConstant.CustAddrTypeLegal,
-    CommonConstant.CustAddrTypeResidence,
-    CommonConstant.CustAddrTypeBiz,
-    CommonConstant.CustAddrTypeCompany,
-    CommonConstant.CustAddrTypeOthBiz
-  ]
+  listAddrRequiredOwnership: Array<string> = new Array();
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService) { }
+    public formValidate: FormValidateService,
+    private addressService: AddressService) { }
 
   async ngOnInit() {
+    await this.getAddrTypeOwnershipRequired();
     this.AddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
@@ -125,6 +122,10 @@ export class CcAddressDetailComponent implements OnInit {
 
   async getEvent(event){
     await this.setOwnership(event.target.value);
+  }
+
+  async getAddrTypeOwnershipRequired(){
+    this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
   }
 
   async setOwnership(MrCustAddrTypeCode: string) {

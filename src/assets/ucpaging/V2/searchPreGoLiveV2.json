@@ -37,7 +37,7 @@
       {
         "type": "officeRoleCodes",
         "datatype": "text",
-        "name": "TaskOfficeCode",
+        "name": "app.ORI_OFFICE_CODE",
         "id": "OfficeCodeId",
         "value": "",
         "placeholder": "Placeholder",

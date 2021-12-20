@@ -1,5 +1,6 @@
 {
-    "title": "Lookup Officer",
+    "title": "Lookup - Officer",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

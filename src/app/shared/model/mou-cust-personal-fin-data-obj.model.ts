@@ -7,6 +7,9 @@ export class MouCustPersonalFinDataObj {
     MrSourceOfIncomeTypeCode: string;
     SpouseMonthlyIncomeAmt: number;
     IsJoinIncome: boolean;
+    OtherIncomeAmt: number;
+    NettIncomeAmt: number;
+    TotalIncomeAmt: number;
     RowVersion: string;
 
 constructor() { 
@@ -18,6 +21,9 @@ constructor() {
         this.SpouseMonthlyIncomeAmt = 0;
         this.MonthlyIncomeAmt = 0;
         this.IsJoinIncome = false;
+        this.OtherIncomeAmt = 0;
+        this.NettIncomeAmt = 0;
+        this.TotalIncomeAmt = 0;
         this.RowVersion = "";
     }
 }

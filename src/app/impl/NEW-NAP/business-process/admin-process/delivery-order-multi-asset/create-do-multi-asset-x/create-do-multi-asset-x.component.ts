@@ -34,6 +34,9 @@ export class CreateDoMultiAssetXComponent implements OnInit {
   @Input() DeliveryOrderHId: number;
   relationshipList: Array<KeyValueObj>;
   PODt: Date;
+
+  readonly ModeAdd: string = CommonConstant.ADD;
+  readonly ModeEdit: string = CommonConstant.EDIT;
   maxDt: any;
   isNeedMaxDt: boolean = false;
   DeliveryOrderForm = this.fb.group({
@@ -75,7 +78,7 @@ export class CreateDoMultiAssetXComponent implements OnInit {
 
     var rmRelation = new RefMasterObj();
     rmRelation.RefMasterTypeCode = this.CustType == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    if (this.Mode == "add") {
+    if (this.Mode == this.ModeAdd) {
       this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRelation).subscribe(
         (response: GenericListObj) => {
           this.relationshipList = response.ReturnObject;
@@ -84,7 +87,7 @@ export class CreateDoMultiAssetXComponent implements OnInit {
           });
         });
     }
-    else if (this.Mode == "edit") {
+    else if (this.Mode == this.ModeEdit) {
       var reqDeliveryOrderH = { Id: this.DeliveryOrderHId };
       this.httpClient.post(URLConstant.GetDeliveryOrderHByDeliveryOrderHId, reqDeliveryOrderH).pipe(
         map((response) => {
@@ -181,10 +184,10 @@ export class CreateDoMultiAssetXComponent implements OnInit {
     if(!isValid) return;
     // END X DSF Non JIRA
 
-    if (this.Mode == "add") {
+    if (this.Mode == this.ModeAdd) {
       url = URLConstant.AddDeliveryOrderMultiAsset;
     }
-    else if (this.Mode == "edit") {
+    else if (this.Mode == this.ModeEdit) {
       url = URLConstant.EditDeliveryOrderMultiAsset;
     }
     this.httpClient.post(url, DOData).subscribe(
@@ -192,4 +195,5 @@ export class CreateDoMultiAssetXComponent implements OnInit {
         this.activeModal.close(response);
       });
   }
+
 }

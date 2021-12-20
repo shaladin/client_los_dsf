@@ -657,6 +657,7 @@ export class CommissionV2XComponent implements OnInit {
           break;
       }
       this.Summary.TotalCommisionAmount += totalAllocationAmount;
+      // this.Summary.TotalTaxAmmount += (totalTaxAmount + totalPenaltyAmt);
       this.Summary.TotalTaxAmmount += totalTaxAmount;
       this.Summary.TotalVATAmount += totalVATAmount;
       this.totalExpenseAmt += totalExpenseAmount;
@@ -829,7 +830,9 @@ export class CommissionV2XComponent implements OnInit {
 
     for (let i = 0; i < listPriority.length; i++) {
       if (allocAmt == 0) break;
-
+      if(this.DictTempRemainingIncomeForm[listPriority[i]] == null){
+        continue;
+      }
       if (this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount > 0) {
         let tempDObj = new AppCommissionDObjX();
         if (this.DictTempRemainingIncomeForm[listPriority[i]].RefundAmount < allocAmt) {

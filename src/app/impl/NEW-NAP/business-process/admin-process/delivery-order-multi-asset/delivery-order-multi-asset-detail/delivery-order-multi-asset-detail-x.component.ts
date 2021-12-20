@@ -32,6 +32,7 @@ import { environment } from 'environments/environment';
 import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail-x',
@@ -57,7 +58,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     AgrmntCreatedDt: ['', Validators.required],
     EffectiveDt: ['', Validators.required],
     AddIntrstAmt: [0],
-    GoLiveEstimated: [''],
+    GoLiveEstimated: ['',Validators.required],
     AdditionalInterestPaidBy: ['']
   });
 
@@ -76,6 +77,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   PODt: Date = new Date();
   isHasPO: boolean = false;
   LobCode: string;
+  DeliveryDt: Date = new Date();
 
   constructor(
     private httpClient: HttpClient,
@@ -123,14 +125,17 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response: AgrmntObj) => {
         this.bizTemplateCode = response.BizTemplateCode;
-        if (response["EffectiveDt"] == null) {
+        this.DOAssetForm.patchValue({
+          AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
+        })
+        if (response["EffectiveDt"] != null) {
           this.DOAssetForm.patchValue({
-            AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
-          })
-        } else {
-          this.DOAssetForm.patchValue({
-            AgrmntCreatedDt: formatDate(response["AgrmntCreatedDt"], 'yyyy-MM-dd', 'en-US'),
             EffectiveDt: formatDate(response["EffectiveDt"], 'yyyy-MM-dd', 'en-US'),
+          })
+        }
+        if (response["GoLiveDt"] != null) {
+          this.DOAssetForm.patchValue({
+            GoLiveEstimated: formatDate(response.GoLiveDt, 'yyyy-MM-dd', 'en-US'),
           })
         }
       }
@@ -186,6 +191,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           });
           console.log("AAAAAAAAAA");
           if (item.DeliveryDt != null) {
+            this.DeliveryDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'));
             let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
             if (new Date(tempDt) < devDt) {
               this.minDt = devDt;
@@ -267,9 +273,21 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     }
   }
 
+  private SelectedDo(formArray: FormArray, deliveryOrderHId: number) {
+    let doNo: string = this.doList.find(x => x.DeliveryOrderHId == deliveryOrderHId).DeliveryNo;
+    if (!doNo) doNo = "";
+    let tempListData: Array<object> = formArray.value;
+    let filteredData = tempListData.find(x => x["DeliveryNo"] == doNo);
+    return [filteredData];
+  }
+
+  readonly modalDoModeAdd: string = CommonConstant.ADD;
+  readonly modalDoModeEdit: string = CommonConstant.EDIT;
   showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number) {
     const modalCreateDO = this.modalService.open(CreateDoMultiAssetXComponent);
-    modalCreateDO.componentInstance.SelectedDOAssetList = formArray.value;
+    let tempList = formArray.value;
+    if (mode == this.modalDoModeEdit) tempList = this.SelectedDo(formArray, deliveryOrderHId);
+    modalCreateDO.componentInstance.SelectedDOAssetList = tempList;
     modalCreateDO.componentInstance.LicensePlateAttr = this.licensePlateAttr;
     modalCreateDO.componentInstance.CustType = this.custType;
     modalCreateDO.componentInstance.AppId = this.appId;
@@ -318,6 +336,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
               });
               console.log("AAAAAAAAAA");
               if (item.DeliveryDt != null) {
+                this.DeliveryDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'));
                 let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
                 if (new Date(tempDt) < devDt) {
                   this.minDt = devDt;
@@ -333,6 +352,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
               }
               formArray.push(formGroup);
             }
+
             this.isFinal = response[2]["IsFinal"];
           }
         );
@@ -345,7 +365,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
 
   editDOHandler(deliveryOrderHId) {
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
-    this.showModalDO(formArray, "edit", deliveryOrderHId);
+    this.showModalDO(formArray, this.modalDoModeEdit, deliveryOrderHId);
   }
 
   createDOHandler() {
@@ -365,7 +385,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       return false;
     }
     else {
-      this.showModalDO(formArraySelected, "add", 0);
+      this.showModalDO(formArraySelected, this.modalDoModeAdd, 0);
     }
   }
 
@@ -423,6 +443,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
             });
             console.log("AAAAAAAAAA");
             if (item.DeliveryDt != null) {
+              this.DeliveryDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'));
               let devDt = new Date(formatDate(item.DeliveryDt, 'yyyy-MM-dd', 'en-US'))
               if (new Date(tempDt) < devDt) {
                 this.minDt = devDt;
@@ -452,6 +473,10 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
 
   SaveForm() {
     if (this.doList.length > 0) {
+      if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
+        this.toastr.warningMessage(ExceptionConstantX.EFF_DATE_MUST_LOWER_THAN_DEL_DT);
+        return;
+      }
       var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
       reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
       reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
@@ -460,6 +485,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
         EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
         AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
+        GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
       };
       let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
       let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
@@ -484,6 +510,10 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
     }
     else {
+      if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
+        this.toastr.warningMessage(ExceptionConstantX.EFF_DATE_MUST_LOWER_THAN_DEL_DT);
+        return;
+      }
       var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
       reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
       reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
@@ -492,6 +522,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
         EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
         AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
+        GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
       };
       let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
       var submitDO = null;
@@ -610,5 +641,25 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         }
       }
     );
+  }
+
+  changeAddInterestPaidBy(){
+    if(this.DOAssetForm.controls.AdditionalInterestPaidBy.value == CommonConstantX.REF_MASTER_CODE_NO_ADD_INTEREST){
+      this.DOAssetForm.patchValue({
+        GoLiveEstimated: this.DOAssetForm.controls.EffectiveDt.value
+      });
+      this.DOAssetForm.controls['GoLiveEstimated'].disable();
+    }
+    else{
+      this.DOAssetForm.controls['GoLiveEstimated'].enable();
+    }
+  }
+
+  checkAddInterestPaidBy(){
+    if(this.DOAssetForm.controls.AdditionalInterestPaidBy.value == CommonConstantX.REF_MASTER_CODE_NO_ADD_INTEREST){
+      this.DOAssetForm.patchValue({
+        GoLiveEstimated: this.DOAssetForm.controls.EffectiveDt.value
+      });
+    }
   }
 }

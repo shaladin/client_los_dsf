@@ -23,6 +23,7 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 
 @Component({
   selector: 'app-cust-confirmation-detail-x',
@@ -89,8 +90,10 @@ export class CustConfirmationDetailXComponent implements OnInit {
       this.viewGenericObj.whereValue = this.arrValue;
       this.CustConfirmForm.controls.AgrmntCreatedDt.setValidators(Validators.required);
       this.CustConfirmForm.controls.EffectiveDt.setValidators(Validators.required);
+      this.CustConfirmForm.controls.GoLiveEstimated.setValidators(Validators.required);
       this.CustConfirmForm.controls.AgrmntCreatedDt.updateValueAndValidity();
       this.CustConfirmForm.controls.EffectiveDt.updateValueAndValidity();
+      this.CustConfirmForm.controls.GoLiveEstimated.updateValueAndValidity();
 
       this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.businessDt = this.UserAccess.BusinessDt;
@@ -111,6 +114,24 @@ export class CustConfirmationDetailXComponent implements OnInit {
     } else {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
     }
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).subscribe(
+      (response: AgrmntObj) => {
+        this.CustConfirmForm.patchValue({
+          AgrmntCreatedDt: formatDate(response.AgrmntCreatedDt, 'yyyy-MM-dd', 'en-US'),
+        })
+        if (response["EffectiveDt"] != null) {
+          this.CustConfirmForm.patchValue({
+            EffectiveDt: formatDate(response.EffectiveDt, 'yyyy-MM-dd', 'en-US'),
+          })
+        }
+        if (response["GoLiveDt"] != null) {
+          this.CustConfirmForm.patchValue({
+            GoLiveEstimated: formatDate(response.GoLiveDt, 'yyyy-MM-dd', 'en-US'),
+          })
+        }
+      }
+    );
+
     this.http.post(URLConstantX.GetAgrmntOtherInfoByAgrmntIdX, { Id: this.AgrmntId }).subscribe(
       (response) => {
         this.CustConfirmForm.patchValue({
@@ -206,6 +227,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
           AgrmntCreatedDt: this.CustConfirmForm.controls.AgrmntCreatedDt.value,
           EffectiveDt: this.CustConfirmForm.controls.EffectiveDt.value,
           AdditionalInterestPaidBy: this.CustConfirmForm.controls.AdditionalInterestPaidBy.value,
+          GoLiveDt : this.CustConfirmForm.controls.GoLiveEstimated.value,
         };
         this.http.post(URLConstantX.AddCustCnfrmX, CustCnfrmWFCFNAObj).subscribe(
           (response) => {
@@ -233,6 +255,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
           AgrmntCreatedDt: this.CustConfirmForm.controls.AgrmntCreatedDt.value,
           EffectiveDt: this.CustConfirmForm.controls.EffectiveDt.value,
           AdditionalInterestPaidBy: this.CustConfirmForm.controls.AdditionalInterestPaidBy.value,
+          GoLiveDt : this.CustConfirmForm.controls.GoLiveEstimated.value,
         };
         this.http.post(URLConstantX.AddCustCnfrmX, CustCnfrmWFCFNAObj).subscribe(
           () => {
@@ -378,5 +401,25 @@ export class CustConfirmationDetailXComponent implements OnInit {
         }
       }
     );
+  }
+
+  changeAddInterestPaidBy(){
+    if(this.CustConfirmForm.controls.AdditionalInterestPaidBy.value == CommonConstantX.REF_MASTER_CODE_NO_ADD_INTEREST){
+      this.CustConfirmForm.patchValue({
+        GoLiveEstimated: this.CustConfirmForm.controls.EffectiveDt.value
+      });
+      this.CustConfirmForm.controls['GoLiveEstimated'].disable();
+    }
+    else{
+      this.CustConfirmForm.controls['GoLiveEstimated'].enable();
+    }
+  }
+
+  checkAddInterestPaidBy(){
+    if(this.CustConfirmForm.controls.AdditionalInterestPaidBy.value == CommonConstantX.REF_MASTER_CODE_NO_ADD_INTEREST){
+      this.CustConfirmForm.patchValue({
+        GoLiveEstimated: this.CustConfirmForm.controls.EffectiveDt.value
+      });
+    }
   }
 }

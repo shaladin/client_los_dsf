@@ -1,0 +1,176 @@
+<lib-ucSubsection [id]="'custMainDataId'" [title]="'Customer Main Data'" [panel]="'CustMainData'">
+</lib-ucSubsection>
+<div id="CustMainData">
+  <div class="row">
+    <!-- left -->
+    <div class="col-md-6 ">
+      <div class="form-group row">
+        <label class="col-md-4" translate>Customer Legal Name</label>
+        <div class="col-md-8">
+          {{custDataPersonalObj.MouCustObj.CustName}}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Id Type</label>
+        <div class="col-md-4">
+          {{custDataPersonalObj.MouCustObj.MrIdTypeCode}}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Id No</label>
+        <div class="col-md-8">
+          {{custDataPersonalObj.MouCustObj.MrIdTypeCode}}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" >Id Expired Date</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustObj.IdExpiredDt == null ? '-' : custDataPersonalObj.MouCustObj.IdExpiredDt | date: 'dd-MM-yyyy' }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Birth Place</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.BirthPlace }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Birth Date</label>
+        <div class="col-md-8">
+            {{ custDataPersonalObj.MouCustPersonalObj.BirthDt == null ? '-' : custDataPersonalObj.MouCustPersonalObj.BirthDt | date: 'dd-MM-yyyy' }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>NPWP</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustObj.TaxIdNo == null ? '-' : custDataPersonalObj.MouCustObj.TaxIdNo }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Mobile Phone 1</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.MobilePhnNo1 == null ? '-' : custDataPersonalObj.MouCustPersonalObj.MobilePhnNo1 }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Mobile Phone 2</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.MobilePhnNo2 == null ? '-' : custDataPersonalObj.MouCustPersonalObj.MobilePhnNo2 }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Mobile Phone 3</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.MobilePhnNo3 == null ? '-' : custDataPersonalObj.MouCustPersonalObj.MobilePhnNo3 }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Email 1</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.Email1 == null ? '-' : custDataPersonalObj.MouCustPersonalObj.Email1 }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Email 2</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.Email2 == null ? '-' : custDataPersonalObj.MouCustPersonalObj.Email2 }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Email 3</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.Email3 == null ? '-' : custDataPersonalObj.MouCustPersonalObj.Email3 }}
+        </div>
+      </div>
+    </div>
+    <!-- right -->
+    <div class="col-md-6 ">
+      <div class="form-group row">
+        <label class="col-md-4"  translate>Customer Full Name</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.CustFullName }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Gender</label>
+        <div class="col-md-4">
+          {{ custDataPersonalObj.MouCustPersonalObj.MrGenderCode }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Mother Maiden Name</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.MotherMaidenName }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Marital Status</label>
+        <div class="col-md-4">
+          {{ custDataPersonalObj.MouCustPersonalObj.MrMaritalStatCode }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Nationality</label>
+        <div class="col-md-4">
+          {{ custDataPersonalObj.MouCustPersonalObj.MrNationalityCode }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Country</label>
+        <div class="col-md-8">
+          {{ CountryName }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Education</label>
+        <div class="col-md-4">
+          {{ custDataPersonalObj.MouCustPersonalObj.MrEducationCode }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Religion</label>
+        <div class="col-md-4">
+          {{ custDataPersonalObj.MouCustPersonalObj.MrReligionCode }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>VIP</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustObj.IsVip == false? 'No' : 'Yes' }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Family Card No</label>
+        <div class="col-md-8">
+          {{ custDataPersonalObj.MouCustPersonalObj.FamilyCardNo == null? '-' : custDataPersonalObj.MouCustPersonalObj.FamilyCardNo }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Number of Residence</label>
+        <div class="col-md-4">
+          {{ custDataPersonalObj.MouCustPersonalObj.NoOfResidence }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4" translate>Number of Dependents</label>
+        <div class="col-md-4">
+          {{ custDataPersonalObj.MouCustPersonalObj.NoOfDependents }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Mou Customer Address -->
+<app-mou-view-customer-addr [MouCustAddrLegalObj]="custDataPersonalObj.MouCustAddrLegalObj" [MouCustAddrResidenceObj]="custDataPersonalObj.MouCustAddrResidenceObj" [MouCustAddrMailingObj]="custDataPersonalObj.MouCustAddrMailingObj" [MouCustPersonalJobDataObj]="custDataPersonalObj.MouCustPersonalJobDataObj" [MouCustType]="custDataPersonalObj.MouCustObj.MrCustTypeCode"></app-mou-view-customer-addr>
+<!-- Mou Contact Info -->
+<app-mou-view-customer-personal-contact-info [listContactPersonPersonal]="listMouCustPersonalContactInformation"></app-mou-view-customer-personal-contact-info>
+<!-- Mou Cust Fin Data -->
+<app-mou-view-customer-personal-personal-fin-data [MouCustPersonalFinDataObj]="custDataPersonalObj.MouCustPersonalFinDataObj" [MrMaritalStatCode]="custDataPersonalObj.MouCustPersonalObj.MrMaritalStatCode"></app-mou-view-customer-personal-personal-fin-data>
+<!-- Mou Cust Bank Acc -->
+<app-mou-view-customer-bank-account [listBankAcc]="listMouCustBankAcc" ></app-mou-view-customer-bank-account>
+<!-- Mou Cust Job Data -->
+<app-mou-view-customer-job-data [CustModelCode]="defCustModelCode" [mouCustPersonalJobDataObj]="custDataPersonalObj.MouCustPersonalJobDataObj" ></app-mou-view-customer-job-data>
+<!-- Mou Cust Socmed -->
+<app-mou-view-customer-socmed [MouCustSocmedObjs]="custDataPersonalObj.MouCustSocmedObjs"></app-mou-view-customer-socmed>
+<!-- Mou Cust Grp Mbr -->
+<app-mou-view-customer-grp-mbr [MouCustGrpObjs]="custDataPersonalObj.MouCustGrpObjs" [MrCustTypeCode]="custDataPersonalObj.MouCustObj.MrCustTypeCode"></app-mou-view-customer-grp-mbr>

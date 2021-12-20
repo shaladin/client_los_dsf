@@ -77,8 +77,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
         MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
         SupplCode: this.DDLContentName[idxDDLContent].SupplCode,
       };
-      let x = this.DDLContentAdd.findIndex(x=>x.Key == this.DDLContentName[idxDDLContent].Key);
-      this.DDLContentAdd.splice(x, 1);
       code = this.DDLContentName[idxDDLContent].SupplCode;
     } else {
       obj = {
@@ -110,6 +108,9 @@ export class FormCommissionGenerateXComponent implements OnInit {
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
     this.tempDDLContentName.push(obj);
+    let x = this.DDLContentAdd.findIndex(x => x.Key == this.DDLContentName[idxDDLContent].Key);
+    this.DDLContentAdd.splice(x, 1);
+
     this.DDLContentName.splice(idxDDLContent, 1);
     this.PassData();
   }
@@ -497,30 +498,28 @@ export class FormCommissionGenerateXComponent implements OnInit {
 
   PatchDataExisting(appCommObj: AppCommissionHObj) {
     this.AddNewDataForm();
-    let idxDDLContent = this.DDLContentName.findIndex(x => x.Key == appCommObj.CommissionRecipientRefNo);
+    let idxDDLContent = this.DDLContentAdd.findIndex(x => x.Key == appCommObj.CommissionRecipientRefNo);
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
     let obj;
     let code;
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp) {
       obj = {
-        Key: this.DDLContentName[idxDDLContent].Key,
-        Value: this.DDLContentName[idxDDLContent].Value,
-        MrSupplEmpPositionCode: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode,
-        MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
-        SupplCode: this.DDLContentName[idxDDLContent].SupplCode,
+        Key: this.DDLContentAdd[idxDDLContent].Key,
+        Value: this.DDLContentAdd[idxDDLContent].Value,
+        MrSupplEmpPositionCode: this.DDLContentAdd[idxDDLContent].MrSupplEmpPositionCode,
+        MrSupplEmpPositionCodeDesc: this.DDLContentAdd[idxDDLContent].MrSupplEmpPositionCodeDesc,
+        SupplCode: this.DDLContentAdd[idxDDLContent].SupplCode,
       };
-      let x = this.DDLContentAdd.findIndex(x=>x.Key == this.DDLContentName[idxDDLContent].Key);
-      this.DDLContentAdd.splice(x, 1);
-      code = this.DDLContentName[idxDDLContent].SupplCode;
+      code = this.DDLContentAdd[idxDDLContent].SupplCode;
     } else {
       obj = {
-        Key: this.DDLContentName[idxDDLContent].Key,
-        Value: this.DDLContentName[idxDDLContent].Value,
+        Key: this.DDLContentAdd[idxDDLContent].Key,
+        Value: this.DDLContentAdd[idxDDLContent].Value,
       };
-      code = this.DDLContentName[idxDDLContent].Key;
+      code = this.DDLContentAdd[idxDDLContent].Key;
 
     }
-    let temp = this.GetTempRuleObj(code, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
+    let temp = this.GetTempRuleObj(code, this.DDLContentAdd[idxDDLContent].MrSupplEmpPositionCode);
     if (temp == undefined || temp == null) {
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
         ContentName: "",
@@ -532,8 +531,8 @@ export class FormCommissionGenerateXComponent implements OnInit {
 
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
       AppCommissionHId: appCommObj.AppCommissionHId,
-      ContentName: this.DDLContentName[idxDDLContent].Key,
-      ContentNameValue: this.DDLContentName[idxDDLContent].Value,
+      ContentName: this.DDLContentAdd[idxDDLContent].Key,
+      ContentNameValue: this.DDLContentAdd[idxDDLContent].Value,
       BankAccountNo: appCommObj.BankAccNo,
       BankAccountName: appCommObj.BankAccName,
       BankBranch: appCommObj.BankBranch,
@@ -554,11 +553,11 @@ export class FormCommissionGenerateXComponent implements OnInit {
     });
     if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
-        MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
-        SupplCode: this.DDLContentName[idxDDLContent].SupplCode
+        MrSupplEmpPositionCodeDesc: this.DDLContentAdd[idxDDLContent].MrSupplEmpPositionCodeDesc,
+        SupplCode: this.DDLContentAdd[idxDDLContent].SupplCode
       });
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
-    this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
+    this.SetRule(code, indexFormObj, this.DDLContentAdd[idxDDLContent].MrSupplEmpPositionCode);
     let allocAmt = 0;
     let TotalPenaltyAmt = 0
     for (let i = 0; i < appCommObj.AppCommissionDs.length; i++) {
@@ -581,7 +580,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       TotalCommisionAmount: appCommObj.TotalCommissionAmt,
     });
     this.tempDDLContentName.push(obj);
-    this.DDLContentName.splice(idxDDLContent, 1);
+    this.DDLContentAdd.splice(idxDDLContent, 1);
     this.ChangeAllocPercentageBasedOnAmt(indexFormObj);
   }
 
