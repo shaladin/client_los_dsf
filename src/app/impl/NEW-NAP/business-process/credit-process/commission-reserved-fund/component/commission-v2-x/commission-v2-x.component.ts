@@ -72,6 +72,8 @@ export class CommissionV2XComponent implements OnInit {
 
   Summary = {
     TotalCommisionAmount: 0,
+    TotalCommissionAfterTaxAmt: 0,
+    TotalDisburseAmount: 0,
     TotalTaxAmmount: 0,
     TotalVATAmount: 0,
     GrossYield: 0
@@ -170,6 +172,7 @@ export class CommissionV2XComponent implements OnInit {
   async ngOnInit() {
     this.AppId = this.ReturnHandlingHObj.AppId;
     this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
+    this.GetCalcMethod();
     this.ActRemainingAlloc = this.maxAllocAmt - this.totalRsvFundAmt;
 
     await this.GetListAppReservedFundByAppId();
@@ -182,7 +185,20 @@ export class CommissionV2XComponent implements OnInit {
     await this.bindDDLReasonReturn();
     await this.bindTaskObj();
   }
-
+  DictCalcMethod: { [id: string]: string } = {};
+  GetCalcMethod() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeTaxCalcMethod }).subscribe(
+      (response) => {
+        let listRefMaster: Array<KeyValueObj> = response[CommonConstant.ReturnObj];
+        if (listRefMaster.length > 0) {
+          for (let index = 0; index < listRefMaster.length; index++) {
+            const element = listRefMaster[index];
+            this.DictCalcMethod[element.Key] = element.Value;
+          }
+        }
+      }
+    );
+  }
   async GetListAllocatePriority() {
     await this.http.post(URLConstantX.GetAppRsvFundPriorityRule, { Id: this.AppId }).toPromise().then(
       (response) => {
@@ -657,6 +673,8 @@ export class CommissionV2XComponent implements OnInit {
           break;
       }
       this.Summary.TotalCommisionAmount += totalAllocationAmount;
+      this.Summary.TotalCommissionAfterTaxAmt += totalCommissionAmtAfterTax;
+      this.Summary.TotalDisburseAmount += totalDisburseAmount;
       // this.Summary.TotalTaxAmmount += (totalTaxAmount + totalPenaltyAmt);
       this.Summary.TotalTaxAmmount += totalTaxAmount;
       this.Summary.TotalVATAmount += totalVATAmount;

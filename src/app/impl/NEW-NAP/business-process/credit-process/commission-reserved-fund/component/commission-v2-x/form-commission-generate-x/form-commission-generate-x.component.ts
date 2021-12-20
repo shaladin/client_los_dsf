@@ -26,6 +26,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
   @Input() FormInputObj: object = {};
   @Input() ListSupplEmpPos: Array<RefMasterObj> = new Array<RefMasterObj>();
   @Input() DictMaxIncomeForm: object = {};
+  @Input() DictCalcMethod: { [id: string]: string } = {};
   @Input() SectionPosition: boolean = false;
   @Output() outputChangeEmp: EventEmitter<number> = new EventEmitter<any>();
   constructor(

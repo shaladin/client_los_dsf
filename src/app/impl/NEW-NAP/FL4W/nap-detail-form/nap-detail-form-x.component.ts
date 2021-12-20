@@ -261,6 +261,12 @@ export class NapDetailFormXComponent implements OnInit {
     }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
+    }else if(Step == CommonConstant.AppStepIns){
+      let ReqByIdObj = new GenericObj();
+      ReqByIdObj.Id = this.appId;
+      this.http.post(URLConstant.CalculateDownPaymentNettPercent, ReqByIdObj).subscribe(
+        (response) => {
+        })
     }
   }
 

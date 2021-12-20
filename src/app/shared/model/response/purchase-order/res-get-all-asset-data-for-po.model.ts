@@ -40,6 +40,7 @@ export class ResGetAllAssetDataForPOByAsset {
     PurchaseOrderHId : number;
     Notes : string;
     RowVersionPO : string;
+    PurchaseOrderHBankAccNo: string;
     PurchaseOrderBankCode : string;
     PurchaseOrderBankBranch : string;
     PurchaseOrderBankAccNo : string;
