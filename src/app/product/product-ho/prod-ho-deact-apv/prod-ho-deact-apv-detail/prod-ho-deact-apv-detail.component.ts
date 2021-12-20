@@ -13,6 +13,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-prod-ho-deact-apv-detail',
@@ -31,7 +32,8 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
 
   constructor(private router: Router, 
               private route: ActivatedRoute,
-              private http:HttpClient) { 
+              private http:HttpClient,
+              private cookieService: CookieService) { 
     this.route.queryParams.subscribe(params => {
     if (params["ProdHId"] != null) {
         this.ProdHId = params["ProdHId"];
@@ -42,6 +44,11 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    if (context[CommonConstant.MR_OFFICE_TYPE_CODE] != CommonConstant.HeadOffice) {
+      this.router.navigate([NavigationConstant.PROD_HO_UNAUTHORIZED], { queryParams: {}, skipLocationChange: false });
+    }
+    
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationForDeactApv.json";
   
     let ApvHoldObj = new ApprovalObj();
