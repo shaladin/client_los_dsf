@@ -260,7 +260,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   
           this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
   
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           if (mouId != null && mouId != "") {
             let mouObj = { Id: mouId };
             this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(

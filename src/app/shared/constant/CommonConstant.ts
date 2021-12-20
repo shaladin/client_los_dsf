@@ -852,6 +852,9 @@ export class CommonConstant {
   public static DmsOverideUpload = "Upload";
   public static DmsOverideView = "View";
   public static DmsOverideUploadView = "Upload,View";
+  public static DmsOverideUploadDownload = "Upload,Download";
+  public static DmsOverideViewDownload = "View,Download";
+  public static DmsOverideUploadDownloadView = "Upload,Download,View";
   public static DmsViewCodeCust = "ConfinsCust";
   public static DmsViewCodeApp = "ConfinsApp";
   public static DmsViewCodeAgr = "ConfinsAgr";

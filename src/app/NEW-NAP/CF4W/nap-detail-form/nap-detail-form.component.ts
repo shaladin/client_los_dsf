@@ -155,7 +155,7 @@ export class NapDetailFormComponent implements OnInit {
             let trxNo;
             this.appNo = this.NapObj.AppNo;
             this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
             let isExisting = response['IsExistingCust'];
             if (isExisting) {
               trxNo = response['CustNo'];

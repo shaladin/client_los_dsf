@@ -99,7 +99,7 @@ export class AgreementViewContainerComponent implements OnInit {
           let getApp = this.http.post(URLConstant.GetAppById, appObj);
           let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
           forkJoin([getApp, getAppCust]).subscribe(
             (response) => {
               let appNo = response[0]['AppNo'];

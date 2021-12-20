@@ -299,7 +299,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   
           this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
   
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           if (mouId != null && mouId != "") {
             this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
               (result: MouCustObj) => {
