@@ -58,9 +58,9 @@ export class URLConstant {
   public static CopyCancelledApp = environment.losUrl + "/v1" + "/Application/CopyCancelledApp";
   public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledApp";
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainData";
-  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainData";
+  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2.1" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
-  public static CopyCancelledAppForMainDataMultiBLV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainDataMultiBL";
+  public static CopyCancelledAppForMainDataMultiBLV2 = environment.losUrl + "/v2.1" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
   public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
   public static AddAppFromMou = environment.losUrl + "/v1" + "/Application/AddAppFromMou";
