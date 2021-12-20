@@ -231,6 +231,9 @@ export class URLConstantX {
   public static EditAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/EditAppCustPersonalJobData";
   public static GetAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/GetAppCustPersonalJobData";
   
+  // AppCustCompanyMgmntShrholder
+  public static GetListManagementShareholderForListPagingByParentAppCustCompanyId = environment.losUrl + "/v1" + "/AppCustCompanyMgmntShrholderX/GetListManagementShareholderForListPagingByParentAppCustCompanyId"
+
   //R2 API
   public static R2ApiAgrmntGetListCustNoHaveAgrmntMaster = environment.r2Url + "/api/Agrmnt/GetListCustNoHaveAgrmntMaster";
 

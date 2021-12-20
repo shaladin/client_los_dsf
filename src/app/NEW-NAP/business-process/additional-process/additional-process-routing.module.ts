@@ -55,6 +55,7 @@ import { ReturnHandlingPagingXComponent } from 'app/impl/NEW-NAP/business-proces
 import { ReturnHandlingDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-detail-x/return-handling-detail-x.component';
 import { EditAppAfterApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail-x.component';
 import { CollateralAddEditComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component';
+import { CustSyncComponent } from './cust-sync/cust-sync.component';
 
 
 const routes: Routes = [
@@ -411,6 +412,11 @@ const routes: Routes = [
         component: EditAppAfterApprovalDetailXComponent,
         data: {title: 'Edit Application After Approval Request Detail'}
       },
+      {
+        path: PathConstantX.CUST_SYNC_PAGING,
+        component: CustSyncComponent,
+        data: {title: 'Customer Sync'}
+      }
     ]
   }
 ];

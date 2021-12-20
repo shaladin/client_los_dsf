@@ -509,6 +509,18 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
       }
     }
     this.setSaveObj(insuredBy);
+    if(this.saveObj.AppInsObjObj.PayPeriodToInsco == CommonConstantX.PayPeriodAnnualy && this.saveObj.AppInsObjObj.InsAssetCoveredBy == CommonConstant.InsuredByCompany){
+      let filtedMainPaidBy = this.saveObj.AppInsMainCvgObjs.find(f=>f.MrInsPaidByCode=="CO" && f.YearNo > 1);
+      if(filtedMainPaidBy != null){
+        this.toastr.warningMessage("Please Use Payment Type Paid In Advance for Free Insurance Year No > 1");
+        return;
+      }
+      let filtedMainCapital = this.saveObj.AppInsMainCvgObjs.find(f=>f.IsCapitalized && f.YearNo > 1);
+      if(filtedMainCapital != null){
+        this.toastr.warningMessage("Please Use Payment Type Paid In Advance for Capitalize Year No > 1");
+        return;
+      }
+    }
 
     if (this.appInsObjId == 0) {
       this.http.post(URLConstant.AddInsuranceDataMultiAsset, this.saveObj).subscribe(

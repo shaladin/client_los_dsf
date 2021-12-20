@@ -29,6 +29,7 @@ import { BankSectionXComponent } from "app/impl/NEW-NAP/sharing-component/cust-c
 import { JobTabXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/job-tab-x/job-tab-x.component";
 import { CustDetailCompanyXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/cust-detail-tab/cust-detail-company-x/cust-detail-company-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { MgmntShrholderXComponent } from "app/impl/NEW-NAP/sharing-component/cust-completion-component/mgmnt-shrholder/mgmnt-shrholder-x.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -58,6 +59,7 @@ export const customCurrencyMaskConfig = {
         OtherInfoTabComponent,
         CcAddressPagingComponent,
         MgmntShrholderComponent,
+        MgmntShrholderXComponent,
         FinancialPersonalXComponent,
         FinancialCompanyXComponent,
         JobTabXComponent,
@@ -91,6 +93,7 @@ export const customCurrencyMaskConfig = {
         CcAddressPagingComponent,
         CcAddressDetailComponent,
         MgmntShrholderComponent,
+        MgmntShrholderXComponent,
         FinancialPersonalXComponent,
         FinancialCompanyXComponent,
         JobTabXComponent,

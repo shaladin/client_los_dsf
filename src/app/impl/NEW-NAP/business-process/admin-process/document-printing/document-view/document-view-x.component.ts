@@ -187,6 +187,7 @@ export class DocumentViewXComponent implements OnInit {
         reportParamObj.paramKey = "agrmntId";
         reportParamObj.paramValue = this.AgrmntId.toString();
         reportParamObj.paramAssignment = 1;
+        reportParamObj.paramDescr = "";
         this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
         this.RdlcReport.ReportInfo.SubReports = new Array();
 

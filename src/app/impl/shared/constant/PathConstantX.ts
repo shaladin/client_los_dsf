@@ -185,6 +185,11 @@ export class PathConstantX {
   //region LEAD
   public static SIMPLE_LEAD_DETAIL = PathConstant.SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
   //endregion
+
+  //#region Cust Sync
+  public static CUST_SYNC = "CustSync";
+  public static CUST_SYNC_PAGING = PathConstantX.CUST_SYNC + "/" + PathConstantX.PAGING;
+  //#endregion Cust Sync
 }
 
 

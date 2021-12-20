@@ -355,9 +355,7 @@ export class SchmRegulerFixXComponent implements OnInit {
             SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
 
-            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
-            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt,
-            //End SITDSFCFRTHREE-171
+            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt,
 
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,

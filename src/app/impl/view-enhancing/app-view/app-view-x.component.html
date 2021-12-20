@@ -20,8 +20,8 @@
               <ng-template matTabContent>
                 <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'">
                 </app-view-app-cust-data-personal>
-                <app-view-app-cust-data-company [appId]="AppId" [BizTemplateCode]="bizTemplateCode"
-                  *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
+                <app-view-app-cust-data-company-x [appId]="AppId" [BizTemplateCode]="bizTemplateCode"
+                  *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company-x>
               </ng-template>
             </mat-tab>
 

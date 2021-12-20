@@ -95,7 +95,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2_PAGING; //"NAP/AddProcess/ReturnHandling/NAP2"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4_PAGING; //"/Nap/AddProcess/ReturnHandling/NAP4"
   public static NAP_ADD_PRCS_RETURN_HANDLING_SURVEY_VERIF_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.RETURN_HANDLING_SURVEY_VERIF_PAGING_X; //"/Nap/AddProcess/ReturnHandling/SurveyVerif/PagingX"
-
+  public static NAP_ADD_PRCS_CUST_SYNC = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.CUST_SYNC_PAGING; //"/Nap/AddProcess/CustSync/PagingX"
   //#endregion
 
   //#region AdminProcess
