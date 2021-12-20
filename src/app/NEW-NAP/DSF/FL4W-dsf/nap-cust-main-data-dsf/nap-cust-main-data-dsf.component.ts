@@ -29,6 +29,7 @@ export class NapCustMainDataDsfComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
+  copyAppId: number = null;
   wfTaskListId: any;
   mode: string;
   viewReturnInfoObj: string = "";
@@ -62,10 +63,12 @@ export class NapCustMainDataDsfComponent implements OnInit {
         this.appId = params["AppId"];
         this.mode = params["Mode"];
       }
+      if (params["CopyAppId"] != null) {
+        this.copyAppId = params["CopyAppId"];
+      }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
-      }
-      else{
+      }else{
         this.wfTaskListId = environment.isCore ? "" : 0;
       }
       if (params["from"] != null) {
@@ -111,6 +114,9 @@ export class NapCustMainDataDsfComponent implements OnInit {
   async GetCustMainData() {
     let reqObj: GenericObj = new GenericObj();
     reqObj.Id = this.appId;
+    if(this.copyAppId != null) {
+      reqObj.Id = this.copyAppId;
+    }
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
       (response) => {
         if (response.AppCustObj) {

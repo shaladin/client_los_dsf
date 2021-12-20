@@ -14,17 +14,17 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { UcDropdownListObj, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/request/product/req-by-prod-off-code-and-version-obj.model';
+import { ReqAddNapObj, ReqAddNapFromCopyObj } from 'app/shared/model/request/nap/new-application/req-add-nap-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/new-application/ReqAddAppRoleObj.Model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
-import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { UcDropdownListObj, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
-import { ReqAddNapObj, ReqAddNapFromCopyObj } from 'app/shared/model/request/nap/new-application/req-add-nap-obj.model';
-import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/new-application/ReqAddAppRoleObj.Model';
-import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/request/product/req-by-prod-off-code-and-version-obj.model';
 
 @Component({
   selector: 'app-cust-main-data-add-x-dsf',
@@ -71,24 +71,23 @@ export class CustMainDataAddXDsfComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    
-      this.MakeLookUpObj();
+    this.MakeLookUpObj();
 
-      if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
-        this.NapAppForm.patchValue({
-          CrtOfficeCode: this.user.OfficeCode,
-          CrtOfficeName: this.user.OfficeName,
-        });
-      }
-      else {
-        this.NapAppForm.controls.OriOfficeCode.disable();
-        this.NapAppForm.patchValue({
-          OriOfficeCode: this.user.OfficeCode,
-          OriOfficeName: this.user.OfficeName,
-          CrtOfficeCode: this.user.OfficeCode,
-          CrtOfficeName: this.user.OfficeName,
-        });
-      }
+    if (this.user.MrOfficeTypeCode == CommonConstant.CENTER_GROUP_CODE) {
+      this.NapAppForm.patchValue({
+        CrtOfficeCode: this.user.OfficeCode,
+        CrtOfficeName: this.user.OfficeName,
+      });
+    }
+    else {
+      this.NapAppForm.controls.OriOfficeCode.disable();
+      this.NapAppForm.patchValue({
+        OriOfficeCode: this.user.OfficeCode,
+        OriOfficeName: this.user.OfficeName,
+        CrtOfficeCode: this.user.OfficeCode,
+        CrtOfficeName: this.user.OfficeName,
+      });
+    }
   }
 
   MakeLookUpObj() {
@@ -343,19 +342,19 @@ export class CustMainDataAddXDsfComponent implements OnInit {
         )
         switch (this.bizTemplateCode) {
           case CommonConstant.CF4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP1], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });
             break;
           case CommonConstant.CFRFN4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });
             break;
           case CommonConstant.FCTR:
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.FL4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_FL4W_NAP1], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_FL4W_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });
             break;
           case CommonConstant.CFNA:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CFNA_NAP1], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CFNA_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });
             break;
           case CommonConstant.OPL:
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": response.Id });
@@ -371,5 +370,4 @@ export class CustMainDataAddXDsfComponent implements OnInit {
   buttonCancelClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_PAGING_X], { "BizTemplateCode": this.bizTemplateCode });
   }
-
 }
