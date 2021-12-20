@@ -638,6 +638,7 @@ export class CommonConstant {
   public static RefMasterTypeCodePublicType = "PUBLIC_TYPE";
   public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
   public static RefMasterTypeCodeInterestCalcBased = "INTEREST_CALC_BASED"; 
+  public static RefMasterTypeCodeTaxCalcMethod = "TAX_CALC_METHOD"; 
 
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";

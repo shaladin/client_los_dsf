@@ -211,6 +211,9 @@ export class URLConstantX {
   //ASSET
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocListX/GetListAssetDocListByAssetTypeCode";
 
+  // App Collateral Doc
+  public static GetListAppCollateralDocsByAppCollateralId = environment.losUrl + "/v1" + "/AppCollateralDocX/GetListAppCollateralDocsByAppCollateralId";
+
   //GENERIC
   public static GetPagingObjectR2BySQL = "/GenericX/GetPagingObjectR2BySQL";
 

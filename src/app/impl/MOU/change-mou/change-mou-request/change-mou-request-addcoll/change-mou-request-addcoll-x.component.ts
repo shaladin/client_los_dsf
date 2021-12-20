@@ -128,8 +128,14 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
   resultPattern: Array<KeyValueObj>;
   customPattern: CustomPatternObj[];
   listMouCustCollateralDocObj: ListMouCustCollateralDocObj = new ListMouCustCollateralDocObj();
-
   mouCustCollateralDoc: MouCustCollateralDocObj = new MouCustCollateralDocObj();
+  inputAddressObjForLegalAddr: InputAddressObj;
+  inputAddressObjForLocAddr: InputAddressObj;
+  OwnerTypeObj: Array<KeyValueObj> = new Array();
+  OwnerProfessionObj: Array<KeyValueObj> = new Array();
+  CustCompanyObj: any;
+  readonly ownerTypePersonal: string = CommonConstant.CustTypePersonal;
+  readonly ownerTypeCompany: string = CommonConstant.CustTypeCompany;
 
   AddCollDataForm = this.fb.group({});
 
@@ -162,13 +168,12 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     CopyToOwnerLocation: [''],
     SelfOwner: [false],
     AttrContentObjs: this.fb.array([]),
+    MrOwnerTypeCode: [''],
     CollateralStatus: [''],
     IsRequiredStatus: [''],
     CollateralReceivedDt: [''],
     CollateralReleasedDt: ['']
   });
-  inputAddressObjForLegalAddr: InputAddressObj;
-  inputAddressObjForLocAddr: InputAddressObj;
   dealerGrading: string;
   dealerRating: number;
   firstBindLookup:boolean = true;
@@ -197,6 +202,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.inputAddressObjForLocAddr.inputField.inputLookupObj.isRequired = false;
 
     this.items = this.AddCollForm.get("items") as FormArray;
+    await this.bindOwnerTypeObj();
+    await this.bindCompanyTypeObj();
     this.bindUcLookup();
     this.bindUcLookupExisting();
     this.initAddrObj();
@@ -231,6 +238,9 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       (response: MouCustObj) => {
         this.returnMouCust = response;
         this.custNo = this.returnMouCust.CustNo;
+        this.AddCollForm.patchValue({
+          MrOwnerTypeCode: this.returnMouCust.MrCustTypeCode
+        });
       });
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship, }).subscribe(
@@ -765,26 +775,13 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
 
           this.UpdateValueCollateralPortionAmt();
-          this.SetProfessionName(this.collateralRegistrationObj.OwnerProfessionCode);
+          this.OwnerTypeChange(this.collateralRegistrationObj.MrOwnerTypeCode);
           this.checkSelfOwnerColl();
           this.InputLookupProfessionObj.isDisable = true;
           this.InputLookupProfessionObj.isReady = true;
           this.onItemChange(this.collateralObj.AssetTypeCode, true, true, true);
         });
     }
-  }
-
-  async SetProfessionName(professionCode: string) {
-    await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
-      (response) => {
-        this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
-        this.InputLookupProfessionObj.jsonSelect = response;
-      }
-    ).catch(
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 
   onItemChange(
@@ -934,6 +931,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.changeMouCustCollateralRegistrationObj.MrUserRelationshipCode = this.AddCollForm.controls.OwnerRelationship.value;
     this.changeMouCustCollateralRegistrationObj.OwnerProfessionCode = this.AddCollForm.controls.OwnerProfessionCode.value;
     this.changeMouCustCollateralRegistrationObj.Notes = this.AddCollForm.controls.Notes.value;
+    this.changeMouCustCollateralRegistrationObj.MrOwnerTypeCode = this.AddCollForm.controls.MrOwnerTypeCode.value;
 
     this.changeMouCustCollateralRegistrationObj.OwnerAddr = this.AddCollForm.controls["legalAddr"]["controls"].Addr.value;
     this.changeMouCustCollateralRegistrationObj.OwnerCity = this.AddCollForm.controls["legalAddr"]["controls"].City.value;
@@ -1086,8 +1084,12 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           Notes: this.collateralRegistrationObj.Notes,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
           OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode,
-          SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF" ? true : false
+          SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF" ? true : false,
+          MrOwnerTypeCode: this.collateralRegistrationObj.MrOwnerTypeCode
         });
+
+        this.CopyUserForSelfOwner();
+        this.OwnerTypeChange(this.collateralRegistrationObj.MrOwnerTypeCode);
         this.CollateralPortionTypeChange();
         this.GenerateCollateralAttr(false, ChangeMouCustCollId);
         this.checkSelfOwnerColl();
@@ -1096,8 +1098,6 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
         this.getRefAssetDocList(true);
         this.AddCollForm.controls.MrCollateralConditionCode.disable();
         this.AddCollForm.updateValueAndValidity();
-
-        this.SetProfessionName(this.collateralRegistrationObj.OwnerProfessionCode);
         
         this.legalAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
         this.legalAddrObj.City = this.collateralRegistrationObj.OwnerCity;
@@ -1369,14 +1369,16 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
           let CustObj = response["MouCustObj"];
           let CustAddrObj = response["MouCustAddrLegalObj"];
           this.CustPersonalJobDataObj = response["MouCustPersonalJobDataObj"];
+          this.CustCompanyObj = response["MouCustCompanyObj"];
 
           this.AddCollForm.patchValue({
             OwnerName: CustObj.CustName,
             OwnerRelationship: "SELF",
             MrIdType: CustObj.MrIdTypeCode,
             OwnerIdNo: CustObj.IdNo,
-            OwnerProfessionCode: typeof(response['MouCustPersonalJobDataObj']) != 'undefined' ? this.CustPersonalJobDataObj.MrProfessionCode : '',
+            OwnerProfessionCode: typeof(response['MouCustPersonalJobDataObj']) != 'undefined' ? this.CustPersonalJobDataObj.MrProfessionCode : this.CustCompanyObj.MrCompanyTypeCode,
             // OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
+            MrOwnerTypeCode: CustObj.MrCustTypeCode
           })
           // let OwnerAddrObj = CustAddrObj;
           this.inputFieldLegalObj.inputLookupObj.nameSelect = CustAddrObj.Zipcode;
@@ -1426,6 +1428,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       this.AddCollForm.controls.legalAddr.disable();
       this.isSelfCust = true
       this.InputLookupProfessionObj.isDisable = true;
+      this.AddCollForm.controls.OwnerProfessionCode.disable();
+      this.AddCollForm.controls.MrOwnerTypeCode.disable();
       return;
     }
     this.InputLookupProfessionObj.isDisable = false;
@@ -1435,6 +1439,8 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     this.AddCollForm.controls.MrIdType.enable();
     this.AddCollForm.controls.OwnerIdNo.enable();
     this.AddCollForm.controls.legalAddr.enable();
+    this.AddCollForm.controls.OwnerProfessionCode.enable();
+    this.AddCollForm.controls.MrOwnerTypeCode.enable();
     this.isSelfCust = false
   }
 
@@ -1517,6 +1523,51 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
     }
   }
 
+  async bindOwnerTypeObj() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
+      (response) => {
+        this.OwnerTypeObj = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
+  async bindCompanyTypeObj(){
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).toPromise().then(
+      (response) => {
+        this.OwnerProfessionObj = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false) {
+    if (OwnerType == CommonConstant.CustTypePersonal) {
+      if (IsOwnerTypeChanged) {
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode: ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      } else {
+        await this.http.post(URLConstant.GetRefProfessionByCode, { Code: this.collateralRegistrationObj.OwnerProfessionCode }).toPromise().then(
+          (response) => {
+            this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
+          }
+        );
+      }
+    } else {
+      if (IsOwnerTypeChanged) {
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode: ""
+        });
+      } else {
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode
+        });
+      }
+    }
+  }
   ChangeCollStat() {
     if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       this.AddCollForm.controls.CollateralReceivedDt.enable();

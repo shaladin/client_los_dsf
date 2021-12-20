@@ -496,7 +496,7 @@ export class CollateralAddEditComponent implements OnInit {
       CollPercentage: 0,
       CollateralPortionAmt: 0,
       OutstandingCollPrcnt: 0,
-      //MrOwnerTypeCode: fouExistObj["OwnerType"],
+      MrOwnerTypeCode: fouExistObj["MrOwnerTypeCode"],
     });
 
     await this.collateralTypeHandler(true);
@@ -694,7 +694,6 @@ export class CollateralAddEditComponent implements OnInit {
             OwnerProfessionCode: this.custType == CommonConstant.CustTypePersonal ? this.AppCustPersonalJobData.MrProfessionCode : this.AppCustCoyObj.MrCompanyTypeCode,
             MrOwnerTypeCode : this.custType
           });
-          await this.OwnerTypeChange(this.custType);
 
           this.collOwnerAddrObj = new AppCustAddrObj();
           this.collOwnerAddrObj.Addr = this.returnCollOwnerObj.Addr;

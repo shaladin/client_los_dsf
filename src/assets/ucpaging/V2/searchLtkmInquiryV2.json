@@ -20,10 +20,36 @@
         },
         {
             "type": "textbox",
+            "name": "LC.CUST_NO",
+            "id": "CustNoId",
+            "value": "",
+            "label": "Customer No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
             "name": "LC.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "LR.DTM_CRT",
+            "id": "LrDtmCrtGteId",
+            "value": "",
+            "label": "LTKM Date >=",
+            "restriction": "gte",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "LR.DTM_CRT",
+            "id": "LrDtmCrtLteId",
+            "value": "",
+            "label": "LTKM Date <=",
+            "restriction": "lte",
             "placeholder": "Placeholder"
         },
         {
@@ -81,8 +107,20 @@
         {
             "type": "sort",
             "position": "left",
+            "label": "CUSTOMER NO",
+            "name": "CustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
             "label": "CUSTOMER NAME",
             "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "LTKM Date",
+            "name": "LR.DTM_CRT"
         },
         {
             "type": "sort",
@@ -117,9 +155,20 @@
             "property": "AppNo"
         },
         {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustNo"
+        },
+        {
             "type": "text",
             "position": "left",
             "property": "CustName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "LtkmDate"
         },
         {
             "type": "text",

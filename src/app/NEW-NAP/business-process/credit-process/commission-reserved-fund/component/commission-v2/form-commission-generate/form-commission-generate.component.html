@@ -101,6 +101,42 @@
               <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
             </div>
           </div>
+
+          <div class="form-group row">
+            <!-- Total Commission After Tax Amount -->
+            <label class="col-md-2 adInsLabel" translate>Total Tax base Amount </label>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" *ngIf="item.controls.TotalCommissionAfterTaxAmt.value != ''">
+                {{item.controls.TotalCommissionAfterTaxAmt.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalCommissionAfterTaxAmt.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+            </div>
+
+            <!-- Disburse Amount -->
+            <label class="col-md-2 adInsLabel" translate>Disburse Amount </label>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" *ngIf="item.controls.TotalDisburseAmount.value != ''">
+                {{item.controls.TotalDisburseAmount.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalDisburseAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <!-- Calculation Method -->
+            <div class="col-md-2">
+              <label class="adInsLabel" translate>Calculation Method</label>
+            </div>
+            <div class="col-md-4">
+              <label class="adInsLabel"> {{DictCalcMethod[item.controls.MrTaxCalcMethodCode.value]}} </label>
+            </div>
+
+            <!-- Expense Amount -->
+            <label class="col-md-2 adInsLabel" translate>Expense Amount </label>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" *ngIf="item.controls.TotalExpenseAmount.value != ''">
+                {{item.controls.TotalExpenseAmount.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalExpenseAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+            </div>
+          </div>
           
           <!-- <div class="px-3" style="padding-right:0rem !important;"> -->
             <!-- <lib-ucSubsection [id]="'ListAllocated' + item.controls.ContentName.value + 'id'" [title]="'Allocate Commission For ' + item.controls.ContentNameValue.value "
