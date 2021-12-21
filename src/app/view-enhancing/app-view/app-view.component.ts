@@ -131,7 +131,7 @@ export class AppViewComponent implements OnInit {
       );
       this.dmsObj.ViewCode = "APP";
       this.dmsObj.UsingDmsAdIns = this.usingDmsAdins;
-      this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+      this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
 
       let reqAppId = { Id: this.AppId };
       this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsOfficeCode, this.OriOfficeCode));
@@ -169,7 +169,7 @@ export class AppViewComponent implements OnInit {
             this.dmsObj.MetadataParent = null;
           }
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.AppNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
           if (this.MouCustId != null && this.MouCustId != 0) {
             var mouObj = { Id: this.MouCustId };
             this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
@@ -201,7 +201,6 @@ export class AppViewComponent implements OnInit {
       this.IsAsset = false;
       this.IsMultiAsset = false;
       this.IsInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -216,7 +215,6 @@ export class AppViewComponent implements OnInit {
       this.IsInvoice = false;
       this.IsMultiAsset = false;
       this.IsMultiInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -228,7 +226,6 @@ export class AppViewComponent implements OnInit {
       this.IsInvoice = false;
       this.IsMultiAsset = false;
       this.IsMultiInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -240,7 +237,6 @@ export class AppViewComponent implements OnInit {
       this.IsMultiCollateral = false;
       this.IsInvoice = false;
       this.IsInsurance = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -255,7 +251,6 @@ export class AppViewComponent implements OnInit {
       this.IsMultiAsset = false;
       this.IsMultiInsurance = false;
       this.IsCollateral = false;
-      this.IsDeviation = false;
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
@@ -291,7 +286,6 @@ export class AppViewComponent implements OnInit {
       this.IsReservedFund = false;
       this.IsPhoneVerification = false;
       this.IsAssetExpense = false;
-      this.IsDeviation = false;
     }
   }
 

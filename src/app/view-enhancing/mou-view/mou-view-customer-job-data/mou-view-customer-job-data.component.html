@@ -1,0 +1,157 @@
+<lib-ucSubsection [id]="'jobDataId'" [title]="'Job Data'" [panel]="'jobData'"></lib-ucSubsection>
+<div id="jobData">
+  <div>
+    <div class="form-group row">
+      <label class="col-md-2" for="custModel" translate>Customer Model</label>
+      <div class="col-md-4">
+        {{ CustModelName }}
+      </div>
+    </div>
+    <!-- PROF -->
+    <div *ngIf="CustModelCode == 'PROF'">
+      <div class="form-group row">
+        <label class="col-md-2" for="professionName" translate>Profession Name</label>
+        <div class="col-md-4">
+          {{ ProfessionName }}
+        </div>
+        <label class="col-md-2" for="industryType" translate>Industry Type</label>
+        <div class="col-md-4">
+          {{ IndustryTypeName }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="professionalNo" translate>Professional No</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.ProfessionalNo }}     
+        </div>
+        <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.EstablishmentDt |  date:'yyyy-MM-dd' }}        
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="jobTitleName" translate>Job Title Name</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.JobTitleName }}         
+        </div>
+      </div>
+    </div>
+    <!-- EMP -->
+    <div *ngIf="CustModelCode == 'EMP'">
+      <div class="form-group row">
+        <label class="col-md-2" for="professionName" translate>Profession Name</label>
+        <div class="col-md-4">
+          {{ ProfessionName }}
+        </div>
+        <label class="col-md-2" for="internalEmp" translate>Internal Employee</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.IsMfEmp == false? "False" : "True" }}  
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="companyName" translate>Company Name</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.CompanyName }}     
+        </div>
+        <label class="col-md-2" for="industryType" translate>Industry Type</label>
+        <div class="col-md-4">
+          {{ IndustryTypeName }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="jobPosition" translate>Job Position</label>
+        <div class="col-md-4">
+          {{ JobPositionName }}     
+        </div>
+        <label class="col-md-2" for="companyScale" translate>Company Scale</label>
+        <div class="col-md-4">
+          {{ CompScale }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="jobTitleName" translate>Job Title Name</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.JobTitleName }}     
+        </div>
+        <label class="col-md-2" for="numOfEmp" translate>Number of Employee</label>
+        <div class="col-md-2">
+          {{ mouCustPersonalJobDataObj.NumOfEmployee }}        
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" id="jobStatus" name="jobStatus" for="jobStatus" translate>Job Status</label>
+        <div class="col-md-4">
+          {{ JobStatName }}  
+        </div>
+        <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.EstablishmentDt |  date:'yyyy-MM-dd' }} 
+        </div>
+      </div>
+    </div>
+    <!-- SME -->
+    <div *ngIf="CustModelCode == 'SME'">
+      <div class="form-group row">
+        <label class="col-md-2" for="professionName" translate>Profession Name</label>
+        <div class="col-md-4">
+          {{ ProfessionName }}
+        </div>
+        <label class="col-md-2" for="numOfEmp" translate>Number of Employee</label>
+        <div class="col-md-2">
+          {{ mouCustPersonalJobDataObj.NumOfEmployee }}    
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="companyName" translate>Company Name</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.CompanyName }}    
+        </div>
+        <label class="col-md-2" for="industryType" translate>Industry Type</label>
+        <div class="col-md-4">
+          {{ IndustryTypeName }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="jobPosition" translate>Job Position</label>
+        <div class="col-md-4">
+          {{ JobPositionName }}
+        </div>
+        <label class="col-md-2" for="companyScale" translate>Company Scale</label>
+        <div class="col-md-4">
+          {{ CompScale }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="jobTitleName" translate>Job Title Name</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.JobTitleName }}       
+        </div>
+        <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.EstablishmentDt |  date:'yyyy-MM-dd' }} 
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="investmentType" translate>Investment Type</label>
+        <div class="col-md-4">
+          {{ InvestmentType }}
+        </div>
+      </div>
+    </div>
+    <!-- NONPROF -->
+    <div *ngIf="CustModelCode == 'NONPROF'">
+      <div class="form-group row">
+        <label class="col-md-2" for="professionName" translate>Profession Name</label>
+        <div class="col-md-4">
+          {{ ProfessionName }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" for="jobTitleName" translate>Job Title Name</label>
+        <div class="col-md-4">
+          {{ mouCustPersonalJobDataObj.JobTitleName }}      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

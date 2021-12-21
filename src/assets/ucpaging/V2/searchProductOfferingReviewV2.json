@@ -18,7 +18,20 @@
         "placeholder": "Placeholder"
       }
     ],
-    "headerList": [{
+    "headerList": [
+      {
+        "type": "label",
+        "position": "center",
+        "label": "SLA",
+        "name": "IndicatorSLA"
+      },
+      {
+        "type": "label",
+        "position": "left",
+        "label": "Claim By",
+        "name": "Assignee"
+      },
+      {
         "type": "sort",
         "position": "center",
         "label": "Product Offering Code",
@@ -45,7 +58,18 @@
     "querystring": {
       "name": "searchProductOfferingReviewV2"
     },
-    "bodyList": [{
+    "bodyList": [
+      {
+        "type": "sla",
+        "position": "center",
+        "property": "IndicatorSLA"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "Assignee"
+      },
+      {
         "type": "text",
         "position": "center",
         "property": "ProdOfferingCode"
@@ -64,25 +88,72 @@
         "type": "action",
         "position": "center",
         "action": [
-          {
-            "type": "edit",
-            "path": "PRODUCT_OFFERING_REVIEW_DETAIL",
-            "param": [
-              {
-                "type": "ProdOfferingHId",
-                "property": "ProdOfferingHId"
-              },
-              {
-                "type": "ProdOfferingId",
-                "property": "ProdOfferingId"
-              },
-              {
-                "type": "WfTaskListId",
-                "property": "Id"
-              }
-            ]
-          }
-        ] 
+            {
+                "type": "switch",
+                "case": [
+                    {
+                        "conditions": [
+                            {
+                                "isUser": true,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "PRODUCT_OFFERING_REVIEW_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "ProdOfferingHId",
+                                "property": "ProdOfferingHId"
+                              },
+                              {
+                                "type": "ProdOfferingId",
+                                "property": "ProdOfferingId"
+                              },
+                              {
+                                "type": "WfTaskListId",
+                                "property": "Id"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "isUser": false,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "PRODUCT_OFFERING_REVIEW_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "ProdOfferingHId",
+                                "property": "ProdOfferingHId"
+                              },
+                              {
+                                "type": "ProdOfferingId",
+                                "property": "ProdOfferingId"
+                              },
+                              {
+                                "type": "WfTaskListId",
+                                "property": "Id"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    }
+                ]
+            }
+        ]
       }
     ]
   }

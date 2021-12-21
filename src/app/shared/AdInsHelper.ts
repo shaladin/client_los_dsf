@@ -225,8 +225,16 @@ export class AdInsHelper {
     return encrypted
   }
 
-  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}) {
-    router.navigate(url, { queryParams: queryParams, skipLocationChange: false });
+  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}, isSkipLocation: boolean = false, isReuseRoute: boolean = false) {
+    // Ngebuat bisa jalanin Constructor dan NgOnInit lagi
+    // router.routeReuseStrategy.shouldReuseRoute = () => {
+    //   return isReuseRoute;
+    // }
+    router.navigateByUrl(
+      router.createUrlTree(
+        [url.toString()], { queryParams: queryParams }
+      ), { skipLocationChange: isSkipLocation }
+    );
   }
 
   public static SetLocalStorage(key: string, value: string) {

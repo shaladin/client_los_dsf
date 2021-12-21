@@ -200,7 +200,7 @@ export class PreGoLiveComponent implements OnInit {
   
           this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
   
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           if (mouId != null && mouId != "") {
             this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
               (result: MouCustObj) => {
@@ -272,6 +272,8 @@ export class PreGoLiveComponent implements OnInit {
       this.agrmntTcObj.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
       this.agrmntTcObj.Notes = this.MainInfoForm.value.TCList[i].Notes;
       this.agrmntTcObj.IsAdditional = this.MainInfoForm.value.TCList[i].IsAdditional;
+      this.agrmntTcObj.IsExpDtMandatory = this.MainInfoForm.value.TCList[i].IsExpDtMandatory;
+      this.agrmntTcObj.IsWaivable = this.MainInfoForm.value.TCList[i].IsWaivable;
 
       var prmsDt = new Date(this.agrmntTcObj.PromisedDt);
       var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
@@ -325,6 +327,8 @@ export class PreGoLiveComponent implements OnInit {
         this.agrmntTcObj.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
         this.agrmntTcObj.Notes = this.MainInfoForm.value.TCList[i].Notes;
         this.agrmntTcObj.IsAdditional = this.MainInfoForm.value.TCList[i].IsAdditional;
+        this.agrmntTcObj.IsExpDtMandatory = this.MainInfoForm.value.TCList[i].IsExpDtMandatory;
+        this.agrmntTcObj.IsWaivable = this.MainInfoForm.value.TCList[i].IsWaivable;
   
         var prmsDt = new Date(this.agrmntTcObj.PromisedDt);
         var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;

@@ -66,6 +66,7 @@ export class SchmDataDlfnComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMaster, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn }).subscribe(
       (response) => {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
+        this.CalcBaseOptions.sort((a,b) => a.SeqNo - b.SeqNo);
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.ReserveField1.indexOf(CommonConstant.InstSchmRegularFix) !== -1);
 
         if (this.CalcBaseOptions.length == 1) {

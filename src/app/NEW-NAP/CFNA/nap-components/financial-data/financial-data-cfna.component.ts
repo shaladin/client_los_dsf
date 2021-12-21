@@ -140,7 +140,8 @@ export class FinancialDataCFNAComponent implements OnInit {
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { Id: this.AppId }).subscribe(
+    let InitAppFinDataUrl = environment.isCore ? URLConstant.GetInitAppFinDataByAppIdV2 : URLConstant.GetInitAppFinDataByAppId;
+    this.http.post<AppFinDataObj>(InitAppFinDataUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 

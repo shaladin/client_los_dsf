@@ -35,10 +35,10 @@
         "placeholder": "Placeholder"
       },
       {
-        "type": "dropdown",
+        "type": "officeRoleCodes",
         "datatype": "text",
         "name": "app.ORI_OFFICE_CODE",
-        "id": "OfficeNameId",
+        "id": "OfficeCodeId",
         "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
@@ -47,7 +47,7 @@
         "url": "",
         "environment": "FOU",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-        "label": "Office Name",
+        "label": "Office",
         "items": [],
         "itemsUrl": []
       },

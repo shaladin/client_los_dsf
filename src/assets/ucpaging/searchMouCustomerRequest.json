@@ -3,6 +3,23 @@
     "exportExcel": false,
     "component": [
         {
+            "type": "officeRoleCodes",
+            "datatype": "text",
+            "name": "M.ORI_OFFICE_CODE",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn" : true,
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
             "type": "textbox",
             "name": "M.MOU_CUST_NO",
             "id": "MouCustNoId",

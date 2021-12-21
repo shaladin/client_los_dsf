@@ -38,6 +38,7 @@ export class OutstandingTcDetailComponent implements OnInit {
   mouCustNo: string = "";
   isDmsReady: boolean;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsFromOutstandingTc: boolean = true;
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -79,7 +80,7 @@ export class OutstandingTcDetailComponent implements OnInit {
             this.dmsObj.MetadataParent = null;
           }
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           if (mouCustId != null && mouCustId != '') {
             this.http.post(URLConstant.GetMouCustById, { Id: mouCustId }).subscribe(
               (response: MouCustObj) => {

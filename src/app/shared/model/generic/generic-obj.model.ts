@@ -1,5 +1,6 @@
 export class GenericObj {
     Id: number;
+    CopyId: number;
     Code: string;
     Codes: string[];
     TrxNo: string;

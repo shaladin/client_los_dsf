@@ -52,6 +52,7 @@ import { MatTabsModule } from '@angular/material';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
+import { UnauthorizedModule } from 'app/unauthorized/unauthorized.module';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.modu
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
-    UcviewgenericModule
+    UcviewgenericModule,
+    UnauthorizedModule
   ],
   providers: [
       NGXToastrService

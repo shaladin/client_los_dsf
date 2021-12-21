@@ -6,6 +6,8 @@ export class AppCustBankStmntObj {
     DebitAmt: number;
     CreditAmt: number;
     BalanceAmt: number;
+    DebitTrxCount: number;
+    CreditTrxCount: number;
     MonthName: string;
 
 constructor() { 

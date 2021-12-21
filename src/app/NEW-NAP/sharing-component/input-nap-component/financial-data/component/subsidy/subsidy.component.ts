@@ -77,7 +77,8 @@ export class SubsidyComponent implements OnInit {
 
   LoadSubsidyData(isRefresh = false)
   {
-    this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { Id: this.AppId }).subscribe(
+    let InitAppSubsidyUrl = environment.isCore ? URLConstant.GetOrInitAppSubsidyByAppIdV2 : URLConstant.GetOrInitAppSubsidyByAppId;
+    this.http.post(InitAppSubsidyUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
         if(isRefresh){

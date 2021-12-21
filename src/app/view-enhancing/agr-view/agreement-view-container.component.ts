@@ -99,7 +99,7 @@ export class AgreementViewContainerComponent implements OnInit {
           let getApp = this.http.post(URLConstant.GetAppById, appObj);
           let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
           forkJoin([getApp, getAppCust]).subscribe(
             (response) => {
               let appNo = response[0]['AppNo'];
@@ -149,7 +149,7 @@ export class AgreementViewContainerComponent implements OnInit {
       this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).subscribe(
         (response) => {
           if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
-            this.IsNeedPO = response["CompntValue"] == 'N' ? true : false;
+            this.IsNeedPO = response["CompntValue"] == 'Y' ? true : false;
           }
         });
     }
@@ -171,6 +171,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsPurchaseOrder = false;
           this.IsLoanData = false;
+          this.IsDeviation = false;
           if(!this.IsNeedPO){
             this.IsPurchaseOrder = false;
           }
@@ -184,6 +185,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsMulti = false;
           this.IsCollateral = false;
+          this.IsDeviation = false;
         }
         else if (this.BizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
@@ -191,6 +193,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsAppCollateral = false;
           this.IsLoanData = false;
+          this.IsDeviation = false;
         }
         else if (this.BizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -210,7 +213,11 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
           this.IsCollateral = false;
-          if(!this.IsNeedPO){
+          this.IsDeviation = false;
+          if(this.IsNeedPO){
+            this.IsPurchaseOrder = true;
+          }
+          else{
             this.IsPurchaseOrder = false;
           }
         }

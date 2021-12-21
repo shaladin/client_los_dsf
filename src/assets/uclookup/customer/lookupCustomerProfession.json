@@ -1,5 +1,6 @@
 {
-    "sectionTitle": "Profession Lookup ",
+    "title": "Lookup - Profession Lookup ",
+    "sectionTitle": "Search",
     "component": [
         {
             "type": "textbox",

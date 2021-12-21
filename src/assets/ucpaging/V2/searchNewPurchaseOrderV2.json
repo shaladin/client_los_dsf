@@ -35,10 +35,10 @@
         "placeholder": "Placeholder"
       },
       {
-        "type": "dropdown",
+        "type": "officeRoleCodes",
         "datatype": "text",
         "name": "A.ORI_OFFICE_CODE",
-        "id": "OfficeNameId",
+        "id": "OfficeCodeId",
         "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
@@ -47,7 +47,7 @@
         "url": "",
         "environment": "FOU",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-        "label": "Office Name",
+        "label": "Office",
         "items": [],
         "itemsUrl": []
       },
@@ -174,28 +174,79 @@
         "type": "action",
         "position": "center",
         "action": [
-          {
-            "type": "edit",
-            "path": "NAP_ADM_PRCS_NEW_PO_DETAIL",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              },
-              {
-                "type": "LobCode",
-                "property": "LobCode"
-              },
-              {
-                "type": "AppId",
-                "property": "AppId"
-              },
-              {
-                "type": "TaskListId",
-                "property": "Id"
-              }
-            ]
-          }
+            {
+                "type": "switch",
+                "case": [
+                    {
+                        "conditions": [
+                            {
+                                "isUser": true,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "NAP_ADM_PRCS_NEW_PO_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "AgrmntId",
+                                "property": "AgrmntId"
+                              },
+                              {
+                                "type": "LobCode",
+                                "property": "LobCode"
+                              },
+                              {
+                                "type": "AppId",
+                                "property": "AppId"
+                              },
+                              {
+                                "type": "TaskListId",
+                                "property": "Id"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "isUser": false,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                          "type": "url",
+                          "path": "NAP_ADM_PRCS_NEW_PO_DETAIL",
+                          "icon" : "ft-edit-2",
+                          "param": [
+                            {
+                              "type": "AgrmntId",
+                              "property": "AgrmntId"
+                            },
+                            {
+                              "type": "LobCode",
+                              "property": "LobCode"
+                            },
+                            {
+                              "type": "AppId",
+                              "property": "AppId"
+                            },
+                            {
+                              "type": "TaskListId",
+                              "property": "Id"
+                            }
+                          ]
+                        },
+                        "isHide": false
+                    }
+                ]
+            }
         ]
       }
     ]

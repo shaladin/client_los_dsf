@@ -18,6 +18,20 @@
         </div>
       </div>
       <div class="form-group row">
+        <label class="col-md-2" for="otherIncome" translate>Other Income</label>
+        <div class="col-md-4">
+          <input type="" currencyMask id="otherIncome" class="form-control" formControlName="OtherIncomeAmt" [options]="{ allowNegative: false}" [(ngModel)]="MouCustPersonalFinDataObj.OtherIncomeAmt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].OtherIncomeAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].OtherIncomeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        </div>
+        <label class="col-md-2" for="monthlyInstallment" translate>Monthly Installment </label>
+        <div class="col-md-4">
+          <input type="" currencyMask id="monthlyInstallmentAmt" class="form-control" formControlName="MonthlyInstallmentAmt" [options]="{ allowNegative: false}" [(ngModel)]="MouCustPersonalFinDataObj.MonthlyInstallmentAmt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyInstallmentAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyInstallmentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
         <label class="col-md-2" for="sourceOfIncome" translate>Source of Income </label>
         <div class="col-md-4">
           <select class="form-control" id="sourceOfIncome" formControlName="MrSourceOfIncomeTypeCode" [(ngModel)]="MouCustPersonalFinDataObj.MrSourceOfIncomeTypeCode">
@@ -25,12 +39,6 @@
               {{item.Value}}
             </option>
           </select>
-        </div>
-        <label class="col-md-2" for="monthlyInstallment" translate>Monthly Installment </label>
-        <div class="col-md-4">
-          <input type="" currencyMask id="monthlyInstallmentAmt" class="form-control" formControlName="MonthlyInstallmentAmt" [options]="{ allowNegative: false}" [(ngModel)]="MouCustPersonalFinDataObj.MonthlyInstallmentAmt"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyInstallmentAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
-          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyInstallmentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row" *ngIf="isMarried == true">

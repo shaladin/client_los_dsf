@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-financial-data-fctr',
@@ -156,7 +157,8 @@ export class FinancialDataFctrComponent implements OnInit {
   }
 
   async LoadAppFinData() {
-    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataFctrByAppId, { Id: this.AppId }).subscribe(
+    let InitAppFinDataUrl = environment.isCore ? URLConstant.GetInitAppFinDataFctrByAppIdV2 : URLConstant.GetInitAppFinDataFctrByAppId;
+    this.http.post<AppFinDataObj>(InitAppFinDataUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 

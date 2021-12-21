@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ListDataCommissionComponent implements OnInit {
 
   @Input() FormInputObj;
+  @Input() DictCalcMethod: { [id: string]: string } = {};
   constructor() { }
 
   ngOnInit() {

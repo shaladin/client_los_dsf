@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
@@ -18,9 +20,15 @@ export class ProdHoRvwPagingComponent implements OnInit {
   IntegrationObj: IntegrationObj = new IntegrationObj();
   UserAccess : CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   
-  constructor(private cookieService: CookieService) { }
+  constructor(private router: Router,
+              private cookieService: CookieService) { }
 
   ngOnInit() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    if (context[CommonConstant.MR_OFFICE_TYPE_CODE] != CommonConstant.HeadOffice) {
+      this.router.navigate([NavigationConstant.PROD_HO_UNAUTHORIZED], { queryParams: {}, skipLocationChange: false });
+    }
+    
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHOReview.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOReview.json";
 

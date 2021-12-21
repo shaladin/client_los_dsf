@@ -42,10 +42,10 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "dropdown",
+            "type": "officeRoleCodes",
             "datatype": "text",
             "name": "DOD.ORI_OFFICE_CODE",
-            "id": "OfficeNameId",
+            "id": "OfficeCodeId",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
@@ -54,7 +54,7 @@
             "url": "",
             "environment": "FOU",
             "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "Office Name",
+            "label": "Office",
             "items": [],
             "itemsUrl": []
         },
@@ -196,20 +196,67 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
-                    "param": [
+                    "type": "switch",
+                    "case": [
                         {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    },
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         },
                         {
-                            "type": "AppId",
-                            "property": "AppId"
-                        },
-                        {
-                            "type": "WfTaskListId",
-                            "property": "Id"
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL",
+                                "icon" : "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    },
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }

@@ -34,10 +34,34 @@
         </div>
         <div class="form-group row">
           <div class="col-md-6">
+            <label class="adInsLabel" translate> Total Tax base Amount </label>
+          </div>
+          <div class="col-md-6" style="text-align: right;">
+            <label class="adInsLabel"> {{item.TotalCommissionAfterTaxAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label class="adInsLabel" translate> Disburse Amount </label>
+          </div>
+          <div class="col-md-6" style="text-align: right;">
+            <label class="adInsLabel"> {{item.TotalDisburseAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label class="adInsLabel" translate> Expense Amount </label>
+          </div>
+          <div class="col-md-6" style="text-align: right;">
+            <label class="adInsLabel"> {{item.TotalExpenseAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
             <label class="adInsLabel" translate> Tax Amount </label>
           </div>
           <div class="col-md-6" style="text-align: right;">
-            <label class="adInsLabel"> {{item.TaxAmt | number:'.2':'en-US'}} </label>
+            <label class="adInsLabel"> {{(item.TaxAmt + item.PenaltyAmt) | number:'.2':'en-US'}} </label>
           </div>
         </div>
         <div class="form-group row">
@@ -46,6 +70,14 @@
           </div>
           <div class="col-md-6" style="text-align: right;">
             <label class="adInsLabel"> {{item.VatAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label class="adInsLabel" translate> Calculation Method </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{DictCalcMethod[item.MrTaxCalcMethodCode]}} </label>
           </div>
         </div>
         <div class="form-group row">

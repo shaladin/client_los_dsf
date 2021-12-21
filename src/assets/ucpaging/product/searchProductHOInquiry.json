@@ -1,0 +1,135 @@
+{
+    "title": "Product HO",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "A.PROD_CODE",
+        "id": "ProdCodeId",
+        "value": "",
+        "label": "Product Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_NAME",
+        "id": "ProdNameId",
+        "value": "",
+        "label": "Product Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "dropdown",
+        "name": "A.PROD_STAT",
+        "id": "ProdStatId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "isQueryIn": true,
+        "ddlType": "all",
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefMaster/GetListKeyValueActiveByCode",
+        "label": "Product Status",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "RefMasterTypeCode",
+        "criteriaPropValue": "PROD_STAT"
+      },
+      {
+        "type": "datepicker",
+        "name": "A.END_DT",
+        "id": "EndDtId",
+        "value": "",
+        "label": "End Date",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "headerList": [{
+        "type": "sort",
+        "position": "center",
+        "label": "Product Code",
+        "name": "ProdCode"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Name",
+        "name": "ProdName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current Version",
+        "name": "CurrentProdVersion"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Draft Version",
+        "name": "DraftProdVersion"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "End Date",
+        "name": "EndDt"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Status",
+        "name": "ProdStatDesc"
+      }
+    ],
+    "querystring": {
+      "name": "searchProductHO"
+    },
+    "bodyList": [{
+        "type": "text",
+        "position": "center",
+        "property": "ProdCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdName"
+      },
+      {
+        "type": "link",
+        "position": "center",
+        "property": "CurrentProdVersion",
+        "path": "VIEW_PRODUCT_HO",
+        "target": "_blank",
+        "param": [
+            {
+                "type": "prodHId",
+                "property": "prodHId"
+            }
+        ]
+      },
+      {
+        "type": "link",
+        "position": "center",
+        "property": "DraftProdVersion",
+        "path": "VIEW_PRODUCT_HO",
+        "target": "_blank",
+        "param": [
+            {
+                "type": "prodHId",
+                "property": "DraftProdHId"
+            }
+        ]
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "EndDt"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdStatDesc"
+      }
+    ]
+  }

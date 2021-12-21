@@ -22,6 +22,9 @@ import { ReqAppAssetAttrObj } from 'app/shared/model/app-asset-attr-obj.model';
 import { ReqAppCollateralAttrObj } from 'app/shared/model/app-collateral-attr-obj.model';
 import { ReqAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
 
 @Component({
   selector: 'app-do-asset-detail',
@@ -52,6 +55,12 @@ export class DoAssetDetailComponent implements OnInit {
   datePipe = new DatePipe("en-US");
   IsReady2: boolean = false;
   isUsed : boolean = false;
+  CustType: string;
+  AppCustObj: any;
+  AppCollateralRegistrationObj: any;
+  AppCustAddrObj: Array<AppCustAddrObj> = new Array();
+  AddrLegalObj: Array<AppCustAddrObj> = new Array();
+  isOwnerReady: boolean = false;
 
   DOAssetDetail = this.fb.group({
     AppAssetId: [0, [Validators.required]],
@@ -173,7 +182,11 @@ export class DoAssetDetailComponent implements OnInit {
 
     console.log(this.DOAssetDetail.controls);
     await this.GetGS();
+    await this.GetAppCustData();
+    await this.GetListAddr();
+    await this.GetAllAssetData();
     this.InputLookupCityIssuerObj.isReady = true;
+    this.isOwnerReady = true;
   }
 
   lookupReady(){
@@ -252,8 +265,9 @@ export class DoAssetDetailComponent implements OnInit {
     this.setAsset(formData);
     this.setCollateralDoc(formData);
     this.setAssetAttr();
+    this.setCollateralRegistration();
 
-    this.httpClient.post(URLConstant.EditAppAssetDOMultiAsset, this.reqAssetDataObj).subscribe(
+    this.httpClient.post(URLConstant.EditAppAssetDOMultiAssetV2, this.reqAssetDataObj).subscribe(
     (response) => {
       this.activeModalAsset.close(response);
     });
@@ -319,6 +333,34 @@ export class DoAssetDetailComponent implements OnInit {
         this.reqAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
       }
     }
+  }
+
+  setCollateralRegistration() {
+    this.reqAssetDataObj.AppCollateralRegistrationObj = new AppCollateralRegistrationObj();
+    this.reqAssetDataObj.AppCollateralRegistrationObj.AppCollateralId = this.AppCollateralRegistrationObj.AppCollateralId;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerName = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerName.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.MrIdTypeCode = this.DOAssetDetail.controls.AssetOwner["controls"].MrIdTypeCode.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerIdNo = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerIdNo.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAddr = this.DOAssetDetail.controls.ownerData["controls"].Addr.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.DOAssetDetail.controls.ownerData["controls"].AreaCode1.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode2 = this.DOAssetDetail.controls.ownerData["controls"].AreaCode2.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode3 = this.DOAssetDetail.controls.ownerData["controls"].AreaCode3.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode4 = this.DOAssetDetail.controls.ownerData["controls"].AreaCode4.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerCity = this.DOAssetDetail.controls.ownerData["controls"].City.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.DOAssetDetail.controls.ownerDataZipcode.value['value'];
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerMobilePhnNo.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.DOAssetDetail.controls.AssetOwner["controls"].MrOwnerRelationshipCode.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.DOAssetDetail.controls.locationData["controls"].Addr.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.DOAssetDetail.controls.locationData["controls"].AreaCode1.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.DOAssetDetail.controls.locationData["controls"].AreaCode2.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.DOAssetDetail.controls.locationData["controls"].AreaCode3.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.DOAssetDetail.controls.locationData["controls"].AreaCode4.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.DOAssetDetail.controls.locationData["controls"].City.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.DOAssetDetail.controls.locationDataZipcode.value['value'];
+    this.reqAssetDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.DOAssetDetail.controls.AssetOwner["controls"].OwnerProfessionCode.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.MrOwnerTypeCode = this.DOAssetDetail.controls.AssetOwner["controls"].MrOwnerTypeCode.value;
+    this.reqAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.AppCollateralRegistrationObj.RowVersion;
+
   }
 
   initCityLookupIssuerLookup(){
@@ -440,6 +482,37 @@ export class DoAssetDetailComponent implements OnInit {
         this.AppObj = response;
       }
     );
+  }
+
+  async GetAppCustData() {
+    await this.http.post(URLConstant.GetAppCustByAppId, {Id : this.AppId}).toPromise().then(
+      (response) => {
+        this.AppCustObj = response;
+        this.CustType = response["MrCustTypeCode"];
+      }
+    );
+  }
+
+  async GetListAddr() {
+    let reqById: GenericObj = new GenericObj();
+    reqById.Id = this.AppId;
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, reqById).toPromise().then(
+      (response) => {
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
+        this.AddrLegalObj = this.AppCustAddrObj.filter(
+          emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
+      }
+    );
+  }
+  async GetAllAssetData() {
+    let reqById: GenericObj = new GenericObj();
+    reqById.Id = this.AppId;
+    await this.http.post(URLConstant.GetAllAssetDataByAppId, reqById).toPromise().then(
+      async (response) => {
+        this.AppCollateralRegistrationObj = response["ResponseAppCollateralRegistrationObj"];
+        this.AppCollateralRegistrationObj.AppCollateralId = response["ResponseAppCollateralObj"].AppCollateralId;
+      }
+    )
   }
 
   ChangeIsReceived(idx: number){

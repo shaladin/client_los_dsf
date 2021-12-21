@@ -176,7 +176,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   
           this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
   
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           if (mouId != null && mouId != "") {
             this.httpClient.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
               (result: MouCustObj) => {
@@ -195,9 +195,21 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     }
   }
 
+  private SelectedDo(formArray: FormArray, deliveryOrderHId: number) {
+    let doNo: string = this.doList.find(x => x.DeliveryOrderHId == deliveryOrderHId).DeliveryNo;
+    if (!doNo) doNo = "";
+    let tempListData: Array<object> = formArray.value;
+    let filteredData = tempListData.find(x => x["DeliveryNo"] == doNo);
+    return [filteredData];
+  }
+
+  readonly modalDoModeAdd: string = CommonConstant.ADD;
+  readonly modalDoModeEdit: string = CommonConstant.EDIT;
   showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number) {
     const modalCreateDO = this.modalService.open(CreateDoMultiAssetComponent);
-    modalCreateDO.componentInstance.SelectedDOAssetList = formArray.value;
+    let tempList = formArray.value;
+    if (mode == this.modalDoModeEdit) tempList = this.SelectedDo(formArray, deliveryOrderHId);
+    modalCreateDO.componentInstance.SelectedDOAssetList = tempList;
     modalCreateDO.componentInstance.LicensePlateAttr = this.licensePlateAttr;
     modalCreateDO.componentInstance.CustType = this.custType;
     modalCreateDO.componentInstance.AppId = this.appId;
@@ -259,7 +271,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
 
   editDOHandler(deliveryOrderHId) {
     var formArray = this.DOAssetForm.get('DOAssetList') as FormArray;
-    this.showModalDO(formArray, "edit", deliveryOrderHId);
+    this.showModalDO(formArray, this.modalDoModeEdit, deliveryOrderHId);
   }
 
   createDOHandler() {
@@ -279,7 +291,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
       return false;
     }
     else {
-      this.showModalDO(formArraySelected, "add", 0);
+      this.showModalDO(formArraySelected, this.modalDoModeAdd, 0);
     }
   }
 

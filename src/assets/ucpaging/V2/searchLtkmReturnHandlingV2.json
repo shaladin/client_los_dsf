@@ -144,28 +144,79 @@
         "type": "action",
         "position": "center",
         "action": [
-          {
-            "type": "edit",
-            "path": "LTKM_RTN_HANDLING_DETAIL",
-            "param": [
-              {
-                "type": "WfTaskListId",
-                "property": "Id"
-              },
-              {
-                "type": "LtkmNo",
-                "property": "LtkmNo"
-              },
-              {
-                "type": "MrCustTypeCode",
-                "property": "MrCustTypeCode"
-              },
-              {
-                "type": "LtkmCustId",
-                "property": "LtkmCustId"
-              }
-            ]
-          }
+            {
+                "type": "switch",
+                "case": [
+                    {
+                        "conditions": [
+                            {
+                                "isUser": true,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "LTKM_RTN_HANDLING_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "WfTaskListId",
+                                "property": "Id"
+                              },
+                              {
+                                "type": "LtkmNo",
+                                "property": "LtkmNo"
+                              },
+                              {
+                                "type": "MrCustTypeCode",
+                                "property": "MrCustTypeCode"
+                              },
+                              {
+                                "type": "LtkmCustId",
+                                "property": "LtkmCustId"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "isUser": false,
+                                "property": "Assignee",
+                                "value": null,
+                                "restriction": "EQ"
+                            }
+                        ],
+                        "result": {
+                            "type": "url",
+                            "path": "LTKM_RTN_HANDLING_DETAIL",
+                            "icon" : "ft-edit-2",
+                            "param": [
+                              {
+                                "type": "WfTaskListId",
+                                "property": "Id"
+                              },
+                              {
+                                "type": "LtkmNo",
+                                "property": "LtkmNo"
+                              },
+                              {
+                                "type": "MrCustTypeCode",
+                                "property": "MrCustTypeCode"
+                              },
+                              {
+                                "type": "LtkmCustId",
+                                "property": "LtkmCustId"
+                              }
+                            ]
+                        },
+                        "isHide": false
+                    }
+                ]
+            }
         ]
       }
     ]

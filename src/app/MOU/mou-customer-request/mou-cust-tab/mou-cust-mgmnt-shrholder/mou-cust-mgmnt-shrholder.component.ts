@@ -146,7 +146,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
 
     for (let i = 0; i < this.listShareholder.length; i++) {
       if (this.listShareholder[i].IsActive && (currentEditedIndex == -1 || currentEditedIndex != i)) {
-        totalPrcnt += this.listShareholder[i].SharePrcnt;
+        totalPrcnt = Math.round((totalPrcnt + this.listShareholder[i].SharePrcnt) * 1000000) / 1000000;
       }
     }
 

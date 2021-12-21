@@ -3,7 +3,7 @@
     "exportExcel": false,
     "component": [
         {
-            "type": "dropdown",
+            "type": "officeRoleCodes",
             "datatype": "text",
             "name": "L.ORI_OFFICE_CODE",
             "id": "OfficeNameId",

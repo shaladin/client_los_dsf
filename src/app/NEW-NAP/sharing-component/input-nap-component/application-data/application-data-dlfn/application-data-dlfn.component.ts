@@ -36,6 +36,7 @@ import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 
 export class ApplicationDataDlfnComponent implements OnInit {
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode: string;
@@ -50,7 +51,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj: boolean;
-
+  isInterestCalcBasedTOP: boolean = false;
+  
   SalesAppInfoForm = this.fb.group({
     MouCustId: [''],
     TopBased: [''],
@@ -326,6 +328,11 @@ export class ApplicationDataDlfnComponent implements OnInit {
         this.IsMouSelect = true;
 
         this.isSingle = this.mouCustDlrFinObj.MrInstTypeCode != CommonConstant.InstTypeMultiple;
+        if(this.isSingle){
+          if(response["InterestCalcBased"] == "TOP"){
+            this.isInterestCalcBasedTOP = true;
+          }
+        }
       });
 
     let payFreqCode;
@@ -468,22 +475,33 @@ export class ApplicationDataDlfnComponent implements OnInit {
     addCrit4.listValue = [this.resultData.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
 
+    let addCrit5 = new CriteriaObj();
+    addCrit5.DataType = "bit";
+    addCrit5.propName = "RUR.IS_ACTIVE";
+    addCrit5.restriction = AdInsConstant.RestrictionEq;
+    addCrit5.value = "1";
+    this.arrAddCrit.push(addCrit5);
+
     await this.GetGSValueSalesOfficer();
 
     this.makeLookUpObj();
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
-      (response) => {
-        let addCrit3 = new CriteriaObj();
-        addCrit3.DataType = "text";
-        addCrit3.propName = "rbt.JOB_TITLE_CODE";
-        addCrit3.restriction = AdInsConstant.RestrictionIn;
-        addCrit3.listValue = [response.GsValue];
-        this.arrAddCrit.push(addCrit3);
-      }
-    );
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
+      });
   }
 
   async loadData() {
@@ -549,6 +567,16 @@ export class ApplicationDataDlfnComponent implements OnInit {
       });
     }
     await this.setDropdown();
+    
+    this.http.post(URLConstant.GetMouCustDlrFncngByAppId, { Id: this.AppId }).subscribe(
+      (responseMouCustDlrFncng) => {
+        if(this.isSingle){
+          if(responseMouCustDlrFncng["InterestCalcBased"] == "TOP"){
+            this.isInterestCalcBasedTOP = true;
+          }
+        }
+      }
+    );
   }
 
   Cancel() {

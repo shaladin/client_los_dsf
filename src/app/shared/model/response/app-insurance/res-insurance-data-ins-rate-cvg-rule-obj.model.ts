@@ -63,3 +63,58 @@ export class InsRateMainCvgRuleObj{
     this.MainRateToCust = 0;
     }
 }
+
+export class ResExecRuleInsRateCvgV2_1obj{
+    ReturnObject: Array<InsRateCoverageObj>
+    RuleSetName: string;
+
+    constructor(){
+        this.ReturnObject = new Array();
+        this.RuleSetName = "";
+    }
+}
+
+export class InsRateCoverageObj{
+    YearNo : number;
+    MainCoverageType : string;
+    MainRateToInsco : number;
+    BaseRatePercentage : number;
+    MainRateToCust : number;
+    CoverageAmt : number;
+    AdditionalCoverage : Array<AdditionalCoverageObj> 
+    constructor(){
+        this.YearNo = 0;
+        this.MainCoverageType = "";
+        this.MainRateToInsco = 0;
+        this.BaseRatePercentage = 0;
+        this.MainRateToCust = 0;
+        this.CoverageAmt = 0;
+        this.AdditionalCoverage = new Array();
+    }
+}
+
+export class AdditionalCoverageObj{
+    AdditionalCoverageType : string;
+    BaseCalc : string;
+    PremiToCust : number;
+    PremiToInsco : number;
+    PremiumType : string;
+    RateToCust : number;
+    RateToInsco : number;
+    SumInsuredAmt : number;
+    AssetAgeFrom : number;
+    AssetAgeTo : number;
+
+    constructor(){
+        this.AdditionalCoverageType = "";
+        this.BaseCalc = "";
+        this.PremiToCust = 0;
+        this.PremiToInsco = 0;
+        this.PremiumType = "";
+        this.RateToCust = 0;
+        this.RateToInsco = 0;
+        this.SumInsuredAmt = 0;
+        this.AssetAgeFrom = 0;
+        this.AssetAgeTo = 0;
+    }
+}

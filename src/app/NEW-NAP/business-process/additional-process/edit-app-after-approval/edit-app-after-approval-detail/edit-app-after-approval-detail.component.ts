@@ -25,6 +25,7 @@ import { ResGetVendorEmpByVendorEmpNoAndVendorCodeObj } from 'app/shared/model/r
 import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 
 @Component({
   selector: 'app-edit-app-after-approval-detail',
@@ -67,6 +68,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
   IsPOEdited: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   DDLReason;
+  AgrmntCurrStep: string;
   EditAppForm = this.fb.group({
     // AppAssetList: this.fb.array([]),
     // PurchaseOrderHList: this.fb.array([]),
@@ -125,6 +127,11 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
   {
       let reqObj : GenericObj = new GenericObj();
       reqObj.Id = this.agrmntId;
+
+      await this.http.post(URLConstant.GetAgrmntByAgrmntId, reqObj).toPromise().then(
+        (response: AgrmntObj) => {
+          this.AgrmntCurrStep = response.AgrmntCurrStep;
+        });
 
       await this.http.post(URLConstant.GetAgrmntDataForEditAppAfterApprovalByAgrmntId, reqObj).toPromise().then(
         (response) => {
@@ -446,7 +453,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
       
       let reqByVendorEmpNo : GenericObj = new GenericObj();
       reqByVendorEmpNo.EmpNo = targetSupplEmp.Key;
-      this.http.post(URLConstant.GetListVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
+      this.http.post(URLConstant.GetListActiveVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
         (response) => {
           var vendorBankAccObj = response[CommonConstant.ReturnObj];
 
@@ -489,7 +496,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
 
             let reqByVendorEmpNo : GenericObj = new GenericObj();
             reqByVendorEmpNo.EmpNo = e.SupplEmpNo;
-            this.http.post(URLConstant.GetListVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
+            this.http.post(URLConstant.GetListActiveVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
               (response) => {
                 var vendorBankAccObj = response[CommonConstant.ReturnObj];
       

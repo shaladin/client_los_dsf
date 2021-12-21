@@ -29,6 +29,7 @@ export class FormCommissionGenerateComponent implements OnInit {
   @Input() identifier: string;
   @Input() FormInputObj: object = {};
   @Input() DictMaxIncomeForm: object = {};
+  @Input() DictCalcMethod: { [id: string]: string } = {};
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -127,6 +128,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       MrTaxKindCode: [''],
       MrTaxCalcMethodCode: [''],
       TaxpayerNo: [''],
+      TotalCommissionAfterTaxAmt: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalCommisionAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalExpenseAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       TotalTaxAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
@@ -135,7 +137,8 @@ export class FormCommissionGenerateComponent implements OnInit {
       TotalDisburseAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
       RowVersion: [''],
       ListAllocated: this.fb.array([]),
-      DropDownList: this.fb.array([])
+      DropDownList: this.fb.array([]),
+      HoldingTaxWithPenalty: [0]
     }) as FormGroup;
     this.arr.push(NewDataForm);
     this.lenDDLContentName--;
@@ -245,6 +248,7 @@ export class FormCommissionGenerateComponent implements OnInit {
         AllocationFrom: [ruleObj[i].AllocationFrom],
         AllocationFromDesc: [ruleObj[i].AllocationFromDesc],
         MaxAllocationAmount: [maxAllocAmt],
+        CommissionAmtAfterTax: [0],
         AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount)]],
         AllocationPercentage: [percentageAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(100)]],
         AllocationBehaviour: [behaviour],
@@ -286,7 +290,7 @@ export class FormCommissionGenerateComponent implements OnInit {
     var content = this.FormInputObj["content"];
     let idxDefault = 0;
     if (content == CommonConstant.ContentSupplier) {
-      this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, { Code: code }).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: code }).subscribe(
         (response) => {
           var len = response["ReturnObject"].length;
           for (var i = 0; i < len; i++) {
@@ -533,7 +537,8 @@ export class FormCommissionGenerateComponent implements OnInit {
         TotalVATAmount: appCommObj.VatAmt,
         TotalPenaltyAmount: appCommObj.PenaltyAmt,
         TotalDisburseAmount: appCommObj.TotalDisburseAmt,
-        RowVersion: appCommObj.RowVersion,
+        TotalCommissionAfterTaxAmt: appCommObj.TotalCommissionAfterTaxAmt,
+        RowVersion: appCommObj.RowVersion
       });
       if (this.FormInputObj["content"] == CommonConstant.ContentSupplierEmp)
         this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
@@ -543,6 +548,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
       this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
   
+      let TotalPenaltyAmt = 0
       for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
         let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionDs[i].MrCommissionSourceCode);
         if (idxFromRuleObj >= 0) {
@@ -558,10 +564,17 @@ export class FormCommissionGenerateComponent implements OnInit {
             TaxAmt: appCommObj.AppCommissionDs[i].TaxAmt,
             VatAmt: appCommObj.AppCommissionDs[i].VatAmt,
             PenaltyAmt: appCommObj.AppCommissionDs[i].PenaltyAmt,
+            CommissionAmtAfterTax: appCommObj.AppCommissionDs[i].CommissionAmtAfterTax,
             RowVersion: appCommObj.AppCommissionDs[i].RowVersion,
           })
+          TotalPenaltyAmt += appCommObj.AppCommissionDs[i].PenaltyAmt;
         }
       }
+
+      this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+        HoldingTaxWithPenalty: (appCommObj.TaxAmt + TotalPenaltyAmt)
+      });
+
       this.ReCalcListAllocated(indexFormObj);
       this.tempDDLContentName.push(obj);
       this.DDLContentName.splice(idxDDLContent, 1);

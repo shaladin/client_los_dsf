@@ -84,7 +84,9 @@ export class CustDetailCompanyComponent implements OnInit {
     this.lookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.lookupCustGrpObj.isRequired = false;
-    
+    this.lookupCustGrpObj.isClear = true;
+    this.lookupCustGrpObj.isReady = true;
+
     this.lookupIndustryTypeObj = new InputLookupObj();
     this.lookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url + "/v1";

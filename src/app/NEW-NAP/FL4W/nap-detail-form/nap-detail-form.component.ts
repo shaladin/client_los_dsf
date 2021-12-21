@@ -150,7 +150,7 @@ export class NapDetailFormComponent implements OnInit {
             let trxNo;
             this.appNo = this.NapObj.AppNo;
             this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
             let isExisting = response['IsExistingCust'];
             if (isExisting) {
               trxNo = response['CustNo'];
@@ -252,8 +252,8 @@ export class NapDetailFormComponent implements OnInit {
     }
   }
 
-  NextStep(Step) {
-    this.ChangeTab(Step);
+  async NextStep(Step) {
+    await this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
     } else if (this.custType == CommonConstant.CustTypeCompany) {
@@ -261,12 +261,18 @@ export class NapDetailFormComponent implements OnInit {
     }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
+    }else if(Step == CommonConstant.AppStepIns){
+      let ReqByIdObj = new GenericObj();
+      ReqByIdObj.Id = this.appId;
+      this.http.post(URLConstant.CalculateDownPaymentNettPercent, ReqByIdObj).subscribe(
+        (response) => {
+        })
     }
   }
 
-  UpdateAppStep(Step: string) {
+  async UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+    await this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
       () => {
         this.spinner.show();
         setTimeout(() => { this.spinner.hide(); }, 1500);
@@ -301,10 +307,10 @@ export class NapDetailFormComponent implements OnInit {
     }
   }
 
-  ChangeTab(AppStep) {
+  async ChangeTab(AppStep) {
     this.IsSavedTC = false;
     if (this.ReturnHandlingHId == 0) {
-      this.UpdateAppStep(AppStep);
+      await this.UpdateAppStep(AppStep);
     }
     switch (AppStep) {
       case CommonConstant.AppStepRef:

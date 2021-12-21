@@ -15,6 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/res-app-cust-personal-and-spouse-data-obj.model';
+import { ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
 
 @Component({
   selector: 'app-doc-signer-cfna-detail',
@@ -22,6 +23,7 @@ import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/res-app-cus
   styles: []
 })
 export class DocSignerCfnaDetailComponent implements OnInit {
+  WfTaskListId: number = 0;
   AppId: number;
   AgrmntId: number;
   ResponseAgrmntSignerObj: AgrmntSignerObj;
@@ -52,6 +54,9 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
       this.BizTemplateCode = params['BizTemplateCode'];
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
     });
     this.isSupplierExists = false;
   }
@@ -60,14 +65,20 @@ export class DocSignerCfnaDetailComponent implements OnInit {
     MrJobPositionSupplBranchEmpName: [''],
     MrJobPositionMfEmpNo1Name: [''],
     MrJobPositionMfEmpNo2Name: [''],
+    MrJobPositionMgmntShrholder1Code: [''],
     MrJobPositionMgmntShrholder1Name: [''],
+    MrJobPositionMgmntShrholder2Code: [''],
     MrJobPositionMgmntShrholder2Name: [''],
+    MrJobPositionMgmntShrholder3Code: [''],
     MrJobPositionMgmntShrholder3Name: ['']
   });
 
   async ngOnInit() {
     await this.getAllData();
-    this.setLookupObj();
+    await this.setLookupObj();
+    await this.setDefaultShareholder();
+    await this.setCritLookup();
+    await this.setCritForShareholderLookup();
   }
 
   async getAllData() {
@@ -209,6 +220,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder2Obj.title = "Approver Signer";
+        this.inputLookupAppCustCompanyShareHolder2Obj.isRequired = false;
         this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
     
         this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
@@ -245,15 +257,104 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.inputLookupBranchEmpObj.isReady = true;
         this.inputLookupOfficeEmp1Obj.isReady = true;
         this.inputLookupOfficeEmp2Obj.isReady = true;
-        this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
-        this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
-        this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
       }
     ).catch(
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  async setDefaultShareholder() {
+    if (this.mode = "edit") return;
+    this.inputLookupAppCustCompanyShareHolder1Obj.isReady = false;
+    await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId, IsShareholder: true }).toPromise().then(
+      (response : ResListCustMainDataObj) => {
+        if (response.ListAppCustObj.length > 0) {
+          this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: response.ListAppCustObj[0].CustName };
+          this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+          this.DocSignerForm.patchValue({
+            MrJobPositionMgmntShrholder1Code: response.ListAppCustObj[0].MrJobPositionCode,
+            MrJobPositionMgmntShrholder1Name: response.ListAppCustObj[0].MrJobPositionCodeDesc,
+          })
+        }
+      });
+  }
+
+  async setCritLookup(){
+    this.inputLookupAppCustCompanyShareHolder1Obj.isReady = false;
+    this.inputLookupAppCustCompanyShareHolder2Obj.isReady = false;
+    this.inputLookupAppCustCompanyShareHolder3Obj.isReady = false;
+
+    this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
+
+    let crit4Obj = new CriteriaObj();
+    crit4Obj.propName = 'AC.APP_ID';
+    crit4Obj.restriction = AdInsConstant.RestrictionEq;
+    crit4Obj.value = this.AppId.toString();
+
+    let custCompanyCrit2: CriteriaObj = new CriteriaObj();
+    custCompanyCrit2.DataType = "text";
+    custCompanyCrit2.propName = "AC.MR_CUST_TYPE_CODE";
+    custCompanyCrit2.restriction = AdInsConstant.RestrictionEq;
+    custCompanyCrit2.value = CommonConstant.CustTypePersonal;
+
+    this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(custCompanyCrit2);
+    this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput.push(custCompanyCrit2);
+    this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput.push(custCompanyCrit2);
+  }
+
+  async setCritForShareholderLookup() {
+    let critShrholder1Obj = new CriteriaObj();
+    critShrholder1Obj.propName = 'ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID';
+    critShrholder1Obj.restriction = AdInsConstant.RestrictionNotIn;
+    critShrholder1Obj.listValue = new Array<number>();
+
+    let critShrholder2Obj = new CriteriaObj();
+    critShrholder2Obj.propName = 'ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID';
+    critShrholder2Obj.restriction = AdInsConstant.RestrictionNotIn;
+    critShrholder2Obj.listValue = new Array<number>();
+
+    let critShrholder3Obj = new CriteriaObj();
+    critShrholder3Obj.propName = 'ACCMS.APP_CUST_COMPANY_MGMNT_SHRHOLDER_ID';
+    critShrholder3Obj.restriction = AdInsConstant.RestrictionNotIn;
+    critShrholder3Obj.listValue = new Array<number>();
+
+    if(this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id != null){
+      critShrholder2Obj.listValue.push(this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id);
+      critShrholder3Obj.listValue.push(this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id);
+    }
+
+    if(this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id != null){
+      critShrholder1Obj.listValue.push(this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id);
+      critShrholder3Obj.listValue.push(this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id);
+    }
+
+    if(this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id != null){
+      critShrholder1Obj.listValue.push(this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id);
+      critShrholder2Obj.listValue.push(this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id);
+    }
+
+    if(critShrholder1Obj.listValue.length > 0){
+      this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(critShrholder1Obj);
+    }
+
+    if(critShrholder2Obj.listValue.length > 0){
+      this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput.push(critShrholder2Obj);
+    }
+
+    if(critShrholder3Obj.listValue.length > 0){
+      this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput.push(critShrholder3Obj);
+    }
+  
+    this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
   }
 
   getLookupBranchEmp(event) {
@@ -286,67 +387,73 @@ export class DocSignerCfnaDetailComponent implements OnInit {
     })
   }
 
-  getLookupAppCustCompanyShareHolder1(event) {
+  async getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
     this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = event.MrJobPositionCode;
     let tempJobName: string = "-";
     if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
     this.agrmntSignerObj.MrJobPositionMgmntShrholder1Name = tempJobName;
+    let tempJobCode: string = "-";
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder1Name: tempJobName,
-    })
+      MrJobPositionMgmntShrholder1Code: tempJobCode,
+      MrJobPositionMgmntShrholder1Name: event.MrJobPositionCodeDesc,
+    });
+    await this.setCritLookup();
+    await this.setCritForShareholderLookup();
   }
 
-  getLookupAppCustCompanyShareHolder2(event) {
+  async getLookupAppCustCompanyShareHolder2(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder2Id = event.AppCustCompanyMgmntShrholderId;
     this.agrmntSignerObj.MrJobPositionMgmntShrholder2Code = event.MrJobPositionCode;
     let tempJobName: string = "-";
     if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
     this.agrmntSignerObj.MrJobPositionMgmntShrholder2Name = tempJobName;
+    let tempJobCode: string = "-";
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder2Name: tempJobName,
-    })
+      MrJobPositionMgmntShrholder2Code: tempJobCode,
+      MrJobPositionMgmntShrholder2Name: event.MrJobPositionCodeDesc,
+    });
+    await this.setCritLookup();
+    await this.setCritForShareholderLookup();
   }
 
-  getLookupAppCustCompanyShareHolder3(event) {
+  async getLookupAppCustCompanyShareHolder3(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder3Id = event.AppCustCompanyMgmntShrholderId;
     this.agrmntSignerObj.MrJobPositionMgmntShrholder3Code = event.MrJobPositionCode;
     let tempJobName: string = "-";
     if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
     this.agrmntSignerObj.MrJobPositionMgmntShrholder3Name = tempJobName;
+    let tempJobCode: string = "-";
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
-      MrJobPositionMgmntShrholder3Name: tempJobName,
-    })
+      MrJobPositionMgmntShrholder3Code: tempJobCode,
+      MrJobPositionMgmntShrholder3Name: event.MrJobPositionCodeDesc,
+    });
+    await this.setCritLookup();
+    await this.setCritForShareholderLookup();
   }
 
   SaveForm() {
     this.agrmntSignerObj.AgrmntId = this.AgrmntId;
+    this.agrmntSignerObj.WfTaskListId = this.WfTaskListId;
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.agrmntSignerObj.AppCustPersonalId = this.ResponseAppCustDataObj.AppCustPersonalId;
       this.agrmntSignerObj.AppCustSpouseId = this.ResponseAppCustDataObj.AppCustSpouseId;
     }
 
+    let urlPost = environment.isCore ? URLConstant.SubmitAgrmntSignerDataV2 : URLConstant.SubmitAgrmntSignerData;
+
     if (this.mode == "edit") {
-      this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    } else {
-      this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      urlPost = environment.isCore ? URLConstant.EditAgrmntSignerDataV2 : URLConstant.EditAgrmntSignerData;
     }
+
+    this.http.post(urlPost, this.agrmntSignerObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { "BizTemplateCode": this.BizTemplateCode });
+      });
   }
 }

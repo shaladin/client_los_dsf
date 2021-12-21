@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGroupDirective, NgForm, AbstractControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -27,6 +27,7 @@ export class AgrmntTcComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() enjiForm: NgForm;
   @Input() identifier: string = "TCList";
+  @Input() IsFromOutstandingTc: boolean = false;
   businessDt: Date;
   IsOpl: boolean = false;
 
@@ -36,6 +37,7 @@ export class AgrmntTcComponent implements OnInit {
   constructor(private http: HttpClient,
     private fb: FormBuilder, private cookieService: CookieService) { }
 
+  currStep: string = "";
   ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -51,6 +53,7 @@ export class AgrmntTcComponent implements OnInit {
     var agrmntObj = { Id: this.AgrmntId };
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (responseAgrmnt: AgrmntObj) => {
+        this.currStep = responseAgrmnt.AgrmntCurrStep;
         if(responseAgrmnt.BizTemplateCode === CommonConstant.OPL) {
           this.IsOpl = true;
         }
@@ -122,7 +125,6 @@ export class AgrmntTcComponent implements OnInit {
     var listTC = this.parentForm.get(this.identifier) as FormArray
     var item = listTC.at(index);
     item.patchValue({
-      PromisedDt: null,
       ExpiredDt: null
     });
     this.ReconstructForm();
@@ -132,77 +134,79 @@ export class AgrmntTcComponent implements OnInit {
     this.totalCheckAll = 0;
     this.totalMandatory = 0;
     this.IsCheckedAll = true;
-    var listTC = this.parentForm.get(this.identifier) as FormArray
+    let listTC = this.parentForm.get(this.identifier) as FormArray
     for (let i = 0; i < listTC.length; i++) {
-      var item = listTC.at(i);
-      var isMandatory: Boolean = item.get("IsMandatory").value;
-      var isChecked: Boolean = item.get("IsChecked").value;
-      var isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
+      let item = listTC.at(i);
+      let isMandatory: Boolean = item.get("IsMandatory").value;
+      let isChecked: Boolean = item.get("IsChecked").value;
+      let isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
+      let isWaived: Boolean = item.get("IsWaived").value;
+      let priorTo: string = item.get("PriorTo").value;
+      let tempExpiredDt: AbstractControl = item.get("ExpiredDt") as AbstractControl;
+      let tempPromisedDt: AbstractControl = item.get("PromisedDt") as AbstractControl;
 
+      console.log(priorTo);
       if (isMandatory) {
+        //logic PriorTo
+        if(!this.IsFromOutstandingTc){
+          if(priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
+        }
         if (isChecked) {
+          tempExpiredDt.enable();
           if(isExpDtMandatory){
-            item.get("ExpiredDt").enable();
-            item.get("ExpiredDt").setValidators([Validators.required]);
-            item.get("ExpiredDt").updateValueAndValidity();
+            tempExpiredDt.setValidators([Validators.required]);
           }
           else{
-            item.get("ExpiredDt").enable();
-            item.get("ExpiredDt").clearValidators();
-            item.get("ExpiredDt").updateValueAndValidity();
+            tempExpiredDt.clearValidators();
           }
-          item.get("PromisedDt").disable();
-          item.get("PromisedDt").clearValidators();
-          item.get("PromisedDt").updateValueAndValidity();
+          tempExpiredDt.updateValueAndValidity();
+          tempPromisedDt.disable();
+          tempPromisedDt.clearValidators();
+          tempPromisedDt.updateValueAndValidity();
           this.totalCheckAll++;
         } 
         else {
-          if(item.get("IsWaived").value){
-            item.get("PromisedDt").disable();
-            item.get("PromisedDt").clearValidators();
-            item.get("PromisedDt").updateValueAndValidity();
+          if(isWaived){
+            tempPromisedDt.disable();
+            tempPromisedDt.clearValidators();
           }
           else{
-            item.get("PromisedDt").enable();
-            item.get("PromisedDt").setValidators([Validators.required]);
-            item.get("PromisedDt").updateValueAndValidity();
+            tempPromisedDt.enable();
+            tempPromisedDt.setValidators([Validators.required]);
             this.IsCheckedAll = false;
           }
-          item.get("ExpiredDt").disable();
-          item.get("ExpiredDt").clearValidators();
-          item.get("ExpiredDt").updateValueAndValidity();
+          tempPromisedDt.updateValueAndValidity();
+          tempExpiredDt.disable();
+          tempExpiredDt.clearValidators();
+          tempExpiredDt.updateValueAndValidity();
         }
       } 
       else {
         if (isChecked) {
+          tempExpiredDt.enable();
           if(isExpDtMandatory){
-            item.get("ExpiredDt").enable();
-            item.get("ExpiredDt").setValidators([Validators.required]);
-            item.get("ExpiredDt").updateValueAndValidity();
+            tempExpiredDt.setValidators([Validators.required]);
           }
           else{
-            item.get("ExpiredDt").enable();
-            item.get("ExpiredDt").clearValidators();
-            item.get("ExpiredDt").updateValueAndValidity();
+            tempExpiredDt.clearValidators();
           }
-          item.get("PromisedDt").disable();
-          item.get("PromisedDt").clearValidators();
-          item.get("PromisedDt").updateValueAndValidity();
+          tempExpiredDt.updateValueAndValidity();
+          tempPromisedDt.disable();
+          tempPromisedDt.clearValidators();
+          tempPromisedDt.updateValueAndValidity();
         } 
         else {
-          if(item.get("IsWaived").value){
-            item.get("PromisedDt").disable();
-            item.get("PromisedDt").clearValidators();
-            item.get("PromisedDt").updateValueAndValidity();
+          if(isWaived){
+            tempPromisedDt.disable();
           }
           else{
-            item.get("PromisedDt").enable();
-            item.get("PromisedDt").clearValidators();
-            item.get("PromisedDt").updateValueAndValidity();
+            tempPromisedDt.enable();
           }
-          item.get("ExpiredDt").disable();
-          item.get("ExpiredDt").clearValidators();
-          item.get("ExpiredDt").updateValueAndValidity();
+          tempPromisedDt.clearValidators();
+          tempPromisedDt.updateValueAndValidity();
+          tempExpiredDt.disable();
+          tempExpiredDt.clearValidators();
+          tempExpiredDt.updateValueAndValidity();
         }
       }
     }

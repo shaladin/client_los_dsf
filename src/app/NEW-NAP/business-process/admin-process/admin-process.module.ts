@@ -52,7 +52,7 @@ import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
-import { MatTabsModule } from "@angular/material";
+import { MatRadioModule, MatTabsModule } from "@angular/material";
 import { SharedModule } from "app/shared/shared.module";
 import { DocChecklistPagingComponent } from "./doc-checklist/doc-checklist-paging/doc-checklist-paging.component";
 import { DocChecklistDetailComponent } from "./doc-checklist/doc-checklist-detail/doc-checklist-detail.component";
@@ -67,6 +67,8 @@ import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocat
 import { InvoiceVerifDetailListOfInvoiceComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component";
 import { InvoiceVerifDetailDFComponent } from "./invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { DeliveryOrderAssetOwnerComponent } from './delivery-order-component/delivery-order-asset-owner/delivery-order-asset-owner.component';
+import { DeliveryOrderAssetLocationComponent } from './delivery-order-component/delivery-order-asset-location/delivery-order-asset-location.component';
 
 export const customCurrencyMaskConfig = {     
   align: "left",
@@ -96,6 +98,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     MatTabsModule,
+    MatRadioModule,
     SharedModule
   ],
   declarations: [
@@ -145,7 +148,9 @@ export const customCurrencyMaskConfig = {
     AssetAllocationPagingComponent,
     AssetAllocationDetailComponent,
     InvoiceVerifDetailListOfInvoiceComponent,
-    InvoiceVerifDetailDFComponent
+    InvoiceVerifDetailDFComponent,
+    DeliveryOrderAssetOwnerComponent,
+    DeliveryOrderAssetLocationComponent
   ],
   providers: [
     NGXToastrService,

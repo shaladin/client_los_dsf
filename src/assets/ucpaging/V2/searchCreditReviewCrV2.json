@@ -3,9 +3,10 @@
     "exportExcel": false,
     "component": [
         {
-            "type": "dropdown",
+            "type": "officeRoleCodes",
+            "datatype": "text",
             "name": "a.ORI_OFFICE_CODE",
-            "id": "OfficeNameId",
+            "id": "OfficeCodeId",
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,

@@ -1,6 +1,7 @@
 {
     "url": "",
     "title":"Lookup - Country",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

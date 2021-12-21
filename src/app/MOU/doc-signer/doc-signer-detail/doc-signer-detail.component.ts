@@ -6,7 +6,7 @@ import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
@@ -68,11 +68,11 @@ export class DocSignerDetailComponent implements OnInit {
   
   MouCustSignerForm = this.fb.group({
     MfSigner1: [''],
-    MfSignerPosition1: [''],
+    MfSignerPosition1: ['', [Validators.required]],
     MfSigner2: [''],
     MfSignerPosition2: [''],
     CustSigner1: [''],
-    CustSignerPosition1: [''],
+    CustSignerPosition1: ['', [Validators.required]],
     CustSigner2: [''],
     CustSignerPosition2: [''],
   });

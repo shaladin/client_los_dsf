@@ -1,0 +1,35 @@
+<lib-ucSubsection [id]="'contactInfomationCompanyId'" [title]="'Contact Information'" [panel]="'contactInformationCompany'">
+</lib-ucSubsection>
+<div id="contactInformationCompany">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th style="text-align: center;"><span class="thead-header" translate>Name
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Job Position
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Mobile Phone
+        </span>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" translate>Email
+        </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf = "listContactPersonCompany?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="listContactPersonCompany?.length > 0">
+      <tr *ngFor="let item of listContactPersonCompany; let i = index">
+        <td style="text-align: center;">{{item.ContactPersonName}}</td>
+        <td style="text-align: center;">{{item.JobPositionName}}</td>
+        <td style="text-align: center;">{{item.MobilePhnNo1}}</td>
+        <td style="text-align: center;">{{item.Email1}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

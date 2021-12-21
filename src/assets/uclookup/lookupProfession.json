@@ -1,6 +1,7 @@
 {
     "url": "",
     "title":"Lookup - Profession",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

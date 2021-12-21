@@ -1,6 +1,7 @@
 {
     "url": "",
-    "title":"Lookup Surveyor",
+    "title":"Lookup - Surveyor",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

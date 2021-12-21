@@ -8,7 +8,6 @@ import { ROUTES } from './sidebar-routes.config';
 import { environment } from 'environments/environment';
 import { CommonConstant } from '../constant/CommonConstant';
 import { AdInsHelper } from '../AdInsHelper';
-import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsConstant } from '../AdInstConstant';
 import { StorageService } from '../services/StorageService';
@@ -88,8 +87,6 @@ export class SidebarComponent implements OnInit {
     navigateSkipLocationChange(ev) {
         //sementara Sementara begini dulu, belum ketemu solusi lain
         //problem : ketika di 'click' halaman memasuki halaman /dashboard/dash-board terlebih dahulu
-        this.router.navigateByUrl(NavigationConstant.DASHBOARD, { skipLocationChange: true }).then(() => {
-            AdInsHelper.RedirectUrl(this.router, [ev.Path], this.genParam(ev.Params));
-        });
+        AdInsHelper.RedirectUrl(this.router, ev.Path, this.genParam(ev.Params));
     }
 }

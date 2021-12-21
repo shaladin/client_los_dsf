@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { UnauthorizedPageComponent } from 'app/unauthorized/unauthorized.component';
 import { ProdHoAddDetailComponent } from './product-ho/prod-ho-add-detail/prod-ho-add-detail.component';
 import { ProdHoAddComponent } from './product-ho/prod-ho-add/prod-ho-add.component';
 import { ProdHoApvDetailComponent } from './product-ho/prod-ho-apv/prod-ho-apv-detail/prod-ho-apv-detail.component';
@@ -194,6 +195,13 @@ const routes: Routes = [
     {
       path: PathConstant.OFFERING_REVIEW,
       component: ProdOfferingRvwPagingComponent,
+      data: {
+        title: 'Product Offering Review Paging'
+      }
+    },
+    {
+      path: PathConstant.UNAUTHORIZED,
+      component: UnauthorizedPageComponent,
       data: {
         title: 'Product Offering Review Paging'
       }

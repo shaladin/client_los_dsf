@@ -1,5 +1,6 @@
 {
-    "title":"Lookup Zip Code",
+    "title":"Lookup - Zip Code",
+    "sectionTitle": "Search",
     "component": [
       {
         "type": "textbox",

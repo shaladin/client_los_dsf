@@ -19,6 +19,8 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
             "path": "/RefMaster/GetListKeyValueActiveByCode",
             "label": "Mou Type",
             "items": [],
@@ -83,6 +85,22 @@
             "value": "",
             "label": "Reference No",
             "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "MOU.ORI_OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn" : true,
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
+            "items": [],
+            "itemsUrl": []
         }
     ],
     "querystring": {

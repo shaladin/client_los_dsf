@@ -1,20 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
-import { environment } from 'environments/environment';
-import { ClaimWorkflowObj } from 'app/shared/model/workflow/claim-workflow-obj.model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
-import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
-import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
-import { LtkmReqObj } from 'app/shared/model/ltkm/ltkm-req-obj.model';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { CookieService } from 'ngx-cookie';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { ClaimTaskService } from 'app/shared/claimTask.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {environment} from 'environments/environment';
+import {CommonConstant} from 'app/shared/constant/CommonConstant';
+import {URLConstant} from 'app/shared/constant/URLConstant';
+import {AdInsHelper} from 'app/shared/AdInsHelper';
+import {UcInputRFAObj} from 'app/shared/model/uc-input-rfa-obj.model';
+import {UcapprovalcreateComponent} from '@adins/ucapprovalcreate';
+import {DMSObj} from 'app/shared/model/dms/dms-obj.model';
+import {LtkmReqObj} from 'app/shared/model/ltkm/ltkm-req-obj.model';
+import {NavigationConstant} from 'app/shared/constant/NavigationConstant';
+import {CookieService} from 'ngx-cookie';
+import {CurrentUserContext} from 'app/shared/model/current-user-context.model';
+import {ClaimTaskService} from 'app/shared/claimTask.service';
+import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
 
 @Component({
     selector: 'app-ltkm-verify-detail',
@@ -58,7 +58,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
     ltkmAnalysisNotes: string = "";
 
     isCustTypePersonal: boolean = true;
-    
+
 
     // ReturnForm = this.fb.group({
     //   ReturnReason: [''],
@@ -72,7 +72,9 @@ export class LtkmVerifyDetailComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private cookieService: CookieService,
-        private claimTaskService: ClaimTaskService) {
+        private claimTaskService: ClaimTaskService,
+        private toastr: NGXToastrService
+    ) {
         this.route.queryParams.subscribe(params => {
             if (params["LtkmNo"] != null) {
                 this.LtkmNo = params["LtkmNo"];
@@ -84,8 +86,8 @@ export class LtkmVerifyDetailComponent implements OnInit {
                 this.wfTaskListId = params["WfTaskListId"];
             }
             if (params["MrCustTypeCode"] != null) {
-                this.CustTypeCode = params["MrCustTypeCode"];   
-                this.CustTypeCode == 'PERSONAL' ? this.isCustTypePersonal = true : this.isCustTypePersonal = false;              
+                this.CustTypeCode = params["MrCustTypeCode"];
+                this.CustTypeCode == 'PERSONAL' ? this.isCustTypePersonal = true : this.isCustTypePersonal = false;
             }
         });
     }
@@ -241,6 +243,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
         let submitLtkmUrl = environment.isCore? URLConstant.SubmitLtkmVerifyV2 : URLConstant.SubmitLtkmVerify;
         this.http.post(submitLtkmUrl, apiObj).subscribe(
             (response) => {
+                this.toastr.successMessage(response["message"]);
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
         });
     }
@@ -257,6 +260,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
         let submitLtkmUrl = environment.isCore? URLConstant.SubmitLtkmVerifyV2 : URLConstant.SubmitLtkmVerify;
         this.http.post(submitLtkmUrl, apiObj).subscribe(
             (response) => {
+                this.toastr.successMessage(response["message"]);
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_PAGING], {});
         });
     }
@@ -284,13 +288,13 @@ export class LtkmVerifyDetailComponent implements OnInit {
 
 
     ClaimTask() {
-        if(environment.isCore){	
-            if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){	
-                this.claimTaskService.ClaimTaskV2(this.wfTaskListId);	
-            }	
-        }	
-        else if (this.wfTaskListId> 0) {	
-            this.claimTaskService.ClaimTask(this.wfTaskListId);	
+        if(environment.isCore){
+            if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+                this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+            }
+        }
+        else if (this.wfTaskListId> 0) {
+            this.claimTaskService.ClaimTask(this.wfTaskListId);
         }
     }
 

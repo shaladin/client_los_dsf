@@ -35,6 +35,11 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
               private apvTaskService: ApprovalTaskService) { }
 
   ngOnInit() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    if (context[CommonConstant.MR_OFFICE_TYPE_CODE] != CommonConstant.HeadOffice) {
+      this.router.navigate([NavigationConstant.PROD_HO_UNAUTHORIZED], { queryParams: {}, skipLocationChange: false });
+    }
+    
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHODeactApv.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactApv.json";
 

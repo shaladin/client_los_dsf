@@ -7,6 +7,9 @@ export class InsuranceDataInsRateCvgRuleObj {
     AppAssetId: number;
     AppCollateralId: number;
     AppId: number;
+    CoverageAmt : number;
+    SumInsuredPercentage : Array<number>;
+    YearNo : Array<number>;
 
     constructor(){
         this.InscoHoCode = "";
@@ -17,5 +20,8 @@ export class InsuranceDataInsRateCvgRuleObj {
         this.AppAssetId = 0;
         this.AppCollateralId = 0;
         this.AppId = 0;
+        this.CoverageAmt = 0;
+        this.SumInsuredPercentage = new Array();
+        this.YearNo = new Array();
     }
 }

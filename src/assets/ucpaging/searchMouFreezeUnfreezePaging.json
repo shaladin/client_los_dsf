@@ -72,6 +72,22 @@
         }
       ],
       "itemsUrl": []
+    },
+    {
+      "type": "dropdown",
+      "name": "MC.ORI_OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "isQueryIn" : true,
+      "url": "",
+      "environment": "FOU",
+      "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office",
+      "items": [],
+      "itemsUrl": []
     }
   ],
   "querystring": {

@@ -259,6 +259,7 @@ export class CommonConstant {
   public static CollateralNeeded = "COLLATERALNEEDED";
   public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
   public static REF_PROD_COMPNT_CODE_CRD_APV = "CRD_APV";
+  public static REF_PROD_COMPNT_CODE_CURR = "CURR";
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
@@ -462,6 +463,10 @@ export class CommonConstant {
   public static PAY_FREQ_MONTHLY = "MONTHLY";
   public static INST_SCHM_REGULAR_FIXED = "RF";
 
+  // INTEREST CALC BASED
+  public static TOP_INTEREST_CALC_BASED = "TOP"; 
+  public static INTEREST_INTEREST_CALC_BASED = "INTEREST"; 
+
   // MR ID TYPE CODE
   public static MrIdTypeCodeEKTP = "EKTP";
   public static MrIdTypeCodeSIM = "SIM";
@@ -632,6 +637,9 @@ export class CommonConstant {
   public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
   public static RefMasterTypeCodePublicType = "PUBLIC_TYPE";
   public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
+  public static RefMasterTypeCodeInterestCalcBased = "INTEREST_CALC_BASED"; 
+  public static RefMasterTypeCodeTaxCalcMethod = "TAX_CALC_METHOD"; 
+
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
@@ -731,11 +739,14 @@ export class CommonConstant {
   public static GSCodeFilterAddr = "FILTER_ADDR";
   public static GSCodeLoadingFeeCountType = "LOADING_FEE_COUNT_TYPE";
   public static GSCodeDefaultLoadingFeeYear = "DEFAULT_LOADING_FEE_YEAR";
-    
   public static LoadingFeeCountType_FirstYear = "FY";
   public static LoadingFeeCountType_LastYear = "LY";
   public static LoadingFeeCountType_CountingYear = "CY";
-
+  public static GSCodeFilterAppDataSalesOfficerCode = "FILTER_APP_DATA_SALES_OFFICER_CODE";
+  public static GSCodeAgrStepToCheckSerialMandatoryEaaa = "AGR_STEP_TO_CHECK_SERIAL_MANDATORY_EAAA";
+  public static GSCodeOwnershipMandatoryAddrType = "OWNERSHIP_MANDATORY_BY_ADDR_TYPE";
+  public static GsCodePasswordRegex = "PASSWORD_REGEX";
+  
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
   public static PaymentTypeDirectPayment = "DIRECT_PAYMENT";
@@ -842,6 +853,9 @@ export class CommonConstant {
   public static DmsOverideUpload = "Upload";
   public static DmsOverideView = "View";
   public static DmsOverideUploadView = "Upload,View";
+  public static DmsOverideUploadDownload = "Upload,Download";
+  public static DmsOverideViewDownload = "View,Download";
+  public static DmsOverideUploadDownloadView = "Upload,Download,View";
   public static DmsViewCodeCust = "ConfinsCust";
   public static DmsViewCodeApp = "ConfinsApp";
   public static DmsViewCodeAgr = "ConfinsAgr";
@@ -948,6 +962,7 @@ export class CommonConstant {
   
   // GENERAL SETTING CODE
   public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
+  
 
   // JOIN TYPE
   public static JOIN_TYPE_INNER = "Inner";
@@ -1093,4 +1108,6 @@ export class CommonConstant {
     "CMPLTN": CommonConstant.AppStepCustCmpltn,
     "AEX": CommonConstant.AppStepAssetExpense
   }
+
+  public static CompanyTypePT = "PT";
 }
