@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppCollateralAccessoryObj } from 'app/shared/model/app-collateral-accessory-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 
@@ -21,11 +23,12 @@ export class ViewDeliveryOrderAssetSingleComponent implements OnInit {
   AssetTypeObj: any;
   appCollateralDoc: any;
   inputGridObj: InputGridObj = new InputGridObj();
-  
+  AppCollateralAccessoryObjs : Array<AppCollateralAccessoryObj> = new Array<AppCollateralAccessoryObj>();
+
   constructor(private http: HttpClient, public activeModal: NgbActiveModal) { }
 
   async ngOnInit() {
-    this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryFL4W.json";
+    this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppCollateralAccessory.json";
 
     await this.getDOAsset();
     await this.getAppAsset();
@@ -35,6 +38,7 @@ export class ViewDeliveryOrderAssetSingleComponent implements OnInit {
     this.getAssetUserRelationshipDesc(this.appCollateralRegistration.MrUserRelationshipCode);
     this.getAssetType(this.appAsset.AssetTypeCode);
     this.getOwnerProfessionDesc(this.appCollateralRegistration.OwnerProfessionCode)
+    this.getCollateralAccData();
   }
 
   async getDOAsset() {
@@ -55,7 +59,7 @@ export class ViewDeliveryOrderAssetSingleComponent implements OnInit {
   }
 
   async getAppCollReg() {
-    await this.http.post(URLConstant.GetAppCollateralRegistrationByAppId, { Id: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppCollateralRegistrationByAppAssetId, { Id: this.appAsset.AppAssetId }).toPromise().then(
       response => {
         this.appCollateralRegistration = response;
       }
@@ -108,6 +112,20 @@ export class ViewDeliveryOrderAssetSingleComponent implements OnInit {
     this.http.post(URLConstant.GetAssetTypeByCode, reqByCode).subscribe(
       (response: any) => {
         this.AssetTypeObj = response;
+      }
+    );
+  }
+
+  getCollateralAccData(){
+    this.http.post<Array<AppCollateralAccessoryObj>>(URLConstant.GetAppCollateralAccessoriesListByAppCollateralId, {Id: this.appCollateralRegistration.AppCollateralId }).subscribe(
+      (response) => {
+        this.AppCollateralAccessoryObjs = response[CommonConstant.ReturnObj];
+        
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = this.AppCollateralAccessoryObjs;
       }
     );
   }

@@ -83,6 +83,7 @@ export class URLConstant {
 
   // App Collateral
   public static GetAppCollateralRegistrationByAppId = environment.losUrl + "/v1" + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
+  public static GetAppCollateralRegistrationByAppAssetId = environment.losUrl + "/v1" + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppAssetId";
   public static GetAppCollateralRegistrationByAgrmntId = environment.losUrl + "/v1" + "/AppCollateralRegistration/GetAppCollateralRegistrationByAgrmntId";
   public static GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral = environment.FoundationR3Url + "/v1" + "/Collateral/GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral";
 
