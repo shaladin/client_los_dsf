@@ -142,7 +142,7 @@
           <td style="text-align: right;">
             {{item.CustAdminFeeAmt + item.CustStampDutyFeeAmt | number:'.2':'en-US'}}
           </td>
-          <td style="text-align: center;">
+          <td style="text-align: center;" *ngIf="item.AppInsObjId">
             <a (click)="viewDetailCollateralHandler(item.AppInsObjId)"><i class="fas fa-pencil-alt"></i></a>
           </td>
         </tr>
