@@ -1040,6 +1040,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       });
     }
     this.isAddressReady = true;
+    this.GetEditData();
   }
 
   async GetEditData() {
