@@ -16,6 +16,7 @@ export class ChangeMouCustCollateralRegistrationObj {
     UserName: string;
     MrUserRelationshipCode: string;
     OwnerProfessionCode: string;
+    MrOwnerTypeCode: string;
     LocationAddr: string;
     LocationAreaCode1: string;
     LocationAreaCode2: string;

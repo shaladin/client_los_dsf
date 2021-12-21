@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-tab-commission',
@@ -31,15 +32,33 @@ export class TabCommissionComponent implements OnInit {
     this.ListReferantorData = new Array();
     this.SummaryData = {
       totalCommAmt: 0,
+      totalCommAfterTaxAmt: 0,
       totalTaxAmt: 0,
       totalVatAmt: 0,
+      totalDisburmentAmt: 0,
       totalExpenseAmt: 0
     };
   }
 
   async ngOnInit() {
     this.initData();
+    this.GetCalcMethod();
     await this.GetCommissionData();
+  }
+
+  DictCalcMethod: { [id: string]: string } = {};
+  GetCalcMethod() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeTaxCalcMethod }).subscribe(
+      (response) => {
+        let listRefMaster: Array<KeyValueObj> = response[CommonConstant.ReturnObj];
+        if (listRefMaster.length > 0) {
+          for (let index = 0; index < listRefMaster.length; index++) {
+            const element = listRefMaster[index];
+            this.DictCalcMethod[element.Key] = element.Value;
+          }
+        }
+      }
+    );
   }
 
   async GetCommissionData() {
@@ -61,8 +80,10 @@ export class TabCommissionComponent implements OnInit {
             this.ListReferantorData.push(tempObj);
 
           this.SummaryData.totalCommAmt += tempObj.TotalCommissionAmt;
+          this.SummaryData.totalCommAfterTaxAmt += tempObj.TotalCommissionAfterTaxAmt;
           this.SummaryData.totalTaxAmt += (tempObj.TaxAmt + tempObj.PenaltyAmt);
           this.SummaryData.totalVatAmt += tempObj.VatAmt;
+          this.SummaryData.totalDisburmentAmt += tempObj.TotalDisburseAmt;
           this.SummaryData.totalExpenseAmt += tempObj.TotalExpenseAmt;
         }
 

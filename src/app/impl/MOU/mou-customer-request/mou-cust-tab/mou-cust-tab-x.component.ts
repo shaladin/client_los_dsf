@@ -1341,6 +1341,7 @@ export class MouCustTabXComponent implements OnInit {
     this.inputAddrLegalPersonalObj = new InputAddressObj;
     this.inputAddrLegalPersonalObj.showAllPhn = false;
     this.inputAddrLegalPersonalObj.showOwnership = true;
+    this.inputAddrLegalPersonalObj.title = 'Legal Address';
     this.inputAddrLegalPersonalObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeLegal);
   }
 

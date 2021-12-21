@@ -428,7 +428,7 @@ export class AssetDataAddEditXComponent implements OnInit {
   }
 
   setAppCollateralDoc(AppCollateralId: number = 0) {
-    this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
+    this.http.post(URLConstantX.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
       (response) => {
         let AppCollateralDocs = new Array();
         AppCollateralDocs = response["AppCollateralDocs"];
@@ -1040,6 +1040,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       });
     }
     this.isAddressReady = true;
+    this.GetEditData();
   }
 
   async GetEditData() {

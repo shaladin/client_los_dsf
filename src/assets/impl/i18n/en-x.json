@@ -145,5 +145,12 @@
   "Sales Officer Code": "MO Code",
   "Sales Officer Name": "MO Name",
   "Tenor": "TENOR (IN MONTHS)",
-  "Insurance Length" : "Insurance Length (In Months)"
+  "Insurance Length" : "Insurance Length (In Months)",
+  "Monthly Installment Amount": "Total Monthly Installment (DSF + Other)",
+  "Gross Monthly Income Amount" : "Monthly Sales / Revenue",
+  "Monthly Income" : "Monthly Sales / Revenue",
+  "Other Monthly Installment Amount": "Total Monthly Installment (DSF + Other)",
+  "Other Monthly Installment": "Total Monthly Installment (DSF + Other)",
+  "Operational Cost" : "Total Monthly Expense",
+  "Operation Cost": "Total Monthly Expense"
 }

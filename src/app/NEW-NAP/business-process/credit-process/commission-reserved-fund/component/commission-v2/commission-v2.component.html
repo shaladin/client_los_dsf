@@ -16,13 +16,13 @@
               </div>
             </div>
             <app-form-commission-generate #Form1 *ngIf="OnForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier">
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier">
             </app-form-commission-generate>
             <app-form-commission-generate #Form2 *ngIf="OnForm2" [hidden]="HideForm2" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierSupplierEmp"
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplierEmp"
               [FormInputObj]="FormInputObjSupplierEmp"></app-form-commission-generate>
             <app-form-commission-generate #Form3 *ngIf="OnForm3" [hidden]="HideForm3" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor">
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor">
             </app-form-commission-generate>
           </div>
 
@@ -41,6 +41,22 @@
                   <label *ngIf="Summary.TotalCommisionAmount > maxAllocAmt"
                     style="color: red;">
                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Total Tax base Amount</label>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                  <label>{{Summary.TotalCommissionAfterTaxAmt | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Total Disburse Amount</label>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                  <label>{{Summary.TotalDisburseAmount | number:'.2':'en-US'}}</label>
                 </div>
               </div>
               <div class="row">

@@ -847,9 +847,9 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
       insCoverage.Month = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
       insCoverage.CoverageAmt = this.InsuranceDataForm.controls.CvgAmt.value;
       insCoverage.SumInsured = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
-      insCoverage.Rate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].CustMainPremiRate.value;
+      insCoverage.Rate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].BaseCustMainPremiRate.value;
       insCoverage.MainCoverageTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
-      insCoverage.RateToInsco = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].InscoMainPremiRate.value;
+      insCoverage.RateToInsco = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].BaseInscoMainPremiRate.value;
 
       let ruleNotCompletes = this.ListRuleNotComplete.filter(x => x.index == i);
       for (let j = 0; j < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"].length; j++) {
@@ -865,10 +865,10 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
 
           addCoverage.BaseCalculation = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].BaseCalculation.value;
           addCoverage.SumInsured = insCoverage.SumInsured;
-          addCoverage.Rate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].CustAddPremiRate.value;
+          addCoverage.Rate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].BaseCustAddPremiRate.value;
           addCoverage.RateType = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].PremiumType.value;
           addCoverage.AddCoverageTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].MrAddCvgTypeCode.value;
-          addCoverage.RateToInsco = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].InscoAddPremiRate.value;
+          addCoverage.RateToInsco = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].BaseInscoAddPremiRate.value;
           addCoverage.SeatCount = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].SeatCount.value;
           insCoverage.AddInsCoverage.push(addCoverage);
         }
@@ -1238,8 +1238,10 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
       SumInsuredPrcnt: [obj.SumInsuredPrcnt, [Validators.required, Validators.min(0), Validators.max(100)]],
       SumInsuredAmt: 0,
       MrMainCvgTypeCode: ['', Validators.required],
+      BaseCustMainPremiRate: 0,
       CustMainPremiRate: 0,
       CustMainPremiAmt: 0,
+      BaseInscoMainPremiRate: obj.InscoMainPremiRate,
       InscoMainPremiRate: obj.InscoMainPremiRate,
       InscoMainPremiAmt: 0,
       TotalInscoAddPremiAmt: 0,
@@ -1257,9 +1259,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
         SumInsuredPercentage: obj.SumInsuredPercentage,
         SumInsuredAmt: 0,
         PremiumType: this.DefaultPremiumType,
+        BaseCustAddPremiRate: 0,
         CustAddPremiRate: 0,
         CustAddPremiAmt: 0,
         BaseCalculation: "",
+        BaseInscoAddPremiRate: 0,
         InscoAddPremiRate: 0,
         InscoAddPremiAmt: 0,
         SeatCount: 0,
@@ -1304,8 +1308,10 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
       SumInsuredAmt: insMainCvg.SumInsuredAmt,
       MrMainCvgTypeCode: insMainCvg.MrMainCvgTypeCode,
       MainCvgTypeName: this.insMainCvgTypeObj.find(x => x.Key == insMainCvg.MrMainCvgTypeCode).Value,
+      BaseCustMainPremiRate: response.ReturnObject[0].MainRateToCust,
       CustMainPremiRate: insMainCvg.CustMainPremiRate,
       CustMainPremiAmt: insMainCvg.CustMainPremiAmt,
+      BaseInscoMainPremiRate: response.ReturnObject[0].MainRateToInsco,
       InscoMainPremiRate: insMainCvg.InscoMainPremiRate,
       InscoMainPremiAmt: insMainCvg.InscoMainPremiAmt,
       TotalInscoAddPremiAmt: insMainCvg.TotalInscoAddPremiAmt,
@@ -1365,9 +1371,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
             SumInsuredPercentage: insMainCvg.SumInsuredPrcnt,
             SumInsuredAmt: check.SumInsuredAmt,
             PremiumType: check.PremiumType,
+            BaseCustAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? AddCvg[AddCvgIndex].RateToCust : custAddPremiRate,
             CustAddPremiRate: custAddPremiRate,
             CustAddPremiAmt: check.CustAddPremiAmt,
             BaseCalculation: check.BaseCalc,
+            BaseInscoAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? AddCvg[AddCvgIndex].RateToInsco : inscoAddPremiRate,
             InscoAddPremiRate: check.InscoAddPremiRate,
             InscoAddPremiAmt: inscoAddPremiRate,
             SeatCount: 0,
@@ -1395,9 +1403,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
             SumInsuredPercentage: insMainCvg.SumInsuredPrcnt,
             SumInsuredAmt: check.SumInsuredAmt,
             PremiumType: check.PremiumType,
+            BaseCustAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? AddCvg[AddCvgIndex].RateToCust : custAddPremiRate,
             CustAddPremiRate: custAddPremiRate,
             CustAddPremiAmt: check.CustAddPremiAmt,
             BaseCalculation: check.BaseCalc,
+            BaseInscoAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? AddCvg[AddCvgIndex].RateToInsco : inscoAddPremiRate,
             InscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiAmt: check.InscoAddPremiAmt,
             SeatCount: seatCount
@@ -1412,9 +1422,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
           SumInsuredPercentage: 0,
           SumInsuredAmt: null,
           PremiumType: this.DefaultPremiumType,
+          BaseCustAddPremiRate: null,
           CustAddPremiRate: null,
           CustAddPremiAmt: 0,
           BaseCalculation: "",
+          BaseInscoAddPremiRate: 0,
           InscoAddPremiRate: 0,
           InscoAddPremiAmt: 0,
           SeatCount: 0
@@ -1507,7 +1519,9 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     await this.GetManuDiffYear(MainCvgIndex);
 
     AppInsMainCvg.patchValue({
+      BaseCustMainPremiRate: MainCvg.MainRateToCust,
       CustMainPremiRate: MainCvg.MainRateToCust,
+      BaseInscoMainPremiRate: MainCvg.MainRateToInsco,
       InscoMainPremiRate: MainCvg.MainRateToInsco,
       CustMainPremiAmt: 0,
       TotalCustAddPremiAmt: 0
@@ -1555,9 +1569,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
               Value: this.ManufYearDiff < this.DefaultLoadingFeeYear ? false : true,
               SumInsuredAmt: LoadingObj.SumInsuredAmt,
               PremiumType: premiumType,
+              BaseCustAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? LoadingObj.RateToCust : LoadingObj.PremiToCust,
               CustAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? LoadingObj.RateToCust : LoadingObj.PremiToCust,
               CustAddPremiAmt: 0,
               BaseCalculation: LoadingObj.BaseCalc,
+              BaseInscoAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? LoadingObj.RateToInsco : LoadingObj.PremiToInsco,
               InscoAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? LoadingObj.RateToInsco : LoadingObj.PremiToInsco,
               InscoAddPremiAmt: 0,
               SeatCount: 0
@@ -1567,9 +1583,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
               Value: this.ManufYearDiff < this.DefaultLoadingFeeYear ? false : true,
               SumInsuredAmt: 0,
               PremiumType: this.DefaultPremiumType,
+              BaseCustAddPremiRate: null,
               CustAddPremiRate: null,
               CustAddPremiAmt: 0,
               BaseCalculation: "",
+              BaseInscoAddPremiRate: 0,
               InscoAddPremiRate: 0,
               InscoAddPremiAmt: 0,
               SeatCount: 0
@@ -1581,9 +1599,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
             Value: false,
             SumInsuredAmt: AddCvg[AddCvgIndex].SumInsuredAmt,
             PremiumType: premiumType,
+            BaseCustAddPremiRate: custAddPremiRate,
             CustAddPremiRate: custAddPremiRate,
             CustAddPremiAmt: 0,
             BaseCalculation: AddCvg[AddCvgIndex].BaseCalc,
+            BaseInscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiAmt: 0,
             SeatCount: 0
@@ -1594,9 +1614,11 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
           Value: false,
           SumInsuredAmt: 0,
           PremiumType: this.DefaultPremiumType,
+          BaseCustAddPremiRate: null,
           CustAddPremiRate: null,
           CustAddPremiAmt: 0,
           BaseCalculation: "",
+          BaseInscoAddPremiRate: 0,
           InscoAddPremiRate: 0,
           InscoAddPremiAmt: 0,
           SeatCount: 0
@@ -1681,7 +1703,9 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
   setRate(mainCoverageType, i) {
     let index = this.insMainCvgTypeObj.findIndex(x => x == mainCoverageType);
     this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
+      BaseCustMainPremiRate: this.ruleObj.MainRateToCust[index],
       CustMainPremiRate: this.ruleObj.MainRateToCust[index],
+      BaseInscoMainPremiRate: this.ruleObj.MainRateToInsco[index],
       InscoMainPremiRate: this.ruleObj.MainRateToInsco[index]
     });
   }
@@ -1692,7 +1716,9 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     if (this.groupAddCvrSumInsuredDropDown[i][addInsTypeCode]) {
       let addCvgTplObj = this.groupAddCvrSumInsuredDropDown[i][addInsTypeCode].find(x => x.SumInsuredAmt == event.target.value);
       this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
+        BaseCustAddPremiRate: addCvgTplObj.PremiToCust,
         CustAddPremiRate: addCvgTplObj.PremiToCust,
+        BaseInscoAddPremiRate: addCvgTplObj.PremiToInsco,
         InscoAddPremiRate: addCvgTplObj.PremiToInsco,
         StdAddPremiRate: addCvgTplObj.BaseRate
       });

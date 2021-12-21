@@ -1,8 +1,8 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <app-list-data-commission *ngIf="ListSupplData.length" [FormInputObj]="SupplData"></app-list-data-commission>
-    <app-list-data-commission *ngIf="ListSupplEmpData.length" [FormInputObj]="SupplEmpData"></app-list-data-commission>
-    <app-list-data-commission *ngIf="ListReferantorData.length" [FormInputObj]="ReferantorData">
+    <app-list-data-commission *ngIf="ListSupplData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplData"></app-list-data-commission>
+    <app-list-data-commission *ngIf="ListSupplEmpData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplEmpData"></app-list-data-commission>
+    <app-list-data-commission *ngIf="ListReferantorData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="ReferantorData">
     </app-list-data-commission>
     <lib-ucSubsection [id]="'formSummaryId'" [title]="'Summary'" [panel]="'formSummary'">
     </lib-ucSubsection>
@@ -19,6 +19,30 @@
           </div>
           <div class="form-group row">
             <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Tax Base Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{SummaryData.totalCommAfterTaxAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Disburse Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{SummaryData.totalDisburmentAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Expense Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{SummaryData.totalExpenseAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
               <label class="adInsLabel" translate>Total Tax Amount</label>
             </div>
             <div class="col-md-6" style="text-align: right;">
@@ -31,14 +55,6 @@
             </div>
             <div class="col-md-6" style="text-align: right;">
               <label class="adInsLabel"> {{SummaryData.totalVatAmt | number:'.2':'en-US'}} </label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-md-6">
-              <label class="adInsLabel" translate>Total Expense Amount</label>
-            </div>
-            <div class="col-md-6" style="text-align: right;">
-              <label class="adInsLabel"> {{SummaryData.totalExpenseAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
         </div>

@@ -62,6 +62,8 @@ export class CommissionV2Component implements OnInit {
 
   Summary = {
     TotalCommisionAmount: 0,
+    TotalCommissionAfterTaxAmt: 0,
+    TotalDisburseAmount: 0,
     TotalTaxAmmount: 0,
     TotalVATAmount: 0,
     GrossYield: 0,
@@ -143,6 +145,7 @@ export class CommissionV2Component implements OnInit {
 
   async ngOnInit() {
     this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
+    this.GetCalcMethod();
     await this.GetListAppReservedFundByAppId();
     await this.GetContentData();
     await this.GetRuleDataForForm();
@@ -156,6 +159,20 @@ export class CommissionV2Component implements OnInit {
     // }
   }
 
+  DictCalcMethod: { [id: string]: string } = {};
+  GetCalcMethod() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeTaxCalcMethod }).subscribe(
+      (response) => {
+        let listRefMaster: Array<KeyValueObj> = response[CommonConstant.ReturnObj];
+        if (listRefMaster.length > 0) {
+          for (let index = 0; index < listRefMaster.length; index++) {
+            const element = listRefMaster[index];
+            this.DictCalcMethod[element.Key] = element.Value;
+          }
+        }
+      }
+    );
+  }
   DictRemainingIncomeForm: object = {};
   async GetListAppReservedFundByAppId(){
     for (let index = 0; index < this.ListResultRefundIncomeInfo.length; index++) {
@@ -427,7 +444,6 @@ export class CommissionV2Component implements OnInit {
 
       this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYield, obj).subscribe(
         (response) => {
-          console.log(response);
           let idxStart = 0;
           let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
           let totalSupplEmpData = this.CommissionForm.value[this.identifierSupplierEmp].length;
@@ -569,6 +585,8 @@ export class CommissionV2Component implements OnInit {
           break;
       }
       this.Summary.TotalCommisionAmount += totalAllocationAmount;
+      this.Summary.TotalCommissionAfterTaxAmt += totalCommissionAmtAfterTax;
+      this.Summary.TotalDisburseAmount += totalDisburseAmount;
       this.Summary.TotalTaxAmmount += (totalTaxAmount + totalPenaltyAmt);
       this.Summary.TotalVATAmount += totalVATAmount;
       this.totalExpenseAmt += totalExpenseAmount;

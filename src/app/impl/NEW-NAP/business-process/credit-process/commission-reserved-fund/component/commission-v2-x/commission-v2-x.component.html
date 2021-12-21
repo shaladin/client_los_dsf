@@ -16,15 +16,15 @@
               </div>
             </div>
             <app-form-commission-generate-x #Form1 *ngIf="OnForm1 && !HideForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier" [maxAllocatedAmount] = "maxAllocAmt"
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier" [maxAllocatedAmount] = "maxAllocAmt"
               [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
             </app-form-commission-generate-x>
             <app-form-commission-generate-x #Form2 *ngIf="OnForm2 && !HideForm2" [hidden]="HideForm2" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierSupplierEmp" [FormInputObj]="FormInputObjSupplierEmp" [maxAllocatedAmount] = "maxAllocAmt" 
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplierEmp" [FormInputObj]="FormInputObjSupplierEmp" [maxAllocatedAmount] = "maxAllocAmt" 
               [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
             </app-form-commission-generate-x>
             <app-form-commission-generate-x #Form3 *ngIf="OnForm3 && !HideForm3" [hidden]="HideForm3" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
-              [parentForm]="CommissionForm" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor" [maxAllocatedAmount] = "maxAllocAmt"
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor" [maxAllocatedAmount] = "maxAllocAmt"
               [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
             </app-form-commission-generate-x>
           </div>
@@ -45,6 +45,22 @@
                 <div class="col-md-4" style="text-align: right;">
                   <label>
                     {{TotalInput | number : '1.2-2'}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Total Tax base Amount</label>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                  <label>{{Summary.TotalCommissionAfterTaxAmt | number:'1.2-2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-inline">
+                  <label translate>Total Disburse Amount</label>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                  <label>{{Summary.TotalDisburseAmount | number:'1.2-2':'en-US'}}</label>
                 </div>
               </div>
               <div class="row">

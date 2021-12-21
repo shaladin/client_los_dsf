@@ -25,7 +25,7 @@
                                     <label class="col-md-6">{{AssetObj?.VendorAddrObj?.Addr}} </label>
                                 </div>
                                 <div class="row" *ngIf="lobCode!='SLB'">
-                                    <label class="col-md-6 adins-required-label" translate>Supplier Bank Account No </label>
+                                    <label class="col-md-6 adins-required-label" translate>Supplier Bank Account </label>
                                     <div class="col-md-6">
                                         <lib-ucdropdownlist [dropdownListObj]="ucDdlVendorBankAccObj" [genericList]="this.AssetObj.ListVendorBankAccObj"
                                         [parentForm]="POForm" [enjiForm]="enjiForm" [identifier]="'VendorBankAccNo'"

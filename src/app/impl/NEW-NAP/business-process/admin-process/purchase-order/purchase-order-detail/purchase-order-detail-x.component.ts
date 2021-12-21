@@ -366,7 +366,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
     this.ucDdlVendorBankAccObj.isCustomList = true;
     this.ucDdlVendorBankAccObj.isSelectOutput = true;
     this.ucDdlVendorBankAccObj.customKey = "BankAccountNo";
-    this.ucDdlVendorBankAccObj.customValue = "BankAccountNo"
+    this.ucDdlVendorBankAccObj.customValue = "VendorBankAccInfoForDisplay"
     this.isDdlVendorBankAccReady = true
   }
   
