@@ -584,7 +584,8 @@ export class CollateralDetailComponent implements OnInit {
         MrOwnerRelationshipCode: fouExistObj["MrOwnerRelationshipCode"],
         UserName: fouExistObj["Username"],
         MrUserRelationshipCode: fouExistObj["MrUserRelationshipCode"],
-        SelfOwner: fouExistObj["MrOwnerRelationshipCode"] == "SELF" ? true : false
+        SelfOwner: fouExistObj["MrOwnerRelationshipCode"] == "SELF" ? true : false,
+        MrOwnerTypeCode: fouExistObj["MrOwnerTypeCode"]
       });
 
       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
@@ -637,6 +638,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AddCollForm.controls.OwnerMobilePhnNo.disable();
       this.AddCollForm.controls.OwnerIdNo.disable();
       this.AddCollForm.controls.MrIdTypeCode.disable();
+      this.AddCollForm.controls.MrOwnerTypeCode.disable();
       this.inputAddressObjForLegal.isReadonly = true;
       this.inputAddressObjForLoc.isReadonly = true;
       this.getRefAssetDocList(fouExistObj["AssetTypeCode"]);
