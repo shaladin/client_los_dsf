@@ -311,7 +311,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.AppCustObj = response;
         this.custNo = this.AppCustObj.CustNo;
         this.custType = this.AppCustObj.MrCustTypeCode;
-        if(this.mode != CommonConstant.ModeEditColl) await this.OwnerTypeChange(this.AppCustObj.MrCustTypeCode);
+        if(this.mode != CommonConstant.ModeEditColl) await this.OwnerTypeChange(this.AppCustObj.MrCustTypeCode, true);
       }
     );
   }
