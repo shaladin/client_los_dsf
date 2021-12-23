@@ -164,7 +164,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4 adins-required-label" translate>Marital Status</label>
+                <label class="col-md-4" [ngClass]="{ 'adins-required-label' : custMainDataMode != CustMainDataMgmntShrholder}" translate>Marital Status</label>
                 <div class="col-md-8">
                   <lib-ucdropdownlist *ngIf="isDdlMaritalStatReady" [dropdownListObj]="ddlMaritalStatObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
                     [identifier]="'MrMaritalStatCode'" [genericList]="DictRefMaster[MasterMaritalStat]" [isDisabled]="isExisting"></lib-ucdropdownlist>
