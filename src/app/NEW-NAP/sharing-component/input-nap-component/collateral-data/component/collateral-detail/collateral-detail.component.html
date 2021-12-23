@@ -335,6 +335,17 @@
                   </div>
                 </div>
                 <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-4" translate>Owner Type</label>
+                    <div class="col-md-8">
+                      <mat-radio-group formControlName="MrOwnerTypeCode" (change)="OwnerTypeChange($event.value, true)">
+                        <mat-radio-button class="custom-control custom-radio display-inline-block"
+                          *ngFor="let item of OwnerTypeObj" [value]="item.Key">
+                          {{item.Value}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group row">
@@ -360,11 +371,22 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4" translate>Owner Profession</label>
-                    <div class="col-md-8">
+                    <div class="col-md-8" *ngIf="AddCollForm.controls.MrOwnerTypeCode.value == 'PERSONAL'">
                       <lib-uclookupgeneric [enjiForm]="enjiForm" *ngIf="InputLookupProfessionObj.isReady"
                         [lookupInput]="InputLookupProfessionObj" [parentForm]="AddCollForm" [identifier]="'lookupProfessionData'"
                         (lookup)="GetProfession($event)">
                       </lib-uclookupgeneric>
+                    </div>
+                    <div class="col-md-8" *ngIf="AddCollForm.controls.MrOwnerTypeCode.value == 'COMPANY'">
+                      <select class="form-control adInsInput" style="width: auto" formControlName="OwnerProfessionCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerProfessionCode.invalid }">
+                        <option value="">Select One</option>
+                        <option *ngFor="let it of OwnerProfessionObj " [value]="it.Key">
+                          {{it.Value}}
+                        </option>
+                      </select>
+                      <lib-uc-show-errors [control]="AddCollForm.controls.OwnerProfessionCode" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
                 </div>
