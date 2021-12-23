@@ -60,6 +60,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
 import { ViewDeviationComponent } from "./view-deviation/view-deviation.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
 import { AppMainInfoXComponent } from "../app-main-info-x/app-main-info-x.component";
+import { TabCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/tab-commission-x.component";
 
 
 @NgModule({
@@ -127,6 +128,7 @@ import { AppMainInfoXComponent } from "../app-main-info-x/app-main-info-x.compon
         ApprovalHistXComponent,
         ViewCreditProcessFlowComponent,
         ViewDeviationComponent,
+        TabCommissionXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
