@@ -92,25 +92,6 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
 
   //#endregion
 
-  onAvailableNextTask() {
-
-  }
-  onApprovalSubmited(event) {
-    let reqApvCustomObj = {
-      AppId: 0,
-      Tasks: event.Tasks
-    }
-
-    this.http.post(URLConstant.Approval, reqApvCustomObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-      });
-  }
-
-  onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-  }
 
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
@@ -133,6 +114,8 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
 
     this.http.post(URLConstant.RequestApproval, apiObj).subscribe(
       (response) => {
+        if (response["StatusCode"] != "200") return;
+        this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_REQ_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
