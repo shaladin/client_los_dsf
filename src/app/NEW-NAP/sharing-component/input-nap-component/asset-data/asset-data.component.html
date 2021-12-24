@@ -186,7 +186,7 @@
                     <label class="col-md-4" translate [ngClass]="{'adins-required-label': AssetDataForm.controls.MrAssetConditionCode.value == 'USED'}">BPKB City Issuer</label>
                     <div class="col-md-8" *ngIf="isOnlookup">
                       <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
-                        [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
+                        [identifier]="'TaxCityIssuer'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
                         (lookup)="SetBpkbCity($event)">
                       </lib-uclookupgeneric>
                     </div>
