@@ -153,12 +153,13 @@ export class SchmBalloonXComponent implements OnInit {
       return;
     }
 
-    if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
-      && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-      && this.ParentForm.controls.IsSubsidyRateExist.value == false
-      && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
-      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
-    }
+    // Penghapusan validasi DSF
+    // if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
+    //   && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+    //   && this.ParentForm.controls.IsSubsidyRateExist.value == false
+    //   && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
+    //   this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
+    // }
 
     if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
       && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
@@ -241,12 +242,13 @@ export class SchmBalloonXComponent implements OnInit {
             return;
           }
 
-          if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
-            && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-            && this.ParentForm.controls.IsSubsidyRateExist.value == false
-            && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
-            this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
-          }
+          // Penghapusan validasi DSF
+          // if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
+          //   && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+          //   && this.ParentForm.controls.IsSubsidyRateExist.value == false
+          //   && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
+          //   this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
+          // }
 
           if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
             && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
