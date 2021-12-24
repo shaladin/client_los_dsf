@@ -311,7 +311,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.AppCustObj = response;
         this.custNo = this.AppCustObj.CustNo;
         this.custType = this.AppCustObj.MrCustTypeCode;
-        if(this.mode != CommonConstant.ModeEditColl) await this.OwnerTypeChange(this.AppCustObj.MrCustTypeCode);
+        if(this.mode != CommonConstant.ModeEditColl) await this.OwnerTypeChange(this.AppCustObj.MrCustTypeCode, true);
       }
     );
   }
@@ -1409,34 +1409,36 @@ export class CollateralAddEditComponent implements OnInit {
     );
   }
 
-  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
-    if(OwnerType == CommonConstant.CustTypePersonal){
-      if(IsOwnerTypeChanged){
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false) {
+    if (OwnerType == CommonConstant.CustTypePersonal) {
+      if (IsOwnerTypeChanged) {
         this.AddCollForm.patchValue({
-          OwnerProfessionCode : ""
+          OwnerProfessionCode: ""
         });
 
         this.InputLookupProfessionObj.nameSelect = "";
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
-      }else{
+      } else {
         let reqByCode: GenericObj = new GenericObj();
         reqByCode.Code = this.AppCustPersonalJobData.MrProfessionCode;
-        
+
         await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
-          (response) =>{
+          (response) => {
             this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
             this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
           }
         );
       }
-    }else{
-      if(IsOwnerTypeChanged){
+    } else {
+      if (IsOwnerTypeChanged) {
         this.AddCollForm.patchValue({
-          OwnerProfessionCode : ""
+          OwnerProfessionCode: ""
         });
-      }else{
+      } else {
+        let OwnerProfessionCode: string = "";
+        if (OwnerProfessionCode) OwnerProfessionCode = this.returnAppCollateralRegistObj.OwnerProfessionCode;
         this.AddCollForm.patchValue({
-          OwnerProfessionCode : this.returnAppCollateralRegistObj.OwnerProfessionCode
+          OwnerProfessionCode: OwnerProfessionCode
         });
       }
     }
