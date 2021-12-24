@@ -79,7 +79,7 @@ export class RolePickService {
                     RowVersion: "",
                     UserIdentityObj: UserIdentityObj
                 };
-                this.http.post(AdInsConstant.LoginByRole, roleObject, { withCredentials: true }).subscribe(
+                this.http.post(AdInsConstant.LoginByRoleV2, roleObject, { withCredentials: true }).subscribe(
                     (response) => {
                         //Cookie sudah diambil dari BE (Di set manual dulu)
 
