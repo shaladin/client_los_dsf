@@ -263,7 +263,7 @@
         </div>
         <div class="col-md-6">
           <label class="adInsLabel"> {{appFinDataObj?.TotalDownPaymentNettAmt | number:'.2':'en-US'}} </label>
-        </div>  
+        </div>
         <div class="col-md-6" *ngIf="BizTemplateCode == 'FCTR'">
           <label class="adInsLabel">RETENTION AMOUNT / PERCENT</label>
         </div>
@@ -436,11 +436,12 @@
     </div>
     <div class="col-md-6" *ngIf="BizTemplateCode != 'CFNA'">
       <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel" translate> Diff Rate Amount </label>
+        <div class="col-md-6" >
+          <label class="adInsLabel" *ngIf="isSubsidyDealer" translate> Subsidy Dealer </label>
+          <label class="adInsLabel" *ngIf="!isSubsidyDealer" translate> Diff Rate Amount </label>
         </div>
         <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.DiffRateAmt | number:'.2':'en-US'}} </label>
+          <label class="adInsLabel"> {{DiffRateAmt | number:'.2':'en-US'}} </label>
         </div>
       </div>
     </div>
@@ -474,7 +475,7 @@
           </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="InstAmt" translate>
-          Installment Amount  
+          Installment Amount
           </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="PrincipalAmt" translate>
@@ -490,7 +491,7 @@
         </span>
         </th>
         <th style="text-align: center;"><span class="thead-header" name="OsInterestAmt" translate>
-          Os Interest Amount  
+          Os Interest Amount
         </span>
         </th>
       </tr>

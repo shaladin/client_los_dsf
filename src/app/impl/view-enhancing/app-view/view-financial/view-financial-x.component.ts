@@ -21,11 +21,11 @@ export class ViewFinancialXComponent implements OnInit {
   @Input() AppId: number = 0;
   @Input() BizTemplateCode: string;
   listAsset: Array<any> = new Array<any>();
-  
+
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   listAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
   listInstallment: Array<InstallmentObj> = new Array<InstallmentObj>();
-  
+
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   appObj: NapAppModel = new NapAppModel();
   appFctrObj: AppFctrObj = new AppFctrObj();
@@ -37,6 +37,8 @@ export class ViewFinancialXComponent implements OnInit {
   appDlrFncng: AppDlrFncng;
   instTypeDescr: string = "-";
   topCalcBased: string = "-";
+  DiffRateAmt: number = 0;
+  isSubsidyDealer: boolean = false;
 
   TotalAssetValue: number;
   TotalRentAmtPerPeriod: number;
@@ -101,6 +103,15 @@ export class ViewFinancialXComponent implements OnInit {
         if (this.appObj.BizTemplateCode == CommonConstant.DF) {
           await this.getDataForDF(this.appFinDataObj)
         }
+        if(this.BizTemplateCode != CommonConstant.CFNA){
+          this.DiffRateAmt = this.appFinDataObj.DiffRateAmt
+          if(this.DiffRateAmt <= 0){
+            this.isSubsidyDealer = true;
+            this.DiffRateAmt*=-1
+          }else{
+            this.isSubsidyDealer = false;
+          }
+        }
       }
     );
 
@@ -108,7 +119,7 @@ export class ViewFinancialXComponent implements OnInit {
         await this.http.post(URLConstantX.GetAppSubsidyProfitabilityXByAppId, reqObj).toPromise().then(
           async (response) => {
             if(!response || !response["ListObjs"] || response["ListObjs"].length <= 0) return;
-    
+
             for(let i=0; i<response["ListObjs"].length; i++)
             {
               let sub = new AppSubsidyObj();
@@ -140,7 +151,7 @@ export class ViewFinancialXComponent implements OnInit {
     )
   }
 
-  
+
 
   async GetListAllAssetFinancialData() {
     var requestAppId = {
@@ -171,7 +182,7 @@ export class ViewFinancialXComponent implements OnInit {
       }
     );
   }
-  
+
   async getDataForDF(appFinDataObj: AppFinDataObj) {
       await this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).toPromise().then(
       async (response: AppDlrFncng) => {
