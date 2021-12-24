@@ -50,7 +50,7 @@ export class URLConstant {
   public static SubmitNAP = environment.losUrl + "/v1" + "/Application/SubmitNAP";
   public static SubmitNAPV2 = environment.losUrl + "/v2" + "/Application/SubmitNAP";
   public static SubmitNapCustMainData = environment.losUrl + "/v1" + "/Application/SubmitNAPCustMainData";
-  public static SubmitNapCustMainDataV2 = environment.losUrl + "/v2" + "/Application/SubmitNAPCustMainData";
+  public static SubmitNapCustMainDataV2 = environment.losUrl + "/v2.1" + "/Application/SubmitNAPCustMainData";
   public static CreateWorkflowDuplicateCheck = environment.losUrl + "/v1" + "/Application/CreateWorkflowDuplicateCheck";
   public static AddEditAppCF2W = environment.losUrl + "/v1" + "/Application/AddEditAppCF2W";
   public static DataTableFeeAndInsNAP = environment.losUrl + "/v1" + "/Application/DataTableFeeAndInsNAP";
