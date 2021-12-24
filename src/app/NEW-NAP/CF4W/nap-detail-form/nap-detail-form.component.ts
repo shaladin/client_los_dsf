@@ -317,7 +317,7 @@ export class NapDetailFormComponent implements OnInit {
     }else if(Step == CommonConstant.AppStepIns){
       let ReqByIdObj = new GenericObj();
       ReqByIdObj.Id = this.appId;
-      this.http.post(URLConstant.CalculateDownPaymentNettPercent, ReqByIdObj).subscribe(
+      this.http.post(URLConstant.CalculateTotalAssetPriceAndDownPayment, ReqByIdObj).subscribe(
         (response) => {
         })
     }
