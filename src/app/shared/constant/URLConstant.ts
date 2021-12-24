@@ -94,7 +94,7 @@ export class URLConstant {
   public static GetAppAssetByAppAssetIdWithSerialNoDefinition = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAppAssetIdWithSerialNoDefinition";
   public static GetAppAssetByAppAssetId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAppAssetId";
   public static CopyAppAsset = environment.losUrl + "/v1" + "/AppAsset/CopyAppAsset";
-  public static CalculateDownPaymentNettPercent = environment.losUrl + "/v1" + "/AppAsset/CalculateDownPaymentNettPercent";
+  public static CalculateTotalAssetPriceAndDownPayment = environment.losUrl + "/v1" + "/AppAsset/CalculateTotalAssetPriceAndDownPayment";
 
   // App Asset Suppl Emp
   public static GetListAppAssetSupplEmpByListAppAssetId = environment.losUrl + "/v1" + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
