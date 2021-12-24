@@ -2369,6 +2369,8 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
+    let ownerCode: string = "";
+    if (this.returnAppCollateralRegistrationObj) ownerCode = this.returnAppCollateralRegistrationObj.OwnerProfessionCode;
     if(OwnerType == CommonConstant.CustTypePersonal){
       if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
@@ -2379,7 +2381,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
       }else{
         let reqByCode: GenericObj = new GenericObj();
-        reqByCode.Code = this.returnAppCollateralRegistrationObj.OwnerProfessionCode;
+        reqByCode.Code = ownerCode;
         
         await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
           (response) =>{
@@ -2393,9 +2395,9 @@ export class AssetDataAddEditComponent implements OnInit {
         this.AssetDataForm.patchValue({
           OwnerProfessionCode : ""
         });
-      }else{
+      } else {
         this.AssetDataForm.patchValue({
-          OwnerProfessionCode : this.returnAppCollateralRegistrationObj.OwnerProfessionCode
+          OwnerProfessionCode : ownerCode
         });
       }
     }
