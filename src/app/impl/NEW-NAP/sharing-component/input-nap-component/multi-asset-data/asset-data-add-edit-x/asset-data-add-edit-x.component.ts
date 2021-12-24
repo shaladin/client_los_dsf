@@ -924,6 +924,8 @@ export class AssetDataAddEditXComponent implements OnInit {
                 }
               }
             }
+
+            this.isSerialReady = true;
           });
 
         let arrCritSuppl = new Array<CriteriaObj>();
