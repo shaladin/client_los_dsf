@@ -45,6 +45,8 @@ import { AssetAllocationPagingComponent } from './asset-allocation/asset-allocat
 import { AssetAllocationDetailComponent } from './asset-allocation/asset-allocation-detail/asset-allocation-detail.component';
 import { InvoiceVerifDetailListOfInvoiceComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component';
 import { InvoiceVerifDetailDFComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component';
+import { OfferingValidityCheckingRequestPagingComponent } from './offering-validity-checking-request/offering-validity-checking-request-paging/offering-validity-checking-request-paging.component';
+import { OfferingValidityCheckingRequestDetailComponent } from './offering-validity-checking-request/offering-validity-checking-request-detail/offering-validity-checking-request-detail.component';
 
 const routes: Routes = [
   {
@@ -216,6 +218,20 @@ const routes: Routes = [
         component: OfferingValidityCheckingApprovalDetailComponent,
         data: {
           title: 'Offering Validity Checking And Approval Detail'
+        }
+      },
+      {
+        path: PathConstant.OFFERING_VALIDITY_REQ_PAGING,
+        component: OfferingValidityCheckingRequestPagingComponent,
+        data: {
+          title: 'Offering Validity Request Paging'
+        }
+      },
+      {
+        path: PathConstant.OFFERING_VALIDITY_REQ_DETAIL,
+        component: OfferingValidityCheckingRequestDetailComponent,
+        data: {
+          title: 'Offering Validity Request Detail'
         }
       },
       {
