@@ -142,6 +142,7 @@ export class URLConstantX {
   public static AddNewApplicationFromCopy = environment.losUrl + "/v1" + "/AppX/AddNewApplicationFromCopy";
   public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2" + "/AppX/AddNewApplicationFromCopy";
   public static AddNewApplicationFromCopyV2_1 = environment.losUrl + "/v2.1" + "/AppX/AddNewApplicationFromCopy";
+  public static AddNewApplicationFromCopyV2_2 = environment.losUrl + "/v2.2" + "/AppX/AddNewApplicationFromCopy";
   public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/v1" +"/AppX/GetAppByCustNoAndIsAppInitDone";
   public static GetAppByCustNoAndAppStat = environment.losUrl + "/v1" + "/AppX/GetAppByCustNoAndAppStat";
 

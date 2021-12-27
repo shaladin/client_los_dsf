@@ -312,7 +312,7 @@ export class CustMainDataAddXComponent implements OnInit {
         AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
       }
       else {
-        AddNapUrl = URLConstantX.AddNewApplicationFromCopyV2_1;
+        AddNapUrl = URLConstantX.AddNewApplicationFromCopyV2_2;
       }
     }
 
