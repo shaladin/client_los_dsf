@@ -399,26 +399,7 @@ export class AssetDataPagingComponent implements OnInit {
       }
     }
     if (await this.checkValidityAssetUsed()) return;
-
-    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
-
-      if (!this.IsCalledIntegrator) {
-        if (confirm("Submit without Integrator ? ")) {
-          this.outputValue.emit({ mode: 'submit' });
-        }
-      }
-      else {
-        this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).toPromise().then(
-          (response) => {
-            this.toastr.successMessage("Success !");
-            this.outputValue.emit({ mode: 'submit' });
-          }
-        );
-      }
-    }
-    else {
-      this.outputValue.emit({ mode: 'submit' });
-    }
+    this.outputValue.emit({ mode: 'submit' });
   }
 
   async getDigitalizationSvcType(){
