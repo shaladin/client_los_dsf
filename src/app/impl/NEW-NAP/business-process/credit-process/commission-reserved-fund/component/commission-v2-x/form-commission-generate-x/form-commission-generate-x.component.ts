@@ -304,7 +304,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
     let content = this.FormInputObj["content"];
     let idxDefault = 0;
     if (content == CommonConstant.ContentSupplier) {
-      this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, { Code: code }).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: code }).subscribe(
         (response) => {
           let len = response["ReturnObject"].length;
           for (let i = 0; i < len; i++) {

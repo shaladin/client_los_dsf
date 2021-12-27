@@ -75,7 +75,8 @@ export class CustDetailPersonalComponent implements OnInit {
     this.lookupCustGrpObj.isReady = true;
     this.lookupCustGrpObj.isClear = true;
     await this.GetRefMaster();
-    this.GetData();
+    await this.GetData();
+    this.lookupCustGrpObj.isReady = true;
   }
 
   async GetRefMaster() {
@@ -154,10 +155,24 @@ export class CustDetailPersonalComponent implements OnInit {
     this.NationalityCountryCode = event.CountryCode;
   }
 
-  GetData() {
-    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).subscribe(
-      (response) => {
-        //this.CustFullName = response.AppCustObj.CustName;
+  SetCriteria(custNo: string) {
+    let listCriteria = new Array();
+    if (custNo) {
+      let critSuppObj = new CriteriaObj();
+      critSuppObj.DataType = 'text';
+      critSuppObj.restriction = AdInsConstant.RestrictionNeq;
+      critSuppObj.propName = 'C.CUST_NO';
+      critSuppObj.value = custNo;
+      listCriteria.push(critSuppObj);
+    }
+    this.lookupCustGrpObj.addCritInput = listCriteria;
+  }
+
+  async GetData() {
+    await this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).toPromise().then(
+      async (response) => {
+        this.SetCriteria(response.AppCustObj.CustNo);
+        this.CustFullName = response.AppCustObj.CustName;
         this.CustDetailForm.patchValue({
           CustFullName: response.AppCustPersonalObj.CustFullName,
           FamilyCardNo: response.AppCustPersonalObj.FamilyCardNo,
@@ -179,7 +194,7 @@ export class CustDetailPersonalComponent implements OnInit {
         this.AppCustPersonalObj.RowVersion = response.AppCustPersonalObj.RowVersion;
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
           this.CustNoObj.CustNo = response.AppCustGrpObj.CustNo;
-          this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
+          await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"]};

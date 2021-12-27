@@ -31,8 +31,8 @@
         "name": "c.TAX_ID_NO",
         "id": "NpwpId",
         "value": "",
-        "label": "NPWP",
-        "placeholder": "NPWP"
+        "label": "Tax Id No",
+        "placeholder": "TaxIdNo"
       },
       {
         "type": "datepicker",
@@ -52,20 +52,20 @@
       },
       {
         "type": "sort",
-        "position": "center",
+        "position": "left",
         "label": "Customer Name",
         "name": "CUST_NAME"
       },
       {
         "type": "sort",
-        "position": "center",
+        "position": "left",
         "label": "Id No",
         "name": "c.ID_NO"
       },
       {
         "type": "sort",
-        "position": "center",
-        "label": "Npwp",
+        "position": "left",
+        "label": "Tax Id No",
         "name": "c.TAX_ID_NO"
       },
       {
@@ -91,17 +91,17 @@
       },
       {
         "type": "text",
-        "position": "center",
+        "position": "left",
         "property": "CustName"
       },
       {
         "type": "text",
-        "position": "center",
+        "position": "left",
         "property": "IdNo"
       },
       {
         "type": "text",
-        "position": "center",
+        "position": "left",
         "property": "TaxIdNo"
       },
       {

@@ -50,7 +50,7 @@ export class BackdoorComponent implements OnInit {
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeCust;
     this.dmsObj.MetadataParent = null;
     this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custObj.CustNo));
-    this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUpload));
+    this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownload,));
   }
 
   // DMSURL(custObj: CustObj, permission : string) {

@@ -167,7 +167,7 @@ export class NapAddDetailComponent implements OnInit {
         response => {
           this.appNo = this.NapObj.AppNo;
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           let isExisting = response['IsExistingCust'];
           if (isExisting) {
             let custNo = response['CustNo'];

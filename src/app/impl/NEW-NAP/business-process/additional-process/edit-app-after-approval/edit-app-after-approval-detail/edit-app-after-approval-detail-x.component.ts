@@ -461,7 +461,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
 
       let reqByVendorEmpNo: GenericObj = new GenericObj();
       reqByVendorEmpNo.EmpNo = targetSupplEmp.Key;
-      this.http.post(URLConstant.GetListVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
+      this.http.post(URLConstant.GetListActiveVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
         (response) => {
           var vendorBankAccObj = response[CommonConstant.ReturnObj];
 
@@ -502,7 +502,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
 
           let reqByVendorEmpNo: GenericObj = new GenericObj();
           reqByVendorEmpNo.EmpNo = e.SupplEmpNo;
-          this.http.post(URLConstant.GetListVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
+          this.http.post(URLConstant.GetListActiveVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
             (response) => {
               var vendorBankAccObj = response[CommonConstant.ReturnObj];
 

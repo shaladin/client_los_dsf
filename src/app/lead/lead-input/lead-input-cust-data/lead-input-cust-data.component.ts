@@ -694,7 +694,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.dmsObj.ViewCode = "ConfinsLead";
 
     this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Lead Id", this.LeadId.toString()));
-    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
+    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", CommonConstant.DmsOverideUploadDownload));
   }
 
   setEnableZipcodeLookup() {

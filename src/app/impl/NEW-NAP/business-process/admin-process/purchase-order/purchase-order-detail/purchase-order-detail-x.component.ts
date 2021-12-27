@@ -242,6 +242,14 @@ export class PurchaseOrderDetailXComponent implements OnInit {
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
+
+        //START X DSF UATDSFCF-588: Fix perhitungan PO D Insurance yg PayPeriodToInsco == Annualy (dihitung tersendiri di luar AgrmntFinData)
+        if(ListPORefMasterObj[i].SourceAgrmntFinDataField == CommonConstantX.SRC_AGRMNT_FIN_DATA_FIELD_TOTAL_INS_CUST_AMT)
+        {
+          tempPurchaseOrderDObj.PurchaseOrderAmt = this.TotalInsCustAmt;
+        }
+        //END X DSF UATDSFCF-588
+        
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
       if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeFee) {

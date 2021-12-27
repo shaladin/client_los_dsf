@@ -63,6 +63,11 @@ export class ProdHoDeactDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    if (context[CommonConstant.MR_OFFICE_TYPE_CODE] != CommonConstant.HeadOffice) {
+      this.router.navigate([NavigationConstant.PROD_HO_UNAUTHORIZED], { queryParams: {}, skipLocationChange: false });
+    }
+    
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
 
     let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };

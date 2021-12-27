@@ -90,5 +90,8 @@ export class CommonConstantX {
 
     //DDL COMMISSION
     public static COM_DDL_SUPPL_EMP = "COM_DDL_SUPPL_EMP";
+
+    //PO
+    public static SRC_AGRMNT_FIN_DATA_FIELD_TOTAL_INS_CUST_AMT = "TotalInsCustAmt";
     
 }

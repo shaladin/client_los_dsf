@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
 import { AppObj } from 'app/shared/model/app/app.model';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
@@ -14,13 +11,11 @@ import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
-import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { forkJoin } from 'rxjs';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { LtkmReqObj } from 'app/shared/model/ltkm/ltkm-req-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
-import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 
 @Component({
     selector: 'app-ltkm-approval-detail',

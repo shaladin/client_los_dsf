@@ -58,9 +58,9 @@ export class URLConstant {
   public static CopyCancelledApp = environment.losUrl + "/v1" + "/Application/CopyCancelledApp";
   public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledApp";
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainData";
-  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainData";
+  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2.1" + "/Application/CopyCancelledAppForMainData";
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
-  public static CopyCancelledAppForMainDataMultiBLV2 = environment.losUrl + "/v2" + "/Application/CopyCancelledAppForMainDataMultiBL";
+  public static CopyCancelledAppForMainDataMultiBLV2 = environment.losUrl + "/v2.1" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
   public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
   public static AddAppFromMou = environment.losUrl + "/v1" + "/Application/AddAppFromMou";
@@ -82,6 +82,7 @@ export class URLConstant {
 
   // App Collateral
   public static GetAppCollateralRegistrationByAppId = environment.losUrl + "/v1" + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppId";
+  public static GetAppCollateralRegistrationByAppAssetId = environment.losUrl + "/v1" + "/AppCollateralRegistration/GetAppCollateralRegistrationByAppAssetId";
   public static GetAppCollateralRegistrationByAgrmntId = environment.losUrl + "/v1" + "/AppCollateralRegistration/GetAppCollateralRegistrationByAgrmntId";
   public static GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral = environment.FoundationR3Url + "/v1" + "/Collateral/GetCollateralByFullAssetCodeAssetTypeSerialNoForAppCollateral";
 
@@ -92,7 +93,7 @@ export class URLConstant {
   public static GetAppAssetByAppAssetIdWithSerialNoDefinition = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAppAssetIdWithSerialNoDefinition";
   public static GetAppAssetByAppAssetId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAppAssetId";
   public static CopyAppAsset = environment.losUrl + "/v1" + "/AppAsset/CopyAppAsset";
-  public static CalculateDownPaymentNettPercent = environment.losUrl + "/v1" + "/AppAsset/CalculateDownPaymentNettPercent";
+  public static CalculateTotalAssetPriceAndDownPayment = environment.losUrl + "/v1" + "/AppAsset/CalculateTotalAssetPriceAndDownPayment";
 
   // App Asset Suppl Emp
   public static GetListAppAssetSupplEmpByListAppAssetId = environment.losUrl + "/v1" + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
@@ -562,6 +563,7 @@ export class URLConstant {
   // Vendor
   public static GetListVendorBankAccByVendorId = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListVendorBankAccByVendorId";
   public static GetListVendorBankAccByVendorCode = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListVendorBankAccByVendorCode";
+  public static GetListActiveVendorBankAccByVendorCode = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccByVendorCode";
   public static GetListKeyValueVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/v1" + "/Vendor/GetListKeyValueByCategoryCodeAndOfficeCode";
   public static GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode = environment.FoundationR3Url + "/v1" + "/Vendor/GetListKeyValueActiveByCategoryCodeAndOfficeCode";
   public static GetVendorByVendorCode = environment.FoundationR3Url + "/v1" + "/Vendor/GetVendorByVendorCode";
@@ -585,6 +587,7 @@ export class URLConstant {
   public static GetAllSupervisorFromSalesPersonBySupervisorId = environment.FoundationR3Url + "/v1" + "/VendorEmp/GetAllSupervisorFromSalesPersonBySupervisorId";
   public static GetVendorEmpByVendorEmpNoAndVendorCode = environment.FoundationR3Url + "/v1" + "/VendorEmp/GetVendorEmpByVendorEmpNoAndVendorCode";
   public static GetListVendorBankAccObjByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListVendorBankAccObjByVendorEmpNo";
+  public static GetListActiveVendorBankAccObjByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccObjByVendorEmpNo";
 
   //Life Ins
   public static AddAppLifeInsH = environment.losUrl + "/v1" + "/AppLifeIns/AddAppLifeInsH";

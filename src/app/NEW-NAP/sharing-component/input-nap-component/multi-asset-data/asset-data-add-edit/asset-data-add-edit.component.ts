@@ -182,7 +182,6 @@ export class AssetDataAddEditComponent implements OnInit {
 
     TaxIssueDt: [''],
     Color: [''],
-    TaxCityIssuer: [''],
 
     SelfUsage: [false],
     SelfOwner: [false],
@@ -985,7 +984,7 @@ export class AssetDataAddEditComponent implements OnInit {
             AssetTypeCode: this.returnAppAssetObj.AssetTypeCode,
             AssetCategoryCode: this.returnAppAssetObj.AssetCategoryCode,
             Color: this.returnAppAssetObj.Color,
-            TaxCityIssuer: this.returnAppAssetObj.TaxCityIssuer,
+            TaxCityIssuer: {value: this.returnAppAssetObj.TaxCityIssuer},
             TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
 
@@ -1213,7 +1212,7 @@ export class AssetDataAddEditComponent implements OnInit {
           this.inputAddressObjForOwner.default = ownerAddrObj;
           this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
 
-          this.OwnerTypeChange(CommonConstant.CustTypeCompany);
+          this.OwnerTypeChange(CommonConstant.CustTypeCompany, true);
           this.AssetDataForm.patchValue({
             OwnerProfessionCode : this.OwnerProfessionObj.find(x=>x.Key == CommonConstant.CompanyTypePT).Key
           });
@@ -1318,7 +1317,7 @@ export class AssetDataAddEditComponent implements OnInit {
     modalTaxCityIssuer.result.then(
       (response) => {
         this.AssetDataForm.patchValue({
-          TaxCityIssuer: response.DistrictCode
+          TaxCityIssuer: {value: response.DistrictCode}
         });
       }
     ).catch(() => {
@@ -1327,7 +1326,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   SetBpkbCity(event) {
     this.AssetDataForm.patchValue({
-      TaxCityIssuer: event.DistrictCode,
+      TaxCityIssuer: {value: event.DistrictCode},
     });
   }
 
@@ -1475,7 +1474,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.IsCollateral = true;
     this.allAssetDataObj.AppAssetObj.IsInsurance = true;
     this.allAssetDataObj.AppAssetObj.Color = this.AssetDataForm.controls["Color"].value;
-    this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls["TaxCityIssuer"].value;
+    this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls["TaxCityIssuer"].value.value;
     this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls["TaxIssueDt"].value;
 
     this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
@@ -1545,11 +1544,11 @@ export class AssetDataAddEditComponent implements OnInit {
       collAttr.AttrValue = this.AssetDataForm.controls["Color"].value;
       this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
     }
-    if (this.AssetDataForm.controls["TaxCityIssuer"].value != "" && this.AssetDataForm.controls["TaxCityIssuer"].value != null) {
+    if (this.AssetDataForm.controls["TaxCityIssuer"].value.value != "" && this.AssetDataForm.controls["TaxCityIssuer"].value.value != null) {
       collAttr = new AppCollateralAttrObj();
       collAttr.CollateralAttrCode = "TAX_CITY_ISSUER";
       collAttr.CollateralAttrName = "Tax City Issuer";
-      collAttr.AttrValue = this.AssetDataForm.controls["TaxCityIssuer"].value;
+      collAttr.AttrValue = this.AssetDataForm.controls["TaxCityIssuer"].value.value;
       this.allAssetDataObj.AppCollateralAttrObj.push(collAttr);
     }
     if (this.AssetDataForm.controls["TaxIssueDt"].value != "" && this.AssetDataForm.controls["TaxIssueDt"].value != null) {
@@ -2103,15 +2102,12 @@ export class AssetDataAddEditComponent implements OnInit {
 
   ChangeAssetCondition() {
     if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
-      this.AssetDataForm.controls.TaxCityIssuer.setValidators([Validators.required]);
       this.AssetDataForm.controls.TaxIssueDt.setValidators([Validators.required]);
       this.InputLookupCityIssuerObj.isRequired = true;
     } else {
-      this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
       this.AssetDataForm.controls.TaxIssueDt.clearValidators();
       this.InputLookupCityIssuerObj.isRequired = false;
     }
-    this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
     this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
   }
 
@@ -2373,6 +2369,8 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
+    let ownerCode: string = "";
+    if (this.returnAppCollateralRegistrationObj) ownerCode = this.returnAppCollateralRegistrationObj.OwnerProfessionCode;
     if(OwnerType == CommonConstant.CustTypePersonal){
       if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
@@ -2383,7 +2381,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
       }else{
         let reqByCode: GenericObj = new GenericObj();
-        reqByCode.Code = this.returnAppCollateralRegistrationObj.OwnerProfessionCode;
+        reqByCode.Code = ownerCode;
         
         await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
           (response) =>{
@@ -2397,9 +2395,9 @@ export class AssetDataAddEditComponent implements OnInit {
         this.AssetDataForm.patchValue({
           OwnerProfessionCode : ""
         });
-      }else{
+      } else {
         this.AssetDataForm.patchValue({
-          OwnerProfessionCode : this.returnAppCollateralRegistrationObj.OwnerProfessionCode
+          OwnerProfessionCode : ownerCode
         });
       }
     }

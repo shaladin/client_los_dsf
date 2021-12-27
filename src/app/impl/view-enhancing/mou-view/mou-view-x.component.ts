@@ -30,7 +30,7 @@ export class MouViewXComponent implements OnInit {
   Viewlink: string;
   dmsObj: DMSObj;
   MouCustNo: string;
-
+  
   constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null)
@@ -58,7 +58,7 @@ export class MouViewXComponent implements OnInit {
               this.dmsObj.User = currentUserContext.UserName;
               this.dmsObj.Role = currentUserContext.RoleCode;
               this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-
+      
               if(this.resultData['CustNo'] != null && this.resultData['CustNo'] != ""){
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
               }
@@ -66,10 +66,10 @@ export class MouViewXComponent implements OnInit {
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
               }
               this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
-              this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+              this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
               this.IsDms = true;
             }
-
+            
         });
 
 

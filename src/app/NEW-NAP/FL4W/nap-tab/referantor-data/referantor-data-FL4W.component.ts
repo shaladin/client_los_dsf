@@ -208,7 +208,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    this.http.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: VendorCode }).subscribe(
+    this.http.post(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: VendorCode }).subscribe(
       (response) => {
         this.bankItems = response[CommonConstant.ReturnObj];
         var bankItem = this.bankItems.find(x => x.IsDefault == true);
