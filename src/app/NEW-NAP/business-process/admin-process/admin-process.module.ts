@@ -69,6 +69,8 @@ import { InvoiceVerifDetailDFComponent } from "./invoice-verif/invoice-verif-det
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { DeliveryOrderAssetOwnerComponent } from './delivery-order-component/delivery-order-asset-owner/delivery-order-asset-owner.component';
 import { DeliveryOrderAssetLocationComponent } from './delivery-order-component/delivery-order-asset-location/delivery-order-asset-location.component';
+import { OfferingValidityCheckingRequestPagingComponent } from "./offering-validity-checking-request/offering-validity-checking-request-paging/offering-validity-checking-request-paging.component";
+import { OfferingValidityCheckingRequestDetailComponent } from "./offering-validity-checking-request/offering-validity-checking-request-detail/offering-validity-checking-request-detail.component";
 
 export const customCurrencyMaskConfig = {     
   align: "left",
@@ -122,6 +124,8 @@ export const customCurrencyMaskConfig = {
     AgrmntActivationDetailComponent,
     OfferingValidityCheckingApprovalPagingComponent,
     OfferingValidityCheckingApprovalDetailComponent,
+    OfferingValidityCheckingRequestPagingComponent,
+    OfferingValidityCheckingRequestDetailComponent,
     DocSignerDetailComponent,
     DocSignerPagingComponent,
     InvoiceDetailComponent,

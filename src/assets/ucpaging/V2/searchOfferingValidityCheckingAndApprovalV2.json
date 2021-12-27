@@ -20,6 +20,14 @@
       },
       {
         "type": "textbox",
+        "name": "app.APP_NO",
+        "id": "AppNoId",
+        "value": "",
+        "label": "Application No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
         "name": "agr.AGRMNT_NO",
         "id": "AgrmntNoId",
         "value": "",
@@ -99,18 +107,24 @@
       {
         "type": "sort",
         "position": "center",
+        "label": "Application No",
+        "name": "app.APP_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
         "label": "Agreement No",
         "name": "agr.AGRMNT_NO"
       },
       {
         "type": "sort",
-        "position": "center",
+        "position": "left",
         "label": "Customer Name",
         "name": "agr.CUST_NAME"
       },
       {
         "type": "sort",
-        "position": "center",
+        "position": "left",
         "label": "Product Offering Name",
         "name": "agr.PROD_OFFERING_NAME"
       },
@@ -168,6 +182,19 @@
       {
         "type": "link",
         "position": "center",
+        "property": "AppNo",
+        "target": "_blank",
+        "path": "VIEW_APP",
+        "param": [
+          {
+            "type": "AppId",
+            "property": "AppId"
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "position": "center",
         "property": "AgrmntNo",
         "target": "_blank",
         "path": "VIEW_AGRMNT",
@@ -180,7 +207,7 @@
       },
       {
         "type": "text",
-        "position": "center",
+        "position": "left",
         "property": "CustName"
       },
       {
