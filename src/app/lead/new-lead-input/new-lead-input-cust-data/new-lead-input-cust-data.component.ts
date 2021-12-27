@@ -813,7 +813,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.dmsObj.Role = "SUPUSR";
     this.dmsObj.ViewCode = "ConfinsLead";
     this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Lead Id", this.LeadId.toString()));
-    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
+    this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", CommonConstant.DmsOverideUploadDownload));
   }
 
   copyAddress() {

@@ -21,6 +21,8 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-ma
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-cust-detail-company',
@@ -70,7 +72,7 @@ export class CustDetailCompanyComponent implements OnInit {
     MrCustModelCode: ['', Validators.required],
   })
 
-  ngOnInit() {
+  async ngOnInit() {
     let datePipe = new DatePipe("en-US");
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -92,7 +94,8 @@ export class CustDetailCompanyComponent implements OnInit {
     this.lookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.isReady = true;
     this.GetCustModel();
-    this.GetData();
+    await this.GetData();
+    this.lookupCustGrpObj.isReady = true;
   }
 
   GetCustModel() {
@@ -174,9 +177,23 @@ export class CustDetailCompanyComponent implements OnInit {
     this.CustDetailForm.controls.VipNotes.updateValueAndValidity();
   }
 
-  GetData() {
-    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).subscribe(
-      (response) => {
+  SetCriteria(custNo: string) {
+    let listCriteria = new Array();
+    if (custNo) {
+      let critSuppObj = new CriteriaObj();
+      critSuppObj.DataType = 'text';
+      critSuppObj.restriction = AdInsConstant.RestrictionNeq;
+      critSuppObj.propName = 'C.CUST_NO';
+      critSuppObj.value = custNo;
+      listCriteria.push(critSuppObj);
+    }
+    this.lookupCustGrpObj.addCritInput = listCriteria;
+  }
+
+  async GetData() {
+    await this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).toPromise().then(
+      async (response) => {
+        this.SetCriteria(response.AppCustObj.CustNo);
         if (response.AppCustCompanyObj.IndustryTypeCode != null) {
           this.industryTypeObj.IndustryTypeCode = response.AppCustCompanyObj.IndustryTypeCode;
           this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: response.AppCustCompanyObj.IndustryTypeCode}).subscribe(
@@ -204,7 +221,7 @@ export class CustDetailCompanyComponent implements OnInit {
 
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
           this.CustNoObj.CustNo = response.AppCustGrpObj.CustNo;
-          this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
+          await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"] };
