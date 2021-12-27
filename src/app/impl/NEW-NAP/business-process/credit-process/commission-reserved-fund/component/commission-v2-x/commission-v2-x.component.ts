@@ -600,7 +600,7 @@ export class CommissionV2XComponent implements OnInit {
         let taxAmt = 0;
         let vatAmt = 0;
         let commissionAmtAfterTax = tempRespTaxObj.ReturnObject[j].TotalTrxAmtAfterTaxAmt;
-        let AllocationAmount = tempRespTaxObj.ReturnObject[j].TrxTaxableAmt;
+        let AllocationAmount = tempRespTaxObj.ReturnObject[j].TrxAmt;
         let totalPenaltyDAmount = 0;
         totalExpenseAmount += tempRespTaxObj.ReturnObject[j].ExpenseAmt;
         totalDisburseAmount += tempRespTaxObj.ReturnObject[j].DisburseAmt;

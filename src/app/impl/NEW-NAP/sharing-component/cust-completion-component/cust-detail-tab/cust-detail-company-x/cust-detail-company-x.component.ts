@@ -21,6 +21,8 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-cust-detail-company-x',
@@ -69,7 +71,7 @@ export class CustDetailCompanyXComponent implements OnInit {
     MrCustModelCode: ['', Validators.required],
   })
 
-  ngOnInit() {
+  async ngOnInit() {
     let datePipe = new DatePipe("en-US");
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -91,7 +93,8 @@ export class CustDetailCompanyXComponent implements OnInit {
     this.lookupEconomicSectorSlikObj.genericJson = "./assets/impl/uclookup/NAP/lookupRefSectorEconomySlikX.json";
     this.lookupEconomicSectorSlikObj.isReady = true;
     this.GetCustModel();
-    this.GetData();
+    await this.GetData();
+    this.lookupCustGrpObj.isReady = true;
   }
 
   GetCustModel() {
@@ -180,12 +183,25 @@ export class CustDetailCompanyXComponent implements OnInit {
     this.CustDetailForm.controls.VipNotes.updateValueAndValidity();
   }
 
-  GetData() {
-    this.http.post(URLConstantX.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).subscribe(
-      (response) => {
+  SetCriteria(custNo: string) {
+    let listCriteria = new Array();
+    if (custNo) {
+      let critSuppObj = new CriteriaObj();
+      critSuppObj.DataType = 'text';
+      critSuppObj.restriction = AdInsConstant.RestrictionNeq;
+      critSuppObj.propName = 'C.CUST_NO';
+      critSuppObj.value = custNo;
+      listCriteria.push(critSuppObj);
+    }
+    this.lookupCustGrpObj.addCritInput = listCriteria;
+  }
+
+  async GetData() {
+    await this.http.post(URLConstantX.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).toPromise().then(
+      async (response) => {
         this.ReturnAppCustCompletionCompanyDataObj = response['resAppCustCompletionCompanyDataObj'];
         this.TempRefSectorEconomySlikCode = response['RefSectorEconomySlikCode'];
-
+        this.SetCriteria(this.ReturnAppCustCompletionCompanyDataObj.AppCustObj.CustNo);
         if (this.ReturnAppCustCompletionCompanyDataObj.AppCustCompanyObj.IndustryTypeCode && this.TempRefSectorEconomySlikCode) {
           this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, {Code: this.TempRefSectorEconomySlikCode}).subscribe(
             (response) => {

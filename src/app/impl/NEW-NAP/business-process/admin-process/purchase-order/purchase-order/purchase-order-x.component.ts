@@ -116,7 +116,7 @@ export class PurchaseOrderXComponent implements OnInit {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
   
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           if (mouId != null && mouId != "") {
             this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
               (result: MouCustObj) => {
