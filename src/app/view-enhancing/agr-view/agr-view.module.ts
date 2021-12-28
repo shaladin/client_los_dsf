@@ -116,13 +116,13 @@ import { ViewPurchaseOrderNewDetailComponent } from "./view-purchase-order-new-d
         UcgridviewComponent,
         UcapprovalhistComponent,
         ViewAssetCollateralDetailComponent,
+        ViewDeliveryOrderAssetSingleComponent,
+        ViewPurchaseOrderDetailComponent,
+        ViewPurchaseOrderNewDetailComponent,
         ViewInsuranceDataDetailXComponent
     ],
     exports: [
-        AgrMainInfoXComponent,
-        ViewDeliveryOrderAssetSingleComponent,
-        ViewPurchaseOrderDetailComponent,
-        ViewPurchaseOrderNewDetailComponent
+        AgrMainInfoXComponent
     ]
 
 })
