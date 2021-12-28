@@ -786,7 +786,9 @@ export class LeadInputCustDataComponent implements OnInit {
 
   setLeadCustPersonal() {
     let isValid = true;
-    if ( new Date(this.CustomerDataForm.controls["BirthDate"].value) > this.Max17YO) {
+    let age = new Date(this.context.BusinessDt);
+    age.setFullYear(new Date(this.CustomerDataForm.controls["BirthDate"].value).getFullYear())
+    if ( age > this.Max17YO) {
       this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
       isValid = false;
     }
@@ -877,7 +879,7 @@ export class LeadInputCustDataComponent implements OnInit {
       } else {
         this.leadInputObj = new ReqInputLeadCustPersonalObj();
         this.setLeadCust();
-        this.setLeadCustPersonal();
+        if (!this.setLeadCustPersonal()) return;
         this.setLeadCustSocmed();
         this.setLegalAddr();
         this.setResidenceAddr();
@@ -896,7 +898,7 @@ export class LeadInputCustDataComponent implements OnInit {
     else {
       this.leadInputObj = new ReqInputLeadCustPersonalObj();
       this.setLeadCust();
-      this.setLeadCustPersonal();
+      if (!this.setLeadCustPersonal()) return;
       this.setLeadCustSocmed();
       this.setLegalAddr();
       this.setResidenceAddr();
@@ -1064,7 +1066,7 @@ export class LeadInputCustDataComponent implements OnInit {
     if (this.isUseDigitalization == '1' && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
       this.leadInputObj = new ReqInputLeadCustPersonalObj();
       this.setLeadCust();
-      this.setLeadCustPersonal();
+      if (!this.setLeadCustPersonal()) return;
       this.setLegalAddr();
       this.setLeadCustPersonalJobData();
       this.http.post(URLConstant.CheckIntegrator, this.leadInputObj).subscribe(

@@ -899,8 +899,9 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
   setLeadCustPersonal() {
     let isValid = true;
-    this.Max17YO.setFullYear(new Date(this.context.BusinessDt).getFullYear() - 17);
-    if ( new Date(this.CustomerDataForm.controls["BirthDate"].value) > this.Max17YO) {
+    let age = new Date(this.context.BusinessDt);
+    age.setFullYear(new Date(this.CustomerDataForm.controls["BirthDate"].value).getFullYear())
+    if ( age > this.Max17YO) {
       this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
       isValid = false;
     }
@@ -991,7 +992,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
       } else {
         this.leadInputObj = new LeadInputObj();
         this.setLeadCust();
-        this.setLeadCustPersonal();
+        if (!this.setLeadCustPersonal()) return;
         // this.setLeadCustSocmed();
         this.setLegalAddr();
         this.setResidenceAddr();
@@ -1012,7 +1013,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
         this.setLeadCust();
         this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
-        this.setLeadCustPersonal();
+        if (!this.setLeadCustPersonal()) return;
         // this.setLeadCustSocmed();
         this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
         this.setLegalAddr();
@@ -1034,7 +1035,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     else {
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
-      this.setLeadCustPersonal();
+      if (!this.setLeadCustPersonal()) return;
       // this.setLeadCustSocmed();
       this.setLegalAddr();
       this.setResidenceAddr();
@@ -1219,7 +1220,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     if (this.isNeedCheckBySystem == "0") {
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
-      this.setLeadCustPersonal();
+      if (!this.setLeadCustPersonal()) return;
       this.setLegalAddr();
       this.setLeadCustPersonalJobData();
       this.http.post(URLConstant.CheckIntegrator, this.leadInputObj).subscribe(
