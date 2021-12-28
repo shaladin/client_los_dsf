@@ -62,7 +62,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         this.mouType = params['MOUType'];
       }
     });
-    this.currentStepIndex = 1;
+    this.currentStepIndex = 4;
   }
 
   async ngOnInit() : Promise<void> {

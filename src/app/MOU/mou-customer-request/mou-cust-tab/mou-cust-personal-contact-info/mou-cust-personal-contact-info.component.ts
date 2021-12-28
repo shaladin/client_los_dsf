@@ -211,7 +211,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       MrIdTypeCode: this.listContactPersonPersonal[i].MrIdTypeCode,
       MrCustRelationshipCode: this.listContactPersonPersonal[i].MrCustRelationshipCode,
       IdNo: this.listContactPersonPersonal[i].IdNo,
-      IdExpiredDt: this.listContactPersonPersonal[i].IdExpiredDt != null ? formatDate(this.listContactPersonPersonal[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+      IdExpiredDt: this.listContactPersonPersonal[i].IdExpiredDt ? formatDate(this.listContactPersonPersonal[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
       BirthPlace: this.listContactPersonPersonal[i].BirthPlace,
       BirthDt: birthDt,
       IsEmergencyContact: this.listContactPersonPersonal[i].IsEmergencyContact,
