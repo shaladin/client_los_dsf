@@ -140,6 +140,7 @@ export class URLConstant {
   public static DeleteAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionRule";
   public static GetAppCommissionTaxAndCalcGrossYield = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
+  public static GetAppCommissionTaxAndCalcGrossYieldV2 = environment.losUrl + "/v2" + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
   public static CalCulateGrossYield = environment.losUrl + "/v1" + "/AppCommission/CalCulateGrossYield";
 
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/v1" + "/RefOffice/GetRefOfficeByOfficeCode";
