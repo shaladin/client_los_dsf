@@ -32,10 +32,10 @@
           <div class="row" id="viewSummary">
             <div class="col-md-12">
               <div class="row">
-                <div class="col-md-2 form-inline">
+                <div class="col-md-3 form-inline">
                   <label translate>Total Commision Amount</label>
                 </div>
-                <div class="col-md-4" style="text-align: right;">
+                <div class="col-md-3" style="text-align: right;">
                   <label class ="adInsLabel" *ngIf="Summary.TotalCommisionAmount <= maxAllocAmt">
                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
                   <label *ngIf="Summary.TotalCommisionAmount > maxAllocAmt"
@@ -44,50 +44,50 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-2 form-inline">
+                <div class="col-md-3 form-inline">
                   <label translate>Total Commission After Tax Amount</label>
                 </div>
-                <div class="col-md-4" style="text-align: right;">
+                <div class="col-md-3" style="text-align: right;">
                   <label>{{Summary.TotalCommissionAfterTaxAmt | number:'.2':'en-US'}}</label>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-2 form-inline">
+                <div class="col-md-3 form-inline">
                   <label translate>Total Disburse Amount</label>
                 </div>
-                <div class="col-md-4" style="text-align: right;">
+                <div class="col-md-3" style="text-align: right;">
                   <label>{{Summary.TotalDisburseAmount | number:'.2':'en-US'}}</label>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-2 form-inline">
+                <div class="col-md-3 form-inline">
                   <label translate>Total Expense Amount</label>
                 </div>
-                <div class="col-md-4" style="text-align: right;">
+                <div class="col-md-3" style="text-align: right;">
                   <label>{{Summary.totalExpenseAmount | number:'.2':'en-US'}}</label>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-2 form-inline">
+                <div class="col-md-3 form-inline">
                   <label translate>Total TAX</label>
                 </div>
-                <div class="col-md-4" style="text-align: right;">
+                <div class="col-md-3" style="text-align: right;">
                   <label>{{Summary.TotalTaxAmmount | number:'.2':'en-US'}}</label>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-2 form-inline">
+                <div class="col-md-3 form-inline">
                   <label translate>Total VAT</label>
                 </div>
-                <div class="col-md-4" style="text-align: right;">
+                <div class="col-md-3" style="text-align: right;">
                   <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-2 form-inline">
+                <div class="col-md-3 form-inline">
                   <label translate>Gross Yield</label>
                 </div>
-                <div class="col-md-4" style="text-align:right;">
+                <div class="col-md-3" style="text-align:right;">
                   <label *ngIf="Summary.GrossYield >= 0"> {{Summary.GrossYield | number:'.6':'en-US'}}%</label>
                   <label *ngIf="Summary.GrossYield < 0" style="color: red;"> ( {{-Summary.GrossYield | number:'.6':'en-US'}} ) %</label>
                 </div>
