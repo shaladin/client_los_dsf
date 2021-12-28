@@ -409,6 +409,9 @@ export class CommissionV2Component implements OnInit {
   CalculateTotal() {
     console.log("CALCULATE ME");
     this.Summary.TotalCommisionAmount = 0;
+    this.Summary.TotalCommissionAfterTaxAmt = 0;
+    this.Summary.TotalDisburseAmount = 0;
+    this.Summary.totalExpenseAmount = 0;
     this.Summary.TotalTaxAmmount = 0;
     this.Summary.TotalVATAmount = 0;
     this.Summary.GrossYield = 0;
