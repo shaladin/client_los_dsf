@@ -82,6 +82,7 @@ export class ExceptionConstant {
     public static NO_LEAD_DATA_AVAILABLE = 'No Lead Available to Cancel';
     public static CANNOT_INSURE_SAME_PERSON = "Cannot insure same person";
     public static SETTING_COMPONENT_RULE_FIRST = "Please setting rule {0}, component {1} for Year No {2}.";
+    public static CANNOT_INPUT_TWO_EMERGENCY_CONTACT_MOU = "Cannot Add More Than 1 Emergency Contact";
 
     public static INSERT_ESTIMATION_EFFECTIVE_DATE = "Insert Estimation Effective Date";
     public static GRACE_PERIOD_MUST_SET = "Grace Period must be set";
