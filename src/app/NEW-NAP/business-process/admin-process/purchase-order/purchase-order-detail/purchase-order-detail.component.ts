@@ -139,7 +139,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
 
   async initBancAcc(){
-    await this.http.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise().then(
     (response) => {
       if(response["ReturnObject"].length == 0){
         this.isHasVendorBankAcc = false;
