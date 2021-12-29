@@ -1151,7 +1151,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         continue;
       }
       if(!this.appCollateralDataObj.AppCollateralRegistrationObj[key]){
-        this.toastr.warningMessage("Please complete owner data first");
+        this.toastr.warningMessage("Please complete Collateral Owner or Collateral User Data first");
         this.IsCollateralOwnerInvalid = true;
         return false;
       }
