@@ -171,6 +171,10 @@ export class NapCustMainDataComponent implements OnInit {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
+    reqObj.AppNo = this.NapObj.AppNo;
+    reqObj.BizTemplateCode = this.NapObj.BizTemplateCode;
+    reqObj.OriOfficeCode = this.NapObj.OriOfficeCode;
+    
     let SubmitNapCustMainDataUrl = environment.isCore ? URLConstant.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
     this.http.post(SubmitNapCustMainDataUrl, reqObj).subscribe(
       (response) => {

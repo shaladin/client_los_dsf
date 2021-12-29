@@ -241,6 +241,9 @@ export class PathConstant {
     public static OFFERING_VALIDITY_APPRV = "OfferingValidityApproval";
     public static OFFERING_VALIDITY_APPRV_PAGING = PathConstant.OFFERING_VALIDITY_APPRV + "/" + PathConstant.PAGING;
     public static OFFERING_VALIDITY_APPRV_DETAIL = PathConstant.OFFERING_VALIDITY_APPRV + "/" + PathConstant.DETAIL;
+    public static OFFERING_VALIDITY_REQ = "OfferingValidityRequest";
+    public static OFFERING_VALIDITY_REQ_PAGING = PathConstant.OFFERING_VALIDITY_REQ + "/" + PathConstant.PAGING;
+    public static OFFERING_VALIDITY_REQ_DETAIL = PathConstant.OFFERING_VALIDITY_REQ + "/" + PathConstant.DETAIL;
     public static NAP_DOC_SIGNER = "DocumentSigner";
     public static NAP_DOC_SIGNER_PAGING = PathConstant.NAP_DOC_SIGNER + "/" + PathConstant.PAGING;
     public static NAP_DOC_SIGNER_DETAIL = PathConstant.NAP_DOC_SIGNER + "/" + PathConstant.DETAIL;
