@@ -158,6 +158,10 @@ export class NapCustMainDataXComponent implements OnInit {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
+    reqObj.AppNo = this.NapObj.AppNo;
+    reqObj.BizTemplateCode = this.NapObj.BizTemplateCode;
+    reqObj.OriOfficeCode = this.NapObj.OriOfficeCode;
+    
     this.http.post(URLConstant.SubmitNapCustMainData, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

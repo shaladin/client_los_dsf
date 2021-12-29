@@ -170,6 +170,7 @@ export class CommonConstant {
   public static AppStepLiv = "LIV";
   public static AppStepPO = "PO";
   public static AppStepOFVC = "OFVC";
+  public static AppStepOFVR = "OFVR";
   public static AppStepOFVA = "OFVA";
   public static AppStepDO = "DO";
   public static AppStepCNFR = "CNFR";
@@ -259,6 +260,7 @@ export class CommonConstant {
   public static CollateralNeeded = "COLLATERALNEEDED";
   public static RefProdCompntCodeDisburseToCust = "DISBURSE_TO_CUST";
   public static REF_PROD_COMPNT_CODE_CRD_APV = "CRD_APV";
+  public static REF_PROD_COMPNT_CODE_OFF_VLD_APV = "OFF_VLD_APV";
   public static REF_PROD_COMPNT_CODE_CURR = "CURR";
 
   // PRODUCT BEHAVIOUR
@@ -456,6 +458,7 @@ export class CommonConstant {
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
   public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
   public static RefReasonTypeCodeReturnHandlingGeneral = "RTN_H_GEN";
+  public static RefReasonTypeCodeOfferingValidityReqApv = "OFF_VLD_REQ_APV";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -810,6 +813,8 @@ export class CommonConstant {
   public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
   public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV";
   public static CAT_CODE_CRD_APV = "CRD_APV";
+  public static SCHM_CODE_OFF_VLD_APV_CF = "OFF_VLD_APV_CF";
+  public static CAT_CODE_OFF_VLD_APV = "OFF_VLD_APV";
   public static CAT_CODE_DOC_CHCKLIST_APV = "DOC_CHCKLIST_APV";
   public static CAT_CODE_APP_OPL_APV = "APP_OPL_APV";
   public static CAT_CODE_AML_APV = "AML_APV";
@@ -970,6 +975,7 @@ export class CommonConstant {
   // WORKFLOW
   public static ACT_CODE_AGR = "AGR_";
   public static ACT_CODE_RVW = "RVW_";
+  public static ACT_CODE_OFVR = "OFVR_";
   public static ACT_CODE_REQU_DEC = "REQU_DEC_";
   public static ACT_CODE_DCK_DEC = "DCK_DEC_";
   public static ACT_CODE_AST_ALO = "AST_ALO_";

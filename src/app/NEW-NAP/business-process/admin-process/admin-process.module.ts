@@ -95,6 +95,8 @@ import { DeliveryOrderAssetOwnerComponent } from './delivery-order-component/del
 import { DeliveryOrderAssetLocationComponent } from './delivery-order-component/delivery-order-asset-location/delivery-order-asset-location.component';
 import { DeliveryOrderMultiAssetXComponent } from "app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-x.component";
 import { CustConfirmationPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-paging/cust-confirmation-paging-x.component";
+import { OfferingValidityCheckingRequestPagingComponent } from "./offering-validity-checking-request/offering-validity-checking-request-paging/offering-validity-checking-request-paging.component";
+import { OfferingValidityCheckingRequestDetailComponent } from "./offering-validity-checking-request/offering-validity-checking-request-detail/offering-validity-checking-request-detail.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -150,6 +152,8 @@ export const customCurrencyMaskConfig = {
     AgrmntActivationDetailComponent,
     OfferingValidityCheckingApprovalPagingComponent,
     OfferingValidityCheckingApprovalDetailComponent,
+    OfferingValidityCheckingRequestPagingComponent,
+    OfferingValidityCheckingRequestDetailComponent,
     DocSignerDetailComponent,
     DocSignerPagingComponent,
     DocSignerDetailXComponent,

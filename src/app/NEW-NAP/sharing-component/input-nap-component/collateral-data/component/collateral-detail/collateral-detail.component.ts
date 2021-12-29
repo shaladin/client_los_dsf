@@ -34,6 +34,7 @@ import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model'
 import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -83,7 +84,7 @@ export class CollateralDetailComponent implements OnInit {
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
   editAppCollateralObj: AppCollateralObj = new AppCollateralObj();
-  collateralRegistrationObj: AppCollateralRegistrationObj;
+  collateralRegistrationObj: AppCollateralRegistrationObj = new AppCollateralRegistrationObj();
   editCollateralRegistrationObj: AppCollateralRegistrationObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
@@ -127,7 +128,8 @@ export class CollateralDetailComponent implements OnInit {
     OutstandingCollPrcnt: [0],
     items: this.fb.array([]),
     AppCollateralAttrObjs: this.fb.array([]),
-    OwnerProfessionCode: ['']
+    OwnerProfessionCode: [''],
+    MrOwnerTypeCode: [''],
   });
 
   CollTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -140,11 +142,14 @@ export class CollateralDetailComponent implements OnInit {
   inputAddressObjForLoc: InputAddressObj;
   appAssetId: number = 0;
   isDiffWithRefAttr: boolean;
-  AppCustData: AppCustObj;
+  AppCustData: AppCustObj = new AppCustObj();
   IntegratorCheckBySystemGsValue: string = "0";
   IsUseDigitalization: string;
   sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   IsSvcExist: boolean = false;
+  OwnerTypeObj: Array<KeyValueObj>;
+  OwnerProfessionObj: Array<KeyValueObj> = new Array();
+  custType: string;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   InputLookupProfessionObj : InputLookupObj = new InputLookupObj();
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
@@ -162,6 +167,7 @@ export class CollateralDetailComponent implements OnInit {
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.isRequired = false;
+    this.InputLookupProfessionObj.isReady = true;
 
     this.items = this.AddCollForm.get('items') as FormArray;
 
@@ -184,18 +190,26 @@ export class CollateralDetailComponent implements OnInit {
     }
     if(this.bizTemplateCode == CommonConstant.CFRFN4W){
       this.AddCollForm.patchValue({
-        SelfUsage: true,
-        SelfOwner: true
+        SelfUsage: true
       });
+      if(this.mode == "add"){
+        this.AddCollForm.patchValue({
+          SelfOwner: true
+        });
+      }
       await this.CopyUserForSelfUsage();
       await this.CopyUserForSelfOwner();
-      if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypePersonal){
+      let isPersonal = true;
+      if(this.collateralRegistrationObj.MrOwnerTypeCode == CommonConstant.CustTypeCompany){
+        isPersonal = false;
+      }
+
+      if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypePersonal && isPersonal){
         await this.setOwnerRelationListDdl();
       }
     }
     this.GenerateAppCollateralAttr(false);
     await this.GetGS();
-    this.InputLookupProfessionObj.isReady = true;
   }
 
   initUcLookup() {
@@ -363,6 +377,23 @@ export class CollateralDetailComponent implements OnInit {
           await this.onItemChange(this.AddCollForm.controls.AssetTypeCode.value, false);
         }
       });
+    
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.RefMasterTypeCodeCustType}).toPromise().then(
+      (response) => {
+        this.OwnerTypeObj = response[CommonConstant.ReturnObj];
+        if(this.mode != "edit"){
+          this.AddCollForm.patchValue({
+            MrOwnerTypeCode : this.custType
+          });
+        }
+      }
+    );
+
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.RefMasterTypeCodeCompanyType}).toPromise().then(
+      (response) => {    
+        this.OwnerProfessionObj = response[CommonConstant.ReturnObj];
+      }
+    );
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition }).subscribe(
       (response) => {
@@ -399,11 +430,25 @@ export class CollateralDetailComponent implements OnInit {
         }
       });
 
+    this.getRelationListDdl();
+
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+      (response) => {
+        this.IdTypeList = response[CommonConstant.ReturnObj];
+        if (this.mode != "edit") {
+          this.AddCollForm.patchValue({
+            MrIdTypeCode: this.IdTypeList[0].Key
+          });
+        }
+      });
+  }
+
+  async getRelationListDdl(custType: string = this.AppCustData.MrCustTypeCode) {
     let refMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+    if(custType == CommonConstant.CustTypePersonal) {
       refMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship
     }
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: refMasterTypeCode }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: refMasterTypeCode }).toPromise().then(
       (response) => {
         this.OwnerRelationList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
@@ -417,25 +462,17 @@ export class CollateralDetailComponent implements OnInit {
         }
       }
     );
-
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
-      (response) => {
-        this.IdTypeList = response[CommonConstant.ReturnObj];
-        if (this.mode != "edit") {
-          this.AddCollForm.patchValue({
-            MrIdTypeCode: this.IdTypeList[0].Key
-          });
-        }
-      });
   }
 
   AppCustId: number = 0;
   AppNo: string = "";
   async GetAppCustByAppId() {
     await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
-      (response) => {
+      async (response) => {
         this.AppCustData = response;
         this.AppCustId = response.AppCustId;
+        this.custType = this.AppCustData.MrCustTypeCode;
+        if(this.mode != "edit") await this.OwnerTypeChange(this.AppCustData.MrCustTypeCode);
       });
   }
   async getAppData() {
@@ -547,7 +584,8 @@ export class CollateralDetailComponent implements OnInit {
         MrOwnerRelationshipCode: fouExistObj["MrOwnerRelationshipCode"],
         UserName: fouExistObj["Username"],
         MrUserRelationshipCode: fouExistObj["MrUserRelationshipCode"],
-        SelfOwner: fouExistObj["MrOwnerRelationshipCode"] == "SELF" ? true : false
+        SelfOwner: fouExistObj["MrOwnerRelationshipCode"] == "SELF" ? true : false,
+        MrOwnerTypeCode: fouExistObj["MrOwnerTypeCode"]
       });
 
       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
@@ -600,6 +638,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AddCollForm.controls.OwnerMobilePhnNo.disable();
       this.AddCollForm.controls.OwnerIdNo.disable();
       this.AddCollForm.controls.MrIdTypeCode.disable();
+      this.AddCollForm.controls.MrOwnerTypeCode.disable();
       this.inputAddressObjForLegal.isReadonly = true;
       this.inputAddressObjForLoc.isReadonly = true;
       this.getRefAssetDocList(fouExistObj["AssetTypeCode"]);
@@ -665,6 +704,13 @@ export class CollateralDetailComponent implements OnInit {
             }
           }
 
+          let MrOwnerTypeCode = this.collateralRegistrationObj.MrOwnerTypeCode;
+          let isFromDB = true;
+          if (MrOwnerTypeCode == null){
+            MrOwnerTypeCode = this.custType;
+            isFromDB = false;
+          }
+
           this.AddCollForm.patchValue({
             AssetTypeCode: this.appCollateralObj.AssetTypeCode,
             FullAssetCode: this.appCollateralObj.FullAssetCode,
@@ -688,8 +734,11 @@ export class CollateralDetailComponent implements OnInit {
             UserName: this.collateralRegistrationObj.UserName,
             MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
             RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
-            SelfOwner: (this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF")
+            SelfOwner: (this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
+            MrOwnerTypeCode: this.collateralRegistrationObj.MrOwnerTypeCode
           });
+
+          await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
 
           if (!IsExisting) {
             this.AddCollForm.patchValue({
@@ -707,8 +756,6 @@ export class CollateralDetailComponent implements OnInit {
 
           this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
           await this.onItemChange(this.appCollateralObj.AssetTypeCode);
-          this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
-          this.inputLookupExistColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
           this.inputLookupColl.nameSelect = this.appCollateralObj.FullAssetName;
           this.inputLookupColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
           // set data Location Address
@@ -968,6 +1015,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AddCollForm.controls.MrIdTypeCode.disable();
       this.AddCollForm.controls.OwnerIdNo.disable();
       this.AddCollForm.controls.OwnerAddrObj.disable();
+      this.AddCollForm.controls.MrOwnerTypeCode.disable();
 
       this.AppCustObj = new AppCustObj();
       this.AppCustCompanyObj = new AppCustCompanyObj();
@@ -975,7 +1023,7 @@ export class CollateralDetailComponent implements OnInit {
 
       var appObj = { "Id": this.AppId };
       await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
-        response => {
+        async response => {
           this.AppCustObj = response['AppCustObj'];
           this.AppCustCompanyObj = response['AppCustCompanyObj'];
           this.AppCustAddrObj = response['AppCustAddrLegalObj'];
@@ -987,8 +1035,11 @@ export class CollateralDetailComponent implements OnInit {
             MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
             OwnerIdNo: this.AppCustObj.IdNo,
             OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : '',
-            OwnerProfessionCode: this.AppCustPersonalJobDataObj.MrProfessionCode
+            OwnerProfessionCode: this.AppCustPersonalJobDataObj.MrProfessionCode,
+            MrOwnerTypeCode : this.custType
           })
+          await this.OwnerTypeChange(this.custType);
+
           this.OwnerAddrObj.Addr = this.AppCustAddrObj.Addr
           this.OwnerAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1
           this.OwnerAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2
@@ -1013,7 +1064,56 @@ export class CollateralDetailComponent implements OnInit {
       this.AddCollForm.controls.MrIdTypeCode.enable();
       this.AddCollForm.controls.OwnerIdNo.enable();
       this.AddCollForm.controls.OwnerAddrObj.enable();
+      this.AddCollForm.controls.MrOwnerTypeCode.enable();
       this.InputLookupProfessionObj.isDisable = false;
+    }
+  }
+
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
+    await this.getRelationListDdl();
+    if(OwnerType == CommonConstant.CustTypePersonal){
+      if(this.custType == CommonConstant.CustTypePersonal){
+        await this.setOwnerRelationListDdl();
+      }
+      if(IsOwnerTypeChanged){
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      }else if(this.custType == CommonConstant.CustTypePersonal){
+        await this.setOwnerRelationListDdl();
+        let reqByCode: GenericObj = new GenericObj();
+        reqByCode.Code = this.AppCustPersonalJobDataObj.MrProfessionCode;
+        
+        await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
+          (response) =>{
+            this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
+          }
+        );
+      }
+      else {
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      }
+    }else{
+      if(IsOwnerTypeChanged){
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      }else{
+        this.AddCollForm.patchValue({
+          OwnerProfessionCode : this.collateralRegistrationObj.OwnerProfessionCode
+        });
+      }
     }
   }
 
@@ -1289,6 +1389,7 @@ export class CollateralDetailComponent implements OnInit {
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.AddCollForm.controls["OwnerMobilePhnNo"].value;
     this.appCollateralDataObj.AppCollateralRegistrationObj.OwnerProfessionCode = this.AddCollForm.controls["OwnerProfessionCode"].value;
+    this.appCollateralDataObj.AppCollateralRegistrationObj.MrOwnerTypeCode = this.AddCollForm.controls["MrOwnerTypeCode"].value;
   }
 
   setCollateralLocation() {

@@ -11,6 +11,7 @@ import { AdInsHelper } from '../AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { AdInsConstant } from '../AdInstConstant';
 import { StorageService } from '../services/StorageService';
+import { NavigationConstant } from '../constant/NavigationConstant';
 
 declare var $: any;
 
@@ -44,24 +45,18 @@ export class SidebarComponent implements OnInit {
         //         this.menuItems = data;
         //     }
         //     );
-        if (environment.production == false) {
-            this.menuItems = ROUTES.filter(menuItem => menuItem);            
+        //Update menu if change of environment
+        var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        // if (currEnvi && currentUserContext && currEnvi != environment.Module) {
+        if (currentUserContext) {
+            this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: currentUserContext.RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
+                (response) => {
+                    AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.ReturnObj]));
+                    this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
+                });
         }
-        else {
-            //Update menu if change of environment
-            let currEnvi = AdInsHelper.GetLocalStorage(CommonConstant.ENVIRONMENT_MODULE);
-            var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-            // if (currEnvi && currentUserContext && currEnvi != environment.Module) {
-            if (currentUserContext) {
-                this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: currentUserContext.RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
-                    (response) => {
-                        AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.ReturnObj]));
-                        this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
-                    });
-            }
-            else
-                this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
-        }
+        else
+            this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
     }
 
     genParam(params: [{ 'Attr': string, 'Value': string }]) {
@@ -85,6 +80,10 @@ export class SidebarComponent implements OnInit {
     }
 
     navigateSkipLocationChange(ev) {
-        AdInsHelper.RedirectUrl(this.router, ev.Path, this.genParam(ev.Params));
+        //sementara Sementara begini dulu, belum ketemu solusi lain
+        //problem : ketika di 'click' halaman memasuki halaman /dashboard/dash-board terlebih dahulu
+        this.router.navigateByUrl(NavigationConstant.DASHEMPTY, { skipLocationChange: true }).then(() => {
+            AdInsHelper.RedirectUrl(this.router, [ev.Path], this.genParam(ev.Params), false);
+        });
     }
 }

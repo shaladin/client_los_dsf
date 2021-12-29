@@ -34,6 +34,8 @@ export class MouCustCompanyDataObj {
         this.MouCustAddrMailingObj = new MouCustAddrObj();
         this.MouCustAddrBusinessObj = new MouCustAddrObj();
         this.MouCustCompanyFinDataObj = new MouCustCompanyFinDataObj();
+        this.MouCustFinDataAttrObjs = new Array<MouCustCompanyFinDataAttrObj>();
+        this.AttrGroups = Array<string>();
         this.RowVersion = ""; 
     }
 }

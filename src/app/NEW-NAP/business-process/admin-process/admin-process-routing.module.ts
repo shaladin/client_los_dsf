@@ -68,7 +68,8 @@ import { DocSignerDetailXComponent } from 'app/impl/NEW-NAP/business-process/adm
 import { DocSignerPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/doc-signer/doc-signer-paging/doc-signer-paging-x.component';
 import { DeliveryOrderMultiAssetXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset/delivery-order-multi-asset-x.component';
 import { CustConfirmationPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-paging/cust-confirmation-paging-x.component';
-
+import { OfferingValidityCheckingRequestPagingComponent } from './offering-validity-checking-request/offering-validity-checking-request-paging/offering-validity-checking-request-paging.component';
+import { OfferingValidityCheckingRequestDetailComponent } from './offering-validity-checking-request/offering-validity-checking-request-detail/offering-validity-checking-request-detail.component';
 
 const routes: Routes = [
   {
@@ -247,6 +248,20 @@ const routes: Routes = [
         component: OfferingValidityCheckingApprovalDetailComponent,
         data: {
           title: 'Offering Validity Checking And Approval Detail'
+        }
+      },
+      {
+        path: PathConstant.OFFERING_VALIDITY_REQ_PAGING,
+        component: OfferingValidityCheckingRequestPagingComponent,
+        data: {
+          title: 'Offering Validity Request Paging'
+        }
+      },
+      {
+        path: PathConstant.OFFERING_VALIDITY_REQ_DETAIL,
+        component: OfferingValidityCheckingRequestDetailComponent,
+        data: {
+          title: 'Offering Validity Request Detail'
         }
       },
       {
