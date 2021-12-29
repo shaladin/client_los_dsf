@@ -1030,7 +1030,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       this.mouCustCollateralDoc.DocNotes = this.AddCollForm.value.ListDoc[i].DocNotes;
       this.listMouCustCollateralDocObj.MouCustCollateralDocObj.push(this.mouCustCollateralDoc);
     }
-    const custCollObj = {
+    let custCollObj = {
       MouCustCollateral: this.mouCustCollateralObj,
       MouCustCollateralRegistration: this.mouCustCollateralRegistrationObj,
       ListMouCustCollateralDoc: this.listMouCustCollateralDocObj.MouCustCollateralDocObj,
@@ -1038,7 +1038,18 @@ export class MouRequestAddcollXComponent implements OnInit {
       CollateralReceivedDt: this.AddCollForm.controls.CollateralReceivedDt.value,
       CollateralReleasedDt: this.AddCollForm.controls.CollateralReleasedDt.value
     }
+    
+    let mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
+    mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
 
+    await this.submitAddEditMouCustCollateralData(custCollObj);
+    this.AddCollForm.reset();
+    this.ClearForm();
+    this.collateralObj = null;
+    this.type = 'Paging';
+  }
+
+  async submitAddEditMouCustCollateralData(custCollObj) {
     if (this.collateralObj == null) {
       await this.http.post(URLConstantX.AddMouCustCollateralDataX, custCollObj).toPromise().then(
         (response) => {
@@ -1051,10 +1062,13 @@ export class MouRequestAddcollXComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
         });
     }
-    this.AddCollForm.reset();
-    this.ClearForm();
-    this.collateralObj = null;
-    this.type = 'Paging';
+  }
+
+  hitIntegrator(mouCustObjForAddTrxData: MouCustObjForAddTrxData) {
+    this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).subscribe(
+      (response) => {
+      }
+    );
   }
 
   setCollateralObjForSave() {
@@ -1064,11 +1078,9 @@ export class MouRequestAddcollXComponent implements OnInit {
     if (this.collateralObj) {
       this.mouCustCollateralObj = this.collateralObj;
     }
-
     if (this.collateralRegistrationObj) {
       this.mouCustCollateralRegistrationObj = this.collateralRegistrationObj;
     }
-
     this.mouCustCollateralObj.MouCustId = this.MouCustId;
     this.mouCustCollateralObj.AssetTypeCode = this.AddCollForm.controls.AssetTypeCode.value;
     this.mouCustCollateralObj.FullAssetCode = this.AddCollForm.controls.FullAssetCode.value;

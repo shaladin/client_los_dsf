@@ -448,6 +448,8 @@ export class CustMainDataXComponent implements OnInit {
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
           this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
+          this.CustMainDataForm.controls.MrMaritalStatCode.clearValidators();
+          this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
         }
         END X DSF Issue Non Jira */
         await this.GetAppCustMainDataByAppId();
