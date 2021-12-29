@@ -251,11 +251,12 @@ export class AdInsHelper {
     // router.routeReuseStrategy.shouldReuseRoute = () => {
     //   return isReuseRoute;
     // }
-    router.navigateByUrl(
-      router.createUrlTree(
-        [url.toString()], { queryParams: queryParams }
-      ), { skipLocationChange: isSkipLocation }
-    );
+    // router.navigateByUrl(
+    //   router.createUrlTree(
+    //     [url.toString()], { queryParams: queryParams }
+    //   ), { skipLocationChange: isSkipLocation }
+    // );
+    router.navigate(url, { queryParams: queryParams, skipLocationChange: isSkipLocation });
   }
 
   public static SetLocalStorage(key: string, value: string) {

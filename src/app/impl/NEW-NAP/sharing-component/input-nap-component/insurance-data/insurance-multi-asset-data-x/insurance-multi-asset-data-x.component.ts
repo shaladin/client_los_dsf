@@ -483,7 +483,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
         let TotalCustAddPremiAmt = this.calcInsObj.InsCoverage[0].AdditionalPremiAmt;
         let totalPremiToCustAnually = TotalCustMainPremiAmt + TotalCustAddPremiAmt + TotalCustFeeAmt ;
         if (insCpltzAmt > totalPremiToCustAnually - custDiscAmt) {
-          this.toastr.warningMessage(ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN + "Total Premi to Customer after Discount.");
+          this.toastr.warningMessage(ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN + "Total 1st Year Premi to Customer after Discount.");
           return;
         }
       } else {

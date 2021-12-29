@@ -86,21 +86,17 @@ export class LoginPageComponent implements OnInit {
     localStorage.setItem("Username", username);
     //this.rolePickService.openDialog(data.returnObject);
 
-    let LoginURL = environment.isCore ? AdInsConstant.LoginV2 : AdInsConstant.Login;
-    this.http.post(LoginURL, requestObj).subscribe(
+    this.http.post(AdInsConstant.LoginV2, requestObj).subscribe(
       async (response) => {
         if (response["StatusCode"] == CommonConstant.STATUS_CODE_USER_LOCKED) {
           this.isLocked = true;
         }
         else {
-          if(environment.isCore){
-            await this.http.post(AdInsConstant.GetListJobTitleByUsernameAndModule, {UserName : username, Module : environment.Module}).toPromise().then(
-              (response) => {
-                this.loginObj.response = response["ListOfficeRoleJobTitle"]
-              });
-          }else{
-            this.loginObj.response = response[CommonConstant.ReturnObj];
-          }
+          await this.http.post(AdInsConstant.GetListJobTitleByUsernameAndModule, {UserName : username, Module : environment.Module}).toPromise().then(
+            (response) => {
+              this.loginObj.response = response["ListOfficeRoleJobTitle"]
+            });
+            
           this.loginObj.user = username;
           this.loginObj.pwd = password;
 

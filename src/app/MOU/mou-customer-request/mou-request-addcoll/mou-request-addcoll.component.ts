@@ -1004,6 +1004,26 @@ export class MouRequestAddcollComponent implements OnInit {
       ListMouCustCollaterals: this.SetCollateralAttr()
     };
 
+    let mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
+    mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
+
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
+      if (!this.IsCalledIntegrator) {
+        if (confirm("Continue without integrator ?")) {
+          await this.submitAddEditMouCustCollateralData(custCollObj);
+        }
+      } else {
+        await this.submitAddEditMouCustCollateralData(custCollObj);
+        this.hitIntegrator(mouCustObjForAddTrxData);
+      }
+    }
+    this.AddCollForm.reset();
+    this.ClearForm();
+    this.collateralObj = null;
+    this.type = 'Paging';
+  }
+
+  async submitAddEditMouCustCollateralData(custCollObj) {
     if (this.collateralObj == null) {
       await this.http.post(URLConstant.AddMouCustCollateralData, custCollObj).toPromise().then(
         (response) => {
@@ -1016,10 +1036,13 @@ export class MouRequestAddcollComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
         });
     }
-    this.AddCollForm.reset();
-    this.ClearForm();
-    this.collateralObj = null;
-    this.type = 'Paging';
+  }
+
+  hitIntegrator(mouCustObjForAddTrxData: MouCustObjForAddTrxData) {
+    this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).subscribe(
+      (response) => {
+      }
+    );
   }
 
   setCollateralObjForSave() {
@@ -1390,7 +1413,8 @@ export class MouRequestAddcollComponent implements OnInit {
       CollateralPortionAmt: [0],
       CollateralPortionType: [''],
       ListDoc: this.fb.array([]),      
-      AttrContentObjs: this.fb.array([])
+      AttrContentObjs: this.fb.array([]),
+      MrOwnerTypeCode: ['']
     })
     this.AddCollForm.updateValueAndValidity();
 
@@ -1405,6 +1429,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.isSelfCust = false;
     this.collateralObj = null;
     this.isAttrReady = false;
+    this.IsCalledIntegrator = false;
 
     this.items = this.AddCollForm.get('items') as FormArray;
     this.bindUcLookup()
@@ -1509,24 +1534,7 @@ export class MouRequestAddcollComponent implements OnInit {
         return;
       }
     }
-
-    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
-      if (!this.IsCalledIntegrator) {
-        if (confirm("Continue without integrator ?")) {
-          this.UpdatePlafondAmt(sumCollateralValue);
-        }
-      } else {
-        this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
-          (response) => {
-            this.UpdatePlafondAmt(sumCollateralValue);
-            this.toastr.successMessage("Success !");
-          }
-        );
-      }
-    }
-    else {
-      this.UpdatePlafondAmt(sumCollateralValue);
-    }
+    this.UpdatePlafondAmt(sumCollateralValue);
   }
 
   UpdatePlafondAmt(sumCollateralValue: number) {
@@ -1659,19 +1667,12 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   HitAPI() {
-    let assetData = this.listCollateralData;
-    if (assetData.length != 0) {
-      for (let i = 0; i < assetData.length; i++) {
-        if (assetData[i]["SerialNo1"] == '') {
-          this.toastr.warningMessage("Please Input Chassis No in asset name " + assetData[i].FullAssetName + ".");
-          return;
-        }
-      }
-      this.IsCalledIntegrator = true;
-      this.toastr.successMessage("Submit with integrator.");
+    if(this.AddCollForm.controls.items['controls'][0]['controls']['SerialNoValue'].value == '') {
+      this.toastr.warningMessage(String.Format("Please Input {0} !", this.AddCollForm.controls.items['controls'][0]['controls']['SerialNoLabel'].value));
     }
-    else {
-      this.toastr.warningMessage("Must have atleast 1 asset.");
+    else{
+      this.toastr.successMessage("Submit with Integrator");
+      this.IsCalledIntegrator = true;
     }
   }
 

@@ -399,6 +399,8 @@ export class CustMainDataComponent implements OnInit {
           this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
           this.CustMainDataForm.controls.Email1.setValidators(Validators.pattern(CommonConstant.regexEmail));
           this.CustMainDataForm.controls.Email1.updateValueAndValidity();
+          this.CustMainDataForm.controls.MrMaritalStatCode.clearValidators();
+          this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
         }
         await this.GetAppCustMainDataByAppId();
         this.BindLookupJobPosition();

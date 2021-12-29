@@ -762,6 +762,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   setMouCustPersonalFinDataAttr(){
+    if (this.CustDataForm.controls['AttrList'] == undefined) return;
     var formValue = this.CustDataForm.controls['AttrList'].value;
     let CustAttrRequest = new Array<MouCustCompanyFinDataAttrObj>();
      
@@ -817,6 +818,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   setMouCustCompanyFinDataAttr(){
+    if (this.CustDataCompanyForm.controls['AttrList'] == undefined) return;
     var formValue = this.CustDataCompanyForm.controls['AttrList'].value;
     let CustAttrRequest = new Array<MouCustCompanyFinDataAttrObj>();
      

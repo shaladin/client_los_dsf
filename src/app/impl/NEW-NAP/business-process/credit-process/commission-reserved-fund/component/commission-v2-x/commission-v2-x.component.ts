@@ -26,7 +26,7 @@ import { NapAppReferantorModel } from 'app/shared/model/nap-app-referantor.model
 import { ReqGetAppCommissionRuleObj } from 'app/shared/model/app-commission-rsv-fund/req-get-app-commission-rule-obj.model';
 import { RuleCommissionObj } from 'app/shared/model/rule-commission/rule-commission-obj.model';
 import { AppCommissionHObj } from 'app/shared/model/app-commission-h-obj.model';
-import { ReqTaxObj } from 'app/shared/model/app-commission-rsv-fund/req-tax-obj.model';
+import { ReqTaxV2Obj, VendorEmpTaxObj, VendorTaxObj, ReqTaxObj } from 'app/shared/model/app-commission-rsv-fund/req-tax-obj.model';
 import { ResponseTaxDetailObj } from 'app/shared/model/tax/response-tax-detail.model';
 import { ResponseTaxObj } from 'app/shared/model/tax/response-tax.model';
 import { TaxTrxDObj } from 'app/shared/model/tax/tax-trx-d.model';
@@ -523,6 +523,8 @@ export class CommissionV2XComponent implements OnInit {
     this.totalReferantor = 0;
     this.TotalInput = 0;
     this.Summary.TotalCommisionAmount = 0;
+    this.Summary.TotalCommissionAfterTaxAmt = 0;
+    this.Summary.TotalDisburseAmount = 0;
     this.Summary.TotalTaxAmmount = 0;
     this.Summary.TotalVATAmount = 0;
     this.Summary.GrossYield = 0;
@@ -576,7 +578,6 @@ export class CommissionV2XComponent implements OnInit {
         this.IsCalculated = false;
       }
     );
-
   }
 
   mapTaxData(identifier: string, TaxDetailData: ResponseTaxDetailObj, idxStart: number, idxEnd: number) {
