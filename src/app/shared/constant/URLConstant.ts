@@ -1909,4 +1909,7 @@ export class URLConstant {
 
   //Ref Curr
   public static GetRefCurrByCode = environment.FoundationR3Url + "/v1" + "/RefCurr/GetRefCurrByCode";
+
+  //Cust Phone No
+  public static GetListCustPhoneNoByCustNo = environment.FoundationR3Url + "/v1" + "/Cust/GetListCustPhoneNoByCustNo";
 }
