@@ -224,9 +224,9 @@ export class CollateralDetailComponent implements OnInit {
       AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
       IsRefresh: false
     };
-    this.attrSettingObj.GetQuestionReqObj = GenObj;
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Collateral Attribute";
-    this.attrSettingObj.UrlGetQuestion = URLConstant.GenerateAppCollateralAttrV2;
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppCollateralAttrV2;
   }
 
   initUcLookup() {

@@ -8,8 +8,8 @@ export class RefAttrSettingObj {
     IsShowBtnRefresh: boolean;
     UrlGetLookupExistingValue: string;
     UrlGetRuleForAttrContent: string;
-    UrlGetQuestion: string;
-    GetQuestionReqObj: object;
+    UrlGetListAttr: string;
+    ReqGetListAttrObj: object;
     Title: string;
     urlQryPaging: string;
     urlEnviPaging: string;
@@ -21,8 +21,8 @@ export class RefAttrSettingObj {
         this.IsShowBtnRefresh = true;
         this.UrlGetLookupExistingValue = URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode;
         this.UrlGetRuleForAttrContent = URLConstant.GetRuleForAttrContent;
-        this.UrlGetQuestion = "";
-        this.GetQuestionReqObj = {};
+        this.UrlGetListAttr = "";
+        this.ReqGetListAttrObj = {};
         this.Title = "Ref Attribute Generate";
         this.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.urlEnviPaging = environment.FoundationR3Url + "/v1";

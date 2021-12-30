@@ -551,9 +551,9 @@ export class ApplicationDataComponent implements OnInit {
       AttrGroup: CommonConstant.AttrGroupApplicationData + "_" + this.BizTemplateCode,
       IsRefresh: false
     };
-    this.attrSettingObj.GetQuestionReqObj = GenObj;
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Application Attribute";
-    this.attrSettingObj.UrlGetQuestion = URLConstant.GenerateAppAttrContentV2;
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAttrContentV2;
   }
   GenerateAppAttrContentForm() {
     if (this.GenerateAppAttrContentObjs != null) {
@@ -1305,17 +1305,4 @@ export class ApplicationDataComponent implements OnInit {
     this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
     this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName; 
   }
-  getFormValidationErrors() {
-    console.log(this.NapAppModelForm);
-    const invalid = [];
-    const controls = this.NapAppModelForm.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-        console.log(name);
-      }
-    }
-    console.log(invalid);
-  }
-  
 }
