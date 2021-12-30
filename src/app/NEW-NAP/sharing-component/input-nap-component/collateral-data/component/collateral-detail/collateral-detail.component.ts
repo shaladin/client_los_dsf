@@ -35,6 +35,7 @@ import { AppCustPersonalObj } from 'app/shared/model/app-cust-personal-obj.model
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -171,6 +172,7 @@ export class CollateralDetailComponent implements OnInit {
 
     this.items = this.AddCollForm.get('items') as FormArray;
 
+    // this.SetRefAttrSettingObj();
     this.GetLegalAddr();
     this.initUcLookup();
     await this.GetAppCustByAppId();
@@ -210,6 +212,21 @@ export class CollateralDetailComponent implements OnInit {
     }
     this.GenerateAppCollateralAttr(false);
     await this.GetGS();
+  }
+
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  identifierAppCollAttr: string = "appCollateralAttrTestObjs";
+  SetRefAttrSettingObj() {
+    let GenObj =
+    {
+      AppCollateralId: this.AppCollateralId,
+      AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
+      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
+      IsRefresh: false
+    };
+    this.attrSettingObj.GetQuestionReqObj = GenObj;
+    this.attrSettingObj.Title = "Collateral Attribute";
+    this.attrSettingObj.UrlGetQuestion = URLConstant.GenerateAppCollateralAttrV2;
   }
 
   initUcLookup() {

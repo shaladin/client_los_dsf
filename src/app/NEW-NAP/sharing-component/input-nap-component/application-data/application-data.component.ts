@@ -37,6 +37,7 @@ import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
 import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
 import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-application-data',
@@ -205,6 +206,7 @@ export class ApplicationDataComponent implements OnInit {
     this.applicationDDLitems = [];
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
+    this.SetRefAttrSettingObj();
     this.initDdlMrWop();
     this.initDdlMrCustNotifyOpt();
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
@@ -443,7 +445,7 @@ export class ApplicationDataComponent implements OnInit {
         this.initDdlMrFirstInstType();
         this.initDdlPayFreq();
         this.getPayFregData();
-        this.GenerateAppAttrContent();
+        // this.GenerateAppAttrContent();
         this.spinner.hide();
       }
     );
@@ -540,6 +542,19 @@ export class ApplicationDataComponent implements OnInit {
       });
   }
 
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  readonly identifierAppAttr: string = "AppAttrContentObjs";
+  SetRefAttrSettingObj() {
+    let GenObj =
+    {
+      AppId: this.appId,
+      AttrGroup: CommonConstant.AttrGroupApplicationData + "_" + this.BizTemplateCode,
+      IsRefresh: false
+    };
+    this.attrSettingObj.GetQuestionReqObj = GenObj;
+    this.attrSettingObj.Title = "Application Attribute";
+    this.attrSettingObj.UrlGetQuestion = URLConstant.GenerateAppAttrContentV2;
+  }
   GenerateAppAttrContentForm() {
     if (this.GenerateAppAttrContentObjs != null) {
       this.ListAttrAnswer = [];
@@ -981,7 +996,7 @@ export class ApplicationDataComponent implements OnInit {
       for (let i = 0; i < this.NapAppModelForm.controls["AppAttrContentObjs"].value.length; i++) {
         var appAttrContentObj = new AppAttrContentObj();
         appAttrContentObj.AppId = this.appId;
-        appAttrContentObj.RefAttrCode = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].RefAttrCode;
+        appAttrContentObj.RefAttrCode = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].AttrCode;
         appAttrContentObj.AttrValue = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].AttrValue;
 
         appAttrContentObjs.push(appAttrContentObj);      
@@ -1290,5 +1305,17 @@ export class ApplicationDataComponent implements OnInit {
     this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
     this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName; 
   }
-
+  getFormValidationErrors() {
+    console.log(this.NapAppModelForm);
+    const invalid = [];
+    const controls = this.NapAppModelForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+        console.log(name);
+      }
+    }
+    console.log(invalid);
+  }
+  
 }
