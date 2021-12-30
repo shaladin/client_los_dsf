@@ -7,7 +7,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
@@ -81,7 +81,7 @@ export class NewLeadInputPageDsfComponent implements OnInit {
             this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response["LeadNo"]));
             this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
-            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
             this.isDmsReady = true;
           }
           console.log('dmsobj = ', JSON.stringify(this.dmsObj));
