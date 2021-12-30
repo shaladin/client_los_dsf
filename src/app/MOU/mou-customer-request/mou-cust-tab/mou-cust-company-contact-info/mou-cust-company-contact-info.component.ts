@@ -93,6 +93,7 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
     Email1: ['', Validators.pattern(CommonConstant.regexEmail)],
     Email2: ['', Validators.pattern(CommonConstant.regexEmail)],
     CopyFromContactPerson: [''],
+    IsGuarantor: [false]
   });
 
   controlNameIdType: string = 'MrIdTypeCode';
@@ -198,6 +199,14 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
     this.callbackCopyAddrComp.emit(this.copyFromContactPerson);
   }
 
+  CheckIsGuarantor() {
+    this.ContactInfoCompanyForm.controls.BirthDt.clearValidators();
+    if(this.ContactInfoCompanyForm.controls.IsGuarantor.value == true) {
+      this.ContactInfoCompanyForm.controls.BirthDt.setValidators(Validators.required);
+    }
+    this.ContactInfoCompanyForm.controls.BirthDt.updateValueAndValidity();
+  }
+
   SaveForm(){
     this.MouCustCompanyContactPersonObj = new MouCustCompanyContactPersonObj();
     if(this.listContactPersonCompany == undefined){
@@ -289,7 +298,7 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
       MrIdTypeCode: this.listContactPersonCompany[i].MrIdTypeCode,
       MrCustRelationshipCode: this.listContactPersonCompany[i].MrCustRelationshipCode,
       IdNo: this.listContactPersonCompany[i].IdNo,
-      IdExpiredDt: this.listContactPersonCompany[i].IdExpiredDt != null ? formatDate(this.listContactPersonCompany[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+      IdExpiredDt: this.checkIsNullOrEmpty(this.listContactPersonCompany[i].IdExpiredDt) ? "" : formatDate(this.listContactPersonCompany[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
       BirthPlace: this.listContactPersonCompany[i].BirthPlace,
       BirthDt: birthDt,
       MrJobPositionCode: this.listContactPersonCompany[i].MrJobPositionCode,
@@ -297,7 +306,8 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
       MobilePhnNo2: this.listContactPersonCompany[i].MobilePhnNo2,
       JobTitleName: this.listContactPersonCompany[i].JobTitleName,
       Email1: this.listContactPersonCompany[i].Email1,
-      Email2: this.listContactPersonCompany[i].Email2
+      Email2: this.listContactPersonCompany[i].Email2,
+      IsGuarantor: this.listContactPersonCompany[i].IsGuarantor
     });
 
     this.setCustRelationShip(this.listContactPersonCompany[i].MrCustRelationshipCode);
@@ -305,6 +315,11 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
     this.selectedJobPositionName = this.listContactPersonCompany[i].JobPositionName;
     this.getInitPattern();
     this.open(content);
+  }
+
+  checkIsNullOrEmpty(item: any) {
+    if(item == null || item == "") return true;
+    return false;
   }
 
   setCustRelationShip(MrCustRelationshipCode: string) {
@@ -412,6 +427,7 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
       Email1: ['', Validators.pattern(CommonConstant.regexEmail)],
       Email2: ['', Validators.pattern(CommonConstant.regexEmail)],
       CopyFromContactPerson: [''],
+      IsGuarantor: [false]
     });
     this.copyFromContactPerson = "";
     this.selectedGenderName = this.defaultGenderName;
@@ -458,6 +474,7 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
     this.MouCustCompanyContactPersonObj.FaxArea = this.ContactInfoCompanyForm.controls["contactPersonCompAddr"]["controls"].FaxArea.value;
     this.MouCustCompanyContactPersonObj.Fax = this.ContactInfoCompanyForm.controls["contactPersonCompAddr"]["controls"].Fax.value;
     this.MouCustCompanyContactPersonObj.JobPositionName = this.selectedJobPositionName;
+    this.MouCustCompanyContactPersonObj.IsGuarantor = this.ContactInfoCompanyForm.controls.IsGuarantor.value;
   }
 
   bindJobPositionObj(){
