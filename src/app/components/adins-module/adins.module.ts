@@ -22,6 +22,7 @@ import { UcapprovalhistModule } from '@adins/ucapprovalhist';
 import { UcaddtotempModule } from '@adins/ucaddtotemp';
 import { UcthingstodoModule } from '@adins/ucthingstodo';
 import { UcdropdownlistModule } from '@adins/ucdropdownlist';
+import { UcAttributeModule } from '@adins/uc-attribute';
 import { UcreportModule } from "@adins/ucreport";
 import { UcTestingComponent } from './uc-testing/uc-testing.component';
 import { UcTestComponent } from './uc-test/uc-test.component';
@@ -72,6 +73,7 @@ export const customCurrencyMaskConfig = {
         UcaddtotempModule,
         UcthingstodoModule,
         UcdropdownlistModule,
+        UcAttributeModule,
         RefAttrModule,
         UcreportModule,
         UcTestingComponent,
@@ -104,6 +106,7 @@ export const customCurrencyMaskConfig = {
         UcthingstodoModule,
         UcreportModule,
         UcdropdownlistModule,
+        UcAttributeModule,
         RefAttrModule,
         NgMultiSelectDropDownModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
