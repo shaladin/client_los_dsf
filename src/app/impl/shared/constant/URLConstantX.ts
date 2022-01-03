@@ -38,7 +38,7 @@ export class URLConstantX {
   public static CopyCancelledApp = environment.losUrl + "/v1" + "/AppX/CopyCancelledApp";
   public static CopyCancelledAppForMainData = environment.losUrl + "/v1" + "/AppX/CopyCancelledAppForMainData";
   public static CopyCancelledAppV2 = environment.losUrl + "/v2" + "/AppX/CopyCancelledApp";
-  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2" + "/AppX/CopyCancelledAppForMainData";
+  public static CopyCancelledAppForMainDataV2 = environment.losUrl + "/v2.1" + "/AppX/CopyCancelledAppForMainData";
   public static SubmitNapCustMainDataV2 = environment.losUrl + "/v2" + "/AppX/SubmitNAPCustMainData";
   public static AddAppFromSimpleLeadXV2 = environment.losUrl + "/v2" + "/AppX/AddAppFromSimpleLead";
   // App Invoice
