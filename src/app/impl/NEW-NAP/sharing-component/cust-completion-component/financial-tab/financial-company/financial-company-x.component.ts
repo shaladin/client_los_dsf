@@ -43,6 +43,8 @@ export class FinancialCompanyXComponent implements OnInit {
   LobCode: string;
   AppObj: AppObj = new AppObj();
   IsDisburseToCust: boolean = false;
+  NettIncomeAmt : number;
+  isCalculated : boolean = false;
 
   AppCustAttrListForm = this.fb.group({
   });
@@ -183,10 +185,21 @@ export class FinancialCompanyXComponent implements OnInit {
     this.currentModal = this.modalService.open(this.ModalCoyFinData, {ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false});
   }
 
+  onChangeCustFinInput() {
+    this.isCalculated = false;
+  }
+
   GetEvent(event) {
     if (event != undefined && event.Key == "IsDetail") {
       this.IsDetail = event.Value;
     }
+  }
+
+  calculateCompanyFinData(){
+    this.NettIncomeAmt = this.FinancialForm.controls.GrossMonthlyIncomeAmt.value - 
+                         this.FinancialForm.controls.OthMonthlyInstAmt.value - 
+                         this.FinancialForm.controls.OprCost.value;
+    this.isCalculated = true;
   }
 
   SetAttrContent(){
@@ -246,6 +259,11 @@ export class FinancialCompanyXComponent implements OnInit {
   async SaveAppCustPersonalFinData()
   {
     if (!this.FinancialForm.valid) return;
+
+    if (!this.isCalculated) {
+      this.toastr.warningMessage("Please Calculate First");
+      return;
+    }
 
     await this.http.post(URLConstant.AddEditAppCustCompanyFinData, {AppCustCompanyFinDataObj: this.FinancialForm.value}).toPromise().then(
       (response) => {
