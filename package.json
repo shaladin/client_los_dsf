@@ -21,6 +21,7 @@
   },
   "private": true,
   "dependencies": {
+    "@adins/uc-attribute": "^1.0.1",
     "@adins/uc-directive-upper-case": "^1.1.1",
     "@adins/uc-show-errors": "^1.0.8",
     "@adins/uc-subsection": "^1.0.5",
