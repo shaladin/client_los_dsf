@@ -118,11 +118,11 @@
                     <label class="col-md-3 adInsLabel" translate>Gross Monthly Income Amount</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyIncomeAmt != 0">{{CustCoyFinData.GrossMonthlyIncomeAmt | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyIncomeAmt == 0">-</label>
-                    <label class="col-md-3 adInsLabel" translate>Gross Profit Amount</label>
+                    <!-- <label class="col-md-3 adInsLabel" translate>Gross Profit Amount</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossProfitAmt != 0">{{CustCoyFinData.GrossProfitAmt | number:'.2':'en-US'}}</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossProfitAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossProfitAmt == 0">-</label> -->
                   </div>
-                  <div class="form-group row ">
+                  <!-- <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Return Of Investment Percent</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt != 0">{{CustCoyFinData.ReturnOfInvestmentPrcnt | number:'.6':'en-US'}} %</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt == 0">-</label>
@@ -161,24 +161,24 @@
                     <label class="col-md-3 adInsLabel" translate>Working Capital Amount</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.WorkingCapitalAmt != 0">{{CustCoyFinData.WorkingCapitalAmt | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.WorkingCapitalAmt == 0">-</label>
-                  </div>
+                  </div>-->
                   <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Other Monthly Installment Amount</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OthMonthlyInstAmt != 0">{{CustCoyFinData.OthMonthlyInstAmt | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OthMonthlyInstAmt == 0">-</label>
-                    <label class="col-md-3 adInsLabel" translate>Date As Of</label>
+                    <!-- <label class="col-md-3 adInsLabel" translate>Date As Of</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DateAsOf != 0">{{CustCoyFinData.DateAsOf | date: 'dd-MMM-yyyy'}}</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DateAsOf == 0">-</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DateAsOf == 0">-</label> -->
                   </div>
                   <div class="form-group row ">
-                    <label class="col-md-3 adInsLabel" translate>Revenue</label>
+                    <!-- <label class="col-md-3 adInsLabel" translate>Revenue</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue != 0">{{CustCoyFinData.Revenue | number:'.2':'en-US'}}</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue == 0">-</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue == 0">-</label> -->
                     <label class="col-md-3 adInsLabel" translate>Operation Cost</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost != 0">{{CustCoyFinData.OprCost | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost == 0">-</label>
                   </div>
-                  <div class="form-group row ">
+                  <!-- <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Profit Before Tax</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitBeforeTax != 0">{{CustCoyFinData.ProfitBeforeTax | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitBeforeTax == 0">-</label>
@@ -209,6 +209,11 @@
                     <label class="col-md-3 adInsLabel" translate>Current Ratio</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrRatio != 0">{{CustCoyFinData.CurrRatio | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrRatio == 0">-</label>
+                  </div> -->
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Net Income Amount</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost != 0">{{CustCoyFinData.GrossMonthlyIncomeAmt - CustCoyFinData.OthMonthlyInstAmt - CustCoyFinData.OprCost | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost == 0">-</label>
                   </div>
                 
             </div>
