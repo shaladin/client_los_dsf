@@ -356,6 +356,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       });
     }
 
+    this.InsuranceDataForm.controls.InsAssetCoveredBy.enable();
     if (this.BLCode == CommonConstant.FCTR && this.existingListAppColl.length != 0) {
       for (let i = 0; i < this.existingListAppColl.length; i++) {
         if (this.existingListAppColl[i].CollateralNo == this.appCollateralObj.CollateralNo) {
