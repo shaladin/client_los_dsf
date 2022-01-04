@@ -99,6 +99,8 @@ import { DeliveryOrderMultiAssetXComponent } from "app/impl/NEW-NAP/business-pro
 import { CustConfirmationPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-paging/cust-confirmation-paging-x.component";
 import { OfferingValidityCheckingRequestPagingComponent } from "./offering-validity-checking-request/offering-validity-checking-request-paging/offering-validity-checking-request-paging.component";
 import { OfferingValidityCheckingRequestDetailComponent } from "./offering-validity-checking-request/offering-validity-checking-request-detail/offering-validity-checking-request-detail.component";
+import { DocumentPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/document-printing-dsf/document-paging-dsf/document-paging-dsf.component";
+import { DocumentViewXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/document-printing-dsf/document-view-x-dsf/document-view-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -162,6 +164,7 @@ export const customCurrencyMaskConfig = {
     DocSignerPagingXComponent,
     InvoiceDetailComponent,
     DocumentPagingComponent,
+    DocumentPagingDsfComponent,
     DocumentViewComponent,
     DeliveryOrderMultiAssetComponent,
     DeliveryOrderMultiAssetDetailComponent,
@@ -205,6 +208,7 @@ export const customCurrencyMaskConfig = {
     PurchaseOrderDetailXComponent,
     AgrmntActivationDetailXComponent,
     DocumentViewXComponent,
+    DocumentViewXDsfComponent,
     NewPurchaseOrderDetailXComponent,
     PoEntryXComponent,
     CreateDoMultiAssetXComponent,

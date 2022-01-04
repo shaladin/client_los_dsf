@@ -1,0 +1,52 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="col-md-8" style="padding-left: 0px;">
+          <h4 class="form-section card-title" translate>Document Printing</h4>
+        </div>
+        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th><span translate class="thead-header" name='SeqNo'>No</span></th>
+        <th class="text-left"><span translate class="thead-header" name='DocName'>Document Name</span></th>
+        <th><span translate class="thead-header" name='IsNeedToBePrinted'>Need To Print</span>
+        </th>
+        <th class="text-center"><span translate class="thead-header" name='LastPrintDt'>Last Printed</span></th>
+        <th class="text-left"><span translate class="thead-header" name='EmpName'>Last Printed By</span></th>
+        <th><span translate class="thead-header" name='NumOfDocPrinted'>Number Of Printed</span>
+        </th>
+        <th class="text-center"><span translate class="thead-header" name='Print'>Print</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of AgrmntDocObj">
+        <td>{{item.SeqNo}}</td>
+        <td class="text-left">{{item.DocName}}</td>
+        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
+        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
+        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
+        <td class="text-left">{{item.EmpName}}</td>
+        <td>{{item.NumOfDocPrinted}}</td>
+        <td>
+          <a class="primary p-0" (click)="Print(item)">
+            <i class="font-medium-3 fa fa-print"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <div class="text-right">
+    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
+      [queryParams]="{BizTemplateCode : this.BizTemplateCode}" translate>
+      <i class="ft-arrow-left"></i> Back
+    </button>
+  </div>
+</div>

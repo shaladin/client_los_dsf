@@ -73,6 +73,8 @@ import { DeliveryOrderMultiAssetXComponent } from 'app/impl/NEW-NAP/business-pro
 import { CustConfirmationPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-paging/cust-confirmation-paging-x.component';
 import { OfferingValidityCheckingRequestPagingComponent } from './offering-validity-checking-request/offering-validity-checking-request-paging/offering-validity-checking-request-paging.component';
 import { OfferingValidityCheckingRequestDetailComponent } from './offering-validity-checking-request/offering-validity-checking-request-detail/offering-validity-checking-request-detail.component';
+import { DocumentPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/document-printing-dsf/document-paging-dsf/document-paging-dsf.component';
+import { DocumentViewXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/document-printing-dsf/document-view-x-dsf/document-view-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -338,6 +340,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.NAP_DOC_PRINT_PAGING,
+        component: DocumentPagingDsfComponent,
+        data: {
+          title: 'Document Printing Paging Dsf'
+        }
+      },
+      {
         path: PathConstant.NAP_DOC_PRINT_VIEW,
         component: DocumentViewComponent,
         data: {
@@ -349,6 +358,13 @@ const routes: Routes = [
         component: DocumentViewXComponent,
         data: {
           title: 'Document Printing View X'
+        }
+      },
+      {
+        path: PathConstantDsf.NAP_DOC_PRINT_VIEW_X,
+        component: DocumentViewXDsfComponent,
+        data: {
+          title: 'Document Printing View X Dsf'
         }
       },
       {
