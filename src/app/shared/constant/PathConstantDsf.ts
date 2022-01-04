@@ -135,4 +135,8 @@ export class PathConstantDsf {
     public static CRD_APPRV_DETAIL_X = PathConstant.CRD_APPRV_CR + "/" + PathConstantDsf.DETAIL_X;
 
     public static NEW_CUST = "NewCustomerXDsf";
+
+    public static NAP_DOC_PRINT = "DocPrintDsf";
+    public static NAP_DOC_PRINT_PAGING = PathConstantDsf.NAP_DOC_PRINT + "/" + PathConstant.PAGING;
+    public static NAP_DOC_PRINT_VIEW_X = PathConstantDsf.NAP_DOC_PRINT + "/" + PathConstantX.VIEW;
 }

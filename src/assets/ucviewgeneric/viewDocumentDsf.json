@@ -1,0 +1,112 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "DocumentId",
+        "subSectionTitle": "Main Info",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "link",
+            "label": "Application Number",
+            "property": "ApplicationNo",
+            "name": "ApplicationNo",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_APP",
+            "target" : "_blank",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Agreement No",
+            "property": "AggrementNo",
+            "name": "AggrementNo",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_AGRMNT",
+            "target" : "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Mou No",
+            "property": "MouCustNo",
+            "name": "MouCustNo",
+            "isHide": true,
+            "environment": "LOSR3WEB",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          }, 
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "link",
+            "label": "Agreement Parent No",
+            "property": "AggrementParentNo",
+            "name": "AggrementParentNo",
+            "environment": "LOSR3WEB",
+            "path": "NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW_DSF",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              },
+              {
+                "type": "BizTemplateCode",
+                "property": "CFNA"
+              }
+            ]
+          }, 
+          {
+            "type": "callback",
+            "key": "ViewProdOffering",
+            "label": "Product Offering Name",
+            "property": "ProdNo"
+          },
+          {
+            "type": "text",
+            "label": "Office Name",
+            "property": "OfficeName"
+          },
+          {
+            "type": "text",
+            "label": "Application Status",
+            "property": "Stat"
+          },
+          {
+            "type": "text",
+            "label": "Application Current Step",
+            "property": "CurrStep"
+          },
+          {
+            "type": "text",
+            "label": "Application Last Step",
+            "property": "LastStep"
+          }
+        ],
+        "querystring": {
+          "name": "viewDocumentDsf"
+
+        }
+      }
+    ]
+  }

@@ -17,7 +17,7 @@ export const environment = {
   ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
   FoundationR3Web:'http://foundation-be.confins.one:8888',
   //FoundationR3Web:'http://localhost:5000',
-  losR3Web: 'http://los.confins.one',
+  losR3Web: 'http://localhost:4200',
   WorkflowR3Url: 'http://engine.confins.one/Workflow_Dev_R3/',
   WebSocketURL: 'http://foundation-be.confins.one:8888',
   //WebSocketURL: 'http://localhost:5000',
