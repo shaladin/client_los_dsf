@@ -42,6 +42,8 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
+import { UcAttributeComponent } from '@adins/uc-attribute';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -136,6 +138,12 @@ export class CollateralAddEditComponent implements OnInit {
   // @ViewChild("CollateralModal", { read: ViewContainerRef }) collateralModal: ViewContainerRef;
   @ViewChild("CityIssuerModal", { read: ViewContainerRef }) cityIssuerModal: ViewContainerRef;
   @ViewChild("enjiForm") enjiForm: NgForm;
+  private ucAttrComp: UcAttributeComponent;
+  @ViewChild('ucAttrComp') set content(content: UcAttributeComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.ucAttrComp = content;
+    }
+  }
   items: FormArray;
   SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
 
@@ -229,6 +237,22 @@ export class CollateralAddEditComponent implements OnInit {
     });
   }
 
+  isReadyAttrSetting: boolean = false;
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  identifierAppCollAttr: string = "appCollateralAttrTestObjs";
+  SetRefAttrSettingObj() {
+    let GenObj =
+    {
+      AppCollateralId: this.AppCollateralId,
+      AssetTypeCode: this.AddCollForm.get("AssetTypeCode").value,
+      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
+      IsRefresh: false
+    };
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
+    this.attrSettingObj.Title = "Collateral Attribute";
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppCollateralAttrV2;
+    this.isReadyAttrSetting = true;
+  }
   back() {
     if (this.isReturnHandlingSave) {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT], { AppId: this.AppId, ReturnHandlingHId: this.ReturnHandlingHId, WfTaskListId: this.WfTaskListId });
@@ -659,6 +683,15 @@ export class CollateralAddEditComponent implements OnInit {
       });
 
     await this.GenerateAppCollateralAttr(false);
+    // let GenObj =
+    // {
+    //   AppCollateralId: this.AppCollateralId,
+    //   AssetTypeCode: this.AddCollForm.get("AssetTypeCode").value,
+    //   AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
+    //   IsRefresh: false
+    // };
+    // this.attrSettingObj.GetQuestionReqObj = GenObj;
+    // this.ucAttrComp.GetListAttribute();
   }
 
 
@@ -801,6 +834,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.isRequired = false;
     this.InputLookupProfessionObj.isReady = true;
+    // this.SetRefAttrSettingObj();
     await this.GetAppCust()
     if(this.custType == CommonConstant.CustTypePersonal){
       await this.GetAppCustPersonalJobData();

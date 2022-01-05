@@ -1046,6 +1046,7 @@ export class URLConstant {
   public static GetListExistingAppCollateralWithInsurance = environment.losUrl + "/v1" + "/AppCollateral/GetListExistingAppCollateralWithInsurance";
   public static GetAppCollateralByAppAssetId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralByAppAssetId";
   public static GenerateAppCollateralAttr = environment.losUrl + "/v1" + "/AppCollateral/GenerateAppCollateralAttr";
+  public static GenerateAppCollateralAttrV2 = environment.losUrl + "/v2" + "/AppCollateral/GenerateAppCollateralAttr";
   public static GetAppCollateralAccessoriesListByAppCollateralId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralAccessoriesListByAppCollateralId";
 
   // App Collateral Suppl Emp
@@ -1898,6 +1899,7 @@ export class URLConstant {
 
   //App Attr Content
   public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
+  public static GenerateAppAttrContentV2 = environment.losUrl + "/v2" + "/AppAttrContent/GenerateAppAttrContent";
   public static GetListAppAttrContentForView = environment.losUrl + "/v1" + "/AppAttrContent/GetListAppAttrContentForView";
 
   //Dashboard
@@ -1910,5 +1912,8 @@ export class URLConstant {
 
   //Ref Curr
   public static GetRefCurrByCode = environment.FoundationR3Url + "/v1" + "/RefCurr/GetRefCurrByCode";
+
+  //Cust Phone No
+  public static GetListCustPhoneNoByCustNo = environment.FoundationR3Url + "/v1" + "/Cust/GetListCustPhoneNoByCustNo";
 }
 
