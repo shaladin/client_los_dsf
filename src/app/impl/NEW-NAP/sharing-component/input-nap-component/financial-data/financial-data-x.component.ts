@@ -89,7 +89,7 @@ export class FinancialDataXComponent implements OnInit {
         StdEffectiveRatePrcnt: 0, //base eff rate to cust
         FlatRatePrcnt: 0, //flat rate to cust
         InstAmt: 0,
-        GracePeriod: 0,
+        GracePeriod: [0, [Validators.min(0)]],
         MrGracePeriodTypeCode: "",
 
         NumOfInst: 0,

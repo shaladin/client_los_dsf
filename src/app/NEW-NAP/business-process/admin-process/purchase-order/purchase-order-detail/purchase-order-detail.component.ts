@@ -138,22 +138,11 @@ export class PurchaseOrderDetailComponent implements OnInit {
       });
   }
 
-  async initBancAcc(){
+  async initBancAcc() {
     await this.http.post(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise().then(
-    (response) => {
-      if(response["ReturnObject"].length == 0){
-        this.isHasVendorBankAcc = false;
-      }
-      else{
-        this.vendorBankAccList = response["ReturnObject"];
-        this.vendorBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
-        var isDefaultFound = false;
-        for (const item of this.vendorBankAccList) {
-          if (item["IsDefault"]) {
-            this.VendorBankAcc = item as VendorBankAccObj;
-            isDefaultFound = true;
-            break;
-          }
+      (response) => {
+        if (response["ReturnObject"].length == 0) {
+          this.isHasVendorBankAcc = false;
         }
         else {
           this.vendorBankAccList = response["ReturnObject"];
