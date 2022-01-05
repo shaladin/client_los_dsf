@@ -96,7 +96,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
       OwnerMobilePhnNo: this.AppCollateralRegistrationObj.OwnerMobilePhnNo,
       SelfOwner: (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer),
       OwnerProfessionCode: this.AppCollateralRegistrationObj.OwnerProfessionCode,
-      MrOwnerTypeCode: this.AppCollateralRegistrationObj.MrOwnerTypeCode
+      MrOwnerTypeCode: this.AppCollateralRegistrationObj.MrOwnerTypeCode == null ? this.CustType : this.AppCollateralRegistrationObj.MrOwnerTypeCode
     });
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -201,7 +201,8 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
         OwnerZipcode: this.AddrLegalObj[0].Zipcode,
         OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
         OwnerAddrType: CommonConstant.AddrTypeLegal,
-        OwnerProfessionCode: this.AppCustPersonalJobData.MrProfessionCode
+        OwnerProfessionCode: this.AppCustPersonalJobData.MrProfessionCode,
+        MrOwnerTypeCode: this.AppCustObj.MrCustTypeCode
       });
       this.inputFieldOwnerAddrObj = new InputFieldObj();
       this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -288,10 +289,10 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   OwnerTypeObj: Array<KeyValueObj> = new Array();
   async bindOwnerTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.OwnerTypeObj = response[CommonConstant.ReturnObj];
-        this.parentForm.patchValue({
+        this.parentForm.controls[this.identifier].patchValue({
           MrOwnerTypeCode: this.CustType
         });
       }
@@ -313,7 +314,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false) {
     if (OwnerType == CommonConstant.CustTypePersonal) {
       if (IsOwnerTypeChanged) {
-        this.parentForm.patchValue({
+        this.parentForm.controls[this.identifier].patchValue({
           OwnerProfessionCode: ""
         });
 
@@ -332,11 +333,11 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
       }
     } else {
       if (IsOwnerTypeChanged) {
-        this.parentForm.patchValue({
+        this.parentForm.controls[this.identifier].patchValue({
           OwnerProfessionCode: ""
         });
       } else {
-        this.parentForm.patchValue({
+        this.parentForm.controls[this.identifier].patchValue({
           OwnerProfessionCode: this.AppCollateralRegistrationObj.OwnerProfessionCode
         });
       }

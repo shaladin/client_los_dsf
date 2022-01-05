@@ -35,10 +35,10 @@
                 <label class="col-md-4" translate>Customer</label>
                 <label class="col-md-2 adins-required-label" translate>Phone</label>
                 <div class="col-md-4">
-                  <select *ngIf="TelemkOfferSubj.ListPhoneNo" class="form-control" id="phoneNumberId" formControlName="Phn"
+                  <select *ngIf="ListPhoneNoObj" class="form-control" id="phoneNumberId" formControlName="Phn"
                     (change)="onChangePhn()"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Phn.invalid }">
-                    <option *ngFor="let item of TelemkOfferSubj.ListPhoneNo" [value]="item.PhoneNumber">
+                    <option *ngFor="let item of ListPhoneNoObj" [value]="item.PhoneNumber">
                       {{item.PhoneType}}: {{item.PhoneNumber}}
                     </option>
                   </select>
