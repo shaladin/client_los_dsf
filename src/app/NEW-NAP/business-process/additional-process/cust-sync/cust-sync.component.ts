@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -55,8 +56,9 @@ export class CustSyncComponent implements OnInit {
             return this.http.post(URLConstant.SyncAppCustWithCustFOUSecondary, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo });
           })
         ).toPromise().then(
-          (response) => {
+          async (response) => {
             if(response["StatusCode"] == 200){
+              await this.checkAppCustCompletion(e.RowObj.AppCustId);
               this.toastr.successMessage("Data Synced Successfully");
             }
           }
@@ -80,5 +82,12 @@ export class CustSyncComponent implements OnInit {
         }
       );
     }
+  }
+
+  async checkAppCustCompletion(appCustId: number) {
+    await this.http.post(URLConstantX.SaveAppCustCompletion, {Id: appCustId}).toPromise().then(
+      response => {
+      }
+    );
   }
 }

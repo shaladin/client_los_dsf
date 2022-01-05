@@ -12,6 +12,7 @@ import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-survey-paging-x',
@@ -96,6 +97,9 @@ export class SurveyPagingXComponent implements OnInit {
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
+    }
+    if (ev.Key == "Edit") {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.Id, "TrxNo": ev.RowObj.TrxNo });
     }
   }
 
