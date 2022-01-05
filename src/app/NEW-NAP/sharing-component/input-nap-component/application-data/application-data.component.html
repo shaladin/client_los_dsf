@@ -413,7 +413,7 @@
               </div>
             </div>
 
-            <div *ngIf="GenerateAppAttrContentObjs != null && isAppAttrContentReady">
+            <!-- <div *ngIf="GenerateAppAttrContentObjs != null && isAppAttrContentReady">
               <lib-ucSubsection [id]="'AppAttrContentId'" [title]="'Application Attribute'" [panel]="'appAttrContent'">
               </lib-ucSubsection>
               <div [id]="appAttrContent">
@@ -490,8 +490,10 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
+            <uc-attribute-form [parentForm]="NapAppModelForm" [identifier]="identifierAppAttr" [enjiForm]="enjiForm" [AttrSetting]="attrSettingObj"></uc-attribute-form>
+  
 
           <div class="form-actions right">
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">

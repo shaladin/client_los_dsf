@@ -1052,7 +1052,8 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       CopyToOwnerLocation: [''],
       OwnerProfessionCode: [''],
       SelfOwner: [false],
-      AttrContentObjs: this.fb.array([])
+      AttrContentObjs: this.fb.array([]),
+      MrOwnerTypeCode: ['']
     });
     this.AddCollForm.updateValueAndValidity();
 

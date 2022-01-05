@@ -45,6 +45,7 @@ import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-co
 import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-application-data-x',
@@ -239,6 +240,7 @@ export class ApplicationDataXComponent implements OnInit {
     this.applicationDDLitems = [];
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
+    this.SetRefAttrSettingObj();
     this.initDdlMrWop();
     this.initDdlMrCustNotifyOpt();
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
@@ -577,7 +579,7 @@ export class ApplicationDataXComponent implements OnInit {
         this.initDdlMrFirstInstType();
         this.initDdlPayFreq();
         this.getPayFregData();
-        this.GenerateAppAttrContent();
+        // this.GenerateAppAttrContent();
         this.spinner.hide();
       }
     );
@@ -689,6 +691,19 @@ export class ApplicationDataXComponent implements OnInit {
       });
   }
 
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  readonly identifierAppAttr: string = "AppAttrContentObjs";
+  SetRefAttrSettingObj() {
+    let GenObj =
+    {
+      AppId: this.appId,
+      AttrGroup: CommonConstant.AttrGroupApplicationData + "_" + this.BizTemplateCode,
+      IsRefresh: false
+    };
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
+    this.attrSettingObj.Title = "Application Attribute";
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAttrContentV2;
+  }
   GenerateAppAttrContentForm() {
     if (this.GenerateAppAttrContentObjs != null) {
       this.ListAttrAnswer = [];
@@ -1322,7 +1337,7 @@ export class ApplicationDataXComponent implements OnInit {
       for (let i = 0; i < this.NapAppModelForm.controls["AppAttrContentObjs"].value.length; i++) {
         var appAttrContentObj = new AppAttrContentObj();
         appAttrContentObj.AppId = this.appId;
-        appAttrContentObj.RefAttrCode = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].RefAttrCode;
+        appAttrContentObj.RefAttrCode = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].AttrCode;
         appAttrContentObj.AttrValue = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].AttrValue;
 
         appAttrContentObjs.push(appAttrContentObj);

@@ -61,7 +61,13 @@
             <lib-ucSubsection [id]="'addContactInfomationCompanyId'" [title]=" mode + ' Contact Information'"
               [panel]="'addContactInfomationCompany'">
             </lib-ucSubsection>
-            <div id="addContactInfomationCompany">
+            <div id="addContactInfomationCompany" class="px-3">
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel" for="IsGuarantor" translate>Guarantor</label>
+                <div class="col-md-4">
+                  <input class="border-primary" type="checkbox" data-md-icheck id="IsGuarantor" formControlName="IsGuarantor" (change)="CheckIsGuarantor()">
+                </div>               
+              </div>
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="ContactPersonName" translate>Name</label>
                 <div class="col-md-4">
@@ -118,7 +124,7 @@
                   <input type="text" id="IdNo" class="form-control" formControlName="IdNo" [ngClass]="{ 'is-invalid': enjiForm.submitted && ContactInfoCompanyForm.controls.IdNo.invalid}">
                   <lib-uc-show-errors [customPattern]="customPattern" [control]="ContactInfoCompanyForm.controls.IdNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adInsLabel" translate>Birth Date</label>
+                <label class="col-md-2 adInsLabel" [ngClass]="{'adins-required-label': ContactInfoCompanyForm.controls.IsGuarantor.value }" translate>Birth Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="BirthDt"
                     max="{{BusinessDate | date:'yyyy-MM-dd'}}"
@@ -176,33 +182,32 @@
                   <lib-uc-show-errors [control]="ContactInfoCompanyForm.controls.Email2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
-
-              <lib-ucSubsection [id]="'addressInfomationId'" [title]="'Address'"
-                [panel]="'addressInfomation'">
-              </lib-ucSubsection>
-              <div id="addressInfomation">
-                <div class="px-3">
-                  <div class="form-group row">
-                    <label class="col-md-2" translate>Copy Address From</label>
-                    <div class="col-md-4">
-                      <div class="input-group">
-                        <select class="form-control" formControlName="CopyFromContactPerson" [(ngModel)]="copyFromContactPerson">
-                          <option *ngFor="let item of copyToContactPersonAddrObj" [value]="item.Key">
-                            {{item.Value}}
-                          </option>
-                        </select>
-                        <div class="input-group-append">
-                            <span class="input-group-btn">
-                                <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChangedComp()">
-                                    <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
-                                </button>
-                            </span>
-                          </div>
-                      </div>
+            </div>
+            <lib-ucSubsection [id]="'addressInfomationId'" [title]="'Address'"
+              [panel]="'addressInfomation'">
+            </lib-ucSubsection>
+            <div id="addressInfomation">
+              <div class="px-3">
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Copy Address From</label>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <select class="form-control" formControlName="CopyFromContactPerson" [(ngModel)]="copyFromContactPerson">
+                        <option *ngFor="let item of copyToContactPersonAddrObj" [value]="item.Key">
+                          {{item.Value}}
+                        </option>
+                      </select>
+                      <div class="input-group-append">
+                          <span class="input-group-btn">
+                              <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChangedComp()">
+                                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                              </button>
+                          </span>
+                        </div>
                     </div>
-                  </div> 
-                  <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForCPComp" [enjiForm]="enjiForm" [identifier]="'contactPersonCompAddr'" [UCAddrForm]="ContactInfoCompanyForm" ></lib-ucaddress>
-                </div>
+                  </div>
+                </div> 
+                <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForCPComp" [enjiForm]="enjiForm" [identifier]="'contactPersonCompAddr'" [UCAddrForm]="ContactInfoCompanyForm" ></lib-ucaddress>
               </div>
             </div>
             <div class="form-actions right">

@@ -38,6 +38,8 @@ export class SchmBalloonXComponent implements OnInit {
   IsFirstCalc: boolean = true;
   EffRateAfterCalc: number = -1;
   FlatRateAfterCalc: number = -1;
+  GracePeriodAfterCalc: number = -1;
+  GracePeriodTypeAfterCalc: string = "empty";
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -77,6 +79,8 @@ export class SchmBalloonXComponent implements OnInit {
     if (this.ParentForm.getRawValue().ExistingFinData) {
       this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
       this.FlatRateAfterCalc = this.ParentForm.getRawValue().FlatRatePrcnt;
+      this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
+      this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
     }
   }
 
@@ -186,6 +190,8 @@ export class SchmBalloonXComponent implements OnInit {
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
+          this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
+          this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
             TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
@@ -459,6 +465,13 @@ export class SchmBalloonXComponent implements OnInit {
   }
 
   SetNeedReCalculate(value) {
+    if (this.GracePeriodAfterCalc != this.ParentForm.getRawValue().GracePeriod
+      || this.GracePeriodTypeAfterCalc != this.ParentForm.getRawValue().MrGracePeriodTypeCode) {
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
+      return;
+    }
     if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate) {
       if ((this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective && this.EffRateAfterCalc == this.ParentForm.getRawValue().EffectiveRatePrcnt)
         || (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeFlat && this.FlatRateAfterCalc == this.ParentForm.getRawValue().FlatRatePrcnt)) {
