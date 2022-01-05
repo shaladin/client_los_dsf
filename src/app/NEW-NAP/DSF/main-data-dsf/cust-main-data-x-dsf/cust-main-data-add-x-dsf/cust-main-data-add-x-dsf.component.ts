@@ -317,7 +317,7 @@ export class CustMainDataAddXDsfComponent implements OnInit {
         AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
       }
       else {
-        AddNapUrl = URLConstantX.AddNewApplicationFromCopyV2_1;
+        AddNapUrl = URLConstantX.AddNewApplicationFromCopyV2_2;
 
         // await this.http.post<GenericObj>(URLConstantDsf.AddXDAACPDSF, requestAddNapObj).toPromise().then(
         //   (response) => {
