@@ -1,0 +1,295 @@
+{
+    "title": "Document Printing",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "ApplicationNoId",
+            "value": "",
+            "label": "Application Number",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "B.AGRMNT_NO",
+            "id": "AgreementNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "B.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "B.PROD_OFFERING_NAME",
+            "id": "ProdNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "(CASE WHEN NEED_TO_PRINT_DOC <> DOC.PRINTED_DOC THEN 'Incomplete' ELSE 'Complete' END)",
+            "id": "StatusOfNeedPrinted",
+            "label": "Status Of Need Doc Printing",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": "Incomplete",
+                    "value": "Incomplete"
+                },
+                {
+                    "key": "Complete",
+                    "value": "Complete"
+                }
+            ],
+            "itemsUrl": []
+        }
+    ],
+    "querystring": {
+        "name": "searchDocument"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application No",
+            "name": "ApplicationNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Aggrement No",
+            "name": "AggrementNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Product  Offering Name",
+            "name": "ProdName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Status Of Need Doc Printing",
+            "name": "StatusOfNeedPrinted"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "ApplicationNo",
+            "target": "_blank",
+            "path": "VIEW_APP",
+            "param": [
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "CF4W",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "VIEW_AGRMNT",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "FL4W",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "VIEW_AGRMNT",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "CFRFN4W",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "VIEW_AGRMNT",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "FCTR",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "VIEW_AGRMNT",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "CFNA",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "VIEW_AGRMNT",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "BizTemplateCode",
+                                    "value": "DLFN",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "link",
+                                "position": "center",
+                                "property": "AggrementNo",
+                                "target": "_blank",
+                                "path": "VIEW_AGRMNT",
+                                "param": [
+                                    {
+                                        "type": "AgrmntId",
+                                        "property": "AgrmntId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "ViewProdOffering",
+            "position": "left",
+            "property": "ProdName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "StatusOfNeedPrinted"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW_DSF",
+                    "param": [
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

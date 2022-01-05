@@ -68,7 +68,7 @@
             "param": [
               {
                 "type": "AgrmntId",
-                "property": "AgrmntId"
+                "property": "AgrmntParentId"
               },
               {
                 "type": "BizTemplateCode",
