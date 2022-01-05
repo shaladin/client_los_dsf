@@ -127,20 +127,39 @@
       "position": "center",
       "action": [
         {
-          "type": "edit",
-          "path": "NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT",
-          "param": [
+          "type": "switch",
+          "case": [
             {
-              "type": "AppId",
-              "property": "AppId"
+              "conditions": [
+                {
+                  "isUser": true,
+                  "property": "Assignee",
+                  "value": null,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "Edit",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
             },
             {
-              "type": "WfTaskListId",
-              "property": "Id"
-            },
-            {
-              "type": "TrxNo",
-              "property": "TrxNo"
+              "conditions": [
+                {
+                  "isUser": false,
+                  "property": "Assignee",
+                  "value": null,
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "callback",
+                "key": "Edit",
+                "icon": "ft-edit-2"
+              },
+              "isHide": false
             }
           ]
         }
