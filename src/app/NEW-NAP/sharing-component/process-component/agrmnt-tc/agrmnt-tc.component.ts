@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, FormArray, Validators, ControlContainer, FormGr
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppObj } from 'app/shared/model/app/app.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
@@ -38,7 +37,7 @@ export class AgrmntTcComponent implements OnInit {
     private fb: FormBuilder, private cookieService: CookieService) { }
 
   currStep: string = "";
-  ngOnInit() {
+  async ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.parentForm.removeControl(this.identifier);
@@ -47,17 +46,13 @@ export class AgrmntTcComponent implements OnInit {
     while (listTC.length !== 0) {​​​​​
       listTC.removeAt(0)
     }​​​​​
-    var agrmntTcObj = {
-      Id: this.AgrmntId
-    }
-    var agrmntObj = { Id: this.AgrmntId };
-    this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
-      (responseAgrmnt: AgrmntObj) => {
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).toPromise().then(
+      async (responseAgrmnt: AgrmntObj) => {
         this.currStep = responseAgrmnt.AgrmntCurrStep;
         if(responseAgrmnt.BizTemplateCode === CommonConstant.OPL) {
           this.IsOpl = true;
         }
-        this.http.post(URLConstant.GetListAgrmntTcbyAgrmntId, agrmntTcObj).subscribe(
+        await this.http.post(URLConstant.GetListAgrmntTcbyAgrmntId, { Id: this.AgrmntId }).toPromise().then(
           (response) => {
             this.AgrmntTcList = response["ReturnObject"];
             if (this.AgrmntTcList != null && this.AgrmntTcList.length != 0) {
