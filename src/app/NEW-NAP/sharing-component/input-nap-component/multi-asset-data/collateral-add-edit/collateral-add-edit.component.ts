@@ -43,7 +43,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
-import { UcAttributeComponent } from '@adins/uc-attribute';
+// import { UcAttributeComponent } from '@adins/uc-attribute';
 
 @Component({
   selector: 'app-collateral-add-edit',
