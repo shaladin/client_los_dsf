@@ -43,13 +43,13 @@ export class AgrmntTcComponent implements OnInit {
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
-    while (listTC.length !== 0) {​​​​​
+    while (listTC.length !== 0) {
       listTC.removeAt(0)
-    }​​​​​
+    }
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).toPromise().then(
       async (responseAgrmnt: AgrmntObj) => {
         this.currStep = responseAgrmnt.AgrmntCurrStep;
-        if(responseAgrmnt.BizTemplateCode === CommonConstant.OPL) {
+        if (responseAgrmnt.BizTemplateCode === CommonConstant.OPL) {
           this.IsOpl = true;
         }
         await this.http.post(URLConstant.GetListAgrmntTcbyAgrmntId, { Id: this.AgrmntId }).toPromise().then(
@@ -74,10 +74,10 @@ export class AgrmntTcComponent implements OnInit {
                   IsWaivable: this.AgrmntTcList[i].IsWaivable,
                   IsWaived: this.AgrmntTcList[i].IsWaived
                 }) as FormGroup;
-    
+
                 if (this.AgrmntTcList[i].IsMandatory == true) {
-                  if(this.AgrmntTcList[i].PriorTo == responseAgrmnt.AgrmntCurrStep) {
-                    if(!this.AgrmntTcList[i].IsWaived) {
+                  if (this.AgrmntTcList[i].PriorTo == responseAgrmnt.AgrmntCurrStep) {
+                    if (!this.AgrmntTcList[i].IsWaived) {
                       TCDetail.controls.PromisedDt.setValidators([Validators.required]);
                     }
                   }
@@ -95,20 +95,20 @@ export class AgrmntTcComponent implements OnInit {
                   TCDetail.controls.PromisedDt.disable();
                   TCDetail.controls.IsChecked.disable();
                   TCDetail.controls.IsWaived.disable();
-                  if(!this.AgrmntTcList[i].IsExpDtMandatory){
+                  if (!this.AgrmntTcList[i].IsExpDtMandatory) {
                     TCDetail.controls.ExpiredDt.disable();
                   }
                 }
-    
+
                 listTC.push(TCDetail);
                 this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
               }
-    
+
               this.ReconstructForm();
               this.OutputMode.emit("edit");
             }
           }
-        ); 
+        );
       },
       (error) => {
         console.log(error);
@@ -116,7 +116,7 @@ export class AgrmntTcComponent implements OnInit {
     );
   }
 
-  ResetPromisedAndExpiredDtToNull(index){
+  ResetPromisedAndExpiredDtToNull(index) {
     var listTC = this.parentForm.get(this.identifier) as FormArray
     var item = listTC.at(index);
     item.patchValue({
@@ -143,15 +143,15 @@ export class AgrmntTcComponent implements OnInit {
       console.log(priorTo);
       if (isMandatory) {
         //logic PriorTo
-        if(!this.IsFromOutstandingTc){
-          if(priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
+        if (!this.IsFromOutstandingTc) {
+          if (priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
         }
         if (isChecked) {
           tempExpiredDt.enable();
-          if(isExpDtMandatory){
+          if (isExpDtMandatory) {
             tempExpiredDt.setValidators([Validators.required]);
           }
-          else{
+          else {
             tempExpiredDt.clearValidators();
           }
           tempExpiredDt.updateValueAndValidity();
@@ -159,13 +159,13 @@ export class AgrmntTcComponent implements OnInit {
           tempPromisedDt.clearValidators();
           tempPromisedDt.updateValueAndValidity();
           this.totalCheckAll++;
-        } 
+        }
         else {
-          if(isWaived){
+          if (isWaived) {
             tempPromisedDt.disable();
             tempPromisedDt.clearValidators();
           }
-          else{
+          else {
             tempPromisedDt.enable();
             tempPromisedDt.setValidators([Validators.required]);
             this.IsCheckedAll = false;
@@ -175,26 +175,26 @@ export class AgrmntTcComponent implements OnInit {
           tempExpiredDt.clearValidators();
           tempExpiredDt.updateValueAndValidity();
         }
-      } 
+      }
       else {
         if (isChecked) {
           tempExpiredDt.enable();
-          if(isExpDtMandatory){
+          if (isExpDtMandatory) {
             tempExpiredDt.setValidators([Validators.required]);
           }
-          else{
+          else {
             tempExpiredDt.clearValidators();
           }
           tempExpiredDt.updateValueAndValidity();
           tempPromisedDt.disable();
           tempPromisedDt.clearValidators();
           tempPromisedDt.updateValueAndValidity();
-        } 
+        }
         else {
-          if(isWaived){
+          if (isWaived) {
             tempPromisedDt.disable();
           }
-          else{
+          else {
             tempPromisedDt.enable();
           }
           tempPromisedDt.clearValidators();
