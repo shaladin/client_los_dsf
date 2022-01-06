@@ -286,6 +286,10 @@
                         {
                             "type": "AgrmntId",
                             "property": "AgrmntId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
                         }
                     ]
                 }
