@@ -37,27 +37,27 @@ export class TermConditionsComponent implements OnInit {
     private fb: FormBuilder, private cookieService: CookieService) { }
 
   currStep: string = "";
-  ngOnInit() {
+  async ngOnInit() {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     let listTC = this.parentForm.get(this.identifier) as FormArray;
-    while (listTC.length !== 0) {​​​​​
+    while (listTC.length !== 0) {
       listTC.removeAt(0)
-    }​​​​​
+    }
     let appTcObj = {
       Id: this.AppId
     }
     let appObj = { Id: this.AppId };
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
-      (responseApp: AppObj) => {
+    await this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      async (responseApp: AppObj) => {
         this.currStep = responseApp.AppCurrStep;
-        if(responseApp.BizTemplateCode === CommonConstant.OPL) {
+        if (responseApp.BizTemplateCode === CommonConstant.OPL) {
           this.IsOpl = true;
         }
-        this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
-          (response) => {
+        await this.http.post(URLConstant.GetListTCbyAppId, appTcObj).toPromise().then(
+          async (response) => {
             this.AppTcList = response["AppTcs"];
             if (this.AppTcList != null && this.AppTcList["length"] != 0) {
               for (let i = 0; i < this.AppTcList["length"]; i++) {
@@ -79,10 +79,10 @@ export class TermConditionsComponent implements OnInit {
                   IsWaived: this.AppTcList[i].IsWaived,
                   RowVersion: this.AppTcList[i].RowVersion
                 }) as FormGroup;
-    
+
                 if (this.AppTcList[i].IsMandatory == true) {
-                  if(this.AppTcList[i].PriorTo == responseApp.AppCurrStep) {
-                    if(!this.AppTcList[i].IsWaived) {
+                  if (this.AppTcList[i].PriorTo == responseApp.AppCurrStep) {
+                    if (!this.AppTcList[i].IsWaived) {
                       TCDetail.controls.PromisedDt.setValidators([Validators.required]);
                     }
                   }
@@ -96,23 +96,23 @@ export class TermConditionsComponent implements OnInit {
                 if (this.AppTcList[i].IsChecked == false) {
                   TCDetail.controls.ExpiredDt.disable();
                 }
-                else if(this.AppTcList[i].IsChecked == true && this.IsNap == false) {
+                else if (this.AppTcList[i].IsChecked == true && this.IsNap == false) {
                   TCDetail.controls.PromisedDt.disable();
                   TCDetail.controls.IsChecked.disable();
-                  if(!this.AppTcList[i].IsExpDtMandatory){
+                  if (!this.AppTcList[i].IsExpDtMandatory) {
                     TCDetail.controls.ExpiredDt.disable();
                   }
                 }
-    
+
                 listTC.push(TCDetail);
                 this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
               }
-    
+
               this.ReconstructForm();
               this.OutputMode.emit("edit");
             }
             else {
-              this.http.post(URLConstant.GetListTCbyAppIdFromRule, appTcObj).subscribe(
+              await this.http.post(URLConstant.GetListTCbyAppIdFromRule, appTcObj).toPromise().then(
                 (response) => {
                   this.AppTcList = response["AppTcs"];
                   for (let i = 0; i < this.AppTcList["length"]; i++) {
@@ -134,10 +134,10 @@ export class TermConditionsComponent implements OnInit {
                       IsWaived: this.AppTcList[i].IsWaived,
                       RowVersion: this.AppTcList[i].RowVersion
                     }) as FormGroup;
-    
+
                     if (this.AppTcList[i].IsMandatory == true) {
-                      if(this.AppTcList[i].PriorTo == responseApp.AppCurrStep){
-                        if(!this.AppTcList[i].IsWaived){
+                      if (this.AppTcList[i].PriorTo == responseApp.AppCurrStep) {
+                        if (!this.AppTcList[i].IsWaived) {
                           TCDetail.controls.PromisedDt.setValidators([Validators.required]);
                         }
                       }
@@ -147,28 +147,28 @@ export class TermConditionsComponent implements OnInit {
                     if (this.AppTcList[i].IsChecked == false && this.AppTcList[i].IsMandatory == true) {
                       this.IsCheckedAll = false;
                     }
-                  
+
                     if (this.AppTcList[i].IsChecked == false) {
                       TCDetail.controls.ExpiredDt.disable();
                     }
                     else {
-                      TCDetail.controls.PromisedDt.disable(); 
-                      if(!this.AppTcList[i].IsExpDtMandatory){
+                      TCDetail.controls.PromisedDt.disable();
+                      if (!this.AppTcList[i].IsExpDtMandatory) {
                         TCDetail.controls.ExpiredDt.disable();
                       }
                     }
-     
+
                     listTC.push(TCDetail);
                     this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
                   }
-    
+
                   this.ReconstructForm();
                   this.OutputMode.emit("add");
                 }
               );
             }
           }
-        ); 
+        );
       },
       (error) => {
         console.log(error);
@@ -176,7 +176,7 @@ export class TermConditionsComponent implements OnInit {
     );
   }
 
-  ResetPromisedAndExpiredDtToNull(index){
+  ResetPromisedAndExpiredDtToNull(index) {
     let listTC = this.parentForm.get(this.identifier) as FormArray
     let item = listTC.at(index);
     item.patchValue({
@@ -202,13 +202,13 @@ export class TermConditionsComponent implements OnInit {
 
       if (isMandatory) {
         //logic PriorTo
-        if(priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
+        if (priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
         if (isChecked) {
           tempExpiredDt.enable();
-          if(isExpDtMandatory){
+          if (isExpDtMandatory) {
             tempExpiredDt.setValidators([Validators.required]);
           }
-          else{
+          else {
             tempExpiredDt.clearValidators();
           }
           tempExpiredDt.updateValueAndValidity();
@@ -216,13 +216,13 @@ export class TermConditionsComponent implements OnInit {
           tempPromisedDt.clearValidators();
           tempPromisedDt.updateValueAndValidity();
           this.totalCheckAll++;
-        } 
+        }
         else {
-          if(isWaived){
+          if (isWaived) {
             tempPromisedDt.disable();
             tempPromisedDt.clearValidators();
           }
-          else{
+          else {
             tempPromisedDt.enable();
             tempPromisedDt.setValidators([Validators.required]);
             this.IsCheckedAll = false;
@@ -232,26 +232,26 @@ export class TermConditionsComponent implements OnInit {
           tempExpiredDt.clearValidators();
           tempExpiredDt.updateValueAndValidity();
         }
-      } 
+      }
       else {
         if (isChecked) {
           tempExpiredDt.enable();
-          if(isExpDtMandatory){
+          if (isExpDtMandatory) {
             tempExpiredDt.setValidators([Validators.required]);
           }
-          else{
+          else {
             tempExpiredDt.clearValidators();
           }
           tempExpiredDt.updateValueAndValidity();
           tempPromisedDt.disable();
           tempPromisedDt.clearValidators();
           tempPromisedDt.updateValueAndValidity();
-        } 
+        }
         else {
-          if(isWaived){
+          if (isWaived) {
             tempPromisedDt.disable();
           }
-          else{
+          else {
             tempPromisedDt.enable();
           }
           tempPromisedDt.clearValidators();
