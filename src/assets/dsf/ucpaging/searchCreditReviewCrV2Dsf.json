@@ -3,10 +3,11 @@
     "exportExcel": false,
     "component": [
         {
-            "type": "dropdown",
+            "type": "officeRoleCodes",
+            "datatype": "text",
             "name": "a.ORI_OFFICE_CODE",
-            "id": "OfficeNameId",
-            "value": "Office Name",
+            "id": "OfficeCodeId",
+            "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
             "ddlType": "all",
@@ -41,7 +42,23 @@
             "value": "",
             "label": "Product Offering Name",
             "placeholder": "Placeholder"
-        }
+        },
+        {
+            "type" : "claim",
+            "label": "Task Claim Status",
+            "id": "ClaimStatId",
+            "ddlType" : "all",
+            "isCriteriaDataTable" : true
+          },
+          {
+            "type": "textbox",
+            "name": "Assignee",
+            "id": "ClaimById",
+            "value": "",
+            "label": "Task Claim By",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+          }
     ],
     "headerList": [
         {
@@ -49,6 +66,12 @@
             "position": "center",
             "label": "SLA",
             "name": "IndicatorSLA"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Claim By",
+            "name": "Assignee"
         },
         {
             "type": "sort",
@@ -92,6 +115,11 @@
             "type": "sla",
             "position": "center",
             "property": "IndicatorSLA"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Assignee"
         },
         {
             "type": "text",
