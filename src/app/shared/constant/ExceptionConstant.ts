@@ -197,5 +197,7 @@ export class ExceptionConstant {
     public static INS_ASSET_CATEGORY_NOT_FOUND = "Ins Asset Category Not Found, Please Setting Rule First";
     public static EXP_PASSWORD = "Password has expired. Please change your password."; 
     public static PWD_EXCEPTION = "Minimum 8 characters, at least 1 letter, 1 number and 1 special character.";
+
+    public static MAX_REFERANTOR_EXCEPTION = "Number of Referantor Cannot Be More than {0}";
 }
 
