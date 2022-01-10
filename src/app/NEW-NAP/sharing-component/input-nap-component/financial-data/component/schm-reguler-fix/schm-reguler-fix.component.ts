@@ -37,6 +37,8 @@ export class SchmRegulerFixComponent implements OnInit {
   IsFirstCalc: boolean = true;
   EffRateAfterCalc: number = -1;
   FlatRateAfterCalc: number = -1;
+  GracePeriodAfterCalc: number = -1;
+  GracePeriodTypeAfterCalc: string = "empty";
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
   constructor(private fb: FormBuilder,
@@ -76,6 +78,8 @@ export class SchmRegulerFixComponent implements OnInit {
     if (this.ParentForm.getRawValue().ExistingFinData) {
       this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
       this.FlatRateAfterCalc = this.ParentForm.getRawValue().FlatRatePrcnt;
+      this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
+      this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
     }
   }
 
@@ -92,7 +96,7 @@ export class SchmRegulerFixComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMaster, tempReq).subscribe(
       (response) => {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
-        this.CalcBaseOptions.sort((a,b) => a.SeqNo - b.SeqNo);
+        this.CalcBaseOptions.sort((a, b) => a.SeqNo - b.SeqNo);
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmRegularFix) !== -1);
 
         if (this.CalcBaseOptions.length > 0) {
@@ -105,7 +109,7 @@ export class SchmRegulerFixComponent implements OnInit {
             this.ParentForm.get("EffectiveRatePrcnt").disable();
             this.ParentForm.get("FlatRatePrcnt").disable();
             this.ParentForm.get("InstAmt").disable();
-          }else {
+          } else {
             this.ParentForm.patchValue({
               CalcBase: this.CalcBaseOptions[0].MasterCode
             });
@@ -169,6 +173,8 @@ export class SchmRegulerFixComponent implements OnInit {
           this.listInstallment = response.InstallmentTable;
           this.EffRateAfterCalc = response.EffectiveRatePrcnt;
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
+          this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
+          this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
             TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
@@ -416,6 +422,13 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   SetNeedReCalculate(value: boolean) {
+    if (this.GracePeriodAfterCalc != this.ParentForm.getRawValue().GracePeriod
+      || this.GracePeriodTypeAfterCalc != this.ParentForm.getRawValue().MrGracePeriodTypeCode) {
+      this.ParentForm.patchValue({
+        IsReCalculate: false
+      });
+      return;
+    }
     if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate) {
       if ((this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective && this.EffRateAfterCalc == this.ParentForm.getRawValue().EffectiveRatePrcnt)
         || (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeFlat && this.FlatRateAfterCalc == this.ParentForm.getRawValue().FlatRatePrcnt)) {
