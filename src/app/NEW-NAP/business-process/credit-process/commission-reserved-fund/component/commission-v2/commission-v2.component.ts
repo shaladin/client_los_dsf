@@ -17,18 +17,20 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCommissionDObj } from 'app/shared/model/app-commission-d-obj.model';
 import { ResultRefundObj } from 'app/shared/model/app-fin-data/result-refund.model';
 import { ReqGetAppCommissionRuleObj } from 'app/shared/model/app-commission-rsv-fund/req-get-app-commission-rule-obj.model';
-import { ReqTaxObj } from 'app/shared/model/app-commission-rsv-fund/req-tax-obj.model';
+import { ReqTaxV2Obj, VendorEmpTaxObj, VendorTaxObj } from 'app/shared/model/app-commission-rsv-fund/req-tax-obj.model';
 import { AppReservedFundObj } from 'app/shared/model/app-reserved-fund-obj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
-import { String } from 'typescript-string-operations';
 import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/app-commission-rsv-fund/req-return-handling-comm-rsv-fund-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
 import { environment } from 'environments/environment';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ResGetRefTaxOfficeDetailObj } from 'app/shared/model/Response/commission/res-get-ref-tax-office-detail-obj.model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -47,6 +49,7 @@ export class CommissionV2Component implements OnInit {
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: object = {};
   @Input() BizTemplateCode: string;
+  @Input() NapObj: AppObj;
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
@@ -96,9 +99,9 @@ export class CommissionV2Component implements OnInit {
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
   readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
   readonly DDLTask: string = CommonConstant.ReturnTask;
+  taxOfficeCode: string = "";
 
-
-  FormReturnObj  =this.fb.group({
+  FormReturnObj = this.fb.group({
     ReturnTo: [''],
     Reason: [''],
     Notes: ['']
@@ -152,6 +155,7 @@ export class CommissionV2Component implements OnInit {
     await this.GetExistingAppCommData();
     await this.bindDDLReasonReturn();
     await this.bindTaskObj();
+    this.GetTaxOffice();
     // if (Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object) {
     //   if (this.BizTemplateCode == CommonConstant.CFNA) {
     //     this.IsCalculated = true;
@@ -174,7 +178,7 @@ export class CommissionV2Component implements OnInit {
     );
   }
   DictRemainingIncomeForm: object = {};
-  async GetListAppReservedFundByAppId(){
+  async GetListAppReservedFundByAppId() {
     for (let index = 0; index < this.ListResultRefundIncomeInfo.length; index++) {
       const element = this.ListResultRefundIncomeInfo[index];
       let TempObj = new ResultRefundObj();
@@ -183,17 +187,17 @@ export class CommissionV2Component implements OnInit {
       TempObj.RefundAmount = element.RefundAmount;
       this.DictRemainingIncomeForm[element.RefundAllocationFrom] = TempObj;
     }
-    await this.http.post(URLConstant.GetListAppReservedFundByAppId, {Id: this.ReturnHandlingHObj.AppId}).toPromise().then(
-      (response)=>{
+    await this.http.post(URLConstant.GetListAppReservedFundByAppId, { Id: this.ReturnHandlingHObj.AppId }).toPromise().then(
+      (response) => {
         // console.log(response);
         let tempObj: Array<AppReservedFundObj> = response[CommonConstant.ReturnObj];
         // console.log(tempObj);
         for (let index = 0; index < tempObj.length; index++) {
           const element = tempObj[index];
           // console.log(element);
-          if(this.DictRemainingIncomeForm[element.MrReservedFundSourceCode]){
-            this.DictRemainingIncomeForm[element.MrReservedFundSourceCode].RefundAmount-=element.ReservedFundAmt;
-          }          
+          if (this.DictRemainingIncomeForm[element.MrReservedFundSourceCode]) {
+            this.DictRemainingIncomeForm[element.MrReservedFundSourceCode].RefundAmount -= element.ReservedFundAmt;
+          }
         }
         // console.log(this.DictRemainingIncomeForm);
         this.outputDictRemaining.emit(this.DictRemainingIncomeForm);
@@ -202,7 +206,7 @@ export class CommissionV2Component implements OnInit {
   }
 
   async GetContentData() {
-    var obj;
+    let obj;
     obj = {
       Id: this.ReturnHandlingHObj.AppId,
       RowVersion: ""
@@ -234,7 +238,7 @@ export class CommissionV2Component implements OnInit {
   GetDDLContent(ReturnObject, content: string) {
     if (content == CommonConstant.ContentReferantor) {
       if (ReturnObject.AppId == null) return;
-      var KVPObj;
+      let KVPObj;
       KVPObj = {
         Key: ReturnObject.ReferantorCode,
         Value: ReturnObject.ReferantorName
@@ -248,8 +252,8 @@ export class CommissionV2Component implements OnInit {
         BankBranch: ReturnObject.BankBranch,
       };
     } else {
-      for (var i = 0; i < ReturnObject.length; i++) {
-        var KVPObj;
+      for (let i = 0; i < ReturnObject.length; i++) {
+        let KVPObj;
         if (content == CommonConstant.ContentSupplier) {
           KVPObj = {
             Key: ReturnObject[i].SupplCode,
@@ -278,18 +282,17 @@ export class CommissionV2Component implements OnInit {
     let obj: ReqGetAppCommissionRuleObj = { AppId: this.ReturnHandlingHObj.AppId, BizTemplateCode: this.BizTemplateCode };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
-        var ResponseObj = response[CommonConstant.ReturnObj];
+        let ResponseObj = response[CommonConstant.ReturnObj];
         // override hide suppl & suppl emp jika CFRFN4W ignore rule
-        if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA)
-        {
+        if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
           ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
           ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp = null;
           this.HideForm1 = true;
           this.HideForm2 = true;
         }
         if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp) { // For CFNA
-          for (var i = 0; i < ResponseObj["length"]; i++) {
-            var temp: RuleCommissionObj = ResponseObj[i][CommonConstant.ReturnObj].RuleDataObjects;
+          for (let i = 0; i < ResponseObj["length"]; i++) {
+            let temp: RuleCommissionObj = ResponseObj[i][CommonConstant.ReturnObj].RuleDataObjects;
             this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
             this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
           }
@@ -301,10 +304,10 @@ export class CommissionV2Component implements OnInit {
   }
 
   BindRuleData(tempObj: any, contentType: string, supplCode: string) {
-    var listTempObj = new Array();
+    let listTempObj = new Array();
     if (contentType == CommonConstant.ContentSupplier) {
-      for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
-        var temp = {
+      for (let i = 0; i < tempObj.AllocationFrom.length; i++) {
+        let temp = {
           AllocationAmount: tempObj.AllocationAmount[i],
           AllocationBehaviour: tempObj.AllocationBehaviour[i],
           AllocationFrom: tempObj.AllocationFrom[i],
@@ -319,16 +322,16 @@ export class CommissionV2Component implements OnInit {
       this.RuleSupplierData[supplCode] = listTempObj;
     }
     if (contentType == CommonConstant.ContentSupplierEmp) {
-      var DictJobPosition: object = {};
-      var tempJobPosition: string = "";
-      var listJobPosition = new Array();
-      for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
+      let DictJobPosition: object = {};
+      let tempJobPosition: string = "";
+      let listJobPosition = new Array();
+      for (let i = 0; i < tempObj.AllocationFrom.length; i++) {
         if (tempJobPosition != tempObj.JobPositionCode[i]) {
           listTempObj = new Array();
           tempJobPosition = tempObj.JobPositionCode[i];
           listJobPosition.push(tempJobPosition);
         }
-        var temp = {
+        let temp = {
           AllocationAmount: tempObj.AllocationAmount[i],
           AllocationBehaviour: tempObj.AllocationBehaviour[i],
           AllocationFrom: tempObj.AllocationFrom[i],
@@ -341,15 +344,15 @@ export class CommissionV2Component implements OnInit {
       }
 
       // sort 
-      for (var i = 0; i < listJobPosition.length; i++) {
+      for (let i = 0; i < listJobPosition.length; i++) {
         listTempObj = DictJobPosition[listJobPosition[i]];
         listTempObj.sort((a, b) => a.AllocationFromSeq - b.AllocationFromSeq);
       }
       this.RuleSupplierEmpData[supplCode] = DictJobPosition;
     }
     if (contentType == CommonConstant.ContentReferantor) {
-      for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
-        var temp = {
+      for (let i = 0; i < tempObj.AllocationFrom.length; i++) {
+        let temp = {
           AllocationAmount: tempObj.AllocationAmount[i],
           AllocationBehaviour: tempObj.AllocationBehaviour[i],
           AllocationFrom: tempObj.AllocationFrom[i],
@@ -367,10 +370,10 @@ export class CommissionV2Component implements OnInit {
 
   isAutoGenerate: boolean = true;
   async GetExistingAppCommData() {
-    var objApi = { Id: this.ReturnHandlingHObj.AppId };
+    let objApi = { Id: this.ReturnHandlingHObj.AppId };
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
-        var tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
+        let tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
         if (tempObj.length > 0) {
           this.isAutoGenerate = false;
           this.GetFormAddDynamicObj(CommonConstant.ContentSupplier);
@@ -409,71 +412,71 @@ export class CommissionV2Component implements OnInit {
   CalculateTotal() {
     console.log("CALCULATE ME");
     this.Summary.TotalCommisionAmount = 0;
+    this.Summary.TotalCommissionAfterTaxAmt = 0;
+    this.Summary.TotalDisburseAmount = 0;
+    this.Summary.totalExpenseAmount = 0;
     this.Summary.TotalTaxAmmount = 0;
     this.Summary.TotalVATAmount = 0;
     this.Summary.GrossYield = 0;
     this.totalExpenseAmt = 0;
     this.Summary.totalExpenseAmount = 0;
-    for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
+    for (let i = 0; i < this.ListAllocFromForDict.length; i++) {
       this.DictTotalIncomeForm[this.ListAllocFromForDict[i]] = 0;
     }
 
-    var listVendorCode: Array<string> = new Array<string>();
-    var listVendorEmpNo: Array<string> = new Array<string>();
-    var listTrxAmt: Array<Array<number>> = new Array<Array<number>>();
-    if (this.GetCalcTaxData(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-    if (this.GetCalcTaxData(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
-    if (this.GetCalcTaxData(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    // let listVendorCode: Array<string> = new Array<string>();
+    // let listVendorEmpNo: Array<string> = new Array<string>();
+    // let listTrxAmt: Array<Array<number>> = new Array<Array<number>>();
+    // if (this.GetCalcTaxData(this.identifierSupplier, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    // if (this.GetCalcTaxData(this.identifierSupplierEmp, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    // if (this.GetCalcTaxData(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
+    const listVendorTax: Array<VendorTaxObj> = this.GetCalcVendorTaxDataV2(this.identifierSupplier);
+    const listVendorEmpTax: Array<VendorEmpTaxObj> = this.GetCalcVendorEmpTaxDataV2(this.identifierSupplierEmp);
+    const listReferantorTax: Array<VendorTaxObj> = this.GetCalcVendorTaxDataV2(this.identifierReferantor);
 
-    if (listTrxAmt.length == 0) {
-      this.IsCalculated = true;
-      return true;
-    }
+    let obj: ReqTaxV2Obj = {
+      AppId: this.ReturnHandlingHObj.AppId,
+      VendorTaxs: listVendorTax,
+      VendorEmpTaxs: listVendorEmpTax,
+      ReferantorTaxs: listReferantorTax,
+      TrxTypeCode: CommonConstant.TrxTypeCodeAppCom,
+      ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
+      IsSave: false,
+      TaxOfficeCode: this.taxOfficeCode
+    };
+    if (this.CekMaxValueIncomeInfo()) return;
 
-    if (listVendorCode.length > 0) {
-      let obj: ReqTaxObj = {
-        AppId: this.ReturnHandlingHObj.AppId,
-        VendorCode: listVendorCode,
-        VendorEmpNo: listVendorEmpNo,
-        TrxAmt: listTrxAmt,
-        TrxTypeCode: CommonConstant.TrxTypeCodeAppCom,
-        ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
-        IsSave: false,
-      };
-      if (this.CekMaxValueIncomeInfo()) return;
-
-      this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYield, obj).subscribe(
-        (response) => {
-          let idxStart = 0;
-          let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
-          let totalSupplEmpData = this.CommissionForm.value[this.identifierSupplierEmp].length;
-          let totalReferantorData = this.CommissionForm.value[this.identifierReferantor].length;
-          idxStart = this.BindTaxData(this.identifierSupplier, response, idxStart, totalSupplData);
-          idxStart = this.BindTaxData(this.identifierSupplierEmp, response, idxStart, totalSupplEmpData);
-          idxStart = this.BindTaxData(this.identifierReferantor, response, idxStart, totalReferantorData);
-          this.Summary.GrossYield = response.GrossYield;
-          this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
-          if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
-          this.IsCalculated = true;
-          this.outputUpdateRemainingAlloc.emit(this.totalExpenseAmt);
-        },
-        (error) => {
-          this.IsCalculated = false;
-        }
-      );
-    }
+    this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYieldV2, obj).subscribe(
+      (response) => {
+        let idxStart = 0;
+        let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
+        let totalSupplEmpData = this.CommissionForm.value[this.identifierSupplierEmp].length;
+        let totalReferantorData = this.CommissionForm.value[this.identifierReferantor].length;
+        idxStart = this.BindTaxData(this.identifierSupplier, response, idxStart, totalSupplData);
+        idxStart = this.BindTaxData(this.identifierSupplierEmp, response, idxStart, totalSupplEmpData);
+        idxStart = this.BindTaxData(this.identifierReferantor, response, idxStart, totalReferantorData);
+        this.Summary.GrossYield = response.GrossYield;
+        this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
+        if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
+        this.IsCalculated = true;
+        this.outputUpdateRemainingAlloc.emit(this.totalExpenseAmt);
+      },
+      (error) => {
+        this.IsCalculated = false;
+      }
+    );
   }
 
   GetCalcTaxData(identifier: string, listVendorCode: Array<string>, listVendorEmpNo: Array<string>, listTrxAmt: Array<Array<number>>) {
     const tempDataList = this.CommissionForm.get(identifier) as FormArray;
-    for (var i = 0; i < tempDataList.length; i++) {
+    for (let i = 0; i < tempDataList.length; i++) {
       const tempData = tempDataList.get(i.toString()) as FormGroup;
       const ContentName = tempData.get("ContentName").value;
       if (ContentName != "") {
-        var tempListTrxAmt: Array<number> = new Array<number>();
-        var totalCommAmt: number = 0;
+        let tempListTrxAmt: Array<number> = new Array<number>();
+        let totalCommAmt: number = 0;
         const tempListAllocated = tempData.get("ListAllocated") as FormArray;
-        for (var j = 0; j < tempListAllocated.length; j++) {
+        for (let j = 0; j < tempListAllocated.length; j++) {
           const tempListAllocIdxAt = tempListAllocated.get(j.toString()) as FormGroup;
           const AllocFrom = tempListAllocIdxAt.get("AllocationFrom").value;
           const AllocAmt = tempListAllocIdxAt.get("AllocationAmount").value;
@@ -504,7 +507,7 @@ export class CommissionV2Component implements OnInit {
         }
       } else {
         this.IsCalculated = false;
-        var Label = "";
+        let Label = "";
         if (identifier == this.identifierSupplier) Label = CommonConstant.LabelSupplier;
         if (identifier == this.identifierSupplierEmp) Label = CommonConstant.LabelSupplierEmp;
         if (identifier == this.identifierReferantor) Label = CommonConstant.LabelReferantor;
@@ -515,9 +518,84 @@ export class CommissionV2Component implements OnInit {
     return false;
   }
 
+  private GetCalcVendorTaxDataV2(identifier: string): Array<VendorTaxObj> {
+    let listVendorTax: Array<VendorTaxObj> = new Array();
+    const tempDataList = this.CommissionForm.get(identifier) as FormArray;
+    for (let i = 0; i < tempDataList.length; i++) {
+      const tempData = tempDataList.get(i.toString()) as FormGroup;
+      listVendorTax.push(this.SetVendorTaxObj(identifier, tempData, i));
+    }
+    return listVendorTax;
+  }
+  private GetCalcVendorEmpTaxDataV2(identifier: string): Array<VendorEmpTaxObj> {
+    let listVendorTax: Array<VendorEmpTaxObj> = new Array();
+    const tempDataList = this.CommissionForm.get(identifier) as FormArray;
+    for (let i = 0; i < tempDataList.length; i++) {
+      const tempData = tempDataList.get(i.toString()) as FormGroup;
+      listVendorTax.push(this.SetVendorEmpTaxObj(identifier, tempData, i));
+    }
+    return listVendorTax;
+  }
+
+  private SetVendorTaxObj(identifier: string, tempData: FormGroup, idx: number): VendorTaxObj {
+    let VendorTax: VendorTaxObj = new VendorTaxObj();
+    const ContentName = tempData.get("ContentName").value;
+    this.CheckDataChosen(ContentName, identifier, idx);
+    const tempListAllocated = tempData.get("ListAllocated") as FormArray;
+    VendorTax.TrxAmt = this.SetVendorTaxTrxAmt(tempListAllocated, ContentName);
+    VendorTax.VendorCode = ContentName;
+    return VendorTax;
+  }
+
+  private SetVendorEmpTaxObj(identifier: string, tempData: FormGroup, idx: number): VendorEmpTaxObj {
+    let VendorTax: VendorEmpTaxObj = new VendorEmpTaxObj();
+    const ContentName = tempData.get("ContentName").value;
+    this.CheckDataChosen(ContentName, identifier, idx);
+    const tempListAllocated = tempData.get("ListAllocated") as FormArray;
+    VendorTax.TrxAmt = this.SetVendorTaxTrxAmt(tempListAllocated, ContentName);
+    const SupplCode = tempData.get("SupplCode").value;
+    VendorTax.VendorCode = SupplCode;
+    VendorTax.VendorEmpNo = ContentName;
+    return VendorTax;
+  }
+
+  private CheckDataChosen(ContentName: string, identifier: string, idx: number) {
+    if (ContentName) return;
+
+    this.IsCalculated = false;
+    let Label = "";
+    if (identifier == this.identifierSupplier) Label = CommonConstant.LabelSupplier;
+    if (identifier == this.identifierSupplierEmp) Label = CommonConstant.LabelSupplierEmp;
+    if (identifier == this.identifierReferantor) Label = CommonConstant.LabelReferantor;
+    throw this.toastr.warningMessage("Please Choose " + Label + " Name at Data " + (idx + 1));
+  }
+
+  private SetVendorTaxTrxAmt(tempListAllocated: FormArray, ContentName: string): Array<number> {
+    let tempListTrxAmt: Array<number> = new Array<number>();
+    let totalCommAmt: number = 0;
+    for (let j = 0; j < tempListAllocated.length; j++) {
+      const tempListAllocIdxAt = tempListAllocated.get(j.toString()) as FormGroup;
+      const AllocFrom = tempListAllocIdxAt.get("AllocationFrom").value;
+      const AllocAmt = tempListAllocIdxAt.get("AllocationAmount").value;
+      if (this.DictTotalIncomeForm[AllocFrom] == undefined) {
+        this.DictTotalIncomeForm[AllocFrom] = 0;
+        this.ListAllocFromForDict.push(AllocFrom);
+      }
+      this.DictTotalIncomeForm[AllocFrom] += AllocAmt;
+
+      tempListTrxAmt.push(AllocAmt);
+      totalCommAmt += AllocAmt;
+    }
+    if (totalCommAmt == 0) {
+      this.IsCalculated = false;
+      throw this.toastr.warningMessage("Please Allocate at least 1 item for " + ContentName);
+    }
+    return tempListTrxAmt;
+  }
+
   BindTaxData(identifier: string, TaxDetailData: ResponseTaxDetailObj, idxStart: number, idxEnd: number) {
     // let totalBindData=this.CommissionForm.value[identifier].length;
-    for (var i = 0; i < idxEnd; i++) {
+    for (let i = 0; i < idxEnd; i++) {
       let totalTaxAmount: number = 0;
       let totalVATAmount: number = 0;
       let totalExpenseAmount: number = 0;
@@ -527,24 +605,24 @@ export class CommissionV2Component implements OnInit {
       let totalAllocationAmount: number = 0;
       let HoldingTaxWithPenalty: number = 0;
       let tempRespTaxObj: ResponseTaxObj = TaxDetailData.ResponseTaxObjs[idxStart];
-      for (var j = 0; j < tempRespTaxObj.ReturnObject.length; j++) {
+      for (let j = 0; j < tempRespTaxObj.ReturnObject.length; j++) {
         let taxAmt = 0;
         let vatAmt = 0;
         let commissionAmtAfterTax = tempRespTaxObj.ReturnObject[j].TotalTrxAmtAfterTaxAmt;
-        let AllocationAmount = tempRespTaxObj.ReturnObject[j].TrxTaxableAmt;
+        let AllocationAmount = tempRespTaxObj.ReturnObject[j].TrxAmt;
         let totalPenaltyDAmount = 0;
         totalExpenseAmount += tempRespTaxObj.ReturnObject[j].ExpenseAmt;
         totalDisburseAmount += tempRespTaxObj.ReturnObject[j].DisburseAmt;
         totalPenaltyAmt += tempRespTaxObj.ReturnObject[j].PenaltyAmt;
         totalCommissionAmtAfterTax += commissionAmtAfterTax;
         totalAllocationAmount += AllocationAmount;
-        var TaxTrxDObjData: Array<TaxTrxDObj> = tempRespTaxObj.ReturnObject[j].TaxTrxD;
-        for (var k = 0; k < TaxTrxDObjData.length; k++) {
+        let TaxTrxDObjData: Array<TaxTrxDObj> = tempRespTaxObj.ReturnObject[j].TaxTrxD;
+        for (let k = 0; k < TaxTrxDObjData.length; k++) {
           totalPenaltyDAmount += TaxTrxDObjData[k].PenaltyAmt;
           if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.TaxTypeCode) {
             taxAmt += TaxTrxDObjData[k].TaxAmt;
-            totalTaxAmount +=  TaxTrxDObjData[k].TaxAmt;
-            HoldingTaxWithPenalty +=  (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
+            totalTaxAmount += TaxTrxDObjData[k].TaxAmt;
+            HoldingTaxWithPenalty += (TaxTrxDObjData[k].TaxAmt + TaxTrxDObjData[k].PenaltyAmt);
           } else if (TaxTrxDObjData[k].TaxTypeCode == CommonConstant.VATTypeCode) {
             vatAmt = TaxTrxDObjData[k].TaxAmt;
             totalVATAmount += TaxTrxDObjData[k].TaxAmt;
@@ -607,7 +685,7 @@ export class CommissionV2Component implements OnInit {
     this.GetListAppCommObj(this.identifierSupplier, listAppCommissionHAddObj, listAppCommissionHEditObj);
     this.GetListAppCommObj(this.identifierSupplierEmp, listAppCommissionHAddObj, listAppCommissionHEditObj);
     this.GetListAppCommObj(this.identifierReferantor, listAppCommissionHAddObj, listAppCommissionHEditObj);
-    var obj = {
+    let obj = {
       AppId: this.ReturnHandlingHObj.AppId,
       GrossYield: this.Summary.GrossYield,
       ListAppCommissionHAddObj: listAppCommissionHAddObj
@@ -620,8 +698,8 @@ export class CommissionV2Component implements OnInit {
   }
 
   CekMaxValueIncomeInfo() {
-    var flag = false;
-    for (var i = 0; i < this.ListAllocFromForDict.length; i++) {
+    let flag = false;
+    for (let i = 0; i < this.ListAllocFromForDict.length; i++) {
       if (this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAmount < this.DictTotalIncomeForm[this.ListAllocFromForDict[i]]) {
         flag = true;
         this.toastr.warningMessage(this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAllocationFromDesc + " cannot be more than " + this.DictRemainingIncomeForm[this.ListAllocFromForDict[i]].RefundAmount);
@@ -632,20 +710,20 @@ export class CommissionV2Component implements OnInit {
 
   GetListAppCommObj(identifier: string, listAppCommissionHAddObj: Array<AppCommissionHObj>, listAppCommissionHEditObj: Array<AppCommissionHObj>) {
     const listData = this.CommissionForm.get(identifier) as FormArray;
-    for (var i = 0; i < listData.length; i++) {
-      var tempData = new AppCommissionHObj();
+    for (let i = 0; i < listData.length; i++) {
+      let tempData = new AppCommissionHObj();
       const temp = listData.get(i.toString()) as FormGroup;
       if (temp.get("ContentName").value == "") continue;
       if (identifier == this.identifierSupplier) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplier);
       if (identifier == this.identifierSupplierEmp) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplierEmp);
       if (identifier == this.identifierReferantor) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeReferantor);
-      
+
       listAppCommissionHAddObj.push(tempData);
     }
   }
 
   PatchAppCommHData(AppCommH: FormGroup, CommReceipientTypeCode: string) {
-    var temp = new AppCommissionHObj();
+    let temp = new AppCommissionHObj();
     if (AppCommH.get("AppCommissionHId").value != 0) temp.AppCommissionHId = AppCommH.get("AppCommissionHId").value;
     temp.AppId = this.ReturnHandlingHObj.AppId;
     temp.BankAccNo = AppCommH.get("BankAccountNo").value;
@@ -666,6 +744,7 @@ export class CommissionV2Component implements OnInit {
     temp.MrTaxCalcMethodCode = AppCommH.get("MrTaxCalcMethodCode").value;
     temp.TaxpayerNo = AppCommH.get("TaxpayerNo").value;
     temp.RowVersion = AppCommH.get("RowVersion").value;
+    temp.TaxOfficeCode = this.taxOfficeCode;
     if (CommReceipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplierEmp) {
       temp.ReservedField1 = AppCommH.get("SupplCode").value;
       temp.ReservedField2 = AppCommH.get("MrSupplEmpPositionCodeDesc").value;
@@ -675,11 +754,11 @@ export class CommissionV2Component implements OnInit {
   }
 
   PatchAppCommDData(AppCommH: FormGroup) {
-    var listAppCommissionDObj = new Array();
+    let listAppCommissionDObj = new Array();
     const temp = AppCommH.get("ListAllocated") as FormArray;
-    for (var i = 0; i < temp.length; i++) {
+    for (let i = 0; i < temp.length; i++) {
       const tempObj = temp.get(i.toString()) as FormGroup;
-      var tempAppCommissionDObj = new AppCommissionDObj();
+      let tempAppCommissionDObj = new AppCommissionDObj();
       if (tempObj.get("AppCommissionDId").value != 0) {
         tempAppCommissionDObj.AppCommissionHId = tempObj.get("AppCommissionHId").value;
         tempAppCommissionDObj.AppCommissionDId = tempObj.get("AppCommissionDId").value;
@@ -760,7 +839,7 @@ export class CommissionV2Component implements OnInit {
         break;
     }
     if (!refMasterTypeCode) return;
-    var mrCustTypeCode;
+    let mrCustTypeCode;
 
     await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.ReturnHandlingHObj.AppId }).toPromise().then(
       (response: AppCustObj) => {
@@ -772,13 +851,13 @@ export class CommissionV2Component implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
-        this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);    
+        this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
       }
     );
   }
 
-  SaveReturnForm(){
-    var reqReturnHandlingCommRsvFundObj = new ReqReturnHandlingCommRsvFundObj();
+  SaveReturnForm() {
+    let reqReturnHandlingCommRsvFundObj = new ReqReturnHandlingCommRsvFundObj();
     reqReturnHandlingCommRsvFundObj.AppId = this.ReturnHandlingHObj.AppId;
     reqReturnHandlingCommRsvFundObj.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
     reqReturnHandlingCommRsvFundObj.ReturnTo = this.FormReturnObj.value.ReturnTo;
@@ -789,7 +868,16 @@ export class CommissionV2Component implements OnInit {
     this.http.post(SubmitReturnHandlingCommRsvFundUrl, reqReturnHandlingCommRsvFundObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
+
+  GetTaxOffice(){
+    let ReqByCodeObj: GenericObj = new GenericObj();
+    ReqByCodeObj.Code = this.NapObj.OriOfficeCode;
+    this.http.post(URLConstant.GetRefTaxOfficeDetailByRefOfficeCode, ReqByCodeObj).subscribe(
+      (response: ResGetRefTaxOfficeDetailObj) => {
+          this.taxOfficeCode = response["TaxOfficeCode"];
       });
   }
 }

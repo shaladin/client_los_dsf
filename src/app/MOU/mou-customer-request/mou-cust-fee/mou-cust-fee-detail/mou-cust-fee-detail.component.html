@@ -39,7 +39,7 @@
             <div class="col-md-8">
               <input type="" currencyMask class="form-control adInsInput" formControlName="FeeAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustFeeForm.controls.FeeAmt.invalid }"
-                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 2, nullable: false }" />
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, nullable: false }" />
               <lib-uc-show-errors [control]="MouCustFeeForm.controls.FeeAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>

@@ -375,8 +375,10 @@ export class TrialCalculationComponent implements OnInit {
       (response) => {
         this.appFinDataObj = response;
 
-        if (this.appFinDataObj.MrInstSchemeCode != CommonConstant.InstSchmRegularFix) {
+        if (this.TrialForm.controls["MrInstSchemeCode"].value != CommonConstant.InstSchmRegularFix) {
           this.TrialForm.get("RateType").disable();
+        } else {
+          this.TrialForm.get("RateType").enable();
         }
 
         this.TrialForm.patchValue({

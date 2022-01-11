@@ -103,7 +103,6 @@ export class AssetDataComponent implements OnInit {
     DownPaymentPrctg: [0, [Validators.min(0.000001), Validators.max(100)]],
     AssetNotes: ['', [Validators.maxLength(4000)]],
     Color: ['', Validators.maxLength(50)],
-    TaxCityIssuer: [''],
     TaxIssueDt: [''],
     Discount: [0],
     ExpectedDelivDt: [],
@@ -1013,7 +1012,7 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.MaxDownPaymentPrcnt = this.CheckValidationObj && this.CheckValidationObj.DPMax ? this.CheckValidationObj.DPMax : 0;
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls.AssetNotes.value;
     this.allAssetDataObj.AppAssetObj.Color = this.AssetDataForm.controls.Color.value;
-    this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls.TaxCityIssuer.value;
+    this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls.TaxCityIssuer.value.value;
     this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls.TaxIssueDt.value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
     this.allAssetDataObj.AppAssetObj.Discount = this.AssetDataForm.controls.Discount.value;
@@ -1075,7 +1074,7 @@ export class AssetDataComponent implements OnInit {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "-";
     }
 
-    this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls.TaxCityIssuer.value;
+    this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.AssetDataForm.controls.TaxCityIssuer.value.value;
     this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls.TaxIssueDt.value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls.ManufacturingYear.value;
 
@@ -1226,7 +1225,7 @@ export class AssetDataComponent implements OnInit {
 
   SetBpkbCity(event) {
     this.AssetDataForm.patchValue({
-      TaxCityIssuer: event.DistrictCode,
+      TaxCityIssuer: {value: event.DistrictCode},
     });
   }
 
@@ -1500,7 +1499,7 @@ export class AssetDataComponent implements OnInit {
             DownPaymentPrctg: this.appAssetObj.ResponseAppAssetObj.DownPaymentPrctg,
             AssetNotes: this.appAssetObj.ResponseAppAssetObj.AssetNotes,
             Color: this.appAssetObj.ResponseAppAssetObj.Color,
-            TaxCityIssuer: this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer,
+            TaxCityIssuer: {value: this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer},
             AssetSeqNo: this.appAssetObj.ResponseAppAssetObj.AssetSeqNo,
             AssetStat: this.appAssetObj.ResponseAppAssetObj.AssetStat,
             AssetTypeCode: this.appAssetObj.ResponseAppAssetObj.AssetTypeCode,
@@ -1927,15 +1926,12 @@ export class AssetDataComponent implements OnInit {
   setValidatorBpkb() {
     let MrAssetConditionCode: string = this.AssetDataForm.controls.MrAssetConditionCode.value;
     if (MrAssetConditionCode == 'USED') {
-      this.AssetDataForm.controls.TaxCityIssuer.setValidators(Validators.required);
       this.AssetDataForm.controls.TaxIssueDt.setValidators(Validators.required);
       this.InputLookupCityIssuerObj.isRequired = true;
     } else {
-      this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
       this.AssetDataForm.controls.TaxIssueDt.clearValidators();
       this.InputLookupCityIssuerObj.isRequired = false;
     }
-    this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
     this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
   }
 

@@ -20,7 +20,7 @@ export const customCurrencyMaskConfig = {
     allowNegative: false,
     allowZero: true,
     decimal: ".",
-    precision: 2,
+    precision: 0,
     prefix: "",
     suffix: "",
     thousands: ",",

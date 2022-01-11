@@ -73,6 +73,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   MaxDate: Date;
   inputAddressObjForCP: InputAddressObj;
   BusinessDt: Date;
+  isEmergencyContactExist: boolean = false;
 
   ContactInfoPersonalForm = this.fb.group({
     ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -111,12 +112,29 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.initLookup();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
+    this.checkIsEmergencyContactExists();
+  }
+
+  checkIsEmergencyContactExists() {
+    if(this.listContactPersonPersonal.length == 0) return;
+    for(let i = 0; i < this.listContactPersonPersonal.length; i++) {
+      if(this.listContactPersonPersonal[i].IsEmergencyContact == true) {
+        this.isEmergencyContactExist = true;
+        return;
+      }
+    }
+    this.isEmergencyContactExist = false;
   }
 
   SaveForm() {
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value);
     if (selectedRelationship == undefined) {
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP);
+      return;
+    }
+
+    if (this.ContactInfoPersonalForm.controls.IsEmergencyContact.value == true && this.isEmergencyContactExist) {
+      this.toastr.warningMessage(ExceptionConstant.CANNOT_INPUT_TWO_EMERGENCY_CONTACT_MOU);
       return;
     }
 
@@ -145,6 +163,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     if (this.mode == "Edit") {
       this.listContactPersonPersonal[this.currentEditedIndex] = this.MouCustPersonalContactPersonObj;
     }
+    this.checkIsEmergencyContactExists();
     this.callbackSubmit.emit(this.listContactPersonPersonal);
     this.modalService.dismissAll();
     this.clearForm();
@@ -211,7 +230,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       MrIdTypeCode: this.listContactPersonPersonal[i].MrIdTypeCode,
       MrCustRelationshipCode: this.listContactPersonPersonal[i].MrCustRelationshipCode,
       IdNo: this.listContactPersonPersonal[i].IdNo,
-      IdExpiredDt: this.listContactPersonPersonal[i].IdExpiredDt ? formatDate(this.listContactPersonPersonal[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
+      IdExpiredDt: this.checkIsNullOrEmpty(this.listContactPersonPersonal[i].IdExpiredDt) ? "" : formatDate(this.listContactPersonPersonal[i].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
       BirthPlace: this.listContactPersonPersonal[i].BirthPlace,
       BirthDt: birthDt,
       IsEmergencyContact: this.listContactPersonPersonal[i].IsEmergencyContact,
@@ -222,6 +241,10 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       IsGuarantor: this.listContactPersonPersonal[i].IsGuarantor
     });
 
+    if(this.listContactPersonPersonal[i].IsEmergencyContact == true) {
+      this.isEmergencyContactExist = false;
+    }
+
     this.setCustRelationShip(this.listContactPersonPersonal[i].MrCustRelationshipCode);
     this.setContactPersonAddr(this.listContactPersonPersonal[i]);
     this.selectedProfessionCode = this.listContactPersonPersonal[i].MrJobProfessionCode;
@@ -229,6 +252,19 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.CheckSpouse();
     this.getInitPattern();
     this.open(content);
+  }
+
+  checkIsNullOrEmpty(item: any) {
+    if(item == null || item == "") return true;
+    return false;
+  }
+
+  CheckIsGuarantor() {
+    this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
+    if(this.ContactInfoPersonalForm.controls.IsGuarantor.value == true) {
+      this.ContactInfoPersonalForm.controls.BirthDt.setValidators(Validators.required);
+    }
+    this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
   }
 
   setCustRelationShip(MrCustRelationshipCode: string) {
@@ -241,6 +277,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   delete(i) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listContactPersonPersonal.splice(i, 1);
+      this.checkIsEmergencyContactExists();
       this.callbackSubmit.emit(this.listContactPersonPersonal);
     }
   }
