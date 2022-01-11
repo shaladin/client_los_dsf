@@ -138,6 +138,7 @@ export class URLConstant {
   // App Commission
   public static AddOrEditAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/AddOrEditAppCommissionData";
   public static SubmitAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/SubmitAppCommissionData";
+  public static SubmitAppCommissionDataV2_1 = environment.losUrl + "/v2.1" + "/AppCommission/SubmitAppCommissionData";
   public static SubmitReturnHandlingCommRsvFund = environment.losUrl + "/v1" + "/AppCommission/SubmitReturnHandlingCommRsvFund";
   public static SubmitReturnHandlingCommRsvFundV2 = environment.losUrl + "/v2" + "/AppCommission/SubmitReturnHandlingCommRsvFund";
   public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionDataForEditByAppId";
@@ -146,6 +147,7 @@ export class URLConstant {
   public static GetAppCommissionRuleV2 = environment.losUrl + "/v2" + "/AppCommission/GetAppCommissionRule";
   public static GetAppCommissionTaxAndCalcGrossYield = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
   public static GetAppCommissionTaxAndCalcGrossYieldV2 = environment.losUrl + "/v2" + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
+  public static GetAppCommissionTaxAndCalcGrossYieldV2_1 = environment.losUrl + "/v2.1" + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
   public static CalCulateGrossYield = environment.losUrl + "/v1" + "/AppCommission/CalCulateGrossYield";
 
   public static GetRefOfficeByOfficeCode = environment.FoundationR3Url + "/v1" + "/RefOffice/GetRefOfficeByOfficeCode";
@@ -1186,6 +1188,7 @@ export class URLConstant {
   public static GetAppFinDataAndFeeByAppIdAndListAppAssetId = environment.losUrl + "/v1" + "/AgrmntActivation/GetAppFinDataAndFeeByAppIdAndListAppAssetId";
   public static SubmitAgrmntActivationByHuman = environment.losUrl + "/v1" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
   public static SubmitAgrmntActivationByHumanV2 = environment.losUrl + "/v2" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
+  public static SubmitAgrmntActivationByHumanV2_1 = environment.losUrl + "/v2.1" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
 
   //Asset Accessory
   // public static GetAssetAccessoryByCode = "http://localhost:5000/AssetAccessory/GetAssetAccessoryByCode";
@@ -1923,4 +1926,8 @@ export class URLConstant {
 
   //Cust Phone No
   public static GetListCustPhoneNoByCustNo = environment.FoundationR3Url + "/v1" + "/Cust/GetListCustPhoneNoByCustNo";
+
+  //Ref Tax Office
+  public static GetRefTaxOfficeDetailByRefOfficeCode = environment.FoundationR3Url + "/v1" + "/RefTaxOffice/GetRefTaxOfficeDetailByRefOfficeCode";
+  
 }

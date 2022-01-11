@@ -2089,6 +2089,9 @@ export class AssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, { Code: this.districtObj.ProvDistrictCode }).subscribe(
       (response: any) => {
         this.DistrictObj = response;
+        this.AssetDataForm.patchValue({
+          TaxCityIssuer: this.DistrictObj.ProvDistrictCode
+        });
         this.InputLookupCityIssuerObj.jsonSelect = this.DistrictObj;
         this.InputLookupCityIssuerObj.nameSelect = this.DistrictObj.ProvDistrictName;
       }

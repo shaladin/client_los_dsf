@@ -24,6 +24,10 @@ export class AdminProcessService {
         let submitHumanAgrmnActivationUrl = environment.isCore? URLConstant.SubmitAgrmntActivationByHumanV2 : URLConstant.SubmitAgrmntActivationByHuman;
         return this.http.post(submitHumanAgrmnActivationUrl, Obj);
     }
+
+    SubmitAgrmntActivationByHumanV2_1(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.SubmitAgrmntActivationByHumanV2_1, Obj);
+    }
 }
 
 export class ReqAppAssetAgreementActivationObj {

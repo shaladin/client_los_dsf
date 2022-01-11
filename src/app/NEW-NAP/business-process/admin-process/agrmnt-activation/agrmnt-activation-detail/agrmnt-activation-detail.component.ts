@@ -187,7 +187,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
         AgreementNo: this.AgrmntNo,
         IsEnd: this.IsEnd
       }
-      this.adminProcessSvc.SubmitAgrmntActivationByHuman(Obj).subscribe((response) => {
+      this.adminProcessSvc.SubmitAgrmntActivationByHumanV2_1(Obj).subscribe((response) => {
         AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
       });
     }
