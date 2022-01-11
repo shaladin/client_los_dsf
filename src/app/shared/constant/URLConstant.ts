@@ -1914,4 +1914,8 @@ export class URLConstant {
 
   //Cust Phone No
   public static GetListCustPhoneNoByCustNo = environment.FoundationR3Url + "/v1" + "/Cust/GetListCustPhoneNoByCustNo";
+
+  //Ref Tax Office
+  public static GetRefTaxOfficeDetailByRefOfficeCode = environment.FoundationR3Url + "/v1" + "/RefTaxOffice/GetRefTaxOfficeDetailByRefOfficeCode";
+  
 }

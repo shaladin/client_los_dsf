@@ -24,6 +24,7 @@ export class ReqTaxV2Obj {
     TrxTypeCode: string;
     ExchangeRateAmt: string;
     IsSave: boolean;
+    TaxOfficeCode: string;
     constructor() {
         this.AppId = 0;
         this.VendorTaxs = new Array();
@@ -32,6 +33,7 @@ export class ReqTaxV2Obj {
         this.TrxTypeCode = "";
         this.ExchangeRateAmt = "";
         this.IsSave = false;
+        this.TaxOfficeCode = "";
     }
 }
 export class VendorTaxObj {

@@ -29,6 +29,7 @@ export class AppCommissionHObj{
     ReservedField3: string;
     ReservedField4: string;
     ReservedField5: string;
+    TaxOfficeCode: string;
 
     constructor(){
         this.AppCommissionHId = 0;

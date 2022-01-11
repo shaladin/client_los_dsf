@@ -23,12 +23,14 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
-import { String } from 'typescript-string-operations';
 import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/app-commission-rsv-fund/req-return-handling-comm-rsv-fund-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
 import { environment } from 'environments/environment';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ResGetRefTaxOfficeDetailObj } from 'app/shared/model/Response/commission/res-get-ref-tax-office-detail-obj.model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -47,6 +49,7 @@ export class CommissionV2Component implements OnInit {
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: object = {};
   @Input() BizTemplateCode: string;
+  @Input() NapObj: AppObj;
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
@@ -96,7 +99,7 @@ export class CommissionV2Component implements OnInit {
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
   readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
   readonly DDLTask: string = CommonConstant.ReturnTask;
-
+  taxOfficeCode: string = "";
 
   FormReturnObj = this.fb.group({
     ReturnTo: [''],
@@ -152,6 +155,7 @@ export class CommissionV2Component implements OnInit {
     await this.GetExistingAppCommData();
     await this.bindDDLReasonReturn();
     await this.bindTaskObj();
+    this.GetTaxOffice();
     // if (Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object) {
     //   if (this.BizTemplateCode == CommonConstant.CFNA) {
     //     this.IsCalculated = true;
@@ -438,6 +442,7 @@ export class CommissionV2Component implements OnInit {
       TrxTypeCode: CommonConstant.TrxTypeCodeAppCom,
       ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
       IsSave: false,
+      TaxOfficeCode: this.taxOfficeCode
     };
     if (this.CekMaxValueIncomeInfo()) return;
 
@@ -739,6 +744,7 @@ export class CommissionV2Component implements OnInit {
     temp.MrTaxCalcMethodCode = AppCommH.get("MrTaxCalcMethodCode").value;
     temp.TaxpayerNo = AppCommH.get("TaxpayerNo").value;
     temp.RowVersion = AppCommH.get("RowVersion").value;
+    temp.TaxOfficeCode = this.taxOfficeCode;
     if (CommReceipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplierEmp) {
       temp.ReservedField1 = AppCommH.get("SupplCode").value;
       temp.ReservedField2 = AppCommH.get("MrSupplEmpPositionCodeDesc").value;
@@ -863,6 +869,15 @@ export class CommissionV2Component implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
+
+  GetTaxOffice(){
+    let ReqByCodeObj: GenericObj = new GenericObj();
+    ReqByCodeObj.Code = this.NapObj.OriOfficeCode;
+    this.http.post(URLConstant.GetRefTaxOfficeDetailByRefOfficeCode, ReqByCodeObj).subscribe(
+      (response: ResGetRefTaxOfficeDetailObj) => {
+          this.taxOfficeCode = response["TaxOfficeCode"];
       });
   }
 }
