@@ -78,7 +78,6 @@ export class FormCommissionGenerateV2Component implements OnInit {
         Value: this.DDLContentName[idxDDLContent].Value,
       };
       code = this.DDLContentName[idxDDLContent].Key;
-
     }
 
     var temp = this.GetTempRuleObj(code, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
@@ -99,7 +98,8 @@ export class FormCommissionGenerateV2Component implements OnInit {
         MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
         SupplCode: this.DDLContentName[idxDDLContent].SupplCode
       });
-    this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
+    let DDLContentObj = this.DDLContentName[idxDDLContent];
+    this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj, DDLContentObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent, 1);
@@ -192,7 +192,8 @@ export class FormCommissionGenerateV2Component implements OnInit {
         MrSupplEmpPositionCodeDesc: this.DDLContentName[idx].MrSupplEmpPositionCodeDesc,
         SupplCode: this.DDLContentName[idx].SupplCode
       });
-    this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
+    let DDLContentObj = this.DDLContentName[idx];
+    this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj, DDLContentObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idx].MrSupplEmpPositionCode);
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idx, 1);
@@ -280,7 +281,7 @@ export class FormCommissionGenerateV2Component implements OnInit {
     return tempObj;
   }
 
-  GetDDLBankAccount(code, idx) {
+  GetDDLBankAccount(code, idx, DDLContentObj) {
     var content = this.FormInputObj["content"];
     let idxDefault = 0;
     if (content == CommonConstant.ContentSupplier) {
@@ -323,23 +324,15 @@ export class FormCommissionGenerateV2Component implements OnInit {
           this.SetDefaultDDLBankAcc(idx, idxDefault);
         });
     } else if (content == CommonConstant.ContentReferantor) {
-      this.http.post(URLConstant.GetRefBankByBankCodeAsync, { Code: this.FormInputObj["BankData"].BankCode }).toPromise().then(
-        (response) => {
-          var eachDDLDetail = this.fb.group({
-            Key: this.FormInputObj["BankData"].BankAccNo,
-            Value: this.FormInputObj["BankData"].BankAccName,
-            BankCode: this.FormInputObj["BankData"].BankCode,
-            BankName: response["BankName"],
-            BankBranch: this.FormInputObj["BankData"].BankBranch
-          }) as FormGroup;
-          this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
-          this.SetDefaultDDLBankAcc(idx, idxDefault);
-        }
-      ).catch(
-        (error) => {
-          console.log(error);
-        }
-      );
+      var eachDDLDetail = this.fb.group({
+        Key: DDLContentObj.BankAccNo,
+        Value: DDLContentObj.BankAccName,
+        BankCode: DDLContentObj.BankCode,
+        BankName: DDLContentObj.BankName,
+        BankBranch: DDLContentObj.BankBranch
+      }) as FormGroup;
+      this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
+      this.SetDefaultDDLBankAcc(idx, idxDefault);
     }
   }
 
@@ -539,7 +532,8 @@ export class FormCommissionGenerateV2Component implements OnInit {
           MrSupplEmpPositionCodeDesc: this.DDLContentName[idxDDLContent].MrSupplEmpPositionCodeDesc,
           SupplCode: this.DDLContentName[idxDDLContent].SupplCode
         });
-      this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
+      let DDLContentObj = this.DDLContentName[idxDDLContent];
+      this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj, DDLContentObj);
       this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
   
       let TotalPenaltyAmt = 0

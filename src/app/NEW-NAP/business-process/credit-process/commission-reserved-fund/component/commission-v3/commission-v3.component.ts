@@ -236,16 +236,14 @@ export class CommissionV3Component implements OnInit {
         let KVPObj;
         KVPObj = {
           Key: ReturnObject[i].ReferantorCode,
-          Value: ReturnObject[i].ReferantorName
+          Value: ReturnObject[i].ReferantorName,
+          BankCode: ReturnObject[i].RefBankCode,
+          BankName: ReturnObject[i].BankName,
+          BankAccNo: ReturnObject[i].BankAccNo,
+          BankAccName: ReturnObject[i].BankAccName,
+          BankBranch: ReturnObject[i].BankBranch,
         };
         this.ContentObjReferantor.push(KVPObj);
-        this.FormInputObjReferantor["BankData"] = {
-          BankCode: ReturnObject.RefBankCode,
-          BankName: "",
-          BankAccNo: ReturnObject.BankAccNo,
-          BankAccName: ReturnObject.BankAccName,
-          BankBranch: ReturnObject.BankBranch,
-        };
       }
     } else {
       for (let i = 0; i < ReturnObject.length; i++) {
@@ -269,10 +267,6 @@ export class CommissionV3Component implements OnInit {
         }
       }
     }
-  }
-
-  print(){
-    console.log(this.CommissionForm);
   }
 
   RuleSupplierData: object = {};
@@ -536,6 +530,7 @@ export class CommissionV3Component implements OnInit {
     }
     return listVendorTax;
   }
+  
   private GetCalcVendorEmpTaxDataV2(identifier: string): Array<VendorEmpTaxObj> {
     let listVendorTax: Array<VendorEmpTaxObj> = new Array();
     const tempDataList = this.CommissionForm.get(identifier) as FormArray;

@@ -15,12 +15,12 @@
                 </select>
               </div>
             </div>
-            <!-- <app-form-commission-generate-v2 #Form1 *ngIf="OnForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+            <app-form-commission-generate-v2 #Form1 *ngIf="OnForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier">
             </app-form-commission-generate-v2>
             <app-form-commission-generate-v2 #Form2 *ngIf="OnForm2" [hidden]="HideForm2" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplierEmp"
-              [FormInputObj]="FormInputObjSupplierEmp"></app-form-commission-generate-v2> -->
+              [FormInputObj]="FormInputObjSupplierEmp"></app-form-commission-generate-v2>
             <app-form-commission-generate-v2 #Form3 *ngIf="OnForm3" [hidden]="HideForm3" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor">
             </app-form-commission-generate-v2>
@@ -161,9 +161,6 @@
             </div>
 
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-danger mr-1" (click)="print()">
-                <i class="ft-x"></i>&nbsp;<span translate>Print</span>
-              </button>
               <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
                 <i class="ft-x"></i>&nbsp;<span translate>Cancel Return</span>
               </button>
