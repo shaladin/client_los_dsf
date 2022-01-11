@@ -20,6 +20,7 @@ export class URLConstantX {
   //App CustX
   public static AddCustMainDataPersonalX = environment.losUrl + "/v1" + "/AppCustX/AddCustMainDataPersonal";
   public static EditCustMainDataPersonalX = environment.losUrl + "/v1" + "/AppCustX/EditCustMainDataPersonal";
+  public static EditCustMainDataPersonalXV2 = environment.losUrl + "/v2" + "/AppCustX/EditCustMainDataPersonal";
   public static GetAppCustMainDataByAppCustIdX = environment.losUrl + "/v1" + "/AppCustX/GetAppCustMainDataByAppCustId";
 
 
@@ -258,5 +259,9 @@ export class URLConstantX {
 
   //AppSubsidyProfitabilityX
   public static GetAppSubsidyProfitabilityXByAppId = environment.losUrl + "/v1" + "/AppSubsidyProfitabilityX/GetAppSubsidyProfitabilityXByAppId";
+
+  //CUST EXPOSURE
+  public static GetR2CustExposureByCustNo = environment.FoundationR3Url + "/v1" + "/CustX/GetR2CustExposureByCustNo";
+  public static GetR2CustGroupExposureByCustNo = environment.FoundationR3Url + "/v1" + "/CustX/GetR2CustGroupExposureByCustNo";
 
 }

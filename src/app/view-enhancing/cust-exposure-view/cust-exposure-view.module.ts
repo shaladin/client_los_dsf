@@ -18,6 +18,9 @@ import { CustExposureViewComponent } from "./cust-exposure-view.component";
 import { ObligorExposureComponent } from './obligor-exposure/obligor-exposure.component';
 import { CustExposureComponent } from './cust-exposure/cust-exposure.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { CustExposureViewXComponent } from "app/impl/view-enhancing/cust-exposure-view/cust-exposure-view-x.component";
+import { ObligorExposureXComponent } from "app/impl/view-enhancing/cust-exposure-view/obligor-exposure/obligor-exposure-x.component";
+import { CustExposureXComponent } from "app/impl/view-enhancing/cust-exposure-view/cust-exposure/cust-exposure-x.component";
 
 @NgModule({
     imports: [
@@ -42,9 +45,16 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     declarations: [
         CustExposureViewComponent,
         ObligorExposureComponent,
-        CustExposureComponent
+        CustExposureComponent,
+        CustExposureViewXComponent,
+        ObligorExposureXComponent,
+        CustExposureXComponent
     ],
     entryComponents: [
+    ],
+    exports: [
+        ObligorExposureXComponent,
+        CustExposureXComponent
     ]
 
 })
