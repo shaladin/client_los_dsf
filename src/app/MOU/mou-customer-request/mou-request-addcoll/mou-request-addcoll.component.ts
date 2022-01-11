@@ -1444,7 +1444,6 @@ export class MouRequestAddcollComponent implements OnInit {
       SerialNo4: [''],
       SerialNo5: [''],
       SelfOwner: [false],
-      MrOwnerTypeCode: [''],
       TaxCityIssuer: [''],
       TaxIssueDt: [''],
       RowVersionCollateral: [''],
@@ -1510,18 +1509,6 @@ export class MouRequestAddcollComponent implements OnInit {
     this.AddCollForm.patchValue({
       TaxCityIssuer: event.DistrictCode,
     });
-  }
-  getFormValidationErrors() {
-    console.log(this.AddCollForm.getRawValue());
-    const invalid = [];
-    const controls = this.AddCollForm.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-        console.log(name);
-      }
-    }
-    console.log(invalid);
   }
   SaveExistingCollateral() {
     if (this.isEdit) {
