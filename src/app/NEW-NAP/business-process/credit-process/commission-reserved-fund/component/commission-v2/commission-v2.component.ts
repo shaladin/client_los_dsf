@@ -446,7 +446,7 @@ export class CommissionV2Component implements OnInit {
     };
     if (this.CekMaxValueIncomeInfo()) return;
 
-    this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYieldV2, obj).subscribe(
+    this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYieldV2_1, obj).subscribe(
       (response) => {
         let idxStart = 0;
         let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
@@ -690,7 +690,7 @@ export class CommissionV2Component implements OnInit {
       GrossYield: this.Summary.GrossYield,
       ListAppCommissionHAddObj: listAppCommissionHAddObj
     };
-    this.http.post(URLConstant.SubmitAppCommissionData, obj).subscribe(
+    this.http.post(URLConstant.SubmitAppCommissionDataV2_1, obj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.outputTab.emit();
