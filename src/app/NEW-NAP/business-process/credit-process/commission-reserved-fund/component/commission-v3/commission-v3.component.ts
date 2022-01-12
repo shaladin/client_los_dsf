@@ -17,10 +17,13 @@ import { ReqTaxV2Obj, VendorEmpTaxObj, VendorTaxObj } from 'app/shared/model/app
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { ResultRefundObj } from 'app/shared/model/app-fin-data/result-refund.model';
 import { AppReservedFundObj } from 'app/shared/model/app-reserved-fund-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { NapAppReferantorModel } from 'app/shared/model/nap-app-referantor.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { ResGetRefTaxOfficeDetailObj } from 'app/shared/model/Response/commission/res-get-ref-tax-office-detail-obj.model';
 import { ReturnHandlingHObj } from 'app/shared/model/return-handling/return-handling-h-obj.model';
 import { RuleCommissionObj } from 'app/shared/model/rule-commission/rule-commission-obj.model';
 import { ResponseTaxDetailObj } from 'app/shared/model/tax/response-tax-detail.model';
@@ -45,6 +48,7 @@ export class CommissionV3Component implements OnInit {
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: object = {};
   @Input() BizTemplateCode: string;
+  @Input() NapObj: AppObj;
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
@@ -94,7 +98,7 @@ export class CommissionV3Component implements OnInit {
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
   readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
   readonly DDLTask: string = CommonConstant.ReturnTask;
-
+  taxOfficeCode: string = "";
 
   FormReturnObj = this.fb.group({
     ReturnTo: [''],
@@ -150,6 +154,7 @@ export class CommissionV3Component implements OnInit {
     await this.GetExistingAppCommData();
     await this.bindDDLReasonReturn();
     await this.bindTaskObj();
+    this.GetTaxOffice();
     // if (Object.keys(this.CommissionForm.value).length === 0 && this.CommissionForm.value.constructor === Object) {
     //   if (this.BizTemplateCode == CommonConstant.CFNA) {
     //     this.IsCalculated = true;
@@ -446,10 +451,11 @@ export class CommissionV3Component implements OnInit {
       TrxTypeCode: CommonConstant.TrxTypeCodeAppCom,
       ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
       IsSave: false,
+      TaxOfficeCode: this.taxOfficeCode
     };
     if (this.CekMaxValueIncomeInfo()) return;
 
-    this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYieldV2, obj).subscribe(
+    this.http.post<ResponseTaxDetailObj>(URLConstant.GetAppCommissionTaxAndCalcGrossYieldV2_1, obj).subscribe(
       (response) => {
         let idxStart = 0;
         let totalSupplData = this.CommissionForm.value[this.identifierSupplier].length;
@@ -694,7 +700,7 @@ export class CommissionV3Component implements OnInit {
       GrossYield: this.Summary.GrossYield,
       ListAppCommissionHAddObj: listAppCommissionHAddObj
     };
-    this.http.post(URLConstant.SubmitAppCommissionData, obj).subscribe(
+    this.http.post(URLConstant.SubmitAppCommissionDataV2_1, obj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.outputTab.emit();
@@ -748,6 +754,7 @@ export class CommissionV3Component implements OnInit {
     temp.MrTaxCalcMethodCode = AppCommH.get("MrTaxCalcMethodCode").value;
     temp.TaxpayerNo = AppCommH.get("TaxpayerNo").value;
     temp.RowVersion = AppCommH.get("RowVersion").value;
+    temp.TaxOfficeCode = this.taxOfficeCode;
     if (CommReceipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplierEmp) {
       temp.ReservedField1 = AppCommH.get("SupplCode").value;
       temp.ReservedField2 = AppCommH.get("MrSupplEmpPositionCodeDesc").value;
@@ -872,6 +879,15 @@ export class CommissionV3Component implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
+
+  GetTaxOffice(){
+    let ReqByCodeObj: GenericObj = new GenericObj();
+    ReqByCodeObj.Code = this.NapObj.OriOfficeCode;
+    this.http.post(URLConstant.GetRefTaxOfficeDetailByRefOfficeCode, ReqByCodeObj).subscribe(
+      (response: ResGetRefTaxOfficeDetailObj) => {
+          this.taxOfficeCode = response["TaxOfficeCode"];
       });
   }
 }

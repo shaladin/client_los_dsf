@@ -757,6 +757,7 @@ export class CommonConstant {
   public static GSCodeOwnershipMandatoryAddrType = "OWNERSHIP_MANDATORY_BY_ADDR_TYPE";
   public static GsCodePasswordRegex = "PASSWORD_REGEX";
   public static GsCodeMaximumReferantor = "MAX_REFERANTOR";
+  public static GsCodeIsShowMultiReferantor = "IS_SHOW_MULTI_REFERANTOR";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";

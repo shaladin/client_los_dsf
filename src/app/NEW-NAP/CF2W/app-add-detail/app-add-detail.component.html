@@ -122,7 +122,9 @@
               </app-guarantor-paging>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data-new *ngIf="AppStepIndex == 3" [appId]="appId" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              <app-referantor-data *ngIf="AppStepIndex == 3 && IsShowMultiReferantor == '0'" [appId]="appId" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()" [showCancel]="'true'">
+              </app-referantor-data>
+              <app-referantor-data-new *ngIf="AppStepIndex == 3 && IsShowMultiReferantor == '1'" [appId]="appId" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
