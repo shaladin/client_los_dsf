@@ -1,3 +1,4 @@
+import { HttpHeaders } from "@angular/common/http";
 import { environment } from "environments/environment";
 
 export class AdInsConstant {
@@ -51,4 +52,8 @@ export class AdInsConstant {
   // Storage Watch Key
   public static WatchRoleState = "RoleState";
   public static WatchRoleLang = "lang";
+  
+  private static SpinnerHeaders = new HttpHeaders({
+    'IsLoading': "true"});
+  public static SpinnerOptions = {headers: AdInsConstant.SpinnerHeaders};
 }

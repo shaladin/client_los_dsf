@@ -25,7 +25,8 @@ export const environment = {
     ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
     Module:"LOS",
     Superset: 'http://linuxdev4:8091/',
-    isCore : true
+    isCore : true,
+    SpinnerOnHttpPost: true
   };
   
   
