@@ -1,10 +1,7 @@
-export class VendorBankAccObj {
+export class CustBankAccObj {
 
-    VendorBankAccId: number;
-    VendorId: number;
-    VendorCode: string;
-    VendorEmpId: number;
-    VendorEmpNo: string;
+    CustBankAccId: number;
+    CustId: number;
     RefBankId: number;
     BankName: string;
     BankCode: string;
@@ -12,9 +9,7 @@ export class VendorBankAccObj {
     BankAccountName: string;
     IsDefault: boolean;
     IsActive: boolean;
-    RefBankid: number;
     BankBranch: string;
-    Notes: string;
 
     constructor() {
 

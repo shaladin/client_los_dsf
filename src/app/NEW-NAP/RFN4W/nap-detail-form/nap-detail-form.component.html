@@ -114,9 +114,12 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 1 && IsDataReady" [appId]="appId" (outputTab)="NextStep('APP')"
+              <app-referantor-data *ngIf="AppStepIndex == 1 && IsDataReady && IsShowMultiReferantor == '0'" [appId]="appId" (outputTab)="NextStep('APP')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel">
-              </app-referantor-data>
+              </app-referantor-data>| 
+              <app-referantor-data-new *ngIf="AppStepIndex == 1 && IsDataReady && IsShowMultiReferantor == '1'" [appId]="appId" (outputTab)="NextStep('APP')"
+                  (outputCancel)="Cancel()" [showCancel]="showCancel">
+              </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data *ngIf="AppStepIndex == 2 && IsDataReady" [appId]="appId" [isCollateral]="false"

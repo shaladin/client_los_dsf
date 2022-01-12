@@ -4,7 +4,10 @@ export class NapAppReferantorModel{
     ReferantorCode: string;
     ReferantorName: string;
     MrReferantorType: string;
+    MrReferantorTypeName: string;
+    ReferantorCategory: string;
     RefBankCode: string;
+    BankName: string;
     BankAccName: string;
     BankAccNo: string;
     BankBranch: string;
@@ -21,7 +24,6 @@ export class NapAppReferantorModel{
     MrTaxCalcMethod: string;
     RowVersion: string;
     constructor () {
-        // this.ReferantorName = "";
         this.RowVersion = "";
     }
 }

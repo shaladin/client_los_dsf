@@ -23,6 +23,7 @@ export class InputLookupObj {
     isJoinExAPI: boolean;
     integrationObj: IntegrationObj;
     isClear : boolean;
+    IsUpdate: boolean;
     
     constructor() {
         this.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
@@ -43,6 +44,7 @@ export class InputLookupObj {
         this.isJoinExAPI = false;
         this.integrationObj = new IntegrationObj();
         this.isClear = false;
+        this.IsUpdate = false;
     }
 }
 

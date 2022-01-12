@@ -112,6 +112,8 @@ import { SchmEvenPrincipalFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/
 import { SchmBalloonFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
 import { ApplicationDataOplComponent } from "./application-data/application-data-opl/application-data-opl.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ReferantorDataNewComponent } from "./referantor-data-new/referantor-data-new.component";
+import { ReferantorDataNewDetailComponent } from "./referantor-data-new-detail/referantor-data-new-detail.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -200,6 +202,7 @@ export const customCurrencyMaskConfig = {
     AppCustAssetDetailComponent,
     AppCustAssetOldNapComponent,
     AppCustAssetOldNapDetailComponent,
+    ReferantorDataNewComponent,
 
     ApplicationDataDlfnComponent,
     InvoiceDataDlfnComponent,
@@ -318,7 +321,8 @@ export const customCurrencyMaskConfig = {
     AppCustAssetComponent,
     AppCustAssetOldNapComponent,
     AppCustAssetOldNapDetailComponent,
-
+    ReferantorDataNewComponent,
+    ReferantorDataNewDetailComponent,
     ApplicationDataDlfnComponent,
     InvoiceDataDlfnComponent,
     EditInvoiceDataComponent,
@@ -347,7 +351,7 @@ export const customCurrencyMaskConfig = {
     SchmEvenPrincipalFL4WComponent,
     SchmBalloonFL4WComponent,
   ],
-  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
+  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent, ReferantorDataNewDetailComponent],
   providers: [
     NGXToastrService
   ]

@@ -1,0 +1,177 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <!-- Income Information -->
+    <div class="card-body">
+      <!-- <div class="px-3"> -->
+        <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Allocation Type</label>
+              <div class="col-md-8">
+                <select style="width:50%" class="form-control" formControlName="AllocType" (change)="inputTypeChange()">
+                  <option value="{{AllocTypeAmt}}">Amount</option>
+                  <option value="{{AllocTypePerc}}">Percentage</option>
+                </select>
+              </div>
+            </div>
+            <app-form-commission-generate-v2 #Form1 *ngIf="OnForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier">
+            </app-form-commission-generate-v2>
+            <app-form-commission-generate-v2 #Form2 *ngIf="OnForm2" [hidden]="HideForm2" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplierEmp"
+              [FormInputObj]="FormInputObjSupplierEmp"></app-form-commission-generate-v2>
+            <app-form-commission-generate-v2 #Form3 *ngIf="OnForm3" [hidden]="HideForm3" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
+              [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor">
+            </app-form-commission-generate-v2>
+          </div>
+
+          <!-- Summary -->
+          <lib-ucSubsection [id]="'viewSummaryId'" [title]="'Summary'" [panel]="'viewSummary'">
+          </lib-ucSubsection>
+          <div class="row" id="viewSummary">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-3 form-inline">
+                  <label translate>Total Commision Amount</label>
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                  <label class ="adInsLabel" *ngIf="Summary.TotalCommisionAmount <= maxAllocAmt">
+                    {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
+                  <label *ngIf="Summary.TotalCommisionAmount > maxAllocAmt"
+                    style="color: red;">
+                    {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-inline">
+                  <label translate>Total Commission After Tax Amount</label>
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                  <label>{{Summary.TotalCommissionAfterTaxAmt | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-inline">
+                  <label translate>Total Disburse Amount</label>
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                  <label>{{Summary.TotalDisburseAmount | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-inline">
+                  <label translate>Total Expense Amount</label>
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                  <label>{{Summary.totalExpenseAmount | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-inline">
+                  <label translate>Total TAX</label>
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                  <label>{{Summary.TotalTaxAmmount | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-inline">
+                  <label translate>Total VAT</label>
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                  <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-inline">
+                  <label translate>Gross Yield</label>
+                </div>
+                <div class="col-md-3" style="text-align:right;">
+                  <label *ngIf="Summary.GrossYield >= 0"> {{Summary.GrossYield | number:'.6':'en-US'}}%</label>
+                  <label *ngIf="Summary.GrossYield < 0" style="color: red;"> ( {{-Summary.GrossYield | number:'.6':'en-US'}} ) %</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!isReturnOn" class="form-actions right">
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="print()">
+              <i class="ft-x"></i>&nbsp;<span translate>Print</span>
+            </button>
+            <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+              <i  class="ft-x"></i>&nbsp;<span translate>Return</span>
+            </button>
+            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+            </button>
+            <button type="button" (click)="CalculateTotal()" class="btn btn-raised btn-primary mr-1">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Calculate</span>
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary mr-1">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+            </button>
+          </div>
+        </form>
+        <form class="form form-horizontal" *ngIf="isReturnOn && ReturnHandlingHObj.ReturnHandlingHId == 0" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid && SaveReturnForm()"
+        #enjiForm="ngForm">
+          <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCommissionId'" [title]="'Return Commission & Reserved Fund'"
+          [panel]="'formReturnCommission'">
+          </lib-ucSubsection>
+          <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCommission'">
+            <div class="form-group row adins-required">
+              <div class="form-group col-md-2">
+                <label class="adInsLabel" translate>Return To</label>
+              </div>
+              <div class="col-md-4">
+                <select class="form-control adInsInput" style="width: auto" formControlName="ReturnTo"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnTo.invalid}">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DDLData[DDLTask]" value="{{it.Key}}">
+                    {{it.Value}} </option>
+                </select>
+                <lib-uc-show-errors [control]="FormReturnObj.controls.ReturnTo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+
+            </div>
+            <div class="form-group row adins-required">
+              <div class="form-group col-md-2">
+                <label class="adInsLabel" translate>Return Reason</label>
+              </div>
+              <div class="col-md-4">
+                <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.Reason.invalid}">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DDLData[DDLReason]" value="{{it.Key}}">
+                    {{it.Value}} </option>
+                </select>
+                <lib-uc-show-errors [control]="FormReturnObj.controls.Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+
+            </div>
+
+            <div class="form-group row adins-required">
+              <div class="form-group col-md-2">
+                <label class="adInsLabel" translate>Return Notes</label>
+              </div>
+              <div class="col-md-4">
+                <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.Notes.invalid}"></textarea>
+                <lib-uc-show-errors [control]="FormReturnObj.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </div>
+
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel Return</span>
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      <!-- </div> -->
+    </div>
+
+  </div>
+</div>

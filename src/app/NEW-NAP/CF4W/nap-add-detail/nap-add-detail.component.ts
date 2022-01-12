@@ -22,6 +22,7 @@ import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -47,6 +48,7 @@ export class NapAddDetailComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   isMainCustMarried: boolean = false;
+  IsShowMultiReferantor: number = 0;
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -100,6 +102,7 @@ export class NapAddDetailComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     // check DMS
+    await this.GetGSValueShowRferantor();
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
@@ -136,6 +139,13 @@ export class NapAddDetailComponent implements OnInit {
 
     await this.GetCustMainData();
     this.MakeViewReturnInfoObj();
+  }
+
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+    (response) => {
+      this.IsShowMultiReferantor = parseInt(response.GsValue);
+    });
   }
 
   async GetCustMainData() {

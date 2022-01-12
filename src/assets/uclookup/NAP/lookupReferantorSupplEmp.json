@@ -1,0 +1,79 @@
+{
+    "title": "Lookup - Referantor Supplier Employee",
+    "sectionTitle": "Search",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "VE.VENDOR_EMP_NO",
+        "id": "referantorCode",
+        "value": "",
+        "label": "Referantor Code",
+        "placeholder": "Referantor Code"
+      },
+      {
+        "type": "textbox",
+        "name": "VE.VENDOR_EMP_NAME",
+        "id": "referantorName",
+        "value": "",
+        "label": "Referantor Name",
+        "placeholder": "Referantor Name"
+      }
+    ],
+    "querystring": {
+      "name": "lookupReferantorSupplEmp"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Referantor Code",
+        "name": "ReferantorCode"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Referantor Name",
+        "name": "ReferantorName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Referantor Type",
+        "name": "ReferantorTypeDesc"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Select"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ReferantorCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ReferantorName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ReferantorTypeDesc"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "ReferantorName"
+          }
+        ]
+      }
+    ],
+    "propertyId": "ReferantorName",
+    "propertyName": "ReferantorName"
+  }

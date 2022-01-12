@@ -19,6 +19,7 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -37,7 +38,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   BizTemplateCode: string;
   IsViewReady: boolean = false;
-
+  IsShowMultiReferantor: number = 0;
   Step = {
     "COM": 1,
     "RSV": 2
@@ -79,10 +80,10 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     Other: []
   };
 
-  ngOnInit() {
+  async ngOnInit() {
     this.isShow = false;
     this.claimTask();
-
+    await this.GetGSValueShowRferantor();
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
@@ -90,6 +91,13 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     this.GetAndUpdateAppStep();
     this.MakeViewReturnInfoObj();
     this.GetIncomeInfoObj();
+  }
+
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+    (response) => {
+      this.IsShowMultiReferantor = parseInt(response.GsValue);
+    });
   }
 
   ListResultRefundIncomeInfo: Array<ResultRefundObj>;

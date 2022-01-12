@@ -103,10 +103,14 @@ export class URLConstant {
 
   // App Referantor
   public static AddAppReferantor = environment.losUrl + "/v1" + "/AppReferantor/AddAppReferantor";
+  public static AddListAppReferantor = environment.losUrl + "/v1" + "/AppReferantor/AddListAppReferantor";
   public static EditAppReferantor = environment.losUrl + "/v1" + "/AppReferantor/EditAppReferantor";
+  public static EditListAppReferantor = environment.losUrl + "/v1" + "/AppReferantor/EditListAppReferantor";
   public static DeleteAppReferantor = environment.losUrl + "/v1" + "/AppReferantor/DeleteAppReferantor";
+  public static DeleteListAppReferantor = environment.losUrl + "/v1" + "/AppReferantor/DeleteListAppReferantor";
   public static GetAppReferantorByAppReferantorId = environment.losUrl + "/v1" + "/AppReferantor/GetAppReferantorByAppReferantorId";
   public static GetAppReferantorByAppId = environment.losUrl + "/v1" + "/AppReferantor/GetAppReferantorByAppId";
+  public static GetListAppReferantorWithDetailByAppId = environment.losUrl + "/v1" + "/AppReferantor/GetListAppReferantorWithDetailByAppId";
   public static VendorCategoryAgencyCompany = "AGENCY_COMPANY";
   public static VendorCategoryAgencyPersonal = "AGENCY_PERSONAL";
 
@@ -140,6 +144,7 @@ export class URLConstant {
   public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionDataForEditByAppId";
   public static DeleteAppCommissionData = environment.losUrl + "/v1" + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionRule";
+  public static GetAppCommissionRuleV2 = environment.losUrl + "/v2" + "/AppCommission/GetAppCommissionRule";
   public static GetAppCommissionTaxAndCalcGrossYield = environment.losUrl + "/v1" + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
   public static GetAppCommissionTaxAndCalcGrossYieldV2 = environment.losUrl + "/v2" + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
   public static GetAppCommissionTaxAndCalcGrossYieldV2_1 = environment.losUrl + "/v2.1" + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
@@ -592,6 +597,8 @@ export class URLConstant {
   public static GetVendorEmpByVendorEmpNoAndVendorCode = environment.FoundationR3Url + "/v1" + "/VendorEmp/GetVendorEmpByVendorEmpNoAndVendorCode";
   public static GetListVendorBankAccObjByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListVendorBankAccObjByVendorEmpNo";
   public static GetListActiveVendorBankAccObjByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccObjByVendorEmpNo";
+  public static GetListActiveVendorBankAccByVendorEmpId = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccByVendorEmpId";
+  public static GetListActiveVendorBankAccByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccByVendorEmpNo";
 
   //Life Ins
   public static AddAppLifeInsH = environment.losUrl + "/v1" + "/AppLifeIns/AddAppLifeInsH";
@@ -821,6 +828,8 @@ export class URLConstant {
   public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
   public static GetCustCompanyForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
   public static GetListKeyValueMobilePhnByAppId = environment.losUrl + "/v1" + "/AppCust/GetListKeyValueMobilePhnByAppId";
+  public static GetListActiveCustBankAccByCustId = environment.FoundationR3Url + "/v1" + "/CustBankAcc/GetListActiveCustBankAccByCustId";
+  public static GetListActiveCustBankAccByCustNo = environment.FoundationR3Url + "/v1" + "/CustBankAcc/GetListActiveCustBankAccByCustNo";
 
   public static AddAppCustHighlightComment = environment.losUrl + "/v1" + "/AppCust/AddAppCustHighlightComment";
   public static GetAppCustHighlightCommentByCustNo = environment.losUrl + "/v1" + "/AppCust/GetAppCustHighlightCommentByCustNo";

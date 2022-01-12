@@ -21,6 +21,7 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -48,6 +49,7 @@ export class NapAddDetailComponent implements OnInit {
   IsSavedTC: boolean = false;
   isMainCustMarried: boolean = false;
   IsDataReady: boolean = false;
+  IsShowMultiReferantor: number = 0;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
   FormReturnObj = this.fb.group({
@@ -101,6 +103,7 @@ export class NapAddDetailComponent implements OnInit {
       (response) => {
         this.SysConfigResultObj = response;
     });
+    await this.GetGSValueShowRferantor();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.NapObj.AppId = this.appId;
     if (this.ReturnHandlingHId > 0) {
@@ -130,6 +133,13 @@ export class NapAddDetailComponent implements OnInit {
     await this.GetCustMainData();
 
     this.MakeViewReturnInfoObj();
+  }
+
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+    (response) => {
+      this.IsShowMultiReferantor = parseInt(response.GsValue);
+    });
   }
 
   async GetCustMainData() {
