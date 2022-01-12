@@ -37,6 +37,8 @@ import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-re
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
 import { NewLeadInputPageXComponent } from 'app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { RoTelemkOfferDetailXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail-x.component';
+import { RoTelemkOfferVerifXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component';
 
 
 const routes: Routes = [
@@ -185,14 +187,14 @@ const routes: Routes = [
       },
       {
         path: PathConstant.POTENTIAL_RO_TEL_OFFER_DETAIL,
-        component: RoTelemkOfferDetailComponent,
+        component: RoTelemkOfferDetailXComponent,
         data: {
           title: 'RO Telemarketing Offering Detail'
         }
       },
       {
         path: PathConstant.POTENTIAL_RO_TEL_OFFER_VERIF,
-        component: RoTelemkOfferVerifComponent,
+        component: RoTelemkOfferVerifXComponent,
         data: {
           title: 'RO Telemarketing Offering Verification'
         }

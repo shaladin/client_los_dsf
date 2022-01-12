@@ -259,4 +259,6 @@ export class URLConstantX {
   //AppSubsidyProfitabilityX
   public static GetAppSubsidyProfitabilityXByAppId = environment.losUrl + "/v1" + "/AppSubsidyProfitabilityX/GetAppSubsidyProfitabilityXByAppId";
 
+  //Potential RO
+  public static GetTelemkOfferingSubjectByRoPotentialNo = environment.losUrl + "/v1" + "/RoPotentialX/GetTelemkOfferingSubjectByRoPotentialNo";
 }
