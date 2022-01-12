@@ -19,7 +19,7 @@
 }
 
 body {
-    background-image: url('assets/img/background.png');
+    /* background-image: url('assets/img/background.png'); */
     /* Full height */
     height: 100%;
     /* Center and scale the image nicely */
@@ -455,4 +455,71 @@ input[type=date].form-control.is-invalid {
 
 mat-dialog-container#role-modal {
     height: auto;
+}
+
+#login {
+    font-family: 'Inter', sans-serif !important;
+    background-image: url("assets/img/bg-login.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.text-user {
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    font-size: 10px;
+}
+
+.text-title {
+    font-style: normal;
+    font-weight: 700;
+    line-height: 44px;
+    text-align: center;
+    letter-spacing: 0.04em;
+    color: rgba(31, 32, 35, 0.9);
+}
+
+.input-field {
+    text-align: left;
+    border: 0.5px solid rgb(202, 202, 202);
+    padding: 1rem;
+}
+
+.input-field i {
+    line-height: 55px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.input-field input {
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    margin-left: 1.5rem;
+}
+
+.gradient-button {
+    margin: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.2rem;
+    padding: 1.1rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFF;
+    border-radius: 5px;
+    width: 13rem;
+    cursor: pointer;
+    display: inline-block;
+    outline: none;
+    border: none;
+}
+
+.gradient-button-2 {
+    background: linear-gradient(135deg, #87EE77 0%, #04C16E 100%);
+}
+.gradient-button-2:hover { 
+    filter: brightness(95%);
 }
