@@ -34,6 +34,10 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/app-commission-rsv-fund/req-return-handling-comm-rsv-fund-obj.model';
 import { getLocaleNumberFormat, formatNumber } from '@angular/common';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ResGetRefTaxOfficeDetailObj } from 'app/shared/model/Response/commission/res-get-ref-tax-office-detail-obj.model';
+import { ReqTaxObjX } from 'app/impl/shared/model/app-commission-rsv-fund/req-tax-obj-x.model';
 
 @Component({
   selector: 'app-commission-v2-x',
@@ -52,6 +56,7 @@ export class CommissionV2XComponent implements OnInit {
   @Input() totalRsvFundAmt: number = 0;
   @Input() DictMaxIncomeForm: object = {};
   @Input() BizTemplateCode: string;
+  @Input() NapObj: AppObj;
   @Input() LobCode: string = "";
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Input() maxAllocRefundAmt: number = 0;
@@ -119,7 +124,7 @@ export class CommissionV2XComponent implements OnInit {
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
   readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
   readonly DDLTask: string = CommonConstant.ReturnTask;
-
+  taxOfficeCode: string = "";
 
   FormReturnObj = this.fb.group({
     ReturnTo: [''],
@@ -184,6 +189,7 @@ export class CommissionV2XComponent implements OnInit {
     await this.GetExistingAppCommData();
     await this.bindDDLReasonReturn();
     await this.bindTaskObj();
+    this.GetTaxOffice();
   }
   DictCalcMethod: { [id: string]: string } = {};
   GetCalcMethod() {
@@ -538,7 +544,7 @@ export class CommissionV2XComponent implements OnInit {
     if (this.AllocateDataWithPriority(this.identifierReferantor, listVendorCode, listVendorEmpNo, listTrxAmt)) return;
 
 
-    let obj: ReqTaxObj = {
+    let obj: ReqTaxObjX = {
       AppId: this.AppId,
       VendorCode: listVendorCode,
       VendorEmpNo: listVendorEmpNo,
@@ -546,6 +552,7 @@ export class CommissionV2XComponent implements OnInit {
       TrxTypeCode: CommonConstant.TrxTypeCodeAppCom,
       ExchangeRateAmt: CommonConstant.ExchangeRateAmt,
       IsSave: false,
+      TaxOfficeCode: this.taxOfficeCode
     };
     //await listTrxAmt.forEach(a=> a.forEach(b=>this.TotalInput += b));
     
@@ -833,6 +840,7 @@ export class CommissionV2XComponent implements OnInit {
     temp.MrTaxCalcMethodCode = FormHData.get("MrTaxCalcMethodCode").value;
     temp.TaxpayerNo = FormHData.get("TaxpayerNo").value;
     temp.RowVersion = FormHData.get("RowVersion").value;
+	  temp.TaxOfficeCode = this.taxOfficeCode;
     if (CommReceipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplierEmp) {
       temp.ReservedField1 = FormHData.get("SupplCode").value;
       temp.ReservedField2 = FormHData.get("MrSupplEmpPositionCodeDesc").value;
@@ -986,6 +994,15 @@ export class CommissionV2XComponent implements OnInit {
       });
   }
 
+  GetTaxOffice(){
+    let ReqByCodeObj: GenericObj = new GenericObj();
+    ReqByCodeObj.Code = this.NapObj.OriOfficeCode;
+    this.http.post(URLConstant.GetRefTaxOfficeDetailByRefOfficeCode, ReqByCodeObj).subscribe(
+      (response: ResGetRefTaxOfficeDetailObj) => {
+          this.taxOfficeCode = response["TaxOfficeCode"];
+      });
+  }
+  
   ChangeEmpPos(idx: number) {
     let ListIdx = idx;
     for (let i = 0; i < this.ListAppCommHObj.length; i++) {

@@ -23,6 +23,9 @@ export class AdminProcessXService {
         return this.http.post(URLConstantX.SubmitAgrmntActivationByHuman, Obj);
     }
 
+    SubmitAgrmntActivationByHumanV2_1(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.SubmitAgrmntActivationByHumanV2_1, Obj);
+    }
     SubmitAgrmntActivationXByHumanV2(Obj: any): Observable<Object> {
         return this.http.post(URLConstantX.SubmitAgrmntActivationByHumanV2, Obj);
     }
