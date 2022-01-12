@@ -58,13 +58,15 @@ import { NewLeadInputDsfComponent } from "app/dsf/lead/new-lead-input/new-lead-i
 import { NewLeadInputMainInfoDsfComponent } from "app/dsf/lead/new-lead-input/new-lead-input-main-info-dsf/new-lead-input-main-info-dsf.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { AdInsModule } from "app/components/adins-module/adins.module";
+import { RoTelemkOfferDetailXComponent } from "app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail-x.component";
+import { RoTelemkOfferVerifXComponent } from "app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
   allowZero: true,
   decimal: ".",
-  precision: 2,
+  precision: 0,
   prefix: "",
   suffix: "",
   thousands: ",",
@@ -93,7 +95,9 @@ export const customCurrencyMaskConfig = {
     GeneratePotentialRoComponent,
     RoTelemkOfferPagingComponent,
     RoTelemkOfferDetailComponent,
+    RoTelemkOfferDetailXComponent,
     RoTelemkOfferVerifComponent,
+    RoTelemkOfferVerifXComponent,
     RoPotentialInquiryComponent,
     RoPotentialExecutionComponent,
     RoPotentialViewComponent,

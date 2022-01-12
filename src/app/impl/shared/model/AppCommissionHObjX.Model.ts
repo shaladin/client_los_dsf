@@ -32,6 +32,7 @@ export class AppCommissionHObjX{
     ListAppCommSupplEmpObj: Array<AppCommSupplEmpObjX>;
     AllocationAmount: number;
     CommissionAmtAfterTax: number;
+    TaxOfficeCode: string;
 
     constructor(){
         this.AppCommissionHId = 0;
@@ -63,5 +64,6 @@ export class AppCommissionHObjX{
         this.ListAppCommSupplEmpObj = new Array<AppCommSupplEmpObjX>();
         this.AllocationAmount=0;
         this.CommissionAmtAfterTax=0;
+        this.TaxOfficeCode = "";
     }
 }

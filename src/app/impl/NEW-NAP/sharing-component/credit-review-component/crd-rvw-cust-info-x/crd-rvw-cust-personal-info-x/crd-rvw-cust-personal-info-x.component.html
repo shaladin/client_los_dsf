@@ -131,8 +131,8 @@
     </div>
     <div class="col-md-6 "> 
       <span *ngFor="let item of ListCrdRvwCustPhnStatusObj; let i = index">
-        <label *ngIf="i!=0" class="label-control"> &nbsp;/&nbsp; </label>
-        <span id="PhnIndicator{{i}}">
+        <label class="label-control"> {{item.PhnNo}} </label>
+        <span id="PhnIndicator{{i}}" style="float: right; width: 55%">
           <i [ngClass]="item.PhnIndicator == null ? 'far fa-circle' : item.PhnIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
             [ngStyle]="{'color': item.PhnIndicator == null ? '' : item.PhnIndicator != whiteIndicator ? item.PhnIndicator : ''}" class="font-medium-3 tooltips">
             <span class="tooltipstext">
@@ -142,7 +142,7 @@
           </i>
         </span>
         &nbsp;
-        <label class="label-control"> {{item.PhnNo}} </label>
+        <br>
       </span>
     </div>
   </div>

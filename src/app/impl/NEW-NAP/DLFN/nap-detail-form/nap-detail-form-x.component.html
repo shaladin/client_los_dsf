@@ -113,16 +113,15 @@
   </div>
 </div>
 <br>
-<div class="col-md-12">
+<div class="col-md-12"*ngIf="ReturnHandlingHId > 0 && IsLastStep">
   <div class="form-action pull-right">
   </div>
-  <div class="card" *ngIf="ReturnHandlingHId > 0">
+  <div class="card">
     <div class="card-body">
       <div class="px-3">
         <div class="form-action pull-right">
-          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary">
-            <i class="far fa-check-square"></i> Submit
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
           </button>
         </div>
       </div>

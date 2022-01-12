@@ -210,6 +210,7 @@ export class AppViewXComponent implements OnInit {
       this.IsCustomerOpl = false;
       this.IsLifeInsurance = false;
       this.IsApprovalHist = false;
+      this.IsDeviation = false;
       this.IsMultiInsurance = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
