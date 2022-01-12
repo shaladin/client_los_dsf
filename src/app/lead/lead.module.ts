@@ -52,6 +52,8 @@ import { NewLeadInputPageXComponent } from "app/impl/lead/new-lead-input/new-lea
 import { NewLeadInputLeadDataXComponent } from "app/impl/lead/new-lead-input/new-lead-input-lead-data-x/new-lead-input-lead-data-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { AdInsModule } from "app/components/adins-module/adins.module";
+import { RoTelemkOfferDetailXComponent } from "app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail-x.component";
+import { RoTelemkOfferVerifXComponent } from "app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -87,7 +89,9 @@ export const customCurrencyMaskConfig = {
     GeneratePotentialRoComponent,
     RoTelemkOfferPagingComponent,
     RoTelemkOfferDetailComponent,
+    RoTelemkOfferDetailXComponent,
     RoTelemkOfferVerifComponent,
+    RoTelemkOfferVerifXComponent,
     RoPotentialInquiryComponent,
     RoPotentialExecutionComponent,
     RoPotentialViewComponent,
