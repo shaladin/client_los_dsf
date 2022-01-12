@@ -1202,6 +1202,7 @@ export class ChangeMouRequestAddcollXComponent implements OnInit {
       OwnerProfessionCode: [''],
       SelfOwner: [false],
       AttrContentObjs: this.fb.array([]),
+      MrOwnerTypeCode: [''],
       CollateralStatus: [''],
       IsRequiredStatus: [''],
       CollateralReceivedDt: [''],

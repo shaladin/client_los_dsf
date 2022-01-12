@@ -16,6 +16,9 @@ import { VerfResultHObj } from 'app/shared/model/verf-result-h/verf-result-h.mod
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { ResCustPhoneNoObj } from 'app/shared/model/lead/res-cust-phone-no-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-ro-telemk-offer-verif',
@@ -29,6 +32,7 @@ export class RoTelemkOfferVerifComponent implements OnInit {
   QuestionObj: object;
   ListVerfAnswer: Array<Array<string>> = [];
   ListVerifResultHObj: Array<VerfResultHObj> = [];
+  ListPhoneNoObj: Array<ResCustPhoneNoObj> = new Array<ResCustPhoneNoObj>();
   PhoneDataForm = this.fb.group({
     RoPotentialNo: [''],
     CustNo: [''],
@@ -65,22 +69,32 @@ export class RoTelemkOfferVerifComponent implements OnInit {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess[CommonConstant.BUSINESS_DT];
     await this.getTelemkOfferSubj();
+    await this.getListCustPhoneNo();
     await this.bindVerfResultStat();
     await this.getQuestionList();
     await this.getVerfResultData();
     await this.getListVerfResulHtData();
   }
 
+  async getListCustPhoneNo() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.CustNo = this.TelemkOfferSubj.CustNo;
+    await this.http.post(URLConstant.GetListCustPhoneNoByCustNo, reqObj).toPromise().then(
+      (response: GenericListObj) => {
+        this.ListPhoneNoObj = response[CommonConstant.ReturnObj];
+        if (this.ListPhoneNoObj.length > 0) {
+          this.PhoneDataForm.patchValue({
+            Phn: this.ListPhoneNoObj[0].PhoneNumber,
+            PhnType: this.ListPhoneNoObj[0].PhoneType
+          });
+        }
+      })
+  }
+
   async getTelemkOfferSubj() {
     await this.http.post(URLConstant.GetTelemkOfferingSubjectByRoPotentialNo, { TrxNo: this.roPotentialNo }).toPromise().then(
       (response: ResRoTelemkOfferSubjectObj) => {
         this.TelemkOfferSubj = response;
-        if (this.TelemkOfferSubj.ListPhoneNo.length > 0) {
-          this.PhoneDataForm.patchValue({
-            Phn: this.TelemkOfferSubj.ListPhoneNo[0].PhoneNumber,
-            PhnType: this.TelemkOfferSubj.ListPhoneNo[0].PhoneType
-          });
-        }
       })
   }
 

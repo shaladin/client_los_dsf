@@ -31,6 +31,7 @@ export class MouCustCompanyContactPersonObj {
     PhnExt2: string; 
     FaxArea: string; 
     Fax: string; 
+    IsGuarantor: boolean;
     RowVersion: string;
     
     constructor() { 
