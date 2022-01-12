@@ -1,5 +1,3 @@
-import { MouCustCollateralAttrObj } from "./mou-cust-collateral-attr-obj.model";
-
 export class MouCustCollateralObj{
     MouCustCollateralId: number;
     MouCustId: number;
@@ -21,6 +19,7 @@ export class MouCustCollateralObj{
     CollateralPrcnt: number;
     CollateralPortionAmt: number;
     MaxCollPrcnt: number;
+    TaxCityIssuer: string;
     AssetTaxDate: Date;
     CollateralNotes: string;
     ManufacturingYear: number;

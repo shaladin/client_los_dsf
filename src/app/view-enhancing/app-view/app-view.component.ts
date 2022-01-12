@@ -210,6 +210,7 @@ export class AppViewComponent implements OnInit {
       this.IsCustomerOpl = false;
       this.IsLifeInsurance = false;
       this.IsApprovalHist = false;
+      this.IsDeviation = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
       this.IsAsset = false;
@@ -289,6 +290,7 @@ export class AppViewComponent implements OnInit {
       this.IsReservedFund = false;
       this.IsPhoneVerification = false;
       this.IsAssetExpense = false;
+      this.IsDeviation = false;
     }
   }
 
