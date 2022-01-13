@@ -4,15 +4,6 @@
     "reportTemplateCode": "FACT_MONTHLY_PAYMENT_SCHEDULE_SUMMARY",
     "component": [ 
         {
-            "type" : "datepicker",
-            "label" : "Date As Of",
-            "name" : "LeadDtGte",
-            "value" : "BD",
-            "restriction" : "gte",
-            "datatype" : "date",
-            "paramAssignment": 1 
-        } ,
-        {
             "type" : "dropdown",
             "label" : "Currency",
             "name" : "Currency",
@@ -43,7 +34,17 @@
             "criteriaPropValue": "", 
             "itemsUrl" : [],
             "paramAssignment": 1 
-        }      
+        },     
+        {
+            "type" : "datepicker",
+            "label" : "Date As Of",
+            "name" : "LeadDtGte",
+            "value" : "BD",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }
+         
     ],
     "exportTypeList": [
         {
