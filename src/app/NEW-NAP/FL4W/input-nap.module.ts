@@ -57,16 +57,16 @@ import { NapCustMainDataXDsfComponent } from "../DSF/FL4W-dsf/nap-cust-main-data
 import { NapDetailFormXDsfComponent } from "../DSF/FL4W-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 
-
-export const customCurrencyMaskConfig = {
-  align: "right",
-  allowNegative: true,
-  allowZero: true,
-  decimal: ".",
-  precision: 2,
-  prefix: "",
-  suffix: "",
-  thousands: ",",
+ 
+export const customCurrencyMaskConfig = {     
+  align: "right",     
+  allowNegative: true,     
+  allowZero: true,     
+  decimal: ".",     
+  precision: 0,     
+  prefix: "",     
+  suffix: "",     
+  thousands: ",",     
   nullable: false,
   inputMode: CurrencyMaskInputMode.NATURAL
 };

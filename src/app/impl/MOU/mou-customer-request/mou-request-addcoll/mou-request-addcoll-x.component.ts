@@ -41,6 +41,7 @@ import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model'
 import { RefAttrGenerateObj } from 'app/shared/model/ref-attr-generate.model';
 import { ResMouCustCollateralAttrObj, MouCustCollateralAttrObj } from 'app/shared/model/mou-cust-collateral-attr-obj.model';
 import { MouCustObjForAddTrxData } from 'app/shared/model/mou-cust-obj-for-add-trx-data.model';
+import { RefProvDistrictObj } from 'app/shared/model/ref-prov-district-obj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll-x',
@@ -166,6 +167,8 @@ export class MouRequestAddcollXComponent implements OnInit {
     MrIdType: ['', [Validators.required]],
     Notes: [''],
     MrOwnerTypeCode: [''],
+    TaxCityIssuer: [''],
+    TaxIssueDt: [''],
     OwnerProfessionCode: [''],
     OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.required]],
     SelfOwner: [false],
@@ -714,6 +717,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       this.AddCollForm.controls.AssetCategoryCode.enable();
       this.AddCollForm.controls.OwnerName.enable();
       this.AddCollForm.controls.OwnerRelationship.enable();
+      this.AddCollForm.controls.TaxIssueDt.enable();
       this.AddCollForm.controls.OwnerIdNo.enable();
       this.AddCollForm.controls.MrIdType.enable();
       this.AddCollForm.controls.Notes.enable();
@@ -820,6 +824,7 @@ export class MouRequestAddcollXComponent implements OnInit {
         (response) => {
           this.collateralObj = response['MouCustCollateral'];
           this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
+          this.setMouCustCollateralExistingDoc(this.collateralObj.MouCustCollateralId);
 
           this.maxPrcnt = this.collateralObj.MaxCollPrcnt - e.SumCollateralPrcnt;
 
@@ -890,11 +895,19 @@ export class MouRequestAddcollXComponent implements OnInit {
             SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == CommonConstant.SelfCustomer,
             OwnerRelationship: this.collateralRegistrationObj.MrOwnerRelationshipCode,
             Notes: this.collateralRegistrationObj.Notes,
+            TaxCityIssuer: this.collateralObj.TaxCityIssuer,
             OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode,
             OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
             RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
             MrOwnerTypeCode: this.collateralRegistrationObj.MrOwnerTypeCode
           });
+          this.GetProvDistrict(this.collateralObj.TaxCityIssuer);
+          if (this.collateralObj.AssetTaxDate) {
+            this.AddCollForm.patchValue({
+              TaxIssueDt: formatDate(this.collateralObj.AssetTaxDate, 'yyyy-MM-dd', 'en-US')
+            });
+          }
+          this.InputLookupCityIssuerObj.isDisable = true;
 
           this.CopyUserForSelfOwner();
           this.OwnerTypeChange(this.collateralRegistrationObj.MrOwnerTypeCode);
@@ -930,6 +943,7 @@ export class MouRequestAddcollXComponent implements OnInit {
           this.AddCollForm.controls.MrIdType.disable();
           this.AddCollForm.controls.Notes.disable();
           this.AddCollForm.controls.ManufacturingYear.disable();
+          this.AddCollForm.controls.TaxIssueDt.disable();
           this.AddCollForm.controls["legalAddr"]["controls"].Addr.disable();
           this.AddCollForm.controls["legalAddr"]["controls"].AreaCode3.disable();
           this.AddCollForm.controls["legalAddr"]["controls"].AreaCode4.disable();
@@ -1086,6 +1100,8 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.mouCustCollateralObj.FullAssetCode = this.AddCollForm.controls.FullAssetCode.value;
     this.mouCustCollateralObj.FullAssetName = this.AddCollForm.controls.FullAssetName.value.value;
     this.mouCustCollateralObj.AssetCategoryCode = this.AddCollForm.controls.AssetCategoryCode.value;
+    this.mouCustCollateralObj.TaxCityIssuer = this.AddCollForm.controls.TaxCityIssuer.value;
+    this.mouCustCollateralObj.AssetTaxDate = this.AddCollForm.controls.TaxIssueDt.value;
     this.mouCustCollateralObj.MrCollateralConditionCode = CommonConstant.AssetConditionUsed;
     this.mouCustCollateralObj.MrCollateralUsageCode = CommonConstant.AssetUsageComm;
     this.mouCustCollateralObj.CollateralStat = CommonConstant.AssetConditionNew;
@@ -1235,6 +1251,8 @@ export class MouRequestAddcollXComponent implements OnInit {
       this.AddCollForm.controls.Notes.disable();
       this.AddCollForm.controls.OwnerMobilePhnNo.disable();
       this.AddCollForm.controls.ManufacturingYear.disable();
+      this.AddCollForm.controls.TaxIssueDt.disable();
+      this.InputLookupCityIssuerObj.isDisable = true;
       this.AddCollForm.controls.CollateralReleasedDt.disable();
       this.AddCollForm.controls.CollateralReceivedDt.disable();
       this.inputAddressObjForLegalAddr.isReadonly = true;
@@ -1301,7 +1319,8 @@ export class MouRequestAddcollXComponent implements OnInit {
             }
           });
 
-        this.getRefAssetDocList(this.collateralObj.AssetTypeCode);
+        if(isAddEdit) this.getRefAssetDocList(this.collateralObj.AssetTypeCode);
+        else this.setMouCustCollateralExistingDoc(this.collateralObj.MouCustCollateralId);
 
         this.AddCollForm.patchValue({
           MouCustCollateralId: this.collateralObj.MouCustCollateralId,
@@ -1323,6 +1342,7 @@ export class MouRequestAddcollXComponent implements OnInit {
           MaxCollPrcnt: this.collateralObj.MaxCollPrcnt,
           CollateralNotes: this.collateralObj.CollateralNotes,
           ManufacturingYear: this.collateralObj.ManufacturingYear,
+          TaxCityIssuer: this.collateralObj.TaxCityIssuer,
           RowVersionCollateral: this.collateralObj.RowVersion,
 
           MouCustCollateralRegistrationId: this.collateralRegistrationObj.MouCustCollateralRegistrationId,
@@ -1336,6 +1356,12 @@ export class MouRequestAddcollXComponent implements OnInit {
           OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
+        this.GetProvDistrict(this.collateralObj.TaxCityIssuer);
+        if (this.collateralObj.AssetTaxDate) {
+          this.AddCollForm.patchValue({
+            TaxIssueDt: formatDate(this.collateralObj.AssetTaxDate, 'yyyy-MM-dd', 'en-US')
+          });
+        }
 
         this.AddCollForm.controls.MaxCollPrcnt.setValidators([Validators.required, Validators.min(this.AddCollForm.controls.CollateralPrcnt.value), Validators.max(this.maxPrcnt)])
         this.AddCollForm.controls.MaxCollPrcnt.updateValueAndValidity();
@@ -1405,6 +1431,18 @@ export class MouRequestAddcollXComponent implements OnInit {
     );
   }
 
+  GetProvDistrict(ProvDistrictCode: string) {
+    this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, { Code: ProvDistrictCode }).subscribe(
+      (response: RefProvDistrictObj) => {
+        this.AddCollForm.patchValue({
+          TaxCityIssuer: response.ProvDistrictCode
+        });
+        this.InputLookupCityIssuerObj.jsonSelect = response;
+        this.InputLookupCityIssuerObj.nameSelect = response.ProvDistrictName;
+      }
+    );
+  }
+
   async SetProfessionName(professionCode: string) {
     await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
       (response) => {
@@ -1429,6 +1467,7 @@ export class MouRequestAddcollXComponent implements OnInit {
   }
 
   ClearForm() {
+    this.SetLookupBpkpCityIssuer();
     this.AddCollForm = this.fb.group({
       MouCustCollateralId: [''],
       MouCustCollateralRegistrationId: [''],
@@ -1453,6 +1492,8 @@ export class MouRequestAddcollXComponent implements OnInit {
       SerialNo4: [''],
       SerialNo5: [''],
       SelfOwner: [false],
+      TaxCityIssuer: [''],
+      TaxIssueDt: [''],
       RowVersionCollateral: [''],
       RowVersionCollateralRegistration: [''],
       items: this.fb.array([]),
@@ -1468,7 +1509,10 @@ export class MouRequestAddcollXComponent implements OnInit {
       CollateralReleasedDt: ['']
     })
     this.AddCollForm.updateValueAndValidity();
+    this.setValidatorBpkb();
 
+    this.InputLookupCityIssuerObj.nameSelect = '';
+    this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: '' }
     this.inputFieldLocationObj.inputLookupObj.nameSelect = '';
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: '' }
     this.inputFieldLegalObj.inputLookupObj.nameSelect = '';
@@ -1487,6 +1531,35 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.bindMouData();
   }
 
+  InputLookupCityIssuerObj: InputLookupObj = new InputLookupObj();
+  SetLookupBpkpCityIssuer() {
+    this.InputLookupCityIssuerObj = new InputLookupObj();
+    this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+    this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.isRequired = false;
+    let disCrit = new Array();
+    let critDisObj = new CriteriaObj();
+    critDisObj.DataType = 'text';
+    critDisObj.restriction = AdInsConstant.RestrictionEq;
+    critDisObj.propName = 'TYPE';
+    critDisObj.value = 'DIS';
+    disCrit.push(critDisObj);
+    this.InputLookupCityIssuerObj.addCritInput = disCrit;
+  }
+  setValidatorBpkb() {
+    this.AddCollForm.controls.TaxCityIssuer.setValidators(Validators.required);
+    this.AddCollForm.controls.TaxIssueDt.setValidators(Validators.required);
+    this.InputLookupCityIssuerObj.isRequired = true;
+    this.AddCollForm.controls.TaxCityIssuer.updateValueAndValidity();
+    this.AddCollForm.controls.TaxIssueDt.updateValueAndValidity();
+  }
+  SetBpkbCity(event) {
+    this.AddCollForm.patchValue({
+      TaxCityIssuer: event.DistrictCode,
+    });
+  }
   SaveExistingCollateral() {
     if (this.isEdit) {
       this.mouCustCollateralObj = this.collateralObj;
@@ -1666,7 +1739,6 @@ export class MouRequestAddcollXComponent implements OnInit {
   }
 
   getRefAssetDocList(AssetTypeCode) {
-
     this.http.post(URLConstant.GetRefAssetDocList, { Code: AssetTypeCode }).subscribe(
       (response) => {
         if (response[CommonConstant.ReturnObj].length > 0) {
@@ -1693,9 +1765,7 @@ export class MouRequestAddcollXComponent implements OnInit {
             ListDoc.push(assetDocumentDetail);
           }
         }
-        if (this.type == 'AddExisting') {
-          this.setMouCustCollateralDoc(this.MouCustCollateralId);
-        } else {
+        if (this.type == 'AddEdit') {
           this.setMouCustCollateralDoc(this.MouCustCollateralId);
         }
       });
@@ -1704,20 +1774,20 @@ export class MouRequestAddcollXComponent implements OnInit {
   setMouCustCollateralDoc(MouCustCollateralId: number = 0) {
     this.http.post(URLConstant.GetListMouCustCollateralDocsByMouCustCollateralId, { Id: MouCustCollateralId }).subscribe(
       (response) => {
-        let MouCustCollateralDocs = new Array();
-        MouCustCollateralDocs = response["MouCustCollateralDocs"];
+        let MouCustCollateralDocs = response["MouCustCollateralDocs"];
+        let tempDocForm = this.AddCollForm.get("ListDoc");
+        let tempListDoc = tempDocForm.value;
         if (MouCustCollateralDocs["length"] > 0) {
-          console.log("meow meow")
-          //region sementara gini dulu, kalo core ada perubahan, ambil core
-          for (let i = 0; i < this.AddCollForm.controls.ListDoc["controls"].length; i++) {
-            let tempDoc = MouCustCollateralDocs.find(x=>x.DocCode === this.AddCollForm.controls.ListDoc["controls"][i]["controls"]["DocCode"].value)
-            if(tempDoc != null){
-              this.AddCollForm.controls.ListDoc["controls"][i].patchValue({
-                DocNo: tempDoc.DocNo,
-                DocNotes: tempDoc.DocNotes,
-                ACDExpiredDt: formatDate(tempDoc.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-                IsReceived: tempDoc.IsReceived
-              })
+          for (let i = 0; i < MouCustCollateralDocs.length; i++) {
+            const tempMouCustCollateralDoc = MouCustCollateralDocs[i];
+            const findIdx: number = tempListDoc.findIndex(x => x.DocCode == tempMouCustCollateralDoc.DocCode);
+            if (findIdx > 0) {
+              tempDocForm["controls"][findIdx].patchValue({
+                DocNo: tempMouCustCollateralDoc.DocNo,
+                DocNotes: tempMouCustCollateralDoc.DocNotes,
+                ACDExpiredDt: formatDate(tempMouCustCollateralDoc.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+                IsReceived: tempMouCustCollateralDoc.IsReceived
+              });
             }
           }
           //end region
@@ -1735,6 +1805,35 @@ export class MouRequestAddcollXComponent implements OnInit {
             while (listDocExisting.length !== 0) {
               listDocExisting.removeAt(0);
             }
+          }
+        }
+      });
+  }
+
+  setMouCustCollateralExistingDoc(MouCustCollateralId: number = 0) {
+    this.http.post(URLConstant.GetListMouCustCollateralDocsByMouCustCollateralId, { Id: MouCustCollateralId }).subscribe(
+      (response) => {
+        let MouCustCollateralDocs = response["MouCustCollateralDocs"];
+        let tempDocForm = this.AddCollForm.get("ListDoc") as FormArray;
+        while (tempDocForm.length !== 0) {
+          tempDocForm.removeAt(0);
+        }
+        if (MouCustCollateralDocs["length"] > 0) {
+          for (let i = 0; i < MouCustCollateralDocs.length; i++) {
+            const tempMouCustCollateralDoc = MouCustCollateralDocs[i];
+            console.log(tempMouCustCollateralDoc);
+            let assetDocumentDetail = this.fb.group({
+              DocCode: tempMouCustCollateralDoc.DocCode,
+              AssetDocName: tempMouCustCollateralDoc.DocName,
+              IsValueNeeded: tempMouCustCollateralDoc.IsValueNeeded,
+              IsMandatoryNew: tempMouCustCollateralDoc.IsMandatoryNew,
+              IsMandatoryUsed: tempMouCustCollateralDoc.IsMandatoryUsed,
+              IsReceived: tempMouCustCollateralDoc.IsReceived,
+              DocNo: tempMouCustCollateralDoc.DocNo,
+              ACDExpiredDt: formatDate(tempMouCustCollateralDoc.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+              DocNotes: tempMouCustCollateralDoc.DocNotes
+            }) as FormGroup;
+            tempDocForm.push(assetDocumentDetail);
           }
         }
       });

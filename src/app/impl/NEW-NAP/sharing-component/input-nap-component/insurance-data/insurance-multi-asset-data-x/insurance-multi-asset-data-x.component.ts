@@ -356,6 +356,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
       });
     }
 
+    this.InsuranceDataForm.controls.InsAssetCoveredBy.enable();
     if (this.BLCode == CommonConstant.FCTR && this.existingListAppColl.length != 0) {
       for (let i = 0; i < this.existingListAppColl.length; i++) {
         if (this.existingListAppColl[i].CollateralNo == this.appCollateralObj.CollateralNo) {
@@ -1196,7 +1197,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     switch (this.ruleObj.CustStampdutyFeeToCustBhv) {
       case CommonConstant.InsFeeBhvDef:
         //set default jika pertama kali create
-        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.AdminFeeToCust });
+        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.CustStampdutyFeeToCust });
         break;
       case CommonConstant.InsFeeBhvMin:
         CustStampDutyFeeAmtValidator.push(Validators.min(this.ruleObj.CustStampdutyFeeToCust));

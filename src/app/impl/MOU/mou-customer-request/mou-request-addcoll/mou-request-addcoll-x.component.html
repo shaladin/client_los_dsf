@@ -110,15 +110,7 @@
           </div>
           <div class="form-group row">
             <label class="col-md-4 adins-required-label" translate>Collateral Condition</label>
-              <label class="col-md-8">Used</label>
-          </div>
-          <div class="form-group row">
-            <label class="col-md-4" translate>Manufacturing Year</label>
-            <div class="col-md-8">
-              <input type="text" class="form-control" formControlName="ManufacturingYear">
-              <lib-uc-show-errors [control]="AddCollForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
+              <label class="col-md-8">Used</label> 
           </div>
           <div class="form-group row">
             <label class="col-md-4 adins-required-label" translate>Collateral Price</label>
@@ -175,6 +167,23 @@
             </div>
           </div>
           <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>BPKB City Issuer</label>
+            <div class="col-md-8">
+              <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
+                [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AddCollForm'
+                (lookup)="SetBpkbCity($event)">
+              </lib-uclookupgeneric>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>BPKB Issue Date</label>
+            <div class="col-md-8">
+              <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt">
+              <lib-uc-show-errors [control]="AddCollForm.controls.TaxIssueDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
             <label class="col-md-4 adins-label" translate>Notes</label>
             <div class="col-md-8">
               <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
@@ -190,6 +199,14 @@
                 [parentForm]='AddCollForm' [enjiForm]='enjiForm' [identifier]="'FullAssetName'" #LookupCollateral
                 (lookup)="getLookupCollateralTypeResponse($event)">
               </lib-uclookupgeneric>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Manufacturing Year</label>
+            <div class="col-md-8">
+              <input type="text" class="form-control" formControlName="ManufacturingYear">
+              <lib-uc-show-errors [control]="AddCollForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
             </div>
           </div>
           <div formArrayName="items">
@@ -267,6 +284,11 @@
               <th><span translate class="thead-header">Document Notes</span></th>
             </tr>
           </thead>
+          <tbody *ngIf="AddCollForm.controls.ListDoc.controls.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
           <tbody>
             <tr *ngFor="let item of AddCollForm.controls.ListDoc.controls; let i = index" [formGroupName]="i">
               <td>{{item.controls.AssetDocName.value}}</td>
@@ -392,8 +414,8 @@
             </select>
             <div class="input-group-append">
               <span class="input-group-btn">
-                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationOwner()" translate>
-                  <i class="fa fa-check-square-o"></i>Copy
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationOwner()">
+                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                 </button>
               </span>
             </div>
@@ -401,7 +423,7 @@
         </div>
       </div>
       <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegalAddr" [enjiForm]="enjiForm"
-        [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
+      [identifier]="'legalAddr'" [UCAddrForm]="AddCollForm"></lib-ucaddress>
     </div>
 
     <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
@@ -418,8 +440,8 @@
             </select>
             <div class="input-group-append">
               <span class="input-group-btn">
-                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()" translate>
-                  <i class="fa fa-check-square-o"></i>Copy
+                <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()">
+                  <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                 </button>
               </span>
             </div>
@@ -431,11 +453,11 @@
     </div>
 
     <div class="form-actions right">
-      <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1" translate>
-        <i class="ft-x"></i> Cancel
+      <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
+        <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
       </button>
-      <button type="submit" class="btn btn-raised btn-primary" translate>
-        <i class="far fa-check-square"></i> Save
+      <button type="submit" class="btn btn-raised btn-primary">
+        <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
       </button>
     </div>
   </form>
@@ -461,16 +483,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>Collateral Condition</label>
-              <label class="col-md-8">Used</label>
-          </div>
-          <div class="form-group row">
-            <label class="col-md-4" translate>Manufacturing Year</label>
-            <div class="col-md-8">
-              <input type="text" class="form-control" formControlName="ManufacturingYear">
-              <lib-uc-show-errors [control]="AddCollForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
+            <label class="col-md-4 adins-required-label" translate>Collateral Condition</label> 
+              <label class="col-md-8">Used</label>  
           </div>
           <div class="form-group row">
             <label class="col-md-4 adins-required-label" translate>Collateral Price</label>
@@ -526,6 +540,23 @@
             </div>
           </div>
           <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>BPKB City Issuer</label>
+            <div class="col-md-8">
+              <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
+                [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AddCollForm'
+                (lookup)="SetBpkbCity($event)">
+              </lib-uclookupgeneric>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>BPKB Issue Date</label>
+            <div class="col-md-8">
+              <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt">
+              <lib-uc-show-errors [control]="AddCollForm.controls.TaxIssueDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
             <label class="col-md-4 adins-label" translate>Notes</label>
             <div class="col-md-8">
               <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
@@ -540,6 +571,14 @@
               <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='AddCollForm' [enjiForm]='enjiForm'
                 [identifier]="'FullAssetName'" #LookupCollateral (lookup)="getLookupCollateralTypeResponse($event)">
               </lib-uclookupgeneric>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4" translate>Manufacturing Year</label>
+            <div class="col-md-8">
+              <input type="text" class="form-control" formControlName="ManufacturingYear">
+              <lib-uc-show-errors [control]="AddCollForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
             </div>
           </div>
           <div formArrayName="items">
@@ -617,24 +656,29 @@
               <th><span translate class="thead-header">Document Notes</span></th>
             </tr>
           </thead>
+          <tbody *ngIf="AddCollForm.controls.ListDoc.controls.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
           <tbody>
             <tr *ngFor="let item of AddCollForm.controls.ListDoc.controls; let i = index" [formGroupName]="i">
               <td>{{item.controls.AssetDocName.value}}</td>
               <td>
-                <input type="checkbox" class="border-primary" formControlName="IsReceived">
+                <input type="checkbox" class="border-primary" disabled formControlName="IsReceived">
               </td>
               <td>
-                <input type="text" class="form-control width-100-per" formControlName="DocNo">
+                <input type="text" class="form-control width-100-per" disabled formControlName="DocNo">
                 <lib-uc-show-errors [control]="AddCollForm.controls.DocNo" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </td>
               <td>
-                <input type="date" class="form-control width-100-per" formControlName="ACDExpiredDt">
+                <input type="date" class="form-control width-100-per" disabled formControlName="ACDExpiredDt">
                 <lib-uc-show-errors [control]="AddCollForm.controls.ACDExpiredDt" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </td>
               <td>
-                <input type="text" class="form-control width-100-per" formControlName="DocNotes">
+                <input type="text" class="form-control width-100-per" disabled formControlName="DocNotes">
                 <lib-uc-show-errors [control]="AddCollForm.controls.DocNotes" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </td>
@@ -644,7 +688,7 @@
       </div>
     </div>
 
-    <ref-attr-form-generate *ngIf="isAttrReady" [IsDisable]="IsDisable" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+    <ref-attr-form-generate *ngIf="isAttrReady" [IsDisable]="IsDisable" [IsShowBtnRefresh]="false" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>

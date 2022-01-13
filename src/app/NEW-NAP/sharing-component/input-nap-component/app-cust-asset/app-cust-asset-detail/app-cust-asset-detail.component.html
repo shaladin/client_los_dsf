@@ -35,7 +35,7 @@
             <div class="col-md-8">
               <input type="" currencyMask class="form-control adInsInput" formControlName="AssetValue"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && CustAssetForm.controls.AssetValue.invalid }"
-                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 2, nullable: false }" />
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, nullable: false }" />
               <lib-uc-show-errors [control]="CustAssetForm.controls.AssetValue" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>

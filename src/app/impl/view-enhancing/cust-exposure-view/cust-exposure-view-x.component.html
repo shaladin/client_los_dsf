@@ -1,0 +1,72 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title" style="margin-bottom: 10px;">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                Customer Exposure View
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <lib-ucSubsection [id]="'MainInfoId'" [title]="'Main Information'" [panel]="'MainInfo'">
+          </lib-ucSubsection>
+          <div class="card-body" id="MainInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="label-control" translate> Customer Name </label>
+                    <span id="CustIndicator" style="float: right;">                    
+                      <i [ngClass]="CrdRvwExposureHObj.CustIndicator == null ? 'far fa-circle' : CrdRvwExposureHObj.CustIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                      [ngStyle]="{'color': CrdRvwExposureHObj.CustIndicator == null ? '' : CrdRvwExposureHObj.CustIndicator != whiteIndicator ? CrdRvwExposureHObj.CustIndicator : ''}" class="font-medium-3 tooltips">
+                        <span class="tooltipstext">
+                          <span *ngIf="CrdRvwExposureHObj.CustIndicatorDescr != null && CrdRvwExposureHObj.CustIndicatorDescr != ''"> {{CrdRvwExposureHObj.CustIndicatorDescr}} </span>
+                          <span *ngIf="CrdRvwExposureHObj.CustIndicatorDescr == null || CrdRvwExposureHObj.CustIndicatorDescr == ''"> No Data </span>
+                        </span>
+                      </i>
+                    </span>
+                  </div>
+                  <div class="col-md-6 ">
+                    <label class="label-control"> {{CrdRvwExposureHObj.CustName}} </label>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-6 ">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="label-control" translate> Relation With Customer </label>
+                  </div>
+                  <div class="col-md-6 ">
+                    <label class="label-control"> {{CrdRvwExposureHObj.RelationWithCust}} </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <mat-tab-group *ngIf="IsReady">
+            <mat-tab label="Customer Exposure">
+              <ng-template matTabContent>
+                <app-cust-exposure-x [exposureHObj]="CrdRvwExposureHObj" [CustNo]="CustNo"></app-cust-exposure-x>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Customer Group Exposure">
+              <ng-template matTabContent>
+                <app-cust-exposure-x [exposureHObj]="CrdRvwExposureHObj" [exposureType]="ExposureCustGroupTypeCode" [CustNo]="CustNo"></app-cust-exposure-x>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Obligor Exposure">
+              <ng-template matTabContent>
+                <app-obligor-exposure-x [exposureHObj]="CrdRvwExposureHObj"></app-obligor-exposure-x>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

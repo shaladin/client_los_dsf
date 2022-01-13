@@ -35,6 +35,7 @@ export class PathConstantX {
   public static VIEW_MOU_CUST_X = 'Mou/CustView/X';
   public static VIEW_CHANGE_MOU_X = "ChangeMouView/X";
   public static VIEW_AGRMNT_X = "AgrmntView/X";
+  public static VIEW_CUST_EXPSR_X = "CustExposureView/X";
   //#endregion
 
   //#region Nap-Crd-Prcs

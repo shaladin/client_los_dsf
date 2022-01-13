@@ -43,6 +43,8 @@ import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { NewLeadUpdateDsfComponent } from 'app/dsf/lead/new-lead-update-dsf/new-lead-update-dsf.component';
 import { NewLeadInputDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input.component';
 import { NewLeadInputMainInfoDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input-main-info-dsf/new-lead-input-main-info-dsf.component';
+import { RoTelemkOfferDetailXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail-x.component';
+import { RoTelemkOfferVerifXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component';
 
 
 const routes: Routes = [
@@ -205,14 +207,14 @@ const routes: Routes = [
       },
       {
         path: PathConstant.POTENTIAL_RO_TEL_OFFER_DETAIL,
-        component: RoTelemkOfferDetailComponent,
+        component: RoTelemkOfferDetailXComponent,
         data: {
           title: 'RO Telemarketing Offering Detail'
         }
       },
       {
         path: PathConstant.POTENTIAL_RO_TEL_OFFER_VERIF,
-        component: RoTelemkOfferVerifComponent,
+        component: RoTelemkOfferVerifXComponent,
         data: {
           title: 'RO Telemarketing Offering Verification'
         }

@@ -3,11 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CustomPatternObj } from 'app/shared/model/library/custom-pattern-obj.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-change-password',
@@ -27,7 +29,7 @@ export class ChangePasswordComponent implements OnInit {
   });
   customPattern = new Array<CustomPatternObj>();
 
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.username = params['Username'];
     });
@@ -60,6 +62,10 @@ export class ChangePasswordComponent implements OnInit {
       const password = this.ResetPassForm.value.OldPassword;
       const newpassword = this.ResetPassForm.value.NewPassword;
 
+      let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      if (context != null) {
+        this.username = context[CommonConstant.USER_NAME];
+      }
       var requestObj = { "Username": this.username, "Password": password, "NewPassword": newpassword };
       this.http.post(URLConstant.ChangePasswordRefUserByUsername, requestObj).subscribe(
         (response) => {
