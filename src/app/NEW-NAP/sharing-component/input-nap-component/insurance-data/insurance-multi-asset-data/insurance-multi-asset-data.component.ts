@@ -2325,6 +2325,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
       (response) => {
         this.paidByObj = response[CommonConstant.ReturnObj];
+        if(this.BLCode == CommonConstant.FCTR){
+          let PaidByCustIdx = this.paidByObj.findIndex(x => x.Key == CommonConstant.InsPaidByCustomer)
+          this.paidByObj = this.paidByObj.slice(PaidByCustIdx, 1);
+        }
       }
     );
   }
