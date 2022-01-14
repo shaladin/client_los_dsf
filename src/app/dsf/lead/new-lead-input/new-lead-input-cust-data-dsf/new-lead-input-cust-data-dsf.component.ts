@@ -37,7 +37,7 @@ import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { RegexService } from 'app/shared/services/regex.services';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
-
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-new-lead-input-cust-data-dsf',
@@ -130,6 +130,8 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   IsReady: boolean = false;
   customPattern: Array<CustomPatternObj>;
   resultPattern: Array<KeyValueObj>;
+  Max17YO: Date;
+  context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(
     private regexService: RegexService,
@@ -192,6 +194,8 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
+    this.Max17YO = new Date(context.BusinessDt);
+    this.Max17YO.setFullYear(new Date(context.BusinessDt).getFullYear() - 17);
     await this.getLeadData();
 
     this.inputLegalAddressObj = new InputFieldObj();
@@ -909,6 +913,14 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   }
 
   setLeadCustPersonal() {
+    let isValid = true;
+    let age = new Date(this.context.BusinessDt);
+    age.setFullYear(new Date(this.CustomerDataForm.controls["BirthDate"].value).getFullYear())
+    if (age > this.Max17YO) {
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      isValid = false;
+    }
+
     this.leadInputObj.LeadCustPersonalObj.CustFullName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustPersonalObj.MrGenderCode = this.CustomerDataForm.controls["Gender"].value;
     this.leadInputObj.LeadCustPersonalObj.BirthPlace = this.CustomerDataForm.controls["BirthPlace"].value;
@@ -918,6 +930,8 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     this.leadInputObj.LeadCustPersonalObj.Email1 = this.CustomerDataForm.controls["Email"].value;
     this.leadInputObj.LeadCustPersonalObj.MobilePhnNo1 = this.CustomerDataForm.controls["MobilePhone1"].value;
     this.leadInputObj.LeadCustPersonalObj.MobilePhnNo2 = this.CustomerDataForm.controls["MobilePhone2"].value;
+
+    return isValid;
   }
 
   // setLeadCustSocmed() {
@@ -972,7 +986,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
         this.setLeadCust();
         this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
-        this.setLeadCustPersonal();
+        if (!this.setLeadCustPersonal()) return;
         // this.setLeadCustSocmed();
         this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
         this.setLegalAddr();
@@ -993,7 +1007,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
       } else {
         this.leadInputObj = new LeadInputObj();
         this.setLeadCust();
-        this.setLeadCustPersonal();
+        if (!this.setLeadCustPersonal()) return;
         // this.setLeadCustSocmed();
         this.setLegalAddr();
         this.setResidenceAddr();
@@ -1014,7 +1028,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
         this.setLeadCust();
         this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
-        this.setLeadCustPersonal();
+        if (!this.setLeadCustPersonal()) return;
         // this.setLeadCustSocmed();
         this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
         this.setLegalAddr();
@@ -1036,7 +1050,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     else {
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
-      this.setLeadCustPersonal();
+      if (!this.setLeadCustPersonal()) return;
       // this.setLeadCustSocmed();
       this.setLegalAddr();
       this.setResidenceAddr();
@@ -1232,7 +1246,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     if (this.isNeedCheckBySystem == "0") {
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
-      this.setLeadCustPersonal();
+      if (!this.setLeadCustPersonal()) return;
       this.setLegalAddr();
       this.setLeadCustPersonalJobData();
       this.http.post(URLConstant.CheckIntegrator, this.leadInputObj).subscribe(

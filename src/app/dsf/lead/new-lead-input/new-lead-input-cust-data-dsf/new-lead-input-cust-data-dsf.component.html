@@ -69,7 +69,7 @@
                 <label class="col-md-2 adInsLabel adins-required-label" translate>Birth Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control adInsInput" formControlName="BirthDate" required
-                    [max]="businessDt | date: 'yyyy-MM-dd'"
+                    [max]="Max17YO | date: 'yyyy-MM-dd'"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.BirthDate.invalid}">
                   <lib-uc-show-errors [control]="CustomerDataForm.controls.BirthDate" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -278,9 +278,9 @@
             <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()" translate>
             Cancel
           </button> -->
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="fa fa-check-square-o"></i> Save & Continue
-            </button>
+          <button type="submit" class="btn btn-raised btn-primary">
+            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Save & Continue</span>
+          </button>
           </div>
         </form>
       </div>
