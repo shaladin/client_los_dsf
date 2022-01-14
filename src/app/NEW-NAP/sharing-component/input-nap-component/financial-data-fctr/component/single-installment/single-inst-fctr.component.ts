@@ -84,7 +84,9 @@ export class SingleInstFctrComponent implements OnInit {
             NtfAmt: response.NtfAmt,
             RefundInterestAmt: response.RefundInterestAmt,
             TotalDisbAmt: response.TotalDisbAmt,
-            GrossYieldPrcnt: response.GrossYieldPrcnt
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt,
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt
           });
 
           this.SetInstallmentTable();
