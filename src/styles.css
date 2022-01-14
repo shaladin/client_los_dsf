@@ -458,11 +458,28 @@ mat-dialog-container#role-modal {
 }
 
 #login {
-    font-family: 'Inter', sans-serif !important;
-    background-image: url("assets/img/bg-login.png");
+    font-family: 'Poppins', sans-serif;
+    background: #fcefee;
+    background-image: url("assets/img/bg-login-2.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    
+}
+
+#custom-fill-red {
+    fill: #B42317;
+}
+
+#custom-stroke-red {
+    stroke: #B42317;
+}
+
+.custom-card {
+    border-radius: 10%;
+    padding: 1.5rem 3rem;
+    background: white;
+    width: 34.33rem;
 }
 
 .text-user {
@@ -482,8 +499,9 @@ mat-dialog-container#role-modal {
 
 .input-field {
     text-align: left;
-    border: 0.5px solid rgb(202, 202, 202);
     padding: 1rem;
+    border: 1px solid #b4241721;
+    border-radius: 8px;
 }
 
 .input-field i {
@@ -500,12 +518,12 @@ mat-dialog-container#role-modal {
     margin-left: 1.5rem;
 }
 
-.gradient-button {
+.custom-pill-button {
     margin: 10px;
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 0.2rem;
-    padding: 1.1rem;
+    padding: 1.3rem;
     text-align: center;
     text-transform: uppercase;
     color: #FFF;
@@ -515,11 +533,10 @@ mat-dialog-container#role-modal {
     display: inline-block;
     outline: none;
     border: none;
+    border-radius: 100px;
+    background: #B42317;
 }
 
-.gradient-button-2 {
-    background: linear-gradient(135deg, #87EE77 0%, #04C16E 100%);
-}
-.gradient-button-2:hover { 
-    filter: brightness(95%);
+.custom-pill-button:hover { 
+    filter: brightness(90%);
 }
