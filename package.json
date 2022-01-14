@@ -36,6 +36,7 @@
     "@adins/ucapproveby": "^1.0.2",
     "@adins/ucdashboard2": "^1.0.17",
     "@adins/ucdropdownlist": "^1.0.27",
+    "@adins/ucdropdownsearch": "^1.0.7",
     "@adins/ucgridfooter": "^1.0.2",
     "@adins/ucgridview": "^2.2.0",
     "@adins/ucinputnumber": "^1.0.2",
