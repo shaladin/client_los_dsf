@@ -272,6 +272,7 @@ export class FeeXComponent implements OnInit {
 
   PatchProvisionFeeValue() {
     var fb_provision = this.GetProvisionFormGroup();
+    if (!fb_provision) return; // X DSF : Penjagaan jika memang tidak ada settingan rule fee untuk LOB nya
 
     this.ParentForm.patchValue({
       MrProvisionFeeTypeCode: fb_provision.get("FeeType").value,
@@ -332,7 +333,7 @@ export class FeeXComponent implements OnInit {
   CalculateProvisionCapitalize() {
     var fb_provision = this.GetProvisionFormGroup();
     var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
-    var ProvisionFeeAmt = fb_provision.get("AppFeeAmt").value;
+    var ProvisionFeeAmt = fb_provision ? fb_provision.get("AppFeeAmt").value : 0;  // X DSF : Penjagaan jika memang tidak ada settingan rule fee untuk LOB nya
     var FeeCapitalize: number = 0;
     var FeeCapitalizeType: string;
     var FeeCapitalizePrcnt: number;
@@ -376,8 +377,8 @@ export class FeeXComponent implements OnInit {
     var fb_provision = this.GetProvisionFormGroup();
 
     var calcObj: CalcProvisionFee = new CalcProvisionFee();
-    calcObj.ProvisionFeeSource = fb_provision.get("FeeSource").value;
-    calcObj.ProvisionFeeType = fb_provision.get("FeeType").value;
+    calcObj.ProvisionFeeSource = fb_provision ? fb_provision.get("FeeSource").value : "";  // X DSF : Penjagaan jika memang tidak ada settingan rule fee untuk LOB nya
+    calcObj.ProvisionFeeType = fb_provision ? fb_provision.get("FeeType").value : "";  // X DSF : Penjagaan jika memang tidak ada settingan rule fee untuk LOB nya
     calcObj.AppId = this.AppId;
     calcObj.DownPaymentGrossAmt = this.ParentForm.get("DownPaymentGrossAmt").value;
     calcObj.InsCapitalizedAmt = this.ParentForm.get("InsCptlzAmt").value;
@@ -390,15 +391,17 @@ export class FeeXComponent implements OnInit {
       (response) => {
         response["ProvisionFeePercentage"];
         var fb_provision = this.GetProvisionFormGroup();
-
-        fb_provision.patchValue({
-          AppFeeAmt: response["ProvisionFeeAmt"],
-          AppFeePrcnt: response["ProvisionFeePercentage"],
-          StdFeeAmt: response["StdProvisionFeeAmt"],
-          StdFeePrcnt: response["StdProvisionFeePercentage"],
-          SellFeeAmt: response["SellProvisionFeeAmt"],
-          SellFeePrcnt: response["SellProvisionFeePercentage"]
-        });
+        if(fb_provision) // X DSF : Penjagaan jika memang tidak ada settingan rule fee untuk LOB nya
+        {
+          fb_provision.patchValue({
+            AppFeeAmt: response["ProvisionFeeAmt"],
+            AppFeePrcnt: response["ProvisionFeePercentage"],
+            StdFeeAmt: response["StdProvisionFeeAmt"],
+            StdFeePrcnt: response["StdProvisionFeePercentage"],
+            SellFeeAmt: response["SellProvisionFeeAmt"],
+            SellFeePrcnt: response["SellProvisionFeePercentage"]
+          });
+        }
         this.CalculateProvisionCapitalize();
         this.CalculateTotalFeeAndCaptlzAmt();
       }
