@@ -16,7 +16,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
+  templateUrl: './login-page-new.component.html',
   styleUrls: ['./login-page.component.scss'],
   providers: [RolePickService, NGXToastrService]
 })
@@ -36,6 +36,7 @@ export class LoginPageComponent implements OnInit {
     user: "",
     pwd: ""
   };
+  showPass: boolean = false;
 
   constructor(private router: Router, private http: HttpClient, public rolePickService: RolePickService,
     private route: ActivatedRoute, private cookieService: CookieService,private toastr: NGXToastrService) {
@@ -125,5 +126,9 @@ export class LoginPageComponent implements OnInit {
   // On registration link click
   onRegister() {
     this.router.navigate(['register'], { relativeTo: this.route.parent });
+  }
+
+  onClickShowPass() {
+    this.showPass = !this.showPass;
   }
 }

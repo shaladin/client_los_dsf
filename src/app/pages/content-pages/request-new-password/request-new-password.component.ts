@@ -15,7 +15,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: "request-new-password",
-  templateUrl: "./request-new-password.component.html",
+  templateUrl: "./request-new-password-new.component.html",
   providers: [NGXToastrService]
 })
 export class RequestNewPasswordComponent implements OnInit {
