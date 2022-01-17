@@ -50,7 +50,7 @@ export class DocumentViewXDsfComponent implements OnInit {
   BizTemplateCode: string;
   isDocSignerAvailable: boolean;
 
-  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING;
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING_DSF;
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
@@ -68,10 +68,10 @@ export class DocumentViewXDsfComponent implements OnInit {
 
   ngOnInit() {
     if (this.BizTemplateCode == CommonConstant.OPL) {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformationAgrmnt.json";
+      this.viewGenericObj.viewInput = "./assets/dsf/ucviewgeneric/viewNapAppOPLMainInformationAgrmnt.json";
     }
     else {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocumentDsf.json";
+      this.viewGenericObj.viewInput = "./assets/dsf/ucviewgeneric/viewDocumentDsf.json";
     }
 
     this.GetListAgrmntDocByAgrmntId();

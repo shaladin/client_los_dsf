@@ -25,8 +25,8 @@ export class DocumentPagingDsfComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/searchDocumentDsf.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocumentDsf.json";
+    this.inputPagingObj._url = "./assets/dsf/ucpaging/searchDocumentDsf.json";
+    this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchDocumentDsf.json";
 
     this.inputPagingObj.addCritInput = new Array();
     var critLobObj = new CriteriaObj();
