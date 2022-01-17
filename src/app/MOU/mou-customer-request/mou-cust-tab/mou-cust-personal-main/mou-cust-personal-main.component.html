@@ -73,12 +73,12 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4" for="npwp" translate
-              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'NPWP'">NPWP</label>
-            <label class="col-md-4 adins-required-label" for="npwp" translate
-              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'NPWP'">NPWP</label>
+            <label class="col-md-4" for="TaxIdNo" translate
+              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'NPWP'">Tax Id No</label>
+            <label class="col-md-4 adins-required-label" for="TaxIdNo" translate
+              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'NPWP'">Tax Id No</label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="npwp" formControlName="TaxIdNo">
+              <input type="text" class="form-control" id="TaxIdNo" formControlName="TaxIdNo">
               <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].TaxIdNo"
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
