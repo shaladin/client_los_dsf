@@ -13,6 +13,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-prod-offering-deact-apv-detail',
@@ -31,7 +32,8 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
 
   constructor(private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdOfferingHId"] != null) {
         this.ProdOfferingHId = params["ProdOfferingHId"];
@@ -85,7 +87,8 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
     }
 
     this.http.post(URLConstant.ProdOfferingApproval, reqProdHoApvCustomObj).subscribe(
-      () => {
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV], {});
       }
     );
