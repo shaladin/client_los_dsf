@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import {Component, OnInit} from '@angular/core';
+import {environment} from 'environments/environment';
+import {URLConstant} from 'app/shared/constant/URLConstant';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {UcUploadObj} from 'app/shared/model/uc-upload-obj.model';
 
 @Component({
   selector: 'app-cessie-monitoring',
@@ -9,37 +10,30 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
   styles: []
 })
 export class CessieMonitoringComponent implements OnInit {
-  uploadObj: Object;
+  uploadObj: UcUploadObj = new UcUploadObj();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-    this.uploadObj = {
-      title: 'Upload Cessie Factoring', // Title Paging dan Upload Page
-      subsectionId: 'UcUploadFile', // Ga perlu diubah
-      formatsAllowed: '.txt', // File yang bisa di upload
-      UploadTypeCode: 'UPL_CESSIE', // UploadTypeCode berdasarkan keperluan
-      ErrorDownloadUrl: URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType, // URL untuk Download Error File
-      TemplateUrl: URLConstant.DownloadTemplate, // URL untuk Download Template File
-      TemplateName: 'Upload_Cessie_Template', // Nama Excel Template File
-      FileErrorName: "Upload_Cessie_ErrorDownload", // Nama Excel Download Error File
-      // SheetName: 'TemplateGan',
-      environmentUrl: environment.losUrl + '/v1',
-      apiQryPaging: URLConstant.GetPagingObjectBySQL,
-      pagingJson: "./assets/ucpaging/searchCessieMonitoring.json",
-      ddlEnvironments: [
-        {
-          name: "UL.UPLOAD_STATUS",
-          environment: environment.FoundationR3Url + "/v1"
-        },
-        {
-          name: "UL.ORI_OFFICE_CODE",
-          environment: environment.FoundationR3Url + "/v1"
-        }
-      ],
-      url: URLConstantX.UploadFileV2,
-      isDownloadTmplt : true
-    }
+    this.uploadObj.title = 'Upload Cessie Factoring';
+    this.uploadObj.UploadTypeCode = 'UPL_CESSIE';
+    this.uploadObj.ErrorDownloadUrl = URLConstant.GetLeadMonitoringByUploadMonitoringNoAndTrxType;
+    this.uploadObj.TemplateName = 'Upload_Cessie_Template';
+    this.uploadObj.FileErrorName = 'Upload_Cessie_ErrorDownload';
+    this.uploadObj.pagingJson = './assets/ucpaging/searchCessieMonitoring.json';
+    this.uploadObj.ddlEnvironments = [
+      {
+        name: 'UL.UPLOAD_STATUS',
+        environment: environment.FoundationR3Url + '/v1'
+      },
+      {
+        name: 'UL.ORI_OFFICE_CODE',
+        environment: environment.FoundationR3Url + '/v1'
+      }
+    ]
+    this.uploadObj.formatsAllowed = '.txt';
+    this.uploadObj.url = URLConstantX.UploadFileV2;
     console.log(this.uploadObj)
   }
 }
