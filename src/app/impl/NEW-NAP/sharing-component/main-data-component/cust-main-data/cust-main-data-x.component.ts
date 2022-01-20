@@ -640,8 +640,8 @@ export class CustMainDataXComponent implements OnInit {
       MrProfessionCode: event.ProfessionCode,
     });
     if (this.custMainDataMode == CommonConstant.CustMainDataModeCust) return;
-    this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, event.ProfessionCode);
-    this.custAttrForm.ResetValueFromAttrCode(CommonConstant.AttrCodeDeptAml);
+    // this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, event.ProfessionCode);
+    // this.custAttrForm.ResetValueFromAttrCode(CommonConstant.AttrCodeDeptAml);
   }
 
   changeCustModel() {
@@ -655,8 +655,8 @@ export class CustMainDataXComponent implements OnInit {
     this.professionLookUpObj.nameSelect = valueDesc;
     this.professionLookUpObj.jsonSelect = { JobDesc: valueDesc };
     if (this.custMainDataMode == CommonConstant.CustMainDataModeCust) return;
-    this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, valueCode);
-    this.custAttrForm.ResetValueFromAttrCode(CommonConstant.AttrCodeDeptAml);
+    // this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, valueCode);
+    // this.custAttrForm.ResetValueFromAttrCode(CommonConstant.AttrCodeDeptAml);
     this.PatchCriteriaLookupProfession();
   }
 
@@ -844,7 +844,7 @@ export class CustMainDataXComponent implements OnInit {
           this.professionLookUpObj.nameSelect = response.ProfessionName;
           this.professionLookUpObj.jsonSelect = response;
           if (this.custMainDataMode == CommonConstant.CustMainDataModeCust) return;
-          this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, AppCustPersonalJobDataObj.MrProfessionCode);
+          //this.custAttrForm.SetSearchListInputType(CommonConstant.AttrCodeDeptAml, AppCustPersonalJobDataObj.MrProfessionCode);
         }
       );
     }
