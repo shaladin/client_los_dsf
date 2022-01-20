@@ -91,7 +91,7 @@ export class PoEntryXComponent implements OnInit {
     );
 
     if (this.IsDisburseToCust) {
-      
+
       await this.httpClient.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
         (response : AppCustObj) => {
           this.AppCust = response;
@@ -173,7 +173,7 @@ export class PoEntryXComponent implements OnInit {
                 console.log(error);
               }
             );
-      
+
           }
         }
       );
@@ -191,7 +191,7 @@ export class PoEntryXComponent implements OnInit {
         forkJoin([getAppLoanPurpose, getListBankAcc, getAppLoanPurposeForPOByLoan]).toPromise().then(
           (response) => {
             this.AppLoanPurposeList = response[0]["listResponseAppLoanPurpose"] as Array<AppLoanPurposeObj>;
-            
+
             this.AssetObj = response[2]["ReturnObject"];
 
             this.vendorBankAccList = response[1]["ReturnObject"];
@@ -252,7 +252,7 @@ export class PoEntryXComponent implements OnInit {
             console.log(error);
           }
         );
-  
+
       }
     }
     this.httpClient.post(URLConstant.GetPurchaseOrderExpDt, { Id: this.AppId }).subscribe(
@@ -313,7 +313,7 @@ export class PoEntryXComponent implements OnInit {
         }
       }
     }
-    
+
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response1) => {
         let GetProduct = new GenericObj();
@@ -424,7 +424,7 @@ export class PoEntryXComponent implements OnInit {
         () => {
         }
       );
-    }else{      
+    }else{
       this.httpClient.post(URLConstant.EditPurchaseOrder, { requestPurchaseOrderHObj: requestPurchaseOrderH, requestPurchaseOrderDObjs: requestListPurchaseOrderD }).toPromise().then(
         (response) => {
           this.activeModal.close(response);
@@ -452,14 +452,15 @@ export class PoEntryXComponent implements OnInit {
     var TempListPurchaseOrderD = new Array();
     for (var i = 0; i < ListPORefMasterObj.length; i++) {
       if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeNonFee) {
-        var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+        let tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
       if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeFee) {
         let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
-        var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+        if(!tempAgrmntFeeObj) continue; // X DSF : Penjagaan jika memang tidak ada settingan rule fee untuk LOB MPF
+        let tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
