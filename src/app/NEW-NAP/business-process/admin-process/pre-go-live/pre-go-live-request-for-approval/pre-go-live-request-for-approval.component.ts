@@ -36,6 +36,8 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   IsReady: boolean;
   BizTemplateCode: string;
   PlafondAmt: number = 0;
+  OriOfficeCode: string;
+
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -145,12 +147,12 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     };
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_PRE_GO_LIVE;
     this.InputObj.Reason = this.itemReason;
-    this.InputObj.TrxNo = this.AgrmntNo
+    this.InputObj.TrxNo = this.AgrmntNo;
     this.IsReady = true;
   }
 
@@ -158,6 +160,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
           this.BizTemplateCode = response['BizTemplateCode'];
+          this.OriOfficeCode = response['OriOfficeCode'];
       }
     ).catch(
         (error) => {

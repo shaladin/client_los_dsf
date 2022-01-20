@@ -51,6 +51,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   RFAInfo: Object = new Object();
+  OriOfficeCode: string;
 
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   private createComponent: UcapprovalcreateComponent;
@@ -195,6 +196,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
         if (response != undefined)
           this.GetCreditScoring(response["AppNo"]);
         this.AppNo = response["AppNo"];
+        this.OriOfficeCode = response["OriOfficeCode"];
       });
   }
 
@@ -449,7 +451,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
     this.InputObj.RequestedBy = this.UserAccess.UserName;
-    this.InputObj.OfficeCode = this.UserAccess.OfficeCode;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
