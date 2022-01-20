@@ -148,6 +148,17 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       }
     );
 
+    let addCritVendor = new CriteriaObj();
+    await this.http.post(URLConstant.GetAppAssetByAgrmntId, reqObj).toPromise().then(
+      (response) => {
+        
+        addCritVendor.propName = "V.VENDOR_CODE";
+        addCritVendor.restriction = AdInsConstant.RestrictionEq;
+        addCritVendor.value = response["SupplCode"];
+        this.arrAddCrit.push(addCritVendor);
+      }
+    );
+
     if(this.LobCode == CommonConstantX.SLB){
       await this.http.post(URLConstant.GetAppCustByAppId, { Id : this.AppId }).toPromise().then(
         async (response) => {
@@ -193,12 +204,12 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     }
 
 
-    var addCritAgrmntId = new CriteriaObj();
-    addCritAgrmntId.DataType = "numeric";
-    addCritAgrmntId.propName = "AA.AGRMNT_ID";
-    addCritAgrmntId.restriction = AdInsConstant.RestrictionIn;
-    addCritAgrmntId.listValue = [this.agrmntId];
-    this.arrAddCrit.push(addCritAgrmntId);
+    // var addCritAgrmntId = new CriteriaObj();
+    // addCritAgrmntId.DataType = "numeric";
+    // addCritAgrmntId.propName = "AA.AGRMNT_ID";
+    // addCritAgrmntId.restriction = AdInsConstant.RestrictionIn;
+    // addCritAgrmntId.listValue = [this.agrmntId];
+    // this.arrAddCrit.push(addCritAgrmntId);
 
     for (var i = 0; i < this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs.length; i++) {
       let currentAgrmntCommissionHId = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].AgrmntCommissionHId;
@@ -215,18 +226,18 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
 
       this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId] = new InputLookupObj();
 
-      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
-      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlEnviPaging = environment.losUrl + "/v1";
-      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].pagingJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
-      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].genericJson = "./assets/uclookup/lookupSupplEmpForEditAppAftApv.json";
+      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlJson = "./assets/impl/uclookup/lookupSupplEmpForEditAppAftApv.json";
+      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].urlEnviPaging = environment.FoundationR3Url + "/v1";
+      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].pagingJson = "./assets/impl/uclookup/lookupSupplEmpForEditAppAftApv.json";
+      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].genericJson = "./assets/impl/uclookup/lookupSupplEmpForEditAppAftApv.json";
       this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].isReady = true;
 
       this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].nameSelect = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientRefNoDesc;
-      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].jsonSelect = { SupplEmpName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientRefNoDesc };
+      this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].jsonSelect = { VendorEmpName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientRefNoDesc };
 
       var addCrit = new CriteriaObj();
       addCrit.DataType = "text";
-      addCrit.propName = "AASE.SUPPL_EMP_NO";
+      addCrit.propName = "VE.VENDOR_EMP_NO";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = [this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientRefNo];
       this.arrAddCrit.push(addCrit);
@@ -476,7 +487,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
 
     var CommissionRecipientRefNo = SupplEmpCommList.at(index).get("CommissionRecipientRefNo").value;
 
-    if (CommissionRecipientRefNo != e.SupplEmpNo) {
+    if (CommissionRecipientRefNo != e.VendorEmpNo) {
       let AgrmntCommissionHId = AgrCommH.controls.AgrmntCommissionHId.value;
       let indexVba = this.listTempVba.map(function (x) { return x.AgrmntCommissionHId; }).indexOf(AgrmntCommissionHId);
       if (indexVba > -1)
@@ -485,8 +496,8 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       SupplEmpCommList.removeAt(index);
 
       let empObj: ReqGetVendorEmpByVendorEmpNoAndVendorCodeObj = new ReqGetVendorEmpByVendorEmpNoAndVendorCodeObj();
-      empObj.VendorEmpNo = e.SupplEmpNo,
-        empObj.VendorCode = e.SupplCode
+      empObj.VendorEmpNo = e.VendorEmpNo,
+        empObj.VendorCode = e.VendorCode
 
 
       this.http.post(URLConstant.GetVendorEmpByVendorEmpNoAndVendorCode, empObj).subscribe(
@@ -501,7 +512,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
           });
 
           let reqByVendorEmpNo: GenericObj = new GenericObj();
-          reqByVendorEmpNo.EmpNo = e.SupplEmpNo;
+          reqByVendorEmpNo.EmpNo = e.VendorEmpNo;
           this.http.post(URLConstant.GetListActiveVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
             (response) => {
               var vendorBankAccObj = response[CommonConstant.ReturnObj];

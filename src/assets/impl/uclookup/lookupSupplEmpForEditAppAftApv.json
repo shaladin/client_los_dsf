@@ -1,0 +1,80 @@
+{
+    "title": "Lookup - Supplier Employee For Edit App After Approval",
+    "sectionTitle": "Search",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "VE.VENDOR_EMP_NO",
+            "id": "VendorEmpNoId",
+            "value": "",
+            "label": "Supplier Employee No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "VE.VENDOR_EMP_NAME",
+            "id": "VendorEmpNameId",
+            "value": "",
+            "label": "Supplier Employee Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "lookupBranchEmp"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Supplier No",
+            "name": "VE.VENDOR_EMP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Supplier Name",
+            "name": "VE.VENDOR_EMP_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Supplier Position",
+            "name": "RM.DESCR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "VendorEmpNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "VendorEmpName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "JobTitleName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "VendorEmpNo"
+                }
+            ]
+        }
+    ],
+    "propertyId": "VendorEmpNo",
+    "propertyName": "VendorEmpName"
+}
+  
