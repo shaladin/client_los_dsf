@@ -178,11 +178,11 @@ export class MouReviewFactoringComponent implements OnInit {
 
   claimTask() {
     if(environment.isCore){	
-      if(this.WfTaskListIdÂ !=Â ""Â &&Â this.WfTaskListIdÂ !=Â undefined){	
+      if(this.WfTaskListId != "" && this.WfTaskListId != undefined){	
         this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
       }	
     }	
-    elseÂ ifÂ (this.WfTaskListIdÂ >Â 0)Â {	
+    else if (this.WfTaskListId > 0) {	
         this.claimTaskService.ClaimTask(this.WfTaskListId);	
     }		
   }
