@@ -42,6 +42,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   RFAInfo: Object = new Object();
   AppCrdApvResultExpDt: Date;
   AgrmntCrdApvResultExpDt: Date;
+  OriOfficeCode: string;
 
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -100,6 +101,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
       response => {
         this.AppNo = response["AppNo"];
         this.AppCrdApvResultExpDt = new Date(response["CrdApvResultExpDt"]);
+        this.OriOfficeCode = response["OriOfficeCode"];
       }
     );
 
@@ -171,6 +173,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CR_APV_RES_EXP_D;
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.AgrmntNo == null ? this.AppNo : this.AgrmntNo;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.IsReady = true;
   }
 }

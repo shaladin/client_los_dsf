@@ -69,6 +69,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   DDLReason;
   AgrmntCurrStep: string;
+  OriOfficeCode: string;
   EditAppForm = this.fb.group({
     // AppAssetList: this.fb.array([]),
     // PurchaseOrderHList: this.fb.array([]),
@@ -95,8 +96,8 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
     this.arrValue.push(this.agrmntId);
     this.DDLReason = new Array();
     await this.BindDDLReason();
-    await this.initInputApprovalObj();
     await this.getData();
+    await this.initInputApprovalObj();
     await this.setdata();
   }
 
@@ -119,6 +120,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_EDIT_APP_AFT_APV_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL;
     this.InputObj.Reason = this.DDLReason;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.TrxNo = "-";
     this.IsReady = true;
   }
@@ -131,6 +133,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
       await this.http.post(URLConstant.GetAgrmntByAgrmntId, reqObj).toPromise().then(
         (response: AgrmntObj) => {
           this.AgrmntCurrStep = response.AgrmntCurrStep;
+          this.OriOfficeCode = response.OfficeCode;
         });
 
       await this.http.post(URLConstant.GetAgrmntDataForEditAppAfterApprovalByAgrmntId, reqObj).toPromise().then(
